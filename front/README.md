@@ -1,4 +1,4 @@
-# front
+# Emendare - Front
 
 ## Project setup
 ```
