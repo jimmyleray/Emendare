@@ -17,7 +17,8 @@ jobs:
     working_directory: ~/Emendare/front
 
     steps:
-      - checkout
+      - checkout:
+          path: ~/Emendare
 
       # Download and cache dependencies
       - restore_cache:
