@@ -1,11 +1,25 @@
-# Emendare - Back
+## Skeleton for Node.js applications written in TypeScript
 
-## Project setup
-```
-npm install
+### Development
+
+```bash
+npm run dev
 ```
 
-### Compile and start server
+### Running tests
+
+```bash
+npm test
 ```
-npm run start
+
+### Linting
+
+```bash
+npm run lint
+```
+
+### Building a container
+
+```bash
+docker build .
 ```
