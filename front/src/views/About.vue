@@ -1,3 +1,5 @@
 <template>
-  <h1>This is an about page</h1>
+  <v-layout column align-center>
+    <p>About page</p>
+  </v-layout>
 </template>
