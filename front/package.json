@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "serve:prod": "npm run build & serve -s dist",
+    "serve:prod": "serve -s -l 8080 dist",
+    "prod": "npm run build & npm run serve:prod",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e"
