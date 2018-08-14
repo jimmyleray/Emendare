@@ -45,7 +45,7 @@ jobs:
       # Run unit tests
       - run:
           name: unit tests
-          command: ng test --watch false
+          command: npx ng test --watch false
 
       # Run e2e tests
       - run:
