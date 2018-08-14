@@ -27,16 +27,27 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: npm install
+      # Install npm dependencies
+      - run:
+          name: install
+          command: npm install
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-        # run lint!
-      - run: npm run lint
+      # Run lint analysis
+      - run:
+          name: lint
+          command: npm run lint
 
-      # run tests!
-      - run: npm run test-ci
-      - run: npm run e2e
+      # Run unit tests
+      - run:
+          name: unit tests
+          command: ng test --watch false
+
+      # Run e2e tests
+      - run:
+          name: e2e tests
+          command: npm run e2e
