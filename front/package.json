@@ -7,6 +7,8 @@
     "start": "serve -s -l 8080 dist/front",
     "build": "ng build",
     "test": "ng test",
+    "test-ci": "ng test --code-coverage --watch=false --progress=false",
+    "codecov": "codecov -t 187fc664-9fb9-4a79-9064-c7e6d96fc023",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -33,6 +35,7 @@
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
+    "codecov": "^3.0.4",
     "codelyzer": "~4.2.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",

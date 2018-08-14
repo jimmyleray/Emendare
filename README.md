@@ -1,6 +1,7 @@
 # Emendare
 
 [![CircleCI](https://circleci.com/gh/JimmyLeray/Emendare.svg?style=svg)](https://circleci.com/gh/JimmyLeray/Emendare)
+[![Codecov](https://codecov.io/gh/JimmyLeray/Emendare/branch/master/graph/badge.svg)](https://codecov.io/gh/JimmyLeray/Emendare)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0a1f29651edb493ba197fd794d4bc5d4)](https://www.codacy.com/app/jimmy.leray/Emendare?utm_source=github.com&utm_medium=referral&utm_content=JimmyLeray/Emendare&utm_campaign=Badge_Grade)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/JimmyLeray/Emendare/issues)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
