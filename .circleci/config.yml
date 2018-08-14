@@ -45,9 +45,9 @@ jobs:
       # Run unit tests
       - run:
           name: unit tests
-          command: npx ng test --single-run --no-progress
+          command: npx ng test --watch=false --progress=false
 
       # Run e2e tests
       - run:
           name: e2e tests
-          command: npm run e2e --no-progress
+          command: npm run e2e
