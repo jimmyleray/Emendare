@@ -7,7 +7,7 @@
     "start": "serve -s -l 8080 dist/front",
     "build": "ng build",
     "test": "ng test",
-    "test-ci": "ng test --watch=false",
+    "test-ci": "ng test --watch=false --progress=false",
     "codecov": "codecov -t 187fc664-9fb9-4a79-9064-c7e6d96fc023",
     "lint": "ng lint",
     "e2e": "ng e2e"
