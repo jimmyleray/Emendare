@@ -7,3 +7,11 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 Open source digital parliament with community and democratic management of amendable texts
+
+## Roadmap
+
+- Users authentification
+- Create and manage groups
+- Create a new text in editor
+- Propose an amendment
+- Vote on amendments
