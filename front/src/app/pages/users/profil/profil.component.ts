@@ -1,17 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-
-// @ngrx
 import { Store } from "@ngrx/store";
-
-// rxjs
 import { Observable } from "rxjs";
-
-// getters
 import { getAuthenticatedUser } from "src/app/store/getters";
 import { AppState } from "src/app/store/app.state";
-
-// models
 import { User } from "src/app/models";
 
 /**
@@ -46,6 +38,6 @@ export class ProfilComponent implements OnInit {
    * @method signOut
    */
   public signOut() {
-    this.router.navigate(["/users/sign-out"]);
+    this.router.navigate(["/sign-out"]);
   }
 }

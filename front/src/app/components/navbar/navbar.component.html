@@ -3,12 +3,12 @@
     <a mat-button routerLink="/">{{ title }}</a>
     <div fxFlex></div>
     <div *ngIf="!(isAuthenticated | async)">
-      <a mat-button routerLink="/users/sign-up">Register</a>
-      <a mat-button routerLink="/users/sign-in">Sign in</a>
+      <a mat-button routerLink="/sign-up">Register</a>
+      <a mat-button routerLink="/sign-in">Sign in</a>
     </div>
     <div *ngIf="isAuthenticated | async">
-      <a mat-button routerLink="/users/profil">Profil</a>
-      <a mat-button routerLink="/users/sign-out">Sign out</a>
+      <a mat-button routerLink="/profil">Profil</a>
+      <a mat-button routerLink="/sign-out">Sign out</a>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

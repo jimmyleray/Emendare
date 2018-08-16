@@ -1,23 +1,16 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-
-// @ngrx
 import { Store } from "@ngrx/store";
-
-// rxjs
 import { Observable, Subscription } from "rxjs";
-import { takeWhile, filter } from "rxjs/operators";
+import { filter } from "rxjs/operators";
 import { AuthenticateAction } from "src/app/store/actions";
-
-// reducers
+import { AppState } from "src/app/store/app.state";
 import {
   getAuthenticationError,
   isAuthenticated,
   isAuthenticationLoading
 } from "src/app/store/getters";
-
-import { AppState } from "src/app/store/app.state";
 
 /**
  * /users/sign-in
@@ -82,7 +75,7 @@ export class SignInComponent implements OnDestroy, OnInit {
       .select<boolean>(isAuthenticated)
       .pipe(filter(authenticated => authenticated))
       .subscribe(value => {
-        this.router.navigate(["/users/profil"]);
+        this.router.navigate(["/profil"]);
       });
   }
 

@@ -1,7 +1,4 @@
-// import actions
 import { Actions, ActionTypes } from "../actions";
-
-// import models
 import { User } from "src/app/models";
 
 /**

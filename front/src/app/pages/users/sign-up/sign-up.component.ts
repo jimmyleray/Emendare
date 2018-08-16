@@ -1,22 +1,12 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-
-// @ngrx
 import { Store } from "@ngrx/store";
-
-// rxjs
 import { Observable, Subscription } from "rxjs";
-import { takeWhile, filter } from "rxjs/operators";
+import { filter } from "rxjs/operators";
 import { AppState } from "src/app/store/app.state";
-
-// actions
 import { SignUpAction } from "src/app/store/actions";
-
-// models
 import { User } from "src/app/models";
-
-// getters
 import {
   getSignUpError,
   isAuthenticated,
@@ -86,12 +76,12 @@ export class SignUpComponent implements OnDestroy, OnInit {
       .select(isAuthenticated)
       .pipe(filter(authenticated => authenticated))
       .subscribe(value => {
-        this.router.navigate(["/users/profil"]);
+        this.router.navigate(["/profil"]);
       });
   }
 
   /**
-   *  Lifecycle hook that is called when a directive, pipe or service is destroyed.
+   * Lifecycle hook that is called when a directive, pipe or service is destroyed.
    * @method ngOnDestroy
    */
   public ngOnDestroy() {

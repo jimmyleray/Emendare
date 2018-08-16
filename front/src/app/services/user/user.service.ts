@@ -1,12 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Observable, of, throwError } from "rxjs";
-import { User } from "../../models/user";
+import { User } from "src/app/models/user";
 
 export const MOCK_USER = new User();
-MOCK_USER._id = "1";
 MOCK_USER.email = "foo@bar.com";
-MOCK_USER.firstName = "Foo";
-MOCK_USER.lastName = "Bar";
 MOCK_USER.password = "pass";
 
 @Injectable({
@@ -20,7 +17,6 @@ export class UserService {
 
   /**
    * Authenticate the user
-   *
    * @param {string} email The user's email address
    * @param {string} password The user's password
    * @returns {Observable<User>} The authenticated user observable.
