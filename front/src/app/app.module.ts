@@ -45,7 +45,9 @@ const modules = [
 
 // components
 import { AppComponent } from "./layouts";
+
 import { NavbarComponent, ProgressRouterComponent } from "./components";
+
 import {
   HomeComponent,
   ErrorComponent,

@@ -1,3 +1,6 @@
-<h1 fxFlex.xs="80%" fxFlex.sm="70%" fxFlex.md="60%" fxFlex.lg="50%" fxFlex.xl="40%" fxLayoutAlign="center center" class="mat-display-1">
-  {{ "HOME_MESSAGE" | translate }}
-</h1>
+<div fxLayout="column">
+  <h1 fxLayoutAlign="center center" class="mat-display-1">
+    {{ "HOME_MESSAGE" | translate }}
+  </h1>
+  <markdown fxFlex [src]="'https://raw.githubusercontent.com/JimmyLeray/Emendare/master/README.md'"></markdown>
+</div>
