@@ -1,26 +1,25 @@
 <div fxFlex fxLayoutAlign="center center">
   <div fxFlex.xs="100%" fxFlex.sm="60%" fxFlex.md="40%" fxFlex.lg="30%" fxFlex.xl="25%">
     <mat-card class="mat-elevation-z0">
-      <mat-card-title *ngIf="!(loading | async)">Sign In</mat-card-title>
+      <mat-card-title>{{ 'LOG_IN' | translate }}</mat-card-title>
       <mat-card-content>
         <div *ngIf="error | async">{{ error | async }}</div>
-        <form *ngIf="!(loading | async)" (ngSubmit)="submit()" [formGroup]="form" novalidate>
+        <form (ngSubmit)="submit()" [formGroup]="signinForm" novalidate>
           <div fxLayout="column">
             <mat-form-field fxFlex="100%">
-              <input matInput required email type="email" placeholder="Email Address" formControlName="email" [class.invalid]="form.controls.email.errors && form.controls.email.dirty">
+              <input matInput required email type="email" [placeholder]="'EMAIL' | translate" formControlName="email" [class.invalid]="signinForm.controls.email.errors && signinForm.controls.email.dirty">
             </mat-form-field>
             <mat-form-field fxFlex="100%">
-              <input matInput required type="password" placeholder="Password" formControlName="password" [class.invalid]="form.controls.password.errors && form.controls.password.dirty">
+              <input matInput required type="password" [placeholder]="'PASSWORD' | translate" formControlName="password" [class.invalid]="signinForm.controls.password.errors && signinForm.controls.password.dirty">
             </mat-form-field>
             <div>
-              <button fxFlex mat-flat-button color="primary" type="submit">Sign In</button>
-              <a fxFlex mat-button routerLink="/sign-up">Register</a>
+              <button fxFlex mat-flat-button color="primary" [disabled]="signinForm.invalid" type="submit">
+                {{ 'LOG_IN' | translate }}
+              </button>
+              <a fxFlex mat-button routerLink="/sign-up">{{ 'CREATE_ACCOUNT' | translate }}</a>
             </div>
           </div>
         </form>
-        <div *ngIf="loading | async" fxLayout="row" fxLayoutAlign="center">
-          <mat-spinner></mat-spinner>
-        </div>
       </mat-card-content>
     </mat-card>
   </div>

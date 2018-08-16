@@ -15,9 +15,6 @@ export interface UserState {
   // true if we have attempted existing auth session
   loaded: boolean;
 
-  // true when loading
-  loading: boolean;
-
   // the authenticated user
   user?: User;
 }
@@ -27,8 +24,7 @@ export interface UserState {
  */
 const initialState: UserState = {
   authenticated: false,
-  loaded: false,
-  loading: false
+  loaded: false
 };
 
 /**
@@ -43,10 +39,7 @@ export function usersReducer(
 ): UserState {
   switch (action.type) {
     case ActionTypes.AUTHENTICATE:
-      return {
-        ...state,
-        loading: true
-      };
+      return state;
 
     case ActionTypes.AUTHENTICATED_ERROR:
       return {
@@ -69,8 +62,7 @@ export function usersReducer(
       return {
         ...state,
         authenticated: false,
-        error: action.payload.error.message,
-        loading: false
+        error: action.payload.error.message
       };
 
     case ActionTypes.AUTHENTICATE_SUCCESS:
@@ -86,7 +78,6 @@ export function usersReducer(
         ...state,
         authenticated: true,
         error: undefined,
-        loading: false,
         user: user
       };
 
@@ -110,8 +101,7 @@ export function usersReducer(
       return {
         ...state,
         authenticated: false,
-        error: undefined,
-        loading: true
+        error: undefined
       };
 
     default:

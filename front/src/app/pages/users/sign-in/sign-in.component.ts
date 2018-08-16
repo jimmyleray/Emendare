@@ -6,11 +6,7 @@ import { Observable, Subscription } from "rxjs";
 import { filter } from "rxjs/operators";
 import { AuthenticateAction } from "src/app/store/actions";
 import { AppState } from "src/app/store/app.state";
-import {
-  getAuthenticationError,
-  isAuthenticated,
-  isAuthenticationLoading
-} from "src/app/store/getters";
+import { getAuthenticationError, isAuthenticated } from "src/app/store/getters";
 
 /**
  * /users/sign-in
@@ -28,16 +24,10 @@ export class SignInComponent implements OnDestroy, OnInit {
   public error: Observable<string>;
 
   /**
-   * True if the authentication is loading.
-   * @type {boolean}
-   */
-  public loading: Observable<boolean>;
-
-  /**
    * The authentication form.
    * @type {FormGroup}
    */
-  public form: FormGroup;
+  public signinForm: FormGroup;
 
   /**
    * Component subscription
@@ -62,13 +52,12 @@ export class SignInComponent implements OnDestroy, OnInit {
    */
   public ngOnInit() {
     // set formGroup
-    this.form = this.formBuilder.group({
+    this.signinForm = this.formBuilder.group({
       email: ["", Validators.required],
       password: ["", Validators.required]
     });
 
     this.error = this.store.select<string>(getAuthenticationError);
-    this.loading = this.store.select<boolean>(isAuthenticationLoading);
 
     // subscribe to success
     this.subscription = this.store
@@ -93,8 +82,8 @@ export class SignInComponent implements OnDestroy, OnInit {
    */
   public submit() {
     // get email and password values
-    const email: string = this.form.get("email").value.trim();
-    const password: string = this.form.get("password").value.trim();
+    const email: string = this.signinForm.get("email").value.trim();
+    const password: string = this.signinForm.get("password").value.trim();
 
     // dispatch AuthenticationAction and pass in payload
     this.store.dispatch(

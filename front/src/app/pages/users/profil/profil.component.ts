@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { getAuthenticatedUser } from "src/app/store/getters";
@@ -22,7 +21,7 @@ export class ProfilComponent implements OnInit {
   /**
    * @constructor
    */
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(private store: Store<AppState>) {}
 
   /**
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.
@@ -31,13 +30,5 @@ export class ProfilComponent implements OnInit {
   public ngOnInit() {
     // get authenticated user
     this.user = this.store.select<User>(getAuthenticatedUser);
-  }
-
-  /**
-   * Sign out.
-   * @method signOut
-   */
-  public signOut() {
-    this.router.navigate(["/sign-out"]);
   }
 }

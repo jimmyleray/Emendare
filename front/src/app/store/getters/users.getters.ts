@@ -17,14 +17,6 @@ export const isAuthenticated = (state: AppState) => state.users.authenticated;
 export const isAuthenticatedLoaded = (state: AppState) => state.users.loaded;
 
 /**
- * Returns true if the authentication is loading.
- * @function isAuthenticationLoading
- * @param {AppState} state
- * @returns {boolean}
- */
-export const isAuthenticationLoading = (state: AppState) => state.users.loading;
-
-/**
  * Return the users state
  * @function getAuthenticatedUser
  * @param {AppState} state
@@ -39,14 +31,6 @@ export const getAuthenticatedUser = (state: AppState) => state.users.user;
  * @returns {Error}
  */
 export const getAuthenticationError = (state: AppState) => state.users.error;
-
-/**
- * Returns true if request is in progress.
- * @function isLoading
- * @param {AppState} state
- * @returns {boolean}
- */
-export const isLoading = (state: AppState) => state.users.loading;
 
 /**
  * Returns the sign out error.

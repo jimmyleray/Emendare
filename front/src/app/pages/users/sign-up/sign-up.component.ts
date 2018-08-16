@@ -7,11 +7,7 @@ import { filter } from "rxjs/operators";
 import { AppState } from "src/app/store/app.state";
 import { SignUpAction } from "src/app/store/actions";
 import { User } from "src/app/models";
-import {
-  getSignUpError,
-  isAuthenticated,
-  isAuthenticationLoading
-} from "src/app/store/getters";
+import { getSignUpError, isAuthenticated } from "src/app/store/getters";
 
 /**
  * /users/sign-up
@@ -27,12 +23,6 @@ export class SignUpComponent implements OnDestroy, OnInit {
    * @type {Observable<string>}
    */
   public error: Observable<string>;
-
-  /**
-   * True if the authentication is loading.
-   * @type {boolean}
-   */
-  public loading: Observable<boolean>;
 
   /**
    * The authentication form.
@@ -69,7 +59,6 @@ export class SignUpComponent implements OnDestroy, OnInit {
     });
 
     this.error = this.store.select(getSignUpError);
-    this.loading = this.store.select(isAuthenticationLoading);
 
     // subscribe to success
     this.subscription = this.store

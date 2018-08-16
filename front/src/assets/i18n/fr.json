@@ -1,7 +1,14 @@
 {
+  "HOME": "Accueil",
   "HOME_MESSAGE": "Parlement numérique open source avec gestion communautaire et démocratique de textes amendables",
   "SETTINGS": "Paramètres",
   "SELECT_A_LANGUAGE": "Sélectionner une langue",
   "ENGLISH": "Anglais",
-  "FRENCH": "Français"
+  "FRENCH": "Français",
+  "PROFIL": "Profil",
+  "LOG_IN": "Connexion",
+  "LOG_OUT": "Deconnexion",
+  "CREATE_ACCOUNT": "Créer un compte",
+  "PASSWORD": "Mot de passe",
+  "EMAIL": "Adresse mail"
 }

@@ -1,4 +1,3 @@
-import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { SignOutAction } from "src/app/store/actions";
@@ -13,7 +12,7 @@ export class SignOutComponent implements OnInit {
    * @constructor
    * @param {Store<AppState>} store
    */
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(private store: Store<AppState>) {}
 
   /**
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.

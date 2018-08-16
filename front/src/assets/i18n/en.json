@@ -1,7 +1,14 @@
 {
+  "HOME": "Home",
   "HOME_MESSAGE": "Open source digital parliament with community and democratic management of amendable texts",
   "SETTINGS": "Settings",
   "SELECT_A_LANGUAGE": "Select a language",
   "ENGLISH": "English",
-  "FRENCH": "French"
+  "FRENCH": "French",
+  "PROFIL": "Profil",
+  "LOG_IN": "Log in",
+  "LOG_OUT": "Log out",
+  "CREATE_ACCOUNT": "Create an account",
+  "PASSWORD": "Password",
+  "EMAIL": "Email address"
 }
