@@ -6,4 +6,6 @@
   width: 980px;
   max-width: 100%;
   margin: auto;
+  height: calc(100% - 64px);
+  overflow: auto;
 }
