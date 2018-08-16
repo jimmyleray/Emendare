@@ -4,7 +4,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "ng": "ng",
-    "dev": "ng serve",
+    "dev": "ng serve --aot",
     "start": "serve -s -l 8080 dist/front",
     "build": "ng build --prod",
     "test": "ng test",
