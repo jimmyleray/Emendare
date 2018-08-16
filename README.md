@@ -1,4 +1,6 @@
-# [Emendare](https://github.com/JimmyLeray/Emendare)
+# Emendare
+
+[GitHub](https://github.com/JimmyLeray/Emendare)
 
 [![CircleCI](https://circleci.com/gh/JimmyLeray/Emendare.svg?style=svg)](https://circleci.com/gh/JimmyLeray/Emendare)
 [![Codecov](https://codecov.io/gh/JimmyLeray/Emendare/branch/master/graph/badge.svg)](https://codecov.io/gh/JimmyLeray/Emendare)
