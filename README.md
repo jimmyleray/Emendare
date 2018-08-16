@@ -16,4 +16,5 @@
 - Create a new text in editor
 - Propose an amendment
 - Vote on amendments
-- Internationalization
+- ~~Internationalization~~
+- Add translation labels
