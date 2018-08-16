@@ -10,6 +10,7 @@
 
 ## Roadmap
 
+- Submit a bug report
 - ~~Users authentification~~
 - Manage user account
 - Create and manage groups
