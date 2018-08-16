@@ -31,15 +31,14 @@ export class UserEffects {
   public authenticate: Observable<Action> = this.actions
     .ofType<AuthenticateAction>(ActionTypes.AUTHENTICATE)
     .pipe(
-      mergeMap(action => {
-        console.log(action);
-        return this.userService
+      mergeMap(action =>
+        this.userService
           .authenticate(action.payload.email, action.payload.password)
           .pipe(
             map(user => new AuthenticationSuccessAction({ user })),
             catchError(error => of(new AuthenticationErrorAction({ error })))
-          );
-      })
+          )
+      )
     );
 
   /**
