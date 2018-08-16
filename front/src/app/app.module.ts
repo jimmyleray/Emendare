@@ -8,6 +8,7 @@ import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { MarkdownModule } from "ngx-markdown";
 import { environment } from "../environments/environment"; // Angular CLI environemnt
 import { StoreRouterConnectingModule, routerReducer } from "@ngrx/router-store";
 import { usersReducer } from "./store/reducers";
@@ -51,7 +52,8 @@ import {
   ProfilComponent,
   SignInComponent,
   SignOutComponent,
-  SignUpComponent
+  SignUpComponent,
+  ReadmeComponent
 } from "./pages";
 
 const components = [
@@ -64,7 +66,8 @@ const components = [
   ProfilComponent,
   SignInComponent,
   SignOutComponent,
-  SignUpComponent
+  SignUpComponent,
+  ReadmeComponent
 ];
 
 // AoT requires an exported function for factories
@@ -82,6 +85,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MarkdownModule.forRoot({ loader: HttpClient }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

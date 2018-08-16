@@ -10,6 +10,10 @@ export const routes: Routes = [
     component: pages.HomeComponent
   },
   {
+    path: appRoutes.README,
+    component: pages.ReadmeComponent
+  },
+  {
     canActivate: [guards.AuthenticationGuard],
     path: appRoutes.PROFILE,
     component: pages.ProfilComponent

@@ -1,6 +1,7 @@
 export const appRoutes = {
   HOME: "",
-  PROFILE: "profiltrololol",
+  README: "readme",
+  PROFILE: "profil",
   SIGNIN: "sign-in",
   SIGNOUT: "sign-out",
   SIGNUP: "sign-up"
