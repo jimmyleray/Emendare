@@ -10,7 +10,7 @@ Open source digital parliament with community and democratic management of amend
 
 ## Roadmap
 
-- Users authentification
+- ~~Users authentification~~
 - Create and manage groups
 - Create a new text in editor
 - Propose an amendment

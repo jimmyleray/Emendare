@@ -9,6 +9,6 @@ describe("Emendare App", () => {
 
   it("should display app title", () => {
     page.navigateTo();
-    expect(page.getTitle()).toEqual("Emendare");
+    expect(page.getTitle()).toContain("Emendare");
   });
 });

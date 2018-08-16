@@ -1,0 +1,9 @@
+<div fxFlex fxLayoutAlign="center center">
+  <div fxFlex.xs="100%" fxFlex.sm="60%" fxFlex.md="40%" fxFlex.lg="30%" fxFlex.xl="25%">
+    <mat-card class="mat-elevation-z0">
+      <mat-card-content>
+        <p>Hello, {{ (user | async).email }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
