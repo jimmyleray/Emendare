@@ -5,7 +5,4 @@ import { Component } from "@angular/core";
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"]
 })
-export class HomeComponent {
-  public text =
-    "Open source digital parliament with community and democratic management of amendable texts";
-}
+export class HomeComponent {}
