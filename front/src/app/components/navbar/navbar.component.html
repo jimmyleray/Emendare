@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <a mat-button [routerLink]="routes.HOME" [title]="'HOME' | translate">{{ title }}</a>
+    <a id="app-title" mat-toolbar-title [routerLink]="routes.HOME" [title]="'HOME' | translate">{{ title }}</a>
     <div fxFlex></div>
     <div *ngIf="!(isAuthenticated | async)">
       <a mat-button [routerLink]="routes.SIGNIN">{{ "LOG_IN" | translate }}</a>
