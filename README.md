@@ -20,3 +20,4 @@
 - Vote on amendments
 - ~~Internationalization~~
 - Add translation labels
+- Upgrade tests coverage
