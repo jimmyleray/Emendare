@@ -6,7 +6,7 @@
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/JimmyLeray/Emendare/issues)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-Open source digital parliament with community and democratic management of amendable texts
+> Open source digital parliament with community and democratic management of amendable texts
 
 ## Roadmap
 
