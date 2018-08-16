@@ -5,7 +5,7 @@
     "ng": "ng",
     "dev": "ng serve",
     "start": "serve -s -l 8080 dist/front",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "test-ci": "ng test --watch=false --progress=false",
     "codecov": "codecov -t 187fc664-9fb9-4a79-9064-c7e6d96fc023",

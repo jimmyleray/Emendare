@@ -8,7 +8,7 @@ import { appAvailableLangs } from "src/app/config";
   styleUrls: ["./settings-menu.component.css"]
 })
 export class SettingsMenuComponent implements OnInit {
-  private availableLangs = appAvailableLangs;
+  public availableLangs = appAvailableLangs;
 
   constructor(public translate: TranslateService) {}
 
