@@ -12,6 +12,6 @@ body {
   background-color: #e9ebee;
 }
 
-app-markdown-preview blockquote {
+markdown blockquote {
   margin: 20px 0;
 }
