@@ -11,6 +11,7 @@
 ## Roadmap
 
 - Submit a bug report
+- ~~Easily follow the Readme~~
 - ~~Users authentification~~
 - Manage user account
 - Create and manage groups
