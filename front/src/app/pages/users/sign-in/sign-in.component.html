@@ -16,7 +16,7 @@
               <button fxFlex mat-flat-button color="primary" [disabled]="signinForm.invalid" type="submit">
                 {{ 'LOG_IN' | translate }}
               </button>
-              <a fxFlex mat-button routerLink="/sign-up">{{ 'CREATE_ACCOUNT' | translate }}</a>
+              <a fxFlex mat-button [routerLink]="routes.SIGNUP">{{ 'CREATE_ACCOUNT' | translate }}</a>
             </div>
           </div>
         </form>

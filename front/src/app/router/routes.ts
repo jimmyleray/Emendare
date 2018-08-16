@@ -1,28 +1,29 @@
+import { appRoutes } from "src/app/config";
 import { Routes } from "@angular/router";
 import * as pages from "src/app/pages";
 import * as guards from "src/app/guards";
 
 export const routes: Routes = [
   {
-    path: "",
+    path: appRoutes.HOME,
     pathMatch: "full",
     component: pages.HomeComponent
   },
   {
     canActivate: [guards.AuthenticationGuard],
-    path: "profil",
+    path: appRoutes.PROFILE,
     component: pages.ProfilComponent
   },
   {
-    path: "sign-in",
+    path: appRoutes.SIGNIN,
     component: pages.SignInComponent
   },
   {
-    path: "sign-out",
+    path: appRoutes.SIGNOUT,
     component: pages.SignOutComponent
   },
   {
-    path: "sign-up",
+    path: appRoutes.SIGNUP,
     component: pages.SignUpComponent
   },
   {

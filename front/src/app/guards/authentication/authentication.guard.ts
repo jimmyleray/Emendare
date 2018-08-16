@@ -1,3 +1,4 @@
+import { appRoutes } from "src/app/config";
 import { Injectable } from "@angular/core";
 import { CanActivate, Router } from "@angular/router";
 import { Observable } from "rxjs";
@@ -29,7 +30,7 @@ export class AuthenticationGuard implements CanActivate {
     // redirect to sign in page if user is not authenticated
     observable.subscribe(authenticated => {
       if (!authenticated) {
-        this.router.navigate(["/sign-in"]);
+        this.router.navigate([appRoutes.SIGNIN]);
       }
     });
 

@@ -1,3 +1,4 @@
+import { appRoutes } from "src/app/config";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -18,6 +19,8 @@ import { getSignUpError, isAuthenticated } from "src/app/store/getters";
   styleUrls: ["./sign-up.component.css"]
 })
 export class SignUpComponent implements OnDestroy, OnInit {
+  public routes = appRoutes;
+
   /**
    * The error if authentication fails.
    * @type {Observable<string>}
@@ -65,7 +68,7 @@ export class SignUpComponent implements OnDestroy, OnInit {
       .select(isAuthenticated)
       .pipe(filter(authenticated => authenticated))
       .subscribe(value => {
-        this.router.navigate(["/profil"]);
+        this.router.navigate([appRoutes.PROFILE]);
       });
   }
 

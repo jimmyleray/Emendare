@@ -1,3 +1,4 @@
+import { appErrors } from "src/app/config";
 import { Component } from "@angular/core";
 
 @Component({
@@ -6,5 +7,5 @@ import { Component } from "@angular/core";
   styleUrls: ["./error.component.css"]
 })
 export class ErrorComponent {
-  public error = "404 Not Found";
+  public errors = appErrors;
 }

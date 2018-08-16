@@ -9,14 +9,6 @@ import { AppState } from "../app.state";
 export const isAuthenticated = (state: AppState) => state.users.authenticated;
 
 /**
- * Returns true if the authenticated has loaded.
- * @function isAuthenticatedLoaded
- * @param {AppState} state
- * @returns {boolean}
- */
-export const isAuthenticatedLoaded = (state: AppState) => state.users.loaded;
-
-/**
  * Return the users state
  * @function getAuthenticatedUser
  * @param {AppState} state

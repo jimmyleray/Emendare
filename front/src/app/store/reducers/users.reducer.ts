@@ -12,9 +12,6 @@ export interface UserState {
   // error message
   error?: string;
 
-  // true if we have attempted existing auth session
-  loaded: boolean;
-
   // the authenticated user
   user?: User;
 }
@@ -23,8 +20,7 @@ export interface UserState {
  * The initial state.
  */
 const initialState: UserState = {
-  authenticated: false,
-  loaded: false
+  authenticated: false
 };
 
 /**
@@ -45,15 +41,13 @@ export function usersReducer(
       return {
         ...state,
         authenticated: false,
-        error: action.payload.error.message,
-        loaded: true
+        error: action.payload.error.message
       };
 
     case ActionTypes.AUTHENTICATED_SUCCESS:
       return {
         ...state,
         authenticated: action.payload.authenticated,
-        loaded: true,
         user: action.payload.user
       };
 

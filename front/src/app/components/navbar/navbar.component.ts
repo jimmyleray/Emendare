@@ -3,6 +3,7 @@ import { isAuthenticated } from "src/app/store/getters";
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
+import { appRoutes, appTitle } from "src/app/config";
 
 @Component({
   selector: "app-navbar",
@@ -10,7 +11,8 @@ import { Observable } from "rxjs";
   styleUrls: ["./navbar.component.css"]
 })
 export class NavbarComponent implements OnInit {
-  public title = "Emendare";
+  public routes = appRoutes;
+  public title = appTitle;
   public isAuthenticated: Observable<boolean>;
 
   ngOnInit(): void {

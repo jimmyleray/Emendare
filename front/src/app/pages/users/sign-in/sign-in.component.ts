@@ -1,3 +1,4 @@
+import { appRoutes } from "src/app/config";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -17,6 +18,8 @@ import { getAuthenticationError, isAuthenticated } from "src/app/store/getters";
   styleUrls: ["./sign-in.component.css"]
 })
 export class SignInComponent implements OnDestroy, OnInit {
+  public routes = appRoutes;
+
   /**
    * The error if authentication fails.
    * @type {Observable<string>}
@@ -64,7 +67,7 @@ export class SignInComponent implements OnDestroy, OnInit {
       .select<boolean>(isAuthenticated)
       .pipe(filter(authenticated => authenticated))
       .subscribe(value => {
-        this.router.navigate(["/profil"]);
+        this.router.navigate([appRoutes.PROFILE]);
       });
   }
 

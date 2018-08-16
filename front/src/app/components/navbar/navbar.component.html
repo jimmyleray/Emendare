@@ -1,18 +1,18 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <a mat-button routerLink="/" [title]="'HOME' | translate">{{ title }}</a>
+    <a mat-button [routerLink]="routes.HOME" [title]="'HOME' | translate">{{ title }}</a>
     <div fxFlex></div>
     <div *ngIf="!(isAuthenticated | async)">
-      <a mat-button routerLink="/sign-in">{{ "LOG_IN" | translate }}</a>
+      <a mat-button [routerLink]="routes.SIGNIN">{{ "LOG_IN" | translate }}</a>
     </div>
     <button *ngIf="isAuthenticated | async" mat-icon-button [matMenuTriggerFor]="profilMenu" [title]="'PROFIL' | translate">
       <mat-icon>supervised_user_circle</mat-icon>
     </button>
     <mat-menu #profilMenu="matMenu">
-      <a mat-menu-item routerLink="/profil">
+      <a mat-menu-item [routerLink]="routes.PROFILE">
         {{ "PROFIL" | translate }}
       </a>
-      <a mat-menu-item routerLink="/sign-out">{{ "LOG_OUT" | translate }}</a>
+      <a mat-menu-item [routerLink]="routes.SIGNOUT">{{ "LOG_OUT" | translate }}</a>
     </mat-menu>
     <app-settings-menu></app-settings-menu>
   </mat-toolbar-row>
