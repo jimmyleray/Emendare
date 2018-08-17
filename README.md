@@ -23,3 +23,5 @@
 - ~~Internationalization~~
 - Add translation labels
 - Upgrade tests coverage
+- Explore texts and groups
+- Search feature
