@@ -1,19 +1,19 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
   <mat-toolbar-row>
     <mat-icon>keyboard_arrow_right</mat-icon>
-    <a id="app-title" mat-toolbar-title [routerLink]="routes.HOME" [title]="'HOME' | translate">{{ title }}</a>
+    <a id="app-title" mat-toolbar-title [routerLink]="[routes.HOME]" [title]="'HOME' | translate">{{ title }}</a>
     <div fxFlex></div>
     <div *ngIf="!(isAuthenticated | async)">
-      <a mat-button [routerLink]="routes.SIGNIN">{{ "LOG_IN" | translate }}</a>
+      <a mat-button [routerLink]="['/', routes.SIGNIN]">{{ "LOG_IN" | translate }}</a>
     </div>
     <button *ngIf="isAuthenticated | async" mat-icon-button [matMenuTriggerFor]="profilMenu" [title]="'PROFIL' | translate">
       <mat-icon>supervised_user_circle</mat-icon>
     </button>
     <mat-menu #profilMenu="matMenu">
-      <a mat-menu-item [routerLink]="routes.PROFILE">
+      <a mat-menu-item [routerLink]="['/', routes.PROFILE]">
         {{ "PROFIL" | translate }}
       </a>
-      <a mat-menu-item [routerLink]="routes.SIGNOUT">{{ "LOG_OUT" | translate }}</a>
+      <a mat-menu-item [routerLink]="['/', routes.SIGNOUT]">{{ "LOG_OUT" | translate }}</a>
     </mat-menu>
     <app-settings-menu></app-settings-menu>
   </mat-toolbar-row>
