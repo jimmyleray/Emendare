@@ -2,10 +2,13 @@
   height: 100%;
 }
 
+#page-wrapper {
+  height: calc(100% - 64px);
+  overflow: auto;
+}
+
 #page-content {
   width: 980px;
   max-width: 100%;
   margin: auto;
-  height: calc(100% - 64px);
-  overflow: auto;
 }
