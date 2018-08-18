@@ -1,6 +1,20 @@
 {
   "HOME": "Home",
-  "HOME_MESSAGE": "Open source digital parliament with community and democratic management of amendable texts",
+  "HOME_TITLE": "The Digital Parliament",
+  "HOME_SUBTITLE": "Open source platform with advanced and democratic community management of amendable texts",
+  "HOME_DESCRIPTION": "An amendment is a proposal, submitted to the vote of a meeting, to correct, complete or cancel all or part of a draft text",
+  "FEATURES_EDITOR": "Advanced Editor of Amendments",
+  "FEATURES_EDITOR_DESC": "Users can propose changes to public texts or these or their organizations",
+  "FEATURES_GROUPS": "Management of think tanks",
+  "FEATURES_GROUPS_DESC": "Organizations can manage finely and collectively their own rules of administration",
+  "FEATURES_VOTES": "Organization of the votes",
+  "FEATURES_VOTES_DESC": "The votes on the proposals of the users are organized automatically",
+  "USE_CASES_COMPANY": "Enterprises & cooperatives",
+  "USE_CASES_COMPANY_DESC": "Horizontally write texts related to your professional activities",
+  "USE_CASES_POLITICS": "Political parties & unions",
+  "USE_CASES_POLITICS_DESC": "Write your political programs and your demands",
+  "USE_CASES_GROUPS": "Groups & associations",
+  "USE_CASES_GROUPS_DESC": "Collectively write your reports of discussions or your petitions",
   "SETTINGS": "Settings",
   "SELECT_A_LANGUAGE": "Select a language",
   "ENGLISH": "English",
@@ -14,5 +28,7 @@
   "ISSUES": "Report an issue",
   "DOCUMENTATION": "Documentation",
   "README": "Readme",
-  "REPOSITORY": "GitHub"
+  "REPOSITORY": "GitHub",
+  "FEATURES": "Features",
+  "USE_CASES": "Use cases"
 }

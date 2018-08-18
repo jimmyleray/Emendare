@@ -1,6 +1,20 @@
 {
   "HOME": "Accueil",
-  "HOME_MESSAGE": "Parlement numérique open source avec gestion communautaire et démocratique de textes amendables",
+  "HOME_TITLE": "Le Parlement numérique",
+  "HOME_SUBTITLE": "Plateforme open source avec une gestion communautaire avancée et démocratique de textes amendables",
+  "HOME_DESCRIPTION": "Un amendement est une modification, soumise au vote d'une assemblée, en vue de corriger, compléter ou annuler tout ou une partie d'un projet de texte",
+  "FEATURES_EDITOR": "Editeur avancé d'amendements",
+  "FEATURES_EDITOR_DESC": "Les utilisateurs peuvent proposer des modifications sur les textes publics ou de leurs organisations",
+  "FEATURES_GROUPS": "Gestion de groupes de réflexion",
+  "FEATURES_GROUPS_DESC": "Les organisations peuvent gérer finement et collectivement leurs propres règles d'administration",
+  "FEATURES_VOTES": "Organisation des votes",
+  "FEATURES_VOTES_DESC": "Les votes sur les propositions des utilisateurs sont organisés automatiquement",
+  "USE_CASES_COMPANY": "Entreprises & coopératives",
+  "USE_CASES_COMPANY_DESC": "Rédiger horizontalement des textes liés à vos activités professionnelles",
+  "USE_CASES_POLITICS": "Partis politiques & syndicats",
+  "USE_CASES_POLITICS_DESC": "Rédiger vos programmes politiques et vos revendications",
+  "USE_CASES_GROUPS": "Groupes & associations",
+  "USE_CASES_GROUPS_DESC": "Rédiger collectivement vos rapports de discussions ou vos pétitions",
   "SETTINGS": "Paramètres",
   "SELECT_A_LANGUAGE": "Sélectionner une langue",
   "ENGLISH": "Anglais",
@@ -14,5 +28,7 @@
   "ISSUES": "Rapporter un bug",
   "DOCUMENTATION": "Documentation",
   "README": "Readme",
-  "REPOSITORY": "GitHub"
+  "REPOSITORY": "GitHub",
+  "FEATURES": "Fonctionnalités",
+  "USE_CASES": "Cas d'utilisation"
 }

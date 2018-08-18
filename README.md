@@ -14,7 +14,7 @@
 - ~~Submit an issue link~~
 - ~~Easily follow the Readme~~
 - ~~Users authentification~~
-- User friendly Home page
+- ~~User friendly Home page~~
 - Manage user account
 - Create and manage groups
 - Create a new text in editor

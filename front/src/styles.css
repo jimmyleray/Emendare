@@ -12,3 +12,11 @@ body {
   height: 100%;
   background-color: #e9ebee;
 }
+
+.center {
+  text-align: center;
+}
+
+.padding-10 {
+  padding: 10px;
+}
