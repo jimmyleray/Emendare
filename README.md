@@ -14,6 +14,7 @@
 - ~~Submit an issue link~~
 - ~~Easily follow the Readme~~
 - ~~Users authentification~~
+- User friendly Home page
 - Manage user account
 - Create and manage groups
 - Create a new text in editor
@@ -24,4 +25,4 @@
 - Upgrade tests coverage
 - Explore texts and groups
 - ~~Documentation feature~~
-- Search feature
+- Search bar feature
