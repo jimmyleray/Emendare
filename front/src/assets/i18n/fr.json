@@ -30,5 +30,8 @@
   "README": "Readme",
   "REPOSITORY": "GitHub",
   "FEATURES": "Fonctionnalités",
-  "USE_CASES": "Cas d'utilisation"
+  "USE_CASES": "Cas d'utilisation",
+  "DEVELOPERS": "Développeurs",
+  "ADD": "Ajouter / Créer",
+  "EXPLORE": "Explorer"
 }

@@ -7,5 +7,6 @@ export const appRoutes = {
   SIGNIN: "sign-in",
   SIGNOUT: "sign-out",
   SIGNUP: "sign-up",
-  README: "readme"
+  README: "readme",
+  EXPLORE: "explore"
 };

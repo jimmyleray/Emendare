@@ -18,6 +18,10 @@ import * as guards from "src/app/guards";
         component: pages.ReadmeComponent
       },
       {
+        path: appRoutes.EXPLORE,
+        component: pages.ExploreComponent
+      },
+      {
         canActivate: [guards.AuthenticationGuard],
         path: appRoutes.PROFILE,
         component: pages.ProfilComponent

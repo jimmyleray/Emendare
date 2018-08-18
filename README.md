@@ -25,4 +25,3 @@
 - Upgrade tests coverage
 - Explore texts and groups
 - ~~Documentation feature~~
-- Search bar feature

@@ -58,7 +58,8 @@ import {
   SignInComponent,
   SignOutComponent,
   SignUpComponent,
-  ReadmeComponent
+  ReadmeComponent,
+  ExploreComponent
 } from "./pages";
 
 /**
@@ -75,7 +76,8 @@ const components = [
   SignInComponent,
   SignOutComponent,
   SignUpComponent,
-  ReadmeComponent
+  ReadmeComponent,
+  ExploreComponent
 ];
 
 /**

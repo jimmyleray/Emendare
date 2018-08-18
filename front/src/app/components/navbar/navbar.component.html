@@ -5,19 +5,37 @@
       {{ appConfig.appTitle }}
     </a>
     <div fxFlex></div>
-    <div *ngIf="!(isAuthenticated | async)">
-      <a mat-button [routerLink]="['/', appRoutes.SIGNIN]">{{ "LOG_IN" | translate }}</a>
-    </div>
-    <button *ngIf="isAuthenticated | async" mat-icon-button [matMenuTriggerFor]="profilMenu" [title]="'PROFIL' | translate">
+    <button mat-icon-button [matMenuTriggerFor]="addMenu" [title]="'ADD' | translate">
+      <mat-icon>add</mat-icon>
+    </button>
+    <mat-menu #addMenu="matMenu">
+      <a mat-menu-item [routerLink]="['/', appRoutes.README]">
+        {{ "README" | translate }}
+      </a>
+    </mat-menu>
+    <a mat-icon-button [routerLink]="['/', appRoutes.EXPLORE]" [title]="'EXPLORE' | translate">
+      <mat-icon>search</mat-icon>
+    </a>
+    <button mat-icon-button [matMenuTriggerFor]="profilMenu" [title]="'PROFIL' | translate">
       <mat-icon>supervised_user_circle</mat-icon>
     </button>
     <mat-menu #profilMenu="matMenu">
-      <a mat-menu-item [routerLink]="['/', appRoutes.PROFILE]">
-        {{ "PROFIL" | translate }}
+      <a *ngIf="!(isAuthenticated | async)" mat-menu-item [routerLink]="['/', appRoutes.SIGNIN]">
+        {{ "LOG_IN" | translate }}
       </a>
-      <a mat-menu-item [routerLink]="['/', appRoutes.SIGNOUT]">{{ "LOG_OUT" | translate }}</a>
+      <div *ngIf="isAuthenticated | async">
+        <a mat-menu-item [routerLink]="['/', appRoutes.PROFILE]">
+          {{ "PROFIL" | translate }}
+        </a>
+        <a mat-menu-item [routerLink]="['/', appRoutes.SIGNOUT]">{{ "LOG_OUT" | translate }}</a>
+      </div>
     </mat-menu>
-    <button mat-icon-button [matMenuTriggerFor]="codeMenu" [title]="'DEVELOPPERS' | translate">
+    <div class="vertical-spacer"></div>
+    <app-settings-menu></app-settings-menu>
+    <a mat-icon-button [href]="appConfig.issuesPath" target="_blank" [title]="'ISSUES' | translate">
+      <mat-icon>bug_report</mat-icon>
+    </a>
+    <button mat-icon-button [matMenuTriggerFor]="codeMenu" [title]="'DEVELOPERS' | translate">
       <mat-icon>code</mat-icon>
     </button>
     <mat-menu #codeMenu="matMenu">
@@ -31,9 +49,5 @@
         {{ "REPOSITORY" | translate }}
       </a>
     </mat-menu>
-    <a mat-icon-button [href]="appConfig.issuesPath" target="_blank" [title]="'ISSUES' | translate">
-      <mat-icon>bug_report</mat-icon>
-    </a>
-    <app-settings-menu></app-settings-menu>
   </mat-toolbar-row>
 </mat-toolbar>
