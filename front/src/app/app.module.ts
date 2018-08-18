@@ -93,7 +93,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [...components, AuthenticationGuard],
+  declarations: components,
   imports: [
     ...modules,
     RoutingModule,
@@ -124,7 +124,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     EffectsModule.forRoot([UserEffects])
   ],
-  providers: [UserService],
+  providers: [UserService, AuthenticationGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
