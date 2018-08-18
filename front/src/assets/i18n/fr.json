@@ -4,7 +4,7 @@
   "HOME_SUBTITLE": "Plateforme open source avec une gestion communautaire avancée et démocratique de textes amendables",
   "HOME_DESCRIPTION": "Un amendement est une modification, soumise au vote d'une assemblée, en vue de corriger, compléter ou annuler tout ou une partie d'un projet de texte",
   "FEATURES_EDITOR": "Editeur avancé d'amendements",
-  "FEATURES_EDITOR_DESC": "Les utilisateurs peuvent proposer des modifications sur les textes publics ou de leurs organisations",
+  "FEATURES_EDITOR_DESC": "Les utilisateurs peuvent proposer des modifications sur les textes publics ou ceux de leurs organisations",
   "FEATURES_GROUPS": "Gestion de groupes de réflexion",
   "FEATURES_GROUPS_DESC": "Les organisations peuvent gérer finement et collectivement leurs propres règles d'administration",
   "FEATURES_VOTES": "Organisation des votes",
