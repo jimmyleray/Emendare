@@ -3,5 +3,6 @@ export const appRoutes = {
   PROFILE: "profil",
   SIGNIN: "sign-in",
   SIGNOUT: "sign-out",
-  SIGNUP: "sign-up"
+  SIGNUP: "sign-up",
+  README: "readme"
 };

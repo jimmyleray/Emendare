@@ -12,5 +12,7 @@
   "PASSWORD": "Mot de passe",
   "EMAIL": "Adresse mail",
   "ISSUES": "Rapporter un bug",
-  "DOCUMENTATION": "Documentation"
+  "DOCUMENTATION": "Documentation",
+  "README": "Readme",
+  "REPOSITORY": "GitHub"
 }

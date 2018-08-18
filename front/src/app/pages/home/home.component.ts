@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { readmePath } from "src/app/config";
+import { appConfig } from "src/app/config";
 
 @Component({
   selector: "app-home",
@@ -7,5 +7,5 @@ import { readmePath } from "src/app/config";
   styleUrls: ["./home.component.css"]
 })
 export class HomeComponent {
-  public readmePath = readmePath;
+  public appConfig = appConfig;
 }

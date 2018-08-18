@@ -54,7 +54,8 @@ import {
   ProfilComponent,
   SignInComponent,
   SignOutComponent,
-  SignUpComponent
+  SignUpComponent,
+  ReadmeComponent
 } from "./pages";
 
 const components = [
@@ -67,7 +68,8 @@ const components = [
   ProfilComponent,
   SignInComponent,
   SignOutComponent,
-  SignUpComponent
+  SignUpComponent,
+  ReadmeComponent
 ];
 
 // AoT requires an exported function for factories

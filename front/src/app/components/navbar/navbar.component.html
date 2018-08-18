@@ -1,24 +1,36 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
   <mat-toolbar-row>
     <mat-icon>keyboard_arrow_right</mat-icon>
-    <a id="app-title" mat-toolbar-title [routerLink]="[routes.HOME]" [title]="'HOME' | translate">{{ title }}</a>
+    <a id="app-title" mat-toolbar-title [routerLink]="[appRoutes.HOME]" [title]="'HOME' | translate">{{ appConfig.appTitle
+      }}</a>
     <div fxFlex></div>
     <div *ngIf="!(isAuthenticated | async)">
-      <a mat-button [routerLink]="['/', routes.SIGNIN]">{{ "LOG_IN" | translate }}</a>
+      <a mat-button [routerLink]="['/', appRoutes.SIGNIN]">{{ "LOG_IN" | translate }}</a>
     </div>
     <button *ngIf="isAuthenticated | async" mat-icon-button [matMenuTriggerFor]="profilMenu" [title]="'PROFIL' | translate">
       <mat-icon>supervised_user_circle</mat-icon>
     </button>
     <mat-menu #profilMenu="matMenu">
-      <a mat-menu-item [routerLink]="['/', routes.PROFILE]">
+      <a mat-menu-item [routerLink]="['/', appRoutes.PROFILE]">
         {{ "PROFIL" | translate }}
       </a>
-      <a mat-menu-item [routerLink]="['/', routes.SIGNOUT]">{{ "LOG_OUT" | translate }}</a>
+      <a mat-menu-item [routerLink]="['/', appRoutes.SIGNOUT]">{{ "LOG_OUT" | translate }}</a>
     </mat-menu>
-    <a mat-icon-button [href]="documentationPath" [title]="'DOCUMENTATION' | translate">
+    <button mat-icon-button [matMenuTriggerFor]="codeMenu" [title]="'DEVELOPPERS' | translate">
       <mat-icon>code</mat-icon>
-    </a>
-    <a mat-icon-button [href]="issuesPath" [title]="'ISSUES' | translate">
+    </button>
+    <mat-menu #codeMenu="matMenu">
+      <a mat-menu-item [routerLink]="['/', appRoutes.README]">
+        {{ "README" | translate }}
+      </a>
+      <a mat-menu-item [href]="appConfig.documentationPath">
+        {{ "DOCUMENTATION" | translate }}
+      </a>
+      <a mat-menu-item [href]="appConfig.repositoryPath">
+        {{ "REPOSITORY" | translate }}
+      </a>
+    </mat-menu>
+    <a mat-icon-button [href]="appConfig.issuesPath" [title]="'ISSUES' | translate">
       <mat-icon>bug_report</mat-icon>
     </a>
     <app-settings-menu></app-settings-menu>

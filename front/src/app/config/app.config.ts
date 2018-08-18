@@ -1,6 +1,8 @@
-export const appTitle = "Emendare";
-export const readmePath =
-  "https://raw.githubusercontent.com/JimmyLeray/Emendare/master/README.md";
-export const issuesPath = "https://github.com/JimmyLeray/Emendare/issues";
-export const documentationPath =
-  "https://emendare-documentation.cleverapps.io/";
+export const appConfig = {
+  appTitle: "Emendare",
+  readmePath:
+    "https://raw.githubusercontent.com/JimmyLeray/Emendare/master/README.md",
+  issuesPath: "https://github.com/JimmyLeray/Emendare/issues",
+  documentationPath: "https://emendare-documentation.cleverapps.io/",
+  repositoryPath: "https://github.com/JimmyLeray/Emendare"
+};
