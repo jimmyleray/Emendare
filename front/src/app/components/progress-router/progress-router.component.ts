@@ -28,7 +28,7 @@ export class ProgressRouterComponent implements OnInit, OnDestroy {
   public loading = false;
 
   /**
-   * @constructor
+   * @constructor Constructor function
    * @param {Router} router Angular router service
    */
   constructor(private router: Router) {}

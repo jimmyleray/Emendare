@@ -6,13 +6,19 @@ import { User } from "src/app/models";
  * @interface UserState
  */
 export interface UserState {
-  // boolean if user is authenticated
+  /**
+   * Boolean if user is authenticated
+   */
   authenticated: boolean;
 
-  // error message
+  /**
+   * Optionnal error message
+   */
   error?: string;
 
-  // the authenticated user
+  /**
+   * The optionnal authenticated user
+   */
   user?: User;
 }
 

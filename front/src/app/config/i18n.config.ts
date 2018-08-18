@@ -2,8 +2,19 @@
  * Interface to describe a language
  */
 interface Lang {
+  /**
+   * Two letters described language
+   */
   id: string;
+
+  /**
+   * I18n key described language
+   */
   name: string;
+
+  /**
+   * True if it is the default language
+   */
   default?: boolean;
 }
 

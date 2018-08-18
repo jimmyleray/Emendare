@@ -12,8 +12,8 @@ import { AppState } from "src/app/store/app.state";
 })
 export class SignOutComponent implements OnInit {
   /**
-   * @constructor
-   * @param {Store<AppState>} store
+   * @constructor Constructor function
+   * @param {Store<AppState>} store Ngrx store service
    */
   constructor(private store: Store<AppState>) {}
 

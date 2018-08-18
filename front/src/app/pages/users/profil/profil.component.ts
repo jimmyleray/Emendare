@@ -21,7 +21,7 @@ export class ProfilComponent implements OnInit {
   public user: Observable<User>;
 
   /**
-   * @constructor
+   * @constructor Constructor function
    * @param {Store<AppState>} store Ngrx store service
    */
   constructor(private store: Store<AppState>) {}

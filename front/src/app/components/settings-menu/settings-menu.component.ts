@@ -17,7 +17,7 @@ export class SettingsMenuComponent implements OnInit {
   public availableLangs = appAvailableLangs;
 
   /**
-   * @constructor
+   * @constructor Constructor function
    * @param translate Translation service
    */
   constructor(public translate: TranslateService) {}

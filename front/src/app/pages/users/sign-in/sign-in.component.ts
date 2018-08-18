@@ -42,7 +42,7 @@ export class SignInComponent implements OnDestroy, OnInit {
   private subscription: Subscription;
 
   /**
-   * @constructor
+   * @constructor Constructor function
    * @param {FormBuilder} formBuilder Angular forms builder
    * @param {Store<AppState>} store Ngrx store service
    * @param {Router} router Angular Router service

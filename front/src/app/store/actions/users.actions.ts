@@ -4,6 +4,9 @@ import { Action } from "@ngrx/store";
 // import models
 import { User } from "src/app/models";
 
+/**
+ * List all available users actions
+ */
 export const ActionTypes = {
   AUTHENTICATE: "[users] Authenticate",
   AUTHENTICATE_ERROR: "[users] Authentication error",
@@ -25,6 +28,9 @@ export const ActionTypes = {
  * @implements {Action} Ngrx action interface
  */
 export class AuthenticateAction implements Action {
+  /**
+   * Type of the action
+   */
   public type: string = ActionTypes.AUTHENTICATE;
   constructor(public payload: { email: string; password: string }) {}
 }
@@ -35,7 +41,15 @@ export class AuthenticateAction implements Action {
  * @implements {Action} Ngrx action interface
  */
 export class AuthenticatedAction implements Action {
+  /**
+   * Type of the action
+   */
   public type: string = ActionTypes.AUTHENTICATED;
+
+  /**
+   * Constructor function
+   * @param payload Payload typings
+   */
   constructor(public payload?: { token?: string }) {}
 }
 
@@ -45,7 +59,15 @@ export class AuthenticatedAction implements Action {
  * @implements {Action} Ngrx action interface
  */
 export class AuthenticatedSuccessAction implements Action {
+  /**
+   * Type of the action
+   */
   public type: string = ActionTypes.AUTHENTICATED_SUCCESS;
+
+  /**
+   * Constructor function
+   * @param payload Payload typings
+   */
   constructor(public payload: { authenticated: boolean; user: User }) {}
 }
 
@@ -55,7 +77,15 @@ export class AuthenticatedSuccessAction implements Action {
  * @implements {Action} Ngrx action interface
  */
 export class AuthenticatedErrorAction implements Action {
+  /**
+   * Type of the action
+   */
   public type: string = ActionTypes.AUTHENTICATED_ERROR;
+
+  /**
+   * Constructor function
+   * @param payload Payload typings
+   */
   constructor(public payload?: any) {}
 }
 
@@ -65,7 +95,15 @@ export class AuthenticatedErrorAction implements Action {
  * @implements {Action} Ngrx action interface
  */
 export class AuthenticationErrorAction implements Action {
+  /**
+   * Type of the action
+   */
   public type: string = ActionTypes.AUTHENTICATE_ERROR;
+
+  /**
+   * Constructor function
+   * @param payload Payload typings
+   */
   constructor(public payload?: any) {}
 }
 
@@ -75,7 +113,15 @@ export class AuthenticationErrorAction implements Action {
  * @implements {Action} Ngrx action interface
  */
 export class AuthenticationSuccessAction implements Action {
+  /**
+   * Type of the action
+   */
   public type: string = ActionTypes.AUTHENTICATE_SUCCESS;
+
+  /**
+   * Constructor function
+   * @param payload Payload typings
+   */
   constructor(public payload: { user: User }) {}
 }
 
@@ -85,7 +131,15 @@ export class AuthenticationSuccessAction implements Action {
  * @implements {Action} Ngrx action interface
  */
 export class SignOutAction implements Action {
+  /**
+   * Type of the action
+   */
   public type: string = ActionTypes.SIGN_OUT;
+
+  /**
+   * Constructor function
+   * @param payload Payload typings
+   */
   constructor(public payload?: any) {}
 }
 
@@ -95,7 +149,15 @@ export class SignOutAction implements Action {
  * @implements {Action} Ngrx action interface
  */
 export class SignOutErrorAction implements Action {
+  /**
+   * Type of the action
+   */
   public type: string = ActionTypes.SIGN_OUT_SUCCESS;
+
+  /**
+   * Constructor function
+   * @param payload Payload typings
+   */
   constructor(public payload?: any) {}
 }
 
@@ -105,7 +167,15 @@ export class SignOutErrorAction implements Action {
  * @implements {Action} Ngrx action interface
  */
 export class SignOutSuccessAction implements Action {
+  /**
+   * Type of the action
+   */
   public type: string = ActionTypes.SIGN_OUT_SUCCESS;
+
+  /**
+   * Constructor function
+   * @param payload Payload typings
+   */
   constructor(public payload?: any) {}
 }
 
@@ -115,7 +185,15 @@ export class SignOutSuccessAction implements Action {
  * @implements {Action} Ngrx action interface
  */
 export class SignUpAction implements Action {
+  /**
+   * Type of the action
+   */
   public type: string = ActionTypes.SIGN_UP;
+
+  /**
+   * Constructor function
+   * @param payload Payload typings
+   */
   constructor(public payload: { user: User }) {}
 }
 
@@ -125,7 +203,15 @@ export class SignUpAction implements Action {
  * @implements {Action} Ngrx action interface
  */
 export class SignUpErrorAction implements Action {
+  /**
+   * Type of the action
+   */
   public type: string = ActionTypes.SIGN_UP_ERROR;
+
+  /**
+   * Constructor function
+   * @param payload Payload typings
+   */
   constructor(public payload?: any) {}
 }
 
@@ -135,7 +221,15 @@ export class SignUpErrorAction implements Action {
  * @implements {Action} Ngrx action interface
  */
 export class SignUpSuccessAction implements Action {
+  /**
+   * Type of the action
+   */
   public type: string = ActionTypes.SIGN_UP_SUCCESS;
+
+  /**
+   * Constructor function
+   * @param payload Payload typings
+   */
   constructor(public payload: { user: User }) {}
 }
 
