@@ -1,3 +1,6 @@
+/**
+ * Application configuration
+ */
 export const appConfig = {
   appTitle: "Emendare",
   readmePath:

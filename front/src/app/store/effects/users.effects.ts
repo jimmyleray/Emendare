@@ -94,8 +94,8 @@ export class UserEffects {
 
   /**
    * @constructor
-   * @param {Actions} actions
-   * @param {UserService} userService
+   * @param {Actions} actions Ngrx actions service
+   * @param {UserService} userService Users service management
    */
   constructor(private actions: Actions, private userService: UserService) {}
 }

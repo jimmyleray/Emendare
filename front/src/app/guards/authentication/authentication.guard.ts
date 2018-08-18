@@ -16,6 +16,8 @@ import { AppState } from "src/app/store/app.state";
 export class AuthenticationGuard implements CanActivate {
   /**
    * @constructor
+   * @param {Store<AppState>} store Ngrx store service
+   * @param {Router} router Angular Router service
    */
   constructor(private store: Store<AppState>, private router: Router) {}
 

@@ -2,10 +2,16 @@ import { Injectable } from "@angular/core";
 import { Observable, of, throwError } from "rxjs";
 import { User } from "src/app/models/user";
 
+/**
+ * A mocked user for test purposes
+ */
 export const MOCK_USER = new User();
 MOCK_USER.email = "foo@bar.com";
 MOCK_USER.password = "pass";
 
+/**
+ * User service
+ */
 @Injectable({
   providedIn: "root"
 })

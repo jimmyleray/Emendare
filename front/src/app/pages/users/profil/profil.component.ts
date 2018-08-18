@@ -15,11 +15,14 @@ import { User } from "src/app/models";
   styleUrls: ["./profil.component.css"]
 })
 export class ProfilComponent implements OnInit {
-  // the authenticated user
+  /**
+   * The authenticated user
+   */
   public user: Observable<User>;
 
   /**
    * @constructor
+   * @param {Store<AppState>} store Ngrx store service
    */
   constructor(private store: Store<AppState>) {}
 

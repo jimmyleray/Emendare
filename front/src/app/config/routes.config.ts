@@ -1,3 +1,6 @@
+/**
+ * List of route paths of the application
+ */
 export const appRoutes = {
   HOME: "",
   PROFILE: "profil",

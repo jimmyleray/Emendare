@@ -30,6 +30,9 @@ import {
   MatProgressBarModule
 } from "@angular/material";
 
+/**
+ * List of all imported Angular material modules
+ */
 const modules = [
   FlexLayoutModule,
   MatCardModule,
@@ -58,6 +61,9 @@ import {
   ReadmeComponent
 } from "./pages";
 
+/**
+ * List of all declared custom components
+ */
 const components = [
   AppComponent,
   NavbarComponent,
@@ -72,7 +78,11 @@ const components = [
   ReadmeComponent
 ];
 
-// AoT requires an exported function for factories
+/**
+ * A factory to lazy-load dynamically external i18n files
+ * AoT requires an exported function for factories
+ * @param http Http Angular service
+ */
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }

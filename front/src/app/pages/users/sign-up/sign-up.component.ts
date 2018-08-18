@@ -19,6 +19,9 @@ import { getSignUpError, isAuthenticated } from "src/app/store/getters";
   styleUrls: ["./sign-up.component.css"]
 })
 export class SignUpComponent implements OnDestroy, OnInit {
+  /**
+   * Route paths configuration
+   */
   public routes = appRoutes;
 
   /**
@@ -41,8 +44,9 @@ export class SignUpComponent implements OnDestroy, OnInit {
 
   /**
    * @constructor
-   * @param {FormBuilder} formBuilder
-   * @param {Store<AppState>} store
+   * @param {FormBuilder} formBuilder Angular forms builder
+   * @param {Store<AppState>} store Ngrx store service
+   * @param {Router} router Angular Router service
    */
   constructor(
     private formBuilder: FormBuilder,

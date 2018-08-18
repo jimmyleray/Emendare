@@ -22,7 +22,7 @@ export const ActionTypes = {
 /**
  * Authenticate.
  * @class AuthenticateAction
- * @implements {Action}
+ * @implements {Action} Ngrx action interface
  */
 export class AuthenticateAction implements Action {
   public type: string = ActionTypes.AUTHENTICATE;
@@ -32,7 +32,7 @@ export class AuthenticateAction implements Action {
 /**
  * Checks if user is authenticated.
  * @class AuthenticatedAction
- * @implements {Action}
+ * @implements {Action} Ngrx action interface
  */
 export class AuthenticatedAction implements Action {
   public type: string = ActionTypes.AUTHENTICATED;
@@ -42,7 +42,7 @@ export class AuthenticatedAction implements Action {
 /**
  * Authenticated check success.
  * @class AuthenticatedSuccessAction
- * @implements {Action}
+ * @implements {Action} Ngrx action interface
  */
 export class AuthenticatedSuccessAction implements Action {
   public type: string = ActionTypes.AUTHENTICATED_SUCCESS;
@@ -52,7 +52,7 @@ export class AuthenticatedSuccessAction implements Action {
 /**
  * Authenticated check error.
  * @class AuthenticatedErrorAction
- * @implements {Action}
+ * @implements {Action} Ngrx action interface
  */
 export class AuthenticatedErrorAction implements Action {
   public type: string = ActionTypes.AUTHENTICATED_ERROR;
@@ -62,7 +62,7 @@ export class AuthenticatedErrorAction implements Action {
 /**
  * Authentication error.
  * @class AuthenticationErrorAction
- * @implements {Action}
+ * @implements {Action} Ngrx action interface
  */
 export class AuthenticationErrorAction implements Action {
   public type: string = ActionTypes.AUTHENTICATE_ERROR;
@@ -72,7 +72,7 @@ export class AuthenticationErrorAction implements Action {
 /**
  * Authentication success.
  * @class AuthenticationSuccessAction
- * @implements {Action}
+ * @implements {Action} Ngrx action interface
  */
 export class AuthenticationSuccessAction implements Action {
   public type: string = ActionTypes.AUTHENTICATE_SUCCESS;
@@ -82,7 +82,7 @@ export class AuthenticationSuccessAction implements Action {
 /**
  * Sign out.
  * @class SignOutAction
- * @implements {Action}
+ * @implements {Action} Ngrx action interface
  */
 export class SignOutAction implements Action {
   public type: string = ActionTypes.SIGN_OUT;
@@ -92,7 +92,7 @@ export class SignOutAction implements Action {
 /**
  * Sign out error.
  * @class SignOutErrorAction
- * @implements {Action}
+ * @implements {Action} Ngrx action interface
  */
 export class SignOutErrorAction implements Action {
   public type: string = ActionTypes.SIGN_OUT_SUCCESS;
@@ -102,7 +102,7 @@ export class SignOutErrorAction implements Action {
 /**
  * Sign out success.
  * @class SignOutSuccessAction
- * @implements {Action}
+ * @implements {Action} Ngrx action interface
  */
 export class SignOutSuccessAction implements Action {
   public type: string = ActionTypes.SIGN_OUT_SUCCESS;
@@ -112,7 +112,7 @@ export class SignOutSuccessAction implements Action {
 /**
  * Sign up.
  * @class SignUpAction
- * @implements {Action}
+ * @implements {Action} Ngrx action interface
  */
 export class SignUpAction implements Action {
   public type: string = ActionTypes.SIGN_UP;
@@ -122,7 +122,7 @@ export class SignUpAction implements Action {
 /**
  * Sign up error.
  * @class SignUpErrorAction
- * @implements {Action}
+ * @implements {Action} Ngrx action interface
  */
 export class SignUpErrorAction implements Action {
   public type: string = ActionTypes.SIGN_UP_ERROR;
@@ -132,7 +132,7 @@ export class SignUpErrorAction implements Action {
 /**
  * Sign up success.
  * @class SignUpSuccessAction
- * @implements {Action}
+ * @implements {Action} Ngrx action interface
  */
 export class SignUpSuccessAction implements Action {
   public type: string = ActionTypes.SIGN_UP_SUCCESS;
@@ -141,7 +141,7 @@ export class SignUpSuccessAction implements Action {
 
 /**
  * Actions type.
- * @type {Actions}
+ * @type {Actions} Actions type
  */
 export type Actions =
   | AuthenticateAction

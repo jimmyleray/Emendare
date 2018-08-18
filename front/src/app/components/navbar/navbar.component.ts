@@ -5,19 +5,40 @@ import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 
+/**
+ * Main navbar component
+ */
 @Component({
   selector: "app-navbar",
   templateUrl: "./navbar.component.html",
   styleUrls: ["./navbar.component.css"]
 })
 export class NavbarComponent implements OnInit {
+  /**
+   * Application configuration
+   */
   public appConfig = appConfig;
+
+  /**
+   * Route paths configuration
+   */
   public appRoutes = appRoutes;
+
+  /**
+   * User authentification status
+   */
   public isAuthenticated: Observable<boolean>;
 
+  /**
+   * On Init hook to initiate user status
+   */
   ngOnInit(): void {
     this.isAuthenticated = this.store.select<boolean>(isAuthenticated);
   }
 
+  /**
+   * @constructor
+   * @param {Store<AppState>} store Ngrx store service
+   */
   constructor(private store: Store<AppState>) {}
 }
