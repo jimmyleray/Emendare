@@ -6,7 +6,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/JimmyLeray/Emendare/badge.svg?targetFile=front%2Fpackage.json)](https://snyk.io/test/github/JimmyLeray/Emendare?targetFile=front%2Fpackage.json)
 [![dependencies Status](https://david-dm.org/JimmyLeray/Emendare/status.svg?path=front)](https://david-dm.org/JimmyLeray/Emendare?path=front)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/JimmyLeray/Emendare/issues)
-[![Documentation coverage](https://emendare.cleverapps.io/assets/images/coverage-badge.svg)](https://emendare.cleverapps.io/assets/documentation/coverage.html)
+[![Documentation coverage](http://emendare-documentation.cleverapps.io/images/coverage-badge.svg)](http://emendare-documentation.cleverapps.io/coverage.html)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 > Open source digital parliament with community and democratic management of amendable texts

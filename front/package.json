@@ -10,7 +10,8 @@
     "test": "ng test",
     "test-ci": "ng test --watch=false --progress=false",
     "codecov": "codecov -t 187fc664-9fb9-4a79-9064-c7e6d96fc023",
-    "compodoc": "./node_modules/.bin/compodoc -p src/tsconfig.app.json -d src/assets/documentation",
+    "compodoc": "./node_modules/.bin/compodoc -p src/tsconfig.app.json",
+    "serve-doc": "serve -l 8080 documentation",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
