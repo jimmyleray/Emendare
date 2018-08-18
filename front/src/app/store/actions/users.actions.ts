@@ -32,6 +32,11 @@ export class AuthenticateAction implements Action {
    * Type of the action
    */
   public type: string = ActionTypes.AUTHENTICATE;
+
+  /**
+   * Constructor function
+   * @param payload Payload typings
+   */
   constructor(public payload: { email: string; password: string }) {}
 }
 

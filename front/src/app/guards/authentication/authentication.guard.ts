@@ -8,12 +8,12 @@ import { AppState } from "src/app/store/app.state";
 
 /**
  * Prevent unauthorized activating and loading of routes
- * @class AuthenticatedGuard
+ * @class AuthenticationGuard
  */
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
   /**
-   * @constructor
+   * @constructor Constructor function
    * @param {Store<AppState>} store Ngrx store service
    * @param {Router} router Angular Router service
    */
@@ -24,7 +24,6 @@ export class AuthenticationGuard implements CanActivate {
    * @method canActivate
    */
   canActivate(): Observable<boolean> {
-    // get observable
     const observable = this.store.select<boolean>(isAuthenticated);
 
     // redirect to sign in page if user is not authenticated

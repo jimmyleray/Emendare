@@ -54,8 +54,7 @@ export class SignInComponent implements OnDestroy, OnInit {
   ) {}
 
   /**
-   * Lifecycle hook that is called after data-bound properties of a directive are initialized.
-   * @method ngOnInit
+   * @method ngOnInit Lifecycle hook that is called after data-bound properties of a directive are initialized.
    */
   public ngOnInit() {
     // set formGroup
@@ -76,16 +75,14 @@ export class SignInComponent implements OnDestroy, OnInit {
   }
 
   /**
-   *  Lifecycle hook that is called when a directive, pipe or service is destroyed.
-   * @method ngOnDestroy
+   * @method ngOnDestroy Lifecycle hook that is called when a directive, pipe or service is destroyed.
    */
   public ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
   /**
-   * Submit the authentication form.
-   * @method submit
+   * @method submit Submit the authentication form.
    */
   public submit() {
     // get email and password values

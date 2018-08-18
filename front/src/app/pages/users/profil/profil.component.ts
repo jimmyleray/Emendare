@@ -27,11 +27,9 @@ export class ProfilComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   /**
-   * Lifecycle hook that is called after data-bound properties of a directive are initialized.
-   * @method ngOnInit
+   * @method ngOnInit Lifecycle hook that is called after data-bound properties of a directive are initialized.
    */
   public ngOnInit() {
-    // get authenticated user
     this.user = this.store.select<User>(getAuthenticatedUser);
   }
 }

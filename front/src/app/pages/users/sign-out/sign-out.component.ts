@@ -18,7 +18,7 @@ export class SignOutComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   /**
-   * Lifecycle hook that is called after data-bound properties of a directive are initialized.
+   * @method ngOnInit Lifecycle hook that is called after data-bound properties of a directive are initialized.
    */
   ngOnInit() {
     this.store.dispatch(new SignOutAction());

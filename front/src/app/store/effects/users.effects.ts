@@ -22,6 +22,9 @@ import {
   SignOutAction
 } from "../actions";
 
+/**
+ * User effects injectable
+ */
 @Injectable()
 export class UserEffects {
   /**
@@ -93,7 +96,7 @@ export class UserEffects {
     );
 
   /**
-   * @constructor
+   * @constructor Constructor function
    * @param {Actions} actions Ngrx actions service
    * @param {UserService} userService Users service management
    */
