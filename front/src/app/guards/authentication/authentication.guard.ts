@@ -10,9 +10,7 @@ import { AppState } from "src/app/store/app.state";
  * Prevent unauthorized activating and loading of routes
  * @class AuthenticatedGuard
  */
-@Injectable({
-  providedIn: "root"
-})
+@Injectable()
 export class AuthenticationGuard implements CanActivate {
   /**
    * @constructor

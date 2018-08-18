@@ -62,6 +62,9 @@ import {
   ExploreComponent
 } from "./pages";
 
+import { UserService } from "./services";
+import { AuthenticationGuard } from "./guards";
+
 /**
  * List of all declared custom components
  */
@@ -90,7 +93,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: components,
+  declarations: [...components, AuthenticationGuard],
   imports: [
     ...modules,
     RoutingModule,
@@ -121,6 +124,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     EffectsModule.forRoot([UserEffects])
   ],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

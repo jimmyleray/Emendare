@@ -12,9 +12,7 @@ MOCK_USER.password = "pass";
 /**
  * User service
  */
-@Injectable({
-  providedIn: "root"
-})
+@Injectable()
 export class UserService {
   /**
    * True if authenticated
