@@ -10,5 +10,6 @@
   "LOG_OUT": "Deconnexion",
   "CREATE_ACCOUNT": "Créer un compte",
   "PASSWORD": "Mot de passe",
-  "EMAIL": "Adresse mail"
+  "EMAIL": "Adresse mail",
+  "ISSUES": "Rapporter un bug"
 }

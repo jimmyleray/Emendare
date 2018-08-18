@@ -12,7 +12,7 @@
 
 ## Roadmap
 
-- Submit a bug report
+- ~~Submit an issue link~~
 - ~~Easily follow the Readme~~
 - ~~Users authentification~~
 - Manage user account

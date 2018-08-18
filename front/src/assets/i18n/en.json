@@ -10,5 +10,6 @@
   "LOG_OUT": "Log out",
   "CREATE_ACCOUNT": "Create an account",
   "PASSWORD": "Password",
-  "EMAIL": "Email address"
+  "EMAIL": "Email address",
+  "ISSUES": "Report an issue"
 }
