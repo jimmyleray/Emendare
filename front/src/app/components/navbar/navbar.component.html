@@ -16,16 +16,16 @@
     <a mat-icon-button [routerLink]="['/', appRoutes.EXPLORE]" [title]="'EXPLORE' | translate">
       <mat-icon>search</mat-icon>
     </a>
-    <button mat-icon-button [matMenuTriggerFor]="profilMenu" [title]="'PROFIL' | translate">
+    <button mat-icon-button [matMenuTriggerFor]="profileMenu" [title]="'PROFILE' | translate">
       <mat-icon>supervised_user_circle</mat-icon>
     </button>
-    <mat-menu #profilMenu="matMenu">
+    <mat-menu #profileMenu="matMenu">
       <a *ngIf="!(isAuthenticated | async)" mat-menu-item [routerLink]="['/', appRoutes.SIGNIN]">
         {{ "LOG_IN" | translate }}
       </a>
       <div *ngIf="isAuthenticated | async">
         <a mat-menu-item [routerLink]="['/', appRoutes.PROFILE]">
-          {{ "PROFIL" | translate }}
+          {{ "PROFILE" | translate }}
         </a>
         <a mat-menu-item [routerLink]="['/', appRoutes.SIGNOUT]">{{ "LOG_OUT" | translate }}</a>
       </div>

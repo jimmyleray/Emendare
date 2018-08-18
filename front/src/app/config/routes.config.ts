@@ -3,7 +3,7 @@
  */
 export const appRoutes = {
   HOME: "",
-  PROFILE: "profil",
+  PROFILE: "profile",
   SIGNIN: "sign-in",
   SIGNOUT: "sign-out",
   SIGNUP: "sign-up",
