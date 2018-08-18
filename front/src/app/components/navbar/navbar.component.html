@@ -1,8 +1,9 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
   <mat-toolbar-row>
     <mat-icon>keyboard_arrow_right</mat-icon>
-    <a id="app-title" mat-toolbar-title [routerLink]="[appRoutes.HOME]" [title]="'HOME' | translate">{{ appConfig.appTitle
-      }}</a>
+    <a id="app-title" mat-toolbar-title [routerLink]="[appRoutes.HOME]" [title]="'HOME' | translate">
+      {{ appConfig.appTitle }}
+    </a>
     <div fxFlex></div>
     <div *ngIf="!(isAuthenticated | async)">
       <a mat-button [routerLink]="['/', appRoutes.SIGNIN]">{{ "LOG_IN" | translate }}</a>
@@ -23,14 +24,14 @@
       <a mat-menu-item [routerLink]="['/', appRoutes.README]">
         {{ "README" | translate }}
       </a>
-      <a mat-menu-item [href]="appConfig.documentationPath">
+      <a mat-menu-item [href]="appConfig.documentationPath" target="_blank">
         {{ "DOCUMENTATION" | translate }}
       </a>
-      <a mat-menu-item [href]="appConfig.repositoryPath">
+      <a mat-menu-item [href]="appConfig.repositoryPath" target="_blank">
         {{ "REPOSITORY" | translate }}
       </a>
     </mat-menu>
-    <a mat-icon-button [href]="appConfig.issuesPath" [title]="'ISSUES' | translate">
+    <a mat-icon-button [href]="appConfig.issuesPath" target="_blank" [title]="'ISSUES' | translate">
       <mat-icon>bug_report</mat-icon>
     </a>
     <app-settings-menu></app-settings-menu>
