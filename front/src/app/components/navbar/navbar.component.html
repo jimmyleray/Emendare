@@ -15,6 +15,9 @@
       </a>
       <a mat-menu-item [routerLink]="['/', routes.SIGNOUT]">{{ "LOG_OUT" | translate }}</a>
     </mat-menu>
+    <a mat-icon-button [href]="documentationPath" [title]="'DOCUMENTATION' | translate">
+      <mat-icon>code</mat-icon>
+    </a>
     <a mat-icon-button [href]="issuesPath" [title]="'ISSUES' | translate">
       <mat-icon>bug_report</mat-icon>
     </a>

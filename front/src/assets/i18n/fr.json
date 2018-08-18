@@ -11,5 +11,6 @@
   "CREATE_ACCOUNT": "Créer un compte",
   "PASSWORD": "Mot de passe",
   "EMAIL": "Adresse mail",
-  "ISSUES": "Rapporter un bug"
+  "ISSUES": "Rapporter un bug",
+  "DOCUMENTATION": "Documentation"
 }

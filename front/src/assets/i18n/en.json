@@ -11,5 +11,6 @@
   "CREATE_ACCOUNT": "Create an account",
   "PASSWORD": "Password",
   "EMAIL": "Email address",
-  "ISSUES": "Report an issue"
+  "ISSUES": "Report an issue",
+  "DOCUMENTATION": "Documentation"
 }

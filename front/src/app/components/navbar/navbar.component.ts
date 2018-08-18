@@ -3,7 +3,12 @@ import { isAuthenticated } from "src/app/store/getters";
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { appRoutes, appTitle, issuesPath } from "src/app/config";
+import {
+  appRoutes,
+  appTitle,
+  issuesPath,
+  documentationPath
+} from "src/app/config";
 
 @Component({
   selector: "app-navbar",
@@ -11,6 +16,7 @@ import { appRoutes, appTitle, issuesPath } from "src/app/config";
   styleUrls: ["./navbar.component.css"]
 })
 export class NavbarComponent implements OnInit {
+  public documentationPath = documentationPath;
   public issuesPath = issuesPath;
   public routes = appRoutes;
   public title = appTitle;
