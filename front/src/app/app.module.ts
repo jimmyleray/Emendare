@@ -27,7 +27,8 @@ import {
   MatInputModule,
   MatProgressSpinnerModule,
   MatFormFieldModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatTableModule
 } from "@angular/material";
 
 /**
@@ -43,7 +44,8 @@ const modules = [
   MatInputModule,
   MatProgressSpinnerModule,
   MatFormFieldModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatTableModule
 ];
 
 // components
@@ -63,6 +65,7 @@ import {
   GroupComponent,
   GroupAddComponent,
   GroupsListComponent,
+  GroupTextsComponent,
   TextComponent,
   TextAddComponent,
   TextsListComponent,
@@ -99,6 +102,7 @@ const components = [
   GroupComponent,
   GroupAddComponent,
   GroupsListComponent,
+  GroupTextsComponent,
   TextComponent,
   TextAddComponent,
   TextsListComponent,
