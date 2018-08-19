@@ -2,6 +2,10 @@
   z-index: 1;
 }
 
+#app-logo {
+  height: 48px;
+}
+
 #app-title {
   margin-right: 40px;
   color: inherit;
