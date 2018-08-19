@@ -1,5 +1,6 @@
 <mat-card fxFlex fxLayoutAlign="center" class="mat-elevation-z0">
   <mat-card-content>
     <p>{{ (user | async).email }} profile</p>
+    <a mat-menu-item [routerLink]="['/', appRoutes.SIGNOUT]">{{ "LOG_OUT" | translate }}</a>
   </mat-card-content>
 </mat-card>

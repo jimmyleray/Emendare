@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { getAuthenticatedUser } from "src/app/store/getters";
 import { AppState } from "src/app/store/app.state";
 import { User } from "src/app/models";
+import { appRoutes } from "src/app/config";
 
 /**
  * The user"s account.
@@ -15,6 +16,11 @@ import { User } from "src/app/models";
   styleUrls: ["./profil.component.css"]
 })
 export class ProfilComponent implements OnInit {
+  /**
+   * Route paths configuration
+   */
+  public appRoutes = appRoutes;
+
   /**
    * The authenticated user
    */
