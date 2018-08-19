@@ -8,6 +8,7 @@ import { filter } from "rxjs/operators";
 import { AuthenticateAction } from "src/app/store/actions";
 import { AppState } from "src/app/store/app.state";
 import { getAuthenticationError, isAuthenticated } from "src/app/store/getters";
+import { AuthService } from "src/app/services";
 
 /**
  * /users/sign-in
@@ -50,7 +51,8 @@ export class SignInComponent implements OnDestroy, OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private store: Store<AppState>,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   /**
@@ -70,7 +72,11 @@ export class SignInComponent implements OnDestroy, OnInit {
       .select<boolean>(isAuthenticated)
       .pipe(filter(authenticated => authenticated))
       .subscribe(value => {
-        this.router.navigate([appRoutes.PROFILE]);
+        if (this.authService.redirectUrl) {
+          this.router.navigate([this.authService.redirectUrl]);
+        } else {
+          this.router.navigate([appRoutes.PROFILE]);
+        }
       });
   }
 

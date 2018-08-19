@@ -62,7 +62,7 @@ import {
   ExploreComponent
 } from "./pages";
 
-import { UserService } from "./services";
+import { UserService, AuthService } from "./services";
 import { AuthenticationGuard } from "./guards";
 
 /**
@@ -124,7 +124,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     EffectsModule.forRoot([UserEffects])
   ],
-  providers: [UserService, AuthenticationGuard],
+  providers: [UserService, AuthService, AuthenticationGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
