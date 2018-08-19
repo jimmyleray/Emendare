@@ -21,6 +21,9 @@
       <mat-icon>search</mat-icon>
     </button>
     <mat-menu #exploreMenu="matMenu">
+      <a mat-menu-item [routerLink]="['/', appRoutes.VOTES_LIST]">
+        {{ "VOTES_LIST" | translate }}
+      </a>
       <a mat-menu-item [routerLink]="['/', appRoutes.TEXTS_LIST]">
         {{ "TEXTS_LIST" | translate }}
       </a>

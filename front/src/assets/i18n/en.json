@@ -37,5 +37,6 @@
   "GROUP_ADD": "Create a group",
   "TEXT_ADD": "Create a text",
   "GROUPS_LIST": "My groups",
-  "TEXTS_LIST": "My texts"
+  "TEXTS_LIST": "My texts",
+  "VOTES_LIST": "My votes"
 }
