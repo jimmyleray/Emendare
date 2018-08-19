@@ -3,7 +3,10 @@
 }
 
 #app-logo {
-  height: 48px;
+  img {
+    height: 48px;
+    vertical-align: middle;
+  }
 }
 
 #app-title {

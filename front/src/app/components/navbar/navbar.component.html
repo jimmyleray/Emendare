@@ -1,8 +1,10 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
   <mat-toolbar-row>
-    <img id="app-logo" src="assets/img/logo/logo-white.svg">
-    <mat-icon>keyboard_arrow_right</mat-icon>
-    <a id="app-title" mat-toolbar-title [routerLink]="[appRoutes.HOME]" [title]="'HOME' | translate">
+    <a id="app-logo" [routerLink]="[appRoutes.HOME]" [title]="'HOME' | translate">
+      <img src="assets/img/logo/logo-white.svg">
+    </a>
+    <mat-icon fxHide.xs>keyboard_arrow_right</mat-icon>
+    <a id="app-title" fxHide.xs mat-toolbar-title [routerLink]="[appRoutes.HOME]" [title]="'HOME' | translate">
       {{ appConfig.appTitle }}
     </a>
     <div fxFlex></div>
