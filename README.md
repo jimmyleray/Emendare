@@ -1,4 +1,4 @@
-# [Emendare](https://github.com/JimmyLeray/Emendare)
+# ![Logo](https://github.com/JimmyLeray/Emendare/blob/master/front/src/assets/img/logo/logo.png) [Emendare](https://github.com/JimmyLeray/Emendare)
 
 > Open source digital parliament with advanced and democratic community management of amendable texts
 
