@@ -4,7 +4,7 @@ import { appRoutes } from "src/app/config";
 @Component({
   selector: "app-text",
   templateUrl: "./text.component.html",
-  styleUrls: ["./text.component.css"]
+  styleUrls: ["./text.component.scss"]
 })
 export class TextComponent {
   /**

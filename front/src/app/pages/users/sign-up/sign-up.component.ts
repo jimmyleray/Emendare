@@ -16,7 +16,7 @@ import { getSignUpError, isAuthenticated } from "src/app/store/getters";
  */
 @Component({
   templateUrl: "./sign-up.component.html",
-  styleUrls: ["./sign-up.component.css"]
+  styleUrls: ["./sign-up.component.scss"]
 })
 export class SignUpComponent implements OnDestroy, OnInit {
   /**

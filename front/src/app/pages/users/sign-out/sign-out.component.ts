@@ -8,7 +8,7 @@ import { AppState } from "src/app/store/app.state";
  */
 @Component({
   templateUrl: "./sign-out.component.html",
-  styleUrls: ["./sign-out.component.css"]
+  styleUrls: ["./sign-out.component.scss"]
 })
 export class SignOutComponent implements OnInit {
   /**

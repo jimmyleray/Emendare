@@ -8,7 +8,7 @@ import { appAvailableLangs } from "src/app/config";
 @Component({
   selector: "app-settings-menu",
   templateUrl: "./settings-menu.component.html",
-  styleUrls: ["./settings-menu.component.css"]
+  styleUrls: ["./settings-menu.component.scss"]
 })
 export class SettingsMenuComponent implements OnInit {
   /**

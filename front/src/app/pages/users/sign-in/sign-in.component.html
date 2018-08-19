@@ -12,7 +12,7 @@
             <input matInput required type="password" [placeholder]="'PASSWORD' | translate" formControlName="password" [class.invalid]="signinForm.controls.password.errors && signinForm.controls.password.dirty">
           </mat-form-field>
           <div>
-            <button fxFlex mat-flat-button color="primary" [disabled]="signinForm.invalid" type="submit">
+            <button fxFlex mat-flat-button color="accent" [disabled]="signinForm.invalid" type="submit">
               {{ 'LOG_IN' | translate }}
             </button>
             <a fxFlex mat-button [routerLink]="['/', routes.SIGNUP]">{{ 'CREATE_ACCOUNT' | translate }}</a>

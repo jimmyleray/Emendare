@@ -14,7 +14,7 @@ import {
 @Component({
   selector: "app-progress-router",
   templateUrl: "./progress-router.component.html",
-  styleUrls: ["./progress-router.component.css"]
+  styleUrls: ["./progress-router.component.scss"]
 })
 export class ProgressRouterComponent implements OnInit, OnDestroy {
   /**

@@ -1,22 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import "./app/styles/markdown.css";
+@import "./app/styles/markdown.scss";
+@import "./app/styles/theme.scss";
 
 html {
   height: 100%;
 }
-
 body {
   margin: 0;
   padding: 0;
   height: 100%;
   background-color: #f9f9f9;
 }
-
 .center {
   text-align: center;
 }
-
 .padding-10 {
   padding: 10px;
 }
