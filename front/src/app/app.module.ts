@@ -71,7 +71,13 @@ import {
   AmendComponent
 } from "./pages";
 
-import { UserService, AuthService } from "./services";
+import {
+  UserService,
+  AuthService,
+  GroupService,
+  VoteService,
+  TextService
+} from "./services";
 import { AuthenticationGuard } from "./guards";
 
 /**
@@ -142,7 +148,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     EffectsModule.forRoot([UserEffects])
   ],
-  providers: [UserService, AuthService, AuthenticationGuard],
+  providers: [
+    UserService,
+    AuthService,
+    GroupService,
+    TextService,
+    VoteService,
+    AuthenticationGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

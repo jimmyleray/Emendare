@@ -5,15 +5,15 @@ export class User {
   /**
    * User uniq id
    */
-  _id?: string;
+  _id: string;
 
   /**
    * User email
    */
-  email?: string;
+  email: string;
 
   /**
    * User password
    */
-  password?: string;
+  password: string;
 }

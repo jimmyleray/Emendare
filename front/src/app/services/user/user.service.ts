@@ -6,6 +6,7 @@ import { User } from "src/app/models/user";
  * A mocked user for test purposes
  */
 export const MOCK_USER = new User();
+MOCK_USER._id = "uniq_id";
 MOCK_USER.email = "foo@bar.com";
 MOCK_USER.password = "pass";
 
