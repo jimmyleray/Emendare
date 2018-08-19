@@ -1,7 +1,5 @@
 # Emendare
 
-![Logo](https://github.com/JimmyLeray/Emendare/blob/master/front/src/assets/img/logo/logo.png)
-
 > Open source digital parliament with advanced and democratic community management of amendable texts
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
