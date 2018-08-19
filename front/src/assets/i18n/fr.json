@@ -33,5 +33,9 @@
   "USE_CASES": "Cas d'utilisation",
   "DEVELOPERS": "Développeurs",
   "ADD": "Ajouter / Créer",
-  "EXPLORE": "Explorer"
+  "EXPLORE": "Explorer",
+  "GROUP_ADD": "Créer un groupe",
+  "TEXT_ADD": "Créer un texte",
+  "GROUPS_LIST": "Mes groupes",
+  "TEXTS_LIST": "Mes textes"
 }

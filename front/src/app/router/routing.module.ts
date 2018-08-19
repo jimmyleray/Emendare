@@ -23,8 +23,48 @@ import * as guards from "src/app/guards";
       },
       {
         canActivate: [guards.AuthenticationGuard],
+        path: appRoutes.TEXT,
+        component: pages.TextComponent
+      },
+      {
+        canActivate: [guards.AuthenticationGuard],
+        path: appRoutes.TEXT_ADD,
+        component: pages.TextAddComponent
+      },
+      {
+        canActivate: [guards.AuthenticationGuard],
+        path: appRoutes.TEXTS_LIST,
+        component: pages.TextsListComponent
+      },
+      {
+        canActivate: [guards.AuthenticationGuard],
+        path: appRoutes.GROUP,
+        component: pages.GroupComponent
+      },
+      {
+        canActivate: [guards.AuthenticationGuard],
+        path: appRoutes.GROUP_ADD,
+        component: pages.GroupAddComponent
+      },
+      {
+        canActivate: [guards.AuthenticationGuard],
+        path: appRoutes.GROUPS_LIST,
+        component: pages.GroupsListComponent
+      },
+      {
+        canActivate: [guards.AuthenticationGuard],
+        path: appRoutes.VOTES_LIST,
+        component: pages.VotesListComponent
+      },
+      {
+        canActivate: [guards.AuthenticationGuard],
+        path: appRoutes.VOTE,
+        component: pages.VoteComponent
+      },
+      {
+        canActivate: [guards.AuthenticationGuard],
         path: appRoutes.PROFILE,
-        component: pages.ProfilComponent
+        component: pages.ProfileComponent
       },
       {
         path: appRoutes.SIGNIN,

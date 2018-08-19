@@ -10,13 +10,24 @@
       <mat-icon>add</mat-icon>
     </button>
     <mat-menu #addMenu="matMenu">
-      <a mat-menu-item [routerLink]="['/', appRoutes.README]">
-        {{ "README" | translate }}
+      <a mat-menu-item [routerLink]="['/', appRoutes.TEXT_ADD]">
+        {{ "TEXT_ADD" | translate }}
+      </a>
+      <a mat-menu-item [routerLink]="['/', appRoutes.GROUP_ADD]">
+        {{ "GROUP_ADD" | translate }}
       </a>
     </mat-menu>
-    <a mat-icon-button [routerLink]="['/', appRoutes.EXPLORE]" [title]="'EXPLORE' | translate">
+    <button mat-icon-button [matMenuTriggerFor]="exploreMenu" [title]="'EXPLORE' | translate">
       <mat-icon>search</mat-icon>
-    </a>
+    </button>
+    <mat-menu #exploreMenu="matMenu">
+      <a mat-menu-item [routerLink]="['/', appRoutes.TEXTS_LIST]">
+        {{ "TEXTS_LIST" | translate }}
+      </a>
+      <a mat-menu-item [routerLink]="['/', appRoutes.GROUPS_LIST]">
+        {{ "GROUPS_LIST" | translate }}
+      </a>
+    </mat-menu>
     <a mat-icon-button [routerLink]="['/', appRoutes.PROFILE]" [title]="'PROFILE' | translate">
       <mat-icon>supervised_user_circle</mat-icon>
     </a>

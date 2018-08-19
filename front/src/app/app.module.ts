@@ -54,12 +54,20 @@ import { NavbarComponent, ProgressRouterComponent } from "./components";
 import {
   HomeComponent,
   ErrorComponent,
-  ProfilComponent,
+  ProfileComponent,
   SignInComponent,
   SignOutComponent,
   SignUpComponent,
   ReadmeComponent,
-  ExploreComponent
+  ExploreComponent,
+  GroupComponent,
+  GroupAddComponent,
+  GroupsListComponent,
+  TextComponent,
+  TextAddComponent,
+  TextsListComponent,
+  VotesListComponent,
+  VoteComponent
 } from "./pages";
 
 import { UserService, AuthService } from "./services";
@@ -75,12 +83,20 @@ const components = [
   ProgressRouterComponent,
   HomeComponent,
   ErrorComponent,
-  ProfilComponent,
+  ProfileComponent,
   SignInComponent,
   SignOutComponent,
   SignUpComponent,
   ReadmeComponent,
-  ExploreComponent
+  ExploreComponent,
+  GroupComponent,
+  GroupAddComponent,
+  GroupsListComponent,
+  TextComponent,
+  TextAddComponent,
+  TextsListComponent,
+  VotesListComponent,
+  VoteComponent
 ];
 
 /**

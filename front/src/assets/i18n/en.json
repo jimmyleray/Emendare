@@ -33,5 +33,9 @@
   "USE_CASES": "Use cases",
   "DEVELOPERS": "Developers",
   "ADD": "Add / Create",
-  "EXPLORE": "Explore"
+  "EXPLORE": "Explore",
+  "GROUP_ADD": "Create a group",
+  "TEXT_ADD": "Create a text",
+  "GROUPS_LIST": "My groups",
+  "TEXTS_LIST": "My texts"
 }

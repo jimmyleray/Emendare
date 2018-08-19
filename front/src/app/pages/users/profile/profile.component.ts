@@ -11,11 +11,11 @@ import { appRoutes } from "src/app/config";
  * @class MyAccountComponent
  */
 @Component({
-  selector: "app-profil",
-  templateUrl: "./profil.component.html",
-  styleUrls: ["./profil.component.css"]
+  selector: "app-profile",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.css"]
 })
-export class ProfilComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   /**
    * Route paths configuration
    */
