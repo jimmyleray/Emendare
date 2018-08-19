@@ -23,6 +23,11 @@ import * as guards from "src/app/guards";
       },
       {
         canActivate: [guards.AuthenticationGuard],
+        path: appRoutes.AMEND,
+        component: pages.AmendComponent
+      },
+      {
+        canActivate: [guards.AuthenticationGuard],
         path: appRoutes.TEXT,
         component: pages.TextComponent
       },

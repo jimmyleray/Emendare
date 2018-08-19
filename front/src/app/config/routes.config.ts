@@ -16,5 +16,6 @@ export const appRoutes = {
   TEXT_ADD: "add-text",
   TEXTS_LIST: "texts",
   VOTES_LIST: "votes",
-  VOTE: "vote"
+  VOTE: "vote",
+  AMEND: "amend"
 };

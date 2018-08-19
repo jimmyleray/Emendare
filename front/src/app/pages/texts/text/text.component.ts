@@ -1,12 +1,14 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
+import { appRoutes } from "src/app/config";
 
 @Component({
   selector: "app-text",
   templateUrl: "./text.component.html",
   styleUrls: ["./text.component.css"]
 })
-export class TextComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {}
+export class TextComponent {
+  /**
+   * Route paths configuration
+   */
+  public appRoutes = appRoutes;
 }

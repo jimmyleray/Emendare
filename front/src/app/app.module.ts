@@ -67,7 +67,8 @@ import {
   TextAddComponent,
   TextsListComponent,
   VotesListComponent,
-  VoteComponent
+  VoteComponent,
+  AmendComponent
 } from "./pages";
 
 import { UserService, AuthService } from "./services";
@@ -96,7 +97,8 @@ const components = [
   TextAddComponent,
   TextsListComponent,
   VotesListComponent,
-  VoteComponent
+  VoteComponent,
+  AmendComponent
 ];
 
 /**

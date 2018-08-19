@@ -38,5 +38,6 @@
   "TEXT_ADD": "Create a text",
   "GROUPS_LIST": "My groups",
   "TEXTS_LIST": "My texts",
-  "VOTES_LIST": "My votes"
+  "VOTES_LIST": "My votes",
+  "ADD_AMEND": "Create an amendment"
 }
