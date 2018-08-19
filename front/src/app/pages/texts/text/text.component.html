@@ -1,6 +1,9 @@
-<a mat-flat-button color="primary" [routerLink]="['/',appRoutes.AMEND]" [title]="'ADD_AMEND' | translate">
-  {{ "ADD_AMEND" | translate }}
-</a>
-<p>
-  text works!
-</p>
+<div fxLayout="column">
+  <h1 class="center mat-display-1">{{ (text$ | async).name }}</h1>
+  <p>
+    {{ text$ | async | json}}
+  </p>
+  <a mat-flat-button color="primary" [routerLink]="['/amend', (text$ |async)._id]" [title]="'ADD_AMEND' | translate">
+    {{ "ADD_AMEND" | translate }}
+  </a>
+</div>

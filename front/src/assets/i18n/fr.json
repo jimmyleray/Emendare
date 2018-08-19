@@ -39,5 +39,9 @@
   "GROUPS_LIST": "Mes groupes",
   "TEXTS_LIST": "Mes textes",
   "VOTES_LIST": "Mes votes",
-  "ADD_AMEND": "Créer un amendement"
+  "ADD_AMEND": "Créer un amendement",
+  "SHOW_TEXT": "Afficher ce texte",
+  "SHOW_GROUP": "Afficher ce groupe",
+  "FOLLOWED_TEXTS": "Liste des textes que vous suivez",
+  "FOLLOWED_GROUPS": "Liste des groupes que vous suivez"
 }

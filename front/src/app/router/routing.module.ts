@@ -58,11 +58,6 @@ import * as guards from "src/app/guards";
       },
       {
         canActivate: [guards.AuthenticationGuard],
-        path: appRoutes.GROUP_TEXTS,
-        component: pages.GroupTextsComponent
-      },
-      {
-        canActivate: [guards.AuthenticationGuard],
         path: appRoutes.VOTES_LIST,
         component: pages.VotesListComponent
       },

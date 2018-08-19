@@ -12,11 +12,10 @@ export const appRoutes = {
   GROUP: "group/:id",
   GROUP_ADD: "add-group",
   GROUPS_LIST: "groups",
-  GROUP_TEXTS: "texts/:id",
   TEXT: "text/:id",
   TEXT_ADD: "add-text",
   TEXTS_LIST: "texts",
   VOTES_LIST: "votes",
   VOTE: "vote",
-  AMEND: "amend"
+  AMEND: "amend/:id"
 };
