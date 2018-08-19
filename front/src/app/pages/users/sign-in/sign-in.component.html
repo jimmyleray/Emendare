@@ -1,6 +1,8 @@
 <div fxFlex fxLayout="row" fxLayoutAlign="center start">
   <mat-card fxFlex fxFlex.sm="65" fxFlex.gt-sm="50" class="mat-elevation-z0">
-    <mat-card-title>{{ 'LOG_IN' | translate }}</mat-card-title>
+    <mat-card-title>
+      {{ 'LOG_IN' | translate }}
+    </mat-card-title>
     <mat-card-content>
       <div *ngIf="error | async">{{ error | async }}</div>
       <form (ngSubmit)="submit()" [formGroup]="signinForm" novalidate>
@@ -15,7 +17,11 @@
             <button fxFlex mat-flat-button color="accent" [disabled]="signinForm.invalid" type="submit">
               {{ 'LOG_IN' | translate }}
             </button>
-            <a fxFlex mat-button [routerLink]="['/', routes.SIGNUP]">{{ 'CREATE_ACCOUNT' | translate }}</a>
+          </div>
+          <div class="padding-10">
+            <a fxFlex mat-button [routerLink]="['/', routes.SIGNUP]">
+              {{ 'CREATE_ACCOUNT' | translate }}
+            </a>
           </div>
         </div>
       </form>
