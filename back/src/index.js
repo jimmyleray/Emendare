@@ -4,13 +4,13 @@ const app = express();
 // Request list of groups
 const groups = require("./mocks/groups");
 app.get("/groups", (req, res) => {
-  res.send(groups);
+  res.json(groups);
 });
 
 // Request list of grotextsups
 const texts = require("./mocks/texts");
 app.get("/texts", (req, res) => {
-  res.send(texts);
+  res.json(texts);
 });
 
 // Error 404 middleware
