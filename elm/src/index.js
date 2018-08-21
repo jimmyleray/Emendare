@@ -1,5 +1,5 @@
 import "./main.css";
-import { Main } from "./Main.elm";
+import { Main } from "./Core/Main.elm";
 import registerServiceWorker from "./registerServiceWorker";
 
 Main.embed(document.getElementById("root"));
