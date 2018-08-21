@@ -35,7 +35,7 @@ layout model = div []
 
 navbar : Model -> Html Msg
 navbar model = 
-    nav [ attribute "aria-label" "main navigation", class "navbar", attribute "role" "navigation" ]
+    nav [ attribute "aria-label" "main navigation", class "navbar is-fixed-top", attribute "role" "navigation" ]
         [ div [ class "navbar-brand" ]
             [ div [ class "navbar-item" ]
                 [ text "Emendare" ]
