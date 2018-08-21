@@ -1,7 +1,7 @@
 module Main exposing (..)
 
-import Html exposing (Html, text, div, nav,h1, h2, section, img)
-import Html.Attributes exposing (class, attribute, src)
+import Html exposing (..)
+import Html.Attributes exposing (..)
 
 ---- MODEL ----
 
@@ -35,11 +35,13 @@ layout model = div []
 
 navbar : Model -> Html Msg
 navbar model = 
-    nav [ attribute "aria-label" "main navigation", class "navbar is-fixed-top", attribute "role" "navigation" ]
+    nav [ attribute "aria-label" "main navigation", class "navbar container is-fixed-top is-transparent", attribute "role" "navigation" ]
         [ div [ class "navbar-brand" ]
             [ div [ class "navbar-item" ]
                 [ text "Emendare" ]
-            ]
+            ],
+            div [ class "navbar-end" ]
+                [ gitHubLink model, docLink model ]
         ]
 
 content : Model -> Html Msg
@@ -60,6 +62,24 @@ logo : Model -> String -> Html Msg
 logo model color =
     img [ src <| "/img/logo/logo-" ++ color ++ ".svg" ]
         []
+
+gitHubLink : Model -> Html Msg
+gitHubLink model =
+    a [ class "navbar-item", href "https://github.com/JimmyLeray/Emendare", title "GitHub" ]
+        [ span [ class "icon is-medium" ]
+            [ i [ class "fab fa-github" ]
+                []
+            ]
+        ]
+
+docLink : Model -> Html Msg
+docLink model =
+    a [ class "navbar-item", href "https://emendare-documentation.cleverapps.io/", title "Documentation" ]
+        [ span [ class "icon is-medium" ]
+            [ i [ class "fas fa-book" ]
+                []
+            ]
+        ]
 
 ---- PROGRAM ----
 
