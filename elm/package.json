@@ -1,0 +1,17 @@
+{
+  "name": "emendare",
+  "version": "1.0.0",
+  "description": "This project is bootstrapped with [Create Elm App](https://github.com/halfzebra/create-elm-app).",
+  "scripts": {
+    "dev": "elm-app start",
+    "build": "elm-app build",
+    "test": "elm-app start"
+  },
+  "repository": "https://github.com/jimmyleray/emendare.git",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "create-elm-app": "^1.10.4",
+    "elm": "^0.18.0",
+    "elm-format": "^0.6.1-alpha"
+  }
+}
