@@ -3,7 +3,7 @@ module Views.Navbar exposing (navbar)
 import Core.Messages exposing (..)
 import Core.Model exposing (Model)
 
-import Views.TranslateDropdown exposing (translateDropdown)
+import Views.TranslateDrop exposing (translateDrop)
 import Views.GitHubLink exposing (gitHubLink)
 import Views.DocLink exposing (docLink)
 
@@ -22,6 +22,6 @@ navbar model =
                 [ 
                     gitHubLink model, 
                     docLink model,
-                    translateDropdown model 
+                    translateDrop model 
                 ]
         ]
