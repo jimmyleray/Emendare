@@ -19,8 +19,7 @@ page model =
             [ div [ class "container" ]
                 [ logo model "white",
                     h1 [ class "title" ] [ text "Emendare" ]
-                    , h2 [ class "subtitle" ] [ text "Open source platform with advanced and democratic community management of amendable texts" ]
-                    , span [] [ text <| translate model.language Hello]
+                    , h2 [ class "subtitle" ] [ text <| translate model.language Welcome ]
                 ]
             ]
         ]

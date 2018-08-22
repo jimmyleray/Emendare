@@ -10,4 +10,4 @@ frTranslations key =
             "Bonjour"
 
         Welcome ->
-            "Bienvenue"
+            "Plateforme open source avec une gestion communautaire avancée et démocratique de textes amendables"

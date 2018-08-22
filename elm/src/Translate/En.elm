@@ -10,4 +10,4 @@ enTranslations key =
             "Hello"
 
         Welcome ->
-            "Welcome"
+            "Open source platform with advanced and democratic community management of amendable texts"
