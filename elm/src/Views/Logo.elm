@@ -8,6 +8,5 @@ import Html.Attributes exposing (src)
 
 
 logo : Model -> String -> Html Msg
-logo model color =
-    img [ src <| "/img/logo/logo-" ++ color ++ ".svg" ]
-        []
+logo model color = 
+    img [ src <| "/img/logo/logo-" ++ color ++ ".svg" ] []

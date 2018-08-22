@@ -13,9 +13,9 @@ import Translate.Utils exposing (LanguageTag(..))
 translateDrop : Model -> Html Msg
 translateDrop model =
     div [ class "navbar-item has-dropdown is-hoverable" ]
-    [ a [ class "navbar-link" ] [ text <| toString model.language ]
-    , div [ class "navbar-dropdown" ]
-        [ a [ class "navbar-item", onClick <| ChangeLanguage FR ] [ text "FR" ]
-        , a [ class "navbar-item", onClick <| ChangeLanguage EN ] [ text "EN" ]
+        [ a [ class "navbar-link" ] [ text <| toString model.language ]
+            , div [ class "navbar-dropdown" ]
+                [ a [ class "navbar-item", onClick <| ChangeLanguage FR ] [ text <| toString FR ]
+                , a [ class "navbar-item", onClick <| ChangeLanguage EN ] [ text <| toString EN ]
+                ]
         ]
-    ]

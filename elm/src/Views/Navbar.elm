@@ -4,8 +4,7 @@ import Core.Messages exposing (..)
 import Core.Model exposing (Model)
 
 import Views.TranslateDrop exposing (translateDrop)
-import Views.GitHubLink exposing (gitHubLink)
-import Views.DocLink exposing (docLink)
+import Views.IconLink exposing (iconLink)
 
 import Html exposing (Html, div, a, text, nav)
 import Html.Attributes exposing (class, attribute)
@@ -20,8 +19,8 @@ navbar model =
             ],
             div [ class "navbar-end" ]
                 [ 
-                    gitHubLink model, 
-                    docLink model,
+                    iconLink "https://github.com/JimmyLeray/Emendare" "fab fa-github" "GitHub" model, 
+                    iconLink "https://emendare-documentation.cleverapps.io/" "fas fa-book" "Documentation" model,
                     translateDrop model 
                 ]
         ]
