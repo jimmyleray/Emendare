@@ -1,7 +1,6 @@
 {
   "name": "emendare",
-  "version": "1.0.0",
-  "description": "This project is bootstrapped with [Create Elm App](https://github.com/halfzebra/create-elm-app).",
+  "version": "0.0.0",
   "scripts": {
     "dev": "elm-app start",
     "build": "elm-app build",
