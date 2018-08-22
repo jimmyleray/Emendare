@@ -1,5 +1,7 @@
-module Core.Messages exposing (..)
+module Core.Messages exposing (Msg(..))
 
 import Translate.Utils exposing (LanguageTag)
 
-type Msg = ChangeLanguage LanguageTag
+
+type Msg
+    = ChangeLanguage LanguageTag

@@ -1,6 +1,7 @@
 module Translate.Keys exposing (TranslationKey(..))
 
+
 type TranslationKey
     = Welcome
-    | French 
+    | French
     | English

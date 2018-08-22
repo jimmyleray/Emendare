@@ -1,12 +1,14 @@
-module Translate.Utils exposing (parseLanguage, translate, LanguageTag(..))
+module Translate.Utils exposing (LanguageTag(..), parseLanguage, translate)
 
-import Translate.Keys exposing (TranslationKey)
 import Translate.En exposing (enTranslations)
 import Translate.Fr exposing (frTranslations)
+import Translate.Keys exposing (TranslationKey)
+
 
 type LanguageTag
     = FR
     | EN
+
 
 parseLanguage : String -> LanguageTag
 parseLanguage tag =
@@ -22,6 +24,7 @@ parseLanguage tag =
                 ("Unknown language: '" ++ tag ++ "', defaulting to English")
                 EN
 
+
 translate : LanguageTag -> TranslationKey -> String
 translate languageTag translationKey =
     let
@@ -33,4 +36,4 @@ translate languageTag translationKey =
                 EN ->
                     enTranslations
     in
-        translateFun translationKey
+    translateFun translationKey

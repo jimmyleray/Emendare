@@ -5,6 +5,7 @@ import Core.Model exposing (Model)
 import Html exposing (Html, img)
 import Html.Attributes exposing (src)
 
+
 logo : Model -> String -> Html Msg
-logo model color = 
+logo model color =
     img [ src <| "/img/logo/logo-" ++ color ++ ".svg" ] []
