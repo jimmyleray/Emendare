@@ -8,9 +8,3 @@ frTranslations key =
     case key of
         Welcome ->
             "Plateforme open source avec une gestion communautaire avancée et démocratique de textes amendables"
-
-        French ->
-            "Français"
-
-        English ->
-            "Anglais"
