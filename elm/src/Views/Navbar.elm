@@ -10,7 +10,7 @@ import Views.TranslateDrop exposing (translateDrop)
 
 navbar : Model -> Html Msg
 navbar model =
-    nav [ attribute "aria-label" "main navigation", class "navbar container is-fixed-top is-transparent", attribute "role" "navigation" ]
+    nav [ attribute "aria-label" "main navigation", class "navbar is-info is-fixed-top is-transparent", attribute "role" "navigation" ]
         [ div [ class "navbar-brand" ]
             [ div [ class "navbar-item" ]
                 [ text "Emendare" ]

@@ -11,7 +11,7 @@ import Views.Logo exposing (logo)
 
 page : Model -> Html Msg
 page model =
-    section [ class "hero is-primary" ]
+    section [ class "hero is-dark" ]
         [ div [ class "hero-body" ]
             [ div [ class "container" ]
                 [ logo model "white"
