@@ -1,14 +1,11 @@
 module Views.Navbar exposing (navbar)
 
-import Core.Messages exposing (..)
-import Core.Model exposing (Model)
-
-import Views.TranslateDrop exposing (translateDrop)
-import Views.IconLink exposing (iconLink)
-
 import Html exposing (Html, div, a, text, nav)
 import Html.Attributes exposing (class, attribute)
-
+import Core.Messages exposing (Msg)
+import Core.Model exposing (Model)
+import Views.TranslateDrop exposing (translateDrop)
+import Views.IconLink exposing (iconLink)
 
 navbar : Model -> Html Msg
 navbar model = 

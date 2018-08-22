@@ -2,13 +2,10 @@ module Views.TranslateDrop exposing (translateDrop)
 
 import Core.Messages exposing (..)
 import Core.Model exposing (Model)
-
 import Html exposing (Html, div, a, text)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
-
 import Translate.Utils exposing (LanguageTag(..))
-
 
 translateDrop : Model -> Html Msg
 translateDrop model =

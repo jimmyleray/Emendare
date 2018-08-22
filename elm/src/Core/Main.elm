@@ -7,8 +7,6 @@ import Core.View exposing (view)
 import Core.Messages exposing (Msg)
 import Core.Model exposing (Model)
 
----- PROGRAM ----
-
 main : Program Never Model Msg
 main =
     Html.program

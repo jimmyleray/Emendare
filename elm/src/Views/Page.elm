@@ -2,15 +2,11 @@ module Views.Page exposing (page)
 
 import Core.Messages exposing (..)
 import Core.Model exposing (Model)
-
 import Html exposing (Html, section, a, div, span, text, h1, h2)
 import Html.Attributes exposing (class)
-
 import Views.Logo exposing (logo)
-
 import Translate.Utils exposing (translate)
 import Translate.Keys exposing (..)
-
 
 page : Model -> Html Msg
 page model =
