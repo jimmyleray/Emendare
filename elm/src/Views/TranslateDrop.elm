@@ -1,4 +1,4 @@
-module Views.TranslateDrop exposing (translateDrop)
+module Views.TranslateDrop exposing (viewTranslateDrop)
 
 import Core.Messages exposing (..)
 import Core.Model exposing (Model)
@@ -8,8 +8,8 @@ import Html.Events exposing (onClick)
 import Translate.Utils exposing (LanguageTag(..))
 
 
-translateDrop : Model -> Html Msg
-translateDrop model =
+viewTranslateDrop : Model -> Html Msg
+viewTranslateDrop model =
     div [ class "navbar-item has-dropdown is-hoverable" ]
         [ a [ class "navbar-link" ] [ text <| toString model.language ]
         , div [ class "navbar-dropdown is-right" ]

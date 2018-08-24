@@ -1,15 +1,15 @@
-module Views.Body exposing (body)
+module Views.Body exposing (viewBody)
 
 import Core.Messages exposing (Msg)
 import Core.Model exposing (Model)
 import Html exposing (Html, div)
-import Views.Navbar exposing (navbar)
-import Views.Page exposing (page)
+import Views.Navbar exposing (viewNavbar)
+import Views.Page exposing (viewPage)
 
 
-body : Model -> Html Msg
-body model =
+viewBody : Model -> Html Msg
+viewBody model =
     div []
-        [ navbar model
-        , page model
+        [ viewNavbar model
+        , viewPage model
         ]
