@@ -1,4 +1,4 @@
-module Translate.Utils exposing (LanguageTag(..), parseLanguage, translate)
+module Translate.Utils exposing (LanguageTag(..), translate)
 
 import Translate.En exposing (enTranslations)
 import Translate.Fr exposing (frTranslations)
@@ -8,21 +8,6 @@ import Translate.Keys exposing (TranslationKey)
 type LanguageTag
     = FR
     | EN
-
-
-parseLanguage : String -> LanguageTag
-parseLanguage tag =
-    case tag of
-        "FR" ->
-            FR
-
-        "EN" ->
-            EN
-
-        _ ->
-            Debug.log
-                ("Unknown language: '" ++ tag ++ "', defaulting to English")
-                EN
 
 
 translate : LanguageTag -> TranslationKey -> String
