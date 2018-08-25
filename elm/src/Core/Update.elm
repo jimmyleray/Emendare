@@ -1,11 +1,26 @@
 module Core.Update exposing (update)
 
-import Core.Messages exposing (..)
+import Browser
 import Core.Model exposing (Model)
+import Browser.Navigation as Nav
+import Core.Messages exposing (Msg(..))
+import Url
+
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        ChangeLanguage payload ->
-            ( { model | language = payload }, Cmd.none )
+        LinkClicked urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model, Nav.pushUrl model.key <| Url.toString url )
+
+                Browser.External href ->
+                    ( model, Nav.load href )
+
+        UrlChanged url ->
+            ( { model | url = url } , Cmd.none )
+
+        ChangeLanguage language ->
+            ( { model | language = language }, Cmd.none )

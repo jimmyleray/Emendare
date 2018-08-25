@@ -1,16 +1,14 @@
 {
-  "name": "emendare",
+  "name": "emendare-front",
   "version": "0.0.0",
   "scripts": {
-    "dev": "elm-app start",
-    "build": "elm-app build",
-    "test": "elm-app start"
+    "start": "serve -s -l 8080 public",
+    "build": "elm make src/Main.elm --optimize --output public/app.js"
   },
-  "repository": "https://github.com/jimmyleray/emendare.git",
+  "author": "Jimmy Leray",
   "license": "GPL-3.0",
   "devDependencies": {
-    "create-elm-app": "^1.10.4",
-    "elm": "^0.18.0",
-    "elm-format": "^0.6.1-alpha"
+    "elm": "^0.19.0-bugfix2",
+    "serve": "^10.0.0"
   }
 }
