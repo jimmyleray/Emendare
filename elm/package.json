@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "serve -s -l 8080 public",
-    "build": "elm make src/Main.elm --optimize --output public/app.js"
+    "build": "elm make src/Main.elm --optimize --output public/scripts/app.js"
   },
   "author": "Jimmy Leray",
   "license": "GPL-3.0",
