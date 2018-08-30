@@ -1,4 +1,4 @@
-module Components.TranslateDrop exposing (view)
+module Elements.TranslateDrop exposing (view)
 
 import Html exposing (Html, div, span, text)
 import Html.Events exposing (onClick)

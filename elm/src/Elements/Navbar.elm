@@ -1,4 +1,4 @@
-module Components.Navbar exposing (view)
+module Elements.Navbar exposing (view)
 
 import Html exposing (Html, nav, div, a, text)
 import Html.Attributes exposing (attribute, class, href) 
@@ -9,9 +9,9 @@ import Services.Routing.Main exposing (Route(..))
 import Services.Core.Model exposing (Model)
 import Services.Core.Messages exposing (Msg)
 
-import Components.Link
-import Components.IconLink
-import Components.TranslateDrop
+import Elements.Link
+import Elements.IconLink
+import Elements.TranslateDrop
 
 
 view : Model -> Html Msg
@@ -20,9 +20,9 @@ view model =
         [ div [ class "navbar-brand" ]
             [ a [ class "navbar-item", href "/" ] [ text "Emendare" ] ]
         , div [ class "navbar-end" ] 
-            [ Components.Link.view Readme
-            , Components.IconLink.view "https://github.com/JimmyLeray/Emendare" "fab fa-github" "GitHub" model
-            , Components.IconLink.view "https://emendare-documentation.cleverapps.io/" "fas fa-book" "Documentation" model
-            , Components.TranslateDrop.view model
+            [ Elements.Link.view Readme
+            , Elements.IconLink.view "https://github.com/JimmyLeray/Emendare" "fab fa-github" "GitHub" model
+            , Elements.IconLink.view "https://emendare-documentation.cleverapps.io/" "fas fa-book" "Documentation" model
+            , Elements.TranslateDrop.view model
             ]
         ]

@@ -1,4 +1,4 @@
-module Components.Link exposing (view)
+module Elements.Link exposing (view)
 
 import Html exposing (Html, a, text)
 import Html.Attributes exposing (class, href)

@@ -1,4 +1,4 @@
-module Components.IconLink exposing (view)
+module Elements.IconLink exposing (view)
 
 import Html exposing (Html, a, span, i)
 import Html.Attributes exposing (class, href, title)
