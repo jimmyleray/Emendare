@@ -8,10 +8,11 @@ import Services.Core.Init exposing (init)
 import Services.Core.Update exposing (update)
 import Services.Core.Subscriptions exposing (subscriptions)
 import Services.Core.View exposing (view)
+import Services.Core.Flags exposing (Flags)
 
 
 
-main : Program () Model Msg
+main : Program Flags Model Msg
 main =
     application
         { init = init

@@ -1,4 +1,4 @@
-module Services.Translate.Main exposing (LanguageTag(..), translate, tagToString)
+module Services.Translate.Main exposing (..)
 
 import Services.Translate.En exposing (enTranslations)
 import Services.Translate.Fr exposing (frTranslations)
@@ -35,3 +35,18 @@ tagToString languageTag =
 
         EN ->
             "EN"
+
+
+
+stringToTag : String -> LanguageTag
+stringToTag languageString =
+    case languageString of
+
+            "FR" -> 
+                FR
+
+            "EN" -> 
+                EN
+
+            _ ->
+                EN
