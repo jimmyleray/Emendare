@@ -1,11 +1,11 @@
-module Core.Init exposing (init)
+module Services.Core.Init exposing (init)
 
-
-import Core.Model exposing (Model)
-import Services.Translate.Main exposing (LanguageTag(..))
 import Browser.Navigation exposing (Key)
-import Core.Messages exposing (Msg)
 import Url exposing (Url)
+
+import Services.Core.Model exposing (Model)
+import Services.Translate.Main exposing (LanguageTag(..))
+import Services.Core.Messages exposing (Msg)
 
 
 

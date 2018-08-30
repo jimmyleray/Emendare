@@ -1,4 +1,4 @@
-module Views.TranslateDrop exposing (view)
+module Components.TranslateDrop exposing (view)
 
 import Html exposing (Html, div, span, text)
 import Html.Events exposing (onClick)
@@ -6,9 +6,8 @@ import Html.Attributes exposing (class)
 
 import Services.Translate.Keys exposing (TranslationKey(..))
 import Services.Translate.Main exposing (translate, tagToString, LanguageTag(..))
-
-import Core.Model exposing (Model)
-import Core.Messages exposing (Msg(..))
+import Services.Core.Model exposing (Model)
+import Services.Core.Messages exposing (Msg(..))
 
 
 

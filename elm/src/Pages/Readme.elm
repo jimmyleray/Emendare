@@ -1,14 +1,12 @@
 module Pages.Readme exposing (view)
 
-import Browser exposing (Document)
-import Core.Model exposing (Model)
-import Core.Messages exposing (Msg)
-import Views.Navbar
+import Html exposing (Html, div)
+
+import Services.Core.Model exposing (Model)
+import Services.Core.Messages exposing (Msg)
 
 
 
-view : Model -> Document Msg
+view : Model -> Html Msg
 view model =
-    { title = "Emendare | Readme"
-    , body = [ Views.Navbar.view model ]
-    }
+    div [] []

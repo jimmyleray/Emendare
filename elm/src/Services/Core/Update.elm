@@ -1,10 +1,11 @@
-module Core.Update exposing (update)
+module Services.Core.Update exposing (update)
 
 import Browser exposing (UrlRequest(..))
-import Core.Model exposing (Model)
 import Browser.Navigation exposing (load, pushUrl)
-import Core.Messages exposing (Msg(..))
 import Url exposing (toString)
+
+import Services.Core.Model exposing (Model)
+import Services.Core.Messages exposing (Msg(..))
 
 
 

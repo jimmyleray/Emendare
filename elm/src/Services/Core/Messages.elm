@@ -1,7 +1,8 @@
-module Core.Messages exposing (Msg(..))
+module Services.Core.Messages exposing (Msg(..))
 
 import Browser exposing (UrlRequest)
 import Url exposing (Url)
+
 import Services.Translate.Main exposing (LanguageTag)
 
 

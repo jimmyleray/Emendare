@@ -1,10 +1,10 @@
-module Views.IconLink exposing (view)
+module Components.IconLink exposing (view)
 
 import Html exposing (Html, a, span, i)
 import Html.Attributes exposing (class, href, title)
 
-import Core.Model exposing (Model)
-import Core.Messages exposing (Msg)
+import Services.Core.Model exposing (Model)
+import Services.Core.Messages exposing (Msg)
 
 
 

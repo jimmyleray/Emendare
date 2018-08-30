@@ -1,8 +1,9 @@
-module Core.Model exposing (Model)
+module Services.Core.Model exposing (Model)
 
-import Services.Translate.Main exposing (LanguageTag)
 import Browser.Navigation exposing (Key)
 import Url exposing (Url)
+
+import Services.Translate.Main exposing (LanguageTag)
 
 
 
