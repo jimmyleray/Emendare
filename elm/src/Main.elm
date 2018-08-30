@@ -1,6 +1,6 @@
 module Main exposing (main)
 
-import Browser
+import Browser exposing (application)
 
 import Core.Model exposing (Model)
 import Core.Messages exposing (Msg(..))
@@ -13,7 +13,7 @@ import Core.View exposing (view)
 
 main : Program () Model Msg
 main =
-    Browser.application
+    application
         { init = init
         , view = view
         , update = update

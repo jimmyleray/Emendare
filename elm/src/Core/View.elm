@@ -1,10 +1,10 @@
-module Core.View exposing (..)
+module Core.View exposing (view)
 
 import Browser exposing (Document)
 
 import Services.Routing.Main exposing (Route(..), fromUrl)
 import Core.Model exposing (Model)
-import Core.Messages exposing (Msg(..))
+import Core.Messages exposing (Msg)
 
 import Pages.Home
 import Pages.Readme
