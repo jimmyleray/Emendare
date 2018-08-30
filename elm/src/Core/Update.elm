@@ -1,10 +1,10 @@
 module Core.Update exposing (update)
 
-import Browser
+import Browser exposing (UrlRequest(..))
 import Core.Model exposing (Model)
-import Browser.Navigation as Nav
+import Browser.Navigation exposing (load, pushUrl)
 import Core.Messages exposing (Msg(..))
-import Url
+import Url exposing (toString)
 
 
 
@@ -13,11 +13,11 @@ update msg model =
     case msg of
         LinkClicked urlRequest ->
             case urlRequest of
-                Browser.Internal url ->
-                    ( model, Nav.pushUrl model.key <| Url.toString url )
+                Internal url ->
+                    ( model, pushUrl model.key <| toString url )
 
-                Browser.External href ->
-                    ( model, Nav.load href )
+                External href ->
+                    ( model, load href )
 
         UrlChanged url ->
             ( { model | url = url } , Cmd.none )

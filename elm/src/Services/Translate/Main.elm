@@ -1,8 +1,8 @@
-module Translate.Utils exposing (LanguageTag(..), translate, tagToString)
+module Services.Translate.Main exposing (LanguageTag(..), translate, tagToString)
 
-import Translate.En exposing (enTranslations)
-import Translate.Fr exposing (frTranslations)
-import Translate.Keys exposing (TranslationKey)
+import Services.Translate.En exposing (enTranslations)
+import Services.Translate.Fr exposing (frTranslations)
+import Services.Translate.Keys exposing (TranslationKey)
 
 
 

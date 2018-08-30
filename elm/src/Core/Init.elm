@@ -2,13 +2,13 @@ module Core.Init exposing (init)
 
 
 import Core.Model exposing (Model)
-import Translate.Utils exposing (LanguageTag(..))
-import Browser.Navigation as Nav
+import Services.Translate.Main exposing (LanguageTag(..))
+import Browser.Navigation exposing (Key)
 import Core.Messages exposing (Msg)
-import Url
+import Url exposing (Url)
 
 
 
-init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init : () -> Url -> Key -> ( Model, Cmd Msg )
 init flags url key =
     ( { key = key, url = url, language = EN } , Cmd.none )

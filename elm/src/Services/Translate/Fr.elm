@@ -1,6 +1,6 @@
-module Translate.Fr exposing (frTranslations)
+module Services.Translate.Fr exposing (frTranslations)
 
-import Translate.Keys exposing (TranslationKey(..))
+import Services.Translate.Keys exposing (TranslationKey(..))
 
 
 frTranslations : TranslationKey -> String

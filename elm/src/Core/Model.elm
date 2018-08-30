@@ -1,13 +1,13 @@
 module Core.Model exposing (Model)
 
-import Translate.Utils exposing (LanguageTag)
-import Browser.Navigation as Nav
-import Url
+import Services.Translate.Main exposing (LanguageTag)
+import Browser.Navigation exposing (Key)
+import Url exposing (Url)
 
 
 
 type alias Model =
-    { key : Nav.Key
-    , url : Url.Url
+    { key : Key
+    , url : Url
     , language : LanguageTag
     }

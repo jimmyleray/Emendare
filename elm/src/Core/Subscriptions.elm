@@ -6,5 +6,5 @@ import Core.Messages exposing (Msg)
 
 
 subscriptions : Model -> Sub Msg
-subscriptions _ =
+subscriptions model =
     Sub.none

@@ -1,12 +1,12 @@
 module Core.Messages exposing (Msg(..))
 
-import Browser
-import Url
-import Translate.Utils exposing (LanguageTag)
+import Browser exposing (UrlRequest)
+import Url exposing (Url)
+import Services.Translate.Main exposing (LanguageTag)
 
 
 
 type Msg
-    = LinkClicked Browser.UrlRequest
-    | UrlChanged Url.Url
+    = LinkClicked UrlRequest
+    | UrlChanged Url
     | ChangeLanguage LanguageTag

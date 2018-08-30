@@ -1,4 +1,4 @@
-module Core.Router exposing (..)
+module Services.Routing.Main exposing (..)
 
 import Url
 import Url.Parser as Parser exposing (Parser, oneOf, s)
