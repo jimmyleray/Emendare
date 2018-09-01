@@ -43,7 +43,7 @@ enTranslations key =
             "Organization of the votes"
 
         Features_Votes_Desc ->
-            "The votes on the proposals of the users are organized automatically"
+            "The votes on the proposals of the users are organized and applied automatically"
 
         Use_Cases_Company ->
             "Enterprises & cooperatives"
