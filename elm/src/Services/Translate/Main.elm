@@ -15,7 +15,7 @@ type LanguageTag
 translate : LanguageTag -> TranslationKey -> String
 translate languageTag translationKey =
     let
-        translateFun =
+        translateFunction =
             case languageTag of
                 FR ->
                     frTranslations
@@ -23,7 +23,7 @@ translate languageTag translationKey =
                 EN ->
                     enTranslations
     in
-    translateFun translationKey
+    translateFunction translationKey
 
 
 
