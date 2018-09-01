@@ -51,8 +51,3 @@ jobs:
       - run:
           name: Run e2e tests
           command: npm run e2e
-
-      # Run codecov reporting
-      - run:
-          name: Codecoc
-          command: npm run codecov
