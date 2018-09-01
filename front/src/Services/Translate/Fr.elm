@@ -7,7 +7,7 @@ frTranslations : TranslationKey -> String
 frTranslations key =
     case key of
         Welcome ->
-            "Plateforme open source avec une gestion communautaire avancée et démocratique de textes amendables"
+            "Plateforme open source avec une gestion communautaire et démocratique de textes amendables"
 
         Error404 ->
             "Erreur 404"
@@ -22,7 +22,7 @@ frTranslations key =
             "Le Parlement numérique"
 
         Home_Subtitle ->
-            "Plateforme open source avec une gestion communautaire avancée et démocratique de textes amendables"
+            "Plateforme open source avec une gestion communautaire et démocratique de textes amendables"
 
         Home_Description ->
             "Un amendement est une modification, soumise au vote d'une assemblée, en vue de corriger, compléter ou annuler tout ou une partie d'un projet de texte"

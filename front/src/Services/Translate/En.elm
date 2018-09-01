@@ -7,7 +7,7 @@ enTranslations : TranslationKey -> String
 enTranslations key =
     case key of
         Welcome ->
-            "Open source platform with advanced and democratic community management of amendable texts"
+            "Open source platform with democratic community management of amendable texts"
 
         Error404 ->
             "Error 404"
@@ -22,7 +22,7 @@ enTranslations key =
             "The Digital Parliament"
 
         Home_Subtitle ->
-            "Open source platform with advanced and democratic community management of amendable texts"
+            "Open source platform with democratic community management of amendable texts"
 
         Home_Description ->
             "An amendment is a proposal, submitted to the vote of a meeting, to correct, complete or cancel all or part of a draft text"
