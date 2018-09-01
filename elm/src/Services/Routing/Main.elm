@@ -10,6 +10,10 @@ import Services.Core.Model exposing (Model)
 type Route
     = Root
     | Readme
+    | SignIn
+    | SignUp
+    | Profile
+    | NotFound
 
 
 
@@ -22,9 +26,9 @@ parser =
 
 
 
-fromUrl : Url.Url -> Maybe Route
+fromUrl : Url.Url -> Route
 fromUrl url =
-    Parser.parse parser url
+    Maybe.withDefault NotFound <| Parser.parse parser url
 
 
 
@@ -36,24 +40,23 @@ getRouteTitle route =
 
         Readme ->
             "Readme"
+        
+        SignIn ->
+            "Sign in"
+
+        SignUp ->
+            "Sign up"
+
+        Profile ->
+            "Profile"
+
+        NotFound ->
+            "Not Found"
 
 
 getActualRouteTitle : Model -> String
 getActualRouteTitle model =
-    let 
-        route : Maybe Route
-        route = 
-            (fromUrl model.url)
-    in
-    case route of
-        Just Root ->
-            "Home"
-
-        Just Readme ->
-            "Readme"
-
-        Nothing ->
-            "Not Found"
+    getRouteTitle <| fromUrl model.url
 
 
 
@@ -65,3 +68,15 @@ getRouteUrl route =
 
         Readme ->
             "/readme"
+
+        SignIn ->
+            "/sign-in"
+
+        SignUp ->
+            "/sign-up"
+
+        Profile ->
+            "/profile"
+
+        NotFound ->
+            "/not-found"
