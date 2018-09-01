@@ -1,7 +1,7 @@
 module Elements.Navbar exposing (view)
 
-import Html exposing (Html, nav, div, a, text)
-import Html.Attributes exposing (attribute, class, href) 
+import Html exposing (Html, nav, div, a, span, i, text)
+import Html.Attributes exposing (attribute, class, href, title, target) 
 
 import Services.Translate.Keys exposing (..)
 import Services.Translate.Main exposing (translate, tagToString, LanguageTag(..))
@@ -10,7 +10,6 @@ import Services.Core.Model exposing (Model)
 import Services.Core.Messages exposing (Msg)
 
 import Elements.Link
-import Elements.IconLink
 import Elements.TranslateDrop
 
 
@@ -21,7 +20,10 @@ view model =
             [ a [ class "navbar-item", href "/" ] [ text "Emendare" ] ]
         , div [ class "navbar-end" ] 
             [ Elements.Link.view Readme
-            , Elements.IconLink.view "https://github.com/JimmyLeray/Emendare" "fab fa-github" "GitHub" model
+            , a [ class "navbar-item", href "https://github.com/JimmyLeray/Emendare", title "GitHub", target "_blank" ]
+                [ span [ class "icon fa-lg" ]
+                    [ i [ class "fab fa-github" ] [] ]
+                ]
             , Elements.TranslateDrop.view model
             ]
         ]
