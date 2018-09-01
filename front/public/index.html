@@ -15,10 +15,10 @@
 
     <!-- BULMA CSS LIBRARY -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+    <script async src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
 
     <!-- APPLICATION CUSTOM STYLES -->
-    <link rel="stylesheet" href="/styles/app.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -26,8 +26,23 @@
     <div id="app"></div>
 
     <!-- APPLICATION ELM SCRIPTS -->
-    <script defer src="/scripts/app.js"></script>
-    <script defer src="/scripts/client.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Return the browser language
+        const getBrowserLanguage = () =>
+            (navigator.language || navigator.userLanguage)
+                .split("")
+                .slice(-2)
+                .join("");
+
+        // Start Elm Application
+        Elm.Main.init({
+            node: document.getElementById("app"),
+            flags: {
+                language: getBrowserLanguage()
+            }
+        });
+    </script>
 </body>
 
 </html>

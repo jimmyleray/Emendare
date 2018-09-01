@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "serve -s -l 8080 public",
-    "build": "elm make src/Main.elm --optimize --output public/scripts/app.js",
+    "build": "elm make src/Main.elm --optimize --output public/script.js",
     "lint": "exit 0",
     "test": "exit 0",
     "e2e": "exit 0"
