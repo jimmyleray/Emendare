@@ -1,6 +1,6 @@
 module Pages.Home exposing (view)
 
-import Html exposing (Html, section, div, h1, h2, h3, i, p, text)
+import Html exposing (Html, section, div, h1, h2, h3, i, p, span, text)
 import Html.Attributes exposing (class) 
 
 import Services.Translate.Keys exposing (TranslationKey(..))
@@ -13,7 +13,7 @@ import Services.Core.Messages exposing (Msg)
 view : Model -> Html Msg
 view model =
     div [ ] 
-        [ section [ class "hero is-light is-fullheight" ] 
+        [ section [ class "hero is-info is-fullheight" ] 
             [ div [ class "hero-body has-text-centered" ]
                 [ div [ class "container content" ]
                     [ div [ class "box" ]
@@ -24,17 +24,17 @@ view model =
                         [ h2 [ class "title" ] [ text <| translate model.language Features ]
                         , div [ class "columns box has-text-centered" ] 
                             [ div [ class "column" ] 
-                                [ p [ class "icon is-large" ] [ i [ class "fas fa-3x fa-edit" ] [] ]
+                                [ span [ class "icon is-large" ] [ i [ class "fas fa-3x fa-edit" ] [] ]
                                 , h3 [ ] [ text <| translate model.language Features_Editor ]
                                 , p [ ] [ text <| translate model.language Features_Editor_Desc ]
                                 ]
                             , div [ class "column" ] 
-                                [ p [ class "icon is-large" ] [ i [ class "fas fa-3x fa-users" ] [] ]
+                                [ span [ class "icon is-large" ] [ i [ class "fas fa-3x fa-users" ] [] ]
                                 , h3 [ ] [ text <| translate model.language Features_Groups ]
                                 , p [ ] [ text <| translate model.language Features_Groups_Desc ]
                                 ]
                             , div [ class "column" ] 
-                                [ p [ class "icon is-large" ] [ i [ class "fas fa-3x fa-chart-pie" ] [] ]
+                                [ span [ class "icon is-large" ] [ i [ class "fas fa-3x fa-chart-pie" ] [] ]
                                 , h3 [ ] [ text <| translate model.language Features_Votes ]
                                 , p [ ] [ text <| translate model.language Features_Votes_Desc ]
                                 ]
