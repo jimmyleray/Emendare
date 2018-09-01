@@ -4,7 +4,6 @@
   "scripts": {
     "start": "serve -s -l 8080 public",
     "build": "elm make src/Main.elm --optimize --output public/scripts/app.js",
-    "codecov": "codecov -t 187fc664-9fb9-4a79-9064-c7e6d96fc023",
     "lint": "exit 0",
     "test": "exit 0",
     "e2e": "exit 0"
@@ -12,7 +11,6 @@
   "author": "Jimmy Leray",
   "license": "GPL-3.0",
   "devDependencies": {
-    "codecov": "^3.0.4",
     "elm": "^0.19.0-bugfix2",
     "serve": "^10.0.0"
   }
