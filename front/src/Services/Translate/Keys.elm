@@ -29,7 +29,6 @@ type TranslationKey
     | Email
     | Issues
     | Documentation
-    | Readme
     | Repository
     | Features
     | Use_Cases

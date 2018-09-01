@@ -87,9 +87,6 @@ frTranslations key =
         Documentation ->
             "Documentation"
 
-        Readme ->
-            "Readme"
-
         Repository ->
             "GitHub"
 

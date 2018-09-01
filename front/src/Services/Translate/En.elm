@@ -87,9 +87,6 @@ enTranslations key =
         Documentation ->
             "Documentation"
 
-        Readme ->
-            "Readme"
-
         Repository ->
             "GitHub"
 
