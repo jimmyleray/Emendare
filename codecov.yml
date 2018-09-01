@@ -1,2 +1,0 @@
-fixes:
-  - "::front/" # move root, e.g. : "path/" => "front/path/"
