@@ -16,13 +16,12 @@ import Elements.TranslateDrop
 
 view : Model -> Html Msg
 view model =
-    nav [ attribute "aria-label" "main navigation", class "navbar is-info is-fixed-top is-transparent", attribute "role" "navigation" ]
+    nav [ attribute "aria-label" "main navigation", class "navbar is-dark is-fixed-top is-transparent", attribute "role" "navigation" ]
         [ div [ class "navbar-brand" ]
             [ a [ class "navbar-item", href "/" ] [ text "Emendare" ] ]
         , div [ class "navbar-end" ] 
             [ Elements.Link.view Readme
             , Elements.IconLink.view "https://github.com/JimmyLeray/Emendare" "fab fa-github" "GitHub" model
-            , Elements.IconLink.view "https://emendare-documentation.cleverapps.io/" "fas fa-book" "Documentation" model
             , Elements.TranslateDrop.view model
             ]
         ]
