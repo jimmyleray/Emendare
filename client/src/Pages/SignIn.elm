@@ -1,7 +1,7 @@
 module Pages.SignIn exposing (view)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, type_, placeholder) 
+import Html.Attributes exposing (class, type_, placeholder, novalidate) 
 
 import Services.Translate.Keys exposing (TranslationKey(..))
 import Services.Translate.Main exposing (translate)
@@ -16,27 +16,27 @@ view model =
             [ div [ class "hero-body" ]
                 [ div [ class "container" ]
                     [ h1 [ class "title has-text-centered" ] [ text <| translate model.language SignInTitle ]
-                    , div [ class "box" ]
+                    , form [ class "box max-width-350", novalidate True ]
                         [ div [ class "field" ]
                             [ label [ class "label is-medium" ]
                                 [ text "Email" ]
                             , div [ class "control has-icons-left" ]
-                                [ input [ class "input", type_ "text", placeholder "Email" ] []
+                                [ input [ class "input", type_ "email", placeholder "Email" ] []
                                 , span [ class "icon is-medium is-left" ]
-                                    [ i [ class "fas fa-at" ] [] ]
+                                    [ i [ class "fas fa-envelope" ] [] ]
                                 ]
                             ]
                         , div [ class "field" ]
                             [ label [ class "label is-medium" ]
                                 [ text "Password" ]
                             , div [ class "control has-icons-left" ]
-                                [ input [ class "input", type_ "text", placeholder "Password" ] []
+                                [ input [ class "input", type_ "password", placeholder "Password" ] []
                                 , span [ class "icon is-medium is-left" ]
-                                    [ i [ class "fas fa-key" ] [] ]
+                                    [ i [ class "fas fa-lock" ] [] ]
                                 ]
                             ]
-                        , div [ class "control" ]
-                            [ button [ class "button is-medium is-primary" ]
+                        , div [ class "control has-text-right" ]
+                            [ input [ class "button is-medium is-primary", type_ "submit" ]
                                 [ text <| translate model.language SignInTitle ]
                             ]
                         ]

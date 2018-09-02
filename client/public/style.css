@@ -5,3 +5,8 @@ html {
 .margin-top-50 {
   margin-top: 50px !important;
 }
+
+.max-width-350 {
+  max-width: 350px !important;
+  margin: auto;
+}
