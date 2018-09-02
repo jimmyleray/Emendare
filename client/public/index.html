@@ -13,7 +13,7 @@
     <!-- APPLICATION FAVICON-->
     <link rel="shortcut icon" href="/images/logo/favicon.ico">
 
-    <!-- BULMA CSS LIBRARY -->
+    <!-- BULMA CSS LIBRARY AND FONT AWESOME ICONS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
     <script async src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
 
@@ -28,19 +28,16 @@
     <!-- APPLICATION ELM SCRIPTS -->
     <script src="script.js"></script>
     <script>
-        // Return the browser language
-        const getBrowserLanguage = () =>
-            (navigator.language || navigator.userLanguage)
-                .split("")
-                .slice(-2)
-                .join("");
+        // Get the actual browser language
+        const language = (navigator.language || navigator.userLanguage)
+            .split("")
+            .slice(-2)
+            .join("");
 
-        // Start Elm Application
+        // Initialize the Elm Application
         Elm.Main.init({
             node: document.getElementById("app"),
-            flags: {
-                language: getBrowserLanguage()
-            }
+            flags: { language }
         });
     </script>
 </body>
