@@ -1,7 +1,10 @@
 module Pages.Profile exposing (view)
 
-import Html exposing (Html, div)
+import Html exposing (Html, section, div, h1, h2, text)
+import Html.Attributes exposing (class) 
 
+import Services.Translate.Keys exposing (TranslationKey(..))
+import Services.Translate.Main exposing (translate)
 import Services.Core.Model exposing (Model)
 import Services.Core.Messages exposing (Msg)
 
@@ -9,4 +12,9 @@ import Services.Core.Messages exposing (Msg)
 
 view : Model -> Html Msg
 view model =
-    div [] []
+    section [ class "hero is-info is-fullheight" ]
+            [ div [ class "hero-body has-text-centered" ]
+                [ div [ class "container" ]
+                    [ h1 [ class "title" ] [ text <| translate model.language ProfileTitle ] ]
+                ]
+            ]

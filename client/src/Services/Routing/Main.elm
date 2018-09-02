@@ -4,6 +4,8 @@ import Url
 import Url.Parser as Parser exposing (Parser, oneOf, s)
 
 import Services.Core.Model exposing (Model)
+import Services.Translate.Keys exposing (..)
+import Services.Translate.Main exposing (translate)
 
 
 
@@ -22,6 +24,9 @@ parser =
     oneOf
         [ Parser.map Root Parser.top
         , Parser.map Readme (s "readme")
+        , Parser.map SignIn (s "sign-in")
+        , Parser.map SignUp (s "sign-up")
+        , Parser.map Profile (s "profile")
         ]
 
 
@@ -32,31 +37,31 @@ fromUrl url =
 
 
 
-getRouteTitle : Route -> String
+getRouteTitle : Route -> TranslationKey
 getRouteTitle route =
     case route of
         Root ->
-            "Home"
+            HomeTitle
 
         Readme ->
-            "Readme"
+            ReadmeTitle
         
         SignIn ->
-            "Sign in"
+            SignInTitle
 
         SignUp ->
-            "Sign up"
+            SignUpTitle
 
         Profile ->
-            "Profile"
+            ProfileTitle
 
         NotFound ->
-            "Not Found"
+            NotFoundTitle
 
 
 getActualRouteTitle : Model -> String
 getActualRouteTitle model =
-    getRouteTitle <| fromUrl model.url
+    translate model.language <| getRouteTitle <| fromUrl model.url
 
 
 

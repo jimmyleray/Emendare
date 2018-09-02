@@ -134,3 +134,21 @@ frTranslations key =
 
         Followed_Groups ->
             "Liste des groupes que vous suivez"
+
+        HomeTitle ->
+            "Accueil"
+
+        ReadmeTitle ->
+            "Readme"
+        
+        SignInTitle ->
+            "Connexion"
+
+        SignUpTitle ->
+            "Inscription"
+
+        ProfileTitle ->
+            "Profil"
+
+        NotFoundTitle ->
+            "Page introuvable"

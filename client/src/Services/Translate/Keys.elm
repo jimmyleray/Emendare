@@ -45,3 +45,9 @@ type TranslationKey
     | Show_Group
     | Followed_Texts
     | Followed_Groups
+    | HomeTitle
+    | ReadmeTitle
+    | SignInTitle
+    | SignUpTitle
+    | ProfileTitle
+    | NotFoundTitle

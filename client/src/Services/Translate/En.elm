@@ -134,3 +134,21 @@ enTranslations key =
 
         Followed_Groups ->
             "List of groups you follow"
+
+        HomeTitle ->
+            "Home"
+
+        ReadmeTitle ->
+            "Readme"
+        
+        SignInTitle ->
+            "Sign in"
+
+        SignUpTitle ->
+            "Sign up"
+
+        ProfileTitle ->
+            "Profile"
+
+        NotFoundTitle ->
+            "Not Found"

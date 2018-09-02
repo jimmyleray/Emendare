@@ -19,7 +19,9 @@ view model =
         [ div [ class "navbar-brand" ]
             [ a [ class "navbar-item", href "/" ] [ text "Emendare" ] ]
         , div [ class "navbar-end" ] 
-            [ Elements.Link.view Readme
+            [ Elements.Link.view model SignIn
+            , Elements.Link.view model SignUp
+            , Elements.Link.view model Readme
             , a [ class "navbar-item", href "https://github.com/JimmyLeray/Emendare", title "GitHub", target "_blank" ]
                 [ span [ class "icon fa-lg" ]
                     [ i [ class "fab fa-github" ] [] ]
