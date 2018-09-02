@@ -26,7 +26,7 @@ view model =
             else
                 Elements.Link.view model SignIn
             , Elements.Link.view model Readme
-            , a [ class "navbar-item", href "https://github.com/JimmyLeray/Emendare", title "GitHub", target "_blank" ]
+            , a [ class "navbar-item", href "https://github.com/jimmyleray/Emendare", title "GitHub", target "_blank" ]
                 [ span [ class "icon fa-lg" ]
                     [ i [ class "fab fa-github" ] [] ]
                 ]
