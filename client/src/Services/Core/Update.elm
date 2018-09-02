@@ -6,6 +6,8 @@ import Url exposing (toString)
 
 import Services.Core.Model exposing (Model)
 import Services.Core.Messages exposing (Msg(..))
+import Services.Routing.Main exposing (getRouteUrl, fromUrl)
+import Services.Routing.Routes exposing (Route(..))
 
 
 
@@ -15,7 +17,12 @@ update msg model =
         LinkClicked urlRequest ->
             case urlRequest of
                 Internal url ->
-                    ( model, pushUrl model.key <| toString url )
+                    case toString url == getRouteUrl SignIn of
+                        True ->
+                            ( model, pushUrl model.key <| toString url )
+
+                        False ->
+                            ( { model | lastRoute = fromUrl model.url }, pushUrl model.key <| toString url )
 
                 External href ->
                     ( model, load href )
@@ -25,3 +32,9 @@ update msg model =
 
         ChangeLanguage language ->
             ( { model | language = language }, Cmd.none )
+
+        Connect ->
+            ( { model | isAuthentified = True, userName = "Albard" }, pushUrl model.key <| getRouteUrl model.lastRoute )
+
+        Disconnect ->
+            ( { model | isAuthentified = False, userName = "" }, pushUrl model.key <| getRouteUrl Root )

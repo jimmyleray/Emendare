@@ -1,12 +1,15 @@
 module Pages.SignIn exposing (view)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, type_, placeholder, novalidate) 
+import Html.Attributes exposing (class, type_, placeholder, href)
+import Html.Events exposing (onClick)
 
-import Services.Translate.Keys exposing (TranslationKey(..))
-import Services.Translate.Main exposing (translate)
+import Services.Translate.Keys exposing (..)
+import Services.Translate.Main exposing (translate, tagToString, LanguageTag(..))
+import Services.Routing.Main exposing (getRouteUrl)
+import Services.Routing.Routes exposing (Route(..))
 import Services.Core.Model exposing (Model)
-import Services.Core.Messages exposing (Msg)
+import Services.Core.Messages exposing (Msg(..))
 
 
 
@@ -16,7 +19,7 @@ view model =
             [ div [ class "hero-body" ]
                 [ div [ class "container" ]
                     [ h1 [ class "title has-text-centered" ] [ text <| translate model.language SignInTitle ]
-                    , form [ class "box max-width-350", novalidate True ]
+                    , div [ class "box max-width-350" ]
                         [ div [ class "field" ]
                             [ label [ class "label is-medium" ]
                                 [ text "Email" ]
@@ -35,9 +38,19 @@ view model =
                                     [ i [ class "fas fa-lock" ] [] ]
                                 ]
                             ]
-                        , div [ class "control has-text-right" ]
-                            [ input [ class "button is-medium is-primary", type_ "submit" ]
-                                [ text <| translate model.language SignInTitle ]
+                        , div [ class "columns" ]
+                            [ div [ class "column" ]
+                                [ div [ class "control" ]
+                                    [ a [ class "button is-medium is-light", href <| getRouteUrl SignUp ]
+                                        [ text <| translate model.language SignUpTitle ]
+                                    ]
+                                ]
+                            , div [ class "column" ]
+                                [ div [ class "control has-text-right" ]
+                                    [ button [ class "button is-medium is-primary", onClick Connect ]
+                                        [ text <| translate model.language SignInTitle ]
+                                    ]
+                                ]
                             ]
                         ]
                     ]

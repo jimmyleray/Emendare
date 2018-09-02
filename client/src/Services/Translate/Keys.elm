@@ -4,7 +4,6 @@ module Services.Translate.Keys exposing (TranslationKey(..))
 type TranslationKey
     = Welcome
     | Error404
-    | NotFound
     | Home
     | Home_Title
     | Home_Subtitle
@@ -21,7 +20,6 @@ type TranslationKey
     | Use_Cases_Politics_Desc
     | Use_Cases_Groups
     | Use_Cases_Groups_Desc
-    | Profile
     | Log_in
     | Log_out
     | Create_Account

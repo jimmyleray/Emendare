@@ -1,12 +1,13 @@
 module Pages.SignUp exposing (view)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, type_, placeholder, novalidate) 
+import Html.Attributes exposing (class, type_, placeholder)
+import Html.Events exposing (onClick)
 
 import Services.Translate.Keys exposing (TranslationKey(..))
 import Services.Translate.Main exposing (translate)
 import Services.Core.Model exposing (Model)
-import Services.Core.Messages exposing (Msg)
+import Services.Core.Messages exposing (Msg(..))
 
 
 
@@ -16,7 +17,7 @@ view model =
             [ div [ class "hero-body" ]
                 [ div [ class "container" ]
                     [ h1 [ class "title has-text-centered" ] [ text <| translate model.language SignUpTitle ]
-                    , form [ class "box max-width-350", novalidate True ]
+                    , div [ class "box max-width-350" ]
                         [ div [ class "field" ]
                             [ label [ class "label is-medium" ]
                                 [ text "Email" ]
@@ -36,7 +37,7 @@ view model =
                                 ]
                             ]
                         , div [ class "control has-text-right" ]
-                            [ input [ class "button is-medium is-primary", type_ "submit" ]
+                            [ button [ class "button is-medium is-primary", onClick Connect ]
                                 [ text <| translate model.language SignUpTitle ]
                             ]
                         ]

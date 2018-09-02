@@ -11,3 +11,5 @@ type Msg
     = LinkClicked UrlRequest
     | UrlChanged Url
     | ChangeLanguage LanguageTag
+    | Connect
+    | Disconnect

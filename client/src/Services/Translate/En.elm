@@ -12,9 +12,6 @@ enTranslations key =
         Error404 ->
             "Error 404"
 
-        NotFound ->
-            "Not Found"
-
         Home ->
             "Home"
 
@@ -62,9 +59,6 @@ enTranslations key =
 
         Use_Cases_Groups_Desc ->
             "Collectively write your reports of discussions or your petitions"
-
-        Profile ->
-            "Profile"
 
         Log_in ->
             "Log in"

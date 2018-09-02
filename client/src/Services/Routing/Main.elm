@@ -6,16 +6,8 @@ import Url.Parser as Parser exposing (Parser, oneOf, s)
 import Services.Core.Model exposing (Model)
 import Services.Translate.Keys exposing (..)
 import Services.Translate.Main exposing (translate)
+import Services.Routing.Routes exposing (Route(..))
 
-
-
-type Route
-    = Root
-    | Readme
-    | SignIn
-    | SignUp
-    | Profile
-    | NotFound
 
 
 

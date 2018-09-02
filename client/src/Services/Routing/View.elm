@@ -4,7 +4,8 @@ import Html exposing (Html)
 
 import Services.Core.Model exposing (Model)
 import Services.Core.Messages exposing (Msg)
-import Services.Routing.Main exposing (Route(..), fromUrl)
+import Services.Routing.Main exposing (fromUrl)
+import Services.Routing.Routes exposing (Route(..))
 
 import Pages.Home
 import Pages.Readme

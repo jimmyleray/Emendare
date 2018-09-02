@@ -16,7 +16,7 @@ view model =
             [ div [ class "hero-body has-text-centered" ]
                 [ div [ class "container" ]
                     [ h1 [ class "title" ] [ text <| translate model.language Error404 ]
-                    , h2 [ class "subtitle" ] [ text <| translate model.language NotFound ]
+                    , h2 [ class "subtitle" ] [ text <| translate model.language NotFoundTitle ]
                     ]
                 ]
             ]

@@ -12,9 +12,6 @@ frTranslations key =
         Error404 ->
             "Erreur 404"
 
-        NotFound ->
-            "Page introuvable"
-
         Home ->
             "Accueil"
 
@@ -62,9 +59,6 @@ frTranslations key =
 
         Use_Cases_Groups_Desc ->
             "Rédigez collectivement vos rapports de discussions ou vos pétitions"
-
-        Profile ->
-            "Profil"
 
         Log_in ->
             "Connexion"
