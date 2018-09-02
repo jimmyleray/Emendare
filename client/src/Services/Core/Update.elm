@@ -17,12 +17,10 @@ update msg model =
         LinkClicked urlRequest ->
             case urlRequest of
                 Internal url ->
-                    case toString url == getRouteUrl SignIn of
-                        True ->
-                            ( model, pushUrl model.key <| toString url )
-
-                        False ->
-                            ( { model | lastRoute = fromUrl model.url }, pushUrl model.key <| toString url )
+                    if toString url == getRouteUrl SignIn then
+                        ( model, pushUrl model.key <| toString url )
+                    else
+                        ( { model | lastRoute = fromUrl model.url }, pushUrl model.key <| toString url )
 
                 External href ->
                     ( model, load href )
