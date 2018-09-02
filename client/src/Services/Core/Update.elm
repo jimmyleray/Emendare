@@ -20,7 +20,7 @@ update msg model =
                     if toString url == getRouteUrl SignIn then
                         ( model, pushUrl model.key <| toString url )
                     else
-                        ( { model | lastRoute = fromUrl model.url }, pushUrl model.key <| toString url )
+                        ( { model | redirectRoute = fromUrl model.url }, pushUrl model.key <| toString url )
 
                 External href ->
                     ( model, load href )
@@ -32,7 +32,7 @@ update msg model =
             ( { model | language = language }, Cmd.none )
 
         Connect ->
-            ( { model | isAuthentified = True, userName = "Albard" }, pushUrl model.key <| getRouteUrl model.lastRoute )
+            ( { model | isAuthentified = True, userName = "Albard" }, pushUrl model.key <| getRouteUrl model.redirectRoute )
 
         Disconnect ->
             ( { model | isAuthentified = False, userName = "" }, pushUrl model.key <| getRouteUrl Root )
