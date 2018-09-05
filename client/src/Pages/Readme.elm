@@ -12,7 +12,7 @@ import Services.Core.Messages exposing (Msg)
 
 view : Model -> Html Msg
 view model =
-    section [ class "hero is-success is-fullheight" ]
+    section [ class "hero is-light is-fullheight" ]
             [ div [ class "hero-body has-text-centered" ]
                 [ div [ class "container" ]
                     [ h1 [ class "title" ] [ text <| translate model.language ReadmeTitle ] ]
