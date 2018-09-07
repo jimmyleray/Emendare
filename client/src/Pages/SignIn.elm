@@ -6,8 +6,6 @@ import Html.Events exposing (onClick)
 
 import Services.Translate.Keys exposing (..)
 import Services.Translate.Main exposing (translate, tagToString, LanguageTag(..))
-import Services.Routing.Main exposing (getRouteUrl)
-import Services.Routing.Routes exposing (Route(..))
 import Services.Core.Model exposing (Model)
 import Services.Core.Messages exposing (Msg(..))
 
@@ -41,7 +39,7 @@ view model =
                         , div [ class "columns" ]
                             [ div [ class "column" ]
                                 [ div [ class "control" ]
-                                    [ a [ class "button is-medium is-light", href <| getRouteUrl SignUp ]
+                                    [ a [ class "button is-medium is-light", href "/sign-up" ]
                                         [ text <| translate model.language SignUpTitle ]
                                     ]
                                 ]

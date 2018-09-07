@@ -5,14 +5,7 @@ import Html exposing (Html)
 import Services.Core.Model exposing (Model)
 import Services.Core.Messages exposing (Msg)
 import Services.Routing.Main exposing (fromUrl)
-import Services.Routing.Routes exposing (Route(..))
-
-import Pages.Home
-import Pages.Readme
-import Pages.SignIn
-import Pages.SignUp
-import Pages.Profile
-import Pages.NotFound
+import Services.Routing.Routes exposing (Route)
 
 
 
@@ -23,10 +16,4 @@ routerView model =
         route = 
             (fromUrl model.url)
     in
-    case route of
-        Root -> Pages.Home.view model
-        Readme -> Pages.Readme.view model
-        SignIn -> Pages.SignIn.view model
-        SignUp -> Pages.SignUp.view model
-        Profile -> Pages.Profile.view model
-        NotFound -> Pages.NotFound.view model
+    route.view model
