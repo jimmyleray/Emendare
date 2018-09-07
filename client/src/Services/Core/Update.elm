@@ -17,10 +17,7 @@ update msg model =
         LinkClicked urlRequest ->
             case urlRequest of
                 Internal url ->
-                    if toString url == getRouteUrl SignIn then
-                        ( model, pushUrl model.key <| toString url )
-                    else
-                        ( { model | redirectRoute = fromUrl model.url }, pushUrl model.key <| toString url )
+                    ( model, pushUrl model.key <| toString url )
 
                 External href ->
                     ( model, load href )
@@ -32,7 +29,7 @@ update msg model =
             ( { model | language = language }, Cmd.none )
 
         Connect ->
-            ( { model | isAuthentified = True, userName = "Albard" }, pushUrl model.key <| getRouteUrl model.redirectRoute )
+            ( { model | isAuthentified = True, userName = "Albard" }, pushUrl model.key <| getRouteUrl Profile )
 
         Disconnect ->
             ( { model | isAuthentified = False, userName = "" }, pushUrl model.key <| getRouteUrl Root )

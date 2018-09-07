@@ -14,5 +14,4 @@ type alias Model =
     , language : LanguageTag
     , isAuthentified : Bool
     , userName : String
-    , redirectRoute : Route
     }

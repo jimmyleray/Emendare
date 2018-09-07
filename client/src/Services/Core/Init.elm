@@ -18,5 +18,4 @@ init flags url key =
     , language = stringToTag flags.language
     , isAuthentified = False
     , userName = ""
-    , redirectRoute = Root
     }, Cmd.none )
