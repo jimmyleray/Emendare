@@ -7,6 +7,8 @@ import Url exposing (toString)
 import Services.Core.Model exposing (Model)
 import Services.Core.Messages exposing (Msg(..))
 import Services.Routing.Routes exposing (routes)
+import Services.Routing.Guard exposing (redirectIfProtected)
+import Services.Routing.Main exposing (fromUrl)
 
 
 
@@ -22,7 +24,7 @@ update msg model =
                     ( model, load href )
 
         UrlChanged url ->
-            ( { model | url = url } , Cmd.none )
+            ( { model | url = url }, redirectIfProtected (fromUrl url) model )
 
         ChangeLanguage language ->
             ( { model | language = language }, Cmd.none )

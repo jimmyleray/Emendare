@@ -19,6 +19,7 @@ type alias Route =
     { title : TranslationKey
     , url : String
     , view : Model -> Html Msg
+    , needAuth : Bool
     }
 
 
@@ -28,30 +29,36 @@ routes =
         { title = HomeTitle
         , url = "/"
         , view = Pages.Home.view
+        , needAuth = False
         }
     , readme =
         { title = ReadmeTitle
         , url = "/readme"
         , view = Pages.Readme.view
+        , needAuth = False
         }
     , signin =
         { title = SignInTitle
         , url = "/sign-in"
         , view = Pages.SignIn.view
+        , needAuth = False
         }
     , signup =
         { title = SignUpTitle
         , url = "/sign-up"
         , view = Pages.SignUp.view
+        , needAuth = False
         }
     , profile =
         { title = ProfileTitle
         , url = "/profile"
         , view = Pages.Profile.view
+        , needAuth = True
         }
     , notfound =
         { title = NotFoundTitle
         , url = "/not-found"
         , view = Pages.NotFound.view
+        , needAuth = False
         }
     }
