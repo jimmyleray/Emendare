@@ -1,7 +1,7 @@
 module Pages.SignIn exposing (view)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, type_, placeholder, href)
+import Html.Attributes exposing (class, type_, placeholder, href, autocomplete)
 import Html.Events exposing (onClick)
 
 import Services.Translate.Keys exposing (..)
@@ -24,7 +24,7 @@ view model =
                             [ label [ class "label is-medium" ]
                                 [ text "Email" ]
                             , div [ class "control has-icons-left" ]
-                                [ input [ class "input", type_ "email", placeholder "Email" ] []
+                                [ input [ class "input", type_ "email", placeholder "Email", autocomplete True ] []
                                 , span [ class "icon is-medium is-left" ]
                                     [ i [ class "fas fa-envelope" ] [] ]
                                 ]
@@ -33,7 +33,7 @@ view model =
                             [ label [ class "label is-medium" ]
                                 [ text "Password" ]
                             , div [ class "control has-icons-left" ]
-                                [ input [ class "input", type_ "password", placeholder "Password" ] []
+                                [ input [ class "input", type_ "password", placeholder "Password", autocomplete True ] []
                                 , span [ class "icon is-medium is-left" ]
                                     [ i [ class "fas fa-lock" ] [] ]
                                 ]
