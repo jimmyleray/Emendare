@@ -32,23 +32,12 @@ fromUrl url =
 getRouteTitle : Route -> TranslationKey
 getRouteTitle route =
     case route of
-        Root ->
-            HomeTitle
-
-        Readme ->
-            ReadmeTitle
-        
-        SignIn ->
-            SignInTitle
-
-        SignUp ->
-            SignUpTitle
-
-        Profile ->
-            ProfileTitle
-
-        NotFound ->
-            NotFoundTitle
+        Root -> HomeTitle
+        Readme -> ReadmeTitle
+        SignIn -> SignInTitle
+        SignUp -> SignUpTitle
+        Profile -> ProfileTitle
+        NotFound -> NotFoundTitle
 
 
 getActualRouteTitle : Model -> String
@@ -60,20 +49,9 @@ getActualRouteTitle model =
 getRouteUrl : Route -> String
 getRouteUrl route =
     case route of
-        Root ->
-            "/"
-
-        Readme ->
-            "/readme"
-
-        SignIn ->
-            "/sign-in"
-
-        SignUp ->
-            "/sign-up"
-
-        Profile ->
-            "/profile"
-
-        NotFound ->
-            "/not-found"
+        Root -> "/"
+        Readme -> "/readme"
+        SignIn -> "/sign-in"
+        SignUp -> "/sign-up"
+        Profile -> "/profile"
+        NotFound -> "/not-found"

@@ -17,11 +17,8 @@ translate languageTag translationKey =
     let
         translateFunction =
             case languageTag of
-                FR ->
-                    frTranslations
-
-                EN ->
-                    enTranslations
+                FR -> frTranslations
+                EN -> enTranslations
     in
     translateFunction translationKey
 
@@ -30,23 +27,14 @@ translate languageTag translationKey =
 tagToString : LanguageTag -> String
 tagToString languageTag =
     case languageTag of
-        FR ->
-            "FR"
-
-        EN ->
-            "EN"
+        FR -> "FR"
+        EN -> "EN"
 
 
 
 stringToTag : String -> LanguageTag
 stringToTag languageString =
     case languageString of
-
-            "FR" -> 
-                FR
-
-            "EN" -> 
-                EN
-
-            _ ->
-                EN
+            "FR" -> FR
+            "EN" -> EN
+            _ -> EN

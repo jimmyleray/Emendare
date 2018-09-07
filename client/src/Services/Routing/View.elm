@@ -24,20 +24,9 @@ routerView model =
             (fromUrl model.url)
     in
     case route of
-        Root ->
-            Pages.Home.view model
-
-        Readme ->
-            Pages.Readme.view model
-
-        SignIn ->
-            Pages.SignIn.view model
-
-        SignUp ->
-            Pages.SignUp.view model
-
-        Profile ->
-            Pages.Profile.view model
-
-        NotFound ->
-            Pages.NotFound.view model
+        Root -> Pages.Home.view model
+        Readme -> Pages.Readme.view model
+        SignIn -> Pages.SignIn.view model
+        SignUp -> Pages.SignUp.view model
+        Profile -> Pages.Profile.view model
+        NotFound -> Pages.NotFound.view model
