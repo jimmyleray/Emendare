@@ -5,7 +5,7 @@
     "start": "serve -s -l 8080 public",
     "dev": "elm make src/Main.elm --debug --output public/script.js",
     "build": "elm make src/Main.elm --optimize --output public/script.temp.js && npm run minify",
-    "minify": "uglifyjs public/script.temp.js --compress pure_funcs='F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9',pure_getters,keep_fargs=false,unsafe_comps,unsafe | uglifyjs --mangle --output=public/script.js",
+    "minify": "uglifyjs public/script.temp.js --compress --pure_funcs 'F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9' --pure_getters --keep_fargs=false --unsafe_comps --unsafe | uglifyjs --mangle --output=public/script.js",
     "lint": "exit 0",
     "test": "exit 0",
     "e2e": "exit 0"
