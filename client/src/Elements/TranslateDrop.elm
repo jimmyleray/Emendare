@@ -15,7 +15,7 @@ view : Model -> Html Msg
 view model =
     div [ class "navbar-item has-dropdown is-hoverable" ]
         [ a [ href "", class "navbar-link" ] [ text <| tagToString model.language ]
-        , div [ class "navbar-dropdown is-right" ]
+        , div [ class "navbar-dropdown" ]
             [ a [ href "", class "navbar-item", onClick <| ChangeLanguage FR ] [ text "Français" ]
             , a [ href "", class "navbar-item", onClick <| ChangeLanguage EN ] [ text "English" ]
             ]
