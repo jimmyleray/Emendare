@@ -26,7 +26,6 @@ view model =
                     Elements.Link.view model routes.profile
                 else
                     Elements.Link.view model routes.signin
-                , Elements.Link.view model routes.readme
                 , a [ class "navbar-item", href "https://github.com/jimmyleray/Emendare", title "GitHub", target "_blank" ]
                     [ span [ class "icon fa-lg" ]
                         [ i [ class "fab fa-github" ] [] ]

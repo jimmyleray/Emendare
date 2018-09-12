@@ -131,9 +131,6 @@ enTranslations key =
 
         HomeTitle ->
             "Home"
-
-        ReadmeTitle ->
-            "Readme"
         
         SignInTitle ->
             "Sign in"

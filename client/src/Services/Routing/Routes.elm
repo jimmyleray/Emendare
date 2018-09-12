@@ -7,7 +7,6 @@ import Services.Core.Model exposing (Model)
 import Services.Core.Messages exposing (Msg)
 
 import Pages.Home
-import Pages.Readme
 import Pages.SignIn
 import Pages.SignUp
 import Pages.Profile
@@ -29,12 +28,6 @@ routes =
         { title = HomeTitle
         , url = "/"
         , view = Pages.Home.view
-        , needAuth = False
-        }
-    , readme =
-        { title = ReadmeTitle
-        , url = "/readme"
-        , view = Pages.Readme.view
         , needAuth = False
         }
     , signin =

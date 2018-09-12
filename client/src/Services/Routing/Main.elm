@@ -13,7 +13,6 @@ parser : Parser (Route -> a) a
 parser =
     oneOf 
         [ Parser.map routes.home Parser.top
-        , Parser.map routes.readme (s "readme")
         , Parser.map routes.signin (s "sign-in")
         , Parser.map routes.signup (s "sign-up")
         , Parser.map routes.profile (s "profile")

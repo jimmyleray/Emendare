@@ -131,9 +131,6 @@ frTranslations key =
 
         HomeTitle ->
             "Accueil"
-
-        ReadmeTitle ->
-            "Readme"
         
         SignInTitle ->
             "Connexion"
