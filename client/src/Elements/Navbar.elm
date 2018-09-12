@@ -17,21 +17,22 @@ import Elements.TranslateDrop
 view : Model -> Html Msg
 view model =
     nav [ attribute "aria-label" "main navigation", class "navbar is-dark is-fixed-top is-transparent", attribute "role" "navigation" ]
-        [ div [ class "navbar-brand" ]
-            [ a [ class "navbar-item", href routes.home.url ] [ text "Emendare" ] ]
-        , div [ class "navbar-menu" ]
-            [ div [ class "navbar-end" ] 
-                [ 
-                if model.isAuthentified then
-                    Elements.Link.view model routes.profile
-                else
-                    Elements.Link.view model routes.signin
-                , a [ class "navbar-item", href "https://github.com/jimmyleray/Emendare", title "GitHub", target "_blank" ]
-                    [ span [ class "icon fa-lg" ]
-                        [ i [ class "fab fa-github" ] [] ]
+        [ div [ class "container" ]
+            [ div [ class "navbar-brand" ]
+                [ a [ class "navbar-item", href routes.home.url ] [ text "Emendare" ] ]
+            , div [ class "navbar-menu" ]
+                [ div [ class "navbar-end" ] 
+                    [ 
+                    if model.isAuthentified then
+                        Elements.Link.view model routes.profile
+                    else
+                        Elements.Link.view model routes.signin
+                    , a [ class "navbar-item", href "https://github.com/jimmyleray/Emendare", title "GitHub", target "_blank" ]
+                        [ span [ class "icon fa-lg" ]
+                            [ i [ class "fab fa-github" ] [] ]
+                        ]
+                    , Elements.TranslateDrop.view model
                     ]
-                , Elements.TranslateDrop.view model
-                ]
-            ] 
-        
+                ] 
+            ]
         ]
