@@ -16,7 +16,7 @@ import Elements.TranslateDrop
 
 view : Model -> Html Msg
 view model =
-    nav [ attribute "aria-label" "main navigation", class "navbar is-dark is-fixed-top is-transparent", attribute "role" "navigation" ]
+    nav [ attribute "aria-label" "main navigation", class "navbar is-dark is-fixed-top", attribute "role" "navigation" ]
         [ div [ class "container" ]
             [ div [ class "navbar-brand" ]
                 [ a [ class "navbar-item", href routes.home.url ] [ text "Emendare" ] ]
