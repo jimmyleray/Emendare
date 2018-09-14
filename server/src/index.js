@@ -16,7 +16,14 @@ app.use(morgan("tiny"));
 app.get("/groups", (req, res) => {
   const url = config.gitlabAPIUrl + `/groups/${config.rootGroupName}/subgroups`;
   axios.get(url).then(({ data }) => {
-    res.json(data);
+    res.json(
+      data.map(each => ({
+        id: each.id,
+        name: each.name,
+        parent_id: each.parent_id,
+        web_url: each.web_url
+      }))
+    );
   });
 });
 
@@ -24,7 +31,12 @@ app.get("/groups", (req, res) => {
 app.get("/groups/:id", (req, res) => {
   const url = config.gitlabAPIUrl + `/groups/${req.params.id}`;
   axios.get(url).then(({ data }) => {
-    res.json(data);
+    res.json({
+      id: data.id,
+      name: data.name,
+      parent_id: data.parent_id,
+      web_url: data.web_url
+    });
   });
 });
 
@@ -32,7 +44,14 @@ app.get("/groups/:id", (req, res) => {
 app.get("/groups/:id/subgroups", (req, res) => {
   const url = config.gitlabAPIUrl + `/groups/${req.params.id}/subgroups`;
   axios.get(url).then(({ data }) => {
-    res.json(data);
+    res.json(
+      data.map(each => ({
+        id: each.id,
+        name: each.name,
+        parent_id: each.parent_id,
+        web_url: each.web_url
+      }))
+    );
   });
 });
 
@@ -40,7 +59,21 @@ app.get("/groups/:id/subgroups", (req, res) => {
 app.get("/groups/:id/projects", (req, res) => {
   const url = config.gitlabAPIUrl + `/groups/${req.params.id}/projects`;
   axios.get(url).then(({ data }) => {
-    res.json(data);
+    res.json(
+      data.map(each => ({
+        id: each.id,
+        name: each.name,
+        created_at: each.created_at,
+        last_activity_at: each.last_activity_at,
+        description: each.description,
+        readme_url: each.readme_url,
+        http_url_to_repo: each.http_url_to_repo,
+        namespace_id: each.namespace.id,
+        namespace_name: each.namespace.name,
+        tags_list: each.tags_list,
+        web_url: each.web_url
+      }))
+    );
   });
 });
 
@@ -48,7 +81,19 @@ app.get("/groups/:id/projects", (req, res) => {
 app.get("/projects/:id", (req, res) => {
   const url = config.gitlabAPIUrl + `/projects/${req.params.id}`;
   axios.get(url).then(({ data }) => {
-    res.json(data);
+    res.json({
+      id: data.id,
+      name: data.name,
+      created_at: data.created_at,
+      last_activity_at: data.last_activity_at,
+      description: data.description,
+      readme_url: data.readme_url,
+      http_url_to_repo: data.http_url_to_repo,
+      namespace_id: data.namespace.id,
+      namespace_name: data.namespace.name,
+      tags_list: data.tags_list,
+      web_url: data.web_url
+    });
   });
 });
 
