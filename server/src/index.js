@@ -28,7 +28,15 @@ app.get("/groups/:id", (req, res) => {
   });
 });
 
-// Get list of all projects in a specific group
+// Get list of subgroups in a specific group
+app.get("/groups/:id/subgroups", (req, res) => {
+  const url = config.gitlabAPIUrl + `/groups/${req.params.id}/subgroups`;
+  axios.get(url).then(({ data }) => {
+    res.json(data);
+  });
+});
+
+// Get list of projects in a specific group
 app.get("/groups/:id/projects", (req, res) => {
   const url = config.gitlabAPIUrl + `/groups/${req.params.id}/projects`;
   axios.get(url).then(({ data }) => {
