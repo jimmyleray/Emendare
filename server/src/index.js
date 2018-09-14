@@ -44,6 +44,14 @@ app.get("/groups/:id/projects", (req, res) => {
   });
 });
 
+// Get a specific project
+app.get("/projects/:id", (req, res) => {
+  const url = config.gitlabAPIUrl + `/projects/${req.params.id}`;
+  axios.get(url).then(({ data }) => {
+    res.json(data);
+  });
+});
+
 // Error 404 Middleware
 app.use((req, res) => {
   res.status(404).send("Not Found");
