@@ -1,0 +1,5 @@
+{
+  "port": 8080,
+  "gitlabAPIUrl": "https://gitlab.com/api/v4",
+  "rootGroupName": "emendare"
+}
