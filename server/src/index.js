@@ -12,25 +12,28 @@ const app = express();
 const morgan = require("morgan");
 app.use(morgan("tiny"));
 
+// Function to add API Url to a partial path
+const api = path => config.gitlabAPIUrl + path;
+
 // Get list of all root groups
 app.get("/groups", (req, res) => {
-  const url = config.gitlabAPIUrl + `/groups/${config.rootGroupName}/subgroups`;
-  axios.get(url).then(({ data }) => {
-    res.json(
-      data.map(each => ({
-        id: each.id,
-        name: each.name,
-        parent_id: each.parent_id,
-        web_url: each.web_url
-      }))
-    );
-  });
+  axios
+    .get(api(`/groups/${config.rootGroupName}/subgroups`))
+    .then(({ data }) => {
+      res.json(
+        data.map(each => ({
+          id: each.id,
+          name: each.name,
+          parent_id: each.parent_id,
+          web_url: each.web_url
+        }))
+      );
+    });
 });
 
 // Get a specific group
 app.get("/groups/:id", (req, res) => {
-  const url = config.gitlabAPIUrl + `/groups/${req.params.id}`;
-  axios.get(url).then(({ data }) => {
+  axios.get(api(`/groups/${req.params.id}`)).then(({ data }) => {
     res.json({
       id: data.id,
       name: data.name,
@@ -42,8 +45,7 @@ app.get("/groups/:id", (req, res) => {
 
 // Get list of subgroups in a specific group
 app.get("/groups/:id/subgroups", (req, res) => {
-  const url = config.gitlabAPIUrl + `/groups/${req.params.id}/subgroups`;
-  axios.get(url).then(({ data }) => {
+  axios.get(api(`/groups/${req.params.id}/subgroups`)).then(({ data }) => {
     res.json(
       data.map(each => ({
         id: each.id,
@@ -57,8 +59,7 @@ app.get("/groups/:id/subgroups", (req, res) => {
 
 // Get list of projects in a specific group
 app.get("/groups/:id/projects", (req, res) => {
-  const url = config.gitlabAPIUrl + `/groups/${req.params.id}/projects`;
-  axios.get(url).then(({ data }) => {
+  axios.get(api(`/groups/${req.params.id}/projects`)).then(({ data }) => {
     res.json(
       data.map(each => ({
         id: each.id,
@@ -79,8 +80,7 @@ app.get("/groups/:id/projects", (req, res) => {
 
 // Get a specific project
 app.get("/projects/:id", (req, res) => {
-  const url = config.gitlabAPIUrl + `/projects/${req.params.id}`;
-  axios.get(url).then(({ data }) => {
+  axios.get(api(`/projects/${req.params.id}`)).then(({ data }) => {
     res.json({
       id: data.id,
       name: data.name,
@@ -104,5 +104,5 @@ app.use((req, res) => {
 
 // Start Html Server
 app.listen(config.port, () => {
-  console.log(`Server start on port ${config.port}.`);
+  console.log(`Server start on port ${config.port}`);
 });
