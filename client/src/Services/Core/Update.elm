@@ -6,7 +6,7 @@ import Url exposing (toString)
 
 import Services.Core.Model exposing (Model)
 import Services.Core.Messages exposing (Msg(..))
-import Services.Routing.Routes exposing (routes)
+import Services.Routing.Routes exposing (Route(..), getRouteUrl)
 import Services.Routing.Guard exposing (redirectIfProtected)
 import Services.Routing.Main exposing (fromUrl)
 
@@ -30,7 +30,7 @@ update msg model =
             ( { model | language = language }, Cmd.none )
 
         Connect ->
-            ( { model | isAuthentified = True, userName = "Albard" }, pushUrl model.key routes.profile.url )
+            ( { model | isAuthentified = True, userName = "Albard" }, pushUrl model.key <| getRouteUrl Profile )
 
         Disconnect ->
-            ( { model | isAuthentified = False, userName = "" }, pushUrl model.key routes.home.url )
+            ( { model | isAuthentified = False, userName = "" }, pushUrl model.key <| getRouteUrl Root )

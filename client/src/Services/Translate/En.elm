@@ -96,9 +96,6 @@ enTranslations key =
         Add ->
             "Add / Create"
 
-        Explore ->
-            "Explore"
-
         Group_add ->
             "Create a group"
 
@@ -143,3 +140,12 @@ enTranslations key =
 
         NotFoundTitle ->
             "Not Found"
+
+        ExploreTitle ->
+            "Explore"
+
+        GroupTitle ->
+            "Group"
+
+        TextTitle ->
+            "Text"

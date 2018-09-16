@@ -96,9 +96,6 @@ frTranslations key =
         Add ->
             "Ajouter / Créer"
 
-        Explore ->
-            "Explorer"
-
         Group_add ->
             "Créer un groupe"
 
@@ -143,3 +140,12 @@ frTranslations key =
 
         NotFoundTitle ->
             "Page introuvable"
+
+        ExploreTitle ->
+            "Explorer"
+
+        GroupTitle ->
+            "Groupe"
+
+        TextTitle ->
+            "Texte"

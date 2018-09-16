@@ -32,7 +32,6 @@ type TranslationKey
     | Use_Cases
     | Developers
     | Add
-    | Explore
     | Group_add
     | Text_add
     | Groups_List
@@ -48,3 +47,6 @@ type TranslationKey
     | SignUpTitle
     | ProfileTitle
     | NotFoundTitle
+    | ExploreTitle
+    | GroupTitle
+    | TextTitle

@@ -1,31 +1,34 @@
 module Services.Routing.Main exposing (..)
 
 import Url
-import Url.Parser as Parser exposing (Parser, oneOf, s)
+import Url.Parser as Parser exposing (Parser, oneOf, s, (</>), string)
 
 import Services.Core.Model exposing (Model)
 import Services.Translate.Keys exposing (TranslationKey)
-import Services.Routing.Routes exposing (routes, Route)
+import Services.Routing.Routes exposing (Route(..), getRouteTitle)
 
 
 
 parser : Parser (Route -> a) a
 parser =
     oneOf 
-        [ Parser.map routes.home Parser.top
-        , Parser.map routes.signin (s "sign-in")
-        , Parser.map routes.signup (s "sign-up")
-        , Parser.map routes.profile (s "profile")
+        [ Parser.map Root Parser.top
+        , Parser.map SignIn (s "sign-in")
+        , Parser.map SignUp (s "sign-up")
+        , Parser.map Profile (s "profile")
+        , Parser.map Explore (s "explore")
+        , Parser.map Group (s "group" </> string)
+        , Parser.map Text (s "text" </> string)
         ]
 
 
 
 fromUrl : Url.Url -> Route
 fromUrl url =
-    Maybe.withDefault routes.notfound <| Parser.parse parser url
+    Maybe.withDefault NotFound <| Parser.parse parser url
 
 
 
 getActualRouteTitle : Model -> TranslationKey
 getActualRouteTitle model =
-    fromUrl model.url |> .title
+    getRouteTitle <| fromUrl model.url
