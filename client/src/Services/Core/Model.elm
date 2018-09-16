@@ -14,4 +14,6 @@ type alias Model =
     , isAuthentified : Bool
     , userName : String
     , apiUrl : String
+    , group : String
+    , text : String
     }

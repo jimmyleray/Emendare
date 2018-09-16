@@ -4,6 +4,7 @@ import Browser.Navigation exposing (Key)
 import Url exposing (Url)
 
 import Services.Core.Model exposing (Model)
+import Services.Core.Config exposing (apiUrl)
 import Services.Translate.Main exposing (LanguageTag(..), stringToTag)
 import Services.Core.Messages exposing (Msg)
 import Services.Core.Flags exposing (Flags)
@@ -19,7 +20,9 @@ initialModel flags url key =
     , language = stringToTag flags.language
     , isAuthentified = False
     , userName = ""
-    , apiUrl = if url.host == "localhost" then "http://localhost:3000/" else "https://emendare-api.cleverapps.io/"
+    , apiUrl = if url.host == "localhost" then "http://localhost:3000" else apiUrl
+    , group = ""
+    , text = ""
     }
 
 

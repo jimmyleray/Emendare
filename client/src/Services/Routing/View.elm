@@ -2,6 +2,7 @@ module Services.Routing.View exposing (routerView)
 
 import Html exposing (Html)
 
+import Services.Core.Config exposing (rootGroupID)
 import Services.Core.Model exposing (Model)
 import Services.Core.Messages exposing (Msg)
 import Services.Routing.Main exposing (fromUrl)
@@ -41,7 +42,7 @@ routerView model =
             Pages.NotFound.view model
 
         Explore ->
-            Pages.Group.view model 3301063
+            Pages.Group.view model rootGroupID
 
         Group id ->
             Pages.Group.view model id

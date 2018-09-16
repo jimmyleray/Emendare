@@ -4,6 +4,7 @@ import Browser.Navigation exposing (pushUrl)
 
 import Services.Core.Model exposing (Model)
 import Services.Routing.Routes exposing (Route(..), getRouteUrl)
+import Services.Routing.Fetch exposing (fetchData)
 import Services.Core.Messages exposing (Msg)
 
 
@@ -13,7 +14,7 @@ redirectIfProtected route model =
     if needAuth route && not model.isAuthentified then 
         pushUrl model.key <| getRouteUrl SignIn
     else
-        Cmd.none
+        fetchData route model
 
 
 needAuth route =

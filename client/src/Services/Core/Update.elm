@@ -34,3 +34,11 @@ update msg model =
 
         Disconnect ->
             ( { model | isAuthentified = False, userName = "" }, pushUrl model.key <| getRouteUrl Root )
+
+        GroupReceived result ->
+            case result of
+                Ok group ->
+                    ( { model | group = group }, Cmd.none )
+
+                Err httpError ->
+                    ( model, Cmd.none )

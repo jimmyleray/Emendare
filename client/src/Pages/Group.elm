@@ -1,6 +1,6 @@
 module Pages.Group exposing (view)
 
-import Html exposing (Html, section, div, h1, text)
+import Html exposing (Html, section, div, h1, h2, text)
 import Html.Attributes exposing (class) 
 
 import Services.Translate.Keys exposing (TranslationKey(..))
@@ -15,6 +15,8 @@ view model id =
     section [ class "hero is-light is-fullheight" ]
             [ div [ class "hero-body has-text-centered" ]
                 [ div [ class "container" ]
-                    [ h1 [ class "title" ] [ text <| (translate model.language GroupTitle) ++ " " ++ String.fromInt id ] ]
+                    [ h1 [ class "title" ] [ text <| (translate model.language GroupTitle) ++ " " ++ String.fromInt id ] 
+                    , h2 [ class "subtitle" ] [ text model.group ]
+                    ]
                 ]
             ]
