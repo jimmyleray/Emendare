@@ -1,5 +1,7 @@
 // Global configuration
-const config = require("./config");
+const port = process.env.PORT || 3000;
+const gitlabAPIUrl = "https://gitlab.com/api/v4";
+const rootGroupName = "emendare";
 
 // Http promise requests
 const axios = require("axios");
@@ -13,14 +15,14 @@ const morgan = require("morgan");
 app.use(morgan("tiny"));
 
 // Function to add API Url to a partial path
-const api = path => config.gitlabAPIUrl + path;
+const api = path => gitlabAPIUrl + path;
 
 // Function to send response data
 const send = res => ({ data }) => res.json(data);
 
 // Get list of all root groups
 app.get("/groups", (req, res) => {
-  axios.get(api(`/groups/${config.rootGroupName}/subgroups`)).then(send(res));
+  axios.get(api(`/groups/${rootGroupName}/subgroups`)).then(send(res));
 });
 
 // Get a specific group
@@ -49,6 +51,6 @@ app.use((req, res) => {
 });
 
 // Start Html Server
-app.listen(config.port, () => {
-  console.log(`Server start on port ${config.port}`);
+app.listen(port, () => {
+  console.log(`Server start on port ${port}`);
 });
