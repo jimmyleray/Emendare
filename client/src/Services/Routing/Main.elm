@@ -1,7 +1,7 @@
 module Services.Routing.Main exposing (..)
 
 import Url
-import Url.Parser as Parser exposing (Parser, oneOf, s, (</>), string)
+import Url.Parser as Parser exposing (Parser, oneOf, s, (</>), int)
 
 import Services.Core.Model exposing (Model)
 import Services.Translate.Keys exposing (TranslationKey)
@@ -17,8 +17,8 @@ parser =
         , Parser.map SignUp (s "sign-up")
         , Parser.map Profile (s "profile")
         , Parser.map Explore (s "explore")
-        , Parser.map Group (s "group" </> string)
-        , Parser.map Text (s "text" </> string)
+        , Parser.map Group (s "group" </> int)
+        , Parser.map Text (s "text" </> int)
         ]
 
 

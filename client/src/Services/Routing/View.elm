@@ -41,7 +41,7 @@ routerView model =
             Pages.NotFound.view model
 
         Explore ->
-            Pages.Group.view model "3301063"
+            Pages.Group.view model 3301063
 
         Group id ->
             Pages.Group.view model id

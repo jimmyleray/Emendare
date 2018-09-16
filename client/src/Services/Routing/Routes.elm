@@ -15,8 +15,8 @@ type Route
     | Profile 
     | NotFound 
     | Explore 
-    | Group String
-    | Text String
+    | Group Int
+    | Text Int
 
 
 getRouteTitle route =
@@ -67,7 +67,7 @@ getRouteUrl route =
             "/explore"
 
         Group id ->
-            "/group/" ++ id
+            "/group/" ++ String.fromInt id
 
         Text id ->
-            "/text/" ++ id
+            "/text/" ++ String.fromInt id
