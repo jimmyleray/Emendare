@@ -15,86 +15,32 @@ app.use(morgan("tiny"));
 // Function to add API Url to a partial path
 const api = path => config.gitlabAPIUrl + path;
 
+// Function to send response data
+const send = res => ({ data }) => res.json(data);
+
 // Get list of all root groups
 app.get("/groups", (req, res) => {
-  axios
-    .get(api(`/groups/${config.rootGroupName}/subgroups`))
-    .then(({ data }) => {
-      res.json(
-        data.map(each => ({
-          id: each.id,
-          name: each.name,
-          parent_id: each.parent_id,
-          web_url: each.web_url
-        }))
-      );
-    });
+  axios.get(api(`/groups/${config.rootGroupName}/subgroups`)).then(send(res));
 });
 
 // Get a specific group
 app.get("/groups/:id", (req, res) => {
-  axios.get(api(`/groups/${req.params.id}`)).then(({ data }) => {
-    res.json({
-      id: data.id,
-      name: data.name,
-      parent_id: data.parent_id,
-      web_url: data.web_url
-    });
-  });
+  axios.get(api(`/groups/${req.params.id}`)).then(send(res));
 });
 
 // Get list of subgroups in a specific group
 app.get("/groups/:id/subgroups", (req, res) => {
-  axios.get(api(`/groups/${req.params.id}/subgroups`)).then(({ data }) => {
-    res.json(
-      data.map(each => ({
-        id: each.id,
-        name: each.name,
-        parent_id: each.parent_id,
-        web_url: each.web_url
-      }))
-    );
-  });
+  axios.get(api(`/groups/${req.params.id}/subgroups`)).then(send(res));
 });
 
 // Get list of projects in a specific group
 app.get("/groups/:id/projects", (req, res) => {
-  axios.get(api(`/groups/${req.params.id}/projects`)).then(({ data }) => {
-    res.json(
-      data.map(each => ({
-        id: each.id,
-        name: each.name,
-        created_at: each.created_at,
-        last_activity_at: each.last_activity_at,
-        description: each.description,
-        readme_url: each.readme_url,
-        http_url_to_repo: each.http_url_to_repo,
-        namespace_id: each.namespace.id,
-        namespace_name: each.namespace.name,
-        tags_list: each.tags_list,
-        web_url: each.web_url
-      }))
-    );
-  });
+  axios.get(api(`/groups/${req.params.id}/projects`)).then(send(res));
 });
 
 // Get a specific project
 app.get("/projects/:id", (req, res) => {
-  axios.get(api(`/projects/${req.params.id}`)).then(({ data }) => {
-    res.json({
-      id: data.id,
-      name: data.name,
-      created_at: data.created_at,
-      last_activity_at: data.last_activity_at,
-      description: data.description,
-      readme_url: data.readme_url,
-      http_url_to_repo: data.http_url_to_repo,
-      namespace_id: data.namespace.id,
-      namespace_name: data.namespace.name,
-      tags_list: data.tags_list,
-      web_url: data.web_url
-    });
-  });
+  axios.get(api(`/projects/${req.params.id}`)).then(send(res));
 });
 
 // Error 404 Middleware
