@@ -15,6 +15,6 @@ view model id =
     section [ class "hero is-light is-fullheight" ]
             [ div [ class "hero-body has-text-centered" ]
                 [ div [ class "container" ]
-                    [ h1 [ class "title" ] [ text <| (translate model.language GroupTitle) ++ id ] ]
+                    [ h1 [ class "title" ] [ text <| (translate model.language GroupTitle) ++ " " ++ id ] ]
                 ]
             ]
