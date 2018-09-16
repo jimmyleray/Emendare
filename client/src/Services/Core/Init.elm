@@ -19,6 +19,7 @@ initialModel flags url key =
     , language = stringToTag flags.language
     , isAuthentified = False
     , userName = ""
+    , apiUrl = if url.host == "localhost" then "http://localhost:3000/" else "https://emendare-api.cleverapps.io/"
     }
 
 
