@@ -20,6 +20,16 @@ const api = path => gitlabAPIUrl + path;
 // Function to send response data
 const send = res => ({ data }) => res.json(data);
 
+// Open API CORS Headers
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 // Get list of all root groups
 app.get("/groups", (req, res) => {
   axios.get(api(`/groups/${rootGroupName}/subgroups`)).then(send(res));
