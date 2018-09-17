@@ -32,16 +32,21 @@ app.get("/groups/:id", (req, res) => {
   Promise.all([
     axios.get(api(`/groups/${req.params.id}`)),
     axios.get(api(`/groups/${req.params.id}/subgroups`))
-  ]).then(values => {
-    const data = values[0].data;
-    const groups = values[1].data;
-    data.groups = groups;
+  ]).then(([{ data }, groups]) => {
+    // Add groups params to data
+    data.groups = groups.data;
+
+    // Rename param projects to texts
+    data.texts = data.projects;
+    delete data.projects;
+
+    // Send response
     res.json(data);
   });
 });
 
-// Get a specific project
-app.get("/projects/:id", (req, res) => {
+// Get a specific texot
+app.get("/texts/:id", (req, res) => {
   axios
     .get(api(`/projects/${req.params.id}`))
     .then(({ data }) => res.json(data));
