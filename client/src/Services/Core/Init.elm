@@ -3,7 +3,7 @@ module Services.Core.Init exposing (init)
 import Browser.Navigation exposing (Key)
 import Url exposing (Url)
 
-import Services.Core.Model exposing (Model)
+import Services.Core.Model exposing (Model, Group, Text)
 import Services.Core.Config exposing (apiUrl)
 import Services.Translate.Main exposing (LanguageTag(..), stringToTag)
 import Services.Core.Messages exposing (Msg)
@@ -21,8 +21,8 @@ initialModel flags url key =
     , isAuthentified = False
     , userName = ""
     , apiUrl = if url.host == "localhost" then "http://localhost:3000" else apiUrl
-    , group = ""
-    , text = ""
+    , group = initialGroup
+    , text = initialText
     }
 
 
@@ -32,3 +32,36 @@ init flags url key =
     ( initialModel flags url key
     , redirectIfProtected (fromUrl url) <| initialModel flags url key
     )
+
+
+
+initialGroup : Group
+initialGroup =
+    { description = ""
+    , groups = []
+    , id = 0
+    , name = ""
+    , parent_id = Just 0
+    , path = ""
+    , texts = []
+    , visibility  = ""
+    }
+
+
+
+initialText : Text
+initialText =
+    { description = ""
+    , http_url_to_repo = ""
+    , id = 0
+    , name = ""
+    , namespace = 
+        { id = 0
+        , kind = ""
+        , name = ""
+        , parent_id = Just 0
+        , path = ""
+        }
+    , path = ""
+    , readme_url = ""
+    }

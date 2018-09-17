@@ -1,12 +1,11 @@
 module Services.Routing.Fetch exposing (fetchData)
 
-import Browser.Navigation exposing (pushUrl)
-import Http exposing (..)
-
+import Http exposing (send, get)
 import Services.Core.Config exposing (rootGroupID)
 import Services.Core.Model exposing (Model)
-import Services.Routing.Routes exposing (Route(..), getRouteUrl)
+import Services.Routing.Routes exposing (Route(..))
 import Services.Core.Messages exposing (Msg(..))
+import Services.Core.Decode exposing (decodeGroup)
 
 
 
@@ -14,10 +13,10 @@ fetchData : Route -> Model -> Cmd Msg
 fetchData route model =
     case route of
         Explore ->
-            Http.send GroupReceived (Http.getString <| model.apiUrl ++ "/groups/" ++ String.fromInt rootGroupID)
+            send GroupReceived <| get (model.apiUrl ++ "/groups/" ++ String.fromInt rootGroupID) decodeGroup
 
         Group id ->
-            Http.send GroupReceived (Http.getString <| model.apiUrl ++ "/groups/" ++ String.fromInt id)
+            send GroupReceived <| get (model.apiUrl ++ "/groups/" ++ String.fromInt id) decodeGroup
 
         _ ->
             Cmd.none

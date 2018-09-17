@@ -16,7 +16,7 @@ view model id =
             [ div [ class "hero-body has-text-centered" ]
                 [ div [ class "container" ]
                     [ h1 [ class "title" ] [ text <| (translate model.language GroupTitle) ++ " " ++ String.fromInt id ] 
-                    , h2 [ class "subtitle" ] [ text model.group ]
+                    , h2 [ class "subtitle" ] [ text model.group.name ]
                     ]
                 ]
             ]

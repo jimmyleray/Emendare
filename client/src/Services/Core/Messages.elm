@@ -4,6 +4,7 @@ import Browser exposing (UrlRequest)
 import Url exposing (Url)
 import Http exposing (..)
 
+import Services.Core.Model exposing (Group)
 import Services.Translate.Main exposing (LanguageTag)
 
 
@@ -14,4 +15,4 @@ type Msg
     | ChangeLanguage LanguageTag
     | Connect
     | Disconnect
-    | GroupReceived (Result Http.Error String)
+    | GroupReceived (Result Http.Error Group)

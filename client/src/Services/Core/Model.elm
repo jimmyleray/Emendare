@@ -1,4 +1,4 @@
-module Services.Core.Model exposing (Model)
+module Services.Core.Model exposing (Model, Group, Subgroup, Text, Namespace)
 
 import Browser.Navigation exposing (Key)
 import Url exposing (Url)
@@ -14,6 +14,52 @@ type alias Model =
     , isAuthentified : Bool
     , userName : String
     , apiUrl : String
-    , group : String
-    , text : String
+    , group : Group
+    , text : Text
+    }
+
+
+
+type alias Group =
+    { description : String
+    , groups : List Subgroup
+    , id : Int
+    , name : String
+    , parent_id : Maybe Int
+    , path : String
+    , texts : List Text
+    , visibility : String
+    }
+
+
+
+type alias Subgroup =
+    { description : String
+    , id : Int
+    , name : String
+    , parent_id : Int
+    , path : String
+    , visibility : String
+    }
+
+
+
+type alias Text =
+    { description : String
+    , http_url_to_repo : String
+    , id : Int
+    , name : String
+    , namespace : Namespace
+    , path : String
+    , readme_url : String
+    }
+
+
+
+type alias Namespace =
+    { id : Int
+    , kind : String
+    , name : String
+    , parent_id : Maybe Int
+    , path : String
     }
