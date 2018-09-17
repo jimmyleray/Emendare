@@ -30,11 +30,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Get list of all root groups
-app.get("/groups", (req, res) => {
-  axios.get(api(`/groups/${rootGroupName}/subgroups`)).then(send(res));
-});
-
 // Get a specific group
 app.get("/groups/:id", (req, res) => {
   axios.get(api(`/groups/${req.params.id}`)).then(send(res));
