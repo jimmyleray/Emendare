@@ -17,9 +17,6 @@ app.use(morgan("tiny"));
 // Function to add API Url to a partial path
 const api = path => gitlabAPIUrl + path;
 
-// Function to send response data
-const send = res => ({ data }) => res.json(data);
-
 // Open API CORS Headers
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -30,24 +27,24 @@ app.use((req, res, next) => {
   next();
 });
 
-// Get a specific group
+// Get a specific group with subgroups
 app.get("/groups/:id", (req, res) => {
-  axios.get(api(`/groups/${req.params.id}`)).then(send(res));
-});
-
-// Get list of subgroups in a specific group
-app.get("/groups/:id/subgroups", (req, res) => {
-  axios.get(api(`/groups/${req.params.id}/subgroups`)).then(send(res));
-});
-
-// Get list of projects in a specific group
-app.get("/groups/:id/projects", (req, res) => {
-  axios.get(api(`/groups/${req.params.id}/projects`)).then(send(res));
+  Promise.all([
+    axios.get(api(`/groups/${req.params.id}`)),
+    axios.get(api(`/groups/${req.params.id}/subgroups`))
+  ]).then(values => {
+    const data = values[0].data;
+    const groups = values[1].data;
+    data.groups = groups;
+    res.json(data);
+  });
 });
 
 // Get a specific project
 app.get("/projects/:id", (req, res) => {
-  axios.get(api(`/projects/${req.params.id}`)).then(send(res));
+  axios
+    .get(api(`/projects/${req.params.id}`))
+    .then(({ data }) => res.json(data));
 });
 
 // Error 404 Middleware
