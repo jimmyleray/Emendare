@@ -24,21 +24,32 @@ update msg model =
                     ( model, load href )
 
         UrlChanged url ->
-            ( { model | url = url }, redirectIfProtected (fromUrl url) model )
+            ( { model | url = url, group = Nothing, text = Nothing }
+            , redirectIfProtected (fromUrl url) model )
 
         ChangeLanguage language ->
             ( { model | language = language }, Cmd.none )
 
         Connect ->
-            ( { model | isAuthentified = True, userName = "Albard" }, pushUrl model.key <| getRouteUrl Profile )
+            ( { model | isAuthentified = True, userName = "Albard" }
+            , pushUrl model.key <| getRouteUrl Profile )
 
         Disconnect ->
-            ( { model | isAuthentified = False, userName = "" }, pushUrl model.key <| getRouteUrl Root )
+            ( { model | isAuthentified = False, userName = "" }
+            , pushUrl model.key <| getRouteUrl Root )
 
         GroupReceived result ->
             case result of
                 Ok group ->
                     ( { model | group = Just group }, Cmd.none )
+
+                Err httpError ->
+                    ( model, Cmd.none )
+
+        TextReceived result ->
+            case result of
+                Ok txt ->
+                    ( { model | text = Just txt }, Cmd.none )
 
                 Err httpError ->
                     ( model, Cmd.none )
