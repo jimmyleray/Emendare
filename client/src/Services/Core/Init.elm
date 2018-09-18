@@ -21,8 +21,8 @@ initialModel flags url key =
     , isAuthentified = False
     , userName = ""
     , apiUrl = if url.host == "localhost" then "http://localhost:3000" else apiUrl
-    , group = initialGroup
-    , text = initialText
+    , group = Nothing
+    , text = Nothing
     }
 
 
@@ -32,36 +32,3 @@ init flags url key =
     ( initialModel flags url key
     , redirectIfProtected (fromUrl url) <| initialModel flags url key
     )
-
-
-
-initialGroup : Group
-initialGroup =
-    { description = ""
-    , groups = []
-    , id = 0
-    , name = ""
-    , parent_id = Just 0
-    , path = ""
-    , texts = []
-    , visibility  = ""
-    }
-
-
-
-initialText : Text
-initialText =
-    { description = ""
-    , http_url_to_repo = ""
-    , id = 0
-    , name = ""
-    , namespace = 
-        { id = 0
-        , kind = ""
-        , name = ""
-        , parent_id = Just 0
-        , path = ""
-        }
-    , path = ""
-    , readme_url = ""
-    }

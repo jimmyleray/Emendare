@@ -14,8 +14,8 @@ type alias Model =
     , isAuthentified : Bool
     , userName : String
     , apiUrl : String
-    , group : Group
-    , text : Text
+    , group : Maybe Group
+    , text : Maybe Text
     }
 
 

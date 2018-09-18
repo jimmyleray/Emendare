@@ -6,7 +6,7 @@ import Html.Events exposing (onClick)
 
 import Services.Translate.Keys exposing (TranslationKey(..))
 import Services.Translate.Main exposing (translate)
-import Services.Core.Model exposing (Model, Subgroup, Text)
+import Services.Core.Model exposing (Model, Group, Subgroup, Text)
 import Services.Core.Messages exposing (Msg)
 import Services.Routing.Routes as Route
 
@@ -16,37 +16,48 @@ view : Model -> Int -> Html Msg
 view model id =
     section [ class "hero is-fullheight" ]
             [ div [ class "hero-body has-text-centered" ]
-                [ div [ class "container" ]
-                    [ h1 [ class "title" ] [ text <| (translate model.language GroupTitle) ++ " : " ++ model.group.name ] 
-                    , h2 [ class "subtitle" ] [ text model.group.description ]
-                    , viewTable model
-                    ]
+                [ case model.group of
+                    Just group ->
+                        viewContainer model group
+                        
+                    Nothing ->
+                        div [ class "container" ] []
                 ]
             ]
 
 
 
-viewTable : Model -> Html Msg
-viewTable model =
-    table [ class "table is-fullwidth is-striped is-bordered" ]
-        [ viewHeader model
-        , viewBody model
+viewContainer : Model -> Group -> Html Msg
+viewContainer model group =
+    div [ class "container" ]
+        [ h1 [ class "title" ] [ text <| (translate model.language GroupTitle) ++ " : " ++ group.name ] 
+        , h2 [ class "subtitle" ] [ text group.description ]
+        , viewTable group
         ]
 
 
 
-viewBody : Model -> Html Msg
-viewBody model =
+viewTable : Group -> Html Msg
+viewTable group =
+    table [ class "table is-fullwidth is-striped is-bordered" ]
+        [ viewHeader
+        , viewBody group
+        ]
+
+
+
+viewBody : Group -> Html Msg
+viewBody group =
     tbody []
-        ( [ viewReturn model ]
-        ++ (List.map viewGroup model.group.groups)
-        ++ (List.map viewText model.group.texts)
+        ( [ viewReturn group ]
+        ++ (List.map viewGroup group.groups)
+        ++ (List.map viewText group.texts)
         )
 
 
 
-viewHeader : Model -> Html Msg
-viewHeader model =
+viewHeader : Html Msg
+viewHeader =
     thead [] 
         [ tr []
             [ th [] [ text "Name" ]
@@ -56,9 +67,9 @@ viewHeader model =
 
 
 
-viewReturn : Model-> Html Msg
-viewReturn model =
-    case model.group.parent_id of
+viewReturn : Group-> Html Msg
+viewReturn group =
+    case group.parent_id of
         Just parent_id ->
             tr []
                 [ td []

@@ -38,7 +38,7 @@ update msg model =
         GroupReceived result ->
             case result of
                 Ok group ->
-                    ( { model | group = group }, Cmd.none )
+                    ( { model | group = Just group }, Cmd.none )
 
                 Err httpError ->
                     ( model, Cmd.none )
