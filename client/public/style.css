@@ -28,3 +28,7 @@ section {
   max-width: 960px !important;
   margin: auto;
 }
+
+.padding-6 {
+  padding: 6px !important;
+}
