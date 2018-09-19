@@ -1,5 +1,6 @@
 module Pages.Text exposing (view)
 
+import Markdown
 import Html exposing (Html, section, div, h1, h2, text)
 import Html.Attributes exposing (class) 
 
@@ -30,4 +31,10 @@ viewContainer model txt =
     div [ class "container" ]
         [ h1 [ class "title" ] [ text <| (translate model.language TextTitle) ++ " : " ++ txt.name ] 
         , h2 [ class "subtitle" ] [ text txt.description ]
+        , case txt.content of
+            Just content ->
+                Markdown.toHtml [class "box has-text-left"] content
+                
+            Nothing ->
+                div [] []
         ]

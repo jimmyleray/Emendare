@@ -46,6 +46,7 @@ type alias Subgroup =
 
 type alias Text =
     { description : String
+    , content : Maybe String
     , http_url_to_repo : String
     , id : Int
     , name : String

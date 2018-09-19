@@ -42,11 +42,19 @@ app.get("/groups/:id", (req: express.Request, res: express.Response) => {
   });
 });
 
-// Get a specific texot
+// Get a specific text
 app.get("/texts/:id", (req: express.Request, res: express.Response) => {
-  axios.default
-    .get(api(`/projects/${req.params.id}`))
-    .then(({ data }) => res.json(data));
+  Promise.all([
+    axios.default.get(api(`/projects/${req.params.id}`)),
+    axios.default.get(
+      api(
+        `/projects/${req.params.id}/repository/files/README.md/raw?ref=master`
+      )
+    )
+  ]).then(([{ data }, content]) => {
+    data.content = content.data;
+    res.json(data);
+  });
 });
 
 // Error 404 Middleware

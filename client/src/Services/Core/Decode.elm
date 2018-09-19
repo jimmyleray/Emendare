@@ -34,8 +34,9 @@ decodeSubgroup =
 
 decodeText : Decoder Text
 decodeText =
-  map7 Text
+  map8 Text
     (field "description" string)
+    (maybe <| field "content" string)
     (field "http_url_to_repo" string)
     (field "id" int)
     (field "name" string)
