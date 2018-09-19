@@ -33,7 +33,7 @@ viewContainer model txt =
         , h2 [ class "subtitle" ] [ text txt.description ]
         , case txt.content of
             Just content ->
-                Markdown.toHtml [class "box has-text-left"] content
+                Markdown.toHtml [class "box markdown-body has-text-left"] content
                 
             Nothing ->
                 div [] []
