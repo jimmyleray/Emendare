@@ -49,8 +49,8 @@ viewTable group =
 viewBody : Group -> Html Msg
 viewBody group =
     tbody []
-        ( [ viewReturn group ]
-        ++ (List.map viewGroup group.groups)
+        ( viewReturn group
+        :: (List.map viewGroup group.groups)
         ++ (List.map viewText group.texts)
         )
 
