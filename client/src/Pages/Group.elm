@@ -104,7 +104,9 @@ viewText : Text -> Html Msg
 viewText txt =
     tr []
         [ td [] 
-            [ a [ href <| Route.getRouteUrl <| Route.Text txt.id ] 
+            [ span [ class "icon" ]
+                [ i [ class "far fa-file" ] [] ]
+            , a [ href <| Route.getRouteUrl <| Route.Text txt.id ] 
                 [ text txt.name ] 
             ]
         , td [] [ text txt.description ]
