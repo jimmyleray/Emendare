@@ -14,23 +14,21 @@ import Services.Routing.Routes exposing (Route(..), getRouteUrl)
 
 view : Model -> Int -> Html Msg
 view model id =
-    section [ class "hero is-fullheight" ]
-            [ div [ class "hero-body" ]
-                [ case model.text of
-                    Just txt ->
-                        viewContainer model txt
-                        
-                    Nothing ->
-                        div [ class "container" ] []
-                ]
-            ]
+    section []
+        [ case model.text of
+            Just txt ->
+                viewContainer model txt
+                
+            Nothing ->
+                div [ class "container" ] []
+        ]
 
 
 
 viewContainer : Model -> Text -> Html Msg
 viewContainer model txt =
-    div [ class "markdown-container" ]
-        [ nav [ class "breadcrumb" ]
+    div [ class "container max-width-960" ]
+        [ nav [ class "breadcrumb is-medium" ]
             [ ul []
                 [ li []
                     [ a [ href <| getRouteUrl <| Group txt.namespace.id ]

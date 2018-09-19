@@ -14,23 +14,21 @@ import Services.Routing.Routes as Route
 
 view : Model -> Int -> Html Msg
 view model id =
-    section [ class "hero is-fullheight" ]
-            [ div [ class "hero-body has-text-centered" ]
-                [ case model.group of
-                    Just group ->
-                        viewContainer model group
-                        
-                    Nothing ->
-                        div [ class "container" ] []
-                ]
+    section []
+            [ case model.group of
+                Just group ->
+                    viewContainer model group
+                    
+                Nothing ->
+                    div [ class "container" ] []
             ]
 
 
 
 viewContainer : Model -> Group -> Html Msg
 viewContainer model group =
-    div [ class "container" ]
-        [ h1 [ class "title" ] [ text <| (translate model.language GroupTitle) ++ " : " ++ group.name ] 
+    div [ class "container max-width-960" ]
+        [ h1 [ class "title" ] [ text group.name ] 
         , h2 [ class "subtitle" ] [ text group.description ]
         , viewTable group
         ]

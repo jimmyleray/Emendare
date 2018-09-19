@@ -12,11 +12,9 @@ import Services.Core.Messages exposing (Msg)
 
 view : Model -> Html Msg
 view model =
-    section [ class "hero is-warning is-fullheight" ]
-            [ div [ class "hero-body has-text-centered" ]
-                [ div [ class "container" ]
-                    [ h1 [ class "title" ] [ text <| translate model.language Error404 ]
-                    , h2 [ class "subtitle" ] [ text <| translate model.language NotFoundTitle ]
-                    ]
-                ]
+    section []
+        [ div [ class "container has-text-centered" ]
+            [ h1 [ class "title" ] [ text <| translate model.language Error404 ]
+            , h2 [ class "subtitle" ] [ text <| translate model.language NotFoundTitle ]
             ]
+        ]
