@@ -35,6 +35,6 @@ tagToString languageTag =
 stringToTag : String -> LanguageTag
 stringToTag languageString =
     case languageString of
-            "FR" -> FR
-            "EN" -> EN
-            _ -> EN
+        "FR" -> FR
+        "EN" -> EN
+        _ -> EN

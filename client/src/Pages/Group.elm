@@ -30,14 +30,14 @@ viewContainer model group =
     div [ class "container max-width-960" ]
         [ h1 [ class "title" ] [ text group.name ] 
         , h2 [ class "subtitle" ] [ text group.description ]
-        , div [ class "box padding-6" ] [ viewTable group ]
+        , div [ class "box no-padding overflow-hidden" ] [ viewTable group ]
         ]
 
 
 
 viewTable : Group -> Html Msg
 viewTable group =
-    table [ class "table is-fullwidth is-striped is-bordered" ]
+    table [ class "table is-fullwidth is-striped" ]
         [ viewHeader
         , viewBody group
         ]
