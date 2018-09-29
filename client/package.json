@@ -8,7 +8,7 @@
     "minify": "uglifyjs public/script.temp.js --compress --pure_funcs 'F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9' --pure_getters --keep_fargs=false --unsafe_comps --unsafe | uglifyjs --mangle --output=public/script.js",
     "html-minifier": "html-minifier --file-ext html --input-dir public --output-dir public --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true",
     "lint": "exit 0",
-    "test": "exit 0",
+    "test:unit": "exit 0",
     "e2e": "exit 0"
   },
   "author": "Jimmy Leray",
