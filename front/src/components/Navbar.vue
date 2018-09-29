@@ -13,9 +13,3 @@
     </v-toolbar-items>
   </v-toolbar>
 </template>
-
-<script>
-export default {
-  name: 'Navbar'
-}
-</script>
