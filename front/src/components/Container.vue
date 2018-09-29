@@ -1,9 +1,9 @@
 <template>
   <v-content>
     <v-container fluid>
-      <v-slide-y-transition mode="out-in">
+      <v-fade-transition hide-on-leave>
         <router-view/>
-      </v-slide-y-transition>
+      </v-fade-transition>
     </v-container>
   </v-content>
 </template>
