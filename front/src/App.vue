@@ -1,9 +1,6 @@
 <template>
-  <v-app>
-    <v-toolbar app>
-      <v-toolbar-title id="app-title" v-text="title"></v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>
+  <v-app dark>
+    <Navbar></Navbar>
     <v-content>
       <router-view/>
     </v-content>
@@ -11,12 +8,11 @@
 </template>
 
 <script>
+import Navbar from './components/Navbar.vue'
+
 export default {
-  name: 'App',
-  data() {
-    return {
-      title: 'Emendare'
-    }
+  components: {
+    Navbar
   }
 }
 </script>
