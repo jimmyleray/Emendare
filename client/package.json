@@ -1,22 +1,64 @@
 {
-  "name": "emendare-front",
-  "version": "0.0.0",
+  "name": "emendare",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "serve -s -l 8080 public",
-    "dev": "elm make src/Main.elm --debug --output public/script.js",
-    "build": "elm make src/Main.elm --optimize --output public/script.temp.js && npm run minify && npm run html-minifier",
-    "minify": "uglifyjs public/script.temp.js --compress --pure_funcs 'F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9' --pure_getters --keep_fargs=false --unsafe_comps --unsafe | uglifyjs --mangle --output=public/script.js",
-    "html-minifier": "html-minifier --file-ext html --input-dir public --output-dir public --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true",
-    "lint": "exit 0",
-    "test:unit": "exit 0",
-    "e2e": "exit 0"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "e2e": "exit 0",
+    "lint": "vue-cli-service lint",
+    "start": "serve -s -l 8080 dist",
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:unit": "vue-cli-service test:unit"
   },
-  "author": "Jimmy Leray",
-  "license": "GPL-3.0",
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0-rc.1",
+    "@fortawesome/fontawesome-free": "^5.2.0",
+    "register-service-worker": "^1.0.0",
+    "roboto-fontface": "*",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1",
+    "vuetify": "^1.2.0",
+    "vuex": "^3.0.1"
+  },
   "devDependencies": {
-    "elm": "^0.19.0-bugfix2",
-    "html-minifier": "^3.5.20",
-    "serve": "^10.0.1",
-    "uglify-js": "^3.4.9"
-  }
+    "@vue/cli-plugin-babel": "^3.0.4",
+    "@vue/cli-plugin-e2e-cypress": "^3.0.4",
+    "@vue/cli-plugin-eslint": "^3.0.4",
+    "@vue/cli-plugin-pwa": "^3.0.4",
+    "@vue/cli-plugin-unit-jest": "^3.0.4",
+    "@vue/cli-service": "^3.0.4",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "axios": "^0.18.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.0.1",
+    "serve": "^10.0.2",
+    "vue-cli-plugin-axios": "0.0.4",
+    "vue-cli-plugin-vuetify": "^0.2.0",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
