@@ -1,5 +1,5 @@
 <template>
-  <v-layout column align-center>
-    <h1>Not Found</h1>
+  <v-layout align-center justify-center>
+    <h1>Oups cette page n'existe pas ou plus</h1>
   </v-layout>
 </template>

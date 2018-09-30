@@ -1,6 +1,6 @@
 <template>
   <v-layout column align-center>
-    <h1>SignIn</h1>
+    <h1>Connexion</h1>
     <v-btn @click="login()">Connexion</v-btn>
   </v-layout>
 </template>

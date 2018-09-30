@@ -1,5 +1,5 @@
 <template>
   <v-layout column align-center>
-    <h1>Text</h1>
+    <h1>Texte</h1>
   </v-layout>
 </template>
