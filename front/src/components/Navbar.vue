@@ -6,10 +6,21 @@
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-btn to="/sign-in" flat>Connexion</v-btn>
+      <v-btn to="/sign-in" v-if="!isLoggedIn" flat>Connexion</v-btn>
+      <v-btn to="/profile" v-if="isLoggedIn" flat>Profil</v-btn>
       <v-btn href="https://github.com/jimmyleray/emendare" target="_blank" flat icon>
         <v-icon class="fab fa-github"></v-icon>
       </v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
+
+<script>
+export default {
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn
+    }
+  }
+}
+</script>
