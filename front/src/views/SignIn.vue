@@ -1,7 +1,7 @@
 <template>
   <v-layout column align-center>
     <h1>Connexion</h1>
-    <v-btn @click="login()">Connexion</v-btn>
+    <v-btn color="success" @click="login()">Connexion</v-btn>
   </v-layout>
 </template>
 
