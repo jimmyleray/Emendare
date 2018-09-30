@@ -45,7 +45,7 @@ jobs:
       # Run unit tests
       - run:
           name: Run unit tests
-          command: npm run test:unit
+          command: npm run tests
 
       # Run e2e tests
       - run:
