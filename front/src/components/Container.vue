@@ -1,6 +1,6 @@
 <template>
   <v-content>
-    <v-container fluid fill-height>
+    <v-container fill-height>
       <v-fade-transition hide-on-leave>
         <router-view v-if="!isPending"/>
         <Pending v-if="isPending"></Pending>

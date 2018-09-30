@@ -9,7 +9,7 @@
       <v-btn to="/sign-in" v-if="!isLoggedIn" flat>Connexion</v-btn>
       <v-btn to="/profile" v-if="isLoggedIn" flat>Profil</v-btn>
       <v-btn href="https://github.com/jimmyleray/emendare" target="_blank" flat icon>
-        <v-icon class="fab fa-github"></v-icon>
+        <v-icon>fab fa-github</v-icon>
       </v-btn>
     </v-toolbar-items>
   </v-toolbar>
