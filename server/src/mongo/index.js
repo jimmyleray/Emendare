@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
-const mongoHost = process.env.MONGODB_ADDON_HOST || "mongodb://localhost/";
+const localHost = "mongodb://localhost:27017/emendare";
+const mongoHost = process.env.MONGODB_ADDON_URI || localHost;
 
 mongoose.connect(
   mongoHost,

@@ -1,6 +1,3 @@
-// Global configuration
-const port = Number(process.env.PORT) || 3000;
-
 // Express Html Application
 const express = require("express");
 const app = express();
@@ -41,6 +38,7 @@ app.use((req, res) => {
 });
 
 // Start Html Server
+const port = Number(process.env.PORT) || 3000;
 app.listen(port, () => {
   console.log(`Server start and listening on port ${port}`);
 });
