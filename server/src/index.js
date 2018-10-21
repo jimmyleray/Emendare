@@ -1,3 +1,6 @@
+// Global configuration
+const config = require("./config");
+
 // Express Html Application
 const express = require("express");
 const app = express();
@@ -6,13 +9,13 @@ const app = express();
 const morgan = require("morgan");
 app.use(morgan("tiny"));
 
-// MongoDB configuration
-const db = require("./mongo");
+// MongoDB connection
+const database = require("./mongo");
 
 // MongoDB models
 const User = require("./mongo/models/user");
 
-const initAdminDevUser = async () => {
+const initDevDatabase = async () => {
   await User.deleteMany();
   if (!(await User.findOne({ username: "admin" }))) {
     const adminDevUser = new User({ username: "admin", password: "tmp" });
@@ -23,22 +26,16 @@ const initAdminDevUser = async () => {
 };
 
 if (process.env !== "production") {
-  initAdminDevUser();
+  initDevDatabase();
 }
-
-// Open API CORS Headers
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-});
 
 // Error 404 Middleware
 app.use((req, res) => {
-  res.status(404).send("Not Found");
+  res.status(404).end();
 });
 
-// Start Html Server
-const port = Number(process.env.PORT) || 3000;
+// Start Http Server
+const port = Number(process.env.PORT) || config.devPort;
 app.listen(port, () => {
   console.log(`Server start and listening on port ${port}`);
 });
