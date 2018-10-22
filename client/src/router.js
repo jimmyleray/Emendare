@@ -36,18 +36,18 @@ export default new Router({
       component: () => import('@/views/Text.vue')
     },
     {
-      path: '/sign-in',
-      name: 'sign-in',
+      path: '/signin',
+      name: 'signin',
       component: () => import('@/views/SignIn.vue')
     },
     {
-      path: '/sign-up',
-      name: 'sign-up',
+      path: '/signup',
+      name: 'signup',
       component: () => import('@/views/SignUp.vue')
     },
     {
       path: '*',
-      name: 'not-found',
+      name: 'notfound',
       component: () => import('@/views/NotFound.vue')
     }
   ]

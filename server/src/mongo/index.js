@@ -1,21 +1,37 @@
 const config = require("../config");
 const mongoose = require("mongoose");
 
-const mongoHost = process.env.MONGODB_ADDON_URI || config.localHost;
-
 mongoose.connect(
-  mongoHost,
+  config.mongoHost,
   { useNewUrlParser: true }
 );
 
 const database = mongoose.connection;
 
 database.once("open", () => {
-  console.log("Connected to MongoDB on", mongoHost);
+  console.log("Connected to MongoDB on", config.mongoHost);
 });
 
 database.on("error", error => {
   console.error("MongoDB Error", error);
 });
+
+// MongoDB models
+const User = require("./models/user");
+const Group = require("./models/group");
+
+const initDatabase = async () => {
+  await new User({
+    username: "admin",
+    password: "tmp",
+    email: "admin@admin.com"
+  }).save();
+  await new Group({ name: "test" }).save();
+};
+
+if (process.env !== "production") {
+  database.dropDatabase();
+  initDatabase();
+}
 
 module.exports = database;

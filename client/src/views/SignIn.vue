@@ -1,16 +1,68 @@
 <template>
   <v-layout column align-center>
     <h1>Connexion</h1>
-    <v-btn color="success" @click="login()">Connexion</v-btn>
+    <v-form id="signInForm" v-model="valid">
+      <v-text-field
+        v-model="email"
+        :rules="emailRules"
+        label="E-mail"
+        required
+      ></v-text-field>
+      <v-text-field
+        type="password"
+        v-model="password"
+        :rules="passwordRules"
+        label="Mot de passe"
+        required
+      ></v-text-field>
+      <v-btn block @click="login(email, password)" color="success" :disabled="!valid">Connexion</v-btn>
+    <v-alert :value="true" v-if="message" type="error" transition="scale-transition">{{message}}</v-alert>
+    </v-form>
+    <v-btn to="/signup" flat>Créer un compte</v-btn>
   </v-layout>
 </template>
 
+<style scoped>
+#signInForm {
+  width: 100%;
+  max-width: 350px;
+}
+</style>
+
 <script>
 export default {
+  data: () => ({
+    message: '',
+    valid: false,
+    email: '',
+    emailRules: [
+      v => !!v || "L'adresse mail est requise",
+      v => /.+@.+/.test(v) || "L'adresse mail est invalide"
+    ],
+    password: '',
+    passwordRules: [v => !!v || 'Le mot de passe est requis']
+  }),
   methods: {
-    login() {
-      this.$store.dispatch('login').then(() => {
-        this.$router.push('profile')
+    login: function(email, password) {
+      fetch('http://localhost:3000/login', {
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          password,
+          email
+        })
+      }).then(async res => {
+        const message = await res.text()
+        if (res.status === 200) {
+          localStorage.setItem('token', message)
+          this.$router.push('profile')
+          this.$store.commit('LOGIN')
+        } else {
+          this.message = message
+        }
       })
     }
   }
