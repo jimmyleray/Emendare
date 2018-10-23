@@ -50,11 +50,29 @@ app.post("/login", async (req, res) => {
   } else {
     res.status(400).end("Mot de passe et/ou email invalide");
   }
-  // res.json(await Group.find());
 });
 
 app.post("/logout", async (req, res) => {
-  // res.json(await Group.find());
+  const { token } = req.body;
+  const user = await User.findOne({ token });
+  if (user) {
+    user.delete("token");
+    await user.save();
+    res.end("Utilisateur déconnecté");
+  } else {
+    res.status(400).end("Cet utilisateur est déjà déconnecté");
+  }
+});
+
+// User routes
+app.post("/user/email", async (req, res) => {
+  const { token } = req.body;
+  const user = await User.findOne({ token });
+  if (user) {
+    res.end(user.email);
+  } else {
+    res.status(400).end("Cet utilisateur n'est pas connecté");
+  }
 });
 
 // Groups routes

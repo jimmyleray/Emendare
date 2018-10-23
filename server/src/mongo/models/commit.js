@@ -4,6 +4,7 @@ module.exports = mongoose.model(
   "Commit",
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
+    owners: { type: [mongoose.Schema.Types.ObjectId], required: true },
     name: { type: String, required: true },
     description: { type: String, default: "" },
     patch: { type: String, required: true },
