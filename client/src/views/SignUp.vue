@@ -3,12 +3,6 @@
     <h1>Inscription</h1>
     <v-form id="signUpForm" v-model="valid">
       <v-text-field
-        v-model="username"
-        :rules="usernameRules"
-        label="Pseudonyme"
-        required
-      ></v-text-field>
-      <v-text-field
         v-model="email"
         :rules="emailRules"
         label="E-mail"
@@ -21,7 +15,7 @@
         label="Mot de passe"
         required
       ></v-text-field>
-      <v-btn block @click="signup(username, email, password)" color="success" :disabled="!valid">Inscription</v-btn>
+      <v-btn block @click="signup(email, password)" color="success" :disabled="!valid">Inscription</v-btn>
     <v-alert :value="true" v-if="message" type="error" transition="scale-transition">{{message}}</v-alert>
     </v-form>
   </v-layout>
@@ -40,8 +34,6 @@ export default {
   data: () => ({
     message: '',
     valid: false,
-    username: '',
-    usernameRules: [v => !!v || 'Le pseudonyme est requis'],
     email: '',
     emailRules: [
       v => !!v || "L'adresse mail est requise",
@@ -54,7 +46,7 @@ export default {
     ]
   }),
   methods: {
-    signup: function(username, email, password) {
+    signup: function(email, password) {
       fetch('http://localhost:3000/signup', {
         method: 'post',
         headers: {
@@ -62,7 +54,6 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          username,
           password,
           email
         })

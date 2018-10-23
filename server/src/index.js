@@ -29,10 +29,8 @@ app.post("/signup", async (req, res) => {
   const { username, password, email } = req.body;
   if (await User.findOne({ email })) {
     res.status(400).end("Cet email est déjà utilisé");
-  } else if (await User.findOne({ username })) {
-    res.status(400).end("Ce pseudonyme est déjà utilisé");
   } else {
-    await new User({ username, password, email }).save().then(() => {
+    await new User({ email, password }).save().then(() => {
       res.end("Nouvel utilisateur enregistré");
     });
   }
