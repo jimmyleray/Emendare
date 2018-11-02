@@ -14,6 +14,10 @@ module.exports = mongoose.model(
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Group" }],
       default: []
     },
+    texts: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Text" }],
+      default: []
+    },
     parent: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Group",
