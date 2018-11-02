@@ -16,9 +16,9 @@
         required
       ></v-text-field>
       <v-btn block @click="login(email, password)" color="success" :disabled="!valid">Connexion</v-btn>
-    <v-alert :value="true" v-if="message" type="error" transition="scale-transition">{{message}}</v-alert>
+      <v-alert :value="true" v-if="message" type="error" transition="scale-transition">{{message}}</v-alert>
+      <v-btn block to="/signup" flat>Créer un compte</v-btn>
     </v-form>
-    <v-btn to="/signup" flat>Créer un compte</v-btn>
   </v-layout>
 </template>
 
