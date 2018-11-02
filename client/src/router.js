@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/Home.vue'
-import Profile from '@/views/Profile.vue'
+import Explore from '@/views/Explore.vue'
 
 Vue.use(Router)
 
@@ -15,9 +15,14 @@ export default new Router({
       component: Home
     },
     {
+      path: '/explore',
+      name: 'explore',
+      component: Explore
+    },
+    {
       path: '/profile',
       name: 'profile',
-      component: Profile
+      component: () => import('@/views/Profile.vue')
     },
     {
       path: '/groups',
