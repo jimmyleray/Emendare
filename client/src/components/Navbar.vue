@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar app dark color="primary">
+  <v-toolbar app dark>
     <v-toolbar-items>
       <v-btn id="app-title" to="/" exact flat>Emendare</v-btn>
       <v-btn to="/explore" flat>Explorer</v-btn>
