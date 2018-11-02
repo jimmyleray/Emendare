@@ -3,6 +3,8 @@
     <v-toolbar-items>
       <v-btn id="app-title" to="/" exact flat>Emendare</v-btn>
       <v-btn to="/explore" flat>Explorer</v-btn>
+      <v-btn to="/groups" v-if="isLoggedIn" flat>Mes groupes</v-btn>
+      <v-btn to="/texts" v-if="isLoggedIn" flat>Mes textes</v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-toolbar-items>
