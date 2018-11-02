@@ -8,7 +8,7 @@ module.exports = mongoose.model(
     name: { type: String, required: true },
     description: { type: String, default: "" },
     subgroups: { type: [mongoose.Schema.Types.ObjectId], default: [] },
-    parent: { type: mongoose.Schema.Types.ObjectId },
+    parent: { type: mongoose.Schema.Types.ObjectId, default: null },
     whitelist: { type: [String], default: [] },
     private: { type: Boolean, default: false },
     official: { type: Boolean, default: false },

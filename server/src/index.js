@@ -5,6 +5,9 @@ const config = require("./config");
 const express = require("express");
 const app = express();
 
+// Lib to hash passwords
+const bcrypt = require("bcrypt");
+
 // Requests Logger Middleware
 const morgan = require("morgan");
 app.use(morgan("tiny"));
@@ -30,8 +33,10 @@ app.post("/signup", async (req, res) => {
   if (await User.findOne({ email })) {
     res.status(400).end("Cet email est déjà utilisé");
   } else {
-    await new User({ email, password }).save().then(() => {
-      res.end("Nouvel utilisateur enregistré");
+    bcrypt.hash(password, 10, async (err, hash) => {
+      await new User({ email, password: hash }).save().then(() => {
+        res.end("Nouvel utilisateur enregistré");
+      });
     });
   }
 });
@@ -41,14 +46,20 @@ const generateToken = require("./utils/token");
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email, password });
+  const user = await User.findOne({ email });
   if (user) {
-    const token = generateToken();
-    user.token = token;
-    await user.save();
-    res.end(token);
+    bcrypt.compare(password, user.password, async (err, valid) => {
+      if (valid) {
+        const token = generateToken();
+        user.token = token;
+        await user.save();
+        res.end(token);
+      } else {
+        res.status(400).end("Mot de passe invalide");
+      }
+    });
   } else {
-    res.status(400).end("Mot de passe et/ou email invalide");
+    res.status(400).end("Email invalide");
   }
 });
 
@@ -57,7 +68,6 @@ app.post("/logout", async (req, res) => {
   const user = await User.findOne({ token });
   if (user) {
     user.token = null;
-    console.log(user);
     await user.save();
     res.end("Utilisateur déconnecté");
   } else {

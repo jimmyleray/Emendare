@@ -1,5 +1,6 @@
 const config = require("../config");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 mongoose.connect(
   config.mongoHost,
@@ -21,11 +22,13 @@ const User = require("./models/user");
 const Group = require("./models/group");
 
 const initDatabase = async () => {
-  await new User({
-    username: "admin",
-    password: "tmp",
-    email: "admin@admin.com"
-  }).save();
+  bcrypt.hash("tmp", 10, async (err, hash) => {
+    await new User({
+      username: "admin",
+      password: hash,
+      email: "admin@admin.com"
+    }).save();
+  });
   await new Group({ name: "test" }).save();
 };
 
