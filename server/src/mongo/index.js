@@ -24,15 +24,14 @@ const Group = require("./models/group");
 const initDatabase = async () => {
   bcrypt.hash("tmp", 10, async (err, hash) => {
     await new User({
-      username: "admin",
       password: hash,
-      email: "admin@admin.com"
+      email: "admin@zenika.com"
     }).save();
   });
   await new Group({ name: "test" }).save();
 };
 
-if (process.env !== "production") {
+if (process.env.NODE_ENV !== "production") {
   database.dropDatabase();
   initDatabase();
 }
