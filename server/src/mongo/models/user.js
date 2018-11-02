@@ -7,7 +7,13 @@ module.exports = mongoose.model(
     email: { type: String, required: true },
     created: { type: Date, default: Date.now },
     token: { type: String, default: null },
-    followedGroups: { type: [mongoose.Schema.Types.ObjectId], default: [] },
-    followedTexts: { type: [mongoose.Schema.Types.ObjectId], default: [] }
+    followedGroups: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Group" }],
+      default: []
+    },
+    followedTexts: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Text" }],
+      default: []
+    }
   })
 );
