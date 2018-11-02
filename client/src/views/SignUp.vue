@@ -30,6 +30,8 @@
 
 
 <script>
+import { api } from '../utils/api'
+
 export default {
   data: () => ({
     message: '',
@@ -47,7 +49,7 @@ export default {
   }),
   methods: {
     signup: function(email, password) {
-      fetch('http://localhost:3000/signup', {
+      fetch(api('/signup'), {
         method: 'post',
         headers: {
           Accept: 'application/json',

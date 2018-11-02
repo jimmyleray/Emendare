@@ -7,13 +7,15 @@
 </template>
 
 <script>
+import { api } from '../utils/api'
+
 export default {
   data: () => ({
     email: null
   }),
   methods: {
     logout() {
-      fetch('http://localhost:3000/logout', {
+      fetch(api('/logout'), {
         method: 'post',
         headers: {
           Accept: 'application/json',
@@ -24,6 +26,7 @@ export default {
         })
       }).then(async res => {
         if (res.status === 200) {
+          localStorage.removeItem('token')
           this.$store.commit('LOGOUT')
           this.$router.push('/')
         }
@@ -31,7 +34,7 @@ export default {
     }
   },
   mounted: function() {
-    fetch('http://localhost:3000/user/email', {
+    fetch(api('/user/email'), {
       method: 'post',
       headers: {
         Accept: 'application/json',

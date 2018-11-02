@@ -26,7 +26,7 @@ const Group = require("./mongo/models/group");
 
 // Users routes
 app.post("/signup", async (req, res) => {
-  const { username, password, email } = req.body;
+  const { email, password } = req.body;
   if (await User.findOne({ email })) {
     res.status(400).end("Cet email est déjà utilisé");
   } else {
@@ -40,7 +40,7 @@ app.post("/signup", async (req, res) => {
 const generateToken = require("./utils/token");
 
 app.post("/login", async (req, res) => {
-  const { password, email } = req.body;
+  const { email, password } = req.body;
   const user = await User.findOne({ email, password });
   if (user) {
     const token = generateToken();
@@ -56,7 +56,8 @@ app.post("/logout", async (req, res) => {
   const { token } = req.body;
   const user = await User.findOne({ token });
   if (user) {
-    user.delete("token");
+    user.token = null;
+    console.log(user);
     await user.save();
     res.end("Utilisateur déconnecté");
   } else {

@@ -30,6 +30,8 @@
 </style>
 
 <script>
+import { api } from '../utils/api'
+
 export default {
   data: () => ({
     message: '',
@@ -44,7 +46,7 @@ export default {
   }),
   methods: {
     login: function(email, password) {
-      fetch('http://localhost:3000/login', {
+      fetch(api('/login'), {
         method: 'post',
         headers: {
           Accept: 'application/json',
