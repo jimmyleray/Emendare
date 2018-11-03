@@ -78,11 +78,69 @@ app.post("/logout", async (req, res) => {
 });
 
 // User routes
-app.post("/user/email", async (req, res) => {
+app.post("/user", async (req, res) => {
   const { token } = req.body;
   const user = await User.findOne({ token });
   if (token && user) {
-    res.end(user.email);
+    res.json(user).end();
+  } else {
+    res.status(400).end("Cet utilisateur n'est pas connecté");
+  }
+});
+
+app.post("/user/followGroup/:id", async (req, res) => {
+  const { token } = req.body;
+  const user = await User.findOne({ token });
+  if (token && user) {
+    user.followedGroups.push(req.params.id);
+    await user.save();
+    res.json(user).end();
+  } else {
+    res.status(400).end("Cet utilisateur n'est pas connecté");
+  }
+});
+
+app.post("/user/unFollowGroup/:id", async (req, res) => {
+  const { token } = req.body;
+  const user = await User.findOne({ token });
+  if (token && user) {
+    const id = user.followedGroups.indexOf(req.params.id);
+    if (id >= 0) {
+      user.followedGroups.splice(id, 1);
+      await user.save();
+      res.json(user).end();
+    } else {
+      res.status(400).end("Ce groupe n'est pas suivi");
+    }
+  } else {
+    res.status(400).end("Cet utilisateur n'est pas connecté");
+  }
+});
+
+app.post("/user/followText/:id", async (req, res) => {
+  const { token } = req.body;
+  const user = await User.findOne({ token });
+  if (token && user) {
+    user.followedTexts.push(req.params.id);
+    await user.save();
+    res.json(user).end();
+  } else {
+    res.status(400).end("Cet utilisateur n'est pas connecté");
+  }
+});
+
+app.post("/user/unFollowText/:id", async (req, res) => {
+  const { token } = req.body;
+  const user = await User.findOne({ token });
+  if (token && user) {
+    const id = user.followedTexts.indexOf(req.params.id);
+    if (id >= 0) {
+      user.followedTexts.splice(id, 1);
+      await user.save();
+      res.json(user).end();
+    } else {
+      res.status(400).end("Ce texte n'est pas suivi");
+    }
   } else {
     res.status(400).end("Cet utilisateur n'est pas connecté");
   }

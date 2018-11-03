@@ -1,8 +1,10 @@
 <template>
-  <v-layout column align-center>
+  <v-layout column align-center fill-height>
     <v-card id="card-content">
-      <v-toolbar color="teal" dark>
+      <v-toolbar card>
+        <v-spacer></v-spacer>
         <v-toolbar-title>Explorateur des contenus d'Emendare</v-toolbar-title>
+        <v-spacer></v-spacer>
       </v-toolbar>
       <v-list two-line subheader>
         <v-subheader v-if="rootGroup.subgroups.length > 0" inset>Groupes</v-subheader>
@@ -24,9 +26,7 @@
           </v-list-tile-content>
 
           <v-list-tile-action>
-            <v-btn icon v-if="subgroup.private">
-              <v-icon class="fas fa-user-lock"></v-icon>
-            </v-btn>
+            <v-icon v-if="subgroup.private" class="fas fa-lock"></v-icon>
           </v-list-tile-action>
         </v-list-tile>
 
@@ -51,9 +51,7 @@
           </v-list-tile-content>
 
           <v-list-tile-action>
-            <v-btn icon v-if="text.private">
-              <v-icon class="fas fa-user-lock"></v-icon>
-            </v-btn>
+            <v-icon v-if="text.private" class="fas fa-lock"></v-icon>
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
@@ -64,6 +62,8 @@
 <style scoped>
 #card-content {
   width: 100%;
+  margin-top: -64px;
+  height: calc(100% + 128px);
 }
 </style>
 

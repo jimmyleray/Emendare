@@ -1,28 +1,42 @@
 <template>
-  <v-layout column align-center>
-    <h1>Inscription</h1>
-    <v-form id="signUpForm" v-model="valid">
-      <v-text-field
-        v-model="email"
-        :rules="emailRules"
-        label="E-mail"
-        required
-      ></v-text-field>
-      <v-text-field
-        type="password"
-        v-model="password"
-        :rules="passwordRules"
-        label="Mot de passe"
-        required
-      ></v-text-field>
-      <v-btn block @click="signup(email, password)" color="success" :disabled="!valid">Inscription</v-btn>
-      <v-alert :value="true" v-if="message" type="error" transition="scale-transition">{{message}}</v-alert>
-      <v-btn block to="/signin" flat>J'ai déjà un compte</v-btn>
-    </v-form>
+  <v-layout column align-center fill-height>
+    <v-card id="card-content">
+      <v-toolbar card>
+        <v-spacer></v-spacer>
+        <v-toolbar-title>Inscription à Emendare</v-toolbar-title>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+      <v-layout column align-center style="margin-top:3rem;">
+        <v-form id="signUpForm" v-model="valid">
+          <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="E-mail"
+            required
+          ></v-text-field>
+          <v-text-field
+            type="password"
+            v-model="password"
+            :rules="passwordRules"
+            label="Mot de passe"
+            required
+          ></v-text-field>
+          <v-btn block @click="signup(email, password)" color="success" :disabled="!valid">Inscription</v-btn>
+          <v-alert :value="true" v-if="message" type="error" transition="scale-transition">{{message}}</v-alert>
+          <v-btn block to="/signin" flat>J'ai déjà un compte</v-btn>
+        </v-form>
+      </v-layout>
+    </v-card>
   </v-layout>
 </template>
 
 <style scoped>
+#card-content {
+  width: 100%;
+  margin-top: -64px;
+  height: calc(100% + 128px);
+}
+
 #signUpForm {
   width: 100%;
   max-width: 350px;

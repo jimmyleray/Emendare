@@ -1,7 +1,9 @@
 <template>
   <v-app>
-    <Navbar></Navbar>
-    <Container></Container>
+    <v-card flat style="height:100%;">
+      <Navbar></Navbar>
+      <Container></Container>
+    </v-card>
   </v-app>
 </template>
 

@@ -1,11 +1,29 @@
 <template>
-  <v-layout column align-center>
-    <v-card id="card-content">
-      <v-toolbar color="teal" dark>
+  <v-layout column align-center fill-height>
+    <v-card id="card-content" v-if="group">
+
+      <v-toolbar card>
         <v-icon v-if="group.parent" @click="$router.push('/group/' + group.parent._id)" class="fas fa-chevron-left"></v-icon>
-        <v-toolbar-title v-if="group.parent">{{group.parent.name}} \ <strong>{{group.name}}</strong></v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-title v-if="group.parent">{{group.parent.name}} | <strong>{{group.name}}</strong></v-toolbar-title>
         <v-toolbar-title v-if="!group.parent">{{group.name}}</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <div v-if="user">
+          <v-tooltip bottom v-if="user.followedGroups.find(id => id === group._id)">
+            <v-btn @click="unFollowGroup()" slot="activator" icon>
+              <v-icon class="fas fa-star"></v-icon>
+            </v-btn>
+            <span>Ne plus suivre ce groupe</span>
+          </v-tooltip>
+          <v-tooltip bottom v-if="!user.followedGroups.find(id => id === group._id)">
+            <v-btn @click="followGroup()" slot="activator" icon>
+              <v-icon class="far fa-star"></v-icon>
+            </v-btn>
+            <span>Suivre ce groupe</span>
+          </v-tooltip>
+        </div>
       </v-toolbar>
+
       <v-list two-line subheader>
         <v-subheader v-if="group.subgroups.length > 0" inset>Groupes</v-subheader>
 
@@ -26,9 +44,7 @@
           </v-list-tile-content>
 
           <v-list-tile-action>
-            <v-btn icon v-if="subgroup.private">
-              <v-icon class="fas fa-user-lock"></v-icon>
-            </v-btn>
+            <v-icon v-if="subgroup.private" class="fas fa-lock"></v-icon>
           </v-list-tile-action>
         </v-list-tile>
 
@@ -53,9 +69,7 @@
           </v-list-tile-content>
 
           <v-list-tile-action>
-            <v-btn icon v-if="text.private">
-              <v-icon class="fas fa-user-lock"></v-icon>
-            </v-btn>
+            <v-icon v-if="text.private" class="fas fa-lock"></v-icon>
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
@@ -66,6 +80,8 @@
 <style scoped>
 #card-content {
   width: 100%;
+  margin-top: -64px;
+  height: calc(100% + 128px);
 }
 </style>
 
@@ -75,10 +91,44 @@ import { api, headers } from '../utils/api'
 export default {
   data: function() {
     return {
-      group: {}
+      group: null,
+      user: null
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn
     }
   },
   methods: {
+    followGroup: function() {
+      fetch(api('/user/followGroup/' + this.group._id), {
+        method: 'post',
+        headers: headers(),
+        body: JSON.stringify({
+          token: localStorage.getItem('token')
+        })
+      }).then(async res => {
+        if (res.status === 200) {
+          const user = await res.json()
+          this.user = user
+        }
+      })
+    },
+    unFollowGroup: function() {
+      fetch(api('/user/unFollowGroup/' + this.group._id), {
+        method: 'post',
+        headers: headers(),
+        body: JSON.stringify({
+          token: localStorage.getItem('token')
+        })
+      }).then(async res => {
+        if (res.status === 200) {
+          const user = await res.json()
+          this.user = user
+        }
+      })
+    },
     fetchData: function(id) {
       fetch(api('/groups/' + id), {
         method: 'get',
@@ -89,6 +139,23 @@ export default {
           this.group = group
         }
       })
+      if (this.isLoggedIn) {
+        fetch(api('/user'), {
+          method: 'post',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            token: localStorage.getItem('token')
+          })
+        }).then(async res => {
+          if (res.status === 200) {
+            const user = await res.json()
+            this.user = user
+          }
+        })
+      }
     }
   },
   watch: {

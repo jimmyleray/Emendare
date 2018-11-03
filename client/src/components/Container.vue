@@ -1,6 +1,6 @@
 <template>
-  <v-content>
-    <v-container id="content" fill-height>
+  <v-content style="height:calc(100% - 128px);">
+    <v-container id="content" style="height:100%;">
       <v-fade-transition hide-on-leave>
         <router-view v-if="!isPending"/>
         <Pending v-if="isPending"></Pending>
@@ -8,11 +8,12 @@
     </v-container>
   </v-content>
 </template>
-    max-width: 900px;
 
 <style scoped>
 #content {
   max-width: 960px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 </style>
 
