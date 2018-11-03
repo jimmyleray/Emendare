@@ -1,6 +1,6 @@
 <template>
   <v-content>
-    <v-container fill-height>
+    <v-container id="content" fill-height>
       <v-fade-transition hide-on-leave>
         <router-view v-if="!isPending"/>
         <Pending v-if="isPending"></Pending>
@@ -8,6 +8,13 @@
     </v-container>
   </v-content>
 </template>
+    max-width: 900px;
+
+<style scoped>
+#content {
+  max-width: 960px;
+}
+</style>
 
 <script>
 import Pending from '@/views/Pending.vue'

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { api } from '../utils/api'
+import { api, headers } from '../utils/api'
 
 export default {
   data: () => ({
@@ -17,10 +17,7 @@ export default {
     logout() {
       fetch(api('/logout'), {
         method: 'post',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
+        headers: headers(),
         body: JSON.stringify({
           token: localStorage.getItem('token')
         })

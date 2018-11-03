@@ -26,6 +26,8 @@ const database = require("./mongo");
 // MongoDB models
 const User = require("./mongo/models/user");
 const Group = require("./mongo/models/group");
+const Text = require("./mongo/models/text");
+const Commit = require("./mongo/models/commit");
 
 // Users routes
 app.post("/signup", async (req, res) => {
@@ -79,7 +81,7 @@ app.post("/logout", async (req, res) => {
 app.post("/user/email", async (req, res) => {
   const { token } = req.body;
   const user = await User.findOne({ token });
-  if (user) {
+  if (token && user) {
     res.end(user.email);
   } else {
     res.status(400).end("Cet utilisateur n'est pas connecté");
@@ -88,11 +90,36 @@ app.post("/user/email", async (req, res) => {
 
 // Groups routes
 app.get("/groups", async (req, res) => {
-  res.json(await Group.find()).end();
+  res
+    .json(
+      await Group.findOne({ parent: null })
+        .populate("subgroups")
+        .populate("texts")
+        .populate("parent")
+    )
+    .end();
 });
 
 app.get("/groups/:id", async (req, res) => {
-  res.json(await Group.findById(req.params.id)).end();
+  res
+    .json(
+      await Group.findById(req.params.id)
+        .populate("subgroups")
+        .populate("texts")
+        .populate("parent")
+    )
+    .end();
+});
+
+// Texts routes
+app.get("/texts/:id", async (req, res) => {
+  res
+    .json(
+      await Text.findById(req.params.id)
+        .populate("commits")
+        .populate("group")
+    )
+    .end();
 });
 
 // Error 404 Middleware

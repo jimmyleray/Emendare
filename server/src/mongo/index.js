@@ -1,6 +1,7 @@
 const config = require("../config");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const lorem = require("../utils/lorem");
 
 mongoose.connect(
   config.mongoHost,
@@ -50,15 +51,17 @@ const initDatabase = async () => {
 
     const officialText = await new Text({
       owners: [adminUser._id],
-      name: "France",
-      description: "Groupe officiel francophone",
+      name: "Texte officiel",
+      actual: lorem,
+      description: "Un texte officiel pour tester",
       group: officialGroup._id
     }).save();
 
     const privateText = await new Text({
       owners: [adminUser._id],
-      name: "France",
-      description: "Groupe officiel francophone",
+      name: "Texte privé",
+      actual: lorem,
+      description: "Un texte privé pour tester",
       group: privateGroup._id
     }).save();
 
@@ -67,8 +70,6 @@ const initDatabase = async () => {
 
     privateGroup.texts.push(privateText._id);
     await privateGroup.save();
-
-    console.log(officialGroup, privateGroup);
   });
 };
 

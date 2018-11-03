@@ -30,7 +30,7 @@ export default new Router({
       component: () => import('@/views/Groups.vue')
     },
     {
-      path: '/group',
+      path: '/group/:id',
       name: 'group',
       component: () => import('@/views/Group.vue')
     },
@@ -40,7 +40,7 @@ export default new Router({
       component: () => import('@/views/Texts.vue')
     },
     {
-      path: '/text',
+      path: '/text/:id',
       name: 'text',
       component: () => import('@/views/Text.vue')
     },

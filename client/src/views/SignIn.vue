@@ -30,7 +30,7 @@
 </style>
 
 <script>
-import { api } from '../utils/api'
+import { api, headers } from '../utils/api'
 
 export default {
   data: () => ({
@@ -48,10 +48,7 @@ export default {
     login: function(email, password) {
       fetch(api('/login'), {
         method: 'post',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
+        headers: headers(),
         body: JSON.stringify({
           password,
           email
