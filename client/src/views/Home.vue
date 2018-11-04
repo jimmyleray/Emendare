@@ -6,7 +6,7 @@
         <v-toolbar-title>Bienvenue sur le parlement numérique Emendare</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
-      <v-alert :value="true" type="error" style="margin:0">
+      <v-alert :value="true" type="error" style="margin:0;">
         <strong>Version alpha</strong> ouverte depuis le 16 Novembre 2018 uniquement pour les mails se terminant par @zenika.com<br>
         Pour participer au développement, vous pouvez rejoindre le channel <strong>#emendare</strong> sur le slack Zenika
       </v-alert>

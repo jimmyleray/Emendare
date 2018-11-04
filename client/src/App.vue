@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-card flat style="height:100%;">
+    <v-card flat style="height:100%;" color="blue-grey lighten-4">
       <Navbar></Navbar>
       <Container></Container>
     </v-card>
