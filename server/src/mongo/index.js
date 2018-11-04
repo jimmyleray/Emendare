@@ -30,10 +30,18 @@ const initDatabase = async () => {
       email: "admin@zenika.com"
     }).save();
 
+    const globalGroup = await new Group({
+      owners: [adminUser._id],
+      name: "Global",
+      description: "Groupe officiel global",
+      official: true
+    }).save();
+
     const officialGroup = await new Group({
       owners: [adminUser._id],
-      name: "France",
+      name: "Francais",
       description: "Groupe officiel francophone",
+      parent: globalGroup._id,
       official: true
     }).save();
 
@@ -46,27 +54,33 @@ const initDatabase = async () => {
       whitelist: ["*@zenika.com"]
     }).save();
 
+    globalGroup.subgroups.push(officialGroup._id);
+    await globalGroup.save();
+
     officialGroup.subgroups.push(privateGroup._id);
     await officialGroup.save();
 
-    const officialText = await new Text({
+    const globalText = await new Text({
       owners: [adminUser._id],
-      name: "Texte officiel",
+      name: "Roadmap d'Emendare",
       actual: lorem,
-      description: "Un texte officiel pour tester",
-      group: officialGroup._id
+      description:
+        "Participez à définir les futures fonctionnalités de la plateforme",
+      group: globalGroup._id,
+      official: true
     }).save();
 
     const privateText = await new Text({
       owners: [adminUser._id],
-      name: "Texte privé",
+      name: "Description de l'agence de Rennes",
       actual: lorem,
-      description: "Un texte privé pour tester",
-      group: privateGroup._id
+      description: "Texte utilisé sur le minisite rennes.zenika.com",
+      group: privateGroup._id,
+      private: true
     }).save();
 
-    officialGroup.texts.push(officialText._id);
-    await officialGroup.save();
+    globalGroup.texts.push(globalText._id);
+    await globalGroup.save();
 
     privateGroup.texts.push(privateText._id);
     await privateGroup.save();

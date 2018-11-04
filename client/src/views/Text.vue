@@ -6,6 +6,14 @@
         <v-spacer></v-spacer>
         <v-toolbar-title>{{text.group.name}} | <strong>{{text.name}}</strong></v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-tooltip bottom v-if="text.official">
+          <v-icon slot="activator" class="fas fa-globe-africa"></v-icon>
+          <span>Texte officiel</span>
+        </v-tooltip>
+        <v-tooltip bottom v-if="text.private">
+          <v-icon slot="activator" class="fas fa-lock"></v-icon>
+          <span>Texte privé</span>
+        </v-tooltip>
         <div v-if="user">
           <v-tooltip bottom v-if="user.followedTexts.find(id => id === text._id)">
             <v-btn @click="unFollowText()" slot="activator" icon>
@@ -21,9 +29,14 @@
           </v-tooltip>
         </div>
       </v-toolbar>
-      <v-card-title primary-title>
-        <div class="headline">{{text.description}}</div>
-        <div>{{text.actual}}</div>
+      
+      <v-alert :value="true" type="info" color="blue-grey lighten-1" style="margin:0">
+        Description : {{text.description}}<br>
+        Crée le : {{new Date(text.created).toLocaleString()}}
+      </v-alert>
+
+      <v-card-title>
+        <div v-html="computedText"></div>
       </v-card-title>
     </v-card>
   </v-layout>
@@ -38,6 +51,7 @@
 </style>
 
 <script>
+import * as marked from 'marked'
 import { api, headers } from '../utils/api'
 
 export default {
@@ -48,6 +62,9 @@ export default {
     }
   },
   computed: {
+    computedText() {
+      return marked.default(this.text.actual, { sanitize: true })
+    },
     isLoggedIn() {
       return this.$store.getters.isLoggedIn
     }

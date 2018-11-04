@@ -1,11 +1,17 @@
 <template>
   <v-layout column align-center fill-height>
-    <v-card id="card-content">
+    <v-card id="card-content" v-if="rootGroup">
       <v-toolbar card>
         <v-spacer></v-spacer>
         <v-toolbar-title>Explorateur des contenus d'Emendare</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
+
+      <v-alert :value="true" type="info" color="blue-grey lighten-1" style="margin:0">
+        Description : {{rootGroup.description}}<br>
+        Crée le : {{new Date(rootGroup.created).toLocaleString()}}
+      </v-alert>
+
       <v-list two-line subheader>
         <v-subheader v-if="rootGroup.subgroups.length > 0" inset>Groupes</v-subheader>
 
@@ -26,7 +32,14 @@
           </v-list-tile-content>
 
           <v-list-tile-action>
-            <v-icon v-if="subgroup.private" class="fas fa-lock"></v-icon>
+            <v-tooltip bottom v-if="subgroup.official">
+              <v-icon slot="activator" class="fas fa-globe-africa"></v-icon>
+              <span>Groupe officiel</span>
+            </v-tooltip>
+            <v-tooltip bottom v-if="subgroup.private">
+              <v-icon slot="activator" class="fas fa-lock"></v-icon>
+              <span>Groupe privé</span>
+            </v-tooltip>
           </v-list-tile-action>
         </v-list-tile>
 
@@ -51,7 +64,14 @@
           </v-list-tile-content>
 
           <v-list-tile-action>
-            <v-icon v-if="text.private" class="fas fa-lock"></v-icon>
+            <v-tooltip bottom v-if="text.official">
+              <v-icon slot="activator" class="fas fa-globe-africa"></v-icon>
+              <span>Texte officiel</span>
+            </v-tooltip>
+            <v-tooltip bottom v-if="text.private">
+              <v-icon slot="activator" class="fas fa-lock"></v-icon>
+              <span>Texte privé</span>
+            </v-tooltip>
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
@@ -72,7 +92,7 @@ import { api, headers } from '../utils/api'
 
 export default {
   data: () => ({
-    rootGroup: {}
+    rootGroup: null
   }),
   mounted: function() {
     fetch(api('/groups'), {

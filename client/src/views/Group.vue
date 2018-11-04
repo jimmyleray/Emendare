@@ -8,6 +8,14 @@
         <v-toolbar-title v-if="group.parent">{{group.parent.name}} | <strong>{{group.name}}</strong></v-toolbar-title>
         <v-toolbar-title v-if="!group.parent">{{group.name}}</v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-tooltip bottom v-if="group.official">
+          <v-icon slot="activator" class="fas fa-globe-africa"></v-icon>
+          <span>Groupe officiel</span>
+        </v-tooltip>
+        <v-tooltip bottom v-if="group.private">
+          <v-icon slot="activator" class="fas fa-lock"></v-icon>
+          <span>Groupe privé</span>
+        </v-tooltip>
         <div v-if="user">
           <v-tooltip bottom v-if="user.followedGroups.find(id => id === group._id)">
             <v-btn @click="unFollowGroup()" slot="activator" icon>
@@ -23,6 +31,11 @@
           </v-tooltip>
         </div>
       </v-toolbar>
+
+      <v-alert :value="true" type="info" color="blue-grey lighten-1" style="margin:0">
+        Description : {{group.description}}<br>
+        Crée le : {{new Date(group.created).toLocaleString()}}
+      </v-alert>
 
       <v-list two-line subheader>
         <v-subheader v-if="group.subgroups.length > 0" inset>Groupes</v-subheader>
@@ -44,7 +57,14 @@
           </v-list-tile-content>
 
           <v-list-tile-action>
-            <v-icon v-if="subgroup.private" class="fas fa-lock"></v-icon>
+            <v-tooltip bottom v-if="subgroup.official">
+              <v-icon slot="activator" class="fas fa-globe-africa"></v-icon>
+              <span>Groupe officiel</span>
+            </v-tooltip>
+            <v-tooltip bottom v-if="subgroup.private">
+              <v-icon slot="activator" class="fas fa-lock"></v-icon>
+              <span>Groupe privé</span>
+            </v-tooltip>
           </v-list-tile-action>
         </v-list-tile>
 
@@ -69,7 +89,14 @@
           </v-list-tile-content>
 
           <v-list-tile-action>
-            <v-icon v-if="text.private" class="fas fa-lock"></v-icon>
+            <v-tooltip bottom v-if="text.official">
+              <v-icon slot="activator" class="fas fa-globe-africa"></v-icon>
+              <span>Texte officiel</span>
+            </v-tooltip>
+            <v-tooltip bottom v-if="text.private">
+              <v-icon slot="activator" class="fas fa-lock"></v-icon>
+              <span>Texte privé</span>
+            </v-tooltip>
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
