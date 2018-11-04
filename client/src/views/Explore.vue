@@ -87,7 +87,7 @@ export default {
     rootGroup: null
   }),
   mounted: function() {
-    fetch(api('/groups'), {
+    fetch(api('/rootGroup'), {
       method: 'get',
       headers: headers()
     }).then(async res => {

@@ -147,7 +147,7 @@ app.post("/user/unFollowText/:id", async (req, res) => {
 });
 
 // Groups routes
-app.get("/groups", async (req, res) => {
+app.get("/rootGroup", async (req, res) => {
   res
     .json(
       await Group.findOne({ parent: null })
@@ -158,7 +158,7 @@ app.get("/groups", async (req, res) => {
     .end();
 });
 
-app.get("/groups/:id", async (req, res) => {
+app.get("/group/:id", async (req, res) => {
   res
     .json(
       await Group.findById(req.params.id)
@@ -170,7 +170,7 @@ app.get("/groups/:id", async (req, res) => {
 });
 
 // Texts routes
-app.get("/texts/:id", async (req, res) => {
+app.get("/text/:id", async (req, res) => {
   res
     .json(
       await Text.findById(req.params.id)

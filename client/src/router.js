@@ -25,19 +25,9 @@ export default new Router({
       component: () => import('@/views/Profile.vue')
     },
     {
-      path: '/groups',
-      name: 'groups',
-      component: () => import('@/views/Groups.vue')
-    },
-    {
       path: '/group/:id',
       name: 'group',
       component: () => import('@/views/Group.vue')
-    },
-    {
-      path: '/texts',
-      name: 'texts',
-      component: () => import('@/views/Texts.vue')
     },
     {
       path: '/text/:id',

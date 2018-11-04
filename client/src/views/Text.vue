@@ -94,7 +94,7 @@ export default {
       })
     },
     fetchData: function(id) {
-      fetch(api('/texts/' + id), {
+      fetch(api('/text/' + id), {
         method: 'get',
         headers: headers()
       }).then(async res => {

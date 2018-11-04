@@ -152,7 +152,7 @@ export default {
       })
     },
     fetchData: function(id) {
-      fetch(api('/groups/' + id), {
+      fetch(api('/group/' + id), {
         method: 'get',
         headers: headers()
       }).then(async res => {
