@@ -1,6 +1,6 @@
 <template>
   <v-layout column align-center fill-height>
-    <v-card id="card-content">
+    <v-card class="card-content">
       <v-toolbar card>
         <v-spacer></v-spacer>
         <v-toolbar-title>Bienvenue sur le parlement numérique Emendare</v-toolbar-title>
@@ -21,11 +21,3 @@
     </v-card>
   </v-layout>
 </template>
-
-<style scoped>
-#card-content {
-  width: 100%;
-  margin-top: -64px;
-  height: calc(100% + 128px);
-}
-</style>

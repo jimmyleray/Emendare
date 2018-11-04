@@ -1,6 +1,6 @@
 <template>
   <v-layout column align-center fill-height>
-    <v-card id="card-content">
+    <v-card class="card-content">
       <v-toolbar card>
         <v-spacer></v-spacer>
         <v-toolbar-title>Connexion à votre compte</v-toolbar-title>
@@ -31,12 +31,6 @@
 </template>
 
 <style scoped>
-#card-content {
-  width: 100%;
-  margin-top: -64px;
-  height: calc(100% + 128px);
-}
-
 #signInForm {
   width: 100%;
   max-width: 350px;

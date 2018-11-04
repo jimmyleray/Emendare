@@ -1,29 +1,32 @@
 <template>
   <v-layout column align-center fill-height>
-    <v-card id="card-content" v-if="text">
+    <v-card class="card-content" v-if="text">
       <v-toolbar card>
-        <v-icon v-if="text.group" @click="$router.push('/group/' + text.group._id)" class="fas fa-chevron-left"></v-icon>
+        <v-tooltip bottom v-if="text.group">
+          <v-icon slot="activator" @click="$router.push('/group/' + text.group._id)" class="fas fa-chevron-left"></v-icon>
+          <span>Retour au groupe</span>
+        </v-tooltip>
         <v-spacer></v-spacer>
         <v-toolbar-title>{{text.group.name}} | <strong>{{text.name}}</strong></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-tooltip bottom v-if="text.official">
-          <v-icon slot="activator" class="fas fa-globe-africa"></v-icon>
+          <v-icon slot="activator" color="primary" class="fas fa-globe-africa"></v-icon>
           <span>Texte officiel</span>
         </v-tooltip>
         <v-tooltip bottom v-if="text.private">
-          <v-icon slot="activator" class="fas fa-lock"></v-icon>
+          <v-icon slot="activator" color="error" class="fas fa-lock"></v-icon>
           <span>Texte privé</span>
         </v-tooltip>
         <div v-if="user">
           <v-tooltip bottom v-if="user.followedTexts.find(id => id === text._id)">
             <v-btn @click="unFollowText()" slot="activator" icon>
-              <v-icon class="fas fa-star"></v-icon>
+              <v-icon color="warning" class="fas fa-star"></v-icon>
             </v-btn>
             <span>Ne plus suivre ce texte</span>
           </v-tooltip>
           <v-tooltip bottom v-if="!user.followedTexts.find(id => id === text._id)">
             <v-btn @click="followText()" slot="activator" icon>
-              <v-icon class="far fa-star"></v-icon>
+              <v-icon color="warning" class="far fa-star"></v-icon>
             </v-btn>
             <span>Suivre ce texte</span>
           </v-tooltip>
@@ -41,14 +44,6 @@
     </v-card>
   </v-layout>
 </template>
-
-<style scoped>
-#card-content {
-  width: 100%;
-  margin-top: -64px;
-  height: calc(100% + 128px);
-}
-</style>
 
 <script>
 import * as marked from 'marked'

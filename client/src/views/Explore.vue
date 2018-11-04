@@ -1,6 +1,6 @@
 <template>
   <v-layout column align-center fill-height>
-    <v-card id="card-content" v-if="rootGroup">
+    <v-card class="card-content" v-if="rootGroup">
       <v-toolbar card>
         <v-spacer></v-spacer>
         <v-toolbar-title>Explorateur des contenus d'Emendare</v-toolbar-title>
@@ -33,11 +33,11 @@
 
           <v-list-tile-action>
             <v-tooltip bottom v-if="subgroup.official">
-              <v-icon slot="activator" class="fas fa-globe-africa"></v-icon>
+              <v-icon slot="activator" color="primary" class="fas fa-globe-africa"></v-icon>
               <span>Groupe officiel</span>
             </v-tooltip>
             <v-tooltip bottom v-if="subgroup.private">
-              <v-icon slot="activator" class="fas fa-lock"></v-icon>
+              <v-icon slot="activator" color="error" class="fas fa-lock"></v-icon>
               <span>Groupe privé</span>
             </v-tooltip>
           </v-list-tile-action>
@@ -65,11 +65,11 @@
 
           <v-list-tile-action>
             <v-tooltip bottom v-if="text.official">
-              <v-icon slot="activator" class="fas fa-globe-africa"></v-icon>
+              <v-icon slot="activator" color="primary" class="fas fa-globe-africa"></v-icon>
               <span>Texte officiel</span>
             </v-tooltip>
             <v-tooltip bottom v-if="text.private">
-              <v-icon slot="activator" class="fas fa-lock"></v-icon>
+              <v-icon slot="activator" color="error" class="fas fa-lock"></v-icon>
               <span>Texte privé</span>
             </v-tooltip>
           </v-list-tile-action>
@@ -78,14 +78,6 @@
     </v-card>
   </v-layout>
 </template>
-
-<style scoped>
-#card-content {
-  width: 100%;
-  margin-top: -64px;
-  height: calc(100% + 128px);
-}
-</style>
 
 <script>
 import { api, headers } from '../utils/api'

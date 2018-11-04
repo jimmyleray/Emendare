@@ -1,31 +1,34 @@
 <template>
   <v-layout column align-center fill-height>
-    <v-card id="card-content" v-if="group">
+    <v-card class="card-content" v-if="group">
 
       <v-toolbar card>
-        <v-icon v-if="group.parent" @click="$router.push('/group/' + group.parent._id)" class="fas fa-chevron-left"></v-icon>
+        <v-tooltip bottom v-if="group.parent">
+          <v-icon slot="activator" @click="$router.push('/group/' + group.parent._id)" class="fas fa-chevron-left"></v-icon>
+          <span>Retour au groupe parent</span>
+        </v-tooltip>
         <v-spacer></v-spacer>
         <v-toolbar-title v-if="group.parent">{{group.parent.name}} | <strong>{{group.name}}</strong></v-toolbar-title>
         <v-toolbar-title v-if="!group.parent">{{group.name}}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-tooltip bottom v-if="group.official">
-          <v-icon slot="activator" class="fas fa-globe-africa"></v-icon>
+          <v-icon slot="activator" color="primary" class="fas fa-globe-africa"></v-icon>
           <span>Groupe officiel</span>
         </v-tooltip>
         <v-tooltip bottom v-if="group.private">
-          <v-icon slot="activator" class="fas fa-lock"></v-icon>
+          <v-icon slot="activator" color="error" class="fas fa-lock"></v-icon>
           <span>Groupe privé</span>
         </v-tooltip>
         <div v-if="user">
           <v-tooltip bottom v-if="user.followedGroups.find(id => id === group._id)">
             <v-btn @click="unFollowGroup()" slot="activator" icon>
-              <v-icon class="fas fa-star"></v-icon>
+              <v-icon color="warning" class="fas fa-star"></v-icon>
             </v-btn>
             <span>Ne plus suivre ce groupe</span>
           </v-tooltip>
           <v-tooltip bottom v-if="!user.followedGroups.find(id => id === group._id)">
             <v-btn @click="followGroup()" slot="activator" icon>
-              <v-icon class="far fa-star"></v-icon>
+              <v-icon color="warning" class="far fa-star"></v-icon>
             </v-btn>
             <span>Suivre ce groupe</span>
           </v-tooltip>
@@ -58,11 +61,11 @@
 
           <v-list-tile-action>
             <v-tooltip bottom v-if="subgroup.official">
-              <v-icon slot="activator" class="fas fa-globe-africa"></v-icon>
+              <v-icon slot="activator" color="primary" class="fas fa-globe-africa"></v-icon>
               <span>Groupe officiel</span>
             </v-tooltip>
             <v-tooltip bottom v-if="subgroup.private">
-              <v-icon slot="activator" class="fas fa-lock"></v-icon>
+              <v-icon slot="activator" color="error" class="fas fa-lock"></v-icon>
               <span>Groupe privé</span>
             </v-tooltip>
           </v-list-tile-action>
@@ -90,11 +93,11 @@
 
           <v-list-tile-action>
             <v-tooltip bottom v-if="text.official">
-              <v-icon slot="activator" class="fas fa-globe-africa"></v-icon>
+              <v-icon slot="activator" color="primary" class="fas fa-globe-africa"></v-icon>
               <span>Texte officiel</span>
             </v-tooltip>
             <v-tooltip bottom v-if="text.private">
-              <v-icon slot="activator" class="fas fa-lock"></v-icon>
+              <v-icon slot="activator" color="error" class="fas fa-lock"></v-icon>
               <span>Texte privé</span>
             </v-tooltip>
           </v-list-tile-action>
@@ -103,14 +106,6 @@
     </v-card>
   </v-layout>
 </template>
-
-<style scoped>
-#card-content {
-  width: 100%;
-  margin-top: -64px;
-  height: calc(100% + 128px);
-}
-</style>
 
 <script>
 import { api, headers } from '../utils/api'
