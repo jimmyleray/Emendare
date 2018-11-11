@@ -8,9 +8,12 @@
     <v-toolbar-items>
       <v-btn to="/profile" v-if="isLoggedIn" flat>Mon Profil</v-btn>
       <v-btn to="/signin" v-if="!isLoggedIn" flat>Connexion</v-btn>
-      <v-btn href="https://github.com/jimmyleray/emendare" target="_blank" flat icon>
-        <v-icon>fab fa-github</v-icon>
-      </v-btn>
+      <v-tooltip bottom>
+        <v-btn slot="activator" href="https://gitlab.com/emendare/emendare" target="_blank" flat icon>
+          <v-icon>fab fa-gitlab</v-icon>
+        </v-btn>
+        <span>GitLab</span>
+      </v-tooltip>
     </v-toolbar-items>
   </v-toolbar>
 </template>
