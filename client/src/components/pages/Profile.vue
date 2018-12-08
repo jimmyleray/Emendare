@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { api, headers } from '../utils/api'
+import { api, headers } from '@/services/api'
 
 export default {
   data: () => ({

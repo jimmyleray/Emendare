@@ -8,7 +8,8 @@
       </v-toolbar>
 
       <v-alert :value="true" type="info" color="blue-grey lighten-1" style="margin:0">
-        Description : {{rootGroup.description}}<br>
+        Description : {{rootGroup.description}}
+        <br>
         Crée le : {{new Date(rootGroup.created).toLocaleString()}}
       </v-alert>
 
@@ -80,7 +81,7 @@
 </template>
 
 <script>
-import { api, headers } from '../utils/api'
+import { api, headers } from '@/services/api'
 
 export default {
   data: () => ({

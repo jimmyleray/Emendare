@@ -1,14 +1,20 @@
 <template>
   <v-layout column align-center fill-height>
     <v-card class="card-content" v-if="group">
-
       <v-toolbar card>
         <v-tooltip bottom v-if="group.parent">
-          <v-icon slot="activator" @click="$router.push('/group/' + group.parent._id)" class="fas fa-chevron-left"></v-icon>
+          <v-icon
+            slot="activator"
+            @click="$router.push('/group/' + group.parent._id)"
+            class="fas fa-chevron-left"
+          ></v-icon>
           <span>Retour au groupe parent</span>
         </v-tooltip>
         <v-spacer></v-spacer>
-        <v-toolbar-title v-if="group.parent">{{group.parent.name}} | <strong>{{group.name}}</strong></v-toolbar-title>
+        <v-toolbar-title v-if="group.parent">
+          {{group.parent.name}} |
+          <strong>{{group.name}}</strong>
+        </v-toolbar-title>
         <v-toolbar-title v-if="!group.parent">{{group.name}}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-tooltip bottom v-if="group.official">
@@ -36,7 +42,8 @@
       </v-toolbar>
 
       <v-alert :value="true" type="info" color="blue-grey lighten-1" style="margin:0">
-        Description : {{group.description}}<br>
+        Description : {{group.description}}
+        <br>
         Crée le : {{new Date(group.created).toLocaleString()}}
       </v-alert>
 
@@ -108,7 +115,7 @@
 </template>
 
 <script>
-import { api, headers } from '../utils/api'
+import { api, headers } from '@/services/api'
 
 export default {
   data: function() {

@@ -18,7 +18,7 @@
 </style>
 
 <script>
-import Pending from '@/views/Pending.vue'
+import Pending from '@/components/pages/Pending'
 
 export default {
   components: {

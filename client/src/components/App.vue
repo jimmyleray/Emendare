@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue'
-import Container from '@/components/Container.vue'
+import Navbar from '@/components/templates/Navbar'
+import Container from '@/components/templates/Container'
 
 export default {
   components: {

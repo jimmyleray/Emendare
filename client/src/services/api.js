@@ -1,4 +1,4 @@
-const apiConfig = require('../config/api.json')
+import apiConfig from '@/config/api'
 
 export const api = pathname =>
   (location.origin === 'http://localhost:8080'

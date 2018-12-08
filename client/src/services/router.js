@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home.vue'
-import Explore from '@/views/Explore.vue'
 
 Vue.use(Router)
 
@@ -12,42 +10,42 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: () => import('@/components/pages/Home')
     },
     {
       path: '/explore',
       name: 'explore',
-      component: Explore
+      component: () => import('@/components/pages/Explore')
     },
     {
       path: '/profile',
       name: 'profile',
-      component: () => import('@/views/Profile.vue')
+      component: () => import('@/components/pages/Profile')
     },
     {
       path: '/group/:id',
       name: 'group',
-      component: () => import('@/views/Group.vue')
+      component: () => import('@/components/pages/Group')
     },
     {
       path: '/text/:id',
       name: 'text',
-      component: () => import('@/views/Text.vue')
+      component: () => import('@/components/pages/Text')
     },
     {
       path: '/signin',
       name: 'signin',
-      component: () => import('@/views/SignIn.vue')
+      component: () => import('@/components/pages/SignIn')
     },
     {
       path: '/signup',
       name: 'signup',
-      component: () => import('@/views/SignUp.vue')
+      component: () => import('@/components/pages/SignUp')
     },
     {
       path: '*',
       name: 'notfound',
-      component: () => import('@/views/NotFound.vue')
+      component: () => import('@/components/pages/NotFound')
     }
   ]
 })

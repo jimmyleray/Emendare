@@ -8,12 +8,7 @@
       </v-toolbar>
       <v-layout column align-center style="margin-top:3rem;">
         <v-form id="signUpForm" v-model="valid">
-          <v-text-field
-            v-model="email"
-            :rules="emailRules"
-            label="E-mail"
-            required
-          ></v-text-field>
+          <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
           <v-text-field
             type="password"
             v-model="password"
@@ -21,8 +16,18 @@
             label="Mot de passe"
             required
           ></v-text-field>
-          <v-btn block @click="signup(email, password)" color="success" :disabled="!valid">Inscription</v-btn>
-          <v-alert :value="true" v-if="message" type="error" transition="scale-transition">{{message}}</v-alert>
+          <v-btn
+            block
+            @click="signup(email, password)"
+            color="success"
+            :disabled="!valid"
+          >Inscription</v-btn>
+          <v-alert
+            :value="true"
+            v-if="message"
+            type="error"
+            transition="scale-transition"
+          >{{message}}</v-alert>
           <v-btn block to="/signin" flat>J'ai déjà un compte</v-btn>
         </v-form>
       </v-layout>
@@ -39,7 +44,7 @@
 
 
 <script>
-import { api, headers } from '../utils/api'
+import { api, headers } from '@/services/api'
 
 export default {
   data: () => ({

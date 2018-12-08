@@ -3,11 +3,18 @@
     <v-card class="card-content" v-if="text">
       <v-toolbar card>
         <v-tooltip bottom v-if="text.group">
-          <v-icon slot="activator" @click="$router.push('/group/' + text.group._id)" class="fas fa-chevron-left"></v-icon>
+          <v-icon
+            slot="activator"
+            @click="$router.push('/group/' + text.group._id)"
+            class="fas fa-chevron-left"
+          ></v-icon>
           <span>Retour au groupe</span>
         </v-tooltip>
         <v-spacer></v-spacer>
-        <v-toolbar-title>{{text.group.name}} | <strong>{{text.name}}</strong></v-toolbar-title>
+        <v-toolbar-title>
+          {{text.group.name}} |
+          <strong>{{text.name}}</strong>
+        </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-tooltip bottom v-if="text.official">
           <v-icon slot="activator" color="primary" class="fas fa-globe-africa"></v-icon>
@@ -32,9 +39,10 @@
           </v-tooltip>
         </div>
       </v-toolbar>
-      
+
       <v-alert :value="true" type="info" color="blue-grey lighten-1" style="margin:0">
-        Description : {{text.description}}<br>
+        Description : {{text.description}}
+        <br>
         Crée le : {{new Date(text.created).toLocaleString()}}
       </v-alert>
 
@@ -47,7 +55,7 @@
 
 <script>
 import * as marked from 'marked'
-import { api, headers } from '../utils/api'
+import { api, headers } from '@/services/api'
 
 export default {
   data: function() {
