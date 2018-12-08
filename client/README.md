@@ -1,4 +1,4 @@
-# emendare
+# Emendare
 
 ## Project npm commands
 
