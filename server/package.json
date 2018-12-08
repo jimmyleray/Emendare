@@ -1,5 +1,5 @@
 {
-  "name": "emendare-back",
+  "name": "emendare-server",
   "version": "0.0.0",
   "main": "index.js",
   "scripts": {
