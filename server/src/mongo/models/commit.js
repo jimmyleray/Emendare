@@ -4,10 +4,7 @@ module.exports = mongoose.model(
   "Commit",
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
-    owners: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-      required: true
-    },
+    whitelist: { type: [String], default: [] },
     name: { type: String, required: true },
     description: { type: String, default: "" },
     patch: { type: String, required: true },
