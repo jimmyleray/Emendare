@@ -1,3 +1,3 @@
 const appName = 'Emendare'
 
-export const title = pageName => appName + ' | ' + pageName
+export const pageTitle = pageName => appName + ' | ' + pageName

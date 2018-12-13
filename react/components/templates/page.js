@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import { Navbar, Metas } from '../templates'
-import { title } from '../../services'
+import { pageTitle } from '../../services'
 
 export const Page = ({ pageName, children }) => (
   <>
     <Head>
-      <title>{title(pageName)}</title>
+      <title>{pageTitle(pageName)}</title>
       <Metas />
     </Head>
     <header>
