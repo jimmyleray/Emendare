@@ -1,12 +1,10 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 const About = () => (
   <div>
-    <Link href="/">
-      <button>Go to Home Page</button>
-    </Link>
+    <Link href="/">Go to Home Page</Link>
     <p>Hello Next.js</p>
   </div>
-);
+)
 
-export default About;
+export default About
