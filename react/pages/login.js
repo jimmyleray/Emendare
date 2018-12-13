@@ -1,7 +1,7 @@
 import { Page } from '../components/templates'
 
 const Login = () => (
-  <Page title="Login">
+  <Page pageName="Connexion">
     <p>Login page</p>
   </Page>
 )

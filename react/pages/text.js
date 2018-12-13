@@ -1,7 +1,7 @@
 import { Page } from '../components/templates'
 
 const Text = () => (
-  <Page title="Text">
+  <Page pageName="Texte">
     <p>Text page</p>
   </Page>
 )

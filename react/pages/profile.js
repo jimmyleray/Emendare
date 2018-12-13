@@ -1,7 +1,7 @@
 import { Page } from '../components/templates'
 
 const Profile = () => (
-  <Page title="Profile">
+  <Page pageName="Profil">
     <p>Profile page</p>
   </Page>
 )

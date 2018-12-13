@@ -1,7 +1,7 @@
 import { Page } from '../components/templates'
 
 const Index = () => (
-  <Page title="Home">
+  <Page pageName="Accueil">
     <p>Home page</p>
   </Page>
 )

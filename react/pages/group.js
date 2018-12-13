@@ -1,7 +1,7 @@
 import { Page } from '../components/templates'
 
 const Group = () => (
-  <Page title="Group">
+  <Page pageName="Groupe">
     <p>Group page</p>
   </Page>
 )
