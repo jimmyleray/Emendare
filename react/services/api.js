@@ -4,8 +4,5 @@ const config = {
     production: 'https://emendare-api.cleverapps.io'
   }
 }
-export class Api {
-  static call(pathname) {
-    return config.url[process.env.NODE_ENV] + pathname
-  }
-}
+
+export const api = pathname => config.url[process.env.NODE_ENV] + pathname

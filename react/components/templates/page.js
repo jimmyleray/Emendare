@@ -1,14 +1,19 @@
 import Head from 'next/head'
-import { Navbar } from './navbar'
+import { Navbar, Metas } from '../templates'
 
 export const Page = ({ title, children }) => (
   <>
     <Head>
       <title>{title}</title>
+      <Metas />
     </Head>
     <header>
       <Navbar />
     </header>
-    <main>{children}</main>
+    <main>
+      <section class="section">
+        <div class="container">{children}</div>
+      </section>
+    </main>
   </>
 )
