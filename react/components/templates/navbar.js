@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const links = [
   { pathname: '/', title: 'Home' },
-  { pathname: '/about', title: 'About' }
+  { pathname: '/login', title: 'Login' }
 ]
 
 export const Navbar = () => (
