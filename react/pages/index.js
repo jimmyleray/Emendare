@@ -1,10 +1,9 @@
-import Link from 'next/link'
+import { Page } from '../components/templates'
 
 const Index = () => (
-  <div>
-    <Link href="/about">Go to About Page</Link>
-    <p>Hello Next.js</p>
-  </div>
+  <Page title="Home">
+    <p>Home page</p>
+  </Page>
 )
 
 export default Index

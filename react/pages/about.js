@@ -1,10 +1,9 @@
-import Link from 'next/link'
+import { Page } from '../components/templates'
 
 const About = () => (
-  <div>
-    <Link href="/">Go to Home Page</Link>
-    <p>Hello Next.js</p>
-  </div>
+  <Page title="About">
+    <p>About page</p>
+  </Page>
 )
 
 export default About
