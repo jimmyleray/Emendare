@@ -1,22 +1,22 @@
 import Link from 'next/link'
 
 export const Navbar = () => (
-  <nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="container is-fluid">
-      <div class="navbar-brand">
+  <nav className="navbar" role="navigation" aria-label="main navigation">
+    <div className="container is-fluid">
+      <div className="navbar-brand">
         <Link href="/">
-          <a class="navbar-item">Emendare</a>
+          <a className="navbar-item">Emendare</a>
         </Link>
       </div>
-      <div class="navbar-menu">
-        <div class="navbar-start">
+      <div className="navbar-menu">
+        <div className="navbar-start">
           <Link href="/explore">
-            <a class="navbar-item">Explorer</a>
+            <a className="navbar-item">Explorer</a>
           </Link>
         </div>
-        <div class="navbar-end">
+        <div className="navbar-end">
           <Link href="/login">
-            <a class="navbar-item">Connexion</a>
+            <a className="navbar-item">Connexion</a>
           </Link>
         </div>
       </div>
