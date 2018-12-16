@@ -1,4 +1,4 @@
-import { Page } from '../components/templates'
+import { Page } from '../components'
 
 const Login = () => (
   <Page pageName="Connexion">

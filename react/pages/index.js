@@ -1,8 +1,16 @@
-import { Page } from '../components/templates'
+import { Page } from '../components'
+import { UserContext } from '../contexts'
 
 const Index = () => (
   <Page pageName="Accueil">
-    <p>Home page</p>
+    <UserContext.Consumer>
+      {({ amount, incrementAmount }) => (
+        <div>
+          <button onClick={incrementAmount}>Increment</button>
+          <p>Home page of {amount}</p>
+        </div>
+      )}
+    </UserContext.Consumer>
   </Page>
 )
 
