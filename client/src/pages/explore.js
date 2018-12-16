@@ -2,7 +2,7 @@ import React from 'react'
 import { Page } from '../components'
 
 export const Explore = () => (
-  <Page pageName="Explorer">
+  <Page title="Explorer">
     <p>Explore page</p>
   </Page>
 )

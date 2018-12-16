@@ -3,7 +3,7 @@ import { Page } from '../components'
 import { UserContext } from '../contexts'
 
 export const Home = () => (
-  <Page pageName="Accueil">
+  <Page title="Accueil">
     <UserContext.Consumer>
       {({ amount, incrementAmount }) => (
         <div>
