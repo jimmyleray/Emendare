@@ -1,20 +1,20 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 module.exports = mongoose.model(
-  "Text",
+  'Text',
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
     name: { type: String, required: true },
-    description: { type: String, default: "" },
-    actual: { type: String, default: "" },
+    description: { type: String, default: '' },
+    actual: { type: String, default: '' },
     patches: { type: [String], default: [] },
     group: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Group",
+      ref: 'Group',
       required: true
     },
     commits: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Commit" }],
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Commit' }],
       default: []
     },
     whitelist: { type: [String], default: [] },
@@ -22,4 +22,4 @@ module.exports = mongoose.model(
     official: { type: Boolean, default: false },
     updated: { type: Date, default: Date.now }
   })
-);
+)

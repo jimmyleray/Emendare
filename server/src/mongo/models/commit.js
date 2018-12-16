@@ -1,14 +1,14 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 module.exports = mongoose.model(
-  "Commit",
+  'Commit',
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
     whitelist: { type: [String], default: [] },
     name: { type: String, required: true },
-    description: { type: String, default: "" },
+    description: { type: String, default: '' },
     patch: { type: String, required: true },
-    text: { type: mongoose.Schema.Types.ObjectId, ref: "Text", required: true },
+    text: { type: mongoose.Schema.Types.ObjectId, ref: 'Text', required: true },
     updated: { type: Date, default: Date.now }
   })
-);
+)
