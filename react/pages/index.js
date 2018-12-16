@@ -1,7 +1,8 @@
+import { withRouter } from 'next/router'
 import { Page } from '../components'
 import { UserContext } from '../contexts'
 
-const Index = () => (
+const Index = ({ router }) => (
   <Page pageName="Accueil">
     <UserContext.Consumer>
       {({ amount, incrementAmount }) => (
@@ -14,4 +15,4 @@ const Index = () => (
   </Page>
 )
 
-export default Index
+export default withRouter(Index)

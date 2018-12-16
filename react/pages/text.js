@@ -1,3 +1,4 @@
+import { withRouter } from 'next/router'
 import { Page } from '../components'
 
 const Text = () => (
@@ -6,4 +7,4 @@ const Text = () => (
   </Page>
 )
 
-export default Text
+export default withRouter(Text)

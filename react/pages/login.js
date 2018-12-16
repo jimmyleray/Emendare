@@ -1,3 +1,4 @@
+import { withRouter } from 'next/router'
 import { Page } from '../components'
 
 const Login = () => (
@@ -6,4 +7,4 @@ const Login = () => (
   </Page>
 )
 
-export default Login
+export default withRouter(Login)

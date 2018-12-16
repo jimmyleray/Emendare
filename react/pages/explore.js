@@ -1,3 +1,4 @@
+import { withRouter } from 'next/router'
 import { Page } from '../components'
 
 const Explore = () => (
@@ -6,4 +7,4 @@ const Explore = () => (
   </Page>
 )
 
-export default Explore
+export default withRouter(Explore)

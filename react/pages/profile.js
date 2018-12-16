@@ -1,3 +1,4 @@
+import { withRouter } from 'next/router'
 import { Page } from '../components'
 
 const Profile = () => (
@@ -6,4 +7,4 @@ const Profile = () => (
   </Page>
 )
 
-export default Profile
+export default withRouter(Profile)

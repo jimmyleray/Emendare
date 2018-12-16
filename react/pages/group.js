@@ -1,3 +1,4 @@
+import { withRouter } from 'next/router'
 import { Page } from '../components'
 
 const Group = () => (
@@ -6,4 +7,4 @@ const Group = () => (
   </Page>
 )
 
-export default Group
+export default withRouter(Group)
