@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { UserContext } from '../contexts'
 
 export const Navbar = () => (
   <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -16,9 +17,25 @@ export const Navbar = () => (
           </Link>
         </div>
         <div className="navbar-end">
-          <Link to="/login" className="navbar-item">
-            Connexion
-          </Link>
+          <UserContext.Consumer>
+            {({ user }) =>
+              user ? (
+                <Link to="/profile" className="navbar-item">
+                  Mon Profil
+                </Link>
+              ) : (
+                <Link to="/login" className="navbar-item">
+                  Connexion
+                </Link>
+              )
+            }
+          </UserContext.Consumer>
+          <a
+            href="https://gitlab.com/emendare/emendare"
+            className="navbar-item"
+          >
+            GitLab
+          </a>
         </div>
       </div>
     </div>

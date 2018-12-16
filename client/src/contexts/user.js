@@ -7,11 +7,12 @@ export class UserProvider extends React.Component {
     super(props)
 
     this.state = {
-      amount: 0,
-      incrementAmount: () => {
-        this.setState(state => ({
-          amount: state.amount + 1
-        }))
+      user: null,
+      login: newUser => {
+        this.setState(state => ({ user: newUser }))
+      },
+      logout: () => {
+        this.setState(state => ({ user: null }))
       }
     }
   }

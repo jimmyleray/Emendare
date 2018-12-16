@@ -1,6 +1,6 @@
 const config = {
   url: {
-    development: 'http://localhost:3000',
+    development: 'http://localhost:3030',
     production: 'https://emendare-api.cleverapps.io'
   }
 }

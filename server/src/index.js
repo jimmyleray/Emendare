@@ -55,7 +55,7 @@ app.post("/login", async (req, res) => {
         const token = generateToken();
         user.token = token;
         await user.save();
-        res.end(token);
+        res.json(user);
       } else {
         res.status(400).end("Mot de passe invalide");
       }
