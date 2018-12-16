@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import { Navbar, Metas, Providers } from '../templates'
-import { pageTitle } from '../../utils'
+import { Navbar, Metas, Providers } from '../components'
+import { pageTitle } from '../utils'
 
 export const Page = ({ pageName, children }) => (
   <Providers>
