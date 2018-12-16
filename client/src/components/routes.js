@@ -15,13 +15,10 @@ export const routes = [
 export const Routes = () => (
   <Router>
     <Switch>
-      {routes.map((route, i) =>
-        route.public ? (
-          <Route key={i} {...route} />
-        ) : (
-          <PrivateRoute key={i} {...route} />
-        )
-      )}
+      {routes.map(route => {
+        const Component = route.public ? Route : PrivateRoute
+        return <Component key={route.path} {...route} />
+      })}
       <Route component={NotFound} />
     </Switch>
   </Router>

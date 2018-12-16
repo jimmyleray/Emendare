@@ -8,11 +8,13 @@ export class UserProvider extends React.Component {
 
     this.state = {
       user: null,
-      login: newUser => {
-        this.setState(state => ({ user: newUser }))
+      login: user => {
+        localStorage.setItem('user-token', user.token)
+        this.setState(() => ({ user }))
       },
       logout: () => {
-        this.setState(state => ({ user: null }))
+        localStorage.removeItem('user-token')
+        this.setState(() => ({ user: null }))
       }
     }
   }

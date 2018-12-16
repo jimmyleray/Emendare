@@ -12,7 +12,7 @@ export class Login extends React.Component {
       this.setState({ [name]: event.target.value })
     }
 
-    this.login = login => event => {
+    this.submit = login => event => {
       event.preventDefault()
       fetch(api('/login'), {
         method: 'post',
@@ -27,12 +27,11 @@ export class Login extends React.Component {
       }).then(async res => {
         if (res.status === 200) {
           const user = await res.json()
-          localStorage.setItem('token', user.token)
           login(user)
           this.setState({ redirectToProfile: true })
         } else {
-          // const message = await res.text()
-          //this.message = message
+          const errorMessage = await res.text()
+          this.setState({ errorMessage })
         }
       })
     }
@@ -40,6 +39,7 @@ export class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      errorMessage: '',
       redirectToProfile: false
     }
   }
@@ -51,7 +51,7 @@ export class Login extends React.Component {
       <UserContext.Consumer>
         {({ login }) => (
           <Page title="Connexion">
-            <form onSubmit={this.login(login)}>
+            <form onSubmit={this.submit(login)}>
               <div className="field">
                 <label className="label is-medium">Email</label>
                 <p className="control has-icons-left has-icons-right">
@@ -88,6 +88,11 @@ export class Login extends React.Component {
                   </button>
                 </p>
               </div>
+              {this.state.errorMessage && (
+                <div className="notification is-danger has-text-centered">
+                  {this.state.errorMessage}
+                </div>
+              )}
             </form>
           </Page>
         )}
