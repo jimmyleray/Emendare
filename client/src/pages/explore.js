@@ -1,10 +1,8 @@
-import { withRouter } from 'next/router'
+import React from 'react'
 import { Page } from '../components'
 
-const Explore = () => (
+export const Explore = () => (
   <Page pageName="Explorer">
     <p>Explore page</p>
   </Page>
 )
-
-export default withRouter(Explore)

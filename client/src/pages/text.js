@@ -1,10 +1,8 @@
-import { withRouter } from 'next/router'
+import React from 'react'
 import { Page } from '../components'
 
-const Text = () => (
+export const Text = () => (
   <Page pageName="Texte">
     <p>Text page</p>
   </Page>
 )
-
-export default withRouter(Text)

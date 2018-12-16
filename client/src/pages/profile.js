@@ -1,10 +1,8 @@
-import { withRouter } from 'next/router'
+import React from 'react'
 import { Page } from '../components'
 
-const Profile = () => (
+export const Profile = () => (
   <Page pageName="Profil">
     <p>Profile page</p>
   </Page>
 )
-
-export default withRouter(Profile)
