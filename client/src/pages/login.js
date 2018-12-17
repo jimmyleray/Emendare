@@ -4,7 +4,7 @@ import { Page } from '../components'
 import { api } from '../utils'
 import { UserContext } from '../contexts'
 
-export class Login extends React.Component {
+export class LoginPage extends React.Component {
   constructor(props) {
     super(props)
 

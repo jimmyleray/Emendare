@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Page } from '../components'
 
-export const Home = () => (
+export const HomePage = () => (
   <Page title="Accueil">
     <div className="notification is-warning has-text-centered">
       <p>

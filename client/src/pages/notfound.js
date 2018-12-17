@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Page } from '../components'
 
-export const NotFound = () => (
+export const NotFoundPage = () => (
   <Page title="Introuvable">
     <div className="field has-text-centered">
       <h1 className="is-size-3">Erreur 404 - Page introuvable</h1>
