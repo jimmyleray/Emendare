@@ -44,40 +44,48 @@ export const Group = ({ data }) => {
     <UserContext.Consumer>
       {({ user, login }) => (
         <>
-          {data.parent && (
-            <Link to={'/group/' + data.parent._id}>
-              Retour au groupe parent
-            </Link>
-          )}
+          <div className="field is-grouped">
+            <p className="control">
+              {data.parent && (
+                <Link to={'/group/' + data.parent._id} className="button">
+                  <span className="icon">
+                    <i className="fas fa-chevron-left" />
+                  </span>
+                  <span>Retour au groupe parent</span>
+                </Link>
+              )}
+            </p>
+            <p className="control">
+              {user &&
+                (user.followedGroups.find(id => id === data._id) ? (
+                  <button
+                    onClick={unFollowGroup(data._id)(login)}
+                    className="button is-danger"
+                  >
+                    Ne plus suivre ce groupe
+                  </button>
+                ) : (
+                  <button
+                    onClick={followGroup(data._id)(login)}
+                    className="button is-success"
+                  >
+                    Suivre ce groupe
+                  </button>
+                ))}
+            </p>
+          </div>
 
-          <p>Description : {data.description}</p>
-          <p>Crée le : {new Date(data.created).toLocaleString()}</p>
-
-          {user &&
-            (user.followedGroups.find(id => id === data._id) ? (
-              <button
-                onClick={unFollowGroup(data._id)(login)}
-                className="button is-danger"
-              >
-                Ne plus suivre ce groupe
-              </button>
-            ) : (
-              <button
-                onClick={followGroup(data._id)(login)}
-                className="button is-success"
-              >
-                Suivre ce groupe
-              </button>
-            ))}
+          <div className="box">
+            <p>Description : {data.description}</p>
+            <p>Crée le : {new Date(data.created).toLocaleString()}</p>
+          </div>
 
           {data.subgroups.length > 0 && (
             <>
               <p>Groupes</p>
               {data.subgroups.map(subgroup => (
                 <Link key={subgroup._id} to={'/group/' + subgroup._id}>
-                  <p>
-                    {subgroup.name} : {subgroup.description}
-                  </p>
+                  {subgroup.name} : {subgroup.description}
                 </Link>
               ))}
             </>
@@ -86,13 +94,15 @@ export const Group = ({ data }) => {
           {data.texts.length > 0 && (
             <>
               <p>Textes</p>
-              {data.texts.map(text => (
-                <Link key={text._id} to={'/text/' + text._id}>
-                  <p>
-                    {text.name} : {text.description}
-                  </p>
-                </Link>
-              ))}
+              <ul>
+                {data.texts.map(text => (
+                  <li key={text._id}>
+                    <Link to={'/text/' + text._id}>
+                      {text.name} : {text.description}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </>
           )}
         </>

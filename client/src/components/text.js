@@ -45,47 +45,48 @@ export const Text = ({ data }) => {
     <UserContext.Consumer>
       {({ user, login }) => (
         <>
-          {data.group && (
-            <Link to={'/group/' + data.group._id}>Retour au groupe</Link>
-          )}
+          <div className="field is-grouped">
+            <p className="control">
+              {data.group && (
+                <Link to={'/group/' + data.group._id} className="button">
+                  <span className="icon">
+                    <i className="fas fa-chevron-left" />
+                  </span>
+                  <span>Retour au groupe</span>
+                </Link>
+              )}
+            </p>
+            <p className="control">
+              {user &&
+                (user.followedTexts.find(id => id === data._id) ? (
+                  <button
+                    onClick={unFollowText(data._id)(login)}
+                    className="button is-danger"
+                  >
+                    Ne plus suivre ce texte
+                  </button>
+                ) : (
+                  <button
+                    onClick={followText(data._id)(login)}
+                    className="button is-success"
+                  >
+                    Suivre ce texte
+                  </button>
+                ))}
+            </p>
+          </div>
 
-          <p>
-            {data.group.name} | <strong>{data.name}</strong>
-          </p>
-          <p>Description : {data.description}</p>
-          <p>Crée le : {new Date(data.created).toLocaleString()}</p>
-          {user &&
-            (user.followedTexts.find(id => id === data._id) ? (
-              <button
-                onClick={unFollowText(data._id)(login)}
-                className="button is-danger"
-              >
-                Ne plus suivre ce texte
-              </button>
-            ) : (
-              <button
-                onClick={followText(data._id)(login)}
-                className="button is-success"
-              >
-                Suivre ce texte
-              </button>
-            ))}
-          <Markdown source={data.actual} />
+          <div className="box">
+            <p>
+              {data.group.name} | <strong>{data.name}</strong>
+            </p>
+            <p>Description : {data.description}</p>
+            <p>Crée le : {new Date(data.created).toLocaleString()}</p>
+          </div>
+
+          <Markdown>{data.actual}</Markdown>
         </>
       )}
     </UserContext.Consumer>
   )
 }
-
-/* <v-tooltip bottom v-if="user.followedTexts.find(id => id === text._id)">
-            <v-btn @click="unFollowText()" slot="activator" icon>
-              <v-icon color="warning" class="fas fa-star"></v-icon>
-            </v-btn>
-            <span>Ne plus suivre ce texte</span>
-          </v-tooltip>
-          <v-tooltip bottom v-if="!user.followedTexts.find(id => id === text._id)">
-            <v-btn @click="followText()" slot="activator" icon>
-              <v-icon color="warning" class="far fa-star"></v-icon>
-            </v-btn>
-            <span>Suivre ce texte</span>
-          </v-tooltip>*/

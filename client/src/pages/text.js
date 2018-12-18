@@ -38,7 +38,7 @@ export class TextPage extends React.Component {
 
   render() {
     return (
-      <Page title="Texte">
+      <Page title={this.state.text ? this.state.text.name : 'Texte'}>
         {this.state.text && <Text data={this.state.text} />}
       </Page>
     )
