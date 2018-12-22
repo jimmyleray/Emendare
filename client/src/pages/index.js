@@ -1,3 +1,4 @@
+export * from './amend'
 export * from './explore'
 export * from './group'
 export * from './home'

@@ -31,28 +31,46 @@ const initDatabase = async () => {
     }).save()
 
     const globalGroup = await new Group({
-      owners: [adminUser._id],
       name: 'Global',
-      description: 'Groupe officiel global',
-      official: true
+      description: 'Groupe officiel global'
     }).save()
+
+    const globalGroupRules = await new Text({
+      group: globalGroup._id,
+      rules: true
+    }).save()
+
+    globalGroup.rules = globalGroupRules._id
+    await globalGroup.save()
 
     const officialGroup = await new Group({
-      owners: [adminUser._id],
       name: 'Francais',
       description: 'Groupe officiel francophone',
-      parent: globalGroup._id,
-      official: true
+      parent: globalGroup._id
     }).save()
 
+    const officialGroupRules = await new Text({
+      group: officialGroup._id,
+      rules: true
+    }).save()
+
+    officialGroup.rules = officialGroupRules._id
+    await officialGroup.save()
+
     const privateGroup = await new Group({
-      owners: [adminUser._id],
       name: 'Zenika',
       description: 'Groupe privé Zenika',
       parent: officialGroup._id,
-      private: true,
       whitelist: ['*@zenika.com']
     }).save()
+
+    const privateGroupRules = await new Text({
+      group: privateGroup._id,
+      rules: true
+    }).save()
+
+    privateGroup.rules = privateGroupRules._id
+    await privateGroup.save()
 
     globalGroup.subgroups.push(officialGroup._id)
     await globalGroup.save()
@@ -61,7 +79,6 @@ const initDatabase = async () => {
     await officialGroup.save()
 
     const globalText = await new Text({
-      owners: [adminUser._id],
       name: "Roadmap d'Emendare",
       actual: lorem,
       description:
@@ -71,7 +88,6 @@ const initDatabase = async () => {
     }).save()
 
     const privateText = await new Text({
-      owners: [adminUser._id],
       name: "Description de l'agence de Rennes",
       actual: lorem,
       description: 'Texte utilisé sur le minisite rennes.zenika.com',

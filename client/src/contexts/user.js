@@ -31,6 +31,9 @@ export class UserProvider extends React.Component {
         if (res.status === 200) {
           const user = await res.json()
           this.setState({ user, isConnectionPending: false })
+        } else {
+          localStorage.removeItem('user-token')
+          this.setState({ isConnectionPending: false })
         }
       })
     } else {

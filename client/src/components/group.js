@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../contexts'
+import { Spacer } from '../components'
 import { apiFetch } from '../utils'
 
 const unFollowGroup = id => login => () => {
@@ -46,11 +47,22 @@ export const Group = ({ data }) => {
               </Link>
             )}
 
+            <Spacer />
+
+            {isConnected() && (
+              <Link to={'/text/' + data.rules._id} className="button is-info">
+                <span className="icon">
+                  <i className="fas fa-cog" />
+                </span>
+                <span>Voir les paramètres</span>
+              </Link>
+            )}
+
             {isConnected() &&
               (user.followedGroups.find(id => id === data._id) ? (
                 <button
                   onClick={unFollowGroup(data._id)(login)}
-                  className="button is-danger"
+                  className="button is-danger is-outlined"
                 >
                   Ne plus suivre ce groupe
                 </button>

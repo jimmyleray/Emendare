@@ -4,8 +4,9 @@ module.exports = mongoose.model(
   'Group',
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
-    name: { type: String, required: true },
+    name: { type: String, default: '' },
     description: { type: String, default: '' },
+    rules: { type: mongoose.Schema.Types.ObjectId, ref: 'Text' },
     subgroups: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],
       default: []
@@ -19,9 +20,7 @@ module.exports = mongoose.model(
       ref: 'Group',
       default: null
     },
-    whitelist: { type: [String], default: [] },
-    private: { type: Boolean, default: false },
-    official: { type: Boolean, default: false },
+    whitelist: { type: [String], default: ['*'] },
     updated: { type: Date, default: Date.now }
   })
 )

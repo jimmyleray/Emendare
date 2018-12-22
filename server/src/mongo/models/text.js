@@ -4,7 +4,7 @@ module.exports = mongoose.model(
   'Text',
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
-    name: { type: String, required: true },
+    name: { type: String, default: '' },
     description: { type: String, default: '' },
     actual: { type: String, default: '' },
     patches: { type: [String], default: [] },
@@ -17,9 +17,7 @@ module.exports = mongoose.model(
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Commit' }],
       default: []
     },
-    whitelist: { type: [String], default: [] },
-    private: { type: Boolean, default: false },
-    official: { type: Boolean, default: false },
-    updated: { type: Date, default: Date.now }
+    updated: { type: Date, default: Date.now },
+    rules: { type: Boolean, default: false }
   })
 )

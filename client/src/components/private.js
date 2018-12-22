@@ -11,7 +11,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
           {...rest}
           render={props =>
             isConnected() ? (
-              <Component />
+              <Component {...props} />
             ) : isConnectionPending ? (
               <PendingPage />
             ) : (

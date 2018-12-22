@@ -9,7 +9,8 @@ export const routes = [
   { path: '/group/:id', component: Pages.GroupPage },
   { path: '/login', component: Pages.LoginPage },
   { path: '/profile', component: Pages.ProfilePage, private: true },
-  { path: '/text/:id', component: Pages.TextPage }
+  { path: '/text/:id', component: Pages.TextPage },
+  { path: '/amend/:id', component: Pages.AmendPage, private: true }
 ]
 
 export const Routes = () => (

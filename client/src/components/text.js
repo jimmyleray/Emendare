@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../contexts'
-import { Markdown } from '../components'
+import { Markdown, Spacer } from '../components'
 import { apiFetch } from '../utils'
 
 const unFollowText = id => login => () => {
@@ -47,11 +47,22 @@ export const Text = ({ data }) => {
               </Link>
             )}
 
+            <Spacer />
+
+            {isConnected() && (
+              <Link to={'/amend/' + data._id} className="button is-info">
+                <span className="icon">
+                  <i className="fas fa-plus" />
+                </span>
+                <span>Proposer un amendement</span>
+              </Link>
+            )}
+
             {isConnected() &&
               (user.followedTexts.find(id => id === data._id) ? (
                 <button
                   onClick={unFollowText(data._id)(login)}
-                  className="button is-danger"
+                  className="button is-danger is-outlined"
                 >
                   Ne plus suivre ce texte
                 </button>
@@ -67,9 +78,15 @@ export const Text = ({ data }) => {
 
           <div className="box">
             <p>
-              {data.group.name} | <strong>{data.name}</strong>
+              {data.rules ? 'Paramètres' : data.group.name} |{' '}
+              <strong>{data.rules ? data.group.name : data.name}</strong>
             </p>
-            <p>Description : {data.description}</p>
+            <p>
+              Description :{' '}
+              {data.rules
+                ? 'Règles du groupe ' + data.group.name
+                : data.description}
+            </p>
             <p>Crée le : {new Date(data.created).toLocaleString()}</p>
           </div>
 
