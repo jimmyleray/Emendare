@@ -13,7 +13,8 @@ export class UserProvider extends React.Component {
         localStorage.setItem('user-token', user.token)
         this.setState(() => ({ user }))
       },
-      logout: () => {
+      logout: event => {
+        event.preventDefault()
         localStorage.removeItem('user-token')
         this.setState(() => ({ user: null }))
       }
