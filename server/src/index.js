@@ -20,6 +20,11 @@ app.use(bodyParser.json())
 const cors = require('cors')
 app.use(cors())
 
+// Matcher utility
+// https://github.com/jonschlinkert/is-match
+const isMatch = require('is-match')
+const isMatchZenika = isMatch('*@zenika.com')
+
 // MongoDB connection
 const database = require('./mongo')
 
@@ -32,14 +37,18 @@ const Commit = require('./mongo/models/commit')
 // Users routes
 app.post('/signup', async (req, res) => {
   const { email, password } = req.body
-  if (await User.findOne({ email })) {
-    res.status(400).end('Cet email est déjà utilisé')
+  if (!isMatchZenika(email)) {
+    res.status(400).end("Cet email n'est pas encore autorisé")
   } else {
-    bcrypt.hash(password, 10, async (err, hash) => {
-      await new User({ email, password: hash }).save().then(() => {
-        res.end('Nouvel utilisateur enregistré')
+    if (await User.findOne({ email })) {
+      res.status(400).end('Cet email est déjà utilisé')
+    } else {
+      bcrypt.hash(password, 10, async (err, hash) => {
+        await new User({ email, password: hash }).save().then(() => {
+          res.end('Nouvel utilisateur enregistré')
+        })
       })
-    })
+    }
   }
 })
 
@@ -48,20 +57,32 @@ const generateToken = require('./utils/token')
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body
-  const user = await User.findOne({ email })
-  if (user) {
-    bcrypt.compare(password, user.password, async (err, valid) => {
-      if (valid) {
-        const token = generateToken()
-        user.token = token
-        await user.save()
-        res.json(user)
-      } else {
-        res.status(400).end('Mot de passe invalide')
-      }
-    })
+  const token = req.headers['user-token']
+  if (email && password) {
+    const user = await User.findOne({ email })
+    if (user) {
+      bcrypt.compare(password, user.password, async (err, valid) => {
+        if (valid) {
+          const token = generateToken()
+          user.token = token
+          await user.save()
+          res.json(user)
+        } else {
+          res.status(400).end('Mot de passe invalide')
+        }
+      })
+    } else {
+      res.status(400).end('Email invalide')
+    }
+  } else if (token) {
+    const user = await User.findOne({ token })
+    if (user) {
+      res.json(user)
+    } else {
+      res.status(400).end('Token invalide')
+    }
   } else {
-    res.status(400).end('Email invalide')
+    res.status(400).end('Requete invalide')
   }
 })
 

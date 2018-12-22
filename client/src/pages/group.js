@@ -9,7 +9,7 @@
 
 import React from 'react'
 import { Group, Page } from '../components'
-import { api } from '../utils'
+import { apiFetch } from '../utils'
 
 export class GroupPage extends React.Component {
   constructor(props) {
@@ -21,13 +21,7 @@ export class GroupPage extends React.Component {
   }
 
   fetchData() {
-    fetch(api('/group/' + this.props.match.params.id), {
-      method: 'get',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    }).then(async res => {
+    apiFetch('/group/' + this.props.match.params.id).then(async res => {
       if (res.status === 200) {
         const group = await res.json()
         this.setState({ group })

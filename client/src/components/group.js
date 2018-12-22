@@ -1,15 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../contexts'
-import { api } from '../utils'
+import { apiFetch } from '../utils'
 
 const unFollowGroup = id => login => () => {
-  fetch(api('/user/unFollowGroup/' + id), {
+  apiFetch('/user/unFollowGroup/' + id, {
     method: 'post',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
     body: JSON.stringify({
       token: localStorage.getItem('user-token')
     })
@@ -22,12 +18,8 @@ const unFollowGroup = id => login => () => {
 }
 
 const followGroup = id => login => () => {
-  fetch(api('/user/followGroup/' + id), {
+  apiFetch('/user/followGroup/' + id, {
     method: 'post',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
     body: JSON.stringify({
       token: localStorage.getItem('user-token')
     })

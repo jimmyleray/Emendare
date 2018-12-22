@@ -9,7 +9,7 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Page } from '../components'
-import { api } from '../utils'
+import { apiFetch } from '../utils'
 import { UserContext } from '../contexts'
 
 export class LoginPage extends React.Component {
@@ -22,12 +22,8 @@ export class LoginPage extends React.Component {
 
     this.submit = login => event => {
       event.preventDefault()
-      fetch(api('/login'), {
+      apiFetch('/login', {
         method: 'post',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
         body: JSON.stringify({
           password: this.state.password,
           email: this.state.email

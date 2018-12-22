@@ -14,7 +14,7 @@
 
 import React from 'react'
 import { Text, Page } from '../components'
-import { api } from '../utils'
+import { apiFetch } from '../utils'
 
 export class TextPage extends React.Component {
   constructor(props) {
@@ -26,13 +26,7 @@ export class TextPage extends React.Component {
   }
 
   fetchData() {
-    fetch(api('/text/' + this.props.match.params.id), {
-      method: 'get',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    }).then(async res => {
+    apiFetch('/text/' + this.props.match.params.id).then(async res => {
       if (res.status === 200) {
         const text = await res.json()
         this.setState({ text })

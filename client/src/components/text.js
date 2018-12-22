@@ -2,15 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../contexts'
 import { Markdown } from '../components'
-import { api } from '../utils'
+import { apiFetch } from '../utils'
 
 const unFollowText = id => login => () => {
-  fetch(api('/user/unFollowText/' + id), {
+  apiFetch('/user/unFollowText/' + id, {
     method: 'post',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
     body: JSON.stringify({
       token: localStorage.getItem('user-token')
     })
@@ -23,12 +19,8 @@ const unFollowText = id => login => () => {
 }
 
 const followText = id => login => () => {
-  fetch(api('/user/followText/' + id), {
+  apiFetch('/user/followText/' + id, {
     method: 'post',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
     body: JSON.stringify({
       token: localStorage.getItem('user-token')
     })

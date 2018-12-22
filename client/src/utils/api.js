@@ -5,4 +5,14 @@ const config = {
   }
 }
 
-export const api = pathname => config.url[process.env.NODE_ENV] + pathname
+export const apiFetch = (pathname, options = {}) => {
+  return fetch(config.url[process.env.NODE_ENV] + pathname, {
+    ...options,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      ...(options.headers || {}),
+      'user-token': localStorage.getItem('user-token')
+    }
+  })
+}
