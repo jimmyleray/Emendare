@@ -36,35 +36,32 @@ export const Group = ({ data }) => {
     <UserContext.Consumer>
       {({ isConnected, user, login }) => (
         <>
-          <div className="field is-grouped">
-            <p className="control">
-              {data.parent && (
-                <Link to={'/group/' + data.parent._id} className="button">
-                  <span className="icon">
-                    <i className="fas fa-chevron-left" />
-                  </span>
-                  <span>Retour au groupe parent</span>
-                </Link>
-              )}
-            </p>
-            <p className="control">
-              {isConnected() &&
-                (user.followedGroups.find(id => id === data._id) ? (
-                  <button
-                    onClick={unFollowGroup(data._id)(login)}
-                    className="button is-danger"
-                  >
-                    Ne plus suivre ce groupe
-                  </button>
-                ) : (
-                  <button
-                    onClick={followGroup(data._id)(login)}
-                    className="button is-success"
-                  >
-                    Suivre ce groupe
-                  </button>
-                ))}
-            </p>
+          <div className="buttons">
+            {data.parent && (
+              <Link to={'/group/' + data.parent._id} className="button">
+                <span className="icon">
+                  <i className="fas fa-chevron-left" />
+                </span>
+                <span>Retour au groupe parent</span>
+              </Link>
+            )}
+
+            {isConnected() &&
+              (user.followedGroups.find(id => id === data._id) ? (
+                <button
+                  onClick={unFollowGroup(data._id)(login)}
+                  className="button is-danger"
+                >
+                  Ne plus suivre ce groupe
+                </button>
+              ) : (
+                <button
+                  onClick={followGroup(data._id)(login)}
+                  className="button is-success"
+                >
+                  Suivre ce groupe
+                </button>
+              ))}
           </div>
 
           <div className="box">

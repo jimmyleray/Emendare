@@ -37,35 +37,32 @@ export const Text = ({ data }) => {
     <UserContext.Consumer>
       {({ isConnected, user, login }) => (
         <>
-          <div className="field is-grouped">
-            <p className="control">
-              {data.group && (
-                <Link to={'/group/' + data.group._id} className="button">
-                  <span className="icon">
-                    <i className="fas fa-chevron-left" />
-                  </span>
-                  <span>Retour au groupe</span>
-                </Link>
-              )}
-            </p>
-            <p className="control">
-              {isConnected() &&
-                (user.followedTexts.find(id => id === data._id) ? (
-                  <button
-                    onClick={unFollowText(data._id)(login)}
-                    className="button is-danger"
-                  >
-                    Ne plus suivre ce texte
-                  </button>
-                ) : (
-                  <button
-                    onClick={followText(data._id)(login)}
-                    className="button is-success"
-                  >
-                    Suivre ce texte
-                  </button>
-                ))}
-            </p>
+          <div className="buttons">
+            {data.group && (
+              <Link to={'/group/' + data.group._id} className="button">
+                <span className="icon">
+                  <i className="fas fa-chevron-left" />
+                </span>
+                <span>Retour au groupe</span>
+              </Link>
+            )}
+
+            {isConnected() &&
+              (user.followedTexts.find(id => id === data._id) ? (
+                <button
+                  onClick={unFollowText(data._id)(login)}
+                  className="button is-danger"
+                >
+                  Ne plus suivre ce texte
+                </button>
+              ) : (
+                <button
+                  onClick={followText(data._id)(login)}
+                  className="button is-success"
+                >
+                  Suivre ce texte
+                </button>
+              ))}
           </div>
 
           <div className="box">
