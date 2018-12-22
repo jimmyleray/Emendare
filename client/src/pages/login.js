@@ -1,3 +1,11 @@
+/*
+ * Page de connexion
+ * Le but de cette page est de permettre aux utilisateurs :
+ * - de se connecter avec leur email / mot de passe
+ * - TODO : d'accèder à la page d'inscription
+ * - TODO : d'accèder à une page de récupération de mot de passe
+ */
+
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Page } from '../components'

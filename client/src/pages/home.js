@@ -1,3 +1,11 @@
+/*
+ * Page d'acceuil
+ * Le but de cette page est de permettre aux utilisateurs :
+ * - de comprendre l'objectif de la plateforme
+ * - d'accéder rapidement à la page d'exploration
+ * - d'accèder rapidement à la page d'inscription
+ */
+
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Page } from '../components'

@@ -1,3 +1,10 @@
+/*
+ * Page d'erreur introuvable
+ * Le but de cette page est de permettre aux utilisateurs :
+ * - de comprendre que la page demandée est introuvable
+ * - d'accéder rapidement à la page d'acceuil
+ */
+
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Page } from '../components'

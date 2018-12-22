@@ -1,3 +1,12 @@
+/*
+ * Page de groupe
+ * Le but de cette page est de permettre aux utilisateurs :
+ * - d'accéder aux pages de textes du groupe
+ * - d'accéder aux pages de sous-groupes du groupe
+ * - TODO : de visualiser les règles de gestion du groupe
+ * - TODO : de suivre les évènements liés au groupe
+ */
+
 import React from 'react'
 import { Group, Page } from '../components'
 import { api } from '../utils'
