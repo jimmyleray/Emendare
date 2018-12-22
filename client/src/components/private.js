@@ -5,9 +5,9 @@ import { UserContext } from '../contexts'
 export const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <UserContext.Consumer>
-      {({ user }) => (
+      {({ isConnected }) => (
         <Route {...rest}>
-          {user ? <Component /> : <Redirect to="/login" />}
+          {isConnected() ? <Component /> : <Redirect to="/login" />}
         </Route>
       )}
     </UserContext.Consumer>

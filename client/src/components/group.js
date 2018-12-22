@@ -42,7 +42,7 @@ const followGroup = id => login => () => {
 export const Group = ({ data }) => {
   return (
     <UserContext.Consumer>
-      {({ user, login }) => (
+      {({ isConnected, user, login }) => (
         <>
           <div className="field is-grouped">
             <p className="control">
@@ -56,7 +56,7 @@ export const Group = ({ data }) => {
               )}
             </p>
             <p className="control">
-              {user &&
+              {isConnected() &&
                 (user.followedGroups.find(id => id === data._id) ? (
                   <button
                     onClick={unFollowGroup(data._id)(login)}

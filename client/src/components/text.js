@@ -43,7 +43,7 @@ const followText = id => login => () => {
 export const Text = ({ data }) => {
   return (
     <UserContext.Consumer>
-      {({ user, login }) => (
+      {({ isConnected, user, login }) => (
         <>
           <div className="field is-grouped">
             <p className="control">
@@ -57,7 +57,7 @@ export const Text = ({ data }) => {
               )}
             </p>
             <p className="control">
-              {user &&
+              {isConnected() &&
                 (user.followedTexts.find(id => id === data._id) ? (
                   <button
                     onClick={unFollowText(data._id)(login)}

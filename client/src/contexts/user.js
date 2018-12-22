@@ -8,6 +8,7 @@ export class UserProvider extends React.Component {
 
     this.state = {
       user: null,
+      isConnected: () => this.state.user !== null,
       login: user => {
         localStorage.setItem('user-token', user.token)
         this.setState(() => ({ user }))

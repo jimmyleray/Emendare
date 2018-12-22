@@ -18,8 +18,8 @@ export const Navbar = () => (
         </div>
         <div className="navbar-end">
           <UserContext.Consumer>
-            {({ user }) =>
-              user ? (
+            {({ isConnected }) =>
+              isConnected() ? (
                 <Link to="/profile" className="navbar-item">
                   Mon Profil
                 </Link>
