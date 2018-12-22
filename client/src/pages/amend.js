@@ -48,7 +48,7 @@ export class AmendPage extends React.Component {
       <Page
         title={
           this.state.text
-            ? 'Amender ' + this.state.text.group.name
+            ? 'Amendement de ' + this.state.text.group.name
             : 'Amendement'
         }
       >
