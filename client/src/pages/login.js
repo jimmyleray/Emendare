@@ -20,7 +20,7 @@ export class LoginPage extends React.Component {
       this.setState({ [name]: event.target.value })
     }
 
-    this.submit = login => event => {
+    this.submit = setUser => event => {
       event.preventDefault()
       apiFetch('/login', {
         method: 'post',
@@ -31,7 +31,7 @@ export class LoginPage extends React.Component {
       }).then(async res => {
         if (res.status === 200) {
           const user = await res.json()
-          login(user)
+          setUser(user)
           this.setState({ redirectToReferrer: true })
         } else {
           const errorMessage = await res.text()
@@ -54,9 +54,9 @@ export class LoginPage extends React.Component {
 
     return (
       <UserContext.Consumer>
-        {({ login }) => (
+        {({ setUser }) => (
           <Page title="Connexion">
-            <form onSubmit={this.submit(login)}>
+            <form onSubmit={this.submit(setUser)}>
               <div className="field">
                 <label className="label is-medium">Email</label>
                 <p className="control has-icons-left has-icons-right">

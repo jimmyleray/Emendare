@@ -4,7 +4,7 @@ import { UserContext } from '../contexts'
 import { Spacer } from '../components'
 import { apiFetch } from '../utils'
 
-const unFollowGroup = id => login => () => {
+const unFollowGroup = setUser => id => () => {
   apiFetch('/user/unFollowGroup/' + id, {
     method: 'post',
     body: JSON.stringify({
@@ -13,12 +13,12 @@ const unFollowGroup = id => login => () => {
   }).then(async res => {
     if (res.status === 200) {
       const user = await res.json()
-      login(user)
+      setUser(user)
     }
   })
 }
 
-const followGroup = id => login => () => {
+const followGroup = setUser => id => () => {
   apiFetch('/user/followGroup/' + id, {
     method: 'post',
     body: JSON.stringify({
@@ -27,7 +27,7 @@ const followGroup = id => login => () => {
   }).then(async res => {
     if (res.status === 200) {
       const user = await res.json()
-      login(user)
+      setUser(user)
     }
   })
 }
@@ -35,7 +35,7 @@ const followGroup = id => login => () => {
 export const Group = ({ data }) => {
   return (
     <UserContext.Consumer>
-      {({ isConnected, user, login }) => (
+      {({ isConnected, user, setUser }) => (
         <>
           <div className="buttons">
             {data.parent && (
@@ -54,21 +54,21 @@ export const Group = ({ data }) => {
                 <span className="icon">
                   <i className="fas fa-cog" />
                 </span>
-                <span>Voir les paramètres</span>
+                <span>Voir les règles du groupe</span>
               </Link>
             )}
 
             {isConnected() &&
               (user.followedGroups.find(id => id === data._id) ? (
                 <button
-                  onClick={unFollowGroup(data._id)(login)}
+                  onClick={unFollowGroup(setUser)(data._id)}
                   className="button is-danger is-outlined"
                 >
                   Ne plus suivre ce groupe
                 </button>
               ) : (
                 <button
-                  onClick={followGroup(data._id)(login)}
+                  onClick={followGroup(setUser)(data._id)}
                   className="button is-success"
                 >
                   Suivre ce groupe

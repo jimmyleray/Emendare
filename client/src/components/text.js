@@ -4,7 +4,7 @@ import { UserContext } from '../contexts'
 import { Markdown, Spacer } from '../components'
 import { apiFetch } from '../utils'
 
-const unFollowText = id => login => () => {
+const unFollowText = setUser => id => () => {
   apiFetch('/user/unFollowText/' + id, {
     method: 'post',
     body: JSON.stringify({
@@ -13,12 +13,12 @@ const unFollowText = id => login => () => {
   }).then(async res => {
     if (res.status === 200) {
       const user = await res.json()
-      login(user)
+      setUser(user)
     }
   })
 }
 
-const followText = id => login => () => {
+const followText = setUser => id => () => {
   apiFetch('/user/followText/' + id, {
     method: 'post',
     body: JSON.stringify({
@@ -27,7 +27,7 @@ const followText = id => login => () => {
   }).then(async res => {
     if (res.status === 200) {
       const user = await res.json()
-      login(user)
+      setUser(user)
     }
   })
 }
@@ -35,7 +35,7 @@ const followText = id => login => () => {
 export const Text = ({ data }) => {
   return (
     <UserContext.Consumer>
-      {({ isConnected, user, login }) => (
+      {({ isConnected, user, setUser }) => (
         <>
           <div className="buttons">
             {data.group && (
@@ -61,14 +61,14 @@ export const Text = ({ data }) => {
             {isConnected() &&
               (user.followedTexts.find(id => id === data._id) ? (
                 <button
-                  onClick={unFollowText(data._id)(login)}
+                  onClick={unFollowText(setUser)(data._id)}
                   className="button is-danger is-outlined"
                 >
                   Ne plus suivre ce texte
                 </button>
               ) : (
                 <button
-                  onClick={followText(data._id)(login)}
+                  onClick={followText(setUser)(data._id)}
                   className="button is-success"
                 >
                   Suivre ce texte

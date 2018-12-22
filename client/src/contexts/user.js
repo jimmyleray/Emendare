@@ -11,11 +11,11 @@ export class UserProvider extends React.Component {
       user: null,
       isConnectionPending: true,
       isConnected: () => this.state.user !== null,
-      login: user => {
+      setUser: user => {
         localStorage.setItem('user-token', user.token)
         this.setState(() => ({ user }))
       },
-      logout: event => {
+      unSetUser: event => {
         event.preventDefault()
         localStorage.removeItem('user-token')
         this.setState(() => ({ user: null }))
