@@ -36,7 +36,7 @@ export class LoginPage extends React.Component {
         if (res.status === 200) {
           const user = await res.json()
           login(user)
-          this.setState({ redirectToProfile: true })
+          this.setState({ redirectToReferrer: true })
         } else {
           const errorMessage = await res.text()
           this.setState({ errorMessage })
@@ -48,12 +48,13 @@ export class LoginPage extends React.Component {
       email: '',
       password: '',
       errorMessage: '',
-      redirectToProfile: false
+      redirectToReferrer: false
     }
   }
 
   render() {
-    if (this.state.redirectToProfile) return <Redirect to="/profile" />
+    const { from } = this.props.location.state || { from: { pathname: '/' } }
+    if (this.state.redirectToReferrer) return <Redirect to={from} />
 
     return (
       <UserContext.Consumer>

@@ -6,9 +6,18 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <UserContext.Consumer>
       {({ isConnected }) => (
-        <Route {...rest}>
-          {isConnected() ? <Component /> : <Redirect to="/login" />}
-        </Route>
+        <Route
+          {...rest}
+          render={props =>
+            isConnected() ? (
+              <Component />
+            ) : (
+              <Redirect
+                to={{ pathname: '/login', state: { from: props.location } }}
+              />
+            )
+          }
+        />
       )}
     </UserContext.Consumer>
   )
