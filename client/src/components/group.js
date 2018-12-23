@@ -76,36 +76,45 @@ export const Group = ({ data }) => {
               ))}
           </div>
 
-          <div className="box">
-            <p>Description : {data.description}</p>
-            <p>Crée le : {new Date(data.created).toLocaleString()}</p>
-          </div>
+          <div className="columns">
+            <div className="column">
+              <div className="box">
+                <p>Description : {data.description}</p>
+                <p>Crée le : {new Date(data.created).toLocaleString()}</p>
+              </div>
 
-          {data.subgroups.length > 0 && (
-            <>
-              <p>Groupes</p>
-              {data.subgroups.map(subgroup => (
-                <Link key={subgroup._id} to={'/group/' + subgroup._id}>
-                  {subgroup.name} : {subgroup.description}
-                </Link>
-              ))}
-            </>
-          )}
-
-          {data.texts.length > 0 && (
-            <>
-              <p>Textes</p>
-              <ul>
-                {data.texts.map(text => (
-                  <li key={text._id}>
-                    <Link to={'/text/' + text._id}>
-                      {text.name} : {text.description}
+              {data.subgroups.length > 0 && (
+                <>
+                  <p>Groupes</p>
+                  {data.subgroups.map(subgroup => (
+                    <Link key={subgroup._id} to={'/group/' + subgroup._id}>
+                      {subgroup.name} : {subgroup.description}
                     </Link>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
+                  ))}
+                </>
+              )}
+
+              {data.texts.length > 0 && (
+                <>
+                  <p>Textes</p>
+                  <ul>
+                    {data.texts.map(text => (
+                      <li key={text._id}>
+                        <Link to={'/text/' + text._id}>
+                          {text.name} : {text.description}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+            <div className="column">
+              <div className="box">
+                <p>Votes en cours dans le groupe</p>
+              </div>
+            </div>
+          </div>
         </>
       )}
     </UserContext.Consumer>

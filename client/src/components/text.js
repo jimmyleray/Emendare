@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../contexts'
-import { Markdown, Spacer } from '../components'
+import { Spacer } from '../components'
 import { apiFetch } from '../utils'
 
 const unFollowText = setUser => id => () => {
@@ -75,22 +75,39 @@ export const Text = ({ data }) => {
                 </button>
               ))}
           </div>
+          <div className="columns">
+            <div className="column">
+              <div className="box">
+                <p>
+                  {data.rules ? 'Paramètres' : data.group.name} |{' '}
+                  <strong>{data.rules ? data.group.name : data.name}</strong>
+                </p>
+                <p>
+                  Description :{' '}
+                  {data.rules
+                    ? 'Règles du groupe ' + data.group.name
+                    : data.description}
+                </p>
+                <p>Crée le : {new Date(data.created).toLocaleString()}</p>
+              </div>
 
-          <div className="box">
-            <p>
-              {data.rules ? 'Paramètres' : data.group.name} |{' '}
-              <strong>{data.rules ? data.group.name : data.name}</strong>
-            </p>
-            <p>
-              Description :{' '}
-              {data.rules
-                ? 'Règles du groupe ' + data.group.name
-                : data.description}
-            </p>
-            <p>Crée le : {new Date(data.created).toLocaleString()}</p>
+              <div>
+                {data.actual
+                  .split('\n')
+                  .map((line, index) =>
+                    line ? <p key={index}>{line}</p> : <br key={index} />
+                  )}
+              </div>
+            </div>
+            <div className="column">
+              <div className="box">
+                <p>Vote en cours sur le texte</p>
+              </div>
+              <div className="box">
+                <p>Liste des amendements proposés</p>
+              </div>
+            </div>
           </div>
-
-          <Markdown>{data.actual}</Markdown>
         </>
       )}
     </UserContext.Consumer>

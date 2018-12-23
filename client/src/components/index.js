@@ -1,6 +1,5 @@
 export * from './amend'
 export * from './group'
-export * from './markdown'
 export * from './navbar'
 export * from './spacer'
 export * from './text'
