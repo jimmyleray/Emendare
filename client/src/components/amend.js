@@ -65,6 +65,17 @@ export class Amend extends React.Component {
               <p>
                 Crée le : {new Date(this.props.data.created).toLocaleString()}
               </p>
+
+              <div className="field">
+                <div className="control">
+                  <textarea
+                    rows="12"
+                    className="textarea"
+                    value={this.state.value}
+                    onChange={this.onChange}
+                  />
+                </div>
+              </div>
             </div>
             <div className="notification is-info">
               <p>
@@ -79,34 +90,26 @@ export class Amend extends React.Component {
                 </a>
               </p>
             </div>
-            <div className="field">
-              <div className="control">
-                <textarea
-                  rows="10"
-                  className="textarea"
-                  value={this.state.value}
-                  onChange={this.onChange}
-                />
-              </div>
-            </div>
           </div>
 
           <div className="column">
-            <div className="box">Pré-visualisation de votre amendement</div>
-            {this.state.diff.map((part, index) => (
-              <Markdown
-                key={index}
-                className={
-                  part[0] === 1
-                    ? 'has-text-success'
-                    : part[0] === -1
-                    ? 'has-text-danger'
-                    : ''
-                }
-              >
-                {part[1]}
-              </Markdown>
-            ))}
+            <div className="box">
+              <p>Pré-visualisation de votre amendement</p>
+              {this.state.diff.map((part, index) => (
+                <Markdown
+                  key={index}
+                  className={
+                    part[0] === 1
+                      ? 'has-text-success'
+                      : part[0] === -1
+                      ? 'has-text-danger'
+                      : ''
+                  }
+                >
+                  {part[1]}
+                </Markdown>
+              ))}
+            </div>
           </div>
         </div>
       </>

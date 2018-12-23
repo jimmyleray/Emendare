@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { App } from './components'
+import { App } from './layouts'
 import * as serviceWorker from './utils/worker'
 
 ReactDOM.render(<App />, document.getElementById('app-root'))

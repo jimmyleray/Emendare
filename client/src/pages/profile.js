@@ -10,7 +10,7 @@
  */
 
 import React from 'react'
-import { Page } from '../components'
+import { Page } from '../layouts'
 import { UserContext } from '../contexts'
 
 export const ProfilePage = () => (

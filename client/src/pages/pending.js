@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import { Page } from '../components'
+import { Page } from '../layouts'
 
 export const PendingPage = () => {
   return (

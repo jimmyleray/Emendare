@@ -12,7 +12,8 @@
  */
 
 import React from 'react'
-import { Amend, Page } from '../components'
+import { Page } from '../layouts'
+import { Amend } from '../components'
 import { apiFetch } from '../utils'
 
 export class AmendPage extends React.Component {

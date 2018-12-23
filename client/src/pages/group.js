@@ -5,10 +5,12 @@
  * - d'accéder aux pages de sous-groupes du groupe
  * - TODO : de visualiser les règles de gestion du groupe
  * - TODO : de suivre les évènements liés au groupe
+ * - TODO : de suivre l'activité du groupe
  */
 
 import React from 'react'
-import { Group, Page } from '../components'
+import { Page } from '../layouts'
+import { Group } from '../components'
 import { apiFetch } from '../utils'
 
 export class GroupPage extends React.Component {

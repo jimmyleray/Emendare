@@ -8,7 +8,7 @@
 
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import { Page } from '../components'
+import { Page } from '../layouts'
 import { apiFetch } from '../utils'
 import { UserContext } from '../contexts'
 

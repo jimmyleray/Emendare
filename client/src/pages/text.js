@@ -10,10 +10,12 @@
  * - TODO : de visualiser l'historique des modifications
  * - TODO : de visualiser le vote en cours
  * - TODO : de participer au vote en cours
+ * - TODO : de suivre l'activité du texte
  */
 
 import React from 'react'
-import { Text, Page } from '../components'
+import { Page } from '../layouts'
+import { Text } from '../components'
 import { apiFetch } from '../utils'
 
 export class TextPage extends React.Component {
