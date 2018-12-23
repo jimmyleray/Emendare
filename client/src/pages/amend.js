@@ -46,6 +46,7 @@ export class AmendPage extends React.Component {
   render() {
     return (
       <Page
+        className="is-fluid"
         title={
           this.state.text
             ? 'Amendement de ' + this.state.text.group.name

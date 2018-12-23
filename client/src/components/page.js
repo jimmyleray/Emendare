@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navbar } from '../components'
 
-export const Page = ({ children, title }) => {
+export const Page = ({ children, title, className = '' }) => {
   document.title = 'Emendare | ' + title
 
   return (
@@ -11,7 +11,7 @@ export const Page = ({ children, title }) => {
       </header>
       <main>
         <section className="section">
-          <div className="container">{children}</div>
+          <div className={'container ' + className}>{children}</div>
         </section>
       </main>
     </>
