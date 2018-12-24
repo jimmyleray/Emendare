@@ -11,9 +11,13 @@ export const routes = [
   { path: '/profil', component: Pages.ProfilePage, private: true },
   { path: '/texte/:id', component: Pages.TextPage },
   {
-    path: '/amendement/ajouter/:id',
-    component: Pages.AddAmendPage,
+    path: '/amendement/editer/:id',
+    component: Pages.EditAmendPage,
     private: true
+  },
+  {
+    path: '/amendement/:id',
+    component: Pages.AmendPage
   }
 ]
 

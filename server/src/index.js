@@ -197,6 +197,10 @@ app.get('/text/:id', async (req, res) => {
     .end()
 })
 
+app.get('/amend/:id', async (req, res) => {
+  res.json(await Amend.findById(req.params.id).populate('text')).end()
+})
+
 app.post('/addAmend/:id', async (req, res) => {
   const { name, description, patch, version } = req.body
   const user = await User.findOne({ token: req.headers['user-token'] })

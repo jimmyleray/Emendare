@@ -43,10 +43,7 @@ export class GroupPage extends React.Component {
 
   render() {
     return (
-      <Page
-        className="is-fluid"
-        title={this.state.group ? this.state.group.name : 'Groupe'}
-      >
+      <Page title={this.state.group ? this.state.group.name : 'Groupe'}>
         {this.state.group && <Group data={this.state.group} />}
       </Page>
     )

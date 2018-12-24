@@ -39,7 +39,7 @@ export const Text = ({ data }) => {
 
             {isConnected() && (
               <Link
-                to={'/amendement/ajouter/' + data._id}
+                to={'/amendement/editer/' + data._id}
                 className="button is-info"
               >
                 <span className="icon">
@@ -102,7 +102,9 @@ export const Text = ({ data }) => {
               <div className="box">
                 <p>Liste des amendements proposés</p>
                 {data.amends.map(amend => (
-                  <p>{amend.name}</p>
+                  <Link key={amend._id} to={'/amendement/' + amend._id}>
+                    {amend.name} : {amend.description}
+                  </Link>
                 ))}
               </div>
             </div>

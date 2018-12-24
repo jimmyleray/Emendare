@@ -1,11 +1,12 @@
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { UserContext } from '../contexts'
+import { Amend } from '.'
 import { Spacer } from './spacer'
 import { apiFetch } from '../utils'
 import diff_match_patch from 'diff-match-patch'
 
-export class AddAmend extends React.Component {
+export class EditAmend extends React.Component {
   constructor(props) {
     super(props)
 
@@ -116,6 +117,7 @@ export class AddAmend extends React.Component {
                   <label className="label">Titre de l'amendement</label>
                   <div className="control">
                     <input
+                      required
                       className="input"
                       type="text"
                       value={this.state.amendName}
@@ -129,6 +131,7 @@ export class AddAmend extends React.Component {
                   <label className="label">Description / Argumentaire</label>
                   <div className="control">
                     <textarea
+                      required
                       rows="4"
                       value={this.state.amendDescription}
                       onChange={this.onChange('amendDescription')}
@@ -188,55 +191,22 @@ export class AddAmend extends React.Component {
                 </p>
                 <br />
 
-                <div className="box">
-                  <p className="has-text-centered is-size-5">
-                    {this.state.amendName}
-                  </p>
-                  <p>{this.state.amendDescription}</p>
-                  {this.hasDiffs() && <hr />}
-                  <div>
-                    {this.hasDiffs() ? (
-                      this.state.diffs.map((part, index) => (
-                        <span
-                          key={index}
-                          className={
-                            part[0] === 1
-                              ? 'has-text-weight-bold has-text-success'
-                              : part[0] === -1
-                              ? 'has-text-weight-bold has-text-danger'
-                              : 'has-text-grey-light'
-                          }
-                        >
-                          {part[0] === 1 ? '(+)' : part[0] === -1 ? '[-]' : ''}
-                          {part[1].split('\n').map((line, index) => {
-                            return line ? (
-                              <span key={index}>
-                                {line.length > this.state.textSizeDisplayed * 2
-                                  ? line.slice(
-                                      0,
-                                      this.state.textSizeDisplayed
-                                    ) +
-                                    ' (...) ' +
-                                    line.slice(
-                                      -this.state.textSizeDisplayed,
-                                      -1
-                                    )
-                                  : line}
-                              </span>
-                            ) : (
-                              <br key={index} />
-                            )
-                          })}
-                          {part[0] === 1 ? '(+)' : part[0] === -1 ? '[-]' : ''}
-                        </span>
-                      ))
-                    ) : (
-                      <p className="has-text-centered has-text-danger">
-                        Aucune modification à afficher
-                      </p>
-                    )}
+                {this.hasDiffs() ? (
+                  <Amend
+                    data={{
+                      name: this.state.amendName,
+                      description: this.state.amendDescription,
+                      diffs: this.state.diffs
+                    }}
+                  />
+                ) : (
+                  <div className="box">
+                    <p className="has-text-centered has-text-danger">
+                      Aucune modification à afficher
+                    </p>
                   </div>
-                </div>
+                )}
+
                 <button
                   onClick={this.addAmend(fetchUser)}
                   disabled={!this.hasDiffs() || !isConnected()}
