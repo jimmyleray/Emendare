@@ -28,7 +28,7 @@ export const Routes = () => (
         const Component = route.private ? PrivateRoute : Route
         return <Component key={route.path} {...route} />
       })}
-      <Route component={Pages.NotFoundPage} />
+      <Route component={Pages.ErrorPage} />
     </Switch>
   </Router>
 )

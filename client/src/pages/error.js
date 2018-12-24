@@ -9,7 +9,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Page } from '../layouts'
 
-export const NotFoundPage = () => (
+export const ErrorPage = () => (
   <Page title="Introuvable">
     <div className="field has-text-centered">
       <h1 className="is-size-3">Erreur 404 - Page introuvable</h1>
