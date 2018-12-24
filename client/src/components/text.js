@@ -38,10 +38,7 @@ export const Text = ({ data }) => {
             <Spacer />
 
             {isConnected() && (
-              <Link
-                to={'/amendement/editer/' + data._id}
-                className="button is-info"
-              >
+              <Link to={'/editer/' + data._id} className="button is-info">
                 <span className="icon">
                   <i className="fas fa-plus" />
                 </span>

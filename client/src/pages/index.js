@@ -1,5 +1,5 @@
 export * from './amend'
-export * from './editAmend'
+export * from './edit'
 export * from './explore'
 export * from './group'
 export * from './home'

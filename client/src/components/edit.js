@@ -6,7 +6,7 @@ import { Spacer } from './spacer'
 import { apiFetch } from '../utils'
 import diff_match_patch from 'diff-match-patch'
 
-export class EditAmend extends React.Component {
+export class Edit extends React.Component {
   constructor(props) {
     super(props)
 
@@ -27,13 +27,14 @@ export class EditAmend extends React.Component {
     this.hasDiffs = () => this.state.initialValue !== this.state.amendValue
 
     this.addAmend = fetchUser => event => {
-      apiFetch('/addAmend/' + this.props.data._id, {
+      apiFetch('/amend', {
         method: 'post',
         body: JSON.stringify({
           name: this.state.amendName,
           description: this.state.amendDescription,
           version: this.props.data.version,
-          patch: this.state.patch
+          patch: this.state.patch,
+          textID: this.props.data._id
         })
       }).then(async res => {
         if (res.status === 200) {

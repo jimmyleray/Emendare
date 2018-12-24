@@ -11,8 +11,8 @@ export const routes = [
   { path: '/profil', component: Pages.ProfilePage, private: true },
   { path: '/texte/:id', component: Pages.TextPage },
   {
-    path: '/amendement/editer/:id',
-    component: Pages.EditAmendPage,
+    path: '/editer/:id',
+    component: Pages.EditPage,
     private: true
   },
   {

@@ -25,8 +25,9 @@ export class AmendPage extends React.Component {
     apiFetch('/amend/' + this.props.match.params.id).then(async res => {
       if (res.status === 200) {
         const amend = await res.json()
-        this.setState({ amend })
-        this.computeDiff()
+        this.setState({ amend }, () => {
+          this.computeDiff()
+        })
       }
     })
   }

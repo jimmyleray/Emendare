@@ -44,9 +44,8 @@ app.post('/signup', async (req, res) => {
       res.status(400).end('Cet email est déjà utilisé')
     } else {
       bcrypt.hash(password, 10, async (err, hash) => {
-        await new User({ email, password: hash }).save().then(() => {
-          res.end('Nouvel utilisateur enregistré')
-        })
+        await new User({ email, password: hash }).save()
+        res.end('Nouvel utilisateur enregistré')
       })
     }
   }
@@ -59,7 +58,7 @@ app.post('/login', async (req, res) => {
   const { email, password } = req.body
   const token = req.headers['user-token']
   if (email && password) {
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email }).populate('amends')
     if (user) {
       bcrypt.compare(password, user.password, async (err, valid) => {
         if (valid) {
@@ -75,7 +74,7 @@ app.post('/login', async (req, res) => {
       res.status(400).end('Email invalide')
     }
   } else if (token) {
-    const user = await User.findOne({ token })
+    const user = await User.findOne({ token }).populate('amends')
     if (user) {
       res.json(user)
     } else {
@@ -99,7 +98,9 @@ app.post('/logout', async (req, res) => {
 
 // User routes
 app.post('/user', async (req, res) => {
-  const user = await User.findOne({ token: req.headers['user-token'] })
+  const user = await User.findOne({
+    token: req.headers['user-token']
+  }).populate('amends')
   if (user) {
     res.json(user).end()
   } else {
@@ -201,8 +202,8 @@ app.get('/amend/:id', async (req, res) => {
   res.json(await Amend.findById(req.params.id).populate('text')).end()
 })
 
-app.post('/addAmend/:id', async (req, res) => {
-  const { name, description, patch, version } = req.body
+app.post('/amend', async (req, res) => {
+  const { name, description, patch, version, textID } = req.body
   const user = await User.findOne({ token: req.headers['user-token'] })
   if (user) {
     const amend = await new Amend({
@@ -210,14 +211,13 @@ app.post('/addAmend/:id', async (req, res) => {
       description,
       patch,
       version,
-      author: user._id,
-      text: req.params.id
+      text: textID
     }).save()
 
     user.amends.push(amend._id)
     await user.save()
 
-    const text = await Text.findById(req.params.id)
+    const text = await Text.findById(textID)
     text.amends.push(amend._id)
     await text.save()
 

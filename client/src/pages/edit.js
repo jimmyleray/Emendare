@@ -11,10 +11,10 @@
 
 import React from 'react'
 import { Page } from '../layouts'
-import { EditAmend } from '../components'
+import { Edit } from '../components'
 import { apiFetch } from '../utils'
 
-export class EditAmendPage extends React.Component {
+export class EditPage extends React.Component {
   constructor(props) {
     super(props)
 
@@ -51,7 +51,7 @@ export class EditAmendPage extends React.Component {
             : 'Amendement'
         }
       >
-        {this.state.text && <EditAmend data={this.state.text} />}
+        {this.state.text && <Edit data={this.state.text} />}
       </Page>
     )
   }
