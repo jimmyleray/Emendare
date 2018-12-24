@@ -18,20 +18,27 @@ export const ProfilePage = () => (
   <Page title="Profil">
     <UserContext.Consumer>
       {({ user }) => (
-        <>
-          <p>Profil de {user.email}</p>
-          <p>Crée le {new Date(user.created).toLocaleString()}</p>
-          {user.amends.length > 0 && (
+        <div className="columns">
+          <div className="column">
             <div className="box">
-              <p>Liste des amendements proposés</p>
-              {user.amends.map(amend => (
-                <Link key={amend._id} to={'/amendement/' + amend._id}>
-                  {amend.name} : {amend.description}
-                </Link>
-              ))}
+              <p>Profil de {user.email}</p>
+              <p>Crée le {new Date(user.created).toLocaleString()}</p>
             </div>
-          )}
-        </>
+          </div>
+
+          <div className="column">
+            {user.amends.length > 0 && (
+              <div className="box">
+                <p>Liste des amendements proposés</p>
+                {user.amends.map(amend => (
+                  <Link key={amend._id} to={'/amendement/' + amend._id}>
+                    {amend.name} : {amend.description}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       )}
     </UserContext.Consumer>
   </Page>
