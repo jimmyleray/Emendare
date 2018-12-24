@@ -2,8 +2,7 @@
  * Page de texte
  * Le but de cette page est de permettre aux utilisateurs :
  * - de visualiser la version actuelle du texte
- * - TODO : d'accéder à la page pour amender le texte
- * - TODO : de visualiser les règles liées au texte
+ * - d'accéder à la page pour amender le texte
  * - TODO : de visualiser la liste des amendements
  * - TODO : d'accéder au détail d'un amendement
  * - TODO : de voter pour les amendements préferés

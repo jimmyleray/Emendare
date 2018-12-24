@@ -12,7 +12,7 @@ export const Navbar = () => (
       </div>
       <div className="navbar-menu">
         <div className="navbar-start">
-          <Link to="/explore" className="navbar-item">
+          <Link to="/explorer" className="navbar-item">
             Explorer
           </Link>
         </div>
@@ -21,7 +21,7 @@ export const Navbar = () => (
             {({ isConnected, unSetUser }) =>
               isConnected() ? (
                 <>
-                  <Link to="/profile" className="navbar-item">
+                  <Link to="/profil" className="navbar-item">
                     Mon Profil
                   </Link>
                   <a href="/" onClick={unSetUser} className="navbar-item">
@@ -29,7 +29,7 @@ export const Navbar = () => (
                   </a>
                 </>
               ) : (
-                <Link to="/login" className="navbar-item">
+                <Link to="/connexion" className="navbar-item">
                   Connexion
                 </Link>
               )

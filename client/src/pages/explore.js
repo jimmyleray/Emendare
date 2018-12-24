@@ -1,7 +1,7 @@
 /*
  * Page d'exploration
  * Le but de cette page est de permettre aux utilisateurs :
- * - TODO : de découvrir des contenus à suivre sur Emendare
+ * - de découvrir des contenus à suivre sur Emendare
  * - TODO : de suivre l'activité de la plateforme
  */
 

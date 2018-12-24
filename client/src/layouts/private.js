@@ -16,7 +16,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
               <PendingPage />
             ) : (
               <Redirect
-                to={{ pathname: '/login', state: { from: props.location } }}
+                to={{ pathname: '/connexion', state: { from: props.location } }}
               />
             )
           }

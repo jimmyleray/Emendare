@@ -5,12 +5,12 @@ import * as Pages from '../pages'
 
 export const routes = [
   { path: '/', component: Pages.HomePage, exact: true },
-  { path: '/explore', component: Pages.ExplorePage },
-  { path: '/group/:id', component: Pages.GroupPage },
-  { path: '/login', component: Pages.LoginPage },
-  { path: '/profile', component: Pages.ProfilePage, private: true },
-  { path: '/text/:id', component: Pages.TextPage },
-  { path: '/amend/:id', component: Pages.AmendPage, private: true }
+  { path: '/explorer', component: Pages.ExplorePage },
+  { path: '/groupe/:id', component: Pages.GroupPage },
+  { path: '/connexion', component: Pages.LoginPage },
+  { path: '/profil', component: Pages.ProfilePage, private: true },
+  { path: '/texte/:id', component: Pages.TextPage },
+  { path: '/amendement/:id', component: Pages.AmendPage, private: true }
 ]
 
 export const Routes = () => (

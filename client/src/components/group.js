@@ -39,7 +39,7 @@ export const Group = ({ data }) => {
         <>
           <div className="buttons">
             {data.parent && (
-              <Link to={'/group/' + data.parent._id} className="button">
+              <Link to={'/groupe/' + data.parent._id} className="button">
                 <span className="icon">
                   <i className="fas fa-chevron-left" />
                 </span>
@@ -50,7 +50,7 @@ export const Group = ({ data }) => {
             <Spacer />
 
             {isConnected() && (
-              <Link to={'/text/' + data.rules._id} className="button is-info">
+              <Link to={'/texte/' + data.rules._id} className="button is-info">
                 <span className="icon">
                   <i className="fas fa-cog" />
                 </span>
@@ -79,15 +79,15 @@ export const Group = ({ data }) => {
           <div className="columns">
             <div className="column">
               <div className="box">
-                <p>Description : {data.description}</p>
-                <p>Crée le : {new Date(data.created).toLocaleString()}</p>
+                <p className="has-text-weight-bold">{data.name}</p>
+                <p>{data.description}</p>
               </div>
 
               {data.subgroups.length > 0 && (
                 <>
                   <p>Groupes</p>
                   {data.subgroups.map(subgroup => (
-                    <Link key={subgroup._id} to={'/group/' + subgroup._id}>
+                    <Link key={subgroup._id} to={'/groupe/' + subgroup._id}>
                       {subgroup.name} : {subgroup.description}
                     </Link>
                   ))}
@@ -100,7 +100,7 @@ export const Group = ({ data }) => {
                   <ul>
                     {data.texts.map(text => (
                       <li key={text._id}>
-                        <Link to={'/text/' + text._id}>
+                        <Link to={'/texte/' + text._id}>
                           {text.name} : {text.description}
                         </Link>
                       </li>

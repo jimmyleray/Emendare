@@ -14,9 +14,10 @@ module.exports = mongoose.model(
       required: true
     },
     commits: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Commit' }],
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
       default: []
     },
+    version: { type: Number, default: 0 },
     updated: { type: Date, default: Date.now },
     rules: { type: Boolean, default: false }
   })

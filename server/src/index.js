@@ -32,7 +32,7 @@ const database = require('./mongo')
 const User = require('./mongo/models/user')
 const Group = require('./mongo/models/group')
 const Text = require('./mongo/models/text')
-const Commit = require('./mongo/models/commit')
+const Amend = require('./mongo/models/amend')
 
 // Users routes
 app.post('/signup', async (req, res) => {

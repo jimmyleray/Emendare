@@ -39,7 +39,7 @@ export const Text = ({ data }) => {
         <>
           <div className="buttons">
             {data.group && (
-              <Link to={'/group/' + data.group._id} className="button">
+              <Link to={'/groupe/' + data.group._id} className="button">
                 <span className="icon">
                   <i className="fas fa-chevron-left" />
                 </span>
@@ -50,7 +50,7 @@ export const Text = ({ data }) => {
             <Spacer />
 
             {isConnected() && (
-              <Link to={'/amend/' + data._id} className="button is-info">
+              <Link to={'/amendement/' + data._id} className="button is-info">
                 <span className="icon">
                   <i className="fas fa-plus" />
                 </span>
@@ -83,12 +83,17 @@ export const Text = ({ data }) => {
                   <strong>{data.rules ? data.group.name : data.name}</strong>
                 </p>
                 <p>
-                  Description :{' '}
                   {data.rules
                     ? 'Règles du groupe ' + data.group.name
                     : data.description}
                 </p>
-                <p>Crée le : {new Date(data.created).toLocaleString()}</p>
+                <p>
+                  {data.version +
+                    ' amendement' +
+                    (data.version > 1 ? 's' : '') +
+                    ' accepté' +
+                    (data.version > 1 ? 's' : '')}
+                </p>
               </div>
 
               <div>

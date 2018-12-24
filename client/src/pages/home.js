@@ -34,12 +34,12 @@ export const HomePage = () => (
     </div>
     <div className="field is-grouped is-grouped-centered">
       <p className="control">
-        <Link to="/explore" className="button is-medium is-info">
+        <Link to="/explorer" className="button is-medium is-info">
           Découvrir Emendare
         </Link>
       </p>
       <p className="control">
-        <Link to="/login" className="button is-medium is-primary">
+        <Link to="/connexion" className="button is-medium is-primary">
           Créer votre compte
         </Link>
       </p>

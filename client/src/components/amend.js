@@ -9,25 +9,27 @@ export class Amend extends React.Component {
 
     this.onChange = name => event => {
       this.setState({ [name]: event.target.value }, () => {
-        if (name === 'value') {
+        if (name === 'amendValue') {
           this.computeDiff()
         }
       })
     }
 
     this.restoreInitialValue = event => {
-      this.setState({ value: this.state.initialValue }, () => {
+      this.setState({ amendValue: this.state.initialValue }, () => {
         this.computeDiff()
       })
     }
 
-    this.hasDiffs = () => this.state.initialValue !== this.state.value
+    this.hasDiffs = () => this.state.initialValue !== this.state.amendValue
 
     this.state = {
+      amendName: '',
+      amendDescription: '',
       amendComplexity: 0,
       textSizeDisplayed: 100,
       initialValue: props.data.actual,
-      value: props.data.actual,
+      amendValue: props.data.actual,
       diffs: []
     }
   }
@@ -39,7 +41,7 @@ export class Amend extends React.Component {
   computeDiff() {
     const dmp = new diff_match_patch()
     dmp.Diff_EditCost = 8
-    const diffs = dmp.diff_main(this.state.initialValue, this.state.value)
+    const diffs = dmp.diff_main(this.state.initialValue, this.state.amendValue)
     dmp.diff_cleanupEfficiency(diffs)
     const amendComplexity = dmp.diff_levenshtein(diffs)
     this.setState({ diffs, amendComplexity })
@@ -52,7 +54,7 @@ export class Amend extends React.Component {
       <>
         <div className="buttons">
           {this.props.data.group && (
-            <Link to={'/text/' + this.props.data._id} className="button">
+            <Link to={'/texte/' + this.props.data._id} className="button">
               <span className="icon">
                 <i className="fas fa-chevron-left" />
               </span>
@@ -61,30 +63,64 @@ export class Amend extends React.Component {
           )}
 
           <Spacer />
-
-          <button disabled className="button is-success">
-            Proposer cet amendement
-          </button>
         </div>
 
         <div className="columns">
           <div className="column">
             <div className="box">
               <p>
-                Paramètres | <b>{this.props.data.group.name}</b>
+                {this.props.data.rules
+                  ? 'Paramètres'
+                  : this.props.data.group.name}{' '}
+                |{' '}
+                <strong>
+                  {this.props.data.rules
+                    ? this.props.data.group.name
+                    : this.props.data.name}
+                </strong>
               </p>
               <p>
-                Description : {'Règles du groupe ' + this.props.data.group.name}
+                Description :{' '}
+                {this.props.data.rules
+                  ? 'Règles du groupe ' + this.props.data.group.name
+                  : this.props.data.description}
               </p>
             </div>
 
             <div className="field">
+              <label className="label">Titre de l'amendement</label>
+              <div className="control">
+                <input
+                  className="input"
+                  type="text"
+                  value={this.state.amendName}
+                  onChange={this.onChange('amendName')}
+                  placeholder="Nommez votre amendement en quelques mots"
+                />
+              </div>
+            </div>
+            
+            <div className="field">
+              <label className="label">Description / Argumentaire</label>
+              <div className="control">
+                <textarea
+                  rows="4"
+                  value={this.state.amendDescription}
+                  onChange={this.onChange('amendDescription')}
+                  className="textarea"
+                  placeholder="Défendez votre amendement en quelques phrases"
+                />
+              </div>
+            </div>
+
+            <div className="field">
+              <label className="label">Editeur du texte</label>
               <div className="control">
                 <textarea
                   rows="12"
                   className="textarea"
-                  value={this.state.value}
-                  onChange={this.onChange('value')}
+                  value={this.state.amendValue}
+                  onChange={this.onChange('amendValue')}
                 />
               </div>
             </div>
@@ -101,15 +137,38 @@ export class Amend extends React.Component {
           </div>
 
           <div className="column">
-            <div className="box">
-              <p className="has-text-centered is-size-4">
-                Pré-visualisation de votre amendement
+            <div className="notification">
+              <progress
+                className={
+                  'progress is-small ' +
+                  (this.state.amendComplexity >= 200
+                    ? 'is-danger'
+                    : this.state.amendComplexity >= 100
+                    ? 'is-warning'
+                    : 'is-success')
+                }
+                value={this.state.amendComplexity}
+                max={300}
+              />
+              <p>
+                La complexité est donnée à titre indicatif et ne vous limite
+                pas. Une complexité trop élevée peut cependant nuire à
+                l'adoption de votre amendement. Nous vous conseillons donc de
+                proposer des amendements à faible complexité.
               </p>
-              <p className="has-text-centered is-size-5">
-                Complexité : {this.state.amendComplexity}
-              </p>
-              <br />
+            </div>
 
+            <p className="has-text-centered is-size-4">
+              Pré-visualisation de votre amendement
+            </p>
+            <br />
+
+            <div className="box">
+              <p className="has-text-centered is-size-5">
+                {this.state.amendName}
+              </p>
+              <p>{this.state.amendDescription}</p>
+              {this.hasDiffs() && <hr />}
               <div>
                 {this.hasDiffs() ? (
                   this.state.diffs.map((part, index) => (
@@ -123,6 +182,7 @@ export class Amend extends React.Component {
                           : 'has-text-grey-light'
                       }
                     >
+                      {part[0] === 1 ? '(+)' : part[0] === -1 ? '[-]' : ''}
                       {part[1].split('\n').map((line, index) => {
                         return line ? (
                           <span key={index}>
@@ -136,6 +196,7 @@ export class Amend extends React.Component {
                           <br key={index} />
                         )
                       })}
+                      {part[0] === 1 ? '(+)' : part[0] === -1 ? '[-]' : ''}
                     </span>
                   ))
                 ) : (
@@ -145,6 +206,12 @@ export class Amend extends React.Component {
                 )}
               </div>
             </div>
+            <button
+              disabled={!this.hasDiffs()}
+              className="button is-success is-fullwidth"
+            >
+              Proposer cet amendement
+            </button>
           </div>
         </div>
       </>

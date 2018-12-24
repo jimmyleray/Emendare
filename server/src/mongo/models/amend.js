@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 
 module.exports = mongoose.model(
-  'Commit',
+  'Amend',
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
-    whitelist: { type: [String], default: [] },
+    whitelist: { type: [String], default: ['*'] },
     name: { type: String, required: true },
     description: { type: String, default: '' },
     patch: { type: String, required: true },
