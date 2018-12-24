@@ -4,30 +4,18 @@ import { UserContext } from '../contexts'
 import { Spacer } from '../components'
 import { apiFetch } from '../utils'
 
-const unFollowText = setUser => id => () => {
-  apiFetch('/user/unFollowText/' + id, {
-    method: 'post',
-    body: JSON.stringify({
-      token: localStorage.getItem('user-token')
-    })
-  }).then(async res => {
+const unFollowText = fetchUser => id => () => {
+  apiFetch('/user/unFollowText/' + id, { method: 'post' }).then(async res => {
     if (res.status === 200) {
-      const user = await res.json()
-      setUser(user)
+      fetchUser()
     }
   })
 }
 
-const followText = setUser => id => () => {
-  apiFetch('/user/followText/' + id, {
-    method: 'post',
-    body: JSON.stringify({
-      token: localStorage.getItem('user-token')
-    })
-  }).then(async res => {
+const followText = fetchUser => id => () => {
+  apiFetch('/user/followText/' + id, { method: 'post' }).then(async res => {
     if (res.status === 200) {
-      const user = await res.json()
-      setUser(user)
+      fetchUser()
     }
   })
 }
@@ -35,7 +23,7 @@ const followText = setUser => id => () => {
 export const Text = ({ data }) => {
   return (
     <UserContext.Consumer>
-      {({ isConnected, user, setUser }) => (
+      {({ isConnected, user, fetchUser }) => (
         <>
           <div className="buttons">
             {data.group && (
@@ -50,7 +38,10 @@ export const Text = ({ data }) => {
             <Spacer />
 
             {isConnected() && (
-              <Link to={'/amendement/' + data._id} className="button is-info">
+              <Link
+                to={'/amendement/ajouter/' + data._id}
+                className="button is-info"
+              >
                 <span className="icon">
                   <i className="fas fa-plus" />
                 </span>
@@ -61,14 +52,14 @@ export const Text = ({ data }) => {
             {isConnected() &&
               (user.followedTexts.find(id => id === data._id) ? (
                 <button
-                  onClick={unFollowText(setUser)(data._id)}
+                  onClick={unFollowText(fetchUser)(data._id)}
                   className="button is-danger is-outlined"
                 >
                   Ne plus suivre ce texte
                 </button>
               ) : (
                 <button
-                  onClick={followText(setUser)(data._id)}
+                  onClick={followText(fetchUser)(data._id)}
                   className="button is-success"
                 >
                   Suivre ce texte
@@ -110,6 +101,9 @@ export const Text = ({ data }) => {
               </div>
               <div className="box">
                 <p>Liste des amendements proposés</p>
+                {data.amends.map(amend => (
+                  <p>{amend.name}</p>
+                ))}
               </div>
             </div>
           </div>

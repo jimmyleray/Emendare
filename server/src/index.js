@@ -87,8 +87,7 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/logout', async (req, res) => {
-  const { token } = req.body
-  const user = await User.findOne({ token })
+  const user = await User.findOne({ token: req.headers['user-token'] })
   if (user) {
     user.token = null
     await user.save()
@@ -100,9 +99,8 @@ app.post('/logout', async (req, res) => {
 
 // User routes
 app.post('/user', async (req, res) => {
-  const { token } = req.body
-  const user = await User.findOne({ token })
-  if (token && user) {
+  const user = await User.findOne({ token: req.headers['user-token'] })
+  if (user) {
     res.json(user).end()
   } else {
     res.status(400).end("Cet utilisateur n'est pas connecté")
@@ -110,26 +108,24 @@ app.post('/user', async (req, res) => {
 })
 
 app.post('/user/followGroup/:id', async (req, res) => {
-  const { token } = req.body
-  const user = await User.findOne({ token })
-  if (token && user) {
+  const user = await User.findOne({ token: req.headers['user-token'] })
+  if (user) {
     user.followedGroups.push(req.params.id)
     await user.save()
-    res.json(user).end()
+    res.end('Groupe suivi')
   } else {
     res.status(400).end("Cet utilisateur n'est pas connecté")
   }
 })
 
 app.post('/user/unFollowGroup/:id', async (req, res) => {
-  const { token } = req.body
-  const user = await User.findOne({ token })
-  if (token && user) {
+  const user = await User.findOne({ token: req.headers['user-token'] })
+  if (user) {
     const id = user.followedGroups.indexOf(req.params.id)
     if (id >= 0) {
       user.followedGroups.splice(id, 1)
       await user.save()
-      res.json(user).end()
+      res.end('Groupe non suivi')
     } else {
       res.status(400).end("Ce groupe n'est pas suivi")
     }
@@ -139,26 +135,24 @@ app.post('/user/unFollowGroup/:id', async (req, res) => {
 })
 
 app.post('/user/followText/:id', async (req, res) => {
-  const { token } = req.body
-  const user = await User.findOne({ token })
-  if (token && user) {
+  const user = await User.findOne({ token: req.headers['user-token'] })
+  if (user) {
     user.followedTexts.push(req.params.id)
     await user.save()
-    res.json(user).end()
+    res.end('Texte suivi')
   } else {
     res.status(400).end("Cet utilisateur n'est pas connecté")
   }
 })
 
 app.post('/user/unFollowText/:id', async (req, res) => {
-  const { token } = req.body
-  const user = await User.findOne({ token })
-  if (token && user) {
+  const user = await User.findOne({ token: req.headers['user-token'] })
+  if (user) {
     const id = user.followedTexts.indexOf(req.params.id)
     if (id >= 0) {
       user.followedTexts.splice(id, 1)
       await user.save()
-      res.json(user).end()
+      res.end('Texte non suivi')
     } else {
       res.status(400).end("Ce texte n'est pas suivi")
     }
@@ -197,10 +191,36 @@ app.get('/text/:id', async (req, res) => {
   res
     .json(
       await Text.findById(req.params.id)
-        .populate('commits')
+        .populate('amends')
         .populate('group')
     )
     .end()
+})
+
+app.post('/addAmend/:id', async (req, res) => {
+  const { name, description, patch, version } = req.body
+  const user = await User.findOne({ token: req.headers['user-token'] })
+  if (user) {
+    const amend = await new Amend({
+      name,
+      description,
+      patch,
+      version,
+      author: user._id,
+      text: req.params.id
+    }).save()
+
+    user.amends.push(amend._id)
+    await user.save()
+
+    const text = await Text.findById(req.params.id)
+    text.amends.push(amend._id)
+    await text.save()
+
+    res.end('Nouvel amendement enregistré')
+  } else {
+    res.status(400).end("Cet utilisateur n'est pas connecté")
+  }
 })
 
 // Error 404 Middleware

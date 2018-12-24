@@ -4,30 +4,18 @@ import { UserContext } from '../contexts'
 import { Spacer } from '../components'
 import { apiFetch } from '../utils'
 
-const unFollowGroup = setUser => id => () => {
-  apiFetch('/user/unFollowGroup/' + id, {
-    method: 'post',
-    body: JSON.stringify({
-      token: localStorage.getItem('user-token')
-    })
-  }).then(async res => {
+const unFollowGroup = fetchUser => id => () => {
+  apiFetch('/user/unFollowGroup/' + id, { method: 'post' }).then(async res => {
     if (res.status === 200) {
-      const user = await res.json()
-      setUser(user)
+      fetchUser()
     }
   })
 }
 
-const followGroup = setUser => id => () => {
-  apiFetch('/user/followGroup/' + id, {
-    method: 'post',
-    body: JSON.stringify({
-      token: localStorage.getItem('user-token')
-    })
-  }).then(async res => {
+const followGroup = fetchUser => id => () => {
+  apiFetch('/user/followGroup/' + id, { method: 'post' }).then(async res => {
     if (res.status === 200) {
-      const user = await res.json()
-      setUser(user)
+      fetchUser()
     }
   })
 }
@@ -35,7 +23,7 @@ const followGroup = setUser => id => () => {
 export const Group = ({ data }) => {
   return (
     <UserContext.Consumer>
-      {({ isConnected, user, setUser }) => (
+      {({ isConnected, user, fetchUser }) => (
         <>
           <div className="buttons">
             {data.parent && (
@@ -61,14 +49,14 @@ export const Group = ({ data }) => {
             {isConnected() &&
               (user.followedGroups.find(id => id === data._id) ? (
                 <button
-                  onClick={unFollowGroup(setUser)(data._id)}
+                  onClick={unFollowGroup(fetchUser)(data._id)}
                   className="button is-danger is-outlined"
                 >
                   Ne plus suivre ce groupe
                 </button>
               ) : (
                 <button
-                  onClick={followGroup(setUser)(data._id)}
+                  onClick={followGroup(fetchUser)(data._id)}
                   className="button is-success"
                 >
                   Suivre ce groupe

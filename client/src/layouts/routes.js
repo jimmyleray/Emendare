@@ -10,7 +10,11 @@ export const routes = [
   { path: '/connexion', component: Pages.LoginPage },
   { path: '/profil', component: Pages.ProfilePage, private: true },
   { path: '/texte/:id', component: Pages.TextPage },
-  { path: '/amendement/:id', component: Pages.AmendPage, private: true }
+  {
+    path: '/amendement/ajouter/:id',
+    component: Pages.AddAmendPage,
+    private: true
+  }
 ]
 
 export const Routes = () => (

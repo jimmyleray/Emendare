@@ -1,4 +1,4 @@
-export * from './amend'
+export * from './addAmend'
 export * from './group'
 export * from './navbar'
 export * from './spacer'

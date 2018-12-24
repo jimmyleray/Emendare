@@ -14,6 +14,10 @@ module.exports = mongoose.model(
     followedTexts: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Text' }],
       default: []
+    },
+    amends: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
+      default: []
     }
   })
 )

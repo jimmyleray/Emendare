@@ -18,13 +18,13 @@ export const Navbar = () => (
         </div>
         <div className="navbar-end">
           <UserContext.Consumer>
-            {({ isConnected, unSetUser }) =>
+            {({ isConnected, logout }) =>
               isConnected() ? (
                 <>
                   <Link to="/profil" className="navbar-item">
                     Mon Profil
                   </Link>
-                  <a href="/" onClick={unSetUser} className="navbar-item">
+                  <a href="/" onClick={logout} className="navbar-item">
                     Se déconnecter
                   </a>
                 </>

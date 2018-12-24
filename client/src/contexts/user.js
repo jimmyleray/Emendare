@@ -11,14 +11,22 @@ export class UserProvider extends React.Component {
       user: null,
       isConnectionPending: true,
       isConnected: () => this.state.user !== null,
-      setUser: user => {
+      login: user => {
         localStorage.setItem('user-token', user.token)
         this.setState(() => ({ user }))
       },
-      unSetUser: event => {
+      logout: event => {
         event.preventDefault()
         localStorage.removeItem('user-token')
         this.setState(() => ({ user: null }))
+      },
+      fetchUser: () => {
+        return apiFetch('/user', { method: 'post' }).then(async res => {
+          if (res.status === 200) {
+            const user = await res.json()
+            this.setState({ user })
+          }
+        })
       }
     }
   }

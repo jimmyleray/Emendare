@@ -13,7 +13,7 @@ module.exports = mongoose.model(
       ref: 'Group',
       required: true
     },
-    commits: {
+    amends: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
       default: []
     },
