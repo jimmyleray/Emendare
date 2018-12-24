@@ -74,11 +74,15 @@ export const Group = ({ data }) => {
               {data.subgroups.length > 0 && (
                 <>
                   <p>Groupes</p>
-                  {data.subgroups.map(subgroup => (
-                    <Link key={subgroup._id} to={'/groupe/' + subgroup._id}>
-                      {subgroup.name} : {subgroup.description}
-                    </Link>
-                  ))}
+                  <ul>
+                    {data.subgroups.map(subgroup => (
+                      <li key={subgroup._id}>
+                        <Link to={'/groupe/' + subgroup._id}>
+                          {subgroup.name} : {subgroup.description}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </>
               )}
 

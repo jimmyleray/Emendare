@@ -30,11 +30,15 @@ export const ProfilePage = () => (
             {user.amends.length > 0 && (
               <div className="box">
                 <p>Liste des amendements proposés</p>
-                {user.amends.map(amend => (
-                  <Link key={amend._id} to={'/amendement/' + amend._id}>
-                    {amend.name} : {amend.description}
-                  </Link>
-                ))}
+                <ul>
+                  {user.amends.map(amend => (
+                    <li key={amend._id}>
+                      <Link to={'/amendement/' + amend._id}>
+                        {amend.name} : {amend.description}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
           </div>
