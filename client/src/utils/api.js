@@ -1,3 +1,5 @@
+import io from 'socket.io-client'
+
 const config = {
   url: {
     development: 'http://localhost:3030',
@@ -16,3 +18,5 @@ export const apiFetch = (pathname, options = {}) => {
     }
   })
 }
+
+export const socket = io(config.url[process.env.NODE_ENV])

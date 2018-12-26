@@ -232,7 +232,18 @@ app.use((req, res) => {
   res.status(404).end()
 })
 
+// Add Socket.io to Express server
+const http = require('http').Server(app)
+const io = require('socket.io')(http)
+
+io.on('connection', socket => {
+  console.log('a user connected')
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
+})
+
 // Start Http Server
-app.listen(config.port, () => {
+http.listen(config.port, () => {
   console.log(`Server start and listening on port ${config.port}`)
 })

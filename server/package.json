@@ -14,7 +14,8 @@
     "express": "^4.16.3",
     "is-match": "^1.0.0",
     "mongoose": "^5.3.4",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {}
 }
