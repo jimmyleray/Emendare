@@ -13,13 +13,15 @@ import React from 'react'
 import { Page } from '../layouts'
 import { Edit } from '../components'
 import { apiFetch } from '../utils'
+import { ErrorPage } from '../pages'
 
 export class EditPage extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      text: null
+      text: null,
+      error: false
     }
   }
 
@@ -28,6 +30,8 @@ export class EditPage extends React.Component {
       if (res.status === 200) {
         const text = await res.json()
         this.setState({ text })
+      } else {
+        this.setState({ error: true })
       }
     })
   }
@@ -43,6 +47,8 @@ export class EditPage extends React.Component {
   }
 
   render() {
+    if (this.state.error) return <ErrorPage />
+
     return (
       <Page
         title={

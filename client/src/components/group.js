@@ -2,20 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../contexts'
 import { Spacer } from '../components'
-import { apiFetch } from '../utils'
+import { apiFetch, socket } from '../utils'
 
-const unFollowGroup = fetchUser => id => () => {
+const unFollowGroup = id => () => {
   apiFetch('/user/unFollowGroup/' + id, { method: 'post' }).then(async res => {
     if (res.status === 200) {
-      fetchUser()
+      socket.emit('user')
     }
   })
 }
 
-const followGroup = fetchUser => id => () => {
+const followGroup = id => () => {
   apiFetch('/user/followGroup/' + id, { method: 'post' }).then(async res => {
     if (res.status === 200) {
-      fetchUser()
+      socket.emit('user')
     }
   })
 }
@@ -23,7 +23,7 @@ const followGroup = fetchUser => id => () => {
 export const Group = ({ data }) => {
   return (
     <UserContext.Consumer>
-      {({ isConnected, user, fetchUser }) => (
+      {({ isConnected, user }) => (
         <>
           <div className="buttons">
             {data.parent && (
@@ -47,16 +47,16 @@ export const Group = ({ data }) => {
             )}
 
             {isConnected() &&
-              (user.followedGroups.find(id => id === data._id) ? (
+              (user.followedGroups.find(group => group._id === data._id) ? (
                 <button
-                  onClick={unFollowGroup(fetchUser)(data._id)}
+                  onClick={unFollowGroup(data._id)}
                   className="button is-danger is-outlined"
                 >
                   Ne plus suivre ce groupe
                 </button>
               ) : (
                 <button
-                  onClick={followGroup(fetchUser)(data._id)}
+                  onClick={followGroup(data._id)}
                   className="button is-success"
                 >
                   Suivre ce groupe

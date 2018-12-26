@@ -14,9 +14,35 @@ export const apiFetch = (pathname, options = {}) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       ...(options.headers || {}),
-      'user-token': localStorage.getItem('user-token')
+      token: localStorage.getItem('token')
     }
   })
 }
 
-export const socket = io(config.url[process.env.NODE_ENV])
+const insecureSocket = io(config.url[process.env.NODE_ENV])
+
+export const socket = {
+  on: (name, callback) => {
+    return insecureSocket.on(name, callback)
+  },
+  emit: (name, data = {}) => {
+    return insecureSocket.emit(name, {
+      token: localStorage.getItem('token'),
+      data
+    })
+  },
+  fetch: name => {
+    socket.emit(name)
+    return new Promise((resolve, reject) => {
+      socket.on(name, ({ data, error }) => {
+        socket.off(name)
+        if (error) {
+          console.warn(name, error)
+          reject(error)
+        } else {
+          resolve(data)
+        }
+      })
+    })
+  }
+}

@@ -14,12 +14,14 @@ export const HomePage = () => (
   <Page title="Accueil">
     <div className="notification is-warning has-text-centered">
       <p>
-        <strong>Version alpha</strong> ouverte depuis le 2 Janvier 2019
-        uniquement pour les mails se terminant par @zenika.com
+        <span className="has-text-weight-semibold">Version alpha</span> ouverte
+        depuis le 2 Janvier 2019 uniquement pour les mails se terminant par
+        @zenika.com
       </p>
       <p>
         Pour participer au développement, vous pouvez rejoindre le channel{' '}
-        <strong>#emendare</strong> sur le slack Zenika
+        <span className="has-text-weight-semibold">#emendare</span> sur le slack
+        Zenika
       </p>
     </div>
 

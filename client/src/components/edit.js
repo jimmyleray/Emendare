@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { UserContext } from '../contexts'
 import { Amend } from '.'
 import { Spacer } from './spacer'
-import { apiFetch } from '../utils'
+import { apiFetch, socket } from '../utils'
 import diff_match_patch from 'diff-match-patch'
 
 export class Edit extends React.Component {
@@ -26,7 +26,7 @@ export class Edit extends React.Component {
 
     this.hasDiffs = () => this.state.initialValue !== this.state.amendValue
 
-    this.addAmend = fetchUser => event => {
+    this.addAmend = event => {
       apiFetch('/amend', {
         method: 'post',
         body: JSON.stringify({
@@ -36,9 +36,9 @@ export class Edit extends React.Component {
           patch: this.state.patch,
           textID: this.props.data._id
         })
-      }).then(async res => {
+      }).then(res => {
         if (res.status === 200) {
-          await fetchUser()
+          socket.emit('user')
           this.setState({ redirectToText: true })
         }
       })
@@ -77,7 +77,7 @@ export class Edit extends React.Component {
 
     return (
       <UserContext.Consumer>
-        {({ isConnected, fetchUser }) => (
+        {({ isConnected }) => (
           <>
             <div className="buttons">
               {this.props.data.group && (
@@ -209,7 +209,7 @@ export class Edit extends React.Component {
                 )}
 
                 <button
-                  onClick={this.addAmend(fetchUser)}
+                  onClick={this.addAmend}
                   disabled={!this.hasDiffs() || !isConnected()}
                   className="button is-success is-fullwidth"
                 >

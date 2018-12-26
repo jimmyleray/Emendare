@@ -10,6 +10,7 @@ import React from 'react'
 import { Page } from '../layouts'
 import { Amend } from '../components'
 import { apiFetch } from '../utils'
+import { ErrorPage } from '../pages'
 import diff_match_patch from 'diff-match-patch'
 
 export class AmendPage extends React.Component {
@@ -17,7 +18,8 @@ export class AmendPage extends React.Component {
     super(props)
 
     this.state = {
-      amend: null
+      amend: null,
+      error: false
     }
   }
 
@@ -28,6 +30,8 @@ export class AmendPage extends React.Component {
         this.setState({ amend }, () => {
           this.computeDiff()
         })
+      } else {
+        this.setState({ error: true })
       }
     })
   }
@@ -56,6 +60,8 @@ export class AmendPage extends React.Component {
   }
 
   render() {
+    if (this.state.error) return <ErrorPage />
+
     return (
       <Page
         title={

@@ -12,13 +12,15 @@ import React from 'react'
 import { Page } from '../layouts'
 import { Group } from '../components'
 import { apiFetch } from '../utils'
+import { ErrorPage } from '../pages'
 
 export class GroupPage extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      group: null
+      group: null,
+      error: false
     }
   }
 
@@ -27,6 +29,8 @@ export class GroupPage extends React.Component {
       if (res.status === 200) {
         const group = await res.json()
         this.setState({ group })
+      } else {
+        this.setState({ error: true })
       }
     })
   }
@@ -42,6 +46,8 @@ export class GroupPage extends React.Component {
   }
 
   render() {
+    if (this.state.error) return <ErrorPage />
+
     return (
       <Page title={this.state.group ? this.state.group.name : 'Groupe'}>
         {this.state.group && <Group data={this.state.group} />}

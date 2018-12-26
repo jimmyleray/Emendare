@@ -1,5 +1,5 @@
 import React from 'react'
-import { apiFetch } from '../utils'
+import { apiFetch, socket } from '../utils'
 
 export const UserContext = React.createContext()
 
@@ -12,35 +12,33 @@ export class UserProvider extends React.Component {
       isConnectionPending: true,
       isConnected: () => this.state.user !== null,
       login: user => {
-        localStorage.setItem('user-token', user.token)
+        localStorage.setItem('token', user.token)
         this.setState(() => ({ user }))
       },
       logout: event => {
         event.preventDefault()
-        localStorage.removeItem('user-token')
+        localStorage.removeItem('token')
         this.setState(() => ({ user: null }))
-      },
-      fetchUser: () => {
-        return apiFetch('/user', { method: 'post' }).then(async res => {
-          if (res.status === 200) {
-            const user = await res.json()
-            this.setState({ user })
-          }
-        })
       }
     }
   }
 
   componentDidMount() {
-    const userToken = localStorage.getItem('user-token')
-    if (userToken) {
+    socket.on('user', ({ data, error }) => {
+      if (!error) {
+        this.setState({ user: data })
+      }
+    })
+
+    const token = localStorage.getItem('token')
+    if (token) {
       this.setState({ isConnectionPending: true })
       apiFetch('/login', { method: 'post' }).then(async res => {
         if (res.status === 200) {
           const user = await res.json()
           this.setState({ user, isConnectionPending: false })
         } else {
-          localStorage.removeItem('user-token')
+          localStorage.removeItem('token')
           this.setState({ isConnectionPending: false })
         }
       })

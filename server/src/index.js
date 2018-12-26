@@ -56,9 +56,12 @@ const generateToken = require('./utils/token')
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body
-  const token = req.headers['user-token']
+  const token = req.headers.token
   if (email && password) {
-    const user = await User.findOne({ email }).populate('amends')
+    const user = await User.findOne({ email })
+      .populate('amends')
+      .populate('followedTexts')
+      .populate('followedGroups')
     if (user) {
       bcrypt.compare(password, user.password, async (err, valid) => {
         if (valid) {
@@ -74,7 +77,10 @@ app.post('/login', async (req, res) => {
       res.status(400).end('Email invalide')
     }
   } else if (token) {
-    const user = await User.findOne({ token }).populate('amends')
+    const user = await User.findOne({ token })
+      .populate('amends')
+      .populate('followedTexts')
+      .populate('followedGroups')
     if (user) {
       res.json(user)
     } else {
@@ -86,7 +92,7 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/logout', async (req, res) => {
-  const user = await User.findOne({ token: req.headers['user-token'] })
+  const user = await User.findOne({ token: req.headers.token })
   if (user) {
     user.token = null
     await user.save()
@@ -99,8 +105,11 @@ app.post('/logout', async (req, res) => {
 // User routes
 app.post('/user', async (req, res) => {
   const user = await User.findOne({
-    token: req.headers['user-token']
-  }).populate('amends')
+    token: req.headers.token
+  })
+    .populate('amends')
+    .populate('followedTexts')
+    .populate('followedGroups')
   if (user) {
     res.json(user).end()
   } else {
@@ -109,7 +118,7 @@ app.post('/user', async (req, res) => {
 })
 
 app.post('/user/followGroup/:id', async (req, res) => {
-  const user = await User.findOne({ token: req.headers['user-token'] })
+  const user = await User.findOne({ token: req.headers.token })
   if (user) {
     user.followedGroups.push(req.params.id)
     await user.save()
@@ -120,7 +129,7 @@ app.post('/user/followGroup/:id', async (req, res) => {
 })
 
 app.post('/user/unFollowGroup/:id', async (req, res) => {
-  const user = await User.findOne({ token: req.headers['user-token'] })
+  const user = await User.findOne({ token: req.headers.token })
   if (user) {
     const id = user.followedGroups.indexOf(req.params.id)
     if (id >= 0) {
@@ -136,7 +145,7 @@ app.post('/user/unFollowGroup/:id', async (req, res) => {
 })
 
 app.post('/user/followText/:id', async (req, res) => {
-  const user = await User.findOne({ token: req.headers['user-token'] })
+  const user = await User.findOne({ token: req.headers.token })
   if (user) {
     user.followedTexts.push(req.params.id)
     await user.save()
@@ -147,7 +156,7 @@ app.post('/user/followText/:id', async (req, res) => {
 })
 
 app.post('/user/unFollowText/:id', async (req, res) => {
-  const user = await User.findOne({ token: req.headers['user-token'] })
+  const user = await User.findOne({ token: req.headers.token })
   if (user) {
     const id = user.followedTexts.indexOf(req.params.id)
     if (id >= 0) {
@@ -164,47 +173,59 @@ app.post('/user/unFollowText/:id', async (req, res) => {
 
 // Groups routes
 app.get('/rootGroup', async (req, res) => {
-  res
-    .json(
-      await Group.findOne({ parent: null })
-        .populate('subgroups')
-        .populate('texts')
-        .populate('parent')
-        .populate('rules')
-    )
-    .end()
+  const rootGroup = await Group.findOne({ parent: null })
+    .populate('subgroups')
+    .populate('texts')
+    .populate('parent')
+    .populate('rules')
+
+  if (rootGroup) {
+    res.json(rootGroup).end()
+  } else {
+    res.status(400).end("Ce groupe n'existe pas")
+  }
 })
 
 app.get('/group/:id', async (req, res) => {
-  res
-    .json(
-      await Group.findById(req.params.id)
-        .populate('subgroups')
-        .populate('texts')
-        .populate('parent')
-        .populate('rules')
-    )
-    .end()
+  const group = await Group.findById(req.params.id)
+    .populate('subgroups')
+    .populate('texts')
+    .populate('parent')
+    .populate('rules')
+
+  if (group) {
+    res.json(group).end()
+  } else {
+    res.status(400).end("Ce groupe n'existe pas")
+  }
 })
 
 // Texts routes
 app.get('/text/:id', async (req, res) => {
-  res
-    .json(
-      await Text.findById(req.params.id)
-        .populate('amends')
-        .populate('group')
-    )
-    .end()
+  const text = await Text.findById(req.params.id)
+    .populate('amends')
+    .populate('group')
+
+  if (text) {
+    res.json(text).end()
+  } else {
+    res.status(400).end("Ce texte n'existe pas")
+  }
 })
 
 app.get('/amend/:id', async (req, res) => {
-  res.json(await Amend.findById(req.params.id).populate('text')).end()
+  const amend = await Amend.findById(req.params.id).populate('text')
+
+  if (amend) {
+    res.json(amend).end()
+  } else {
+    res.status(400).end("Cet amendement n'existe pas")
+  }
 })
 
 app.post('/amend', async (req, res) => {
   const { name, description, patch, version, textID } = req.body
-  const user = await User.findOne({ token: req.headers['user-token'] })
+  const user = await User.findOne({ token: req.headers.token })
   if (user) {
     const amend = await new Amend({
       name,
@@ -236,10 +257,25 @@ app.use((req, res) => {
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 
+let usersCount = 0
+
 io.on('connection', socket => {
-  console.log('a user connected')
+  console.log(++usersCount)
   socket.on('disconnect', () => {
-    console.log('user disconnected')
+    console.log(--usersCount)
+  })
+
+  socket.on('user', async ({ token }) => {
+    const errorResponse = { error: 'Token invalide' }
+    if (token) {
+      const user = await User.findOne({ token })
+        .populate('amends')
+        .populate('followedTexts')
+        .populate('followedGroups')
+      socket.emit('user', user ? { data: user } : errorResponse)
+    } else {
+      socket.emit('user', errorResponse)
+    }
   })
 })
 

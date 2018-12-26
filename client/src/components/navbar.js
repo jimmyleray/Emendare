@@ -6,7 +6,7 @@ export const Navbar = () => (
   <nav className="navbar" role="navigation" aria-label="main navigation">
     <div className="container is-fluid">
       <div className="navbar-brand">
-        <Link to="/" className="navbar-item">
+        <Link to="/" className="navbar-item has-text-weight-semibold">
           Emendare
         </Link>
       </div>
@@ -21,7 +21,10 @@ export const Navbar = () => (
             {({ isConnected, logout }) =>
               isConnected() ? (
                 <>
-                  <Link to="/profil" className="navbar-item">
+                  <Link
+                    to="/profil"
+                    className="navbar-item has-text-weight-semibold"
+                  >
                     Mon Profil
                   </Link>
                   <a href="/" onClick={logout} className="navbar-item">

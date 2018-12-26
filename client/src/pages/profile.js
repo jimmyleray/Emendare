@@ -41,6 +41,36 @@ export const ProfilePage = () => (
                 </ul>
               </div>
             )}
+
+            {user.followedTexts.length > 0 && (
+              <div className="box">
+                <p>Liste des textes suivis</p>
+                <ul>
+                  {user.followedTexts.map(followedText => (
+                    <li key={followedText._id}>
+                      <Link to={'/texte/' + followedText._id}>
+                        {followedText.name} : {followedText.description}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {user.followedGroups.length > 0 && (
+              <div className="box">
+                <p>Liste des groupes suivis</p>
+                <ul>
+                  {user.followedGroups.map(followedGroup => (
+                    <li key={followedGroup._id}>
+                      <Link to={'/groupe/' + followedGroup._id}>
+                        {followedGroup.name} : {followedGroup.description}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       )}

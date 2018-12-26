@@ -2,20 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../contexts'
 import { Spacer } from '../components'
-import { apiFetch } from '../utils'
+import { apiFetch, socket } from '../utils'
 
-const unFollowText = fetchUser => id => () => {
+const unFollowText = id => () => {
   apiFetch('/user/unFollowText/' + id, { method: 'post' }).then(async res => {
     if (res.status === 200) {
-      fetchUser()
+      socket.emit('user')
     }
   })
 }
 
-const followText = fetchUser => id => () => {
+const followText = id => () => {
   apiFetch('/user/followText/' + id, { method: 'post' }).then(async res => {
     if (res.status === 200) {
-      fetchUser()
+      socket.emit('user')
     }
   })
 }
@@ -23,7 +23,7 @@ const followText = fetchUser => id => () => {
 export const Text = ({ data }) => {
   return (
     <UserContext.Consumer>
-      {({ isConnected, user, fetchUser }) => (
+      {({ isConnected, user }) => (
         <>
           <div className="buttons">
             {data.group && (
@@ -47,16 +47,16 @@ export const Text = ({ data }) => {
             )}
 
             {isConnected() &&
-              (user.followedTexts.find(id => id === data._id) ? (
+              (user.followedTexts.find(text => text._id === data._id) ? (
                 <button
-                  onClick={unFollowText(fetchUser)(data._id)}
+                  onClick={unFollowText(data._id)}
                   className="button is-danger is-outlined"
                 >
                   Ne plus suivre ce texte
                 </button>
               ) : (
                 <button
-                  onClick={followText(fetchUser)(data._id)}
+                  onClick={followText(data._id)}
                   className="button is-success"
                 >
                   Suivre ce texte
@@ -98,11 +98,15 @@ export const Text = ({ data }) => {
               </div>
               <div className="box">
                 <p>Liste des amendements proposés</p>
-                {data.amends.map(amend => (
-                  <Link key={amend._id} to={'/amendement/' + amend._id}>
-                    {amend.name} : {amend.description}
-                  </Link>
-                ))}
+                <ul>
+                  {data.amends.map(amend => (
+                    <li key={amend._id}>
+                      <Link to={'/amendement/' + amend._id}>
+                        {amend.name} : {amend.description}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
