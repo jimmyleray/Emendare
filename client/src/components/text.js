@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../contexts'
-import { Spacer } from '../components'
+import { Results, Spacer } from '../components'
 import { socket } from '../utils'
 
 const unFollowText = id => () => {
@@ -96,16 +96,17 @@ export const Text = ({ data }) => {
             </div>
             <div className="column">
               <div className="box">
-                <p>Vote en cours sur le texte</p>
+                <p className="is-size-5 has-text-centered has-text-weight-semibold">
+                  Vote en cours sur l'amendement
+                </p>
+                <Results value={54.7} />
               </div>
               <div className="box">
                 <p>Liste des amendements proposés</p>
                 <ul>
                   {data.amends.map(amend => (
                     <li key={amend._id}>
-                      <Link to={'/amendement/' + amend._id}>
-                        {amend.name} : {amend.description}
-                      </Link>
+                      <Link to={'/amendement/' + amend._id}>{amend.name}</Link>
                     </li>
                   ))}
                 </ul>

@@ -33,9 +33,7 @@ export const ProfilePage = () => (
                 <ul>
                   {user.amends.map(amend => (
                     <li key={amend._id}>
-                      <Link to={'/amendement/' + amend._id}>
-                        {amend.name} : {amend.description}
-                      </Link>
+                      <Link to={'/amendement/' + amend._id}>{amend.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -49,7 +47,7 @@ export const ProfilePage = () => (
                   {user.followedTexts.map(followedText => (
                     <li key={followedText._id}>
                       <Link to={'/texte/' + followedText._id}>
-                        {followedText.name} : {followedText.description}
+                        {followedText.name}
                       </Link>
                     </li>
                   ))}
@@ -64,7 +62,7 @@ export const ProfilePage = () => (
                   {user.followedGroups.map(followedGroup => (
                     <li key={followedGroup._id}>
                       <Link to={'/groupe/' + followedGroup._id}>
-                        {followedGroup.name} : {followedGroup.description}
+                        {followedGroup.name}
                       </Link>
                     </li>
                   ))}

@@ -5,14 +5,17 @@ const textSizeDisplayed = 100
 
 export const Amend = ({ data }) => (
   <>
-    <div className="buttons">
-      <Link to={'/texte/' + data.text._id} className="button">
-        <span className="icon">
-          <i className="fas fa-chevron-left" />
-        </span>
-        <span>Retour au texte</span>
-      </Link>
-    </div>
+    {data.text && (
+      <div className="buttons">
+        <Link to={'/texte/' + data.text._id} className="button">
+          <span className="icon">
+            <i className="fas fa-chevron-left" />
+          </span>
+          <span>Retour au texte</span>
+        </Link>
+      </div>
+    )}
+    
     <div className="box">
       {data.name && <p className="has-text-centered is-size-5">{data.name}</p>}
       {data.description && <p>{data.description}</p>}
