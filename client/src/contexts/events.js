@@ -16,7 +16,12 @@ export class EventsProvider extends React.Component {
     socket.emit('events')
     socket.on('events', ({ error, data }) => {
       if (!error) {
-        this.setState({ events: data })
+        this.setState({
+          events: data.map(event => ({
+            ...event,
+            target: event.target ? JSON.parse(event.target) : null
+          }))
+        })
       }
     })
   }

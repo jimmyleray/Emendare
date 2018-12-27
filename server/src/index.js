@@ -218,7 +218,7 @@ io.on('connection', socket => {
 
       await new Event({
         targetType: 'amend',
-        targetID: amend._id
+        target: JSON.stringify({ ...amend._doc, text })
       }).save()
 
       const events = await Event.find().sort('-created')

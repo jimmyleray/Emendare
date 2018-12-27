@@ -37,7 +37,8 @@ const initDatabase = async () => {
     }).save()
 
     await new Event({
-      targetType: 'group'
+      targetType: 'group',
+      target: JSON.stringify(globalGroup)
     }).save()
 
     const globalGroupRules = await new Text({
@@ -55,7 +56,8 @@ const initDatabase = async () => {
     }).save()
 
     await new Event({
-      targetType: 'group'
+      targetType: 'group',
+      target: JSON.stringify({ ...officialGroup._doc, parent: globalGroup })
     }).save()
 
     const officialGroupRules = await new Text({
@@ -74,7 +76,8 @@ const initDatabase = async () => {
     }).save()
 
     await new Event({
-      targetType: 'group'
+      targetType: 'group',
+      target: JSON.stringify({ ...privateGroup._doc, parent: officialGroup })
     }).save()
 
     const privateGroupRules = await new Text({
@@ -101,7 +104,8 @@ const initDatabase = async () => {
     }).save()
 
     await new Event({
-      targetType: 'text'
+      targetType: 'text',
+      target: JSON.stringify({ ...globalText._doc, group: globalGroup })
     }).save()
 
     const privateText = await new Text({
@@ -113,7 +117,8 @@ const initDatabase = async () => {
     }).save()
 
     await new Event({
-      targetType: 'text'
+      targetType: 'text',
+      target: JSON.stringify({ ...privateText._doc, group: privateGroup })
     }).save()
 
     globalGroup.texts.push(globalText._id)

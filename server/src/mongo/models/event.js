@@ -5,6 +5,6 @@ module.exports = mongoose.model(
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
     targetType: { type: String, required: true },
-    targetID: { type: String }
+    target: { type: String, default: JSON.stringify({}) }
   })
 )
