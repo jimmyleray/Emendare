@@ -1,6 +1,5 @@
 import React from 'react'
 import { socket } from '../utils'
-import { EventsContext } from '../contexts'
 
 export const UserContext = React.createContext()
 
@@ -48,13 +47,9 @@ export class UserProvider extends React.Component {
 
   render() {
     return (
-      <EventsContext.Consumer>
-        {({ events }) => (
-          <UserContext.Provider value={this.state}>
-            {this.props.children}
-          </UserContext.Provider>
-        )}
-      </EventsContext.Consumer>
+      <UserContext.Provider value={this.state}>
+        {this.props.children}
+      </UserContext.Provider>
     )
   }
 }

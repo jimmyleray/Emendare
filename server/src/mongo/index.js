@@ -37,7 +37,7 @@ const initDatabase = async () => {
     }).save()
 
     await new Event({
-      title: 'Un nouveau groupe Global a été crée'
+      targetType: 'group'
     }).save()
 
     const globalGroupRules = await new Text({
@@ -55,7 +55,7 @@ const initDatabase = async () => {
     }).save()
 
     await new Event({
-      title: 'Un nouveau groupe Français a été crée'
+      targetType: 'group'
     }).save()
 
     const officialGroupRules = await new Text({
@@ -74,7 +74,7 @@ const initDatabase = async () => {
     }).save()
 
     await new Event({
-      title: 'Un nouveau groupe Zenika a été crée'
+      targetType: 'group'
     }).save()
 
     const privateGroupRules = await new Text({
@@ -101,7 +101,7 @@ const initDatabase = async () => {
     }).save()
 
     await new Event({
-      title: 'Un nouveau texte Roadmap a été crée'
+      targetType: 'text'
     }).save()
 
     const privateText = await new Text({
@@ -113,7 +113,7 @@ const initDatabase = async () => {
     }).save()
 
     await new Event({
-      title: 'Un nouveau texte Agence a été crée'
+      targetType: 'text'
     }).save()
 
     globalGroup.texts.push(globalText._id)

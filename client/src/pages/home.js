@@ -9,7 +9,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Page } from '../layouts'
-import { Events } from '../components'
 
 export const HomePage = () => (
   <Page title="Accueil">
@@ -51,7 +50,5 @@ export const HomePage = () => (
         </Link>
       </p>
     </div>
-
-    <Events />
   </Page>
 )

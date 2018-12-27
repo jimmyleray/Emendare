@@ -5,6 +5,7 @@ import * as Pages from '../pages'
 
 export const routes = [
   { path: '/', component: Pages.HomePage, exact: true },
+  { path: '/actualites', component: Pages.NewsPage },
   { path: '/explorer', component: Pages.ExplorePage },
   { path: '/groupe/:id', component: Pages.GroupPage },
   { path: '/connexion', component: Pages.LoginPage },

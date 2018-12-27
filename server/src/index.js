@@ -45,7 +45,12 @@ app.use((req, res) => {
 
 // Add Socket.io to Express server
 const http = require('http').Server(app)
-const io = require('socket.io')(http)
+const io = require('socket.io')(http, {
+  serveClient: false,
+  pingInterval: 10000,
+  pingTimeout: 5000,
+  cookie: false
+})
 
 let usersCount = 0
 
@@ -207,12 +212,13 @@ io.on('connection', socket => {
       user.amends.push(amend._id)
       await user.save()
 
-      const text = await Text.findById(textID)
+      const text = await Text.findById(textID).populate('group')
       text.amends.push(amend._id)
       await text.save()
 
       await new Event({
-        title: 'Un nouvel amendement a été proposé'
+        targetType: 'amend',
+        targetID: amend._id
       }).save()
 
       const events = await Event.find().sort('-created')

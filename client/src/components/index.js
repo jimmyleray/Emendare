@@ -1,6 +1,6 @@
 export * from './edit'
 export * from './amend'
-export * from './events'
+export * from './event'
 export * from './group'
 export * from './navbar'
 export * from './spacer'

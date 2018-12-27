@@ -16,6 +16,9 @@ export const Navbar = () => (
       </div>
       <div className="navbar-menu">
         <div className="navbar-start">
+          <Link to="/actualites" className="navbar-item">
+            Actualités
+          </Link>
           <Link to="/explorer" className="navbar-item">
             Explorer
           </Link>
