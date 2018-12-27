@@ -2,21 +2,17 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../contexts'
 import { Spacer } from '../components'
-import { apiFetch, socket } from '../utils'
+import { socket } from '../utils'
 
 const unFollowGroup = id => () => {
-  apiFetch('/user/unFollowGroup/' + id, { method: 'post' }).then(async res => {
-    if (res.status === 200) {
-      socket.emit('user')
-    }
+  socket.fetch('unFollowGroup', { id }).then(() => {
+    socket.emit('user')
   })
 }
 
 const followGroup = id => () => {
-  apiFetch('/user/followGroup/' + id, { method: 'post' }).then(async res => {
-    if (res.status === 200) {
-      socket.emit('user')
-    }
+  socket.fetch('followGroup', { id }).then(() => {
+    socket.emit('user')
   })
 }
 

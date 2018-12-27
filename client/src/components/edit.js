@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { UserContext } from '../contexts'
 import { Amend } from '.'
 import { Spacer } from './spacer'
-import { apiFetch, socket } from '../utils'
+import { socket } from '../utils'
 import diff_match_patch from 'diff-match-patch'
 
 export class Edit extends React.Component {
@@ -26,22 +26,19 @@ export class Edit extends React.Component {
 
     this.hasDiffs = () => this.state.initialValue !== this.state.amendValue
 
-    this.addAmend = event => {
-      apiFetch('/amend', {
-        method: 'post',
-        body: JSON.stringify({
+    this.addAmend = () => {
+      socket
+        .fetch('postAmend', {
           name: this.state.amendName,
           description: this.state.amendDescription,
           version: this.props.data.version,
           patch: this.state.patch,
           textID: this.props.data._id
         })
-      }).then(res => {
-        if (res.status === 200) {
+        .then(() => {
           socket.emit('user')
           this.setState({ redirectToText: true })
-        }
-      })
+        })
     }
 
     this.state = {

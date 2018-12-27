@@ -12,7 +12,7 @@
 import React from 'react'
 import { Page } from '../layouts'
 import { Edit } from '../components'
-import { apiFetch } from '../utils'
+import { socket } from '../utils'
 import { ErrorPage } from '../pages'
 
 export class EditPage extends React.Component {
@@ -21,19 +21,19 @@ export class EditPage extends React.Component {
 
     this.state = {
       text: null,
-      error: false
+      error: null
     }
   }
 
   fetchData() {
-    apiFetch('/text/' + this.props.match.params.id).then(async res => {
-      if (res.status === 200) {
-        const text = await res.json()
+    socket
+      .fetch('text', { id: this.props.match.params.id })
+      .then(text => {
         this.setState({ text })
-      } else {
-        this.setState({ error: true })
-      }
-    })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
   }
 
   componentDidMount() {

@@ -11,7 +11,7 @@
 import React from 'react'
 import { Page } from '../layouts'
 import { Group } from '../components'
-import { apiFetch } from '../utils'
+import { socket } from '../utils'
 import { ErrorPage } from '../pages'
 
 export class GroupPage extends React.Component {
@@ -20,19 +20,19 @@ export class GroupPage extends React.Component {
 
     this.state = {
       group: null,
-      error: false
+      error: null
     }
   }
 
   fetchData() {
-    apiFetch('/group/' + this.props.match.params.id).then(async res => {
-      if (res.status === 200) {
-        const group = await res.json()
+    socket
+      .fetch('group', { id: this.props.match.params.id })
+      .then(group => {
         this.setState({ group })
-      } else {
-        this.setState({ error: true })
-      }
-    })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
   }
 
   componentDidMount() {

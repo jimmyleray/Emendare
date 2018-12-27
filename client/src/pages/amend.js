@@ -9,7 +9,7 @@
 import React from 'react'
 import { Page } from '../layouts'
 import { Amend } from '../components'
-import { apiFetch } from '../utils'
+import { socket } from '../utils'
 import { ErrorPage } from '../pages'
 import diff_match_patch from 'diff-match-patch'
 
@@ -19,21 +19,21 @@ export class AmendPage extends React.Component {
 
     this.state = {
       amend: null,
-      error: false
+      error: null
     }
   }
 
   fetchData() {
-    apiFetch('/amend/' + this.props.match.params.id).then(async res => {
-      if (res.status === 200) {
-        const amend = await res.json()
+    socket
+      .fetch('amend', { id: this.props.match.params.id })
+      .then(amend => {
         this.setState({ amend }, () => {
           this.computeDiff()
         })
-      } else {
-        this.setState({ error: true })
-      }
-    })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
   }
 
   componentDidMount() {

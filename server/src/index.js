@@ -33,220 +33,10 @@ const User = require('./mongo/models/user')
 const Group = require('./mongo/models/group')
 const Text = require('./mongo/models/text')
 const Amend = require('./mongo/models/amend')
-
-// Users routes
-app.post('/signup', async (req, res) => {
-  const { email, password } = req.body
-  if (!isMatchZenika(email)) {
-    res.status(400).end("Cet email n'est pas encore autorisé")
-  } else {
-    if (await User.findOne({ email })) {
-      res.status(400).end('Cet email est déjà utilisé')
-    } else {
-      bcrypt.hash(password, 10, async (err, hash) => {
-        await new User({ email, password: hash }).save()
-        res.end('Nouvel utilisateur enregistré')
-      })
-    }
-  }
-})
+const Event = require('./mongo/models/event')
 
 // Utils function to generate unique tokens
 const generateToken = require('./utils/token')
-
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body
-  const token = req.headers.token
-  if (email && password) {
-    const user = await User.findOne({ email })
-      .populate('amends')
-      .populate('followedTexts')
-      .populate('followedGroups')
-    if (user) {
-      bcrypt.compare(password, user.password, async (err, valid) => {
-        if (valid) {
-          const token = generateToken()
-          user.token = token
-          await user.save()
-          res.json(user)
-        } else {
-          res.status(400).end('Mot de passe invalide')
-        }
-      })
-    } else {
-      res.status(400).end('Email invalide')
-    }
-  } else if (token) {
-    const user = await User.findOne({ token })
-      .populate('amends')
-      .populate('followedTexts')
-      .populate('followedGroups')
-    if (user) {
-      res.json(user)
-    } else {
-      res.status(400).end('Token invalide')
-    }
-  } else {
-    res.status(400).end('Requete invalide')
-  }
-})
-
-app.post('/logout', async (req, res) => {
-  const user = await User.findOne({ token: req.headers.token })
-  if (user) {
-    user.token = null
-    await user.save()
-    res.end('Utilisateur déconnecté')
-  } else {
-    res.status(400).end('Cet utilisateur est déjà déconnecté')
-  }
-})
-
-// User routes
-app.post('/user', async (req, res) => {
-  const user = await User.findOne({
-    token: req.headers.token
-  })
-    .populate('amends')
-    .populate('followedTexts')
-    .populate('followedGroups')
-  if (user) {
-    res.json(user).end()
-  } else {
-    res.status(400).end("Cet utilisateur n'est pas connecté")
-  }
-})
-
-app.post('/user/followGroup/:id', async (req, res) => {
-  const user = await User.findOne({ token: req.headers.token })
-  if (user) {
-    user.followedGroups.push(req.params.id)
-    await user.save()
-    res.end('Groupe suivi')
-  } else {
-    res.status(400).end("Cet utilisateur n'est pas connecté")
-  }
-})
-
-app.post('/user/unFollowGroup/:id', async (req, res) => {
-  const user = await User.findOne({ token: req.headers.token })
-  if (user) {
-    const id = user.followedGroups.indexOf(req.params.id)
-    if (id >= 0) {
-      user.followedGroups.splice(id, 1)
-      await user.save()
-      res.end('Groupe non suivi')
-    } else {
-      res.status(400).end("Ce groupe n'est pas suivi")
-    }
-  } else {
-    res.status(400).end("Cet utilisateur n'est pas connecté")
-  }
-})
-
-app.post('/user/followText/:id', async (req, res) => {
-  const user = await User.findOne({ token: req.headers.token })
-  if (user) {
-    user.followedTexts.push(req.params.id)
-    await user.save()
-    res.end('Texte suivi')
-  } else {
-    res.status(400).end("Cet utilisateur n'est pas connecté")
-  }
-})
-
-app.post('/user/unFollowText/:id', async (req, res) => {
-  const user = await User.findOne({ token: req.headers.token })
-  if (user) {
-    const id = user.followedTexts.indexOf(req.params.id)
-    if (id >= 0) {
-      user.followedTexts.splice(id, 1)
-      await user.save()
-      res.end('Texte non suivi')
-    } else {
-      res.status(400).end("Ce texte n'est pas suivi")
-    }
-  } else {
-    res.status(400).end("Cet utilisateur n'est pas connecté")
-  }
-})
-
-// Groups routes
-app.get('/rootGroup', async (req, res) => {
-  const rootGroup = await Group.findOne({ parent: null })
-    .populate('subgroups')
-    .populate('texts')
-    .populate('parent')
-    .populate('rules')
-
-  if (rootGroup) {
-    res.json(rootGroup).end()
-  } else {
-    res.status(400).end("Ce groupe n'existe pas")
-  }
-})
-
-app.get('/group/:id', async (req, res) => {
-  const group = await Group.findById(req.params.id)
-    .populate('subgroups')
-    .populate('texts')
-    .populate('parent')
-    .populate('rules')
-
-  if (group) {
-    res.json(group).end()
-  } else {
-    res.status(400).end("Ce groupe n'existe pas")
-  }
-})
-
-// Texts routes
-app.get('/text/:id', async (req, res) => {
-  const text = await Text.findById(req.params.id)
-    .populate('amends')
-    .populate('group')
-
-  if (text) {
-    res.json(text).end()
-  } else {
-    res.status(400).end("Ce texte n'existe pas")
-  }
-})
-
-app.get('/amend/:id', async (req, res) => {
-  const amend = await Amend.findById(req.params.id).populate('text')
-
-  if (amend) {
-    res.json(amend).end()
-  } else {
-    res.status(400).end("Cet amendement n'existe pas")
-  }
-})
-
-app.post('/amend', async (req, res) => {
-  const { name, description, patch, version, textID } = req.body
-  const user = await User.findOne({ token: req.headers.token })
-  if (user) {
-    const amend = await new Amend({
-      name,
-      description,
-      patch,
-      version,
-      text: textID
-    }).save()
-
-    user.amends.push(amend._id)
-    await user.save()
-
-    const text = await Text.findById(textID)
-    text.amends.push(amend._id)
-    await text.save()
-
-    res.end('Nouvel amendement enregistré')
-  } else {
-    res.status(400).end("Cet utilisateur n'est pas connecté")
-  }
-})
 
 // Error 404 Middleware
 app.use((req, res) => {
@@ -260,21 +50,227 @@ const io = require('socket.io')(http)
 let usersCount = 0
 
 io.on('connection', socket => {
-  console.log(++usersCount)
+  console.log(++usersCount + ' utilisateur(s) connecté(s)')
   socket.on('disconnect', () => {
-    console.log(--usersCount)
+    console.log(--usersCount + ' utilisateur(s) connecté(s)')
+  })
+
+  socket.on('login', async ({ token, data }) => {
+    const { email, password } = data
+    if (email && password) {
+      const user = await User.findOne({ email })
+        .populate('amends')
+        .populate('followedTexts')
+        .populate('followedGroups')
+      if (user) {
+        bcrypt.compare(password, user.password, async (err, valid) => {
+          if (valid) {
+            const token = generateToken()
+            user.token = token
+            await user.save()
+            socket.emit('login', { data: user })
+          } else {
+            socket.emit('login', { error: 'Mot de passe invalide' })
+          }
+        })
+      } else {
+        socket.emit('login', { error: 'Email invalide' })
+      }
+    } else if (token) {
+      const user = await User.findOne({ token })
+        .populate('amends')
+        .populate('followedTexts')
+        .populate('followedGroups')
+      if (user) {
+        socket.emit('login', { data: user })
+      } else {
+        socket.emit('login', { error: 'Token invalide' })
+      }
+    } else {
+      socket.emit('login', { error: 'Requete invalide' })
+    }
+  })
+
+  socket.on('signup', async ({ data }) => {
+    const { email, password } = data
+    if (!email || !isMatchZenika(email)) {
+      socket.emit('signup', { error: "Cet email n'est pas encore autorisé" })
+    } else {
+      if (await User.findOne({ email })) {
+        socket.emit('signup', { error: 'Cet email est déjà utilisé' })
+      } else {
+        if (!password) {
+          socket.emit('signup', { error: 'Le mot de passe est requis' })
+        } else {
+          bcrypt.hash(password, 10, async (err, hash) => {
+            await new User({ email, password: hash }).save()
+            socket.emit('signup')
+          })
+        }
+      }
+    }
+  })
+
+  socket.on('logout', async ({ token }) => {
+    const user = await User.findOne({ token })
+    if (user) {
+      user.token = null
+      await user.save()
+      socket.emit('logout')
+    } else {
+      socket.emit('logout', { error: 'Cet utilisateur est déjà déconnecté' })
+    }
   })
 
   socket.on('user', async ({ token }) => {
-    const errorResponse = { error: 'Token invalide' }
     if (token) {
       const user = await User.findOne({ token })
         .populate('amends')
         .populate('followedTexts')
         .populate('followedGroups')
-      socket.emit('user', user ? { data: user } : errorResponse)
+      socket.emit(
+        'user',
+        user ? { data: user } : { error: "Cet utilisateur n'est pas connecté" }
+      )
     } else {
-      socket.emit('user', errorResponse)
+      socket.emit('user', { error: 'Token invalide' })
+    }
+  })
+
+  socket.on('rootGroup', async () => {
+    const rootGroup = await Group.findOne({ parent: null })
+      .populate('subgroups')
+      .populate('texts')
+      .populate('parent')
+      .populate('rules')
+
+    if (rootGroup) {
+      socket.emit('rootGroup', { data: rootGroup })
+    } else {
+      socket.emit('rootGroup', { error: "Ce groupe n'existe pas" })
+    }
+  })
+
+  socket.on('group', async ({ data }) => {
+    const group = await Group.findById(data.id)
+      .populate('subgroups')
+      .populate('texts')
+      .populate('parent')
+      .populate('rules')
+
+    if (group) {
+      socket.emit('group', { data: group })
+    } else {
+      socket.emit('group', { error: "Ce groupe n'existe pas" })
+    }
+  })
+
+  socket.on('text', async ({ data }) => {
+    const text = await Text.findById(data.id)
+      .populate('amends')
+      .populate('group')
+
+    if (text) {
+      socket.emit('text', { data: text })
+    } else {
+      socket.emit('text', { error: "Ce texte n'existe pas" })
+    }
+  })
+
+  socket.on('amend', async ({ data }) => {
+    const amend = await Amend.findById(data.id).populate('text')
+
+    if (amend) {
+      socket.emit('amend', { data: amend })
+    } else {
+      socket.emit('amend', { error: "Cet amendement n'existe pas" })
+    }
+  })
+
+  socket.on('postAmend', async ({ token, data }) => {
+    const { name, description, patch, version, textID } = data
+    const user = await User.findOne({ token })
+    if (user) {
+      const amend = await new Amend({
+        name,
+        description,
+        patch,
+        version,
+        text: textID
+      }).save()
+
+      user.amends.push(amend._id)
+      await user.save()
+
+      const text = await Text.findById(textID)
+      text.amends.push(amend._id)
+      await text.save()
+
+      socket.emit('postAmend')
+    } else {
+      socket.emit('postAmend', { error: "Cet utilisateur n'est pas connecté" })
+    }
+  })
+
+  socket.on('followGroup', async ({ token, data }) => {
+    const user = await User.findOne({ token })
+    if (user) {
+      user.followedGroups.push(data.id)
+      await user.save()
+      socket.emit('followGroup')
+    } else {
+      socket.emit('followGroup', {
+        error: "Cet utilisateur n'est pas connecté"
+      })
+    }
+  })
+
+  socket.on('unFollowGroup', async ({ token, data }) => {
+    const user = await User.findOne({ token })
+    if (user) {
+      const id = user.followedGroups.indexOf(data.id)
+      if (id >= 0) {
+        user.followedGroups.splice(id, 1)
+        await user.save()
+        socket.emit('unFollowGroup')
+      } else {
+        socket.emit('unFollowGroup', { error: "Ce groupe n'est pas suivi" })
+      }
+    } else {
+      socket.emit('unFollowGroup', {
+        error: "Cet utilisateur n'est pas connecté"
+      })
+    }
+  })
+
+  socket.on('followText', async ({ token, data }) => {
+    const user = await User.findOne({ token })
+    if (user) {
+      user.followedTexts.push(data.id)
+      await user.save()
+      socket.emit('followText')
+    } else {
+      socket.emit('followText', {
+        error: "Cet utilisateur n'est pas connecté"
+      })
+    }
+  })
+
+  socket.on('unFollowText', async ({ token, data }) => {
+    const user = await User.findOne({ token })
+    if (user) {
+      const id = user.followedTexts.indexOf(data.id)
+      if (id >= 0) {
+        user.followedTexts.splice(id, 1)
+        await user.save()
+        socket.emit('unFollowText')
+      } else {
+        socket.emit('unFollowText', { error: "Ce texte n'est pas suivi" })
+      }
+    } else {
+      socket.emit('unFollowText', {
+        error: "Cet utilisateur n'est pas connecté"
+      })
     }
   })
 })

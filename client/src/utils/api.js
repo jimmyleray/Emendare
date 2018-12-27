@@ -7,18 +7,6 @@ const config = {
   }
 }
 
-export const apiFetch = (pathname, options = {}) => {
-  return fetch(config.url[process.env.NODE_ENV] + pathname, {
-    ...options,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      ...(options.headers || {}),
-      token: localStorage.getItem('token')
-    }
-  })
-}
-
 const insecureSocket = io(config.url[process.env.NODE_ENV])
 
 export const socket = {
@@ -31,11 +19,10 @@ export const socket = {
       data
     })
   },
-  fetch: name => {
-    socket.emit(name)
+  fetch: (name, params) => {
+    socket.emit(name, params)
     return new Promise((resolve, reject) => {
-      socket.on(name, ({ data, error }) => {
-        socket.off(name)
+      socket.on(name, ({ data, error } = {}) => {
         if (error) {
           console.warn(name, error)
           reject(error)

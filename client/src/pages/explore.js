@@ -8,7 +8,7 @@
 import React from 'react'
 import { Page } from '../layouts'
 import { Group } from '../components'
-import { apiFetch } from '../utils'
+import { socket } from '../utils'
 
 export class ExplorePage extends React.Component {
   constructor(props) {
@@ -20,11 +20,8 @@ export class ExplorePage extends React.Component {
   }
 
   componentDidMount() {
-    apiFetch('/rootGroup').then(async res => {
-      if (res.status === 200) {
-        const rootGroup = await res.json()
-        this.setState({ rootGroup })
-      }
+    socket.fetch('rootGroup').then(rootGroup => {
+      this.setState({ rootGroup })
     })
   }
 
