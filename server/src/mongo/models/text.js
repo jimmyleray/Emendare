@@ -18,7 +18,6 @@ module.exports = mongoose.model(
       default: []
     },
     version: { type: Number, default: 0 },
-    updated: { type: Date, default: Date.now },
     rules: { type: Boolean, default: false }
   })
 )

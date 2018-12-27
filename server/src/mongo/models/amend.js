@@ -8,7 +8,6 @@ module.exports = mongoose.model(
     description: { type: String, default: '' },
     patch: { type: String, required: true },
     version: { type: Number, required: true },
-    text: { type: mongoose.Schema.Types.ObjectId, ref: 'Text', required: true },
-    updated: { type: Date, default: Date.now }
+    text: { type: mongoose.Schema.Types.ObjectId, ref: 'Text', required: true }
   })
 )

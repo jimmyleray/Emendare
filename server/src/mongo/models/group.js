@@ -20,7 +20,6 @@ module.exports = mongoose.model(
       ref: 'Group',
       default: null
     },
-    whitelist: { type: [String], default: ['*'] },
-    updated: { type: Date, default: Date.now }
+    whitelist: { type: [String], default: ['*'] }
   })
 )
