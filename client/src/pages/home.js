@@ -9,6 +9,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Page } from '../layouts'
+import { Events } from '../components'
 
 export const HomePage = () => (
   <Page title="Accueil">
@@ -22,6 +23,10 @@ export const HomePage = () => (
         Pour participer au développement, vous pouvez rejoindre le channel{' '}
         <span className="has-text-weight-semibold">#emendare</span> sur le slack
         Zenika
+      </p>
+      <p>
+        Il est possible que les données de la plateforme soient réinitialisées à
+        la fin de cette version alpha
       </p>
     </div>
 
@@ -46,5 +51,7 @@ export const HomePage = () => (
         </Link>
       </p>
     </div>
+
+    <Events />
   </Page>
 )

@@ -1,6 +1,8 @@
 import React from 'react'
-import { UserProvider } from '../contexts'
+import { EventsProvider, UserProvider } from '../contexts'
 
 export const Providers = ({ children }) => (
-  <UserProvider>{children}</UserProvider>
+  <EventsProvider>
+    <UserProvider>{children}</UserProvider>
+  </EventsProvider>
 )

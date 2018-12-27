@@ -137,6 +137,11 @@ io.on('connection', socket => {
     }
   })
 
+  socket.on('events', async () => {
+    const events = await Event.find().sort('-created')
+    socket.emit('events', { data: events })
+  })
+
   socket.on('rootGroup', async () => {
     const rootGroup = await Group.findOne({ parent: null })
       .populate('subgroups')
@@ -205,6 +210,13 @@ io.on('connection', socket => {
       const text = await Text.findById(textID)
       text.amends.push(amend._id)
       await text.save()
+
+      await new Event({
+        title: 'Un nouvel amendement a été proposé'
+      }).save()
+
+      const events = await Event.find().sort('-created')
+      io.emit('events', { data: events })
 
       socket.emit('postAmend')
     } else {

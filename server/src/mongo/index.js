@@ -22,6 +22,7 @@ database.on('error', error => {
 const User = require('./models/user')
 const Group = require('./models/group')
 const Text = require('./models/text')
+const Event = require('./models/event')
 
 const initDatabase = async () => {
   bcrypt.hash('tmp', 10, async (err, hash) => {
@@ -33,6 +34,10 @@ const initDatabase = async () => {
     const globalGroup = await new Group({
       name: 'Global',
       description: 'Groupe officiel global'
+    }).save()
+
+    await new Event({
+      title: 'Un nouveau groupe Global a été crée'
     }).save()
 
     const globalGroupRules = await new Text({
@@ -49,6 +54,10 @@ const initDatabase = async () => {
       parent: globalGroup._id
     }).save()
 
+    await new Event({
+      title: 'Un nouveau groupe Français a été crée'
+    }).save()
+
     const officialGroupRules = await new Text({
       group: officialGroup._id,
       rules: true
@@ -62,6 +71,10 @@ const initDatabase = async () => {
       description: 'Groupe privé Zenika',
       parent: officialGroup._id,
       whitelist: ['*@zenika.com']
+    }).save()
+
+    await new Event({
+      title: 'Un nouveau groupe Zenika a été crée'
     }).save()
 
     const privateGroupRules = await new Text({
@@ -87,12 +100,20 @@ const initDatabase = async () => {
       official: true
     }).save()
 
+    await new Event({
+      title: 'Un nouveau texte Roadmap a été crée'
+    }).save()
+
     const privateText = await new Text({
       name: "Description de l'agence de Rennes",
       actual: lorem,
       description: 'Texte utilisé sur le minisite rennes.zenika.com',
       group: privateGroup._id,
       private: true
+    }).save()
+
+    await new Event({
+      title: 'Un nouveau texte Agence a été crée'
     }).save()
 
     globalGroup.texts.push(globalText._id)
