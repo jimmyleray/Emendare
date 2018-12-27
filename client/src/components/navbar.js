@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom'
 import { UserContext } from '../contexts'
 
 export const Navbar = () => (
-  <nav className="navbar" role="navigation" aria-label="main navigation">
+  <nav
+    className="navbar is-fixed-top"
+    role="navigation"
+    aria-label="main navigation"
+  >
     <div className="container is-fluid">
       <div className="navbar-brand">
         <Link to="/" className="navbar-item has-text-weight-semibold">
