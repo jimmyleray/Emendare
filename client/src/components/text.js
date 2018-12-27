@@ -34,7 +34,11 @@ export const Text = ({ data }) => {
             <Spacer />
 
             {isConnected() && (
-              <Link to={'/editer/' + data._id} className="button is-info">
+              <Link
+                to={'/editer/' + data._id}
+                className="button is-info"
+                disabled={data.rules}
+              >
                 <span className="icon">
                   <i className="fas fa-plus" />
                 </span>
@@ -47,6 +51,7 @@ export const Text = ({ data }) => {
                 <button
                   onClick={unFollowText(data._id)}
                   className="button is-danger is-outlined"
+                  disabled={data.rules}
                 >
                   Ne plus suivre ce texte
                 </button>
@@ -54,6 +59,7 @@ export const Text = ({ data }) => {
                 <button
                   onClick={followText(data._id)}
                   className="button is-success"
+                  disabled={data.rules}
                 >
                   Suivre ce texte
                 </button>
