@@ -11,7 +11,7 @@ import { Redirect } from 'react-router-dom'
 import { Page } from '../layouts'
 import { socket } from '../utils'
 
-export class LoginPage extends React.Component {
+export class SubscribePage extends React.Component {
   constructor(props) {
     super(props)
 
@@ -23,7 +23,7 @@ export class LoginPage extends React.Component {
       event.preventDefault()
 
       socket
-        .fetch('login', {
+        .fetch('subscribe', {
           password: this.state.password,
           email: this.state.email
         })
@@ -52,7 +52,7 @@ export class LoginPage extends React.Component {
     if (this.state.redirectToReferrer) return <Redirect to={from} />
 
     return (
-      <Page title="Connexion">
+      <Page title="Inscription">
         <form onSubmit={this.submit}>
           <div className="field">
             <label className="label is-medium">Email</label>
@@ -86,7 +86,7 @@ export class LoginPage extends React.Component {
           <div className="field">
             <p className="control">
               <button type="submit" className="button is-medium is-success">
-                Connexion
+                Inscription
               </button>
             </p>
           </div>

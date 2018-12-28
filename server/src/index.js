@@ -8,18 +8,6 @@ const app = express()
 // Lib to hash passwords
 const bcrypt = require('bcrypt')
 
-// Requests Logger Middleware
-const morgan = require('morgan')
-app.use(morgan('tiny'))
-
-// JSON Body Parser
-const bodyParser = require('body-parser')
-app.use(bodyParser.json())
-
-// CORS Definition
-const cors = require('cors')
-app.use(cors())
-
 // Matcher utility
 // https://github.com/jonschlinkert/is-match
 const isMatch = require('is-match')
@@ -96,20 +84,27 @@ io.on('connection', socket => {
     }
   })
 
-  socket.on('signup', async ({ data }) => {
+  socket.on('subscribe', async ({ data }) => {
     const { email, password } = data
     if (!email || !isMatchZenika(email)) {
-      socket.emit('signup', { error: "Cet email n'est pas encore autorisé" })
+      socket.emit('subscribe', {
+        error:
+          'Pendant cette phase de test, seules les adresses électroniques se terminant par @zenika.com sont acceptées'
+      })
     } else {
       if (await User.findOne({ email })) {
-        socket.emit('signup', { error: 'Cet email est déjà utilisé' })
+        socket.emit('subscribe', {
+          error:
+            "Cet email est déjà utilisé. Si il s'agit de votre compte, essayez de vous y connecter"
+        })
       } else {
         if (!password) {
-          socket.emit('signup', { error: 'Le mot de passe est requis' })
+          socket.emit('subscribe', { error: 'Le mot de passe est requis' })
         } else {
           bcrypt.hash(password, 10, async (err, hash) => {
-            await new User({ email, password: hash }).save()
-            socket.emit('signup')
+            const token = generateToken()
+            const user = await new User({ email, password: hash, token }).save()
+            socket.emit('subscribe', { data: user })
           })
         }
       }

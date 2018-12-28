@@ -9,6 +9,7 @@ export const routes = [
   { path: '/explorer', component: Pages.ExplorePage },
   { path: '/groupe/:id', component: Pages.GroupPage },
   { path: '/connexion', component: Pages.LoginPage },
+  { path: '/inscription', component: Pages.SubscribePage },
   { path: '/profil', component: Pages.ProfilePage, private: true },
   { path: '/texte/:id', component: Pages.TextPage },
   {

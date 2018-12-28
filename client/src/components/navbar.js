@@ -39,9 +39,17 @@ export const Navbar = () => (
                   </a>
                 </>
               ) : (
-                <Link to="/connexion" className="navbar-item">
-                  Connexion
-                </Link>
+                <>
+                  <Link
+                    to="/connexion"
+                    className="navbar-item has-text-weight-semibold"
+                  >
+                    Connexion
+                  </Link>
+                  <Link to="/inscription" className="navbar-item">
+                    Inscription
+                  </Link>
+                </>
               )
             }
           </UserContext.Consumer>
