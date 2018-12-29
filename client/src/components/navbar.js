@@ -11,7 +11,8 @@ export const Navbar = () => (
     <div className="container is-fluid">
       <div className="navbar-brand">
         <Link to="/" className="navbar-item has-text-weight-semibold">
-          Emendare
+          <img src={'/images/logo.png'} alt={'Emendare logo'} />
+          <span style={{ marginLeft: '3px' }}>Emendare</span>
         </Link>
       </div>
       <div className="navbar-menu">
