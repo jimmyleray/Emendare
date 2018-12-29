@@ -4,16 +4,14 @@ import { UserContext } from '../contexts'
 import { Results, Spacer } from '../components'
 import { socket } from '../utils'
 
-const unFollowText = id => () => {
-  socket.fetch('unFollowText', { id }).then(() => {
-    socket.emit('user')
-  })
+const unFollowText = id => async () => {
+  await socket.fetch('unFollowText', { id })
+  socket.emit('user')
 }
 
-const followText = id => () => {
-  socket.fetch('followText', { id }).then(() => {
-    socket.emit('user')
-  })
+const followText = id => async () => {
+  await socket.fetch('followText', { id })
+  socket.emit('user')
 }
 
 export const Text = ({ data }) => {

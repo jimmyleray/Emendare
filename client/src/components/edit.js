@@ -26,19 +26,16 @@ export class Edit extends React.Component {
 
     this.hasDiffs = () => this.state.initialValue !== this.state.amendValue
 
-    this.addAmend = () => {
-      socket
-        .fetch('postAmend', {
-          name: this.state.amendName,
-          description: this.state.amendDescription,
-          version: this.props.data.version,
-          patch: this.state.patch,
-          textID: this.props.data._id
-        })
-        .then(() => {
-          socket.emit('user')
-          this.setState({ redirectToText: true })
-        })
+    this.addAmend = async () => {
+      await socket.fetch('postAmend', {
+        name: this.state.amendName,
+        description: this.state.amendDescription,
+        version: this.props.data.version,
+        patch: this.state.patch,
+        textID: this.props.data._id
+      })
+      socket.emit('user')
+      this.setState({ redirectToText: true })
     }
 
     this.state = {

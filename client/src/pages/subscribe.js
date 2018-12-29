@@ -1,9 +1,8 @@
 /*
- * Page de connexion
+ * Page d'inscription
  * Le but de cette page est de permettre aux utilisateurs :
- * - de se connecter avec leur email / mot de passe
- * - TODO : d'accèder à la page d'inscription
- * - TODO : d'accèder à une page de récupération de mot de passe
+ * - de s'inscire avec leur email / mot de passe
+ * - d'accèder à la page de connexion
  */
 
 import React from 'react'

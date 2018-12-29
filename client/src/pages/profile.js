@@ -5,7 +5,7 @@
  * - TODO : de supprimer leur compte et leurs données
  * - TODO : de changer d'email
  * - TODO : de changer de mot de passe
- * - TODO : de visualiser l'ensemble des contenus suivis
+ * - de visualiser l'ensemble des contenus suivis
  * - TODO : de paramétrer les détails de son compte
  */
 

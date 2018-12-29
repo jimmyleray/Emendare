@@ -3,8 +3,8 @@
  * Le but de cette page est de permettre aux utilisateurs :
  * - de visualiser la version actuelle du texte
  * - d'accéder à la page pour amender le texte
- * - TODO : de visualiser la liste des amendements
- * - TODO : d'accéder au détail d'un amendement
+ * - de visualiser la liste des amendements
+ * - d'accéder au détail d'un amendement
  * - TODO : de voter pour les amendements préferés
  * - TODO : de visualiser l'historique des modifications
  * - TODO : de visualiser le vote en cours

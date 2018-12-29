@@ -2,7 +2,6 @@
  * Page d'exploration
  * Le but de cette page est de permettre aux utilisateurs :
  * - de découvrir des contenus à suivre sur Emendare
- * - TODO : de suivre l'activité de la plateforme
  */
 
 import React from 'react'

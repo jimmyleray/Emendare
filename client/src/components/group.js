@@ -4,16 +4,14 @@ import { UserContext } from '../contexts'
 import { Spacer } from '../components'
 import { socket } from '../utils'
 
-const unFollowGroup = id => () => {
-  socket.fetch('unFollowGroup', { id }).then(() => {
-    socket.emit('user')
-  })
+const unFollowGroup = id => async () => {
+  await socket.fetch('unFollowGroup', { id })
+  socket.emit('user')
 }
 
-const followGroup = id => () => {
-  socket.fetch('followGroup', { id }).then(() => {
-    socket.emit('user')
-  })
+const followGroup = id => async () => {
+  await socket.fetch('followGroup', { id })
+  socket.emit('user')
 }
 
 export const Group = ({ data }) => {
