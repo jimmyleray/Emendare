@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { PrivateRoute } from '../../components'
-import * as Pages from '../pages'
+import * as Pages from '../4_pages'
 
 export const routes = [
   { path: '/', component: Pages.HomePage, exact: true },
