@@ -6,7 +6,7 @@
  */
 
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { Page } from '../layouts'
 import { socket } from '../utils'
 
@@ -52,11 +52,16 @@ export class SubscribePage extends React.Component {
 
     return (
       <Page title="Inscription">
-        <form onSubmit={this.submit}>
+        <form
+          onSubmit={this.submit}
+          style={{ maxWidth: '350px', margin: 'auto' }}
+        >
+          <p className="is-size-3 has-text-centered">Créez votre compte</p>
+          <br />
           <div className="field">
-            <label className="label is-medium">Email</label>
             <p className="control has-icons-left has-icons-right">
               <input
+                placeholder="Email"
                 value={this.state.email}
                 onChange={this.change('email')}
                 className="input is-medium"
@@ -69,9 +74,9 @@ export class SubscribePage extends React.Component {
             </p>
           </div>
           <div className="field">
-            <label className="label is-medium">Mot de passe</label>
             <p className="control has-icons-left">
               <input
+                placeholder="Mot de passe"
                 value={this.state.password}
                 onChange={this.change('password')}
                 className="input is-medium"
@@ -82,11 +87,23 @@ export class SubscribePage extends React.Component {
               </span>
             </p>
           </div>
-          <div className="field">
+          <div className="field is-grouped is-grouped-centered">
             <p className="control">
-              <button type="submit" className="button is-medium is-success">
+              <button
+                type="submit"
+                className="button is-medium is-success"
+                disabled={!this.state.email || !this.state.password}
+              >
                 Inscription
               </button>
+            </p>
+            <p className="control">
+              <Link
+                to="/connexion"
+                className="button is-medium is-info is-outlined"
+              >
+                J'ai déjà un compte
+              </Link>
             </p>
           </div>
           {this.state.error && (

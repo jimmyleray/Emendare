@@ -89,13 +89,13 @@ io.on('connection', socket => {
     if (!email || !isMatchZenika(email)) {
       socket.emit('subscribe', {
         error:
-          'Pendant cette phase de test, seules les adresses électroniques se terminant par @zenika.com sont acceptées'
+          'Pendant cette phase de test, seules les adresses électroniques se terminant par @zenika.com sont acceptées.'
       })
     } else {
       if (await User.findOne({ email })) {
         socket.emit('subscribe', {
           error:
-            "Cet email est déjà utilisé. Si il s'agit de votre compte, essayez de vous y connecter"
+            "Cet email est déjà utilisé. Si il s'agit de votre compte, essayez de vous y connecter directement."
         })
       } else {
         if (!password) {
