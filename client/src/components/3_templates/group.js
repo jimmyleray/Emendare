@@ -1,6 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Spacer, UserContext } from '../../components'
+import {
+  Box,
+  Button,
+  Buttons,
+  Column,
+  Columns,
+  Icon,
+  Spacer,
+  UserContext
+} from '../../components'
 import { socket } from '../../services'
 
 const unFollowGroup = id => async () => {
@@ -18,51 +27,44 @@ export const Group = ({ data }) => {
     <UserContext.Consumer>
       {({ isConnected, user }) => (
         <>
-          <div className="buttons">
+          <Buttons>
             {data.parent && (
-              <Link to={'/groupe/' + data.parent._id} className="button">
-                <span className="icon">
-                  <i className="fas fa-chevron-left" />
-                </span>
+              <Button to={'/groupe/' + data.parent._id}>
+                <Icon type="fas fa-chevron-left" />
                 <span>Retour au groupe parent</span>
-              </Link>
+              </Button>
             )}
 
             <Spacer />
 
             {isConnected() && (
-              <Link to={'/texte/' + data.rules._id} className="button is-info">
-                <span className="icon">
-                  <i className="fas fa-cog" />
-                </span>
+              <Button className="is-info" to={'/texte/' + data.rules._id}>
+                <Icon type="fas fa-cog" />
                 <span>Voir les règles du groupe</span>
-              </Link>
+              </Button>
             )}
 
             {isConnected() &&
               (user.followedGroups.find(group => group._id === data._id) ? (
-                <button
+                <Button
                   onClick={unFollowGroup(data._id)}
-                  className="button is-danger is-outlined"
+                  className="is-danger is-outlined"
                 >
                   Ne plus suivre ce groupe
-                </button>
+                </Button>
               ) : (
-                <button
-                  onClick={followGroup(data._id)}
-                  className="button is-success"
-                >
+                <Button onClick={followGroup(data._id)} className="is-success">
                   Suivre ce groupe
-                </button>
+                </Button>
               ))}
-          </div>
+          </Buttons>
 
-          <div className="columns">
-            <div className="column">
-              <div className="box">
+          <Columns>
+            <Column>
+              <Box>
                 <p className="has-text-weight-bold">{data.name}</p>
                 <p>{data.description}</p>
-              </div>
+              </Box>
 
               {data.subgroups.length > 0 && (
                 <>
@@ -91,13 +93,13 @@ export const Group = ({ data }) => {
                   </ul>
                 </>
               )}
-            </div>
-            <div className="column">
-              <div className="box">
+            </Column>
+            <Column>
+              <Box>
                 <p>Votes en cours dans le groupe</p>
-              </div>
-            </div>
-          </div>
+              </Box>
+            </Column>
+          </Columns>
         </>
       )}
     </UserContext.Consumer>

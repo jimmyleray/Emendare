@@ -7,12 +7,11 @@
  */
 
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { Page } from '../../components'
+import { Button, Notification, Page } from '../../components'
 
 export const HomePage = () => (
   <Page title="Accueil">
-    <div className="notification is-warning has-text-centered">
+    <Notification className="is-warning has-text-centered">
       <p>
         <span className="has-text-weight-semibold">Version alpha</span> ouverte
         depuis le 2 Janvier 2019 uniquement pour les mails se terminant par
@@ -27,7 +26,7 @@ export const HomePage = () => (
         Il est possible que les données de la plateforme soient réinitialisées à
         la fin de cette version alpha
       </p>
-    </div>
+    </Notification>
 
     <div className="field has-text-centered">
       <h1 className="is-size-3">
@@ -40,14 +39,14 @@ export const HomePage = () => (
     </div>
     <div className="field is-grouped is-grouped-centered">
       <p className="control">
-        <Link to="/explorer" className="button is-medium is-info">
+        <Button to="/explorer" className="is-medium is-info">
           Découvrir Emendare
-        </Link>
+        </Button>
       </p>
       <p className="control">
-        <Link to="/inscription" className="button is-medium is-primary">
+        <Button to="/inscription" className="is-medium is-primary">
           Créer votre compte
-        </Link>
+        </Button>
       </p>
     </div>
   </Page>

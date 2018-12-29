@@ -26,6 +26,10 @@ export class EventsProvider extends React.Component {
     })
   }
 
+  componentWillUnmount() {
+    socket.off('events')
+  }
+
   render() {
     return (
       <EventsContext.Provider value={this.state}>

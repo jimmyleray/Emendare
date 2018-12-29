@@ -11,23 +11,23 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Page, UserContext } from '../../components'
+import { Box, Column, Columns, Page, UserContext } from '../../components'
 
 export const ProfilePage = () => (
   <Page title="Profil">
     <UserContext.Consumer>
       {({ user }) => (
-        <div className="columns">
-          <div className="column">
-            <div className="box">
+        <Columns>
+          <Column>
+            <Box>
               <p>Profil de {user.email}</p>
               <p>Crée le {new Date(user.created).toLocaleString()}</p>
-            </div>
-          </div>
+            </Box>
+          </Column>
 
-          <div className="column">
+          <Column>
             {user.amends.length > 0 && (
-              <div className="box">
+              <Box>
                 <p>Liste des amendements proposés</p>
                 <ul>
                   {user.amends.map(amend => (
@@ -36,11 +36,11 @@ export const ProfilePage = () => (
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Box>
             )}
 
             {user.followedTexts.length > 0 && (
-              <div className="box">
+              <Box>
                 <p>Liste des textes suivis</p>
                 <ul>
                   {user.followedTexts.map(followedText => (
@@ -51,11 +51,11 @@ export const ProfilePage = () => (
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Box>
             )}
 
             {user.followedGroups.length > 0 && (
-              <div className="box">
+              <Box>
                 <p>Liste des groupes suivis</p>
                 <ul>
                   {user.followedGroups.map(followedGroup => (
@@ -66,10 +66,10 @@ export const ProfilePage = () => (
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Box>
             )}
-          </div>
-        </div>
+          </Column>
+        </Columns>
       )}
     </UserContext.Consumer>
   </Page>

@@ -57,17 +57,17 @@ export class AmendPage extends React.Component {
     this.setState({ amend: { diffs, ...this.state.amend } })
   }
 
+  getTitle() {
+    return this.state.amend
+      ? 'Amendement ' + this.state.amend.name
+      : 'Amendement'
+  }
+
   render() {
     if (this.state.error) return <ErrorPage />
 
     return (
-      <Page
-        title={
-          this.state.amend
-            ? 'Amendement ' + this.state.amend.name
-            : 'Amendement'
-        }
-      >
+      <Page title={this.getTitle()}>
         {this.state.amend && <Amend data={this.state.amend} />}
       </Page>
     )

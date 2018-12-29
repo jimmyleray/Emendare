@@ -6,8 +6,7 @@
  */
 
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { Page } from '../../components'
+import { Button, Page } from '../../components'
 
 export const ErrorPage = () => (
   <Page title="Introuvable">
@@ -17,9 +16,9 @@ export const ErrorPage = () => (
     </div>
     <div className="field is-grouped is-grouped-centered">
       <p className="control">
-        <Link to="/" className="button is-medium is-primary">
+        <Button to="/" className="is-medium is-primary">
           Retour à l'accueil
-        </Link>
+        </Button>
       </p>
     </div>
   </Page>

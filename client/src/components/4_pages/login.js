@@ -7,8 +7,8 @@
  */
 
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
-import { Page } from '../../components'
+import { Redirect } from 'react-router-dom'
+import { Button, Icon, Notification, Page } from '../../components'
 import { socket } from '../../services'
 
 export class LoginPage extends React.Component {
@@ -69,9 +69,7 @@ export class LoginPage extends React.Component {
                 type="email"
                 autoFocus={true}
               />
-              <span className="icon is-medium is-left">
-                <i className="fas fa-envelope" />
-              </span>
+              <Icon type="fas fa-envelope" className="icon is-medium is-left" />
             </p>
           </div>
           <div className="field">
@@ -83,34 +81,32 @@ export class LoginPage extends React.Component {
                 className="input is-medium"
                 type="password"
               />
-              <span className="icon is-medium is-left">
-                <i className="fas fa-lock" />
-              </span>
+              <Icon type="fas fa-lock" className="icon is-medium is-left" />
             </p>
           </div>
           <div className="field is-grouped is-grouped-centered">
-            <p className="control">
-              <button
+            <div className="control">
+              <Button
                 type="submit"
-                className="button is-medium is-success"
+                className="is-medium is-success"
                 disabled={!this.state.email || !this.state.password}
               >
                 Connexion
-              </button>
-            </p>
-            <p className="control">
-              <Link
+              </Button>
+            </div>
+            <div className="control">
+              <Button
                 to="/inscription"
-                className="button is-medium is-info is-outlined"
+                className="is-medium is-info is-outlined"
               >
                 Je n'ai pas de compte
-              </Link>
-            </p>
+              </Button>
+            </div>
           </div>
           {this.state.error && (
-            <div className="notification is-danger has-text-centered">
+            <Notification className="is-danger has-text-centered">
               {this.state.error}
-            </div>
+            </Notification>
           )}
         </form>
       </Page>

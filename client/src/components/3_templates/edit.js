@@ -1,6 +1,18 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
-import { Amend, Spacer, UserContext } from '../../components'
+import { Redirect } from 'react-router-dom'
+import {
+  Amend,
+  Box,
+  Button,
+  Buttons,
+  Column,
+  Columns,
+  Icon,
+  Notification,
+  Progress,
+  Spacer,
+  UserContext
+} from '../../components'
 import { socket } from '../../services'
 import diff_match_patch from 'diff-match-patch'
 
@@ -71,22 +83,20 @@ export class Edit extends React.Component {
       <UserContext.Consumer>
         {({ isConnected }) => (
           <>
-            <div className="buttons">
+            <Buttons>
               {this.props.data.group && (
-                <Link to={'/texte/' + this.props.data._id} className="button">
-                  <span className="icon">
-                    <i className="fas fa-chevron-left" />
-                  </span>
+                <Button to={'/texte/' + this.props.data._id}>
+                  <Icon type="fas fa-chevron-left" />
                   <span>Retour au texte</span>
-                </Link>
+                </Button>
               )}
 
               <Spacer />
-            </div>
+            </Buttons>
 
-            <div className="columns">
-              <div className="column">
-                <div className="box">
+            <Columns>
+              <Column>
+                <Box>
                   <p>
                     {this.props.data.rules
                       ? 'Paramètres'
@@ -104,7 +114,7 @@ export class Edit extends React.Component {
                       ? 'Règles du groupe ' + this.props.data.group.name
                       : this.props.data.description}
                   </p>
-                </div>
+                </Box>
 
                 <div className="field">
                   <label className="label">Titre de l'amendement</label>
@@ -150,18 +160,16 @@ export class Edit extends React.Component {
                   onClick={this.restoreInitialValue}
                   className="button is-danger is-outlined"
                 >
-                  <span className="icon">
-                    <i className="fas fa-undo" />
-                  </span>
+                  <Icon type="fas fa-undo" />
                   <span>Restaurer le texte initial</span>
                 </button>
-              </div>
+              </Column>
 
-              <div className="column">
-                <div className="notification">
-                  <progress
+              <Column>
+                <Notification>
+                  <Progress
                     className={
-                      'progress is-small ' +
+                      'is-small ' +
                       (this.state.amendComplexity >= 400
                         ? 'is-danger'
                         : this.state.amendComplexity >= 200
@@ -177,7 +185,7 @@ export class Edit extends React.Component {
                     l'adoption de votre amendement. Nous vous conseillons donc
                     de proposer des amendements à faible complexité.
                   </p>
-                </div>
+                </Notification>
 
                 <p className="has-text-centered is-size-4">
                   Pré-visualisation de votre amendement
@@ -193,22 +201,22 @@ export class Edit extends React.Component {
                     }}
                   />
                 ) : (
-                  <div className="box">
+                  <Box>
                     <p className="has-text-centered has-text-danger">
                       Aucune modification à afficher
                     </p>
-                  </div>
+                  </Box>
                 )}
 
-                <button
+                <Button
                   onClick={this.addAmend}
                   disabled={!this.hasDiffs() || !isConnected()}
-                  className="button is-success is-fullwidth"
+                  className="is-success is-fullwidth"
                 >
                   Proposer cet amendement
-                </button>
-              </div>
-            </div>
+                </Button>
+              </Column>
+            </Columns>
           </>
         )}
       </UserContext.Consumer>

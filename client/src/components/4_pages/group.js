@@ -43,11 +43,15 @@ export class GroupPage extends React.Component {
     }
   }
 
+  getTitle() {
+    return this.state.group ? this.state.group.name : 'Groupe'
+  }
+
   render() {
     if (this.state.error) return <ErrorPage />
 
     return (
-      <Page title={this.state.group ? this.state.group.name : 'Groupe'}>
+      <Page title={this.getTitle()}>
         {this.state.group && <Group data={this.state.group} />}
       </Page>
     )

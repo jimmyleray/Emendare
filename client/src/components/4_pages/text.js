@@ -47,19 +47,19 @@ export class TextPage extends React.Component {
     }
   }
 
+  getTitle() {
+    return this.state.text
+      ? this.state.text.rules
+        ? 'Règles de ' + this.state.text.group.name
+        : this.state.text.name
+      : 'Texte'
+  }
+
   render() {
     if (this.state.error) return <ErrorPage />
 
     return (
-      <Page
-        title={
-          this.state.text
-            ? this.state.text.rules
-              ? 'Règles de ' + this.state.text.group.name
-              : this.state.text.name
-            : 'Texte'
-        }
-      >
+      <Page title={this.getTitle()}>
         {this.state.text && <Text data={this.state.text} />}
       </Page>
     )

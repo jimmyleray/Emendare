@@ -1,4 +1,5 @@
 import React from 'react'
+import { Progress } from '../../components'
 
 export const Results = ({ value }) =>
   value ? (
@@ -28,8 +29,8 @@ export const Results = ({ value }) =>
         </div>
       </div>
       <div>
-        <progress
-          className="progress is-success is-large"
+        <Progress
+          className="is-success is-large"
           value="100"
           max="100"
           style={{
@@ -40,8 +41,8 @@ export const Results = ({ value }) =>
             borderBottomRightRadius: 0
           }}
         />
-        <progress
-          className="progress is-danger is-large"
+        <Progress
+          className="is-danger is-large"
           value="100"
           max="100"
           style={{

@@ -1,22 +1,20 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Box, Button, Buttons, Icon } from '../../components'
 
 const textSizeDisplayed = 100
 
 export const Amend = ({ data }) => (
   <>
     {data.text && (
-      <div className="buttons">
-        <Link to={'/texte/' + data.text._id} className="button">
-          <span className="icon">
-            <i className="fas fa-chevron-left" />
-          </span>
+      <Buttons>
+        <Button to={'/texte/' + data.text._id}>
+          <Icon type="fas fa-chevron-left" />
           <span>Retour au texte</span>
-        </Link>
-      </div>
+        </Button>
+      </Buttons>
     )}
-    
-    <div className="box">
+
+    <Box>
       {data.name && <p className="has-text-centered is-size-5">{data.name}</p>}
       {data.description && <p>{data.description}</p>}
       {(data.name || data.description) && data.diffs && <hr />}
@@ -51,6 +49,6 @@ export const Amend = ({ data }) => (
             </span>
           ))}
       </div>
-    </div>
+    </Box>
   </>
 )

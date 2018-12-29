@@ -36,13 +36,17 @@ export class UserProvider extends React.Component {
         .then(user => {
           this.setState({ user, isConnectionPending: false })
         })
-        .catch(error => {
+        .catch(() => {
           localStorage.removeItem('token')
           this.setState({ isConnectionPending: false })
         })
     } else {
       this.setState({ isConnectionPending: false })
     }
+  }
+
+  componentWillUnmount() {
+    socket.off('user')
   }
 
   render() {

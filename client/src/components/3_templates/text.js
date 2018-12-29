@@ -1,6 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Results, Spacer, UserContext } from '../../components'
+import {
+  Box,
+  Button,
+  Buttons,
+  Column,
+  Columns,
+  Icon,
+  Results,
+  Spacer,
+  UserContext
+} from '../../components'
 import { socket } from '../../services'
 
 const unFollowText = id => async () => {
@@ -18,53 +28,50 @@ export const Text = ({ data }) => {
     <UserContext.Consumer>
       {({ isConnected, user }) => (
         <>
-          <div className="buttons">
+          <Buttons>
             {data.group && (
-              <Link to={'/groupe/' + data.group._id} className="button">
-                <span className="icon">
-                  <i className="fas fa-chevron-left" />
-                </span>
+              <Button to={'/groupe/' + data.group._id}>
+                <Icon type="fas fa-chevron-left" />
                 <span>Retour au groupe</span>
-              </Link>
+              </Button>
             )}
 
             <Spacer />
 
             {isConnected() && (
-              <Link
+              <Button
                 to={'/editer/' + data._id}
-                className="button is-info"
+                className="is-info"
                 disabled={data.rules}
               >
-                <span className="icon">
-                  <i className="fas fa-plus" />
-                </span>
+                <Icon type="fas fa-plus" />
                 <span>Proposer un amendement</span>
-              </Link>
+              </Button>
             )}
 
             {isConnected() &&
               (user.followedTexts.find(text => text._id === data._id) ? (
-                <button
+                <Button
                   onClick={unFollowText(data._id)}
                   className="button is-danger is-outlined"
                   disabled={data.rules}
                 >
                   Ne plus suivre ce texte
-                </button>
+                </Button>
               ) : (
-                <button
+                <Button
                   onClick={followText(data._id)}
                   className="button is-success"
                   disabled={data.rules}
                 >
                   Suivre ce texte
-                </button>
+                </Button>
               ))}
-          </div>
-          <div className="columns">
-            <div className="column">
-              <div className="box">
+          </Buttons>
+
+          <Columns>
+            <Column>
+              <Box>
                 <p>
                   {data.rules ? 'Paramètres' : data.group.name} |{' '}
                   <strong>{data.rules ? data.group.name : data.name}</strong>
@@ -81,7 +88,7 @@ export const Text = ({ data }) => {
                     ' accepté' +
                     (data.version > 1 ? 's' : '')}
                 </p>
-              </div>
+              </Box>
 
               <div>
                 {data.actual
@@ -90,15 +97,15 @@ export const Text = ({ data }) => {
                     line ? <p key={index}>{line}</p> : <br key={index} />
                   )}
               </div>
-            </div>
-            <div className="column">
-              <div className="box">
+            </Column>
+            <Column>
+              <Box>
                 <p className="is-size-5 has-text-centered has-text-weight-semibold">
                   Vote en cours sur l'amendement
                 </p>
                 <Results value={54.7} />
-              </div>
-              <div className="box">
+              </Box>
+              <Box>
                 <p>Liste des amendements proposés</p>
                 <ul>
                   {data.amends.map(amend => (
@@ -107,9 +114,9 @@ export const Text = ({ data }) => {
                     </li>
                   ))}
                 </ul>
-              </div>
-            </div>
-          </div>
+              </Box>
+            </Column>
+          </Columns>
         </>
       )}
     </UserContext.Consumer>

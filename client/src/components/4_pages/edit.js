@@ -44,17 +44,17 @@ export class EditPage extends React.Component {
     }
   }
 
+  getTitle() {
+    return this.state.text
+      ? 'Amendement de ' + this.state.text.group.name
+      : 'Amendement'
+  }
+
   render() {
     if (this.state.error) return <ErrorPage />
 
     return (
-      <Page
-        title={
-          this.state.text
-            ? 'Amendement de ' + this.state.text.group.name
-            : 'Amendement'
-        }
-      >
+      <Page title={this.getTitle()}>
         {this.state.text && <Edit data={this.state.text} />}
       </Page>
     )

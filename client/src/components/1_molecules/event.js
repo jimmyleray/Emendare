@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Notification } from '../../components'
 
 const typeToUrl = type => target => {
   const id = target._id ? target._id : ''
@@ -16,7 +17,7 @@ const typeToUrl = type => target => {
 }
 
 const typeToClass = type => {
-  const base = 'notification is-size-5 '
+  const base = 'is-size-5 '
   switch (type) {
     case 'amend':
       return base + 'is-info'
@@ -78,9 +79,9 @@ export const Event = ({ data }) =>
   data.target && (
     <>
       <Link to={typeToUrl(data.targetType)(data.target)}>
-        <div className={typeToClass(data.targetType)}>
+        <Notification className={typeToClass(data.targetType)}>
           {typeToText(data.targetType)(data.target)}
-        </div>
+        </Notification>
       </Link>
       <br />
     </>

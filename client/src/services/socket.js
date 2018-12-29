@@ -13,6 +13,9 @@ export const socket = {
   on: (name, callback) => {
     return insecureSocket.on(name, callback)
   },
+  off: name => {
+    return insecureSocket.off(name)
+  },
   emit: (name, data = {}) => {
     return insecureSocket.emit(name, {
       token: localStorage.getItem('token'),
