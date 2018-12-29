@@ -45,7 +45,7 @@ export const HomePage = () => (
         </Link>
       </p>
       <p className="control">
-        <Link to="/connexion" className="button is-medium is-primary">
+        <Link to="/inscription" className="button is-medium is-primary">
           Créer votre compte
         </Link>
       </p>
