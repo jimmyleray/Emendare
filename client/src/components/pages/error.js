@@ -7,7 +7,7 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Page } from '../layouts'
+import { Page } from '../../components'
 
 export const ErrorPage = () => (
   <Page title="Introuvable">

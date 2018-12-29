@@ -11,8 +11,7 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Page } from '../layouts'
-import { UserContext } from '../contexts'
+import { Page, UserContext } from '../../components'
 
 export const ProfilePage = () => (
   <Page title="Profil">

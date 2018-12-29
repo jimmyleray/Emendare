@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { UserContext } from '../contexts'
+import { UserContext } from '../../components'
 
 export const Navbar = () => (
   <nav

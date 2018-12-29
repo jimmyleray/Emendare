@@ -1,5 +1,5 @@
 import React from 'react'
-import { EventsProvider, UserProvider } from '../contexts'
+import { EventsProvider, UserProvider } from '../../components'
 
 export const Providers = ({ children }) => (
   <EventsProvider>

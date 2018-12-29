@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { UserContext } from '../contexts'
-import { Results, Spacer } from '../components'
-import { socket } from '../utils'
+import { Results, Spacer, UserContext } from '../../components'
+import { socket } from '../../services'
 
 const unFollowText = id => async () => {
   await socket.fetch('unFollowText', { id })

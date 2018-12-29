@@ -1,5 +1,5 @@
 import React from 'react'
-import { Providers, Routes } from '../layouts'
+import { Providers, Routes } from '../../components'
 
 export const App = () => {
   return (

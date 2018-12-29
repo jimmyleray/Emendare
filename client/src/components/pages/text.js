@@ -1,21 +1,22 @@
 /*
- * Page d'amendement
+ * Page de texte
  * Le but de cette page est de permettre aux utilisateurs :
  * - de visualiser la version actuelle du texte
- * - d'éditer le texte et de visualiser les modification
- * - d'écrire un argumentaire pour défendre l'amendement
- * - de valider l'ajout de l'amendement à la liste du texte
- * - TODO : de mettre à jour l'amendement sur la dernière version du texte
+ * - d'accéder à la page pour amender le texte
+ * - de visualiser la liste des amendements
  * - d'accéder au détail d'un amendement
+ * - TODO : de voter pour les amendements préferés
+ * - TODO : de visualiser l'historique des modifications
+ * - TODO : de visualiser le vote en cours
+ * - TODO : de participer au vote en cours
+ * - TODO : de suivre l'activité du texte
  */
 
 import React from 'react'
-import { Page } from '../layouts'
-import { Edit } from '../components'
-import { socket } from '../utils'
-import { ErrorPage } from '../pages'
+import { Text, Page, ErrorPage } from '../../components'
+import { socket } from '../../services'
 
-export class EditPage extends React.Component {
+export class TextPage extends React.Component {
   constructor(props) {
     super(props)
 
@@ -53,11 +54,13 @@ export class EditPage extends React.Component {
       <Page
         title={
           this.state.text
-            ? 'Amendement de ' + this.state.text.group.name
-            : 'Amendement'
+            ? this.state.text.rules
+              ? 'Règles de ' + this.state.text.group.name
+              : this.state.text.name
+            : 'Texte'
         }
       >
-        {this.state.text && <Edit data={this.state.text} />}
+        {this.state.text && <Text data={this.state.text} />}
       </Page>
     )
   }

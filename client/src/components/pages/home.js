@@ -8,7 +8,7 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Page } from '../layouts'
+import { Page } from '../../components'
 
 export const HomePage = () => (
   <Page title="Accueil">

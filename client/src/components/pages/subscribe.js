@@ -1,17 +1,16 @@
 /*
- * Page de connexion
+ * Page d'inscription
  * Le but de cette page est de permettre aux utilisateurs :
- * - de se connecter avec leur email / mot de passe
- * - d'accèder à la page d'inscription
- * - TODO : d'accèder à une page de récupération de mot de passe
+ * - de s'inscire avec leur email / mot de passe
+ * - d'accèder à la page de connexion
  */
 
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
-import { Page } from '../layouts'
-import { socket } from '../utils'
+import { Page } from '../../components'
+import { socket } from '../../services'
 
-export class LoginPage extends React.Component {
+export class SubscribePage extends React.Component {
   constructor(props) {
     super(props)
 
@@ -23,7 +22,7 @@ export class LoginPage extends React.Component {
       event.preventDefault()
 
       socket
-        .fetch('login', {
+        .fetch('subscribe', {
           password: this.state.password,
           email: this.state.email
         })
@@ -52,12 +51,12 @@ export class LoginPage extends React.Component {
     if (this.state.redirectToReferrer) return <Redirect to={from} />
 
     return (
-      <Page title="Connexion">
+      <Page title="Inscription">
         <form
           onSubmit={this.submit}
           style={{ maxWidth: '350px', margin: 'auto' }}
         >
-          <p className="is-size-3 has-text-centered">Se connecter</p>
+          <p className="is-size-3 has-text-centered">Créez votre compte</p>
           <br />
           <div className="field">
             <p className="control has-icons-left has-icons-right">
@@ -95,15 +94,15 @@ export class LoginPage extends React.Component {
                 className="button is-medium is-success"
                 disabled={!this.state.email || !this.state.password}
               >
-                Connexion
+                Inscription
               </button>
             </p>
             <p className="control">
               <Link
-                to="/inscription"
+                to="/connexion"
                 className="button is-medium is-info is-outlined"
               >
-                Je n'ai pas de compte
+                J'ai déjà un compte
               </Link>
             </p>
           </div>

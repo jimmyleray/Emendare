@@ -1,5 +1,5 @@
 import React from 'react'
-import { socket } from '../utils'
+import { socket } from '../../services'
 
 export const EventsContext = React.createContext()
 

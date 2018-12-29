@@ -7,10 +7,8 @@
  */
 
 import React from 'react'
-import { Page } from '../layouts'
-import { Amend } from '../components'
-import { socket } from '../utils'
-import { ErrorPage } from '../pages'
+import { Amend, ErrorPage, Page } from '../../components'
+import { socket } from '../../services'
 import diff_match_patch from 'diff-match-patch'
 
 export class AmendPage extends React.Component {

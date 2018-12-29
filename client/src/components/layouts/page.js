@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar } from '../components'
+import { Navbar } from '../../components'
 
 export const Page = ({ children, title, className = '' }) => {
   document.title = 'Emendare | ' + title

@@ -1,9 +1,7 @@
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
-import { UserContext } from '../contexts'
-import { Amend } from '.'
-import { Spacer } from './spacer'
-import { socket } from '../utils'
+import { Amend, Spacer, UserContext } from '../../components'
+import { socket } from '../../services'
 import diff_match_patch from 'diff-match-patch'
 
 export class Edit extends React.Component {

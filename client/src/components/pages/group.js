@@ -9,10 +9,8 @@
  */
 
 import React from 'react'
-import { Page } from '../layouts'
-import { Group } from '../components'
-import { socket } from '../utils'
-import { ErrorPage } from '../pages'
+import { Group, Page, ErrorPage } from '../../components'
+import { socket } from '../../services'
 
 export class GroupPage extends React.Component {
   constructor(props) {

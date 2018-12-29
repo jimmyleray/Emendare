@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { PrivateRoute } from '../layouts'
+import { PrivateRoute } from '../../components'
 import * as Pages from '../pages'
 
 export const routes = [

@@ -5,9 +5,8 @@
  */
 
 import React from 'react'
-import { Page } from '../layouts'
-import { Group } from '../components'
-import { socket } from '../utils'
+import { Group, Page } from '../../components'
+import { socket } from '../../services'
 
 export class ExplorePage extends React.Component {
   constructor(props) {

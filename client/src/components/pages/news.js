@@ -6,9 +6,7 @@
  */
 
 import React from 'react'
-import { Page } from '../layouts'
-import { Event } from '../components'
-import { EventsContext } from '../contexts'
+import { Event, EventsContext, Page } from '../../components'
 
 export const NewsPage = () => (
   <Page title="Actualités">
