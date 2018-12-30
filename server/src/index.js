@@ -26,6 +26,17 @@ const Event = require('./mongo/models/event')
 // Utils function to generate unique tokens
 const generateToken = require('./utils/token')
 
+// Public API for get texts by ID
+app.get('/text/:id', async (req, res) => {
+  const text = await Text.findById(req.params.id)
+  console.log(text)
+  if (text) {
+    res.end(text.actual)
+  } else {
+    res.status(404).end()
+  }
+})
+
 // Error 404 Middleware
 app.use((req, res) => {
   res.status(404).end()
