@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 module.exports = mongoose.model(
   'User',
   new mongoose.Schema({
+    activated: { type: Boolean, default: false },
     password: { type: String, required: true },
     email: { type: String, required: true },
     created: { type: Date, default: Date.now },
