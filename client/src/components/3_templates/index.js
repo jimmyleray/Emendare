@@ -1,4 +1,5 @@
 export * from './edit'
+export * from './footer'
 export * from './group'
 export * from './navbar'
 export * from './text'

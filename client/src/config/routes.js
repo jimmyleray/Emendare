@@ -5,6 +5,9 @@ const withID = path => (id = ':id') => path + id
 export const routes = [
   { name: 'home', path: '/', exact: true },
   { name: 'news', path: '/actualites' },
+  { name: 'code', path: '/charte' },
+  { name: 'legal', path: '/mentions' },
+  { name: 'contributors', path: '/contributeurs' },
   { name: 'explore', path: '/explorer' },
   { name: 'group', path: withID('/groupe/') },
   { name: 'login', path: '/connexion' },
