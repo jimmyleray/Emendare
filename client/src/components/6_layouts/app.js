@@ -1,8 +1,8 @@
 import React from 'react'
-import { Providers, Routes } from '../../components'
+import { Providers, Router } from '../../components'
 
 export const App = () => (
   <Providers>
-    <Routes />
+    <Router />
   </Providers>
 )

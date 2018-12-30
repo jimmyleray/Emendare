@@ -1,19 +1,22 @@
+// For paths like that for example : /text/:id
 const withID = path => (id = ':id') => path + id
 
-export const routes = {
-  home: { path: '/', exact: true },
-  news: { path: '/actualites' },
-  explore: { path: '/explorer' },
-  group: { path: withID('/groupe/') },
-  login: { path: '/connexion' },
-  subscribe: { path: '/inscription' },
-  profile: { path: '/profil', private: true },
-  text: { path: withID('/texte/') },
-  edit: { path: withID('/editer/'), private: true },
-  amend: { path: withID('/amendement/') }
-}
+// All application routes
+export const routes = [
+  { name: 'home', path: '/', exact: true },
+  { name: 'news', path: '/actualites' },
+  { name: 'explore', path: '/explorer' },
+  { name: 'group', path: withID('/groupe/') },
+  { name: 'login', path: '/connexion' },
+  { name: 'subscribe', path: '/inscription' },
+  { name: 'profile', path: '/profil', private: true },
+  { name: 'text', path: withID('/texte/') },
+  { name: 'edit', path: withID('/editer/'), private: true },
+  { name: 'amend', path: withID('/amendement/') }
+]
 
-export const path = Object.keys(routes).reduce(
-  (acc, key) => ({ ...acc, [key]: routes[key].path }),
+// To be use like that : path.text("42") => /text/42
+export const path = routes.reduce(
+  (acc, route) => ({ ...acc, [route.name]: route.path }),
   {}
 )

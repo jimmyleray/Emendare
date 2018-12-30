@@ -1,14 +1,11 @@
 import io from 'socket.io-client'
+import { apiConfig } from '../config'
 
-const config = {
-  url: {
-    development: 'http://localhost:3030',
-    production: 'https://emendare-api.cleverapps.io'
-  }
-}
+// Default Socket.io Instance
+const insecureSocket = io(apiConfig.url[process.env.NODE_ENV])
 
-const insecureSocket = io(config.url[process.env.NODE_ENV])
-
+// Overwrited Socket.io Instance
+// With fetch method and token prop
 export const socket = {
   on: (name, callback) => {
     return insecureSocket.on(name, callback)
