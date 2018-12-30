@@ -29,7 +29,7 @@ export const ProfilePage = () => (
           <Column>
             {user.amends.length > 0 && (
               <Box>
-                <p>Liste des amendements proposés</p>
+                <p>Liste des amendements que vous avez proposés</p>
                 <ul>
                   {user.amends.map(amend => (
                     <li key={amend._id}>
@@ -42,7 +42,7 @@ export const ProfilePage = () => (
 
             {user.followedTexts.length > 0 && (
               <Box>
-                <p>Liste des textes suivis</p>
+                <p>Liste des textes auxquels vous participez</p>
                 <ul>
                   {user.followedTexts.map(followedText => (
                     <li key={followedText._id}>
@@ -57,7 +57,7 @@ export const ProfilePage = () => (
 
             {user.followedGroups.length > 0 && (
               <Box>
-                <p>Liste des groupes suivis</p>
+                <p>Liste des groupes que vous avez rejoint</p>
                 <ul>
                   {user.followedGroups.map(followedGroup => (
                     <li key={followedGroup._id}>

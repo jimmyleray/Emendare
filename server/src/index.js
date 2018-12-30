@@ -116,10 +116,8 @@ io.on('connection', socket => {
     if (user) {
       user.token = null
       await user.save()
-      socket.emit('logout')
-    } else {
-      socket.emit('logout', { error: 'Cet utilisateur est déjà déconnecté' })
     }
+    socket.emit('logout')
   })
 
   socket.on('user', async ({ token }) => {
@@ -128,10 +126,11 @@ io.on('connection', socket => {
         .populate('amends')
         .populate('followedTexts')
         .populate('followedGroups')
-      socket.emit(
-        'user',
-        user ? { data: user } : { error: "Cet utilisateur n'est pas connecté" }
-      )
+      if (user) {
+        socket.emit('user', { data: user })
+      } else {
+        socket.emit('user', { error: "Cet utilisateur n'est pas connecté" })
+      }
     } else {
       socket.emit('user', { error: 'Token invalide' })
     }
@@ -225,32 +224,32 @@ io.on('connection', socket => {
     }
   })
 
-  socket.on('followGroup', async ({ token, data }) => {
+  socket.on('joinGroup', async ({ token, data }) => {
     const user = await User.findOne({ token })
     if (user) {
       user.followedGroups.push(data.id)
       await user.save()
-      socket.emit('followGroup')
+      socket.emit('joinGroup')
     } else {
-      socket.emit('followGroup', {
+      socket.emit('joinGroup', {
         error: "Cet utilisateur n'est pas connecté"
       })
     }
   })
 
-  socket.on('unFollowGroup', async ({ token, data }) => {
+  socket.on('exitGroup', async ({ token, data }) => {
     const user = await User.findOne({ token })
     if (user) {
       const id = user.followedGroups.indexOf(data.id)
       if (id >= 0) {
         user.followedGroups.splice(id, 1)
         await user.save()
-        socket.emit('unFollowGroup')
+        socket.emit('exitGroup')
       } else {
-        socket.emit('unFollowGroup', { error: "Ce groupe n'est pas suivi" })
+        socket.emit('exitGroup', { error: "Ce groupe n'est pas suivi" })
       }
     } else {
-      socket.emit('unFollowGroup', {
+      socket.emit('exitGroup', {
         error: "Cet utilisateur n'est pas connecté"
       })
     }

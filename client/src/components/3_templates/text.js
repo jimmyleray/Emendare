@@ -39,17 +39,6 @@ export const Text = ({ data }) => {
 
             <Spacer />
 
-            {isConnected() && (
-              <Button
-                to={path.edit(data._id)}
-                className="is-info"
-                disabled={data.rules}
-              >
-                <Icon type="fas fa-plus" />
-                <span>Proposer un amendement</span>
-              </Button>
-            )}
-
             {isConnected() &&
               (user.followedTexts.find(text => text._id === data._id) ? (
                 <Button
@@ -57,7 +46,7 @@ export const Text = ({ data }) => {
                   className="button is-danger is-outlined"
                   disabled={data.rules}
                 >
-                  Ne plus suivre ce texte
+                  Ne plus participer à ce texte
                 </Button>
               ) : (
                 <Button
@@ -65,9 +54,23 @@ export const Text = ({ data }) => {
                   className="button is-success"
                   disabled={data.rules}
                 >
-                  Suivre ce texte
+                  Participer à ce texte
                 </Button>
               ))}
+
+            {isConnected() && (
+              <Button
+                to={path.edit(data._id)}
+                className="is-info"
+                disabled={
+                  data.rules ||
+                  !user.followedTexts.find(text => text._id === data._id)
+                }
+              >
+                <Icon type="fas fa-plus" />
+                <span>Proposer un amendement</span>
+              </Button>
+            )}
           </Buttons>
 
           <Columns>

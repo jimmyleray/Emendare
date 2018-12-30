@@ -11,12 +11,11 @@ export class UserProvider extends React.Component {
       user: null,
       isConnectionPending: true,
       isConnected: () => this.state.user !== null,
-      logout: event => {
+      logout: async event => {
         event.preventDefault()
-        socket.fetch('logout').then(() => {
-          localStorage.removeItem('token')
-          this.setState(() => ({ user: null }))
-        })
+        await socket.fetch('logout')
+        localStorage.removeItem('token')
+        this.setState(() => ({ user: null }))
       }
     }
   }

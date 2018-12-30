@@ -13,13 +13,13 @@ import {
 import { socket } from '../../services'
 import { path } from '../../config'
 
-const unFollowGroup = id => async () => {
-  await socket.fetch('unFollowGroup', { id })
+const quitGroup = id => async () => {
+  await socket.fetch('quitGroup', { id })
   socket.emit('user')
 }
 
-const followGroup = id => async () => {
-  await socket.fetch('followGroup', { id })
+const joinGroup = id => async () => {
+  await socket.fetch('joinGroup', { id })
   socket.emit('user')
 }
 
@@ -38,26 +38,30 @@ export const Group = ({ data }) => {
 
             <Spacer />
 
+            {isConnected() &&
+              (user.followedGroups.find(group => group._id === data._id) ? (
+                <Button
+                  onClick={quitGroup(data._id)}
+                  className="is-danger is-outlined"
+                >
+                  Quitter le groupe
+                </Button>
+              ) : (
+                <Button onClick={joinGroup(data._id)} className="is-success">
+                  Rejoindre le groupe
+                </Button>
+              ))}
+
             {isConnected() && (
-              <Button className="is-info" to={path.text(data.rules._id)}>
+              <Button
+                className="is-info"
+                to={path.text(data.rules._id)}
+                disabled
+              >
                 <Icon type="fas fa-cog" />
                 <span>Voir les règles du groupe</span>
               </Button>
             )}
-
-            {isConnected() &&
-              (user.followedGroups.find(group => group._id === data._id) ? (
-                <Button
-                  onClick={unFollowGroup(data._id)}
-                  className="is-danger is-outlined"
-                >
-                  Ne plus suivre ce groupe
-                </Button>
-              ) : (
-                <Button onClick={followGroup(data._id)} className="is-success">
-                  Suivre ce groupe
-                </Button>
-              ))}
           </Buttons>
 
           <Columns>
