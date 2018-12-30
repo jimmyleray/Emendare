@@ -7,6 +7,7 @@
 
 import React from 'react'
 import { Button, Page } from '../../components'
+import { path } from '../../config'
 
 export const ErrorPage = () => (
   <Page title="Introuvable">
@@ -16,7 +17,7 @@ export const ErrorPage = () => (
     </div>
     <div className="field is-grouped is-grouped-centered">
       <p className="control">
-        <Button to="/" className="is-medium is-primary">
+        <Button to={path.home} className="is-medium is-primary">
           Retour à l'accueil
         </Button>
       </p>

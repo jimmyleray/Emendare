@@ -1,8 +1,10 @@
 import React from 'react'
 import { EventsProvider, UserProvider } from '../../components'
 
-export const Providers = ({ children }) => (
-  <EventsProvider>
-    <UserProvider>{children}</UserProvider>
-  </EventsProvider>
-)
+const providers = [EventsProvider, UserProvider]
+
+export const Providers = ({ children }) =>
+  providers.reduceRight(
+    (children, Provider) => <Provider>{children}</Provider>,
+    children
+  )

@@ -12,6 +12,7 @@ import {
   UserContext
 } from '../../components'
 import { socket } from '../../services'
+import { path } from '../../config'
 
 const unFollowText = id => async () => {
   await socket.fetch('unFollowText', { id })
@@ -30,7 +31,7 @@ export const Text = ({ data }) => {
         <>
           <Buttons>
             {data.group && (
-              <Button to={'/groupe/' + data.group._id}>
+              <Button to={path.group(data.group._id)}>
                 <Icon type="fas fa-chevron-left" />
                 <span>Retour au groupe</span>
               </Button>
@@ -40,7 +41,7 @@ export const Text = ({ data }) => {
 
             {isConnected() && (
               <Button
-                to={'/editer/' + data._id}
+                to={path.edit(data._id)}
                 className="is-info"
                 disabled={data.rules}
               >
@@ -110,7 +111,7 @@ export const Text = ({ data }) => {
                 <ul>
                   {data.amends.map(amend => (
                     <li key={amend._id}>
-                      <Link to={'/amendement/' + amend._id}>{amend.name}</Link>
+                      <Link to={path.amend(amend._id)}>{amend.name}</Link>
                     </li>
                   ))}
                 </ul>

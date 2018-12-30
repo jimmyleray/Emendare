@@ -9,6 +9,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Button, Icon, Notification, Page } from '../../components'
 import { socket } from '../../services'
+import { path } from '../../config'
 
 export class SubscribePage extends React.Component {
   constructor(props) {
@@ -45,10 +46,15 @@ export class SubscribePage extends React.Component {
   }
 
   render() {
-    const { from } = this.props.location.state || {
-      from: { pathname: '/profil' }
-    }
-    if (this.state.redirectToReferrer) return <Redirect to={from} />
+    if (this.state.redirectToReferrer)
+      return (
+        <Redirect
+          to={
+            (this.props.location.state && this.props.location.state.from) ||
+            path.profile
+          }
+        />
+      )
 
     return (
       <Page title="Inscription">
@@ -94,7 +100,7 @@ export class SubscribePage extends React.Component {
               </Button>
             </div>
             <div className="control">
-              <Button to="/connexion" className="is-medium is-info is-outlined">
+              <Button to={path.login} className="is-medium is-info is-outlined">
                 J'ai déjà un compte
               </Button>
             </div>

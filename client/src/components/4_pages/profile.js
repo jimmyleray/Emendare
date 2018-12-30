@@ -12,6 +12,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Box, Column, Columns, Page, UserContext } from '../../components'
+import { path } from '../../config'
 
 export const ProfilePage = () => (
   <Page title="Profil">
@@ -32,7 +33,7 @@ export const ProfilePage = () => (
                 <ul>
                   {user.amends.map(amend => (
                     <li key={amend._id}>
-                      <Link to={'/amendement/' + amend._id}>{amend.name}</Link>
+                      <Link to={path.amend(amend._id)}>{amend.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -45,7 +46,7 @@ export const ProfilePage = () => (
                 <ul>
                   {user.followedTexts.map(followedText => (
                     <li key={followedText._id}>
-                      <Link to={'/texte/' + followedText._id}>
+                      <Link to={path.text(followedText._id)}>
                         {followedText.name}
                       </Link>
                     </li>
@@ -60,7 +61,7 @@ export const ProfilePage = () => (
                 <ul>
                   {user.followedGroups.map(followedGroup => (
                     <li key={followedGroup._id}>
-                      <Link to={'/groupe/' + followedGroup._id}>
+                      <Link to={path.group(followedGroup._id)}>
                         {followedGroup.name}
                       </Link>
                     </li>

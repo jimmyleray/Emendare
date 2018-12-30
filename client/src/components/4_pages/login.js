@@ -10,6 +10,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Button, Icon, Notification, Page } from '../../components'
 import { socket } from '../../services'
+import { path } from '../../config'
 
 export class LoginPage extends React.Component {
   constructor(props) {
@@ -46,10 +47,15 @@ export class LoginPage extends React.Component {
   }
 
   render() {
-    const { from } = this.props.location.state || {
-      from: { pathname: '/profil' }
-    }
-    if (this.state.redirectToReferrer) return <Redirect to={from} />
+    if (this.state.redirectToReferrer)
+      return (
+        <Redirect
+          to={
+            (this.props.location.state && this.props.location.state.from) ||
+            path.profile
+          }
+        />
+      )
 
     return (
       <Page title="Connexion">
@@ -96,7 +102,7 @@ export class LoginPage extends React.Component {
             </div>
             <div className="control">
               <Button
-                to="/inscription"
+                to={path.subscribe}
                 className="is-medium is-info is-outlined"
               >
                 Je n'ai pas de compte

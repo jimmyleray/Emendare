@@ -1,8 +1,8 @@
 import React from 'react'
 import { Navbar } from '../../components'
 
-export const Page = ({ children, title = '', className = '' }) => {
-  document.title = 'Emendare | ' + title
+export const Page = ({ children, title, className = '' }) => {
+  document.title = title ? 'Emendare | ' + title : 'Emendare'
 
   return (
     <>

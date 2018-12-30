@@ -2,31 +2,21 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { PrivateRoute } from '../../components'
 import * as Pages from '../4_pages'
+import { routes } from '../../config'
+import { capitalize } from 'lodash'
 
-export const routes = [
-  { path: '/', component: Pages.HomePage, exact: true },
-  { path: '/actualites', component: Pages.NewsPage },
-  { path: '/explorer', component: Pages.ExplorePage },
-  { path: '/groupe/:id', component: Pages.GroupPage },
-  { path: '/connexion', component: Pages.LoginPage },
-  { path: '/inscription', component: Pages.SubscribePage },
-  { path: '/profil', component: Pages.ProfilePage, private: true },
-  { path: '/texte/:id', component: Pages.TextPage },
-  {
-    path: '/editer/:id',
-    component: Pages.EditPage,
-    private: true
-  },
-  {
-    path: '/amendement/:id',
-    component: Pages.AmendPage
-  }
-]
+const routerConfig = Object.keys(routes)
+  .map(key => ({ ...routes[key], component: capitalize(key) + 'Page' }))
+  .map(route => {
+    route.path = typeof route.path === 'function' ? route.path() : route.path
+    route.component = Pages[route.component]
+    return route
+  })
 
 export const Routes = () => (
   <Router>
     <Switch>
-      {routes.map(route => {
+      {routerConfig.map(route => {
         const Component = route.private ? PrivateRoute : Route
         return <Component key={route.path} {...route} />
       })}

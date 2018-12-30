@@ -15,6 +15,7 @@ import {
 } from '../../components'
 import { socket } from '../../services'
 import diff_match_patch from 'diff-match-patch'
+import { path } from '../../config'
 
 export class Edit extends React.Component {
   constructor(props) {
@@ -77,7 +78,7 @@ export class Edit extends React.Component {
 
   render() {
     if (this.state.redirectToText)
-      return <Redirect to={'/texte/' + this.props.data._id} />
+      return <Redirect to={path.text(this.props.data._id)} />
 
     return (
       <UserContext.Consumer>
@@ -85,7 +86,7 @@ export class Edit extends React.Component {
           <>
             <Buttons>
               {this.props.data.group && (
-                <Button to={'/texte/' + this.props.data._id}>
+                <Button to={path.text(this.props.data._id)}>
                   <Icon type="fas fa-chevron-left" />
                   <span>Retour au texte</span>
                 </Button>

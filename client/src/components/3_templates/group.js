@@ -11,6 +11,7 @@ import {
   UserContext
 } from '../../components'
 import { socket } from '../../services'
+import { path } from '../../config'
 
 const unFollowGroup = id => async () => {
   await socket.fetch('unFollowGroup', { id })
@@ -29,7 +30,7 @@ export const Group = ({ data }) => {
         <>
           <Buttons>
             {data.parent && (
-              <Button to={'/groupe/' + data.parent._id}>
+              <Button to={path.group(data.parent._id)}>
                 <Icon type="fas fa-chevron-left" />
                 <span>Retour au groupe parent</span>
               </Button>
@@ -38,7 +39,7 @@ export const Group = ({ data }) => {
             <Spacer />
 
             {isConnected() && (
-              <Button className="is-info" to={'/texte/' + data.rules._id}>
+              <Button className="is-info" to={path.text(data.rules._id)}>
                 <Icon type="fas fa-cog" />
                 <span>Voir les règles du groupe</span>
               </Button>
@@ -72,7 +73,7 @@ export const Group = ({ data }) => {
                   <ul>
                     {data.subgroups.map(subgroup => (
                       <li key={subgroup._id}>
-                        <Link to={'/groupe/' + subgroup._id}>
+                        <Link to={path.group(subgroup._id)}>
                           {subgroup.name}
                         </Link>
                       </li>
@@ -87,7 +88,7 @@ export const Group = ({ data }) => {
                   <ul>
                     {data.texts.map(text => (
                       <li key={text._id}>
-                        <Link to={'/texte/' + text._id}>{text.name}</Link>
+                        <Link to={path.text(text._id)}>{text.name}</Link>
                       </li>
                     ))}
                   </ul>

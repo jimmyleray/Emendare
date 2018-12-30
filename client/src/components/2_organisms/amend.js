@@ -1,5 +1,6 @@
 import React from 'react'
 import { Box, Button, Buttons, Icon } from '../../components'
+import { path } from '../../config'
 
 const textSizeDisplayed = 100
 
@@ -7,7 +8,7 @@ export const Amend = ({ data }) => (
   <>
     {data.text && (
       <Buttons>
-        <Button to={'/texte/' + data.text._id}>
+        <Button to={path.text(data.text._id)}>
           <Icon type="fas fa-chevron-left" />
           <span>Retour au texte</span>
         </Button>

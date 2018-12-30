@@ -1,18 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Notification } from '../../components'
+import { path } from '../../config'
 
 const typeToUrl = type => target => {
   const id = target._id ? target._id : ''
   switch (type) {
     case 'amend':
-      return '/amendement/' + id
+      return path.amend(id)
     case 'text':
-      return '/texte/' + id
+      return path.text(id)
     case 'group':
-      return '/groupe/' + id
+      return path.group(id)
     default:
-      return '/'
+      return path.home
   }
 }
 

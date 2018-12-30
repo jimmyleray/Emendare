@@ -1,3 +1,5 @@
 import React from 'react'
 
-export const Box = ({ children }) => <div className="box">{children}</div>
+export const Box = ({ children, className = '' }) => (
+  <div className={'box ' + className}>{children}</div>
+)

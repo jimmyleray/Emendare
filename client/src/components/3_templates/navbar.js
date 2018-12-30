@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../../components'
+import { path } from '../../config'
 
 export const Navbar = () => (
   <nav
@@ -10,17 +11,17 @@ export const Navbar = () => (
   >
     <div className="container is-fluid">
       <div className="navbar-brand">
-        <Link to="/" className="navbar-item has-text-weight-semibold">
+        <Link to={path.home} className="navbar-item has-text-weight-semibold">
           <img src={'/images/logo.png'} alt={'Emendare logo'} />
           <span style={{ marginLeft: '3px' }}>Emendare</span>
         </Link>
       </div>
       <div className="navbar-menu">
         <div className="navbar-start">
-          <Link to="/actualites" className="navbar-item">
+          <Link to={path.news} className="navbar-item">
             Actualités
           </Link>
-          <Link to="/explorer" className="navbar-item">
+          <Link to={path.explore} className="navbar-item">
             Explorer
           </Link>
         </div>
@@ -30,24 +31,24 @@ export const Navbar = () => (
               isConnected() ? (
                 <>
                   <Link
-                    to="/profil"
+                    to={path.profile}
                     className="navbar-item has-text-weight-semibold"
                   >
                     Mon Profil
                   </Link>
-                  <a href="/" onClick={logout} className="navbar-item">
+                  <a href={path.home} onClick={logout} className="navbar-item">
                     Se déconnecter
                   </a>
                 </>
               ) : (
                 <>
                   <Link
-                    to="/connexion"
+                    to={path.login}
                     className="navbar-item has-text-weight-semibold"
                   >
                     Connexion
                   </Link>
-                  <Link to="/inscription" className="navbar-item">
+                  <Link to={path.subscribe} className="navbar-item">
                     Inscription
                   </Link>
                 </>

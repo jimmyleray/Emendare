@@ -8,6 +8,7 @@
 
 import React from 'react'
 import { Button, Notification, Page } from '../../components'
+import { path } from '../../config'
 
 export const HomePage = () => (
   <Page title="Accueil">
@@ -39,12 +40,12 @@ export const HomePage = () => (
     </div>
     <div className="field is-grouped is-grouped-centered">
       <p className="control">
-        <Button to="/explorer" className="is-medium is-info">
+        <Button to={path.explore} className="is-medium is-info">
           Découvrir Emendare
         </Button>
       </p>
       <p className="control">
-        <Button to="/inscription" className="is-medium is-primary">
+        <Button to={path.subscribe} className="is-medium is-primary">
           Créer votre compte
         </Button>
       </p>

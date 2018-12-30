@@ -1,5 +1,5 @@
 import React from 'react'
 
-export const Columns = ({ children }) => (
-  <div className="columns">{children}</div>
+export const Columns = ({ children, className = '' }) => (
+  <div className={'columns ' + className}>{children}</div>
 )
