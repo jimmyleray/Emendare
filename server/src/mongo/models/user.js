@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-module.exports = mongoose.model(
+const model = mongoose.model(
   'User',
   new mongoose.Schema({
     activated: { type: Boolean, default: false },
@@ -19,6 +19,20 @@ module.exports = mongoose.model(
     amends: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
       default: []
+    },
+    upVotes: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
+      default: []
+    },
+    downVotes: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
+      default: []
     }
   })
 )
+
+module.exports = class User {
+  static get model() {
+    return model
+  }
+}

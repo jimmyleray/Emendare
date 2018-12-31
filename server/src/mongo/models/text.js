@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
 
-module.exports = mongoose.model(
+const model = mongoose.model(
   'Text',
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
     name: { type: String, default: '' },
     description: { type: String, default: '' },
+    followersCount: { type: Number, default: 0 },
     actual: { type: String, default: '' },
     patches: { type: [String], default: [] },
     group: {
@@ -21,3 +22,9 @@ module.exports = mongoose.model(
     rules: { type: Boolean, default: false }
   })
 )
+
+module.exports = class Text {
+  static get model() {
+    return model
+  }
+}

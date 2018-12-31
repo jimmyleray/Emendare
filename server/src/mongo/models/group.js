@@ -1,12 +1,13 @@
 const mongoose = require('mongoose')
 
-module.exports = mongoose.model(
+const model = mongoose.model(
   'Group',
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
     name: { type: String, default: '' },
     description: { type: String, default: '' },
     rules: { type: mongoose.Schema.Types.ObjectId, ref: 'Text' },
+    followersCount: { type: Number, default: 0 },
     subgroups: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],
       default: []
@@ -23,3 +24,9 @@ module.exports = mongoose.model(
     whitelist: { type: [String], default: ['*'] }
   })
 )
+
+module.exports = class Group {
+  static get model() {
+    return model
+  }
+}

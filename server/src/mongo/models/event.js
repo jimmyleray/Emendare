@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-module.exports = mongoose.model(
+const model = mongoose.model(
   'Event',
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
@@ -8,3 +8,8 @@ module.exports = mongoose.model(
     target: { type: String, default: JSON.stringify({}) }
   })
 )
+module.exports = class Event {
+  static get model() {
+    return model
+  }
+}

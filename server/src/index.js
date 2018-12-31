@@ -31,7 +31,7 @@ const generateToken = require('./utils/token')
 
 // Public API for get texts by ID
 app.get('/text/:id', async (req, res) => {
-  const text = await Text.findById(req.params.id)
+  const text = await Text.model.findById(req.params.id)
   console.log(text)
   if (text) {
     res.end(text.actual)
@@ -65,7 +65,8 @@ io.on('connection', socket => {
   socket.on('login', async ({ token, data }) => {
     const { email, password } = data
     if (email && password) {
-      const user = await User.findOne({ email })
+      const user = await User.model
+        .findOne({ email })
         .populate('amends')
         .populate('followedTexts')
         .populate('followedGroups')
@@ -84,7 +85,8 @@ io.on('connection', socket => {
         socket.emit('login', { error: 'Email invalide' })
       }
     } else if (token) {
-      const user = await User.findOne({ token })
+      const user = await User.model
+        .findOne({ token })
         .populate('amends')
         .populate('followedTexts')
         .populate('followedGroups')
@@ -106,7 +108,7 @@ io.on('connection', socket => {
           'Pendant cette phase de test, seules les adresses électroniques se terminant par @zenika.com sont acceptées.'
       })
     } else {
-      if (await User.findOne({ email })) {
+      if (await User.model.findOne({ email })) {
         socket.emit('subscribe', {
           error:
             "Cet email est déjà utilisé. Si il s'agit de votre compte, essayez de vous y connecter directement."
@@ -126,7 +128,7 @@ io.on('connection', socket => {
   })
 
   socket.on('logout', async ({ token }) => {
-    const user = await User.findOne({ token })
+    const user = await User.model.findOne({ token })
     if (user) {
       user.token = null
       await user.save()
@@ -136,7 +138,8 @@ io.on('connection', socket => {
 
   socket.on('user', async ({ token }) => {
     if (token) {
-      const user = await User.findOne({ token })
+      const user = await User.model
+        .findOne({ token })
         .populate('amends')
         .populate('followedTexts')
         .populate('followedGroups')
@@ -151,12 +154,13 @@ io.on('connection', socket => {
   })
 
   socket.on('events', async () => {
-    const events = await Event.find().sort('-created')
+    const events = await Event.model.find().sort('-created')
     socket.emit('events', { data: events })
   })
 
   socket.on('rootGroup', async () => {
-    const rootGroup = await Group.findOne({ parent: null })
+    const rootGroup = await Group.model
+      .findOne({ parent: null })
       .populate('subgroups')
       .populate('texts')
       .populate('parent')
@@ -170,7 +174,8 @@ io.on('connection', socket => {
   })
 
   socket.on('group', async ({ data }) => {
-    const group = await Group.findById(data.id)
+    const group = await Group.model
+      .findById(data.id)
       .populate('subgroups')
       .populate('texts')
       .populate('parent')
@@ -184,7 +189,8 @@ io.on('connection', socket => {
   })
 
   socket.on('text', async ({ data }) => {
-    const text = await Text.findById(data.id)
+    const text = await Text.model
+      .findById(data.id)
       .populate('amends')
       .populate('group')
 
@@ -196,7 +202,7 @@ io.on('connection', socket => {
   })
 
   socket.on('amend', async ({ data }) => {
-    const amend = await Amend.findById(data.id).populate('text')
+    const amend = await Amend.model.findById(data.id).populate('text')
 
     if (amend) {
       socket.emit('amend', { data: amend })
@@ -207,9 +213,9 @@ io.on('connection', socket => {
 
   socket.on('postAmend', async ({ token, data }) => {
     const { name, description, patch, version, textID } = data
-    const user = await User.findOne({ token })
+    const user = await User.model.findOne({ token })
     if (user) {
-      const amend = await new Amend({
+      const amend = await new Amend.model({
         name,
         description,
         patch,
@@ -220,16 +226,16 @@ io.on('connection', socket => {
       user.amends.push(amend._id)
       await user.save()
 
-      const text = await Text.findById(textID).populate('group')
+      const text = await Text.model.findById(textID).populate('group')
       text.amends.push(amend._id)
       await text.save()
 
-      await new Event({
+      await new Event.model({
         targetType: 'amend',
         target: JSON.stringify({ ...amend._doc, text })
       }).save()
 
-      const events = await Event.find().sort('-created')
+      const events = await Event.model.find().sort('-created')
       io.emit('events', { data: events })
 
       socket.emit('postAmend')
@@ -239,10 +245,15 @@ io.on('connection', socket => {
   })
 
   socket.on('joinGroup', async ({ token, data }) => {
-    const user = await User.findOne({ token })
+    const user = await User.model.findOne({ token })
     if (user) {
       user.followedGroups.push(data.id)
       await user.save()
+
+      const group = await Group.model.findById(data.id)
+      group.followersCount++
+      await group.save()
+
       socket.emit('joinGroup')
     } else {
       socket.emit('joinGroup', {
@@ -252,12 +263,17 @@ io.on('connection', socket => {
   })
 
   socket.on('exitGroup', async ({ token, data }) => {
-    const user = await User.findOne({ token })
+    const user = await User.model.findOne({ token })
     if (user) {
       const id = user.followedGroups.indexOf(data.id)
       if (id >= 0) {
         user.followedGroups.splice(id, 1)
         await user.save()
+
+        const group = await Group.model.findById(data.id)
+        group.followersCount--
+        await group.save()
+
         socket.emit('exitGroup')
       } else {
         socket.emit('exitGroup', { error: "Ce groupe n'est pas suivi" })
@@ -270,10 +286,15 @@ io.on('connection', socket => {
   })
 
   socket.on('followText', async ({ token, data }) => {
-    const user = await User.findOne({ token })
+    const user = await User.model.findOne({ token })
     if (user) {
       user.followedTexts.push(data.id)
       await user.save()
+
+      const text = await Text.model.findById(data.id)
+      text.followersCount++
+      await text.save()
+
       socket.emit('followText')
     } else {
       socket.emit('followText', {
@@ -283,12 +304,17 @@ io.on('connection', socket => {
   })
 
   socket.on('unFollowText', async ({ token, data }) => {
-    const user = await User.findOne({ token })
+    const user = await User.model.findOne({ token })
     if (user) {
       const id = user.followedTexts.indexOf(data.id)
       if (id >= 0) {
         user.followedTexts.splice(id, 1)
         await user.save()
+
+        const text = await Text.model.findById(data.id)
+        text.followersCount--
+        await text.save()
+
         socket.emit('unFollowText')
       } else {
         socket.emit('unFollowText', { error: "Ce texte n'est pas suivi" })
