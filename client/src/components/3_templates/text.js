@@ -7,7 +7,6 @@ import {
   Column,
   Columns,
   Icon,
-  Results,
   Spacer,
   UserContext
 } from '../../components'
@@ -113,12 +112,6 @@ export const Text = ({ data, refetch }) => {
               </div>
             </Column>
             <Column>
-              <Box>
-                <p className="is-size-5 has-text-centered has-text-weight-semibold">
-                  Vote en cours sur l'amendement
-                </p>
-                <Results value={54.7} />
-              </Box>
               <Box>
                 <p>Liste des amendements proposés</p>
                 <ul>
