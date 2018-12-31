@@ -1,7 +1,7 @@
 import React from 'react'
 import { EventsProvider, UserProvider } from '../../components'
 
-const providers = [EventsProvider, UserProvider]
+const providers = [UserProvider, EventsProvider]
 
 // Return all providers encapsulated in order
 export const Providers = ({ children }) =>
