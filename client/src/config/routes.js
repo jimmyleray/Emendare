@@ -5,6 +5,7 @@ const withID = path => (id = ':id') => path + id
 export const routes = [
   { name: 'home', path: '/', exact: true },
   { name: 'news', path: '/actualites' },
+  { name: 'roadmap', path: '/roadmap' },
   { name: 'code', path: '/charte-ethique' },
   { name: 'legal', path: '/mentions-legales' },
   { name: 'contributors', path: '/contributeurs' },

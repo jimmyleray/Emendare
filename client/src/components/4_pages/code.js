@@ -1,9 +1,13 @@
 import React from 'react'
-import { Page } from '../../components'
+import { Notification, Page } from '../../components'
 
 export const CodePage = () => (
   <Page title="Charte éthique">
     <div className="field has-text-centered">
+      <Notification className="is-warning">
+        Vous pouvez participer à la rédaction participative de ce texte dans le{' '}
+        <span className="has-text-weight-semibold">groupe Emendare</span>
+      </Notification>
       <h1 className="is-size-3">Charte éthique</h1>
       <h2 className="is-size-5">Nos engagements et motivations</h2>
       <br />
