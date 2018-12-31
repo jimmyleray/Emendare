@@ -7,9 +7,21 @@
  */
 
 import React from 'react'
-import { Amend, ErrorPage, Page } from '../../components'
+import {
+  Amend,
+  Box,
+  Button,
+  Buttons,
+  Column,
+  Columns,
+  ErrorPage,
+  Icon,
+  Page,
+  Results
+} from '../../components'
 import { socket } from '../../services'
 import diff_match_patch from 'diff-match-patch'
+import { path } from '../../config'
 
 export class AmendPage extends React.Component {
   constructor(props) {
@@ -68,7 +80,29 @@ export class AmendPage extends React.Component {
 
     return (
       <Page title={this.getTitle()}>
-        {this.state.amend && <Amend data={this.state.amend} />}
+        {this.state.amend && (
+          <>
+            <Buttons>
+              <Button to={path.text(this.state.amend.text._id)}>
+                <Icon type="fas fa-chevron-left" />
+                <span>Retour au texte</span>
+              </Button>
+            </Buttons>
+            <Columns>
+              <Column>
+                <Amend data={this.state.amend} />
+              </Column>
+              <Column>
+                <Box>
+                  <p className="is-size-5 has-text-centered has-text-weight-semibold">
+                    Vote en cours sur l'amendement
+                  </p>
+                  <Results value={54.7} />
+                </Box>
+              </Column>
+            </Columns>
+          </>
+        )}
       </Page>
     )
   }
