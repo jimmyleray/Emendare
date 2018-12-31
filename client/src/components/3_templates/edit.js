@@ -41,7 +41,7 @@ export class Edit extends React.Component {
       await socket.fetch('postAmend', {
         name: this.state.amendName,
         description: this.state.amendDescription,
-        version: this.props.data.version,
+        version: this.props.data.patches.length,
         patch: this.state.patch,
         textID: this.props.data._id
       })

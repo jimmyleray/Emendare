@@ -95,11 +95,11 @@ export const Text = ({ data, refetch }) => {
                       (data.followersCount > 1 ? 's' : '')}
                   </span>{' '}
                   -{' '}
-                  {data.version +
+                  {data.patches.length +
                     ' amendement' +
-                    (data.version > 1 ? 's' : '') +
+                    (data.patches.length > 1 ? 's' : '') +
                     ' accepté' +
-                    (data.version > 1 ? 's' : '')}
+                    (data.patches.length > 1 ? 's' : '')}
                 </p>
               </Box>
 
