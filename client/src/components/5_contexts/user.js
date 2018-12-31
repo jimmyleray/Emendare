@@ -46,6 +46,7 @@ export class UserProvider extends React.Component {
 
   componentWillUnmount() {
     socket.off('user')
+    socket.off('login')
   }
 
   render() {
