@@ -60,7 +60,9 @@ export class TextPage extends React.Component {
 
     return (
       <Page title={this.getTitle()}>
-        {this.state.text && <Text data={this.state.text} />}
+        {this.state.text && (
+          <Text data={this.state.text} refetch={this.fetchData.bind(this)} />
+        )}
       </Page>
     )
   }

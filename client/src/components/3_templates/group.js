@@ -13,17 +13,19 @@ import {
 import { socket } from '../../services'
 import { path } from '../../config'
 
-const quitGroup = id => async () => {
+const quitGroup = id => refetch => async () => {
   await socket.fetch('quitGroup', { id })
   socket.emit('user')
+  refetch()
 }
 
-const joinGroup = id => async () => {
+const joinGroup = id => refetch => async () => {
   await socket.fetch('joinGroup', { id })
   socket.emit('user')
+  refetch()
 }
 
-export const Group = ({ data }) => {
+export const Group = ({ data, refetch }) => {
   return (
     <UserContext.Consumer>
       {({ isConnected, user }) => (
@@ -41,13 +43,16 @@ export const Group = ({ data }) => {
             {isConnected() &&
               (user.followedGroups.find(group => group._id === data._id) ? (
                 <Button
-                  onClick={quitGroup(data._id)}
+                  onClick={quitGroup(data._id)(refetch)}
                   className="is-danger is-outlined"
                 >
                   Quitter le groupe
                 </Button>
               ) : (
-                <Button onClick={joinGroup(data._id)} className="is-success">
+                <Button
+                  onClick={joinGroup(data._id)(refetch)}
+                  className="is-success"
+                >
                   Rejoindre le groupe
                 </Button>
               ))}
@@ -69,6 +74,11 @@ export const Group = ({ data }) => {
               <Box>
                 <p className="has-text-weight-bold">{data.name}</p>
                 <p>{data.description}</p>
+                <p className="has-text-weight-semibold">
+                  {data.followersCount +
+                    ' membre' +
+                    (data.followersCount > 1 ? 's' : '')}
+                </p>
               </Box>
 
               {data.subgroups.length > 0 && (

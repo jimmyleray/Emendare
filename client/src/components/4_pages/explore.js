@@ -16,8 +16,11 @@ export class ExplorePage extends React.Component {
       rootGroup: null
     }
   }
-
   componentDidMount() {
+    this.fetchData()
+  }
+
+  fetchData() {
     socket.fetch('rootGroup').then(rootGroup => {
       this.setState({ rootGroup })
     })
@@ -26,7 +29,12 @@ export class ExplorePage extends React.Component {
   render() {
     return (
       <Page title="Explorer">
-        {this.state.rootGroup && <Group data={this.state.rootGroup} />}
+        {this.state.rootGroup && (
+          <Group
+            data={this.state.rootGroup}
+            refetch={this.fetchData.bind(this)}
+          />
+        )}
       </Page>
     )
   }

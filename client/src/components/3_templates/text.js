@@ -14,17 +14,19 @@ import {
 import { socket } from '../../services'
 import { path } from '../../config'
 
-const unFollowText = id => async () => {
+const unFollowText = id => refetch => async () => {
   await socket.fetch('unFollowText', { id })
   socket.emit('user')
+  refetch()
 }
 
-const followText = id => async () => {
+const followText = id => refetch => async () => {
   await socket.fetch('followText', { id })
   socket.emit('user')
+  refetch()
 }
 
-export const Text = ({ data }) => {
+export const Text = ({ data, refetch }) => {
   return (
     <UserContext.Consumer>
       {({ isConnected, user }) => (
@@ -42,7 +44,7 @@ export const Text = ({ data }) => {
             {isConnected() &&
               (user.followedTexts.find(text => text._id === data._id) ? (
                 <Button
-                  onClick={unFollowText(data._id)}
+                  onClick={unFollowText(data._id)(refetch)}
                   className="button is-danger is-outlined"
                   disabled={data.rules}
                 >
@@ -50,7 +52,7 @@ export const Text = ({ data }) => {
                 </Button>
               ) : (
                 <Button
-                  onClick={followText(data._id)}
+                  onClick={followText(data._id)(refetch)}
                   className="button is-success"
                   disabled={data.rules}
                 >
@@ -78,7 +80,9 @@ export const Text = ({ data }) => {
               <Box>
                 <p>
                   {data.rules ? 'Paramètres' : data.group.name} |{' '}
-                  <strong>{data.rules ? data.group.name : data.name}</strong>
+                  <span className="has-text-weight-semibold">
+                    {data.rules ? data.group.name : data.name}
+                  </span>
                 </p>
                 <p>
                   {data.rules
@@ -86,6 +90,12 @@ export const Text = ({ data }) => {
                     : data.description}
                 </p>
                 <p>
+                  <span className="has-text-weight-semibold">
+                    {data.followersCount +
+                      ' contributeur' +
+                      (data.followersCount > 1 ? 's' : '')}
+                  </span>{' '}
+                  -{' '}
                   {data.version +
                     ' amendement' +
                     (data.version > 1 ? 's' : '') +

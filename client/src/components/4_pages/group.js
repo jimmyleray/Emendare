@@ -52,7 +52,9 @@ export class GroupPage extends React.Component {
 
     return (
       <Page title={this.getTitle()}>
-        {this.state.group && <Group data={this.state.group} />}
+        {this.state.group && (
+          <Group data={this.state.group} refetch={this.fetchData.bind(this)} />
+        )}
       </Page>
     )
   }

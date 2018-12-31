@@ -262,7 +262,7 @@ io.on('connection', socket => {
     }
   })
 
-  socket.on('exitGroup', async ({ token, data }) => {
+  socket.on('quitGroup', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
     if (user) {
       const id = user.followedGroups.indexOf(data.id)
@@ -274,12 +274,12 @@ io.on('connection', socket => {
         group.followersCount--
         await group.save()
 
-        socket.emit('exitGroup')
+        socket.emit('quitGroup')
       } else {
-        socket.emit('exitGroup', { error: "Ce groupe n'est pas suivi" })
+        socket.emit('quitGroup', { error: "Ce groupe n'est pas suivi" })
       }
     } else {
-      socket.emit('exitGroup', {
+      socket.emit('quitGroup', {
         error: "Cet utilisateur n'est pas connecté"
       })
     }
