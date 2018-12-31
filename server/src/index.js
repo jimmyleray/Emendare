@@ -1,6 +1,9 @@
 // Global configuration
 const config = require('./config')
 
+// Fetch API polyfills
+const fetch = require('node-fetch')
+
 // Express Html Application
 const express = require('express')
 const app = express()
@@ -295,6 +298,24 @@ io.on('connection', socket => {
         error: "Cet utilisateur n'est pas connecté"
       })
     }
+  })
+
+  socket.on('contributors', async () => {
+    const res = await fetch(config.contributors)
+    const contributors = await res.json()
+    const data = contributors.reduce((acc, commit) => {
+      if (acc[commit.author_email]) {
+        acc[commit.author_email].count++
+      } else {
+        acc[commit.author_email] = {
+          name: commit.author_name,
+          count: 1
+        }
+      }
+      return acc
+    }, {})
+
+    socket.emit('contributors', { data })
   })
 })
 
