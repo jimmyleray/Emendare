@@ -32,7 +32,7 @@ export class NewsPage extends React.Component {
               <div className="has-text-centered">
                 <p className="is-size-3">Fil d'actualités en direct</p>
                 <p className="is-size-5">
-                  Vous pouvez filtrer par type d'actualité
+                  Vous pouvez filtrer par type d'actualités
                 </p>
               </div>
               <br />

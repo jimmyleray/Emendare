@@ -84,6 +84,16 @@ export class Edit extends React.Component {
       <UserContext.Consumer>
         {({ isConnected }) => (
           <>
+            <div className="field has-text-centered">
+              <h1 className="is-size-3">Proposition d'amendement</h1>
+              <h2 className="is-size-5">
+                {this.props.data.rules
+                  ? this.props.data.group.name
+                  : this.props.data.name}
+              </h2>
+            </div>
+            <br />
+
             <Buttons>
               {this.props.data.group && (
                 <Button to={path.text(this.props.data._id)}>
@@ -97,26 +107,6 @@ export class Edit extends React.Component {
 
             <Columns>
               <Column>
-                <Box>
-                  <p>
-                    {this.props.data.rules
-                      ? 'Paramètres'
-                      : this.props.data.group.name}{' '}
-                    |{' '}
-                    <strong>
-                      {this.props.data.rules
-                        ? this.props.data.group.name
-                        : this.props.data.name}
-                    </strong>
-                  </p>
-                  <p>
-                    Description :{' '}
-                    {this.props.data.rules
-                      ? 'Règles du groupe ' + this.props.data.group.name
-                      : this.props.data.description}
-                  </p>
-                </Box>
-
                 <div className="field">
                   <label className="label">Titre de l'amendement</label>
                   <div className="control">
@@ -184,7 +174,7 @@ export class Edit extends React.Component {
                     La complexité est donnée à titre indicatif et ne vous limite
                     pas. Une complexité trop élevée peut cependant nuire à
                     l'adoption de votre amendement. Nous vous conseillons donc
-                    de proposer des amendements à faible complexité.
+                    de proposer des amendements avec une complexité moderée.
                   </p>
                 </Notification>
 

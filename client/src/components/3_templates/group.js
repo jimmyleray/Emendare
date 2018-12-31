@@ -30,6 +30,17 @@ export const Group = ({ data, refetch }) => {
     <UserContext.Consumer>
       {({ isConnected, user }) => (
         <>
+          <div className="field has-text-centered">
+            <h1 className="is-size-3">{data.name}</h1>
+            <h2 className="is-size-5">{data.description}</h2>
+            <p className="has-text-weight-semibold">
+              {data.followersCount +
+                ' membre' +
+                (data.followersCount > 1 ? 's' : '')}
+            </p>
+          </div>
+          <br />
+
           <Buttons>
             {data.parent && (
               <Button to={path.group(data.parent._id)}>
@@ -72,42 +83,36 @@ export const Group = ({ data, refetch }) => {
           <Columns>
             <Column>
               <Box>
-                <p className="has-text-weight-bold">{data.name}</p>
-                <p>{data.description}</p>
-                <p className="has-text-weight-semibold">
-                  {data.followersCount +
-                    ' membre' +
-                    (data.followersCount > 1 ? 's' : '')}
-                </p>
+                {data.subgroups.length > 0 && (
+                  <>
+                    <p>Groupes</p>
+                    <ul>
+                      {data.subgroups.map(subgroup => (
+                        <li key={subgroup._id}>
+                          <Link to={path.group(subgroup._id)}>
+                            {subgroup.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {data.subgroups.length > 0 && data.texts.length > 0 && <br />}
+
+                {data.texts.length > 0 && (
+                  <>
+                    <p>Textes</p>
+                    <ul>
+                      {data.texts.map(text => (
+                        <li key={text._id}>
+                          <Link to={path.text(text._id)}>{text.name}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
               </Box>
-
-              {data.subgroups.length > 0 && (
-                <>
-                  <p>Groupes</p>
-                  <ul>
-                    {data.subgroups.map(subgroup => (
-                      <li key={subgroup._id}>
-                        <Link to={path.group(subgroup._id)}>
-                          {subgroup.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
-
-              {data.texts.length > 0 && (
-                <>
-                  <p>Textes</p>
-                  <ul>
-                    {data.texts.map(text => (
-                      <li key={text._id}>
-                        <Link to={path.text(text._id)}>{text.name}</Link>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
             </Column>
             <Column>
               <Box>

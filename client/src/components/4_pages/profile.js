@@ -18,59 +18,61 @@ export const ProfilePage = () => (
   <Page title="Profil">
     <UserContext.Consumer>
       {({ user }) => (
-        <Columns>
-          <Column>
-            <Box>
-              <p>Profil de {user.email}</p>
-              <p>Crée le {new Date(user.created).toLocaleString()}</p>
-            </Box>
-          </Column>
+        <>
+          <div className="field has-text-centered">
+            <h1 className="is-size-3">Mon profil</h1>
+            <h2 className="is-size-5">{user.email}</h2>
+          </div>
+          <br />
+          <Columns>
+            <Column>
+              {user.followedTexts.length > 0 && (
+                <Box>
+                  <p>Liste des textes auxquels vous participez</p>
+                  <ul>
+                    {user.followedTexts.map(followedText => (
+                      <li key={followedText._id}>
+                        <Link to={path.text(followedText._id)}>
+                          {followedText.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </Box>
+              )}
 
-          <Column>
-            {user.amends.length > 0 && (
-              <Box>
-                <p>Liste des amendements que vous avez proposés</p>
-                <ul>
-                  {user.amends.map(amend => (
-                    <li key={amend._id}>
-                      <Link to={path.amend(amend._id)}>{amend.name}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </Box>
-            )}
+              {user.followedGroups.length > 0 && (
+                <Box>
+                  <p>Liste des groupes que vous avez rejoint</p>
+                  <ul>
+                    {user.followedGroups.map(followedGroup => (
+                      <li key={followedGroup._id}>
+                        <Link to={path.group(followedGroup._id)}>
+                          {followedGroup.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </Box>
+              )}
+            </Column>
 
-            {user.followedTexts.length > 0 && (
-              <Box>
-                <p>Liste des textes auxquels vous participez</p>
-                <ul>
-                  {user.followedTexts.map(followedText => (
-                    <li key={followedText._id}>
-                      <Link to={path.text(followedText._id)}>
-                        {followedText.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </Box>
-            )}
-
-            {user.followedGroups.length > 0 && (
-              <Box>
-                <p>Liste des groupes que vous avez rejoint</p>
-                <ul>
-                  {user.followedGroups.map(followedGroup => (
-                    <li key={followedGroup._id}>
-                      <Link to={path.group(followedGroup._id)}>
-                        {followedGroup.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </Box>
-            )}
-          </Column>
-        </Columns>
+            <Column>
+              {user.amends.length > 0 && (
+                <Box>
+                  <p>Liste des amendements que vous avez proposés</p>
+                  <ul>
+                    {user.amends.map(amend => (
+                      <li key={amend._id}>
+                        <Link to={path.amend(amend._id)}>{amend.name}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </Box>
+              )}
+            </Column>
+          </Columns>
+        </>
       )}
     </UserContext.Consumer>
   </Page>

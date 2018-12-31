@@ -14,7 +14,7 @@ export const Page = ({ children, title, className = '' }) => {
       }}
     >
       <Navbar />
-      <section className="section" style={{ flex: 1 }}>
+      <section className="section" style={{ flex: 1, padding: '1rem' }}>
         <div className={'container ' + className}>{children}</div>
       </section>
       <Footer />

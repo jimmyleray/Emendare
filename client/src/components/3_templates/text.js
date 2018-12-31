@@ -30,6 +30,23 @@ export const Text = ({ data, refetch }) => {
     <UserContext.Consumer>
       {({ isConnected, user }) => (
         <>
+          <div className="field has-text-centered">
+            <h1 className="is-size-3">
+              {data.rules ? data.group.name : data.name}
+            </h1>
+            <h2 className="is-size-5">
+              {data.rules
+                ? 'Règles du groupe ' + data.group.name
+                : data.description}
+            </h2>
+            <p className="has-text-weight-semibold">
+              {data.followersCount +
+                ' participant' +
+                (data.followersCount > 1 ? 's' : '')}
+            </p>
+          </div>
+          <br />
+
           <Buttons>
             {data.group && (
               <Button to={path.group(data.group._id)}>
@@ -77,43 +94,24 @@ export const Text = ({ data, refetch }) => {
           <Columns>
             <Column>
               <Box>
-                <p>
-                  {data.rules ? 'Paramètres' : data.group.name} |{' '}
-                  <span className="has-text-weight-semibold">
-                    {data.rules ? data.group.name : data.name}
-                  </span>
-                </p>
-                <p>
-                  {data.rules
-                    ? 'Règles du groupe ' + data.group.name
-                    : data.description}
-                </p>
-                <p>
-                  <span className="has-text-weight-semibold">
-                    {data.followersCount +
-                      ' participant' +
-                      (data.followersCount > 1 ? 's' : '')}
-                  </span>{' '}
-                  -{' '}
+                {data.actual
+                  .split('\n')
+                  .map((line, index) =>
+                    line ? <p key={index}>{line}</p> : <br key={index} />
+                  )}
+              </Box>
+            </Column>
+            <Column>
+              <Box>
+                <p className="has-text-weight-semibold">
                   {data.patches.length +
                     ' amendement' +
                     (data.patches.length > 1 ? 's' : '') +
                     ' accepté' +
                     (data.patches.length > 1 ? 's' : '')}
                 </p>
-              </Box>
-
-              <div>
-                {data.actual
-                  .split('\n')
-                  .map((line, index) =>
-                    line ? <p key={index}>{line}</p> : <br key={index} />
-                  )}
-              </div>
-            </Column>
-            <Column>
-              <Box>
-                <p>Liste des amendements proposés</p>
+                <br />
+                <p>Liste des amendements à voter</p>
                 <ul>
                   {data.amends.map(amend => (
                     <li key={amend._id}>

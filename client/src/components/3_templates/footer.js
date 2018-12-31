@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom'
 import { path } from '../../config'
 
 export const Footer = () => (
-  <footer className="footer" style={{ padding: '1rem' }}>
+  <footer
+    className="footer"
+    style={{ padding: '1rem', backgroundColor: 'transparent' }}
+  >
     <div
       className="content has-text-centered"
       style={{
