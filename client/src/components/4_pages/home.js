@@ -38,7 +38,10 @@ export const HomePage = () => (
       <Button to={path.explore} className="is-medium is-info">
         Découvrir Emendare
       </Button>
-      <Button to={path.subscribe} className="is-medium is-primary">
+      <Button to={path.code} className="is-medium is-link">
+        Pourquoi Emendare ?
+      </Button>
+      <Button to={path.subscribe} className="is-medium is-danger">
         Créer votre compte
       </Button>
     </Buttons>

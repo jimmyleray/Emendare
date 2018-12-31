@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import { Group, Page } from '../../components'
+import { Group, Notification, Page } from '../../components'
 import { socket } from '../../services'
 
 export class ExplorePage extends React.Component {
@@ -29,6 +29,18 @@ export class ExplorePage extends React.Component {
   render() {
     return (
       <Page title="Explorer">
+        <Notification className="is-warning has-text-centered">
+          <p>
+            Cette page est celle du{' '}
+            <span className="has-text-weight-semibold">
+              groupe principal de la plateforme Emendare
+            </span>
+          </p>
+          <p>
+            Vous pouvez accéder à tous les sous-groupes et à tous leurs textes à
+            partir d'ici
+          </p>
+        </Notification>
         {this.state.rootGroup && (
           <Group
             data={this.state.rootGroup}

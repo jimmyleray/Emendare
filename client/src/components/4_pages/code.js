@@ -26,7 +26,7 @@ export const CodePage = () => (
       <br />
       <p>
         Seul un email permet de vous identifier personnellement. Les données
-        liées à votre compte sont supprimables suite à la fermeture de votre
+        liées à votre compte sont supprimées suite à la fermeture de votre
         compte.
       </p>
       <p>
