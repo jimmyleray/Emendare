@@ -1,5 +1,5 @@
 import React from 'react'
-import { Page } from '../../components'
+import { Notification, Page } from '../../components'
 import { socket } from '../../services'
 
 export class ContributorsPage extends React.Component {
@@ -31,10 +31,10 @@ export class ContributorsPage extends React.Component {
         <br />
         <div className="has-text-centered">
           {Object.keys(this.state.contributors).map(key => (
-            <div key={key} className="notification">
+            <Notification key={key}>
               Merci à {this.state.contributors[key].name} pour ses{' '}
               {this.state.contributors[key].count} contributions
-            </div>
+            </Notification>
           ))}
         </div>
       </Page>
