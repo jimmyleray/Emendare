@@ -1,5 +1,5 @@
 import React from 'react'
-import { Notification, Page } from '../../components'
+import { Page } from '../../components'
 import { socket } from '../../services'
 import { shuffle } from 'lodash'
 
@@ -8,7 +8,7 @@ export class ContributorsPage extends React.Component {
     super(props)
 
     this.state = {
-      contributors: []
+      contributors: null
     }
   }
 
@@ -30,14 +30,14 @@ export class ContributorsPage extends React.Component {
           </h2>
         </div>
         <br />
-        <div className="has-text-centered">
-          {Object.keys(this.state.contributors).map(key => (
-            <Notification key={key}>
-              Merci à {this.state.contributors[key].name} pour ses{' '}
-              {this.state.contributors[key].count} contributions
-            </Notification>
-          ))}
-        </div>
+        {this.state.contributors && this.state.contributors.length > 1 && (
+          <div className="has-text-centered">
+            Merci à{' '}
+            {Object.keys(this.state.contributors)
+              .map(key => this.state.contributors[key].name)
+              .join(', ')}
+          </div>
+        )}
       </Page>
     )
   }
