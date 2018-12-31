@@ -1,6 +1,7 @@
 import React from 'react'
 import { Notification, Page } from '../../components'
 import { socket } from '../../services'
+import { shuffle } from 'lodash'
 
 export class ContributorsPage extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export class ContributorsPage extends React.Component {
   }
 
   async componentDidMount() {
-    const contributors = await socket.fetch('contributors')
+    const contributors = shuffle(await socket.fetch('contributors'))
     this.setState({ contributors })
   }
 
