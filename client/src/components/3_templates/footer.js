@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Column, Columns } from '../../components'
 import { path } from '../../config'
 
 export const Footer = () => (
@@ -7,27 +8,22 @@ export const Footer = () => (
     className="footer"
     style={{ padding: '1rem', backgroundColor: 'transparent' }}
   >
-    <div
-      className="content has-text-centered"
-      style={{
-        display: 'flex'
-      }}
-    >
-      <Link to={path.code} style={{ flex: 1 }}>
-        Charte éthique
-      </Link>
-      <Link to={path.roadmap} style={{ flex: 1 }}>
-        Roadmap
-      </Link>
-      <Link to={path.contributors} style={{ flex: 1 }}>
-        Contributeurs
-      </Link>
-      <Link to={path.legal} style={{ flex: 1 }}>
-        Mentions légales
-      </Link>
-      <a href="https://gitlab.com/emendare/emendare" style={{ flex: 1 }}>
-        Sources / GitLab
-      </a>
-    </div>
+    <Columns className="content has-text-centered">
+      <Column>
+        <Link to={path.code}>Charte éthique</Link>
+      </Column>
+      <Column>
+        <Link to={path.roadmap}>Roadmap</Link>
+      </Column>
+      <Column>
+        <Link to={path.contributors}>Contributeurs</Link>
+      </Column>
+      <Column>
+        <Link to={path.legal}>Mentions légales</Link>
+      </Column>
+      <Column>
+        <a href="https://gitlab.com/emendare/emendare">Sources / GitLab</a>
+      </Column>
+    </Columns>
   </footer>
 )

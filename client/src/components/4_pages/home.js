@@ -7,7 +7,7 @@
  */
 
 import React from 'react'
-import { Button, Notification, Page } from '../../components'
+import { Button, Buttons, Notification, Page } from '../../components'
 import { path } from '../../config'
 
 export const HomePage = () => (
@@ -34,17 +34,13 @@ export const HomePage = () => (
         groupe
       </h2>
     </div>
-    <div className="field is-grouped is-grouped-centered">
-      <p className="control">
-        <Button to={path.explore} className="is-medium is-info">
-          Découvrir Emendare
-        </Button>
-      </p>
-      <p className="control">
-        <Button to={path.subscribe} className="is-medium is-primary">
-          Créer votre compte
-        </Button>
-      </p>
-    </div>
+    <Buttons style={{ justifyContent: 'center' }}>
+      <Button to={path.explore} className="is-medium is-info">
+        Découvrir Emendare
+      </Button>
+      <Button to={path.subscribe} className="is-medium is-primary">
+        Créer votre compte
+      </Button>
+    </Buttons>
   </Page>
 )
