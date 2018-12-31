@@ -44,7 +44,7 @@ export const Group = ({ data, refetch }) => {
               (user.followedGroups.find(group => group._id === data._id) ? (
                 <Button
                   onClick={quitGroup(data._id)(refetch)}
-                  className="is-danger is-outlined"
+                  className="is-light"
                 >
                   Quitter le groupe
                 </Button>

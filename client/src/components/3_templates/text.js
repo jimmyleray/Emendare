@@ -44,7 +44,7 @@ export const Text = ({ data, refetch }) => {
               (user.followedTexts.find(text => text._id === data._id) ? (
                 <Button
                   onClick={unFollowText(data._id)(refetch)}
-                  className="button is-danger is-outlined"
+                  className="button is-light"
                   disabled={data.rules}
                 >
                   Ne plus participer à ce texte
@@ -91,7 +91,7 @@ export const Text = ({ data, refetch }) => {
                 <p>
                   <span className="has-text-weight-semibold">
                     {data.followersCount +
-                      ' contributeur' +
+                      ' participant' +
                       (data.followersCount > 1 ? 's' : '')}
                   </span>{' '}
                   -{' '}
