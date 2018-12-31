@@ -20,11 +20,11 @@ const isMatchZenika = isMatch('*@zenika.com')
 const database = require('./mongo')
 
 // MongoDB models
-const User = require('./mongo/models/user')
-const Group = require('./mongo/models/group')
-const Text = require('./mongo/models/text')
-const Amend = require('./mongo/models/amend')
-const Event = require('./mongo/models/event')
+const User = require('./models/user')
+const Group = require('./models/group')
+const Text = require('./models/text')
+const Amend = require('./models/amend')
+const Event = require('./models/event')
 
 // Utils function to generate unique tokens
 const generateToken = require('./utils/token')

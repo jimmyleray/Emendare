@@ -19,14 +19,14 @@ database.on('error', error => {
 })
 
 // MongoDB models
-const User = require('./models/user')
-const Group = require('./models/group')
-const Text = require('./models/text')
-const Event = require('./models/event')
+const User = require('../models/user')
+const Group = require('../models/group')
+const Text = require('../models/text')
+const Event = require('../models/event')
 
 const initDatabase = async () => {
   bcrypt.hash('tmp', 10, async (err, hash) => {
-    const adminUser = await new User.model({
+    await new User.model({
       password: hash,
       email: 'admin@zenika.com'
     }).save()
@@ -97,8 +97,7 @@ const initDatabase = async () => {
     const globalText = await new Text.model({
       name: "Roadmap d'Emendare",
       actual: lorem,
-      description:
-        'Participez à définir les futures fonctionnalités de la plateforme',
+      description: 'Participez à définir les futures fonctionnalités',
       group: globalGroup._id,
       official: true
     }).save()
@@ -111,7 +110,7 @@ const initDatabase = async () => {
     const privateText = await new Text.model({
       name: "Description de l'agence de Rennes",
       actual: lorem,
-      description: 'Texte utilisé sur le minisite rennes.zenika.com',
+      description: 'Texte utilisé sur rennes.zenika.com',
       group: privateGroup._id,
       private: true
     }).save()
