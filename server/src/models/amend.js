@@ -13,6 +13,10 @@ const model = mongoose.model(
       ref: 'Text',
       required: true
     },
+    arguments: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Argument' }],
+      default: []
+    },
     upVotesCount: { type: Number, default: 0 },
     downVotesCount: { type: Number, default: 0 },
     accepted: { type: Boolean, default: false }

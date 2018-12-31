@@ -66,7 +66,7 @@ export class NewsPage extends React.Component {
                 </Button>
               </Buttons>
               <hr />
-              <div>
+              <div className="has-text-centered">
                 {events &&
                   events
                     .filter(event =>
