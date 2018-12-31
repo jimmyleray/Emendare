@@ -39,7 +39,7 @@ export const HomePage = () => (
         Découvrir Emendare
       </Button>
       <Button to={path.code} className="is-medium is-info">
-        Pourquoi Emendare ?
+        Pourquoi Emendare
       </Button>
       <Button to={path.subscribe} className="is-medium is-primary">
         Créer votre compte

@@ -37,6 +37,10 @@ export class GroupPage extends React.Component {
     this.fetchData()
   }
 
+  componentWillUnmount() {
+    socket.off('group')
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
       this.fetchData()

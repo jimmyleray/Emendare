@@ -46,6 +46,10 @@ export class LoginPage extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    socket.off('login')
+  }
+
   render() {
     if (this.state.redirectToReferrer)
       return (

@@ -38,6 +38,10 @@ export class EditPage extends React.Component {
     this.fetchData()
   }
 
+  componentWillUnmount() {
+    socket.off('text')
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
       this.fetchData()

@@ -45,6 +45,10 @@ export class SubscribePage extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    socket.off('subscribe')
+  }
+
   render() {
     if (this.state.redirectToReferrer)
       return (

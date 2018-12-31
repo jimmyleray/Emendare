@@ -98,7 +98,7 @@ export const Group = ({ data, refetch }) => {
                   </>
                 )}
 
-                {data.subgroups.length > 0 && data.texts.length > 0 && <br />}
+                {data.subgroups.length > 0 && data.texts.length > 0 && <hr />}
 
                 {data.texts.length > 0 && (
                   <>

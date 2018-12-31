@@ -20,6 +20,10 @@ export class ExplorePage extends React.Component {
     this.fetchData()
   }
 
+  componentWillUnmount() {
+    socket.off('rootGroup')
+  }
+
   fetchData() {
     socket.fetch('rootGroup').then(rootGroup => {
       this.setState({ rootGroup })

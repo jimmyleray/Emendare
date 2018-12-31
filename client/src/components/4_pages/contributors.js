@@ -17,6 +17,10 @@ export class ContributorsPage extends React.Component {
     this.setState({ contributors })
   }
 
+  componentWillUnmount() {
+    socket.off('contributors')
+  }
+
   render() {
     return (
       <Page title="Contributeurs">
