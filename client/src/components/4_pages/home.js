@@ -35,13 +35,13 @@ export const HomePage = () => (
       </h2>
     </div>
     <Buttons style={{ justifyContent: 'center' }}>
-      <Button to={path.explore} className="is-medium is-info">
+      <Button to={path.explore} className="is-medium is-link">
         Découvrir Emendare
       </Button>
-      <Button to={path.code} className="is-medium is-link">
+      <Button to={path.code} className="is-medium is-info">
         Pourquoi Emendare ?
       </Button>
-      <Button to={path.subscribe} className="is-medium is-danger">
+      <Button to={path.subscribe} className="is-medium is-primary">
         Créer votre compte
       </Button>
     </Buttons>
