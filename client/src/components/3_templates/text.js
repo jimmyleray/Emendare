@@ -7,6 +7,7 @@ import {
   Column,
   Columns,
   Icon,
+  Notification,
   Spacer,
   UserContext
 } from '../../components'
@@ -102,23 +103,48 @@ export const Text = ({ data, refetch }) => {
               </Box>
             </Column>
             <Column>
+              <Notification className="is-warning">
+                <p>
+                  Vous devez vous déclarer comme participant à ce texte pour
+                  participer à ses votes, et pour proposer de nouveaux
+                  amendements. Les votes se font entre les utilisateurs qui se
+                  sont déclarés comme participants.
+                </p>
+              </Notification>
               <Box>
                 <p className="has-text-weight-semibold">
                   {data.patches.length +
                     ' amendement' +
                     (data.patches.length > 1 ? 's' : '') +
                     ' accepté' +
-                    (data.patches.length > 1 ? 's' : '')}
+                    (data.patches.length > 1 ? 's' : '') +
+                    ' par les participants'}
                 </p>
                 <br />
-                <p>Liste des amendements à voter</p>
-                <ul>
-                  {data.amends.map(amend => (
-                    <li key={amend._id}>
-                      <Link to={path.amend(amend._id)}>{amend.name}</Link>
-                    </li>
-                  ))}
-                </ul>
+
+                {data.amends.length > 0 && (
+                  <>
+                    <p>Liste des votes en cours</p>
+                    <ul>
+                      {data.amends.map(amend => (
+                        <li key={amend._id}>
+                          <Link to={path.amend(amend._id)}>{amend.name}</Link>
+                        </li>
+                      ))}
+                      {data.amends.length === 0 && (
+                        <li className="has-text-weight-semibold has-text-danger">
+                          Aucun vote en cours
+                        </li>
+                      )}
+                    </ul>
+                  </>
+                )}
+
+                {data.amends.length === 0 && (
+                  <p className="has-text-weight-semibold has-text-danger">
+                    Aucun vote en cours
+                  </p>
+                )}
               </Box>
             </Column>
           </Columns>

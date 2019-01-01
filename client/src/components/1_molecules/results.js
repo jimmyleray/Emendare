@@ -6,7 +6,7 @@ export const Results = ({ value }) =>
     <>
       <div className="has-text-centered">
         <div
-          className="has-text-success has-text-weight-semibold"
+          className="has-text-weight-semibold"
           style={{
             display: 'inline-block',
             width: value + '%',
@@ -17,7 +17,7 @@ export const Results = ({ value }) =>
           {value + '% POUR'}
         </div>
         <div
-          className="has-text-danger has-text-weight-semibold"
+          className="has-text-weight-semibold"
           style={{
             display: 'inline-block',
             width: 100 - value + '%',
@@ -56,6 +56,6 @@ export const Results = ({ value }) =>
     </>
   ) : (
     <p className="has-text-centered">
-      Il n'y a pas encore de résultats de votes à afficher
+      Il n'y a pas encore de résultats à afficher
     </p>
   )

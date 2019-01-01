@@ -201,7 +201,12 @@ export class Edit extends React.Component {
 
                 <Button
                   onClick={this.addAmend}
-                  disabled={!this.hasDiffs() || !isConnected()}
+                  disabled={
+                    !this.hasDiffs() ||
+                    !this.state.amendName ||
+                    !this.state.amendDescription ||
+                    !isConnected()
+                  }
                   className="is-success is-fullwidth"
                 >
                   Proposer cet amendement

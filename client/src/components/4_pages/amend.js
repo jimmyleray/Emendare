@@ -16,6 +16,7 @@ import {
   Columns,
   ErrorPage,
   Icon,
+  Notification,
   Page,
   Results
 } from '../../components'
@@ -27,9 +28,24 @@ export class AmendPage extends React.Component {
   constructor(props) {
     super(props)
 
+    this.upVote = () => {
+      this.setState({ upVoted: true, downVoted: false })
+    }
+
+    this.downVote = () => {
+      this.setState({ upVoted: false, downVoted: true })
+    }
+
+    this.unVote = () => {
+      this.setState({ upVoted: false, downVoted: false })
+    }
+
     this.state = {
+      index: 0,
       amend: null,
-      error: null
+      error: null,
+      upVoted: false,
+      downVoted: false
     }
   }
 
@@ -48,10 +64,14 @@ export class AmendPage extends React.Component {
 
   componentDidMount() {
     this.fetchData()
+    this.interval = setInterval(() => {
+      this.setState({ index: this.state.index + 1 })
+    }, 10 * 1000)
   }
 
   componentWillUnmount() {
     socket.off('amend')
+    clearInterval(this.interval)
   }
 
   componentDidUpdate(prevProps) {
@@ -97,11 +117,66 @@ export class AmendPage extends React.Component {
                 <Amend data={this.state.amend} />
               </Column>
               <Column>
-                <Box>
-                  <p className="is-size-5 has-text-centered has-text-weight-semibold">
-                    Vote en cours sur l'amendement
+                <Notification>
+                  <p>
+                    Le vote est clos à la fin du temps imparti ou dès lors
+                    qu'une majorité absolue est atteinte. Le vote est liquide,
+                    ce qui veut dire que vous pouvez changer votre vote jusqu'à
+                    la fin du scrutin.
                   </p>
-                  <Results value={54.7} />
+                </Notification>
+                <Box key={this.state.index}>
+                  <p className="is-size-5 has-text-centered has-text-weight-semibold">
+                    Scrutin en cours sur l'amendement
+                  </p>
+
+                  <p className="has-text-centered">
+                    Temps restant avant la fin du scrutin :{' '}
+                    <span className="has-text-weight-semibold">
+                      {
+                        -Math.floor(
+                          (new Date().getTime() -
+                            (new Date(this.state.amend.created).getTime() +
+                              2 * 3600 * 1000)) /
+                            (1000 * 60)
+                        )
+                      }{' '}
+                      minutes
+                    </span>
+                  </p>
+                  <br/>
+                  <Results value={50} />
+                  <hr />
+
+                  <Buttons className="is-fullwidth">
+                    <Button
+                      className={this.state.upVoted ? 'is-success' : 'is-light'}
+                      onClick={this.upVote}
+                      style={{ flex: 1 }}
+                    >
+                      Voter pour
+                    </Button>
+                    <Button
+                      className={
+                        !this.state.upVoted && !this.state.downVoted
+                          ? 'is-dark'
+                          : 'is-light'
+                      }
+                      onClick={this.unVote}
+                      style={{ flex: 1 }}
+                    >
+                      S'abstenir
+                    </Button>
+                    <Button
+                      className={
+                        this.state.downVoted ? 'is-danger' : 'is-light'
+                      }
+                      onClick={this.downVote}
+                      style={{ flex: 1 }}
+                    >
+                      Voter contre
+                    </Button>
+                  </Buttons>
                 </Box>
               </Column>
             </Columns>
