@@ -2,7 +2,7 @@ import React from 'react'
 import { Progress } from '../../components'
 
 export const Results = ({ value }) =>
-  value ? (
+  !isNaN(value) ? (
     <>
       <div className="has-text-centered">
         <div

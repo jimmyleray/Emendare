@@ -14,11 +14,11 @@ import {
   Buttons,
   Column,
   Columns,
-  ErrorPage,
   Icon,
   Notification,
   Page,
-  Results
+  Results,
+  UserContext
 } from '../../components'
 import { socket } from '../../services'
 import diff_match_patch from 'diff-match-patch'
@@ -29,15 +29,62 @@ export class AmendPage extends React.Component {
     super(props)
 
     this.upVote = () => {
-      this.setState({ upVoted: true, downVoted: false })
+      socket
+        .fetch('upVoteAmend', { id: this.props.match.params.id })
+        .then(amend => {
+          socket.emit('user')
+          this.setState(
+            { amend, error: null, upVoted: true, downVoted: false },
+            () => {
+              this.computeDiff()
+            }
+          )
+        })
+        .catch(error => {
+          this.setState({ error })
+        })
     }
 
     this.downVote = () => {
-      this.setState({ upVoted: false, downVoted: true })
+      socket
+        .fetch('downVoteAmend', { id: this.props.match.params.id })
+        .then(amend => {
+          socket.emit('user')
+          this.setState(
+            { amend, error: null, upVoted: false, downVoted: true },
+            () => {
+              this.computeDiff()
+            }
+          )
+        })
+        .catch(error => {
+          this.setState({ error })
+        })
     }
 
     this.unVote = () => {
-      this.setState({ upVoted: false, downVoted: false })
+      socket
+        .fetch('unVoteAmend', { id: this.props.match.params.id })
+        .then(amend => {
+          socket.emit('user')
+          this.setState(
+            { amend, error: null, upVoted: false, downVoted: false },
+            () => {
+              this.computeDiff()
+            }
+          )
+        })
+        .catch(error => {
+          this.setState({ error })
+        })
+    }
+
+    this.convertMsToTime = ms => {
+      const sec = Math.floor(ms / 1000)
+      const hrs = Math.floor(sec / 3600)
+      const mins = Math.floor((sec - 3600 * hrs) / 60)
+
+      return hrs + ' heures et ' + mins + ' minutes'
     }
 
     this.state = {
@@ -100,88 +147,127 @@ export class AmendPage extends React.Component {
   }
 
   render() {
-    if (this.state.error) return <ErrorPage />
-
     return (
       <Page title={this.getTitle()}>
-        {this.state.amend && (
-          <>
-            <Buttons>
-              <Button to={path.text(this.state.amend.text._id)}>
-                <Icon type="fas fa-chevron-left" />
-                <span>Retour au texte</span>
-              </Button>
-            </Buttons>
-            <Columns>
-              <Column>
-                <Amend data={this.state.amend} />
-              </Column>
-              <Column>
-                <Notification>
-                  <p>
-                    Le vote est clos à la fin du temps imparti ou dès lors
-                    qu'une majorité absolue est atteinte. Le vote est liquide,
-                    ce qui veut dire que vous pouvez changer votre vote jusqu'à
-                    la fin du scrutin.
-                  </p>
-                </Notification>
-                <Box key={this.state.index}>
-                  <p className="is-size-5 has-text-centered has-text-weight-semibold">
-                    Scrutin en cours sur l'amendement
-                  </p>
-
-                  <p className="has-text-centered">
-                    Temps restant avant la fin du scrutin :{' '}
-                    <span className="has-text-weight-semibold">
-                      {
-                        -Math.floor(
-                          (new Date().getTime() -
-                            (new Date(this.state.amend.created).getTime() +
-                              2 * 3600 * 1000)) /
-                            (1000 * 60)
-                        )
-                      }{' '}
-                      minutes
-                    </span>
-                  </p>
-                  <br/>
-                  <Results value={50} />
-                  <hr />
-
-                  <Buttons className="is-fullwidth">
-                    <Button
-                      className={this.state.upVoted ? 'is-success' : 'is-light'}
-                      onClick={this.upVote}
-                      style={{ flex: 1 }}
-                    >
-                      Voter pour
-                    </Button>
-                    <Button
-                      className={
-                        !this.state.upVoted && !this.state.downVoted
-                          ? 'is-dark'
-                          : 'is-light'
-                      }
-                      onClick={this.unVote}
-                      style={{ flex: 1 }}
-                    >
-                      S'abstenir
-                    </Button>
-                    <Button
-                      className={
-                        this.state.downVoted ? 'is-danger' : 'is-light'
-                      }
-                      onClick={this.downVote}
-                      style={{ flex: 1 }}
-                    >
-                      Voter contre
+        <UserContext.Consumer>
+          {({ user }) => (
+            <>
+              {this.state.amend && (
+                <>
+                  <Buttons>
+                    <Button to={path.text(this.state.amend.text._id)}>
+                      <Icon type="fas fa-chevron-left" />
+                      <span>Retour au texte</span>
                     </Button>
                   </Buttons>
-                </Box>
-              </Column>
-            </Columns>
-          </>
-        )}
+                  <Columns>
+                    <Column>
+                      <Amend data={this.state.amend} />
+                    </Column>
+                    <Column>
+                      <Notification>
+                        <p>
+                          Le vote est clos à la fin du temps imparti ou dès lors
+                          qu'une majorité absolue est atteinte. Le vote est
+                          liquide, ce qui veut dire que vous pouvez changer
+                          votre vote jusqu'à la fin du scrutin.
+                        </p>
+                      </Notification>
+                      <Box key={this.state.index}>
+                        <p className="is-size-5 has-text-centered has-text-weight-semibold">
+                          Scrutin en cours sur l'amendement
+                        </p>
+
+                        <p className="has-text-centered">
+                          Temps restant avant la fin du scrutin :{' '}
+                          <span className="has-text-weight-semibold">
+                            {this.convertMsToTime(
+                              -Math.floor(
+                                new Date().getTime() -
+                                  (new Date(
+                                    this.state.amend.created
+                                  ).getTime() +
+                                    this.state.amend.delayMax)
+                              )
+                            )}
+                          </span>
+                        </p>
+                        <br />
+
+                        <Results
+                          value={
+                            Math.round(
+                              (10 * (100 * this.state.amend.upVotesCount)) /
+                                (this.state.amend.upVotesCount +
+                                  this.state.amend.downVotesCount)
+                            ) / 10
+                          }
+                        />
+
+                        <hr />
+
+                        {user && (
+                          <>
+                            <Buttons className="is-fullwidth">
+                              <Button
+                                className={
+                                  user.upVotes.find(
+                                    id => id === this.state.amend._id
+                                  )
+                                    ? 'is-success'
+                                    : 'is-light'
+                                }
+                                onClick={this.upVote}
+                                style={{ flex: 1 }}
+                              >
+                                Voter pour
+                              </Button>
+                              <Button
+                                className={
+                                  !user.upVotes.find(
+                                    id => id === this.state.amend._id
+                                  ) &&
+                                  !user.downVotes.find(
+                                    id => id === this.state.amend._id
+                                  )
+                                    ? 'is-dark'
+                                    : 'is-light'
+                                }
+                                onClick={this.unVote}
+                                style={{ flex: 1 }}
+                              >
+                                S'abstenir
+                              </Button>
+                              <Button
+                                className={
+                                  user.downVotes.find(
+                                    id => id === this.state.amend._id
+                                  )
+                                    ? 'is-danger'
+                                    : 'is-light'
+                                }
+                                onClick={this.downVote}
+                                style={{ flex: 1 }}
+                              >
+                                Voter contre
+                              </Button>
+                            </Buttons>
+
+                            {this.state.error && (
+                              <Notification className="is-danger has-text-centered">
+                                {this.state.error}
+                              </Notification>
+                            )}
+                          </>
+                        )}
+                      </Box>
+                    </Column>
+                  </Columns>
+                </>
+              )}
+            </>
+          )}
+        </UserContext.Consumer>
       </Page>
     )
   }

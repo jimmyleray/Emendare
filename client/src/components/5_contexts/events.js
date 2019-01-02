@@ -8,7 +8,7 @@ export class EventsProvider extends React.Component {
     super(props)
 
     this.state = {
-      events: null
+      events: []
     }
   }
 

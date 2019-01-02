@@ -126,12 +126,15 @@ export const Text = ({ data, refetch }) => {
                   <>
                     <p>Liste des votes en cours</p>
                     <ul>
-                      {data.amends.map(amend => (
-                        <li key={amend._id}>
-                          <Link to={path.amend(amend._id)}>{amend.name}</Link>
-                        </li>
-                      ))}
-                      {data.amends.length === 0 && (
+                      {data.amends
+                        .filter(amend => !amend.closed)
+                        .map(amend => (
+                          <li key={amend._id}>
+                            <Link to={path.amend(amend._id)}>{amend.name}</Link>
+                          </li>
+                        ))}
+                      {data.amends.filter(amend => !amend.closed).length ===
+                        0 && (
                         <li className="has-text-weight-semibold has-text-danger">
                           Aucun vote en cours
                         </li>

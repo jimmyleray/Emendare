@@ -119,7 +119,11 @@ io.on('connection', socket => {
         } else {
           bcrypt.hash(password, 10, async (err, hash) => {
             const token = generateToken()
-            const user = await new User({ email, password: hash, token }).save()
+            const user = await new User.model({
+              email,
+              password: hash,
+              token
+            }).save()
             socket.emit('subscribe', { data: user })
           })
         }
@@ -321,6 +325,95 @@ io.on('connection', socket => {
       }
     } else {
       socket.emit('unFollowText', {
+        error: "Cet utilisateur n'est pas connecté"
+      })
+    }
+  })
+
+  socket.on('upVoteAmend', async ({ token, data }) => {
+    const user = await User.model.findOne({ token })
+    if (user) {
+      const amend = await Amend.model.findById(data.id).populate('text')
+
+      if (user.upVotes.indexOf(data.id) > -1) {
+        socket.emit('upVoteAmend', {
+          error: 'Vous avez déjà voté pour cet amendement'
+        })
+      } else {
+        const id = user.downVotes.indexOf(data.id)
+        if (id > -1) {
+          amend.downVotesCount--
+          user.downVotes.splice(id, 1)
+        }
+        amend.upVotesCount++
+        user.upVotes.push(data.id)
+      }
+
+      await user.save()
+      await amend.save()
+
+      socket.emit('upVoteAmend', { data: amend })
+    } else {
+      socket.emit('upVoteAmend', {
+        error: "Cet utilisateur n'est pas connecté"
+      })
+    }
+  })
+
+  socket.on('downVoteAmend', async ({ token, data }) => {
+    const user = await User.model.findOne({ token })
+    if (user) {
+      const amend = await Amend.model.findById(data.id).populate('text')
+
+      if (user.downVotes.indexOf(data.id) > -1) {
+        socket.emit('downVoteAmend', {
+          error: 'Vous avez déjà voté contre cet amendement'
+        })
+      } else {
+        const id = user.upVotes.indexOf(data.id)
+        if (id > -1) {
+          amend.upVotesCount--
+          user.upVotes.splice(id, 1)
+        }
+        amend.downVotesCount++
+        user.downVotes.push(data.id)
+      }
+
+      await user.save()
+      await amend.save()
+
+      socket.emit('downVoteAmend', { data: amend })
+    } else {
+      socket.emit('downVoteAmend', {
+        error: "Cet utilisateur n'est pas connecté"
+      })
+    }
+  })
+
+  socket.on('unVoteAmend', async ({ token, data }) => {
+    const user = await User.model.findOne({ token })
+    if (user) {
+      const amend = await Amend.model.findById(data.id).populate('text')
+
+      const id1 = user.upVotes.indexOf(data.id)
+      const id2 = user.downVotes.indexOf(data.id)
+
+      if (id1 > -1) {
+        amend.upVotesCount--
+        user.upVotes.splice(id1, 1)
+      }
+
+      if (id2 > -1) {
+        amend.downVotesCount--
+        user.downVotes.splice(id2, 1)
+      }
+
+      await user.save()
+      await amend.save()
+
+      socket.emit('unVoteAmend', { data: amend })
+    } else {
+      socket.emit('unVoteAmend', {
         error: "Cet utilisateur n'est pas connecté"
       })
     }
