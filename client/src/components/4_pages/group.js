@@ -52,7 +52,7 @@ export class GroupPage extends React.Component {
   }
 
   render() {
-    if (this.state.error) return <ErrorPage />
+    if (this.state.error) return <ErrorPage error={this.state.error} />
 
     return (
       <Page title={this.getTitle()}>

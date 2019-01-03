@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import { Group, Notification, Page } from '../../components'
+import { ErrorPage, Group, Notification, Page } from '../../components'
 import { socket } from '../../services'
 
 export class ExplorePage extends React.Component {
@@ -13,7 +13,8 @@ export class ExplorePage extends React.Component {
     super(props)
 
     this.state = {
-      rootGroup: null
+      rootGroup: null,
+      error: null
     }
   }
   componentDidMount() {
@@ -25,12 +26,19 @@ export class ExplorePage extends React.Component {
   }
 
   fetchData() {
-    socket.fetch('rootGroup').then(rootGroup => {
-      this.setState({ rootGroup })
-    })
+    socket
+      .fetch('rootGroup')
+      .then(rootGroup => {
+        this.setState({ rootGroup })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
   }
 
   render() {
+    if (this.state.error) return <ErrorPage error={this.state.error} />
+
     return (
       <Page title="Explorer">
         <Notification className="is-warning has-text-centered">

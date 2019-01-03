@@ -73,11 +73,15 @@ io.on('connection', socket => {
             await user.save()
             socket.emit('login', { data: user })
           } else {
-            socket.emit('login', { error: 'Mot de passe invalide' })
+            socket.emit('login', {
+              error: { code: '401', message: 'Le mot de passe est invalide' }
+            })
           }
         })
       } else {
-        socket.emit('login', { error: 'Email invalide' })
+        socket.emit('login', {
+          error: { code: '405', message: "L'email est invalide" }
+        })
       }
     } else if (token) {
       const user = await User.model
@@ -88,10 +92,14 @@ io.on('connection', socket => {
       if (user) {
         socket.emit('login', { data: user })
       } else {
-        socket.emit('login', { error: 'Token invalide' })
+        socket.emit('login', {
+          error: { code: 405, message: 'Le token est invalide' }
+        })
       }
     } else {
-      socket.emit('login', { error: 'Requete invalide' })
+      socket.emit('login', {
+        error: { code: 405, message: 'La requete est invalide' }
+      })
     }
   })
 
@@ -99,18 +107,26 @@ io.on('connection', socket => {
     const { email, password } = data
     if (!email || !isMatchZenika(email)) {
       socket.emit('subscribe', {
-        error:
-          'Pendant cette phase de test, seules les adresses électroniques se terminant par @zenika.com sont acceptées.'
+        error: {
+          code: 405,
+          message:
+            'Pendant cette phase de test, seules les adresses électroniques se terminant par @zenika.com sont acceptées.'
+        }
       })
     } else {
       if (await User.model.findOne({ email })) {
         socket.emit('subscribe', {
-          error:
-            "Cet email est déjà utilisé. Si il s'agit de votre compte, essayez de vous y connecter directement."
+          error: {
+            code: 405,
+            message:
+              "Cet email est déjà utilisé. Si il s'agit de votre compte, essayez de vous y connecter directement."
+          }
         })
       } else {
         if (!password) {
-          socket.emit('subscribe', { error: 'Le mot de passe est requis' })
+          socket.emit('subscribe', {
+            error: { code: 405, message: 'Le mot de passe est requis' }
+          })
         } else {
           bcrypt.hash(password, 10, async (err, hash) => {
             const token = generateToken()
@@ -145,10 +161,14 @@ io.on('connection', socket => {
       if (user) {
         socket.emit('user', { data: user })
       } else {
-        socket.emit('user', { error: "Cet utilisateur n'est pas connecté" })
+        socket.emit('user', {
+          error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
+        })
       }
     } else {
-      socket.emit('user', { error: 'Token invalide' })
+      socket.emit('user', {
+        error: { code: 405, message: 'Le token est invalide' }
+      })
     }
   })
 
@@ -168,7 +188,9 @@ io.on('connection', socket => {
     if (rootGroup) {
       socket.emit('rootGroup', { data: rootGroup })
     } else {
-      socket.emit('rootGroup', { error: "Ce groupe n'existe pas" })
+      socket.emit('rootGroup', {
+        error: { code: 404, message: "Oups, ce groupe n'existe pas ou plus" }
+      })
     }
   })
 
@@ -183,7 +205,9 @@ io.on('connection', socket => {
     if (group) {
       socket.emit('group', { data: group })
     } else {
-      socket.emit('group', { error: "Ce groupe n'existe pas" })
+      socket.emit('group', {
+        error: { code: 404, message: "Oups, ce groupe n'existe pas ou plus" }
+      })
     }
   })
 
@@ -196,7 +220,9 @@ io.on('connection', socket => {
     if (text) {
       socket.emit('text', { data: text })
     } else {
-      socket.emit('text', { error: "Ce texte n'existe pas" })
+      socket.emit('text', {
+        error: { code: 404, message: "Oups, ce texte n'existe pas ou plus" }
+      })
     }
   })
 
@@ -206,7 +232,12 @@ io.on('connection', socket => {
     if (amend) {
       socket.emit('amend', { data: amend })
     } else {
-      socket.emit('amend', { error: "Cet amendement n'existe pas" })
+      socket.emit('amend', {
+        error: {
+          code: 404,
+          message: "Oups, cet amendement n'existe pas ou plus"
+        }
+      })
     }
   })
 
@@ -239,7 +270,9 @@ io.on('connection', socket => {
 
       socket.emit('postAmend')
     } else {
-      socket.emit('postAmend', { error: "Cet utilisateur n'est pas connecté" })
+      socket.emit('postAmend', {
+        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
+      })
     }
   })
 
@@ -256,7 +289,7 @@ io.on('connection', socket => {
       socket.emit('joinGroup')
     } else {
       socket.emit('joinGroup', {
-        error: "Cet utilisateur n'est pas connecté"
+        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
       })
     }
   })
@@ -275,11 +308,13 @@ io.on('connection', socket => {
 
         socket.emit('quitGroup')
       } else {
-        socket.emit('quitGroup', { error: "Ce groupe n'est pas suivi" })
+        socket.emit('quitGroup', {
+          error: { code: 405, message: "Ce groupe n'est pas suivi" }
+        })
       }
     } else {
       socket.emit('quitGroup', {
-        error: "Cet utilisateur n'est pas connecté"
+        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
       })
     }
   })
@@ -297,7 +332,7 @@ io.on('connection', socket => {
       socket.emit('followText')
     } else {
       socket.emit('followText', {
-        error: "Cet utilisateur n'est pas connecté"
+        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
       })
     }
   })
@@ -316,18 +351,23 @@ io.on('connection', socket => {
 
         socket.emit('unFollowText')
       } else {
-        socket.emit('unFollowText', { error: "Ce texte n'est pas suivi" })
+        socket.emit('unFollowText', {
+          error: { code: 405, message: "Ce texte n'est pas suivi" }
+        })
       }
     } else {
       socket.emit('unFollowText', {
-        error: "Cet utilisateur n'est pas connecté"
+        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
       })
     }
   })
 
   socket.on('upVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (user) {
+    if (
+      user &&
+      user.followedTexts.find(followedText => followedText._id === data.id)
+    ) {
       const amend = await Amend.model.findById(data.id).populate('text')
 
       if (user.upVotes.indexOf(data.id) === -1) {
@@ -346,14 +386,17 @@ io.on('connection', socket => {
       }
     } else {
       socket.emit('upVoteAmend', {
-        error: "Cet utilisateur n'est pas connecté"
+        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
       })
     }
   })
 
   socket.on('downVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (user) {
+    if (
+      user &&
+      user.followedTexts.find(followedText => followedText._id === data.id)
+    ) {
       const amend = await Amend.model.findById(data.id).populate('text')
 
       if (user.downVotes.indexOf(data.id) === -1) {
@@ -372,14 +415,17 @@ io.on('connection', socket => {
       }
     } else {
       socket.emit('downVoteAmend', {
-        error: "Cet utilisateur n'est pas connecté"
+        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
       })
     }
   })
 
   socket.on('unVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (user) {
+    if (
+      user &&
+      user.followedTexts.find(followedText => followedText._id === data.id)
+    ) {
       const amend = await Amend.model.findById(data.id).populate('text')
 
       const id1 = user.upVotes.indexOf(data.id)
@@ -401,7 +447,7 @@ io.on('connection', socket => {
       socket.emit('unVoteAmend', { data: amend })
     } else {
       socket.emit('unVoteAmend', {
-        error: "Cet utilisateur n'est pas connecté"
+        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
       })
     }
   })

@@ -111,7 +111,7 @@ export class SubscribePage extends React.Component {
           </div>
           {this.state.error && (
             <Notification className="is-danger has-text-centered">
-              {this.state.error}
+              {this.state.error.message}
             </Notification>
           )}
         </form>

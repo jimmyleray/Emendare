@@ -14,6 +14,7 @@ import {
   Buttons,
   Column,
   Columns,
+  ErrorPage,
   Icon,
   Notification,
   Page,
@@ -37,9 +38,6 @@ export class AmendPage extends React.Component {
             this.computeDiff()
           })
         })
-        .catch(error => {
-          this.setState({ error })
-        })
     }
 
     this.downVote = () => {
@@ -51,9 +49,6 @@ export class AmendPage extends React.Component {
             this.computeDiff()
           })
         })
-        .catch(error => {
-          this.setState({ error })
-        })
     }
 
     this.unVote = () => {
@@ -64,9 +59,6 @@ export class AmendPage extends React.Component {
           this.setState({ amend, error: null }, () => {
             this.computeDiff()
           })
-        })
-        .catch(error => {
-          this.setState({ error })
         })
     }
 
@@ -136,6 +128,8 @@ export class AmendPage extends React.Component {
   }
 
   render() {
+    if (this.state.error) return <ErrorPage error={this.state.error} />
+
     return (
       <Page title={this.getTitle()}>
         <UserContext.Consumer>
@@ -193,62 +187,94 @@ export class AmendPage extends React.Component {
                           }
                         />
 
-                        <hr />
+                        <p className="has-text-centered">
+                          {this.state.amend.upVotesCount +
+                            this.state.amend.downVotesCount}{' '}
+                          vote
+                          {this.state.amend.upVotesCount +
+                            this.state.amend.downVotesCount >
+                          1
+                            ? 's'
+                            : ''}{' '}
+                          exprimé
+                          {this.state.amend.upVotesCount +
+                            this.state.amend.downVotesCount >
+                          1
+                            ? 's'
+                            : ''}{' '}
+                          sur {this.state.amend.text.followersCount} participant
+                          {this.state.amend.text.followersCount > 1 ? 's' : ''},
+                          soit{' '}
+                          {Math.round(
+                            (10 *
+                              100 *
+                              (this.state.amend.upVotesCount +
+                                this.state.amend.downVotesCount)) /
+                              this.state.amend.text.followersCount
+                          ) / 10}
+                          % de participation
+                        </p>
 
-                        {user && (
-                          <>
-                            <Buttons className="is-fullwidth">
-                              <Button
-                                className={
-                                  user.upVotes.find(
-                                    id => id === this.state.amend._id
-                                  )
-                                    ? 'is-success'
-                                    : 'is-light'
-                                }
-                                onClick={this.upVote}
-                                style={{ flex: 1 }}
-                              >
-                                Voter pour
-                              </Button>
-                              <Button
-                                className={
-                                  !user.upVotes.find(
-                                    id => id === this.state.amend._id
-                                  ) &&
-                                  !user.downVotes.find(
-                                    id => id === this.state.amend._id
-                                  )
-                                    ? 'is-dark'
-                                    : 'is-light'
-                                }
-                                onClick={this.unVote}
-                                style={{ flex: 1 }}
-                              >
-                                S'abstenir
-                              </Button>
-                              <Button
-                                className={
-                                  user.downVotes.find(
-                                    id => id === this.state.amend._id
-                                  )
-                                    ? 'is-danger'
-                                    : 'is-light'
-                                }
-                                onClick={this.downVote}
-                                style={{ flex: 1 }}
-                              >
-                                Voter contre
-                              </Button>
-                            </Buttons>
+                        {user &&
+                          user.followedTexts.find(
+                            followedText =>
+                              this.state.amend.text._id === followedText._id
+                          ) && (
+                            <>
+                              <hr />
 
-                            {this.state.error && (
-                              <Notification className="is-danger has-text-centered">
-                                {this.state.error}
-                              </Notification>
-                            )}
-                          </>
-                        )}
+                              <Buttons className="is-fullwidth">
+                                <Button
+                                  className={
+                                    user.upVotes.find(
+                                      id => id === this.state.amend._id
+                                    )
+                                      ? 'is-success'
+                                      : 'is-light'
+                                  }
+                                  onClick={this.upVote}
+                                  style={{ flex: 1 }}
+                                >
+                                  Voter pour
+                                </Button>
+                                <Button
+                                  className={
+                                    !user.upVotes.find(
+                                      id => id === this.state.amend._id
+                                    ) &&
+                                    !user.downVotes.find(
+                                      id => id === this.state.amend._id
+                                    )
+                                      ? 'is-dark'
+                                      : 'is-light'
+                                  }
+                                  onClick={this.unVote}
+                                  style={{ flex: 1 }}
+                                >
+                                  S'abstenir
+                                </Button>
+                                <Button
+                                  className={
+                                    user.downVotes.find(
+                                      id => id === this.state.amend._id
+                                    )
+                                      ? 'is-danger'
+                                      : 'is-light'
+                                  }
+                                  onClick={this.downVote}
+                                  style={{ flex: 1 }}
+                                >
+                                  Voter contre
+                                </Button>
+                              </Buttons>
+
+                              {this.state.error && (
+                                <Notification className="is-danger has-text-centered">
+                                  {this.state.error}
+                                </Notification>
+                              )}
+                            </>
+                          )}
                       </Box>
                     </Column>
                   </Columns>

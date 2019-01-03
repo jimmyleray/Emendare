@@ -62,7 +62,7 @@ export const Results = ({ value }) =>
     </>
   ) : (
     <>
-      <p className="has-text-centered">
+      <p className="has-text-centered has-text-weight-semibold">
         Il n'y a pas encore de résultats à afficher
       </p>
       <Progress
