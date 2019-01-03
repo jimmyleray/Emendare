@@ -364,25 +364,43 @@ io.on('connection', socket => {
 
   socket.on('upVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (
-      user &&
-      user.followedTexts.find(followedText => followedText._id === data.id)
-    ) {
-      const amend = await Amend.model.findById(data.id).populate('text')
+    if (user) {
+      if (
+        user.followedTexts.find(followedText => followedText._id === data.id)
+      ) {
+        const amend = await Amend.model.findById(data.id).populate('text')
 
-      if (user.upVotes.indexOf(data.id) === -1) {
-        const id = user.downVotes.indexOf(data.id)
-        if (id > -1) {
-          amend.downVotesCount--
-          user.downVotes.splice(id, 1)
+        if (!amend.closed) {
+          if (user.upVotes.indexOf(data.id) === -1) {
+            const id = user.downVotes.indexOf(data.id)
+            if (id > -1) {
+              amend.downVotesCount--
+              user.downVotes.splice(id, 1)
+            }
+            amend.upVotesCount++
+            user.upVotes.push(data.id)
+
+            await user.save()
+            await amend.save()
+
+            socket.emit('upVoteAmend', { data: amend })
+          } else {
+            socket.emit('upVoteAmend', {
+              error: { code: 405, message: 'Vous avez déjà voté pour' }
+            })
+          }
+        } else {
+          socket.emit('upVoteAmend', {
+            error: { code: 405, message: 'Ce scrutin est terminé' }
+          })
         }
-        amend.upVotesCount++
-        user.upVotes.push(data.id)
-
-        await user.save()
-        await amend.save()
-
-        socket.emit('upVoteAmend', { data: amend })
+      } else {
+        socket.emit('upVoteAmend', {
+          error: {
+            code: 405,
+            message: 'Cet utilisateur ne participe pas au texte'
+          }
+        })
       }
     } else {
       socket.emit('upVoteAmend', {
@@ -393,25 +411,43 @@ io.on('connection', socket => {
 
   socket.on('downVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (
-      user &&
-      user.followedTexts.find(followedText => followedText._id === data.id)
-    ) {
-      const amend = await Amend.model.findById(data.id).populate('text')
+    if (user) {
+      if (
+        user.followedTexts.find(followedText => followedText._id === data.id)
+      ) {
+        const amend = await Amend.model.findById(data.id).populate('text')
 
-      if (user.downVotes.indexOf(data.id) === -1) {
-        const id = user.upVotes.indexOf(data.id)
-        if (id > -1) {
-          amend.upVotesCount--
-          user.upVotes.splice(id, 1)
+        if (!amend.closed) {
+          if (user.downVotes.indexOf(data.id) === -1) {
+            const id = user.upVotes.indexOf(data.id)
+            if (id > -1) {
+              amend.upVotesCount--
+              user.upVotes.splice(id, 1)
+            }
+            amend.downVotesCount++
+            user.downVotes.push(data.id)
+
+            await user.save()
+            await amend.save()
+
+            socket.emit('downVoteAmend', { data: amend })
+          } else {
+            socket.emit('downVoteAmend', {
+              error: { code: 405, message: 'Vous vous êtes déjà voté contre' }
+            })
+          }
+        } else {
+          socket.emit('downVoteAmend', {
+            error: { code: 40(), message: 'Ce scrutin est terminé' }
+          })
         }
-        amend.downVotesCount++
-        user.downVotes.push(data.id)
-
-        await user.save()
-        await amend.save()
-
-        socket.emit('downVoteAmend', { data: amend })
+      } else {
+        socket.emit('downVoteAmend', {
+          error: {
+            code: 405,
+            message: 'Cet utilisateur ne participe pas au texte'
+          }
+        })
       }
     } else {
       socket.emit('downVoteAmend', {
@@ -422,29 +458,43 @@ io.on('connection', socket => {
 
   socket.on('unVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (
-      user &&
-      user.followedTexts.find(followedText => followedText._id === data.id)
-    ) {
-      const amend = await Amend.model.findById(data.id).populate('text')
+    if (user) {
+      if (
+        user.followedTexts.find(followedText => followedText._id === data.id)
+      ) {
+        const amend = await Amend.model.findById(data.id).populate('text')
 
-      const id1 = user.upVotes.indexOf(data.id)
-      const id2 = user.downVotes.indexOf(data.id)
+        if (!amend.closed) {
+          const id1 = user.upVotes.indexOf(data.id)
+          const id2 = user.downVotes.indexOf(data.id)
 
-      if (id1 > -1) {
-        amend.upVotesCount--
-        user.upVotes.splice(id1, 1)
+          if (id1 > -1) {
+            amend.upVotesCount--
+            user.upVotes.splice(id1, 1)
+          }
+
+          if (id2 > -1) {
+            amend.downVotesCount--
+            user.downVotes.splice(id2, 1)
+          }
+
+          await user.save()
+          await amend.save()
+
+          socket.emit('unVoteAmend', { data: amend })
+        } else {
+          socket.emit('unVoteAmend', {
+            error: { code: 405, message: 'Ce scutin est terminé' }
+          })
+        }
+      } else {
+        socket.emit('unVoteAmend', {
+          error: {
+            code: 405,
+            message: 'Cet utilisateur ne participe pas à ce texte'
+          }
+        })
       }
-
-      if (id2 > -1) {
-        amend.downVotesCount--
-        user.downVotes.splice(id2, 1)
-      }
-
-      await user.save()
-      await amend.save()
-
-      socket.emit('unVoteAmend', { data: amend })
     } else {
       socket.emit('unVoteAmend', {
         error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
