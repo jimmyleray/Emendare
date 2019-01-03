@@ -9,15 +9,13 @@ import React from 'react'
 import { Button, Page } from '../../components'
 import { path } from '../../config'
 
-export const ErrorPage = ({ error }) => (
+export const ErrorPage = ({
+  error = { code: 404, message: "Oups, cette page n'existe pas ou plus" }
+}) => (
   <Page title="Introuvable">
     <div className="field has-text-centered">
-      <h1 className="is-size-3">
-        Erreur {error.code === 404 ? '404 - Page introuvable' : error.code}
-      </h1>
-      <h2 className="is-size-5">
-        {error.message || "Oups cette page n'existe pas ou plus"}
-      </h2>
+      <h1 className="is-size-3">Erreur {error.code}</h1>
+      <h2 className="is-size-5">{error.message}</h2>
     </div>
     <div className="field is-grouped is-grouped-centered">
       <p className="control">
