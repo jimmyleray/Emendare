@@ -5,28 +5,33 @@ export const Results = ({ value }) =>
   !isNaN(value) ? (
     <>
       <div className="has-text-centered">
-        <div
-          className="has-text-weight-semibold"
-          style={{
-            display: 'inline-block',
-            width: value + '%',
-            minWidth: '100px',
-            maxWidth: 'calc(100% - 100px)'
-          }}
-        >
-          {value + '% POUR'}
-        </div>
-        <div
-          className="has-text-weight-semibold"
-          style={{
-            display: 'inline-block',
-            width: 100 - value + '%',
-            minWidth: '100px',
-            maxWidth: 'calc(100% - 100px)'
-          }}
-        >
-          {100 - value + '% CONTRE'}
-        </div>
+        {value > 0 && (
+          <div
+            className="has-text-weight-semibold"
+            style={{
+              display: 'inline-block',
+              width: value + '%',
+              minWidth: '100px',
+              maxWidth: 'calc(100% - 100px)'
+            }}
+          >
+            {value + '% POUR'}
+          </div>
+        )}
+
+        {value < 100 && (
+          <div
+            className="has-text-weight-semibold"
+            style={{
+              display: 'inline-block',
+              width: 100 - value + '%',
+              minWidth: '100px',
+              maxWidth: 'calc(100% - 100px)'
+            }}
+          >
+            {100 - value + '% CONTRE'}
+          </div>
+        )}
       </div>
       <div>
         <Progress
@@ -37,8 +42,8 @@ export const Results = ({ value }) =>
             display: 'inline-block',
             margin: 0,
             width: value + '%',
-            borderTopRightRadius: 0,
-            borderBottomRightRadius: 0
+            borderTopRightRadius: value < 100 ? 0 : null,
+            borderBottomRightRadius: value < 100 ? 0 : null
           }}
         />
         <Progress
@@ -46,16 +51,29 @@ export const Results = ({ value }) =>
           value="100"
           max="100"
           style={{
+            margin: 0,
             display: 'inline-block',
             width: 100 - value + '%',
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0
+            borderTopLeftRadius: value > 0 ? 0 : null,
+            borderBottomLeftRadius: value > 0 ? 0 : null
           }}
         />
       </div>
     </>
   ) : (
-    <p className="has-text-centered">
-      Il n'y a pas encore de résultats à afficher
-    </p>
+    <>
+      <p className="has-text-centered">
+        Il n'y a pas encore de résultats à afficher
+      </p>
+      <Progress
+        className="is-light is-large"
+        value="100"
+        max="100"
+        style={{
+          margin: 0,
+          display: 'inline-block',
+          width: '100%'
+        }}
+      />
+    </>
   )

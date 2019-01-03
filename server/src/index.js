@@ -57,11 +57,6 @@ const io = require('socket.io')(http, {
 let usersCount = 0
 
 io.on('connection', socket => {
-  console.log(++usersCount + ' utilisateur(s) connecté(s)')
-  socket.on('disconnect', () => {
-    console.log(--usersCount + ' utilisateur(s) connecté(s)')
-  })
-
   socket.on('login', async ({ token, data }) => {
     const { email, password } = data
     if (email && password) {
@@ -335,11 +330,7 @@ io.on('connection', socket => {
     if (user) {
       const amend = await Amend.model.findById(data.id).populate('text')
 
-      if (user.upVotes.indexOf(data.id) > -1) {
-        socket.emit('upVoteAmend', {
-          error: 'Vous avez déjà voté pour cet amendement'
-        })
-      } else {
+      if (user.upVotes.indexOf(data.id) === -1) {
         const id = user.downVotes.indexOf(data.id)
         if (id > -1) {
           amend.downVotesCount--
@@ -347,12 +338,12 @@ io.on('connection', socket => {
         }
         amend.upVotesCount++
         user.upVotes.push(data.id)
+
+        await user.save()
+        await amend.save()
+
+        socket.emit('upVoteAmend', { data: amend })
       }
-
-      await user.save()
-      await amend.save()
-
-      socket.emit('upVoteAmend', { data: amend })
     } else {
       socket.emit('upVoteAmend', {
         error: "Cet utilisateur n'est pas connecté"
@@ -365,11 +356,7 @@ io.on('connection', socket => {
     if (user) {
       const amend = await Amend.model.findById(data.id).populate('text')
 
-      if (user.downVotes.indexOf(data.id) > -1) {
-        socket.emit('downVoteAmend', {
-          error: 'Vous avez déjà voté contre cet amendement'
-        })
-      } else {
+      if (user.downVotes.indexOf(data.id) === -1) {
         const id = user.upVotes.indexOf(data.id)
         if (id > -1) {
           amend.upVotesCount--
@@ -377,12 +364,12 @@ io.on('connection', socket => {
         }
         amend.downVotesCount++
         user.downVotes.push(data.id)
+
+        await user.save()
+        await amend.save()
+
+        socket.emit('downVoteAmend', { data: amend })
       }
-
-      await user.save()
-      await amend.save()
-
-      socket.emit('downVoteAmend', { data: amend })
     } else {
       socket.emit('downVoteAmend', {
         error: "Cet utilisateur n'est pas connecté"

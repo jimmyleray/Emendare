@@ -33,12 +33,9 @@ export class AmendPage extends React.Component {
         .fetch('upVoteAmend', { id: this.props.match.params.id })
         .then(amend => {
           socket.emit('user')
-          this.setState(
-            { amend, error: null, upVoted: true, downVoted: false },
-            () => {
-              this.computeDiff()
-            }
-          )
+          this.setState({ amend, error: null }, () => {
+            this.computeDiff()
+          })
         })
         .catch(error => {
           this.setState({ error })
@@ -50,12 +47,9 @@ export class AmendPage extends React.Component {
         .fetch('downVoteAmend', { id: this.props.match.params.id })
         .then(amend => {
           socket.emit('user')
-          this.setState(
-            { amend, error: null, upVoted: false, downVoted: true },
-            () => {
-              this.computeDiff()
-            }
-          )
+          this.setState({ amend, error: null }, () => {
+            this.computeDiff()
+          })
         })
         .catch(error => {
           this.setState({ error })
@@ -67,12 +61,9 @@ export class AmendPage extends React.Component {
         .fetch('unVoteAmend', { id: this.props.match.params.id })
         .then(amend => {
           socket.emit('user')
-          this.setState(
-            { amend, error: null, upVoted: false, downVoted: false },
-            () => {
-              this.computeDiff()
-            }
-          )
+          this.setState({ amend, error: null }, () => {
+            this.computeDiff()
+          })
         })
         .catch(error => {
           this.setState({ error })
@@ -90,9 +81,7 @@ export class AmendPage extends React.Component {
     this.state = {
       index: 0,
       amend: null,
-      error: null,
-      upVoted: false,
-      downVoted: false
+      error: null
     }
   }
 
