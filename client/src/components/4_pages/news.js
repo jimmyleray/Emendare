@@ -48,7 +48,7 @@ export class NewsPage extends React.Component {
                 </Button>
                 <Button
                   className={
-                    this.state.displayTextEvents ? 'is-warning' : 'is-light'
+                    this.state.displayTextEvents ? 'is-info' : 'is-light'
                   }
                   onClick={this.toggle('displayTextEvents')}
                   style={{ flex: 1 }}
@@ -57,7 +57,7 @@ export class NewsPage extends React.Component {
                 </Button>
                 <Button
                   className={
-                    this.state.displayAmendEvents ? 'is-info' : 'is-light'
+                    this.state.displayAmendEvents ? 'is-success' : 'is-light'
                   }
                   onClick={this.toggle('displayAmendEvents')}
                   style={{ flex: 1 }}
@@ -66,7 +66,7 @@ export class NewsPage extends React.Component {
                 </Button>
               </Buttons>
               <hr />
-              <div className="has-text-centered">
+              <div>
                 {events &&
                   events
                     .filter(event =>

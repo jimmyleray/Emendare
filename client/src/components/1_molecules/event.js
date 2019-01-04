@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Notification } from '../../components'
+import { Icon, Notification } from '../../components'
 import { path } from '../../config'
 
 const typeToUrl = type => target => {
@@ -17,56 +17,63 @@ const typeToUrl = type => target => {
   }
 }
 
-const typeToClass = type => {
-  const base = 'is-size-5 '
-  switch (type) {
-    case 'amend':
-      return base + 'is-info'
-    case 'text':
-      return base + 'is-warning'
-    case 'group':
-      return base + 'is-danger'
-    default:
-      return ''
-  }
-}
-
 const typeToText = type => target => {
   switch (type) {
     case 'amend':
       return (
         <>
-          Un <span className="has-text-weight-semibold">nouvel amendement</span>{' '}
-          a été proposé sur le texte{' '}
-          <span className="has-text-weight-semibold">{target.text.name}</span>{' '}
-          dans le groupe{' '}
-          <span className="has-text-weight-semibold">
-            {target.text.group.name}
+          <Icon type="fas fa-pencil-alt" className="fa-lg has-text-success" />
+          <Icon type="fas fa-chevron-right" />
+          <span>
+            Un{' '}
+            <span className="has-text-weight-semibold">nouvel amendement</span>{' '}
+            a été proposé sur le texte{' '}
+            <span className="has-text-weight-semibold">{target.text.name}</span>{' '}
+            dans le groupe{' '}
+            <span className="has-text-weight-semibold">
+              {target.text.group.name}
+            </span>
           </span>
         </>
       )
     case 'text':
       return (
         <>
-          Un nouveau texte{' '}
-          <span className="has-text-weight-semibold">{target.name}</span> est
-          disponible dans le groupe{' '}
-          <span className="has-text-weight-semibold">{target.group.name}</span>
+          <Icon type="fas fa-align-center" className="fa-lg has-text-info" />
+          <Icon type="fas fa-chevron-right" />
+          <span>
+            Un nouveau texte{' '}
+            <span className="has-text-weight-semibold">{target.name}</span> est
+            disponible dans le groupe{' '}
+            <span className="has-text-weight-semibold">
+              {target.group.name}
+            </span>
+          </span>
         </>
       )
     case 'group':
       return target.parent ? (
         <>
-          Un nouveau groupe{' '}
-          <span className="has-text-weight-semibold">{target.name}</span> est
-          disponible dans le groupe{' '}
-          <span className="has-text-weight-semibold">{target.parent.name}</span>
+          <Icon type="fas fa-users" className="fa-lg has-text-danger" />
+          <Icon type="fas fa-chevron-right" />
+          <span>
+            Un nouveau groupe{' '}
+            <span className="has-text-weight-semibold">{target.name}</span> est
+            disponible dans le groupe{' '}
+            <span className="has-text-weight-semibold">
+              {target.parent.name}
+            </span>
+          </span>
         </>
       ) : (
         <>
-          Un nouveau groupe racine{' '}
-          <span className="has-text-weight-semibold">{target.name}</span> est
-          disponible
+          <Icon type="fas fa-users" className="fa-lg has-text-danger" />
+          <Icon type="fas fa-chevron-right" />
+          <span>
+            Un nouveau groupe racine{' '}
+            <span className="has-text-weight-semibold">{target.name}</span> est
+            disponible
+          </span>
         </>
       )
 
@@ -80,7 +87,7 @@ export const Event = ({ data }) =>
   data.target && (
     <>
       <Link to={typeToUrl(data.targetType)(data.target)}>
-        <Notification className={typeToClass(data.targetType)}>
+        <Notification className="is-light">
           {typeToText(data.targetType)(data.target)}
         </Notification>
       </Link>
