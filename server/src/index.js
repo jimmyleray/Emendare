@@ -400,10 +400,8 @@ io.on('connection', socket => {
 
   socket.on('upVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    console.log(user)
     if (user) {
       const amend = await Amend.model.findById(data.id).populate('text')
-      console.log(user.followedTexts.indexOf(amend.text._id))
       if (user.followedTexts.indexOf(amend.text._id) > -1) {
         if (!amend.closed) {
           if (user.upVotes.indexOf(data.id) === -1) {
