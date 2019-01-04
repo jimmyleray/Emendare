@@ -26,7 +26,9 @@ export class GroupPage extends React.Component {
     socket
       .fetch('group', { id: this.props.match.params.id })
       .then(group => {
-        this.setState({ group })
+        this.setState({ group }, () => {
+          socket.emit('user')
+        })
       })
       .catch(error => {
         this.setState({ error })
@@ -35,10 +37,18 @@ export class GroupPage extends React.Component {
 
   componentDidMount() {
     this.fetchData()
+    socket.on('group/' + this.props.match.params.id, ({ error, data }) => {
+      if (!error) {
+        this.setState({ group: data }, () => {
+          socket.emit('user')
+        })
+      }
+    })
   }
 
   componentWillUnmount() {
     socket.off('group')
+    socket.off('group/' + this.props.match.params.id)
   }
 
   componentDidUpdate(prevProps) {

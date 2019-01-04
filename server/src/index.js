@@ -32,7 +32,6 @@ const generateToken = require('./utils/token')
 // Public API for get texts by ID
 app.get('/text/:id', async (req, res) => {
   const text = await Text.model.findById(req.params.id)
-  console.log(text)
   if (text) {
     res.end(text.actual)
   } else {
@@ -256,9 +255,14 @@ io.on('connection', socket => {
       user.amends.push(amend._id)
       await user.save()
 
-      const text = await Text.model.findById(textID).populate('group')
+      let text = await Text.model.findById(textID)
       text.amends.push(amend._id)
       await text.save()
+
+      text = await Text.model
+        .findById(textID)
+        .populate('amends')
+        .populate('group')
 
       await new Event.model({
         targetType: 'amend',
@@ -267,7 +271,7 @@ io.on('connection', socket => {
 
       const events = await Event.model.find().sort('-created')
       io.emit('events', { data: events })
-
+      io.emit('text/' + text._id, { data: text })
       socket.emit('postAmend')
     } else {
       socket.emit('postAmend', {
@@ -279,14 +283,26 @@ io.on('connection', socket => {
   socket.on('joinGroup', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
     if (user) {
-      user.followedGroups.push(data.id)
-      await user.save()
+      if (user.followedGroups.indexOf(data.id) === -1) {
+        user.followedGroups.push(data.id)
+        await user.save()
 
-      const group = await Group.model.findById(data.id)
-      group.followersCount++
-      await group.save()
+        const group = await Group.model
+          .findById(data.id)
+          .populate('subgroups')
+          .populate('texts')
+          .populate('parent')
+          .populate('rules')
+        group.followersCount++
+        await group.save()
 
-      socket.emit('joinGroup')
+        io.emit('group/' + group._id, { data: group })
+        socket.emit('joinGroup')
+      } else {
+        socket.emit('joinGroup', {
+          error: { code: 405, message: 'Vous participez déjà ce groupe' }
+        })
+      }
     } else {
       socket.emit('joinGroup', {
         error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
@@ -302,10 +318,16 @@ io.on('connection', socket => {
         user.followedGroups.splice(id, 1)
         await user.save()
 
-        const group = await Group.model.findById(data.id)
+        const group = await Group.model
+          .findById(data.id)
+          .populate('subgroups')
+          .populate('texts')
+          .populate('parent')
+          .populate('rules')
         group.followersCount--
         await group.save()
 
+        io.emit('group/' + group._id, { data: group })
         socket.emit('quitGroup')
       } else {
         socket.emit('quitGroup', {
@@ -322,14 +344,24 @@ io.on('connection', socket => {
   socket.on('followText', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
     if (user) {
-      user.followedTexts.push(data.id)
-      await user.save()
+      if (user.followedTexts.indexOf(data.id) === -1) {
+        user.followedTexts.push(data.id)
+        await user.save()
 
-      const text = await Text.model.findById(data.id)
-      text.followersCount++
-      await text.save()
+        const text = await Text.model
+          .findById(data.id)
+          .populate('amends')
+          .populate('group')
+        text.followersCount++
+        await text.save()
 
-      socket.emit('followText')
+        io.emit('text/' + text._id, { data: text })
+        socket.emit('followText')
+      } else {
+        socket.emit('followText', {
+          error: { code: 405, message: 'Vous participez déjà à ce texte' }
+        })
+      }
     } else {
       socket.emit('followText', {
         error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
@@ -345,10 +377,14 @@ io.on('connection', socket => {
         user.followedTexts.splice(id, 1)
         await user.save()
 
-        const text = await Text.model.findById(data.id)
+        const text = await Text.model
+          .findById(data.id)
+          .populate('amends')
+          .populate('group')
         text.followersCount--
         await text.save()
 
+        io.emit('text/' + text._id, { data: text })
         socket.emit('unFollowText')
       } else {
         socket.emit('unFollowText', {
@@ -364,12 +400,11 @@ io.on('connection', socket => {
 
   socket.on('upVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
+    console.log(user)
     if (user) {
-      if (
-        user.followedTexts.find(followedText => followedText._id === data.id)
-      ) {
-        const amend = await Amend.model.findById(data.id).populate('text')
-
+      const amend = await Amend.model.findById(data.id).populate('text')
+      console.log(user.followedTexts.indexOf(amend.text._id))
+      if (user.followedTexts.indexOf(amend.text._id) > -1) {
         if (!amend.closed) {
           if (user.upVotes.indexOf(data.id) === -1) {
             const id = user.downVotes.indexOf(data.id)
@@ -383,6 +418,7 @@ io.on('connection', socket => {
             await user.save()
             await amend.save()
 
+            io.emit('amend/' + amend._id, { data: amend })
             socket.emit('upVoteAmend', { data: amend })
           } else {
             socket.emit('upVoteAmend', {
@@ -412,11 +448,8 @@ io.on('connection', socket => {
   socket.on('downVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
     if (user) {
-      if (
-        user.followedTexts.find(followedText => followedText._id === data.id)
-      ) {
-        const amend = await Amend.model.findById(data.id).populate('text')
-
+      const amend = await Amend.model.findById(data.id).populate('text')
+      if (user.followedTexts.indexOf(amend.text._id) > -1) {
         if (!amend.closed) {
           if (user.downVotes.indexOf(data.id) === -1) {
             const id = user.upVotes.indexOf(data.id)
@@ -430,6 +463,7 @@ io.on('connection', socket => {
             await user.save()
             await amend.save()
 
+            io.emit('amend/' + amend._id, { data: amend })
             socket.emit('downVoteAmend', { data: amend })
           } else {
             socket.emit('downVoteAmend', {
@@ -459,11 +493,8 @@ io.on('connection', socket => {
   socket.on('unVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
     if (user) {
-      if (
-        user.followedTexts.find(followedText => followedText._id === data.id)
-      ) {
-        const amend = await Amend.model.findById(data.id).populate('text')
-
+      const amend = await Amend.model.findById(data.id).populate('text')
+      if (user.followedTexts.indexOf(amend.text._id) > -1) {
         if (!amend.closed) {
           const id1 = user.upVotes.indexOf(data.id)
           const id2 = user.downVotes.indexOf(data.id)
@@ -481,6 +512,7 @@ io.on('connection', socket => {
           await user.save()
           await amend.save()
 
+          io.emit('amend/' + amend._id, { data: amend })
           socket.emit('unVoteAmend', { data: amend })
         } else {
           socket.emit('unVoteAmend', {

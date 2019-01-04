@@ -83,6 +83,7 @@ export class AmendPage extends React.Component {
       .then(amend => {
         this.setState({ amend }, () => {
           this.computeDiff()
+          socket.emit('user')
         })
       })
       .catch(error => {
@@ -92,6 +93,16 @@ export class AmendPage extends React.Component {
 
   componentDidMount() {
     this.fetchData()
+
+    socket.on('amend/' + this.props.match.params.id, ({ error, data }) => {
+      if (!error) {
+        this.setState({ amend: data }, () => {
+          this.computeDiff()
+          socket.emit('user')
+        })
+      }
+    })
+
     this.interval = setInterval(() => {
       this.setState({ index: this.state.index + 1 })
     }, 10 * 1000)
@@ -99,6 +110,7 @@ export class AmendPage extends React.Component {
 
   componentWillUnmount() {
     socket.off('amend')
+    socket.off('amend/' + this.props.match.params.id)
     clearInterval(this.interval)
   }
 

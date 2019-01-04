@@ -19,6 +19,13 @@ export class ExplorePage extends React.Component {
   }
   componentDidMount() {
     this.fetchData()
+    socket.on('rootGroup', ({ error, data }) => {
+      if (!error) {
+        this.setState({ rootGroup: data }, () => {
+          socket.emit('user')
+        })
+      }
+    })
   }
 
   componentWillUnmount() {
@@ -29,7 +36,9 @@ export class ExplorePage extends React.Component {
     socket
       .fetch('rootGroup')
       .then(rootGroup => {
-        this.setState({ rootGroup })
+        this.setState({ rootGroup }, () => {
+          socket.emit('user')
+        })
       })
       .catch(error => {
         this.setState({ error })

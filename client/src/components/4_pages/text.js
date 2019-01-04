@@ -30,7 +30,9 @@ export class TextPage extends React.Component {
     socket
       .fetch('text', { id: this.props.match.params.id })
       .then(text => {
-        this.setState({ text })
+        this.setState({ text }, () => {
+          socket.emit('user')
+        })
       })
       .catch(error => {
         this.setState({ error })
@@ -39,10 +41,18 @@ export class TextPage extends React.Component {
 
   componentDidMount() {
     this.fetchData()
+    socket.on('text/' + this.props.match.params.id, ({ error, data }) => {
+      if (!error) {
+        this.setState({ text: data }, () => {
+          socket.emit('user')
+        })
+      }
+    })
   }
 
   componentWillUnmount() {
     socket.off('text')
+    socket.off('text/' + this.props.match.params.id)
   }
 
   componentDidUpdate(prevProps) {
