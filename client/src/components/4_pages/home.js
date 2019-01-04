@@ -23,10 +23,6 @@ export const HomePage = () => (
         <span className="has-text-weight-semibold">#emendare</span> sur le slack
         Zenika
       </p>
-      <p>
-        Attention il est possible que les données soient réinitalisées pendant
-        cette première phase de test
-      </p>
     </Notification>
 
     <div className="field has-text-centered">
