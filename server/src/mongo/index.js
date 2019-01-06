@@ -187,7 +187,7 @@ const initProdDatabase = async () => {
   const privateGroup = await new Group.model({
     name: 'Zenika',
     description: 'Groupe privé Zenika',
-    parent: officialGroup._id,
+    parent: globalGroup._id,
     whitelist: ['*@zenika.com']
   }).save()
 
