@@ -13,8 +13,8 @@
     "socket.io-client": "^2.2.0"
   },
   "scripts": {
+    "start": "serve -s -l 8080 build",
     "dev": "react-scripts start",
-    "start": "serve -s -l 8080 public",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
