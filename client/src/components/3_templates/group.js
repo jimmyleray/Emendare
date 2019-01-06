@@ -54,6 +54,7 @@ export const Group = ({ data, refetch }) => {
             {isConnected() &&
               (user.followedGroups.find(group => group._id === data._id) ? (
                 <Button
+                  disabled
                   onClick={quitGroup(data._id)(refetch)}
                   className="is-light"
                 >
@@ -61,6 +62,7 @@ export const Group = ({ data, refetch }) => {
                 </Button>
               ) : (
                 <Button
+                  disabled
                   onClick={joinGroup(data._id)(refetch)}
                   className="is-success"
                 >

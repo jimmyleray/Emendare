@@ -7,7 +7,7 @@ const model = mongoose.model(
     name: { type: String, required: true },
     description: { type: String, default: '' },
     patch: { type: String, required: true },
-    version: { type: Number, required: true },
+    version: { type: Number, default: 0 },
     text: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Text',
@@ -19,10 +19,11 @@ const model = mongoose.model(
     },
     upVotesCount: { type: Number, default: 0 },
     downVotesCount: { type: Number, default: 0 },
-    delayMin: { type: Number, default: 3600 * 1000 },
-    delayMax: { type: Number, default: 3600 * 1000 * 24 },
+    delayMin: { type: Number, default: 60 * 1000 },
+    delayMax: { type: Number, default: 60 * 1000 * 60 },
     closed: { type: Boolean, default: false },
-    accepted: { type: Boolean, default: false }
+    accepted: { type: Boolean, default: false },
+    conflicted: { type: Boolean, default: false }
   })
 )
 

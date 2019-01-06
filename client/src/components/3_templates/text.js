@@ -40,10 +40,18 @@ export const Text = ({ data, refetch }) => {
                 ? 'Règles du groupe ' + data.group.name
                 : data.description}
             </h2>
-            <p className="has-text-weight-semibold">
-              {data.followersCount +
-                ' participant' +
-                (data.followersCount > 1 ? 's' : '')}
+            <p>
+              <span className="has-text-weight-semibold">
+                {data.followersCount +
+                  ' participant' +
+                  (data.followersCount > 1 ? 's' : '')}
+              </span>{' '}
+              -{' '}
+              {data.patches.length +
+                ' amendement' +
+                (data.patches.length > 1 ? 's' : '') +
+                ' accepté' +
+                (data.patches.length > 1 ? 's' : '')}
             </p>
           </div>
           <br />
@@ -112,40 +120,60 @@ export const Text = ({ data, refetch }) => {
                 </p>
               </Notification>
               <Box>
-                <p className="has-text-weight-semibold">
-                  {data.patches.length +
-                    ' amendement' +
-                    (data.patches.length > 1 ? 's' : '') +
-                    ' accepté' +
-                    (data.patches.length > 1 ? 's' : '') +
-                    ' par les participants'}
-                </p>
-                <br />
-
                 {data.amends.length > 0 && (
                   <>
                     <p>Liste des votes en cours</p>
-                    <ul>
-                      {data.amends
-                        .filter(amend => !amend.closed)
-                        .map(amend => (
-                          <li key={amend._id}>
-                            <Link to={path.amend(amend._id)}>{amend.name}</Link>
-                          </li>
-                        ))}
-                      {data.amends.filter(amend => !amend.closed).length ===
-                        0 && (
-                        <li className="has-text-weight-semibold has-text-danger">
-                          Aucun vote en cours
-                        </li>
-                      )}
-                    </ul>
+                    {data.amends.filter(amend => !amend.closed).length > 0 ? (
+                      <>
+                        {data.amends
+                          .filter(amend => !amend.closed)
+                          .map((amend, index) => (
+                            <p key={amend._id}>
+                              <Link to={path.amend(amend._id)}>
+                                {index + 1} - {amend.name}
+                              </Link>
+                            </p>
+                          ))}
+                      </>
+                    ) : (
+                      <p className="has-text-weight-semibold has-text-danger">
+                        Aucun vote en cours
+                      </p>
+                    )}
+
+                    <br />
+
+                    <p>Liste des votes clos</p>
+                    {data.amends.filter(amend => amend.closed).length > 0 && (
+                      <ul>
+                        {data.amends
+                          .filter(amend => amend.closed)
+                          .reverse()
+                          .map((amend, index, arr) => (
+                            <li key={amend._id}>
+                              <Link to={path.amend(amend._id)}>
+                                {arr.length - index} - {amend.name}{' '}
+                                <span
+                                  className={
+                                    'has-text-weight-semibold ' +
+                                    (amend.accepted
+                                      ? 'has-text-success'
+                                      : 'has-text-danger')
+                                  }
+                                >
+                                  ({amend.accepted ? 'accepté' : 'refusé'})
+                                </span>
+                              </Link>
+                            </li>
+                          ))}
+                      </ul>
+                    )}
                   </>
                 )}
 
                 {data.amends.length === 0 && (
                   <p className="has-text-weight-semibold has-text-danger">
-                    Aucun vote en cours
+                    Aucun amendement proposé
                   </p>
                 )}
               </Box>

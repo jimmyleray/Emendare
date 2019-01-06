@@ -5,9 +5,15 @@ const textSizeDisplayed = 100
 
 export const Amend = ({ data }) => (
   <Box>
-    {data.name && <p className="has-text-centered is-size-5">{data.name}</p>}
-    {data.description && <p>{data.description}</p>}
-    {(data.name || data.description) && data.diffs && <hr />}
+    <p className="has-text-centered is-size-5">
+      Amendement sur {data.text.name}
+    </p>
+    <p className="has-text-centered is-size-5 has-text-weight-bold">
+      {data.name}
+    </p>
+    <br />
+    <p>{data.description}</p>
+    <hr />
     <div>
       {data.diffs &&
         data.diffs.map((part, index) => (

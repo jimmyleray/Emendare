@@ -1,7 +1,6 @@
 const config = require('../config')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
-const lorem = require('../utils/lorem')
 
 mongoose.connect(
   config.mongoHost,
@@ -96,7 +95,6 @@ const initDatabase = async () => {
 
     const globalText = await new Text.model({
       name: "Roadmap d'Emendare",
-      actual: lorem,
       description: 'Participez à définir les futures fonctionnalités',
       group: globalGroup._id,
       official: true
@@ -109,7 +107,6 @@ const initDatabase = async () => {
 
     const privateText = await new Text.model({
       name: "Description de l'agence de Rennes",
-      actual: lorem,
       description: 'Texte utilisé sur rennes.zenika.com',
       group: privateGroup._id,
       private: true

@@ -37,16 +37,19 @@ export class Edit extends React.Component {
 
     this.hasDiffs = () => this.state.initialValue !== this.state.amendValue
 
-    this.addAmend = async () => {
-      await socket.fetch('postAmend', {
-        name: this.state.amendName,
-        description: this.state.amendDescription,
-        version: this.props.data.patches.length,
-        patch: this.state.patch,
-        textID: this.props.data._id
-      })
-      socket.emit('user')
-      this.setState({ redirectToText: true })
+    this.addAmend = () => {
+      socket
+        .fetch('postAmend', {
+          name: this.state.amendName,
+          description: this.state.amendDescription,
+          version: this.props.data.patches.length,
+          patch: this.state.patch,
+          textID: this.props.data._id
+        })
+        .then(amend => {
+          socket.emit('user')
+          this.setState({ redirectID: amend._id, redirectToAmend: true })
+        })
     }
 
     this.state = {
@@ -54,9 +57,11 @@ export class Edit extends React.Component {
       amendDescription: '',
       amendComplexity: 0,
       textSizeDisplayed: 100,
-      redirectToText: false,
+      redirectToAmend: false,
+      redirectID: null,
       initialValue: props.data.actual,
       amendValue: props.data.actual,
+      text: props.data,
       patch: null,
       diffs: []
     }
@@ -77,8 +82,8 @@ export class Edit extends React.Component {
   }
 
   render() {
-    if (this.state.redirectToText)
-      return <Redirect to={path.text(this.props.data._id)} />
+    if (this.state.redirectToAmend)
+      return <Redirect to={path.amend(this.state.redirectID)} />
 
     return (
       <UserContext.Consumer>
@@ -188,7 +193,8 @@ export class Edit extends React.Component {
                     data={{
                       name: this.state.amendName,
                       description: this.state.amendDescription,
-                      diffs: this.state.diffs
+                      diffs: this.state.diffs,
+                      text: this.state.text
                     }}
                   />
                 ) : (

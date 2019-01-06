@@ -123,19 +123,30 @@ export class AmendPage extends React.Component {
   computeDiff() {
     const dmp = new diff_match_patch()
     dmp.Diff_EditCost = 8
-    const res = dmp.patch_apply(
+
+    let previousText = ''
+
+    for (let index = 0; index < this.state.amend.version; index++) {
+      const patch = this.state.amend.text.patches[index]
+      previousText = dmp.patch_apply(dmp.patch_fromText(patch), previousText)[0]
+    }
+
+    const newText = dmp.patch_apply(
       dmp.patch_fromText(this.state.amend.patch),
-      this.state.amend.text.actual
-    )
-    const newText = res[0]
-    const diffs = dmp.diff_main(this.state.amend.text.actual, newText)
+      previousText
+    )[0]
+
+    const diffs = dmp.diff_main(previousText, newText)
     dmp.diff_cleanupEfficiency(diffs)
     this.setState({ amend: { diffs, ...this.state.amend } })
   }
 
   getTitle() {
     return this.state.amend
-      ? 'Amendement ' + this.state.amend.name
+      ? 'Amendement sur ' +
+          this.state.amend.text.name +
+          ' : ' +
+          this.state.amend.name
       : 'Amendement'
   }
 
@@ -160,72 +171,83 @@ export class AmendPage extends React.Component {
                       <Amend data={this.state.amend} />
                     </Column>
                     <Column>
-                      <Notification>
+                      <Notification className="is-info">
                         <p>
-                          Le vote est clos à la fin du temps imparti ou dès lors
-                          qu'une majorité absolue est atteinte. Le vote est
-                          liquide, ce qui veut dire que vous pouvez changer
-                          votre vote jusqu'à la fin du scrutin.
+                          Le vote est{' '}
+                          <span className="has-text-weight-semibold">
+                            clos à la fin du temps imparti
+                          </span>{' '}
+                          ou dès lors qu'une majorité absolue est atteinte. Le{' '}
+                          <span className="has-text-weight-semibold">
+                            vote est liquide
+                          </span>
+                          , ce qui veut dire que vous pouvez changer votre vote
+                          jusqu'à la fin du scrutin.
                         </p>
                       </Notification>
                       <Box key={this.state.index}>
                         <p className="is-size-5 has-text-centered has-text-weight-semibold">
-                          Scrutin en cours sur l'amendement
+                          Scrutin{' '}
+                          {this.state.amend.closed ? 'clos' : 'en cours'} sur
+                          l'amendement présenté ci-contre
                         </p>
 
-                        <p className="has-text-centered">
-                          Temps restant avant la fin du scrutin :{' '}
-                          <span className="has-text-weight-semibold">
-                            {this.convertMsToTime(
-                              -Math.floor(
-                                new Date().getTime() -
-                                  (new Date(
-                                    this.state.amend.created
-                                  ).getTime() +
-                                    this.state.amend.delayMax)
-                              )
-                            )}
-                          </span>
-                        </p>
-                        <br />
+                        {!this.state.amend.closed && (
+                          <p className="has-text-centered">
+                            Temps restant avant la fin du scrutin :{' '}
+                            <span className="has-text-weight-semibold">
+                              {this.convertMsToTime(
+                                -Math.floor(
+                                  new Date().getTime() -
+                                    (new Date(
+                                      this.state.amend.created
+                                    ).getTime() +
+                                      this.state.amend.delayMax)
+                                )
+                              )}
+                            </span>
+                          </p>
+                        )}
 
-                        <Results
-                          value={
-                            Math.round(
-                              (10 * (100 * this.state.amend.upVotesCount)) /
-                                (this.state.amend.upVotesCount +
-                                  this.state.amend.downVotesCount)
-                            ) / 10
-                          }
-                        />
+                        <hr />
 
-                        <p className="has-text-centered">
-                          {this.state.amend.upVotesCount +
-                            this.state.amend.downVotesCount}{' '}
-                          vote
-                          {this.state.amend.upVotesCount +
-                            this.state.amend.downVotesCount >
-                          1
-                            ? 's'
-                            : ''}{' '}
-                          exprimé
-                          {this.state.amend.upVotesCount +
-                            this.state.amend.downVotesCount >
-                          1
-                            ? 's'
-                            : ''}{' '}
-                          sur {this.state.amend.text.followersCount} participant
-                          {this.state.amend.text.followersCount > 1 ? 's' : ''},
-                          soit{' '}
-                          {Math.round(
-                            (10 *
-                              100 *
-                              (this.state.amend.upVotesCount +
-                                this.state.amend.downVotesCount)) /
-                              this.state.amend.text.followersCount
-                          ) / 10}
-                          % de participation
-                        </p>
+                        {this.state.amend.upVotesCount +
+                          this.state.amend.downVotesCount >
+                        0 ? (
+                          <>
+                            <Results
+                              value={
+                                Math.round(
+                                  (10 * (100 * this.state.amend.upVotesCount)) /
+                                    (this.state.amend.upVotesCount +
+                                      this.state.amend.downVotesCount)
+                                ) / 10
+                              }
+                            />
+                            <p className="has-text-centered">
+                              {this.state.amend.upVotesCount +
+                                this.state.amend.downVotesCount}{' '}
+                              vote
+                              {this.state.amend.upVotesCount +
+                                this.state.amend.downVotesCount >
+                              1
+                                ? 's'
+                                : ''}{' '}
+                              exprimé
+                              {this.state.amend.upVotesCount +
+                                this.state.amend.downVotesCount >
+                              1
+                                ? 's'
+                                : ''}
+                            </p>
+                          </>
+                        ) : (
+                          <p className="has-text-centered">
+                            Aucun vote n'est encore enregistré pour ce scrutin
+                          </p>
+                        )}
+
+                        <hr />
 
                         {user &&
                           user.followedTexts.find(
@@ -233,8 +255,6 @@ export class AmendPage extends React.Component {
                               this.state.amend.text._id === followedText._id
                           ) && (
                             <>
-                              <hr />
-
                               <Buttons className="is-fullwidth">
                                 <Button
                                   className={
@@ -244,6 +264,7 @@ export class AmendPage extends React.Component {
                                       ? 'is-success'
                                       : 'is-light'
                                   }
+                                  disabled={this.state.amend.closed}
                                   onClick={this.upVote}
                                   style={{ flex: 1 }}
                                 >
@@ -260,6 +281,7 @@ export class AmendPage extends React.Component {
                                       ? 'is-dark'
                                       : 'is-light'
                                   }
+                                  disabled={this.state.amend.closed}
                                   onClick={this.unVote}
                                   style={{ flex: 1 }}
                                 >
@@ -273,20 +295,53 @@ export class AmendPage extends React.Component {
                                       ? 'is-danger'
                                       : 'is-light'
                                   }
+                                  disabled={this.state.amend.closed}
                                   onClick={this.downVote}
                                   style={{ flex: 1 }}
                                 >
                                   Voter contre
                                 </Button>
                               </Buttons>
-
-                              {this.state.error && (
-                                <Notification className="is-danger has-text-centered">
-                                  {this.state.error}
-                                </Notification>
-                              )}
                             </>
                           )}
+
+                        {user &&
+                          !this.state.amend.closed &&
+                          !user.followedTexts.find(
+                            followedText =>
+                              this.state.amend.text._id === followedText._id
+                          ) && (
+                            <>
+                              <p className="has-text-centered has-text-weight-semibold has-text-danger">
+                                Vous devez participer au texte visé par cet
+                                amendement pour pouvoir participer à ce scrutin
+                                et / ou proposer d'autres amendements.
+                              </p>
+                            </>
+                          )}
+
+                        {this.state.amend.closed && (
+                          <>
+                            <p className="has-text-centered has-text-weight-semibold has-text-danger">
+                              Le scrutin est clos. L'amendement a été{' '}
+                              {this.state.amend.accepted ? 'accepté' : 'refusé'}{' '}
+                              par les participants.
+                            </p>
+
+                            {this.state.amend.conflicted && (
+                              <>
+                                <br />
+                                <p className="has-text-centered has-text-weight-semibold">
+                                  Mais des conflits ont été détectés à
+                                  l'application de l'amendement. Une nouvelle
+                                  fonctionalité permettra prochainement aux
+                                  auteurs des amendements de corriger ces
+                                  conflits avant les scrutins.
+                                </p>
+                              </>
+                            )}
+                          </>
+                        )}
                       </Box>
                     </Column>
                   </Columns>

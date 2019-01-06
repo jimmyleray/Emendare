@@ -16,6 +16,10 @@ const bcrypt = require('bcrypt')
 const isMatch = require('is-match')
 const isMatchZenika = isMatch('*@zenika.com')
 
+// Diff Match Patch Library
+// https://github.com/google/diff-match-patch
+const diff_match_patch = require('diff-match-patch')
+
 // MongoDB connection
 const database = require('./mongo')
 
@@ -53,7 +57,83 @@ const io = require('socket.io')(http, {
   cookie: false
 })
 
-let usersCount = 0
+const delay = ms => {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
+}
+
+const hasUpMajority = amend =>
+  amend.upVotesCount >= Math.floor(amend.text.followersCount / 2) + 1
+
+const hasDownMajority = amend =>
+  amend.downVotesCount >= Math.floor(amend.text.followersCount / 2) + 1
+
+const hasMajority = amend => hasDownMajority(amend) || hasUpMajority(amend)
+
+const updateTextWithAmend = async amend => {
+  amend.accepted = true
+
+  const dmp = new diff_match_patch()
+  dmp.Diff_EditCost = 8
+
+  const [newText, patchesAreApplied] = dmp.patch_apply(
+    dmp.patch_fromText(amend.patch),
+    amend.text.actual
+  )
+
+  if (!patchesAreApplied.includes(false)) {
+    amend.version = amend.text.patches.length
+    amend.text.patches.push(amend.patch)
+    amend.text.actual = newText
+  } else {
+    amend.conflicted = true
+  }
+
+  await amend.text.save()
+}
+
+const checkAmendVotes = async () => {
+  // On récupère tous les scrutins en cours
+  const amends = await Amend.model.find({ closed: false }).populate('text')
+
+  const date = new Date()
+  const now = date.getTime()
+
+  amends.forEach(async amend => {
+    const start = amend.created.getTime()
+
+    // Si le scrutin est terminé en ayant
+    // atteint une des conditions d'arrêt
+    if (
+      now > start + amend.delayMax ||
+      (now > start + amend.delayMin && hasMajority(amend))
+    ) {
+      amend.closed = true
+
+      // Si il y'a une majorité
+      // pour accepter l'amendement
+      if (hasUpMajority(amend)) {
+        updateTextWithAmend(amend)
+      }
+
+      await amend.save()
+      io.emit('amend/' + amend._id, { data: amend })
+
+      const text = await Text.model
+        .findById(amend.text._id)
+        .populate('amends')
+        .populate('group')
+        
+      io.emit('text/' + text._id, { data: text })
+    }
+  })
+
+  await delay(10 * 1000)
+  checkAmendVotes()
+}
+
+checkAmendVotes()
 
 io.on('connection', socket => {
   socket.on('login', async ({ token, data }) => {
@@ -272,7 +352,7 @@ io.on('connection', socket => {
       const events = await Event.model.find().sort('-created')
       io.emit('events', { data: events })
       io.emit('text/' + text._id, { data: text })
-      socket.emit('postAmend')
+      socket.emit('postAmend', { data: amend })
     } else {
       socket.emit('postAmend', {
         error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
