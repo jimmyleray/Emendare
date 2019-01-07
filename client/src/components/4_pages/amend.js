@@ -71,7 +71,6 @@ export class AmendPage extends React.Component {
     }
 
     this.state = {
-      index: 0,
       amend: null,
       error: null
     }
@@ -102,16 +101,11 @@ export class AmendPage extends React.Component {
         })
       }
     })
-
-    this.interval = setInterval(() => {
-      this.setState({ index: this.state.index + 1 })
-    }, 10 * 1000)
   }
 
   componentWillUnmount() {
     socket.off('amend')
     socket.off('amend/' + this.props.match.params.id)
-    clearInterval(this.interval)
   }
 
   componentDidUpdate(prevProps) {
@@ -186,7 +180,7 @@ export class AmendPage extends React.Component {
                           jusqu'à la fin du scrutin.
                         </p>
                       </Notification>
-                      <Box key={this.state.index}>
+                      <Box>
                         <p className="is-size-5 has-text-centered has-text-weight-semibold">
                           Scrutin{' '}
                           {this.state.amend.closed ? 'clos' : 'en cours'} sur
