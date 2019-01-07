@@ -2,18 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export const Button = ({ children, className = '', ...rest }) =>
-  rest.to ? (
-    <>
-      {rest.disabled ? (
-        <button className={'button ' + className} {...rest}>
-          {children}
-        </button>
-      ) : (
-        <Link to={rest.to} className={'button ' + className} {...rest}>
-          {children}
-        </Link>
-      )}
-    </>
+  rest.to && !rest.disabled ? (
+    <Link to={rest.to} className={'button ' + className} {...rest}>
+      {children}
+    </Link>
   ) : (
     <button className={'button ' + className} {...rest}>
       {children}
