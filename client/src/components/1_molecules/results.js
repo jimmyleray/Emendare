@@ -24,12 +24,12 @@ export const Results = ({ value }) =>
             className="has-text-weight-semibold"
             style={{
               display: 'inline-block',
-              width: (100 - value).toFixed(1) + '%',
+              width: 100 - value + '%',
               minWidth: '100px',
               maxWidth: 'calc(100% - 100px)'
             }}
           >
-            {100 - value + '% CONTRE'}
+            {(100 - value).toFixed(1) + '% CONTRE'}
           </div>
         )}
       </div>
@@ -53,7 +53,7 @@ export const Results = ({ value }) =>
           style={{
             margin: 0,
             display: 'inline-block',
-            width: (100 - value).toFixed(1) + '%',
+            width: 100 - value + '%',
             borderTopLeftRadius: value > 0 ? 0 : null,
             borderBottomLeftRadius: value > 0 ? 0 : null
           }}
