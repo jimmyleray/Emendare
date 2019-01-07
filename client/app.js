@@ -17,6 +17,11 @@ app.use(compression())
 // For static files
 app.use(express.static(__dirname + '/build'))
 
+// For all routes, SPA redirection
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/build/index.html')
+})
+
 // Launch server
 const port = process.env.PORT || 8080
 app.listen(port, () => console.log(`Emendare client running on port ${port}`))
