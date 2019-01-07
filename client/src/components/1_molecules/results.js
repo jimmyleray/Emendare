@@ -24,7 +24,7 @@ export const Results = ({ value }) =>
             className="has-text-weight-semibold"
             style={{
               display: 'inline-block',
-              width: 100 - value + '%',
+              width: (100 - value).toFixed(1) + '%',
               minWidth: '100px',
               maxWidth: 'calc(100% - 100px)'
             }}
@@ -53,7 +53,7 @@ export const Results = ({ value }) =>
           style={{
             margin: 0,
             display: 'inline-block',
-            width: 100 - value + '%',
+            width: (100 - value).toFixed(1) + '%',
             borderTopLeftRadius: value > 0 ? 0 : null,
             borderBottomLeftRadius: value > 0 ? 0 : null
           }}
