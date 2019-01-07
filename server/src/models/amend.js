@@ -19,7 +19,7 @@ const model = mongoose.model(
     },
     upVotesCount: { type: Number, default: 0 },
     downVotesCount: { type: Number, default: 0 },
-    delayMin: { type: Number, default: 24 * 60 * 60 * 1000 },
+    delayMin: { type: Number, default: 60 * 60 * 1000 },
     delayMax: { type: Number, default: 7 * 24 * 60 * 60 * 1000 },
     closed: { type: Boolean, default: false },
     accepted: { type: Boolean, default: false },
