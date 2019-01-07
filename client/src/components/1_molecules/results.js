@@ -11,8 +11,8 @@ export const Results = ({ value }) =>
             style={{
               display: 'inline-block',
               width: value + '%',
-              minWidth: '100px',
-              maxWidth: 'calc(100% - 100px)'
+              minWidth: '120px',
+              maxWidth: 'calc(100% - 120px)'
             }}
           >
             {value + '% POUR'}
@@ -25,8 +25,8 @@ export const Results = ({ value }) =>
             style={{
               display: 'inline-block',
               width: 100 - value + '%',
-              minWidth: '100px',
-              maxWidth: 'calc(100% - 100px)'
+              minWidth: '120px',
+              maxWidth: 'calc(100% - 120px)'
             }}
           >
             {(100 - value).toFixed(1) + '% CONTRE'}
