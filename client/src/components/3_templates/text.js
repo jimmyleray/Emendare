@@ -113,10 +113,10 @@ export const Text = ({ data, refetch }) => {
             <Column>
               <Notification className="is-warning">
                 <p>
-                  Vous devez vous déclarer comme participant à ce texte pour
-                  participer à ses votes, et pour proposer de nouveaux
-                  amendements. Les votes se font entre les utilisateurs qui se
-                  sont déclarés comme participants.
+                  Vous devez être connecté et vous déclarer comme participant à
+                  ce texte pour participer à ses votes, et pour proposer de
+                  nouveaux amendements. Les votes se font entre les utilisateurs
+                  qui se sont déclarés comme participants.
                 </p>
               </Notification>
               <Box>

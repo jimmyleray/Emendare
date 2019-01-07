@@ -238,8 +238,8 @@ const initProdDatabase = async () => {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  database.dropDatabase()
-  initProdDatabase()
+  // database.dropDatabase()
+  // initProdDatabase()
 } else {
   database.dropDatabase()
   initDevDatabase()

@@ -177,7 +177,8 @@ export class AmendPage extends React.Component {
                           <span className="has-text-weight-semibold">
                             clos à la fin du temps imparti
                           </span>{' '}
-                          ou dès lors qu'une majorité absolue est atteinte. Le{' '}
+                          ou dès lors qu'une majorité absolue est atteinte après
+                          un delai minimum d'une heure. Le{' '}
                           <span className="has-text-weight-semibold">
                             vote est liquide
                           </span>
