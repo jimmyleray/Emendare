@@ -8,7 +8,7 @@ export const LegalPage = () => (
       <h2 className="is-size-5">Coordonnées de l'hébergeur</h2>
       <br />
       <p>
-        Emendare est hebergé par{' '}
+        Emendare est hébergé par{' '}
         <a href="https://www.clever-cloud.com/en/legal-terms">Clever Cloud</a>
       </p>
     </div>
