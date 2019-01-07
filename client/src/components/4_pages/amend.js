@@ -217,13 +217,13 @@ export class AmendPage extends React.Component {
                         0 ? (
                           <>
                             <Results
-                              value={
+                              value={(
                                 Math.round(
-                                  (10 * (100 * this.state.amend.upVotesCount)) /
-                                    (this.state.amend.upVotesCount +
-                                      this.state.amend.downVotesCount)
-                                ) / 10
-                              }
+                                  100 * this.state.amend.upVotesCount
+                                ) /
+                                (this.state.amend.upVotesCount +
+                                  this.state.amend.downVotesCount)
+                              ).toFixed(1)}
                             />
                             <p className="has-text-centered">
                               {this.state.amend.upVotesCount +
