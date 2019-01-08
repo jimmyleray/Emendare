@@ -20,15 +20,32 @@
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "./node_modules/.bin/eslint src/**/*.js --fix",
+    "format": "prettier \"src/**/*.js\" --write",
+    "precommit": "NODE_ENV=production lint-staged"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "lint-staged": {
+    "*.{js}": [
+      "pretty-quick --staged",
+      "npm run lint",
+      "git add"
+    ]
   },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "eslint": "^5.12.0",
+    "eslint-config-react-app": "^3.0.6",
+    "eslint-plugin-flowtype": "^2.50.3",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.12.3",
+    "prettier": "^1.15.3"
+  }
 }
