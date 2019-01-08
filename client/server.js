@@ -15,7 +15,8 @@ const compression = require('compression')
 app.use(compression())
 
 // For static files
-app.use(express.static(__dirname + '/build'))
+const oneDay = 86400000
+app.use(express.static(__dirname + '/build', { maxAge: oneDay }))
 
 // For all routes, SPA redirection
 app.get('*', (req, res) => {
@@ -23,5 +24,5 @@ app.get('*', (req, res) => {
 })
 
 // Launch server
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Emendare client running on port ${port}`))
