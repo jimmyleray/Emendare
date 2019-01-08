@@ -19,6 +19,7 @@ import {
   Notification,
   Page,
   Results,
+  Spacer,
   UserContext
 } from '../../components'
 import { socket } from '../../services'
@@ -60,6 +61,16 @@ export class AmendPage extends React.Component {
             this.computeDiff()
           })
         })
+    }
+
+    this.unFollowText = id => async () => {
+      await socket.fetch('unFollowText', { id })
+      socket.emit('user')
+    }
+
+    this.followText = id => async () => {
+      await socket.fetch('followText', { id })
+      socket.emit('user')
     }
 
     this.convertMsToTime = ms => {
@@ -150,7 +161,7 @@ export class AmendPage extends React.Component {
     return (
       <Page title={this.getTitle()}>
         <UserContext.Consumer>
-          {({ user }) => (
+          {({ user, isConnected }) => (
             <>
               {this.state.amend && (
                 <>
@@ -159,6 +170,29 @@ export class AmendPage extends React.Component {
                       <Icon type="fas fa-chevron-left" />
                       <span>Retour au texte</span>
                     </Button>
+
+                    <Spacer />
+
+                    {isConnected() &&
+                      (user.followedTexts.find(
+                        text => text._id === this.state.amend.text._id
+                      ) ? (
+                        <Button
+                          onClick={this.unFollowText(this.state.amend.text._id)}
+                          className="button is-light"
+                          disabled={this.state.amend.text.rules}
+                        >
+                          Ne plus participer à ce texte
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={this.followText(this.state.amend.text._id)}
+                          className="button is-success"
+                          disabled={this.state.amend.text.rules}
+                        >
+                          Participer à ce texte
+                        </Button>
+                      ))}
                   </Buttons>
                   <Columns>
                     <Column>
