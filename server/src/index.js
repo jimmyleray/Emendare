@@ -66,8 +66,7 @@ const delay = ms => {
 const hasAbsoluteUpMajority = amend =>
   amend.upVotesCount >= Math.floor(amend.text.followersCount / 2) + 1
 
-const hasRelativeUpMajority = amend =>
-  amend.upVotesCount >= amend.downVotesCount
+const hasRelativeUpMajority = amend => amend.upVotesCount > amend.downVotesCount
 
 const hasAbsoluteDownMajority = amend =>
   amend.downVotesCount >= Math.floor(amend.text.followersCount / 2) + 1
