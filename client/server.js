@@ -2,9 +2,11 @@
 const express = require('express')
 const app = express()
 
-// For redirect http to https
-const enforce = require('express-sslify')
-app.use(enforce.HTTPS({ trustProtoHeader: true }))
+// For redirect http to https in production
+if (process.env.NODE_ENV === 'production') {
+  const enforce = require('express-sslify')
+  app.use(enforce.HTTPS({ trustProtoHeader: true }))
+}
 
 // For Cors headers
 const cors = require('cors')
@@ -16,7 +18,8 @@ app.use(compression())
 
 // For static files
 const oneDay = 86400000
-app.use(express.static(__dirname + '/build', { maxAge: oneDay }))
+const maxAge = process.env.NODE_ENV === 'production' ? oneDay : 0
+app.use(express.static(__dirname + '/build', { maxAge }))
 
 // For all routes, SPA redirection
 app.get('*', (req, res) => {
