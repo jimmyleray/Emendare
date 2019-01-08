@@ -17,8 +17,8 @@ const compression = require('compression')
 app.use(compression())
 
 // For static files
-const oneDay = 86400000
-const maxAge = process.env.NODE_ENV === 'production' ? oneDay : 0
+const oneWeek = 604800000
+const maxAge = process.env.NODE_ENV === 'production' ? oneWeek : 0
 app.use(express.static(__dirname + '/build', { maxAge }))
 
 // For all routes, SPA redirection
