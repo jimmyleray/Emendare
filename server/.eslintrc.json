@@ -3,12 +3,16 @@
     "browser": true,
     "es6": true
   },
-  "extends": ["eslint:recommended", "plugin:node/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended",
+    "plugin:sonarjs/recommended"
+  ],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-
+  "plugins": ["sonarjs"],
   "rules": {
     "indent": ["error", "tab"],
     "linebreak-style": ["error", "unix"],
@@ -20,6 +24,8 @@
     "node/prefer-global/process": ["error", "always"],
     "node/prefer-global/url-search-params": ["error", "always"],
     "node/prefer-global/url": ["error", "always"],
-    "no-console": ["error", { "allow": ["warn", "error", "log"] }]
+    "no-console": ["error", { "allow": ["warn", "error", "log"] }],
+    "sonarjs/cognitive-complexity": "error",
+    "sonarjs/no-identical-expressions": "error"
   }
 }
