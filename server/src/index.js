@@ -63,13 +63,17 @@ const delay = ms => {
   })
 }
 
-const hasUpMajority = amend =>
+const hasAbsoluteUpMajority = amend =>
   amend.upVotesCount >= Math.floor(amend.text.followersCount / 2) + 1
 
-const hasDownMajority = amend =>
+const hasRelativeUpMajority = amend =>
+  amend.upVotesCount >= amend.downVotesCount
+
+const hasAbsoluteDownMajority = amend =>
   amend.downVotesCount >= Math.floor(amend.text.followersCount / 2) + 1
 
-const hasMajority = amend => hasDownMajority(amend) || hasUpMajority(amend)
+const hasAbsoluteMajority = amend =>
+  hasAbsoluteDownMajority(amend) || hasAbsoluteUpMajority(amend)
 
 const updateTextWithAmend = async amend => {
   amend.accepted = true
@@ -91,6 +95,18 @@ const updateTextWithAmend = async amend => {
   }
 
   await amend.text.save()
+
+  const text = await Text.model
+    .findById(amend.text._id)
+    .populate('amends')
+    .populate('group')
+
+  io.emit('text/' + text._id, { data: text })
+}
+
+broadcastAmend = async amend => {
+  await amend.save()
+  io.emit('amend/' + amend._id, { data: amend })
 }
 
 const checkAmendVotes = async () => {
@@ -103,29 +119,25 @@ const checkAmendVotes = async () => {
   amends.forEach(async amend => {
     const start = amend.created.getTime()
 
-    // Si le scrutin est terminé en ayant
-    // atteint une des conditions d'arrêt
-    if (
-      now > start + amend.delayMax ||
-      (now > start + amend.delayMin && hasMajority(amend))
-    ) {
+    // Si le scrutin est terminé
+    if (now > start + amend.delayMax) {
       amend.closed = true
 
-      // Si il y'a une majorité
-      // pour accepter l'amendement
-      if (hasUpMajority(amend)) {
+      // Si il y'a une majorité relative
+      if (hasRelativeUpMajority(amend)) {
         updateTextWithAmend(amend)
       }
 
-      await amend.save()
-      io.emit('amend/' + amend._id, { data: amend })
+      broadcastAmend(amend)
+    } else if (now > start + amend.delayMin && hasAbsoluteMajority(amend)) {
+      amend.closed = true
 
-      const text = await Text.model
-        .findById(amend.text._id)
-        .populate('amends')
-        .populate('group')
-        
-      io.emit('text/' + text._id, { data: text })
+      // Si il y'a une majorité absolue
+      if (hasAbsoluteUpMajority(amend)) {
+        updateTextWithAmend(amend)
+      }
+
+      broadcastAmend(amend)
     }
   })
 
