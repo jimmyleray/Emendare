@@ -18,13 +18,18 @@ const typeToUrl = type => target => {
 }
 
 const typeToText = type => target => {
+  const created = new Date(target.created)
   switch (type) {
     case 'amend':
       return (
         <>
-          <Icon type="fas fa-pencil-alt" className="fa-lg has-text-success" />
-          <Icon type="fas fa-chevron-right" />
-          <span>
+          <p>
+            <Icon type="fas fa-pencil-alt" className="fa-lg has-text-success" />
+            <Icon type="fas fa-chevron-right" />
+            <span>Le {created.toLocaleString()}</span>
+          </p>
+
+          <p>
             Un{' '}
             <span className="has-text-weight-semibold">nouvel amendement</span>{' '}
             a été proposé sur le texte{' '}
@@ -33,47 +38,59 @@ const typeToText = type => target => {
             <span className="has-text-weight-semibold">
               {target.text.group.name}
             </span>
-          </span>
+          </p>
         </>
       )
     case 'text':
       return (
         <>
-          <Icon type="fas fa-align-center" className="fa-lg has-text-info" />
-          <Icon type="fas fa-chevron-right" />
-          <span>
+          <p>
+            <Icon type="fas fa-align-center" className="fa-lg has-text-info" />
+            <Icon type="fas fa-chevron-right" />
+            <span>Le {created.toLocaleString()}</span>
+          </p>
+
+          <p>
             Un nouveau texte{' '}
             <span className="has-text-weight-semibold">{target.name}</span> est
             disponible dans le groupe{' '}
             <span className="has-text-weight-semibold">
               {target.group.name}
             </span>
-          </span>
+          </p>
         </>
       )
     case 'group':
       return target.parent ? (
         <>
-          <Icon type="fas fa-users" className="fa-lg has-text-danger" />
-          <Icon type="fas fa-chevron-right" />
-          <span>
+          <p>
+            <Icon type="fas fa-users" className="fa-lg has-text-danger" />
+            <Icon type="fas fa-chevron-right" />
+            <span>Le {created.toLocaleString()}</span>
+          </p>
+
+          <p>
             Un nouveau groupe{' '}
             <span className="has-text-weight-semibold">{target.name}</span> est
             disponible dans le groupe{' '}
             <span className="has-text-weight-semibold">
               {target.parent.name}
             </span>
-          </span>
+          </p>
         </>
       ) : (
         <>
-          <Icon type="fas fa-users" className="fa-lg has-text-danger" />
-          <Icon type="fas fa-chevron-right" />
-          <span>
+          <p>
+            <Icon type="fas fa-users" className="fa-lg has-text-danger" />
+            <Icon type="fas fa-chevron-right" />
+            <span>Le {created.toLocaleString()}</span>
+          </p>
+
+          <p>
             Un nouveau groupe racine{' '}
             <span className="has-text-weight-semibold">{target.name}</span> est
             disponible
-          </span>
+          </p>
         </>
       )
 
