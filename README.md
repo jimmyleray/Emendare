@@ -88,7 +88,7 @@ npm run build
 node app.js
 ```
 
-Le serveur app.js va permettre la redirection http -> https ainsi que la compression de l'application.
+Le serveur app.js va permettre la redirection http vers https ainsi que la compression Gzip des fichiers de l'application.
 
 ## Contribution
 
