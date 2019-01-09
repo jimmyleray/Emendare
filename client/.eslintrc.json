@@ -6,7 +6,7 @@
   "extends": [
     "eslint:recommended",
     "react-app",
-    "prettier",
+    "plugin:prettier/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:sonarjs/recommended"
   ],
@@ -25,11 +25,7 @@
   },
   "rules": {
     "react/prop-types": 0,
-    "indent": ["error", "tab"],
     "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "single"],
-    "no-console": ["error", { "allow": ["warn", "error", "log"] }],
-    "sonarjs/cognitive-complexity": "error",
-    "sonarjs/no-identical-expressions": "error"
+    "no-console": ["error", { "allow": ["warn", "error"] }]
   }
 }
