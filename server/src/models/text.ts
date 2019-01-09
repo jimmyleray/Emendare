@@ -22,7 +22,7 @@ const model = mongoose.model(
   })
 )
 
-export default class Text {
+export class Text {
   static get model(): any {
     return model
   }

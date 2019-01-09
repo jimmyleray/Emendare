@@ -15,7 +15,7 @@ const model = mongoose.model(
   })
 )
 
-export default class Argument {
+export class Argument {
   static get model(): any {
     return model
   }

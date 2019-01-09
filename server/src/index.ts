@@ -28,11 +28,7 @@ import Database from './mongo'
 new Database().connect()
 
 // MongoDB models
-import Amend from './models/amend'
-import Event from './models/event'
-import Group from './models/group'
-import Text from './models/text'
-import User from './models/user'
+import { Amend, Event, Group, Text, User } from './models'
 
 // Utils function to generate unique tokens
 import { Crypto } from './services'

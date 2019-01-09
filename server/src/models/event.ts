@@ -9,7 +9,7 @@ const model = mongoose.model(
   })
 )
 
-export default class Event {
+export class Event {
   static get model(): any {
     return model
   }

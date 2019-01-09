@@ -27,7 +27,7 @@ const model = mongoose.model(
   })
 )
 
-export default class Amend {
+export class Amend {
   static get model(): any {
     return model
   }

@@ -25,7 +25,7 @@ const model = mongoose.model(
   })
 )
 
-export default class Group {
+export class Group {
   static get model(): any {
     return model
   }

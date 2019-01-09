@@ -3,10 +3,7 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 
 // MongoDB models
-import Event from '../models/event'
-import Group from '../models/group'
-import Text from '../models/text'
-import User from '../models/user'
+import { Event, Group, Text, User } from '../models'
 
 export default class Database {
   public connection: mongoose.Connection
