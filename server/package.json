@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "lint": "./node_modules/.bin/eslint src/**/*.js --fix"
+    "lint": "./node_modules/.bin/eslint src/**/*.js"
   },
   "husky": {
     "hooks": {
