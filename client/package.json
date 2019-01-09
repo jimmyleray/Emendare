@@ -2,19 +2,10 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "compression": "^1.7.3",
-    "cors": "^2.8.5",
-    "diff-match-patch": "^1.0.4",
-    "express": "^4.16.4",
-    "express-sslify": "^1.2.0",
-    "lodash": "^4.17.11",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.1",
-    "socket.io-client": "^2.2.0"
+  "engines": {
+    "node": ">=8.3.0"
   },
+  "license": "GPL-3.0",
   "scripts": {
     "start": "node app.js",
     "dev": "react-scripts start",
@@ -42,6 +33,19 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "dependencies": {
+    "compression": "^1.7.3",
+    "cors": "^2.8.5",
+    "diff-match-patch": "^1.0.4",
+    "express": "^4.16.4",
+    "express-sslify": "^1.2.0",
+    "lodash": "^4.17.11",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.1",
+    "socket.io-client": "^2.2.0"
+  },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
     "eslint": "^5.12.0",

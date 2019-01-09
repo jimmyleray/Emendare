@@ -2,6 +2,10 @@
   "name": "emendare-server",
   "version": "0.0.0",
   "main": "index.js",
+  "engines": {
+    "node": ">=8.3.0"
+  },
+  "license": "GPL-3.0",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
@@ -22,10 +26,6 @@
       "git add"
     ]
   },
-  "engines": {
-    "node": ">=8.3.0"
-  },
-  "license": "GPL-3.0",
   "dependencies": {
     "bcrypt": "^3.0.2",
     "crypto": "^1.0.1",
