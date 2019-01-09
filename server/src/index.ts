@@ -1,37 +1,41 @@
+// TS Interfaces import
+import { Contribution, Contributors } from './interfaces'
+
 // Global configuration
-const config = require('./config')
+import config from './config'
 
 // Fetch API polyfills
-const fetch = require('node-fetch')
+import fetch from 'node-fetch'
 
 // Express Html Application
-const express = require('express')
+import express from 'express'
 const app = express()
 
 // Lib to hash passwords
-const bcrypt = require('bcrypt')
+import bcrypt from 'bcrypt'
 
 // Matcher utility
 // https://github.com/jonschlinkert/is-match
-const isMatch = require('is-match')
+import isMatch from 'is-match'
 const isMatchZenika = isMatch('*@zenika.com')
 
 // Diff Match Patch Library
 // https://github.com/google/diff-match-patch
-const diff_match_patch = require('diff-match-patch')
+import { diff_match_patch } from 'diff-match-patch'
 
 // MongoDB connection
-const database = require('./mongo')
+import Database from './mongo'
+new Database().connect()
 
 // MongoDB models
-const User = require('./models/user')
-const Group = require('./models/group')
-const Text = require('./models/text')
-const Amend = require('./models/amend')
-const Event = require('./models/event')
+import Amend from './models/amend'
+import Event from './models/event'
+import Group from './models/group'
+import Text from './models/text'
+import User from './models/user'
 
 // Utils function to generate unique tokens
-const generateToken = require('./utils/token')
+import { Crypto } from './services'
 
 // Public API for get texts by ID
 app.get('/text/:id', async (req, res) => {
@@ -49,32 +53,36 @@ app.use((req, res) => {
 })
 
 // Add Socket.io to Express server
-const http = require('http').Server(app)
-const io = require('socket.io')(http, {
-  serveClient: false,
+import { Server } from 'http'
+const http = new Server(app)
+
+import socketIO from 'socket.io'
+const io = socketIO(http, {
+  cookie: false,
   pingInterval: 10000,
   pingTimeout: 5000,
-  cookie: false
+  serveClient: false
 })
 
-const delay = ms => {
+const delay = (ms: number) => {
   return new Promise(resolve => {
     setTimeout(resolve, ms)
   })
 }
 
-const hasAbsoluteUpMajority = amend =>
+const hasAbsoluteUpMajority = (amend: any) =>
   amend.upVotesCount >= Math.floor(amend.text.followersCount / 2) + 1
 
-const hasRelativeUpMajority = amend => amend.upVotesCount > amend.downVotesCount
+const hasRelativeUpMajority = (amend: any) =>
+  amend.upVotesCount > amend.downVotesCount
 
-const hasAbsoluteDownMajority = amend =>
+const hasAbsoluteDownMajority = (amend: any) =>
   amend.downVotesCount >= Math.floor(amend.text.followersCount / 2) + 1
 
-const hasAbsoluteMajority = amend =>
+const hasAbsoluteMajority = (amend: any) =>
   hasAbsoluteDownMajority(amend) || hasAbsoluteUpMajority(amend)
 
-const updateTextWithAmend = async amend => {
+const updateTextWithAmend = async (amend: any) => {
   amend.accepted = true
 
   const dmp = new diff_match_patch()
@@ -85,7 +93,7 @@ const updateTextWithAmend = async amend => {
     amend.text.actual
   )
 
-  if (!patchesAreApplied.includes(false)) {
+  if (patchesAreApplied.indexOf(false) < 0) {
     amend.version = amend.text.patches.length
     amend.text.patches.push(amend.patch)
     amend.text.actual = newText
@@ -103,7 +111,7 @@ const updateTextWithAmend = async amend => {
   io.emit('text/' + text._id, { data: text })
 }
 
-broadcastAmend = async amend => {
+const broadcastAmend = async (amend: any) => {
   await amend.save()
   io.emit('amend/' + amend._id, { data: amend })
 }
@@ -115,7 +123,7 @@ const checkAmendVotes = async () => {
   const date = new Date()
   const now = date.getTime()
 
-  amends.forEach(async amend => {
+  amends.forEach(async (amend: any) => {
     const start = amend.created.getTime()
 
     // Si le scrutin est terminé
@@ -158,8 +166,8 @@ io.on('connection', socket => {
       if (user) {
         bcrypt.compare(password, user.password, async (err, valid) => {
           if (valid) {
-            const token = generateToken()
-            user.token = token
+            const newToken = Crypto.getToken()
+            user.token = newToken
             await user.save()
             socket.emit('login', { data: user })
           } else {
@@ -219,7 +227,7 @@ io.on('connection', socket => {
           })
         } else {
           bcrypt.hash(password, 10, async (err, hash) => {
-            const token = generateToken()
+            const token = Crypto.getToken()
             const user = await new User.model({
               email,
               password: hash,
@@ -336,11 +344,11 @@ io.on('connection', socket => {
     const user = await User.model.findOne({ token })
     if (user) {
       const amend = await new Amend.model({
-        name,
         description,
+        name,
         patch,
-        version,
-        text: textID
+        text: textID,
+        version
       }).save()
 
       user.amends.push(amend._id)
@@ -356,8 +364,8 @@ io.on('connection', socket => {
         .populate('group')
 
       await new Event.model({
-        targetType: 'amend',
-        target: JSON.stringify({ ...amend._doc, text })
+        target: JSON.stringify({ ...amend._doc, text }),
+        targetType: 'amend'
       }).save()
 
       const events = await Event.model.find().sort('-created')
@@ -561,7 +569,7 @@ io.on('connection', socket => {
           }
         } else {
           socket.emit('downVoteAmend', {
-            error: { code: 40(), message: 'Ce scrutin est terminé' }
+            error: { code: 405, message: 'Ce scrutin est terminé' }
           })
         }
       } else {
@@ -624,15 +632,15 @@ io.on('connection', socket => {
   })
 
   socket.on('contributors', async () => {
-    const res = await fetch(config.contributors)
-    const contributors = await res.json()
-    const data = contributors.reduce((acc, commit) => {
+    const res = await fetch(config.contributions)
+    const contributions: Contribution[] = await res.json()
+    const data = contributions.reduce<Contributors>((acc, commit) => {
       if (acc[commit.author_email]) {
         acc[commit.author_email].count++
       } else {
         acc[commit.author_email] = {
-          name: commit.author_name,
-          count: 1
+          count: 1,
+          name: commit.author_name
         }
       }
       return acc

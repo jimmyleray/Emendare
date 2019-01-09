@@ -2,3 +2,6 @@
 
 # Node dependencies
 /node_modules
+
+# Build files
+/build

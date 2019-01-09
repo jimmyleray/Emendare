@@ -6,7 +6,7 @@
 # Testing
 /coverage
 
-# Production
+# Build files
 /build
 
 # Debug files

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const model = mongoose.model(
   'User',
@@ -31,8 +31,8 @@ const model = mongoose.model(
   })
 )
 
-module.exports = class User {
-  static get model() {
+export default class User {
+  static get model(): any {
     return model
   }
 }

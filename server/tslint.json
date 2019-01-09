@@ -1,0 +1,8 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "plugin:sonarjs/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["sonarjs", "prettier"]
+}

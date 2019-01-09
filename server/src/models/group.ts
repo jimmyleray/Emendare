@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const model = mongoose.model(
   'Group',
@@ -25,8 +25,8 @@ const model = mongoose.model(
   })
 )
 
-module.exports = class Group {
-  static get model() {
+export default class Group {
+  static get model(): any {
     return model
   }
 }

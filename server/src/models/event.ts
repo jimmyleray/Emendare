@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const model = mongoose.model(
   'Event',
@@ -8,8 +8,9 @@ const model = mongoose.model(
     target: { type: String, default: JSON.stringify({}) }
   })
 )
-module.exports = class Event {
-  static get model() {
+
+export default class Event {
+  static get model(): any {
     return model
   }
 }

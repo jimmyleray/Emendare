@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const model = mongoose.model(
   'Amend',
@@ -27,8 +27,8 @@ const model = mongoose.model(
   })
 )
 
-module.exports = class Amend {
-  static get model() {
+export default class Amend {
+  static get model(): any {
     return model
   }
 }
