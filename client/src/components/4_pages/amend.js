@@ -22,6 +22,7 @@ import {
   Spacer,
   UserContext
 } from '../../components'
+import { Clock } from '../1_molecules/clock'
 import { socket } from '../../services'
 import diff_match_patch from 'diff-match-patch'
 import { path } from '../../config'
@@ -224,17 +225,12 @@ export class AmendPage extends React.Component {
                         {!this.state.amend.closed && (
                           <p className="has-text-centered">
                             Temps restant avant la fin du scrutin :{' '}
-                            <span className="has-text-weight-semibold">
-                              {this.convertMsToTime(
-                                -Math.floor(
-                                  new Date().getTime() -
-                                    (new Date(
-                                      this.state.amend.created
-                                    ).getTime() +
-                                      this.state.amend.delayMax)
-                                )
-                              )}
-                            </span>
+                            <Clock
+                              date={this.state.amend.created}
+                              delay={this.state.amend.delayMax}
+                              inverse={false}
+                              className="has-text-weight-semibold"
+                            />
                           </p>
                         )}
 
