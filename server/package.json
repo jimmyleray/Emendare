@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "lint": "./node_modules/.bin/eslint src/**/*.js"
+    "lint": "./node_modules/.bin/eslint src/**/*.js",
+    "format": "prettier --write ./**/*.{js,jsx,ts,tsx,css,scss,json,md}"
   },
   "husky": {
     "hooks": {
