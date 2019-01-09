@@ -22,8 +22,12 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/eslint src/**/*.js --fix",
-    "format": "prettier \"src/**/*.js\" --write",
-    "precommit": "NODE_ENV=production lint-staged"
+    "format": "prettier \"src/**/*.js\" --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.{js}": [
