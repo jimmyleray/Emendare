@@ -55,11 +55,24 @@ docker-compose start
 
 La base de données est accessible à l'adresse suivante : **localhost:27017/emendare**
 
-Une fois la base de données en place nous allons pouvoir installer les dépendances et démarrer le serveur.
+Une fois la base de données en place nous allons pouvoir installer les dépendances
 
 ```
 npm install
+```
+
+Puis démarrer le serveur soit pour la production
+
+```
+npm build
 npm start
+```
+
+Soit pour le développement avec ces deux tâches en parallèle
+
+```
+npm run build:watch
+npm run dev
 ```
 
 Cette commande permet de lancer le serveur à l'adresse suivante : **localhost:3030**
