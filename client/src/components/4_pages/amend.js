@@ -20,9 +20,9 @@ import {
   Page,
   Results,
   Spacer,
-  UserContext
+  UserContext,
+  Clock
 } from '../../components'
-import { Clock } from '../1_molecules/clock'
 import { socket } from '../../services'
 import diff_match_patch from 'diff-match-patch'
 import { path } from '../../config'
