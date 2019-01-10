@@ -1,7 +1,7 @@
 /**
  *  This component can be used in two different modes :
- *    props.inverse = true : It will have the beahaviour of a stopwatch
- *    props.inverse = false : It will have the beahaviour of a countdown
+ *    props.inverse = true : It will have the behaviour of a stopwatch
+ *    props.inverse = false : It will have the behaviour of a countdown
  * */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
