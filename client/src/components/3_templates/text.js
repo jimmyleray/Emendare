@@ -152,8 +152,8 @@ export const Text = ({ data, refetch }) => {
                           .filter(amend => amend.closed)
                           .sort(
                             (a, b) =>
-                              new Date(a.finished).getTime() -
-                              new Date(b.finished).getTime()
+                              new Date(b.finished).getTime() -
+                              new Date(a.finished).getTime()
                           )
                           .map((amend, index, arr) => (
                             <li key={amend._id}>
