@@ -4,6 +4,7 @@ const model = mongoose.model(
   'Amend',
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
+    finished: { type: Date },
     name: { type: String, required: true },
     description: { type: String, default: '' },
     patch: { type: String, required: true },
@@ -19,6 +20,7 @@ const model = mongoose.model(
     },
     upVotesCount: { type: Number, default: 0 },
     downVotesCount: { type: Number, default: 0 },
+    totalPotentialVotesCount: { type: Number },
     delayMin: { type: Number, default: 60 * 60 * 1000 },
     delayMax: { type: Number, default: 24 * 60 * 60 * 1000 },
     closed: { type: Boolean, default: false },

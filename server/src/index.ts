@@ -125,6 +125,8 @@ const checkAmendVotes = async () => {
     // Si le scrutin est terminé
     if (now > start + amend.delayMax) {
       amend.closed = true
+      amend.finished = new Date()
+      amend.totalPotentialVotesCount = amend.text.followersCount
 
       // Si il y'a une majorité relative
       if (hasRelativeUpMajority(amend)) {
@@ -134,6 +136,8 @@ const checkAmendVotes = async () => {
       broadcastAmend(amend)
     } else if (now > start + amend.delayMin && hasAbsoluteMajority(amend)) {
       amend.closed = true
+      amend.finished = new Date()
+      amend.totalPotentialVotesCount = amend.text.followersCount
 
       // Si il y'a une majorité absolue
       if (hasAbsoluteUpMajority(amend)) {

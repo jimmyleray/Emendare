@@ -250,18 +250,22 @@ export class AmendPage extends React.Component {
                             <p className="has-text-centered">
                               {this.state.amend.upVotesCount +
                                 this.state.amend.downVotesCount}{' '}
-                              vote
-                              {this.state.amend.upVotesCount +
-                                this.state.amend.downVotesCount >
-                              1
-                                ? 's'
-                                : ''}{' '}
-                              exprimé
-                              {this.state.amend.upVotesCount +
-                                this.state.amend.downVotesCount >
-                              1
-                                ? 's'
-                                : ''}
+                              vote(s) exprimé(s) sur{' '}
+                              {this.state.amend.totalPotentialVotesCount
+                                ? this.state.amend.totalPotentialVotesCount
+                                : this.state.amend.text.followersCount}{' '}
+                              participant(s), soit{' '}
+                              <span className="has-text-weight-semibold">
+                                {(
+                                  (100 *
+                                    (this.state.amend.upVotesCount +
+                                      this.state.amend.downVotesCount)) /
+                                  (this.state.amend.totalPotentialVotesCount
+                                    ? this.state.amend.totalPotentialVotesCount
+                                    : this.state.amend.text.followersCount)
+                                ).toFixed(1)}
+                                % de participation
+                              </span>
                             </p>
                           </>
                         ) : (
