@@ -150,7 +150,11 @@ export const Text = ({ data, refetch }) => {
                       <ul>
                         {data.amends
                           .filter(amend => amend.closed)
-                          .reverse()
+                          .sort(
+                            (a, b) =>
+                              new Date(a.finished).getTime() -
+                              new Date(b.finished).getTime()
+                          )
                           .map((amend, index, arr) => (
                             <li key={amend._id}>
                               <Link to={path.amend(amend._id)}>
