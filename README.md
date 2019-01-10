@@ -91,14 +91,14 @@ Pour lancer le client, deux solutions vont être possibles:
 - en development :
 
 ```
-npm start dev
+npm run dev
 ```
 
 - en production :
 
 ```
-npm run build
-node app.js
+npm build
+npm start
 ```
 
 Le serveur app.js va permettre la redirection http vers https ainsi que la compression Gzip des fichiers de l'application.
