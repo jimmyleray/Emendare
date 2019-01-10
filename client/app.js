@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 // Init Express Application
 const express = require('express')
 const app = express()

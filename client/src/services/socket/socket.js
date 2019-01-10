@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import { apiConfig } from '../config'
+import { apiConfig } from '../../config'
 
 // Default Socket.io Instance
 const insecureSocket = io(apiConfig.url[process.env.NODE_ENV])

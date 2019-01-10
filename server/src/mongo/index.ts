@@ -8,7 +8,7 @@ import { Event, Group, Text, User } from '../models'
 export default class Database {
   public connection: mongoose.Connection
 
-  async connect() {
+  public async connect() {
     this.connection = (await mongoose.connect(
       config.mongoHost,
       { useNewUrlParser: true }
@@ -19,7 +19,7 @@ export default class Database {
     return this.connection
   }
 
-  initData() {
+  private initData() {
     if (process.env.NODE_ENV === 'production') {
       // this.database.dropDatabase()
       // this.initProdData()
@@ -29,7 +29,7 @@ export default class Database {
     }
   }
 
-  async initDevData() {
+  private async initDevData() {
     bcrypt.hash('tmp', 10, async (err, hash) => {
       await new User.model({
         password: hash,
@@ -129,7 +129,7 @@ export default class Database {
     })
   }
 
-  async initProdData() {
+  private async initProdData() {
     const globalGroup = await new Group.model({
       name: 'Global',
       description: 'Groupe officiel global'

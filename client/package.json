@@ -11,9 +11,10 @@
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "cypress:open": "npx cypress open",
     "eject": "react-scripts eject",
-    "lint": "./node_modules/.bin/eslint src/**/*.js",
-    "format": "prettier --write ./**/*.{js,jsx,css,scss,json,md}"
+    "lint": "./node_modules/.bin/eslint {src,public,cypress}/**/*.js",
+    "format": "prettier --write {src,public,cypress}/**/*.{js,jsx,css,scss,json,md}"
   },
   "husky": {
     "hooks": {
@@ -48,9 +49,11 @@
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
-    "eslint": "^5.12.0",
+    "cypress": "^3.1.4",
     "eslint-config-prettier": "^3.3.0",
     "eslint-config-react-app": "^3.0.6",
+    "eslint-plugin-chai-friendly": "^0.4.1",
+    "eslint-plugin-cypress": "^2.2.0",
     "eslint-plugin-flowtype": "^2.50.3",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",

@@ -113,43 +113,52 @@ export class Edit extends React.Component {
             <Columns>
               <Column>
                 <div className="field">
-                  <label className="label">Titre de l'amendement</label>
-                  <div className="control">
-                    <input
-                      required
-                      className="input"
-                      type="text"
-                      value={this.state.amendName}
-                      onChange={this.onChange('amendName')}
-                      placeholder="Nommez votre amendement en quelques mots"
-                    />
-                  </div>
+                  <label htmlFor="title" className="label">
+                    Titre de l'amendement
+                    <div className="control">
+                      <input
+                        required
+                        name="title"
+                        className="input"
+                        type="text"
+                        value={this.state.amendName}
+                        onChange={this.onChange('amendName')}
+                        placeholder="Nommez votre amendement en quelques mots"
+                      />
+                    </div>
+                  </label>
                 </div>
 
                 <div className="field">
-                  <label className="label">Description / Argumentaire</label>
-                  <div className="control">
-                    <textarea
-                      required
-                      rows="4"
-                      value={this.state.amendDescription}
-                      onChange={this.onChange('amendDescription')}
-                      className="textarea"
-                      placeholder="Défendez votre amendement en quelques phrases"
-                    />
-                  </div>
+                  <label htmlFor="description" className="label">
+                    Description / Argumentaire
+                    <div className="control">
+                      <textarea
+                        required
+                        rows="4"
+                        name="description"
+                        value={this.state.amendDescription}
+                        onChange={this.onChange('amendDescription')}
+                        className="textarea"
+                        placeholder="Défendez votre amendement en quelques phrases"
+                      />
+                    </div>
+                  </label>
                 </div>
 
                 <div className="field">
-                  <label className="label">Editeur du texte</label>
-                  <div className="control">
-                    <textarea
-                      rows="12"
-                      className="textarea"
-                      value={this.state.amendValue}
-                      onChange={this.onChange('amendValue')}
-                    />
-                  </div>
+                  <label htmlFor="editor" className="label">
+                    Editeur du texte
+                    <div className="control">
+                      <textarea
+                        rows="12"
+                        name="editor"
+                        className="textarea"
+                        value={this.state.amendValue}
+                        onChange={this.onChange('amendValue')}
+                      />
+                    </div>
+                  </label>
                 </div>
 
                 <button

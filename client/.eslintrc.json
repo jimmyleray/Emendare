@@ -1,14 +1,17 @@
 {
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "jest": true,
+    "cypress/globals": true
   },
   "extends": [
     "eslint:recommended",
     "react-app",
     "plugin:prettier/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:sonarjs/recommended"
+    "plugin:sonarjs/recommended",
+    "plugin:cypress/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -17,7 +20,7 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["prettier", "jsx-a11y", "sonarjs"],
+  "plugins": ["prettier", "jsx-a11y", "sonarjs", "cypress", "chai-friendly"],
   "settings": {
     "react": {
       "version": "detect"
@@ -25,7 +28,8 @@
   },
   "rules": {
     "react/prop-types": 0,
-    "linebreak-style": ["error", "unix"],
+    "no-unused-expressions": 0,
+    "chai-friendly/no-unused-expressions": 2,
     "no-console": ["error", { "allow": ["warn", "error"] }]
   }
 }

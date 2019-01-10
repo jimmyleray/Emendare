@@ -1,6 +1,8 @@
 import React from 'react'
 import { Progress } from '../../components'
 
+const display = 'inline-block'
+
 export const Results = ({ value }) =>
   !isNaN(value) ? (
     <>
@@ -9,7 +11,7 @@ export const Results = ({ value }) =>
           <div
             className="has-text-weight-semibold"
             style={{
-              display: 'inline-block',
+              display,
               width: value + '%',
               minWidth: '120px',
               maxWidth: 'calc(100% - 120px)'
@@ -23,7 +25,7 @@ export const Results = ({ value }) =>
           <div
             className="has-text-weight-semibold"
             style={{
-              display: 'inline-block',
+              display,
               width: 100 - value + '%',
               minWidth: '120px',
               maxWidth: 'calc(100% - 120px)'
@@ -39,7 +41,7 @@ export const Results = ({ value }) =>
           value="100"
           max="100"
           style={{
-            display: 'inline-block',
+            display,
             margin: 0,
             width: value + '%',
             borderTopRightRadius: value < 100 ? 0 : null,
@@ -52,7 +54,7 @@ export const Results = ({ value }) =>
           max="100"
           style={{
             margin: 0,
-            display: 'inline-block',
+            display,
             width: 100 - value + '%',
             borderTopLeftRadius: value > 0 ? 0 : null,
             borderBottomLeftRadius: value > 0 ? 0 : null

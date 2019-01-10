@@ -27,7 +27,7 @@ export class Mailer {
    *   html: '<b>Hello world?</b>'
    * }
    */
-  send(options: any): Promise<any> {
+  public send(options: any): Promise<any> {
     return process.env.NODE_ENV === 'production' && this.transporter
       ? this.transporter.sendMail({
           ...options,

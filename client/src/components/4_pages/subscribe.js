@@ -76,7 +76,6 @@ export class SubscribePage extends React.Component {
                 onChange={this.change('email')}
                 className="input is-medium"
                 type="email"
-                autoFocus={true}
               />
               <Icon type="fas fa-envelope" className="icon is-medium is-left" />
             </p>

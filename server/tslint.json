@@ -1,8 +1,13 @@
 {
-  "extends": [
-    "tslint:recommended",
-    "plugin:sonarjs/recommended",
-    "plugin:prettier/recommended"
-  ],
-  "plugins": ["sonarjs", "prettier"]
+  "extends": ["tslint:recommended"],
+  "rules": {
+    "semicolon": false,
+    "quotemark": false,
+    "trailing-comma": false,
+    "arrow-parens": false,
+    "max-line-length": false,
+    "no-console": false,
+    "ordered-imports": false,
+    "object-literal-sort-keys": false
+  }
 }

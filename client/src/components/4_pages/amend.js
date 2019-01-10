@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/cognitive-complexity */
+
 /*
  * Page de détails d'un amendement
  * Le but de cette page est de permettre aux utilisateurs :
@@ -33,34 +35,26 @@ export class AmendPage extends React.Component {
     this.upVote = () => {
       socket
         .fetch('upVoteAmend', { id: this.props.match.params.id })
-        .then(amend => {
-          socket.emit('user')
-          this.setState({ amend, error: null }, () => {
-            this.computeDiff()
-          })
-        })
+        .then(this.updateAmend)
     }
 
     this.downVote = () => {
       socket
         .fetch('downVoteAmend', { id: this.props.match.params.id })
-        .then(amend => {
-          socket.emit('user')
-          this.setState({ amend, error: null }, () => {
-            this.computeDiff()
-          })
-        })
+        .then(this.updateAmend)
     }
 
     this.unVote = () => {
       socket
         .fetch('unVoteAmend', { id: this.props.match.params.id })
-        .then(amend => {
-          socket.emit('user')
-          this.setState({ amend, error: null }, () => {
-            this.computeDiff()
-          })
-        })
+        .then(this.updateAmend)
+    }
+
+    this.updateAmend = amend => {
+      socket.emit('user')
+      this.setState({ amend, error: null }, () => {
+        this.computeDiff()
+      })
     }
 
     this.unFollowText = id => async () => {
