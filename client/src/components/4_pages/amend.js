@@ -21,9 +21,10 @@ import {
   Results,
   Spacer,
   UserContext,
-  Clock
+  CountDown
 } from '../../components'
 import { socket } from '../../services'
+import { addTimeToDate } from '../../services/helpers/time'
 import diff_match_patch from 'diff-match-patch'
 import { path } from '../../config'
 
@@ -225,10 +226,11 @@ export class AmendPage extends React.Component {
                         {!this.state.amend.closed && (
                           <p className="has-text-centered">
                             Temps restant avant la fin du scrutin :{' '}
-                            <Clock
-                              date={this.state.amend.created}
-                              delay={this.state.amend.delayMax}
-                              inverse={false}
+                            <CountDown
+                              date={addTimeToDate(
+                                this.state.amend.created,
+                                this.state.amend.delayMax
+                              )}
                               className="has-text-weight-semibold"
                             />
                           </p>

@@ -1,4 +1,5 @@
 export * from './amend'
 export * from './event'
 export * from './results'
-export * from './clock'
+export * from './stopWatch'
+export * from './countDown'
