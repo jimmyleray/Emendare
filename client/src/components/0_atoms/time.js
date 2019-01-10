@@ -1,9 +1,7 @@
 import React from 'react'
 // import helpers
-import { toTimeString } from '../../services/helpers'
+import { TimeService } from '../../services'
 
-export const Time = ({ time, className = '', ...rest }) => (
-  <span className={className} {...rest}>
-    {toTimeString(time)}
-  </span>
+export const Time = ({ time, defaultView, ...rest }) => (
+  <span {...rest}>{TimeService.toTimeString(time, defaultView)}</span>
 )
