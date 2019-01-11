@@ -22,9 +22,10 @@ import {
   Page,
   Results,
   Spacer,
-  UserContext
+  UserContext,
+  CountDown
 } from '../../components'
-import { socket } from '../../services'
+import { socket, TimeService } from '../../services'
 import diff_match_patch from 'diff-match-patch'
 import { path } from '../../config'
 
@@ -218,17 +219,13 @@ export class AmendPage extends React.Component {
                         {!this.state.amend.closed && (
                           <p className="has-text-centered">
                             Temps restant avant la fin du scrutin :{' '}
-                            <span className="has-text-weight-semibold">
-                              {this.convertMsToTime(
-                                -Math.floor(
-                                  new Date().getTime() -
-                                    (new Date(
-                                      this.state.amend.created
-                                    ).getTime() +
-                                      this.state.amend.delayMax)
-                                )
+                            <CountDown
+                              date={TimeService.addTimeToDate(
+                                this.state.amend.created,
+                                this.state.amend.delayMax
                               )}
-                            </span>
+                              className="has-text-weight-semibold"
+                            />
                           </p>
                         )}
 
