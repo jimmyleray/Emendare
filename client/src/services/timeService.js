@@ -17,7 +17,7 @@ export class TimeService {
   }
 
   /**
-   * calculate the time spent between now and a futur date
+   * calculate the time spent between now and a date
    * @param {string || Date} date
    */
   static getTimeSpent = date => {
