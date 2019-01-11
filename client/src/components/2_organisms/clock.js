@@ -30,9 +30,7 @@ export const withClock = getTime => Component => {
         const { time, stop } = getTime(this.props)
         if (stop === true) this.stop()
         else {
-          this.setState({
-            time: { sec: time.sec, min: time.min, hrs: time.hrs }
-          })
+          this.setState({ time })
           this.update(time)
         }
       }, intervalDelay)
