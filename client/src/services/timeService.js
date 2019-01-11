@@ -44,11 +44,9 @@ export class TimeService {
    * @param {{sec:number, min:number, hrs: number}} time
    * @param {string} defaultView
    */
-  static toTimeString = (time, defaultView) => {
+  static toTimeString = (time, defaultView = '-') => {
     return time === null
-      ? !defaultView
-        ? '-'
-        : defaultView
+      ? defaultView
       : time.hrs === 0 && time.min === 0
       ? `${time.sec} secondes`
       : `${time.hrs} heures et ${time.min} minutes`
@@ -64,4 +62,11 @@ export class TimeService {
     }
     return new Date(date.getTime() + time)
   }
+
+  /**
+   * Return true if the time is equal to 0 else false
+   * @param {{sec:number, min: number, hrs: number}} time
+   */
+  static isTimeZeros = time =>
+    time.sec === 0 && time.min === 0 && time.hrs === 0
 }
