@@ -1,5 +1,5 @@
 /**
- * This service will help to format a date for the ui components
+ * This service will help to manage Time
  */
 export class TimeService {
   /**
