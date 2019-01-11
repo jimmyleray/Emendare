@@ -5,11 +5,8 @@ import { withClock } from '../2_organisms/clock'
 
 const getCountDownTime = date => {
   let time = TimeService.convertMsToTime(TimeService.getTimeLeft(date))
-  return time.sec === 0 && time.min === 0 && time.hrs === 0
-    ? { time: time, stop: true }
-    : { time: time, stop: false }
+  return { time: time, stop: TimeService.isTimeZeros(time) }
 }
-
 export const CountDown = withClock(({ date }) => getCountDownTime(date))(Time)
 
 CountDown.propTypes = {
