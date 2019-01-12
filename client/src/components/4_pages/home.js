@@ -12,7 +12,10 @@ import { path } from '../../config'
 
 export const HomePage = () => (
   <Page title="Accueil">
-    <Notification className="is-warning has-text-centered">
+    <Notification
+      className="is-danger has-text-centered"
+      style={{ maxWidth: '950px', margin: 'auto' }}
+    >
       <p>
         <span className="has-text-weight-semibold">Version alpha</span> ouverte
         depuis le 7 Janvier 2019 uniquement pour les mails se terminant par{' '}
@@ -24,7 +27,7 @@ export const HomePage = () => (
         Zenika
       </p>
     </Notification>
-
+    <br />
     <div className="field has-text-centered">
       <h1 className="is-size-3">
         Plateforme open source de rédaction de textes amendables
