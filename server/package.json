@@ -13,6 +13,7 @@
     "dev": "nodemon build/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "format": "prettier --write src/**/*.{js,ts,json,md}",
     "format:ci": "prettier --list-different --write src/**/*.{js,ts,json,md}"
