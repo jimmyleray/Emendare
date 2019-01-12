@@ -1,2 +1,2 @@
-codecov:
-  token: 187fc664-9fb9-4a79-9064-c7e6d96fc023
+fixes:
+  - "::front/" # move root, e.g. : "path/" => "front/path/"

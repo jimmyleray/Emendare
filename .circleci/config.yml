@@ -49,5 +49,10 @@ jobs:
 
       # Run unit tests
       - run:
-          name: Run unit test
+          name: Unit Test
           command: npm run test
+
+      # Run codecov reporting
+      - run:
+          name: Codecoc
+          command: npm run codecov
