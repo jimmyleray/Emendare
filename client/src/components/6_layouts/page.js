@@ -1,5 +1,5 @@
 import React from 'react'
-import { Footer, Navbar, Sidebar } from '../../components'
+import { Navbar, Sidebar } from '../../components'
 
 const sidebarWidth = '250px'
 
@@ -15,17 +15,9 @@ export const Page = ({ children, title, className = '' }) => {
         <div
           style={{ flex: 'initial', minWidth: `calc(100% - ${sidebarWidth})` }}
         >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              minHeight: 'calc(100vh - 52px)',
-              overflowY: 'auto'
-            }}
-          >
-            <main style={{ flex: 1, padding: '2rem' }}>{children}</main>
-            <Footer />
-          </div>
+          <main style={{ minHeight: 'calc(100vh - 52px)', padding: '2rem' }}>
+            {children}
+          </main>
         </div>
       </div>
     </>

@@ -143,36 +143,37 @@ export const Text = ({ data, refetch }) => {
                       </p>
                     )}
 
-                    <br />
-
-                    <p>Liste des votes clos</p>
                     {data.amends.filter(amend => amend.closed).length > 0 && (
-                      <ul>
-                        {data.amends
-                          .filter(amend => amend.closed)
-                          .sort(
-                            (a, b) =>
-                              new Date(b.finished).getTime() -
-                              new Date(a.finished).getTime()
-                          )
-                          .map((amend, index, arr) => (
-                            <li key={amend._id}>
-                              <Link to={path.amend(amend._id)}>
-                                {arr.length - index} - {amend.name}{' '}
-                                <span
-                                  className={
-                                    'has-text-weight-semibold ' +
-                                    (amend.accepted
-                                      ? 'has-text-success'
-                                      : 'has-text-danger')
-                                  }
-                                >
-                                  ({amend.accepted ? 'accepté' : 'refusé'})
-                                </span>
-                              </Link>
-                            </li>
-                          ))}
-                      </ul>
+                      <>
+                        <br />
+                        <p>Liste des votes clos</p>
+                        <ul>
+                          {data.amends
+                            .filter(amend => amend.closed)
+                            .sort(
+                              (a, b) =>
+                                new Date(b.finished).getTime() -
+                                new Date(a.finished).getTime()
+                            )
+                            .map((amend, index, arr) => (
+                              <li key={amend._id}>
+                                <Link to={path.amend(amend._id)}>
+                                  {arr.length - index} - {amend.name}{' '}
+                                  <span
+                                    className={
+                                      'has-text-weight-semibold ' +
+                                      (amend.accepted
+                                        ? 'has-text-success'
+                                        : 'has-text-danger')
+                                    }
+                                  >
+                                    ({amend.accepted ? 'accepté' : 'refusé'})
+                                  </span>
+                                </Link>
+                              </li>
+                            ))}
+                        </ul>
+                      </>
                     )}
                   </>
                 )}

@@ -161,7 +161,7 @@ io.on('connection', socket => {
       const user = await User.model
         .findOne({ email })
         .populate('amends')
-        .populate('followedTexts')
+        .populate({ path: 'followedTexts', populate: { path: 'amends' } })
         .populate('followedGroups')
       if (user) {
         bcrypt.compare(password, user.password, async (err, valid) => {
@@ -185,7 +185,7 @@ io.on('connection', socket => {
       const user = await User.model
         .findOne({ token })
         .populate('amends')
-        .populate('followedTexts')
+        .populate({ path: 'followedTexts', populate: { path: 'amends' } })
         .populate('followedGroups')
       if (user) {
         socket.emit('login', { data: user })
@@ -254,7 +254,7 @@ io.on('connection', socket => {
       const user = await User.model
         .findOne({ token })
         .populate('amends')
-        .populate('followedTexts')
+        .populate({ path: 'followedTexts', populate: { path: 'amends' } })
         .populate('followedGroups')
       if (user) {
         socket.emit('user', { data: user })
