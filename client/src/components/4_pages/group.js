@@ -10,7 +10,7 @@
 
 import React from 'react'
 import { Group, Page, ErrorPage } from '../../components'
-import { socket } from '../../services'
+import { Socket } from '../../services'
 
 export class GroupPage extends React.Component {
   constructor(props) {
@@ -23,11 +23,10 @@ export class GroupPage extends React.Component {
   }
 
   fetchData() {
-    socket
-      .fetch('group', { id: this.props.match.params.id })
+    Socket.fetch('group', { id: this.props.match.params.id })
       .then(group => {
         this.setState({ group }, () => {
-          socket.emit('user')
+          Socket.emit('user')
         })
       })
       .catch(error => {
@@ -37,18 +36,18 @@ export class GroupPage extends React.Component {
 
   componentDidMount() {
     this.fetchData()
-    socket.on('group/' + this.props.match.params.id, ({ error, data }) => {
+    Socket.on('group/' + this.props.match.params.id, ({ error, data }) => {
       if (!error) {
         this.setState({ group: data }, () => {
-          socket.emit('user')
+          Socket.emit('user')
         })
       }
     })
   }
 
   componentWillUnmount() {
-    socket.off('group')
-    socket.off('group/' + this.props.match.params.id)
+    Socket.off('group')
+    Socket.off('group/' + this.props.match.params.id)
   }
 
   componentDidUpdate(prevProps) {

@@ -10,18 +10,18 @@ import {
   Spacer,
   UserContext
 } from '../../components'
-import { socket } from '../../services'
+import { Socket } from '../../services'
 import { path } from '../../config'
 
 const quitGroup = id => refetch => async () => {
-  await socket.fetch('quitGroup', { id })
-  socket.emit('user')
+  await Socket.fetch('quitGroup', { id })
+  Socket.emit('user')
   refetch()
 }
 
 const joinGroup = id => refetch => async () => {
-  await socket.fetch('joinGroup', { id })
-  socket.emit('user')
+  await Socket.fetch('joinGroup', { id })
+  Socket.emit('user')
   refetch()
 }
 

@@ -8,7 +8,7 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Button, Icon, Notification, Page } from '../../components'
-import { socket } from '../../services'
+import { Socket } from '../../services'
 import { path } from '../../config'
 
 export class SubscribePage extends React.Component {
@@ -22,14 +22,13 @@ export class SubscribePage extends React.Component {
     this.submit = event => {
       event.preventDefault()
 
-      socket
-        .fetch('subscribe', {
-          password: this.state.password,
-          email: this.state.email
-        })
+      Socket.fetch('subscribe', {
+        password: this.state.password,
+        email: this.state.email
+      })
         .then(async user => {
           localStorage.setItem('token', user.token)
-          await socket.fetch('user')
+          await Socket.fetch('user')
           this.setState({ redirectToReferrer: true })
         })
         .catch(error => {
@@ -46,7 +45,7 @@ export class SubscribePage extends React.Component {
   }
 
   componentWillUnmount() {
-    socket.off('subscribe')
+    Socket.off('subscribe')
   }
 
   render() {

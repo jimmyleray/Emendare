@@ -13,7 +13,7 @@ import {
   Spacer,
   UserContext
 } from '../../components'
-import { socket } from '../../services'
+import { Socket } from '../../services'
 import diff_match_patch from 'diff-match-patch'
 import { path } from '../../config'
 
@@ -38,18 +38,16 @@ export class Edit extends React.Component {
     this.hasDiffs = () => this.state.initialValue !== this.state.amendValue
 
     this.addAmend = () => {
-      socket
-        .fetch('postAmend', {
-          name: this.state.amendName,
-          description: this.state.amendDescription,
-          version: this.props.data.patches.length,
-          patch: this.state.patch,
-          textID: this.props.data._id
-        })
-        .then(amend => {
-          socket.emit('user')
-          this.setState({ redirectID: amend._id, redirectToAmend: true })
-        })
+      Socket.fetch('postAmend', {
+        name: this.state.amendName,
+        description: this.state.amendDescription,
+        version: this.props.data.patches.length,
+        patch: this.state.patch,
+        textID: this.props.data._id
+      }).then(amend => {
+        Socket.emit('user')
+        this.setState({ redirectID: amend._id, redirectToAmend: true })
+      })
     }
 
     this.state = {

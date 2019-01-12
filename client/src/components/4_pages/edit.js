@@ -11,7 +11,7 @@
 
 import React from 'react'
 import { Edit, Page, ErrorPage } from '../../components'
-import { socket } from '../../services'
+import { Socket } from '../../services'
 
 export class EditPage extends React.Component {
   constructor(props) {
@@ -24,8 +24,7 @@ export class EditPage extends React.Component {
   }
 
   fetchData() {
-    socket
-      .fetch('text', { id: this.props.match.params.id })
+    Socket.fetch('text', { id: this.props.match.params.id })
       .then(text => {
         this.setState({ text })
       })
@@ -39,7 +38,7 @@ export class EditPage extends React.Component {
   }
 
   componentWillUnmount() {
-    socket.off('text')
+    Socket.off('text')
   }
 
   componentDidUpdate(prevProps) {

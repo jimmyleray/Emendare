@@ -1,5 +1,5 @@
 import React from 'react'
-import { socket } from '../../services'
+import { Socket } from '../../services'
 
 export const UserContext = React.createContext()
 
@@ -13,7 +13,7 @@ export class UserProvider extends React.Component {
       isConnected: () => this.state.user !== null,
       logout: async event => {
         event.preventDefault()
-        await socket.fetch('logout')
+        await Socket.fetch('logout')
         localStorage.removeItem('token')
         this.setState(() => ({ user: null }))
       }
@@ -21,7 +21,7 @@ export class UserProvider extends React.Component {
   }
 
   componentDidMount() {
-    socket.on('user', ({ error, data }) => {
+    Socket.on('user', ({ error, data }) => {
       if (!error) {
         this.setState({ user: data })
       }
@@ -30,8 +30,7 @@ export class UserProvider extends React.Component {
     const token = localStorage.getItem('token')
     if (token) {
       this.setState({ isConnectionPending: true })
-      socket
-        .fetch('login')
+      Socket.fetch('login')
         .then(user => {
           this.setState({ user, isConnectionPending: false })
         })
@@ -45,8 +44,8 @@ export class UserProvider extends React.Component {
   }
 
   componentWillUnmount() {
-    socket.off('user')
-    socket.off('login')
+    Socket.off('user')
+    Socket.off('login')
   }
 
   render() {

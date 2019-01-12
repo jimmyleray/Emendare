@@ -1,8 +1,8 @@
-import { socket } from './socket'
+import { Socket } from './socket'
 
-test('socket has some methods defined', () => {
-  expect(socket.emit).toBeDefined()
-  expect(socket.fetch).toBeDefined()
-  expect(socket.off).toBeDefined()
-  expect(socket.on).toBeDefined()
+test('Socket has some methods defined', () => {
+  expect(Socket.emit).toBeDefined()
+  expect(Socket.fetch).toBeDefined()
+  expect(Socket.off).toBeDefined()
+  expect(Socket.on).toBeDefined()
 })

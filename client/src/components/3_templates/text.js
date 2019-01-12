@@ -13,18 +13,18 @@ import {
   Spacer,
   UserContext
 } from '../../components'
-import { socket } from '../../services'
+import { Socket } from '../../services'
 import { path } from '../../config'
 
 const unFollowText = id => refetch => async () => {
-  await socket.fetch('unFollowText', { id })
-  socket.emit('user')
+  await Socket.fetch('unFollowText', { id })
+  Socket.emit('user')
   refetch()
 }
 
 const followText = id => refetch => async () => {
-  await socket.fetch('followText', { id })
-  socket.emit('user')
+  await Socket.fetch('followText', { id })
+  Socket.emit('user')
   refetch()
 }
 

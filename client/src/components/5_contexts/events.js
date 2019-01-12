@@ -1,5 +1,5 @@
 import React from 'react'
-import { socket } from '../../services'
+import { Socket } from '../../services'
 
 export const EventsContext = React.createContext()
 
@@ -13,8 +13,8 @@ export class EventsProvider extends React.Component {
   }
 
   componentDidMount() {
-    socket.emit('events')
-    socket.on('events', ({ error, data }) => {
+    Socket.emit('events')
+    Socket.on('events', ({ error, data }) => {
       if (!error) {
         this.setState({
           events: data.map(event => ({
@@ -27,7 +27,7 @@ export class EventsProvider extends React.Component {
   }
 
   componentWillUnmount() {
-    socket.off('events')
+    Socket.off('events')
   }
 
   render() {

@@ -25,7 +25,7 @@ import {
   UserContext,
   CountDown
 } from '../../components'
-import { socket, Time } from '../../services'
+import { Socket, Time } from '../../services'
 import diff_match_patch from 'diff-match-patch'
 import { path } from '../../config'
 
@@ -34,38 +34,38 @@ export class AmendPage extends React.Component {
     super(props)
 
     this.upVote = () => {
-      socket
-        .fetch('upVoteAmend', { id: this.props.match.params.id })
-        .then(this.updateAmend)
+      Socket.fetch('upVoteAmend', { id: this.props.match.params.id }).then(
+        this.updateAmend
+      )
     }
 
     this.downVote = () => {
-      socket
-        .fetch('downVoteAmend', { id: this.props.match.params.id })
-        .then(this.updateAmend)
+      Socket.fetch('downVoteAmend', { id: this.props.match.params.id }).then(
+        this.updateAmend
+      )
     }
 
     this.unVote = () => {
-      socket
-        .fetch('unVoteAmend', { id: this.props.match.params.id })
-        .then(this.updateAmend)
+      Socket.fetch('unVoteAmend', { id: this.props.match.params.id }).then(
+        this.updateAmend
+      )
     }
 
     this.updateAmend = amend => {
-      socket.emit('user')
+      Socket.emit('user')
       this.setState({ amend, error: null }, () => {
         this.computeDiff()
       })
     }
 
     this.unFollowText = id => async () => {
-      await socket.fetch('unFollowText', { id })
-      socket.emit('user')
+      await Socket.fetch('unFollowText', { id })
+      Socket.emit('user')
     }
 
     this.followText = id => async () => {
-      await socket.fetch('followText', { id })
-      socket.emit('user')
+      await Socket.fetch('followText', { id })
+      Socket.emit('user')
     }
 
     this.convertMsToTime = ms => {
@@ -83,12 +83,11 @@ export class AmendPage extends React.Component {
   }
 
   fetchData() {
-    socket
-      .fetch('amend', { id: this.props.match.params.id })
+    Socket.fetch('amend', { id: this.props.match.params.id })
       .then(amend => {
         this.setState({ amend }, () => {
           this.computeDiff()
-          socket.emit('user')
+          Socket.emit('user')
         })
       })
       .catch(error => {
@@ -99,19 +98,19 @@ export class AmendPage extends React.Component {
   componentDidMount() {
     this.fetchData()
 
-    socket.on('amend/' + this.props.match.params.id, ({ error, data }) => {
+    Socket.on('amend/' + this.props.match.params.id, ({ error, data }) => {
       if (!error) {
         this.setState({ amend: data }, () => {
           this.computeDiff()
-          socket.emit('user')
+          Socket.emit('user')
         })
       }
     })
   }
 
   componentWillUnmount() {
-    socket.off('amend')
-    socket.off('amend/' + this.props.match.params.id)
+    Socket.off('amend')
+    Socket.off('amend/' + this.props.match.params.id)
   }
 
   componentDidUpdate(prevProps) {

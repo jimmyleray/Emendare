@@ -1,6 +1,6 @@
 import React from 'react'
 import { Page } from '../../components'
-import { socket } from '../../services'
+import { Socket } from '../../services'
 import { shuffle } from 'lodash'
 
 export class ContributorsPage extends React.Component {
@@ -13,12 +13,12 @@ export class ContributorsPage extends React.Component {
   }
 
   async componentDidMount() {
-    const contributors = shuffle(await socket.fetch('contributors'))
+    const contributors = shuffle(await Socket.fetch('contributors'))
     this.setState({ contributors })
   }
 
   componentWillUnmount() {
-    socket.off('contributors')
+    Socket.off('contributors')
   }
 
   render() {

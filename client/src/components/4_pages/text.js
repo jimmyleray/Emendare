@@ -14,7 +14,7 @@
 
 import React from 'react'
 import { Text, Page, ErrorPage } from '../../components'
-import { socket } from '../../services'
+import { Socket } from '../../services'
 
 export class TextPage extends React.Component {
   constructor(props) {
@@ -27,11 +27,10 @@ export class TextPage extends React.Component {
   }
 
   fetchData() {
-    socket
-      .fetch('text', { id: this.props.match.params.id })
+    Socket.fetch('text', { id: this.props.match.params.id })
       .then(text => {
         this.setState({ text }, () => {
-          socket.emit('user')
+          Socket.emit('user')
         })
       })
       .catch(error => {
@@ -41,18 +40,18 @@ export class TextPage extends React.Component {
 
   componentDidMount() {
     this.fetchData()
-    socket.on('text/' + this.props.match.params.id, ({ error, data }) => {
+    Socket.on('text/' + this.props.match.params.id, ({ error, data }) => {
       if (!error) {
         this.setState({ text: data }, () => {
-          socket.emit('user')
+          Socket.emit('user')
         })
       }
     })
   }
 
   componentWillUnmount() {
-    socket.off('text')
-    socket.off('text/' + this.props.match.params.id)
+    Socket.off('text')
+    Socket.off('text/' + this.props.match.params.id)
   }
 
   componentDidUpdate(prevProps) {

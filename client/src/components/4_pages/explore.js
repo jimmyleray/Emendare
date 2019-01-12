@@ -6,7 +6,7 @@
 
 import React from 'react'
 import { ErrorPage, Group, Page } from '../../components'
-import { socket } from '../../services'
+import { Socket } from '../../services'
 
 export class ExplorePage extends React.Component {
   constructor(props) {
@@ -19,25 +19,24 @@ export class ExplorePage extends React.Component {
   }
   componentDidMount() {
     this.fetchData()
-    socket.on('rootGroup', ({ error, data }) => {
+    Socket.on('rootGroup', ({ error, data }) => {
       if (!error) {
         this.setState({ rootGroup: data }, () => {
-          socket.emit('user')
+          Socket.emit('user')
         })
       }
     })
   }
 
   componentWillUnmount() {
-    socket.off('rootGroup')
+    Socket.off('rootGroup')
   }
 
   fetchData() {
-    socket
-      .fetch('rootGroup')
+    Socket.fetch('rootGroup')
       .then(rootGroup => {
         this.setState({ rootGroup }, () => {
-          socket.emit('user')
+          Socket.emit('user')
         })
       })
       .catch(error => {
