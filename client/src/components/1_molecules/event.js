@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Icon, Notification } from '../../components'
+import { Icon, Notification, StopWatch } from '../../components'
 import { path } from '../../config'
 
 const typeToUrl = type => target => {
@@ -26,7 +26,10 @@ const typeToText = type => target => {
           <p>
             <Icon type="fas fa-pencil-alt" className="fa-lg has-text-success" />
             <Icon type="fas fa-chevron-right" />
-            <span>Le {created.toLocaleString()}</span>
+            <span>
+              Il y'a{' '}
+              <StopWatch date={created} className="has-text-weight-semibold" />
+            </span>
           </p>
 
           <p>
@@ -47,7 +50,10 @@ const typeToText = type => target => {
           <p>
             <Icon type="fas fa-align-center" className="fa-lg has-text-info" />
             <Icon type="fas fa-chevron-right" />
-            <span>Le {created.toLocaleString()}</span>
+            <span>
+              Il y'a{' '}
+              <StopWatch date={created} className="has-text-weight-semibold" />
+            </span>
           </p>
 
           <p>
@@ -66,7 +72,10 @@ const typeToText = type => target => {
           <p>
             <Icon type="fas fa-users" className="fa-lg has-text-danger" />
             <Icon type="fas fa-chevron-right" />
-            <span>Le {created.toLocaleString()}</span>
+            <span>
+              Il y'a{' '}
+              <StopWatch date={created} className="has-text-weight-semibold" />
+            </span>
           </p>
 
           <p>
@@ -83,7 +92,10 @@ const typeToText = type => target => {
           <p>
             <Icon type="fas fa-users" className="fa-lg has-text-danger" />
             <Icon type="fas fa-chevron-right" />
-            <span>Le {created.toLocaleString()}</span>
+            <span>
+              Il y'a{' '}
+              <StopWatch date={created} className="has-text-weight-semibold" />
+            </span>
           </p>
 
           <p>
