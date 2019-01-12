@@ -30,11 +30,11 @@ const typeToText = type => target => {
               Il y a{' '}
               <StopWatch date={created} className="has-text-weight-semibold" />
             </span>
-          </p>
-
-          <p>
+            {' - '}
             Un{' '}
-            <span className="has-text-weight-semibold">nouvel amendement</span>{' '}
+            <span className="has-text-weight-semibold">
+              nouvel amendement
+            </span>{' '}
             a été proposé sur le texte{' '}
             <span className="has-text-weight-semibold">{target.text.name}</span>{' '}
             dans le groupe{' '}
@@ -54,12 +54,10 @@ const typeToText = type => target => {
               Il y a{' '}
               <StopWatch date={created} className="has-text-weight-semibold" />
             </span>
-          </p>
-
-          <p>
+            {' - '}
             Un nouveau texte{' '}
-            <span className="has-text-weight-semibold">{target.name}</span> est
-            disponible dans le groupe{' '}
+            <span className="has-text-weight-semibold">{target.name}</span> a
+            été crée dans le groupe{' '}
             <span className="has-text-weight-semibold">
               {target.group.name}
             </span>
@@ -76,12 +74,10 @@ const typeToText = type => target => {
               Il y a{' '}
               <StopWatch date={created} className="has-text-weight-semibold" />
             </span>
-          </p>
-
-          <p>
+            {' - '}
             Un nouveau groupe{' '}
-            <span className="has-text-weight-semibold">{target.name}</span> est
-            disponible dans le groupe{' '}
+            <span className="has-text-weight-semibold">{target.name}</span> a
+            été crée dans le groupe{' '}
             <span className="has-text-weight-semibold">
               {target.parent.name}
             </span>
@@ -96,12 +92,10 @@ const typeToText = type => target => {
               Il y a{' '}
               <StopWatch date={created} className="has-text-weight-semibold" />
             </span>
-          </p>
-
-          <p>
+            {' - '}
             Un nouveau groupe racine{' '}
-            <span className="has-text-weight-semibold">{target.name}</span> est
-            disponible
+            <span className="has-text-weight-semibold">{target.name}</span> a
+            été crée
           </p>
         </>
       )
