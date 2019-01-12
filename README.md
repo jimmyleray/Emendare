@@ -35,13 +35,13 @@ L'installation du projet nécéssite 2 étapes : une configuration du serveur et
 
 La première étape va être de créer la base de données MongoDB. Pour ce faire il suffit de créer un container contenant une image mongo.
 
-```
+```bash
 cd server/
 ```
 
 puis création de l'image mongo
 
-```
+```bash
 docker-compose build
 ```
 
@@ -49,7 +49,7 @@ docker-compose build
 
 et pour finir lancer le container
 
-```
+```bash
 docker-compose start
 ```
 
@@ -57,20 +57,20 @@ La base de données est accessible à l'adresse suivante : **localhost:27017/eme
 
 Une fois la base de données en place nous allons pouvoir installer les dépendances
 
-```
+```bash
 npm install
 ```
 
 Puis démarrer le serveur soit pour la production
 
-```
+```bash
 npm build
 npm start
 ```
 
 Soit pour le développement avec ces deux tâches en parallèle
 
-```
+```bash
 npm run build:watch
 npm run dev
 ```
@@ -81,7 +81,7 @@ Cette commande permet de lancer le serveur à l'adresse suivante : **localhost:3
 
 Pour l'installation du client la première étape va être d'installer les dépendances.
 
-```
+```bash
 cd client/
 npm install
 ```
@@ -90,13 +90,13 @@ Pour lancer le client, deux solutions vont être possibles:
 
 - en development :
 
-```
+```bash
 npm run dev
 ```
 
 - en production :
 
-```
+```bash
 npm build
 npm start
 ```
