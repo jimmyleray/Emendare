@@ -27,7 +27,7 @@ const typeToText = type => target => {
             <Icon type="fas fa-pencil-alt" className="fa-lg has-text-success" />
             <Icon type="fas fa-chevron-right" />
             <span>
-              Il y'a{' '}
+              Il y a{' '}
               <StopWatch date={created} className="has-text-weight-semibold" />
             </span>
           </p>
@@ -51,7 +51,7 @@ const typeToText = type => target => {
             <Icon type="fas fa-align-center" className="fa-lg has-text-info" />
             <Icon type="fas fa-chevron-right" />
             <span>
-              Il y'a{' '}
+              Il y a{' '}
               <StopWatch date={created} className="has-text-weight-semibold" />
             </span>
           </p>
@@ -73,7 +73,7 @@ const typeToText = type => target => {
             <Icon type="fas fa-users" className="fa-lg has-text-danger" />
             <Icon type="fas fa-chevron-right" />
             <span>
-              Il y'a{' '}
+              Il y a{' '}
               <StopWatch date={created} className="has-text-weight-semibold" />
             </span>
           </p>
@@ -93,7 +93,7 @@ const typeToText = type => target => {
             <Icon type="fas fa-users" className="fa-lg has-text-danger" />
             <Icon type="fas fa-chevron-right" />
             <span>
-              Il y'a{' '}
+              Il y a{' '}
               <StopWatch date={created} className="has-text-weight-semibold" />
             </span>
           </p>
