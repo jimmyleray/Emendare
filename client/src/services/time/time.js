@@ -1,7 +1,7 @@
 /**
  * This service will help to manage Time
  */
-export class TimeService {
+export class Time {
   /**
    * Retrieve the value of sec, min and hrs of a timestamp
    * @param {number} ms
@@ -11,13 +11,13 @@ export class TimeService {
     const hrs = Math.floor(sec / 3600)
     const min = Math.floor((sec - hrs * 3600) / 60)
 
-    // Re-calculate secondes
+    // Re-calculate seconds
     sec = sec - (min * 60 + hrs * 3600)
     return { sec: sec, min: min, hrs: hrs }
   }
 
   /**
-   * calculate the time spent between now and a date
+   * Calculate the time spent between now and a date
    * @param {string || Date} date
    */
   static getTimeSpent = date => {
@@ -28,7 +28,7 @@ export class TimeService {
   }
 
   /**
-   * calculate the time left between now and a date
+   * Calculate the time left between now and a date
    * @param {string || Date} date
    * @param {number} delay
    */
@@ -44,13 +44,12 @@ export class TimeService {
    * @param {{sec:number, min:number, hrs: number}} time
    * @param {string} defaultView
    */
-  static toTimeString = (time, defaultView = '-') => {
-    return time === null
-      ? defaultView
-      : time.hrs === 0 && time.min === 0
+  static toTimeString = time => {
+    return time.hrs === 0 && time.min === 0
       ? `${time.sec} secondes`
       : `${time.hrs} heures et ${time.min} minutes`
   }
+
   /**
    * Add time to a Date
    * @param {Date || string} date

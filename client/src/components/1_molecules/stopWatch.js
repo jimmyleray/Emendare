@@ -1,14 +1,11 @@
 import PropTypes from 'prop-types'
-import { TimeService } from '../../services'
-import { Time } from '../../components'
-import { withClock } from '../2_organisms/clock'
+import { Time } from '../../services'
+import { Clock } from '../../components'
 
-const getStopWatchTime = date => {
-  return { time: TimeService.convertMsToTime(TimeService.getTimeSpent(date)) }
-}
-export const StopWatch = withClock(({ date }) => {
-  getStopWatchTime(date)
-})(Time)
+const getStopWatchTime = ({ date }) =>
+  Time.convertMsToTime(Time.getTimeSpent(date))
+
+export const StopWatch = Clock(getStopWatchTime)
 
 StopWatch.propTypes = {
   date: PropTypes.oneOfType([

@@ -25,7 +25,7 @@ import {
   UserContext,
   CountDown
 } from '../../components'
-import { socket, TimeService } from '../../services'
+import { socket, Time } from '../../services'
 import diff_match_patch from 'diff-match-patch'
 import { path } from '../../config'
 
@@ -220,7 +220,7 @@ export class AmendPage extends React.Component {
                           <p className="has-text-centered">
                             Temps restant avant la fin du scrutin :{' '}
                             <CountDown
-                              date={TimeService.addTimeToDate(
+                              date={Time.addTimeToDate(
                                 this.state.amend.created,
                                 this.state.amend.delayMax
                               )}

@@ -1,17 +1,18 @@
-/**
- * HOC which update a time object {sec: number, min:number, hrs: number} each second
- * when the time is under 1 min else each minute
- *
- *  @param {function} getTime  provides a time object and, in option, a boolean stop which can stop the clock
- */
 import React from 'react'
+import { Time } from '../../services'
 
-export const withClock = getTime => Component => {
+/**
+ * HOC which update a time object {sec: number, min:number, hrs: number}
+ * each second when the time is under 1 min else each minute
+ *
+ *  @param {function} getTime  provides a time object
+ */
+export const Clock = getTime => {
   return class extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
-        time: null,
+        time: getTime(this.props),
         intervalDelay: 1000
       }
     }
@@ -27,9 +28,10 @@ export const withClock = getTime => Component => {
     start = intervalDelay => {
       this.setState({ intervalDelay })
       this.clock = setInterval(() => {
-        const { time, stop } = getTime(this.props)
-        if (stop === true) this.stop()
-        else {
+        const time = getTime(this.props)
+        if (Time.isTimeZeros(time)) {
+          this.stop()
+        } else {
           this.setState({ time })
           this.update(time)
         }
@@ -37,7 +39,8 @@ export const withClock = getTime => Component => {
     }
 
     update = time => {
-      //if the timeleft is under 1 minutes set the intervalDelay to 1sec else set to 1min
+      // if the time is under 1 minute set the
+      // intervalDelay to 1 second else set to 1 minute
       const { intervalDelay } = this.state
       if (time.min === 0 && time.hrs === 0 && intervalDelay !== 1000) {
         this.stop()
@@ -53,7 +56,7 @@ export const withClock = getTime => Component => {
     }
 
     render() {
-      return <Component time={this.state.time} {...this.props} />
+      return <span {...this.props}>{Time.toTimeString(this.state.time)}</span>
     }
   }
 }

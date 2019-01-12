@@ -1,2 +1,2 @@
 export * from './socket'
-export * from './timeService'
+export * from './time'
