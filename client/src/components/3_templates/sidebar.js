@@ -14,7 +14,7 @@ export const Sidebar = ({ width }) => (
         >
           <p className="has-text-weight-semibold">Textes suivis</p>
           <br />
-          {user && (
+          {user ? (
             <>
               {user.followedTexts
                 .filter(Text.hasOpenAmendUnvoted(user))
@@ -86,6 +86,11 @@ export const Sidebar = ({ width }) => (
                   <Link to={path.explore}>Explorer ?</Link>
                 </>
               )}
+            </>
+          ) : (
+            <>
+              <span>Vous n'êtes pas connecté.</span>{' '}
+              <Link to={path.login}>Se connecter ?</Link>
             </>
           )}
 
