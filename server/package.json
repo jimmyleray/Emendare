@@ -14,7 +14,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "format": "prettier --write src/**/*.{js,ts,json,md}"
+    "format": "prettier --write src/**/*.{js,ts,json,md}",
+    "format:ci": "prettier --write src/**/*.{js,ts,json,md}"
   },
   "husky": {
     "hooks": {
