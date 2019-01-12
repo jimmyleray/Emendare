@@ -1,2 +1,2 @@
 fixes:
-  - "::front/" # move root, e.g. : "path/" => "front/path/"
+  - "::client/" # move root, e.g. : "path/" => "client/path/"
