@@ -115,6 +115,9 @@ describe('isNegative', () => {
 
     const timeBis = { seconds: -5, minutes: -2, hours: 0, days: 0 }
     expect(Time.isNegative(timeBis)).toBe(true)
+
+    const timeTer = { seconds: 5, minutes: 2, hours: 0, days: -1 }
+    expect(Time.isNegative(timeTer)).toBe(true)
   })
 
   test('should return false if time is positive', () => {

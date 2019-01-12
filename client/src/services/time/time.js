@@ -77,5 +77,9 @@ export class Time {
     time.seconds < 0 ||
     time.minutes < 0 ||
     time.hours < 0 ||
-    (time.seconds === 0 && time.minutes === 0 && time.hours === 0)
+    time.days < 0 ||
+    (time.seconds === 0 &&
+      time.minutes === 0 &&
+      time.hours === 0 &&
+      time.days === 0)
 }
