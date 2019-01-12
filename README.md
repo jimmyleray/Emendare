@@ -2,7 +2,7 @@
 
 > Plateforme open source de rédaction de textes amendables
 
-[![CircleCI](https://circleci.com/gh/jimmyleray/Emendare.svg?style=svg)](https://circleci.com/gh/jimmyleray/Emendare) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://gitlab.com/emendare/emendare/issues) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0a1f29651edb493ba197fd794d4bc5d4)](https://www.codacy.com/app/jimmy.leray/Emendare?utm_source=github.com&utm_medium=referral&utm_content=JimmyLeray/Emendare&utm_campaign=Badge_Grade)
+[![CircleCI](https://circleci.com/gh/jimmyleray/Emendare.svg?style=svg)](https://circleci.com/gh/jimmyleray/Emendare) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0a1f29651edb493ba197fd794d4bc5d4)](https://www.codacy.com/app/jimmy.leray/Emendare?utm_source=github.com&utm_medium=referral&utm_content=JimmyLeray/Emendare&utm_campaign=Badge_Grade) [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://gitlab.com/emendare/emendare/issues) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## Tech/framework utilisés
 
