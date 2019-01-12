@@ -42,12 +42,19 @@ export const Clock = getTime => {
       // if the time is under 1 minute set the
       // intervalDelay to 1 second else set to 1 minute
       const { intervalDelay } = this.state
-      if (time.min === 0 && time.hrs === 0 && intervalDelay !== 1000) {
+      if (
+        time.minutes === 0 &&
+        time.hours === 0 &&
+        time.days === 0 &&
+        intervalDelay !== 1000
+      ) {
         this.stop()
         this.start(1000)
-      } else if (time.min !== 0 && intervalDelay !== 60000) {
+      } else if (time.minutes !== 0 && intervalDelay !== 60000) {
         this.stop()
         this.start(60000)
+      } else {
+        this.stop()
       }
     }
 

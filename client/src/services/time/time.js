@@ -6,14 +6,15 @@ export class Time {
    * Retrieve the value of sec, min and hrs of a timestamp
    * @param {number} ms
    */
-  static convertMsToTime = ms => {
-    let sec = Math.floor(ms / 1000)
-    const hrs = Math.floor(sec / 3600)
-    const min = Math.floor((sec - hrs * 3600) / 60)
+  static convertMsToTime = milliSeconds => {
+    let seconds = Math.floor(milliSeconds / 1000)
+    const days = Math.floor(seconds / 86400)
+    const hours = Math.floor((seconds - days * 86400) / 3600)
+    const minutes = Math.floor((seconds - days * 86400 - hours * 3600) / 60)
 
     // Re-calculate seconds
-    sec = sec - (min * 60 + hrs * 3600)
-    return { sec: sec, min: min, hrs: hrs }
+    seconds = seconds - (minutes * 60 + hours * 3600 + days * 86400)
+    return { seconds, minutes, hours, days }
   }
 
   /**
@@ -45,9 +46,15 @@ export class Time {
    * @param {string} defaultView
    */
   static toTimeString = time => {
-    return time.hrs === 0 && time.min === 0
-      ? `${time.sec} secondes`
-      : `${time.hrs} heures et ${time.min} minutes`
+    if (time.days > 0) {
+      return `${time.days} jour${time.days > 1 ? 's' : ''}`
+    } else if (time.hours > 0) {
+      return `${time.hours} heure${time.hours > 1 ? 's' : ''}`
+    } else if (time.minutes > 0) {
+      return `${time.minutes} minute${time.minutes > 1 ? 's' : ''}`
+    } else if (time.seconds > 0) {
+      return `${time.seconds} seconde${time.seconds > 1 ? 's' : ''}`
+    }
   }
 
   /**
@@ -67,8 +74,8 @@ export class Time {
    * @param {{sec:number, min: number, hrs: number}} time
    */
   static isNegative = time =>
-    time.sec < 0 ||
-    time.min < 0 ||
-    time.hrs < 0 ||
-    (time.sec === 0 && time.min === 0 && time.hrs === 0)
+    time.seconds < 0 ||
+    time.minutes < 0 ||
+    time.hours < 0 ||
+    (time.seconds === 0 && time.minutes === 0 && time.hours === 0)
 }
