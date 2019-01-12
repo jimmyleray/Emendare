@@ -11,6 +11,7 @@
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage",
     "cypress:open": "npx cypress open",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/eslint {src,public,cypress}/**/*.js",

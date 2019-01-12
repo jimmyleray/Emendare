@@ -50,7 +50,7 @@ jobs:
       # Run unit tests
       - run:
           name: Unit Test
-          command: npm run test
+          command: npm run test:coverage
 
       # Run codecov reporting
       - run:
