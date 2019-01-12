@@ -11,7 +11,7 @@ La stack actuelle de ce projet est la suivante :
 - Coté Frontend :
 
   - [ReactJS](https://reactjs.org/) comme framework pour l'interface client
-  - [Bulma CSS](https://bulma.io/) comme framework css
+  - [Bulma CSS](https://bulma.io/) comme framework css basé sur Flexbox
 
 - Coté Backend :
   - [Node.js](https://nodejs.org/en/) pour le serveur de l'API et le serveur de l'application
@@ -25,7 +25,7 @@ Ces instructions permettent de créer une copie du projet et de pouvoir l'éxecu
 ### Pré-requis
 
 Pour mettre en place l'installation du projet, il faut avoir **Node.js** d'installé.
-Pour installer Node.js, veuillez vous référencer à la documentation officielle : [Node.js](https://nodejs.org/en/)
+Pour installer Node.js, veuillez vous référencer à la [documentation officielle de Node.js](https://nodejs.org/fr/)
 
 ### Installation
 
@@ -33,7 +33,7 @@ L'installation du projet nécéssite 2 étapes : une configuration du serveur et
 
 #### Configuration du serveur
 
-La première étape va être de créer la base de données MongoDB. Pour ce faire il suffit de créer un container contenant une image mongo.
+La première étape va être de créer la base de données MongoDB. Pour se faire il suffit de créer un conteneur contenant une image mongo, en suivant les étapes ci-dessous.
 
 ```bash
 cd server/
@@ -47,7 +47,7 @@ docker-compose build
 
 > Cette commande 'build' est seulement à faire lors de l'installation.
 
-et pour finir lancer le container
+et pour finir lancer le conteneur
 
 ```bash
 docker-compose start
@@ -75,7 +75,7 @@ npm run build:watch
 npm run dev
 ```
 
-Cette commande permet de lancer le serveur à l'adresse suivante : **localhost:3030**
+Ces commandes permettent de lancer le serveur à l'adresse suivante : **localhost:3030**
 
 #### Configuration du client
 
