@@ -29,7 +29,7 @@ export const Clock = getTime => {
       this.setState({ intervalDelay })
       this.clock = setInterval(() => {
         const time = getTime(this.props)
-        if (Time.isTimeZeros(time)) {
+        if (Time.isNegative(time)) {
           this.stop()
         } else {
           this.setState({ time })

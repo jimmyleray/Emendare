@@ -20,11 +20,11 @@ export class Time {
    * Calculate the time spent between now and a date
    * @param {string || Date} date
    */
-  static getTimeSpent = date => {
+  static getTimeSpent = (date, from = new Date()) => {
     if (typeof date === 'string') {
       date = new Date(date)
     }
-    return Math.floor(new Date().getTime() - date.getTime())
+    return Math.floor(from.getTime() - date.getTime())
   }
 
   /**
@@ -32,11 +32,11 @@ export class Time {
    * @param {string || Date} date
    * @param {number} delay
    */
-  static getTimeLeft = date => {
+  static getTimeLeft = (date, from = new Date()) => {
     if (typeof date === 'string') {
       date = new Date(date)
     }
-    return -Math.floor(new Date().getTime() - date.getTime())
+    return Math.floor(date.getTime() - from.getTime())
   }
 
   /**
@@ -63,9 +63,12 @@ export class Time {
   }
 
   /**
-   * Return true if the time is equal to 0 else false
+   * Return true if the time is equal or less to 0 else false
    * @param {{sec:number, min: number, hrs: number}} time
    */
-  static isTimeZeros = time =>
-    time.sec === 0 && time.min === 0 && time.hrs === 0
+  static isNegative = time =>
+    time.sec < 0 ||
+    time.min < 0 ||
+    time.hrs < 0 ||
+    (time.sec === 0 && time.min === 0 && time.hrs === 0)
 }
