@@ -48,7 +48,7 @@ export class ServerState extends React.Component {
                 : 'has-text-danger'
               : 'has-text-light')
           }
-          title={(this.state.ping ? this.state.ping : '?') + ' ms'}
+          title={this.state.ping ? this.state.ping + ' ms' : 'Déconnecté'}
         />
         Etat du serveur
       </p>
