@@ -24,6 +24,7 @@ export const Sidebar = ({ width }) => (
             <>
               {user.followedTexts
                 .filter(Text.hasOpenAmendUnvoted(user))
+                .sort((a, b) => b.followersCount - a.followersCount)
                 .map(followedText => (
                   <Link
                     key={followedText._id}
@@ -48,6 +49,7 @@ export const Sidebar = ({ width }) => (
                     Text.hasOpenAmend(followedTexts) &&
                     !Text.hasOpenAmendUnvoted(user)(followedTexts)
                 )
+                .sort((a, b) => b.followersCount - a.followersCount)
                 .map(followedText => (
                   <Link
                     key={followedText._id}
@@ -68,6 +70,7 @@ export const Sidebar = ({ width }) => (
 
               {user.followedTexts
                 .filter(followedTexts => !Text.hasOpenAmend(followedTexts))
+                .sort((a, b) => b.followersCount - a.followersCount)
                 .map(followedText => (
                   <Link
                     key={followedText._id}
