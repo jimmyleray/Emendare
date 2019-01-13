@@ -1,5 +1,11 @@
 import React from 'react'
-import { Footer, Icon, Notification, UserContext } from '../../components'
+import {
+  Footer,
+  Icon,
+  Notification,
+  ServerState,
+  UserContext
+} from '../../components'
 import { Text } from '../../services'
 import { Link } from 'react-router-dom'
 import { path } from '../../config'
@@ -93,13 +99,13 @@ export const Sidebar = ({ width }) => (
               <Link to={path.login}>Se connecter ?</Link>
             </>
           )}
-
           <br />
           <br />
-
           <p className="has-text-weight-semibold">Liens utiles</p>
           <br />
           <Footer />
+          <br />
+          <ServerState />
         </Notification>
       )}
     </UserContext.Consumer>

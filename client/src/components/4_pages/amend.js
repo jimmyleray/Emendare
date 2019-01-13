@@ -176,7 +176,7 @@ export class AmendPage extends React.Component {
                           className="button is-light"
                           disabled={this.state.amend.text.rules}
                         >
-                          Ne plus participer à ce texte
+                          Se désabonner de ce texte
                         </Button>
                       ) : (
                         <Button
@@ -184,7 +184,7 @@ export class AmendPage extends React.Component {
                           className="button is-success"
                           disabled={this.state.amend.text.rules}
                         >
-                          Participer à ce texte
+                          S'abonner à ce texte
                         </Button>
                       ))}
                   </Buttons>

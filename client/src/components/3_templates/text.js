@@ -13,7 +13,7 @@ import {
   Spacer,
   UserContext
 } from '../../components'
-import { Socket } from '../../services'
+import { Amend, Socket } from '../../services'
 import { path } from '../../config'
 
 const unFollowText = id => refetch => async () => {
@@ -75,15 +75,15 @@ export const Text = ({ data, refetch }) => {
                   className="button is-light"
                   disabled={data.rules}
                 >
-                  Ne plus participer à ce texte
+                  Se désabonner de ce texte
                 </Button>
               ) : (
                 <Button
                   onClick={followText(data._id)(refetch)}
-                  className="button is-success"
+                  className="button is-success has-text-weight-semibold"
                   disabled={data.rules}
                 >
-                  Participer à ce texte
+                  S'abonner à ce texte
                 </Button>
               ))}
 
@@ -97,7 +97,9 @@ export const Text = ({ data, refetch }) => {
                 }
               >
                 <Icon type="fas fa-plus" />
-                <span>Proposer un amendement</span>
+                <span className="has-text-weight-semibold">
+                  Proposer un amendement
+                </span>
               </Button>
             )}
           </Buttons>
@@ -105,11 +107,23 @@ export const Text = ({ data, refetch }) => {
           <Columns>
             <Column>
               <Box>
-                {data.actual
-                  .split('\n')
-                  .map((line, index) =>
-                    line ? <p key={index}>{line}</p> : <br key={index} />
-                  )}
+                {data.actual &&
+                  data.actual
+                    .split('\n')
+                    .map((line, index) =>
+                      line ? <p key={index}>{line}</p> : <br key={index} />
+                    )}
+
+                {!data.actual && (
+                  <>
+                    <p className="has-text-weight-semibold has-text-danger">
+                      Texte actuellement vide
+                    </p>
+                    <p className="has-text-weight-semibold">
+                      Proposez un amendement ?
+                    </p>
+                  </>
+                )}
               </Box>
             </Column>
             <Column>
@@ -124,15 +138,35 @@ export const Text = ({ data, refetch }) => {
               <Box>
                 {data.amends.length > 0 && (
                   <>
-                    <p>Liste des votes en cours</p>
+                    <p className="has-text-weight-semibold">
+                      Liste des scrutins en cours
+                    </p>
                     {data.amends.filter(amend => !amend.closed).length > 0 ? (
                       <>
                         {data.amends
                           .filter(amend => !amend.closed)
                           .map((amend, index) => (
                             <p key={amend._id}>
+                              {user ? (
+                                Amend.isVoted(user)(amend) ? (
+                                  <Icon
+                                    className="fas fa-circle has-text-success"
+                                    title="Vous avez déjà voté"
+                                  />
+                                ) : (
+                                  <Icon
+                                    className="fas fa-circle has-text-danger"
+                                    title="Vous n'avez pas encore voté"
+                                  />
+                                )
+                              ) : (
+                                <Icon
+                                  className="fas fa-circle has-text-light"
+                                  title="Vous n'êtes pas connecté"
+                                />
+                              )}
                               <Link to={path.amend(amend._id)}>
-                                {index + 1} - {amend.name}
+                                {amend.name}
                               </Link>
                             </p>
                           ))}
@@ -145,34 +179,35 @@ export const Text = ({ data, refetch }) => {
 
                     {data.amends.filter(amend => amend.closed).length > 0 && (
                       <>
-                        <br />
-                        <p>Liste des votes clos</p>
-                        <ul>
-                          {data.amends
-                            .filter(amend => amend.closed)
-                            .sort(
-                              (a, b) =>
-                                new Date(b.finished).getTime() -
-                                new Date(a.finished).getTime()
-                            )
-                            .map((amend, index, arr) => (
-                              <li key={amend._id}>
-                                <Link to={path.amend(amend._id)}>
-                                  {arr.length - index} - {amend.name}{' '}
-                                  <span
-                                    className={
-                                      'has-text-weight-semibold ' +
-                                      (amend.accepted
-                                        ? 'has-text-success'
-                                        : 'has-text-danger')
-                                    }
-                                  >
-                                    ({amend.accepted ? 'accepté' : 'refusé'})
-                                  </span>
-                                </Link>
-                              </li>
-                            ))}
-                        </ul>
+                        <hr />
+                        <p className="has-text-weight-semibold">
+                          Liste des anciens scrutins
+                        </p>
+                        {data.amends
+                          .filter(amend => amend.closed)
+                          .sort(
+                            (a, b) =>
+                              new Date(b.finished).getTime() -
+                              new Date(a.finished).getTime()
+                          )
+                          .map((amend, index, arr) => (
+                            <p key={amend._id}>
+                              {amend.accepted ? (
+                                <Icon
+                                  className="fas fa-circle has-text-success"
+                                  title="Accepté"
+                                />
+                              ) : (
+                                <Icon
+                                  className="fas fa-circle has-text-danger"
+                                  title="Refusé"
+                                />
+                              )}
+                              <Link to={path.amend(amend._id)}>
+                                {amend.name}
+                              </Link>
+                            </p>
+                          ))}
                       </>
                     )}
                   </>

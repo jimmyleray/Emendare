@@ -155,6 +155,10 @@ const checkAmendVotes = async () => {
 checkAmendVotes()
 
 io.on('connection', socket => {
+  socket.on('customPing', ({ data }) => {
+    socket.emit('customPong', data)
+  })
+
   socket.on('login', async ({ token, data }) => {
     const { email, password } = data
     if (email && password) {
