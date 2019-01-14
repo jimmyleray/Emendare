@@ -1,27 +1,54 @@
 import React from 'react'
 import {
+  Button,
   Footer,
   Icon,
+  Link,
   Notification,
   ServerState,
   UserContext
 } from '../../components'
 import { Text } from '../../services'
-import { Link } from 'react-router-dom'
 import { path } from '../../config'
 
 export const Sidebar = ({ width }) => (
   <div className="is-hidden-mobile" style={{ flex: 'none', width }}>
     <UserContext.Consumer>
-      {({ user }) => (
+      {({ user, isConnectionPending }) => (
         <Notification
           className="is-dark"
           style={{ height: '100%', borderRadius: 0 }}
         >
-          <p className="has-text-weight-semibold">Textes suivis</p>
-          <br />
+          <div className="has-text-centered">
+            <Link
+              to={path.home}
+              className="has-text-weight-semibold is-size-4"
+              style={{ textDecoration: 'none' }}
+            >
+              <img
+                src={'/images/logo.png'}
+                alt={'Emendare logo'}
+                style={{
+                  filter: 'invert(1)',
+                  verticalAlign: 'middle',
+                  width: '48px'
+                }}
+              />
+              <span style={{ marginLeft: '6px' }}>Emendare</span>
+            </Link>
+          </div>
+
           {user ? (
             <>
+              <br />
+              <div className="has-text-centered">
+                <Link to={path.profile} style={{ textDecoration: 'none' }}>
+                  <Button className="is-link">Mon profil</Button>
+                </Link>
+              </div>
+              <br />
+              <p className="has-text-weight-semibold">Textes suivis</p>
+              <br />
               {user.followedTexts
                 .filter(Text.hasOpenAmendUnvoted(user))
                 .sort((a, b) => b.followersCount - a.followersCount)
@@ -96,13 +123,25 @@ export const Sidebar = ({ width }) => (
                 </>
               )}
             </>
+          ) : !isConnectionPending ? (
+            <>
+              <br />
+              <div className="has-text-centered">
+                <Link to={path.login} style={{ textDecoration: 'none' }}>
+                  <Button className="is-link">Connexion</Button>
+                </Link>
+              </div>
+            </>
           ) : (
             <>
-              <span>Vous n'êtes pas connecté.</span>{' '}
-              <Link to={path.login}>Se connecter ?</Link>
+              <br />
+              <div className="has-text-centered">
+                <Button disabled className="is-link">
+                  Mon profil
+                </Button>
+              </div>
             </>
           )}
-          <br />
           <br />
           <p className="has-text-weight-semibold">Liens utiles</p>
           <br />

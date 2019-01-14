@@ -1,6 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { Icon, Notification, StopWatch } from '../../components'
+import { Icon, Link, Notification, StopWatch } from '../../components'
 import { path } from '../../config'
 
 const typeToUrl = type => target => {

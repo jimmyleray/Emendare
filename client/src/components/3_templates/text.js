@@ -1,7 +1,6 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 
 import React from 'react'
-import { Link } from 'react-router-dom'
 import {
   Box,
   Button,
@@ -9,6 +8,7 @@ import {
   Column,
   Columns,
   Icon,
+  Link,
   Notification,
   Spacer,
   UserContext
@@ -119,9 +119,26 @@ export const Text = ({ data, refetch }) => {
                     <p className="has-text-weight-semibold has-text-danger">
                       Texte actuellement vide
                     </p>
-                    <p className="has-text-weight-semibold">
-                      Proposez un amendement ?
-                    </p>
+                    {isConnected() && (
+                      <>
+                        <br />
+                        <Button
+                          to={path.edit(data._id)}
+                          className="is-info"
+                          disabled={
+                            data.rules ||
+                            !user.followedTexts.find(
+                              text => text._id === data._id
+                            )
+                          }
+                        >
+                          <Icon type="fas fa-plus" />
+                          <span className="has-text-weight-semibold">
+                            Proposer un amendement
+                          </span>
+                        </Button>
+                      </>
+                    )}
                   </>
                 )}
               </Box>

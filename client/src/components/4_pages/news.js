@@ -6,7 +6,17 @@
  */
 
 import React from 'react'
-import { Button, Buttons, Event, EventsContext, Page } from '../../components'
+import {
+  Button,
+  Buttons,
+  Event,
+  EventsContext,
+  Icon,
+  Page
+} from '../../components'
+
+const light = 'has-text-light'
+const dark = 'has-text-dark'
 
 export class NewsPage extends React.Component {
   constructor(props) {
@@ -44,7 +54,11 @@ export class NewsPage extends React.Component {
                   onClick={this.toggle('displayGroupEvents')}
                   style={{ flex: 1 }}
                 >
-                  Groupe
+                  <Icon
+                    type="fas fa-users"
+                    className={this.state.displayGroupEvents ? light : dark}
+                  />{' '}
+                  <span>Groupe</span>
                 </Button>
                 <Button
                   className={
@@ -53,7 +67,11 @@ export class NewsPage extends React.Component {
                   onClick={this.toggle('displayTextEvents')}
                   style={{ flex: 1 }}
                 >
-                  Texte
+                  <Icon
+                    type="fas fa-align-center"
+                    className={this.state.displayTextEvents ? light : dark}
+                  />{' '}
+                  <span>Texte</span>
                 </Button>
                 <Button
                   className={
@@ -62,7 +80,11 @@ export class NewsPage extends React.Component {
                   onClick={this.toggle('displayAmendEvents')}
                   style={{ flex: 1 }}
                 >
-                  Amendement
+                  <Icon
+                    type="fas fa-pencil-alt"
+                    className={this.state.displayAmendEvents ? light : dark}
+                  />{' '}
+                  <span>Amendement</span>
                 </Button>
               </Buttons>
               <hr />

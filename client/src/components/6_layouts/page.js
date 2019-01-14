@@ -1,25 +1,17 @@
 import React from 'react'
-import { Navbar, Sidebar } from '../../components'
-
-const sidebarWidth = '250px'
+import { Alert, Sidebar } from '../../components'
 
 // Main Page layout that also update document title
-export const Page = ({ children, title, className = '' }) => {
+export const Page = ({ children, title }) => {
   document.title = title ? 'Emendare | ' + title : 'Emendare'
 
   return (
-    <>
-      <Navbar />
-      <div className="is-flex">
-        <Sidebar width={sidebarWidth} />
-        <div
-          style={{ flex: 'initial', minWidth: `calc(100% - ${sidebarWidth})` }}
-        >
-          <main style={{ minHeight: 'calc(100vh - 52px)', padding: '2rem' }}>
-            {children}
-          </main>
-        </div>
+    <div className="is-flex" style={{ flexDirection: 'row', height: '100vh' }}>
+      <Sidebar width="250px" />
+      <div className="is-flex" style={{ flex: '1', flexDirection: 'column' }}>
+        <Alert />
+        <main style={{ flex: 1, padding: '2rem' }}>{children}</main>
       </div>
-    </>
+    </div>
   )
 }

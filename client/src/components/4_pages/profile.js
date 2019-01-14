@@ -10,18 +10,29 @@
  */
 
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { Box, Column, Columns, Page, UserContext } from '../../components'
+import {
+  Box,
+  Button,
+  Column,
+  Columns,
+  Link,
+  Page,
+  UserContext
+} from '../../components'
 import { path } from '../../config'
 
 export const ProfilePage = () => (
   <Page title="Profil">
     <UserContext.Consumer>
-      {({ user }) => (
+      {({ user, logout }) => (
         <>
           <div className="field has-text-centered">
             <h1 className="is-size-3">Mon profil</h1>
             <h2 className="is-size-5">{user.email}</h2>
+            <br />
+            <Button onClick={logout} className="is-danger is-medium">
+              Se déconnecter
+            </Button>
           </div>
           <br />
           <Columns>

@@ -1,29 +1,30 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from '../../components'
 import { path } from '../../config'
 
-const footerLinkStyle = {
-  textDecoration: 'none',
-  display: 'block',
-  marginBottom: '1rem'
-}
+const links = [
+  { url: path.explore, title: 'Explorer' },
+  { url: path.news, title: 'Actualités' },
+  { url: path.code, title: 'Charte éthique' },
+  { url: path.contributors, title: 'Contributeurs' },
+  { url: path.legal, title: 'Mentions légales' },
+  { url: 'https://gitlab.com/emendare/emendare', title: 'Sources / GitLab' }
+]
 
 export const Footer = () => (
   <footer>
-    <Link to={path.code} style={footerLinkStyle}>
-      Charte éthique
-    </Link>
-    <Link to={path.roadmap} style={footerLinkStyle}>
-      Roadmap
-    </Link>
-    <Link to={path.contributors} style={footerLinkStyle}>
-      Contributeurs
-    </Link>
-    <Link to={path.legal} style={footerLinkStyle}>
-      Mentions légales
-    </Link>
-    <a href="https://gitlab.com/emendare/emendare" style={footerLinkStyle}>
-      Sources / GitLab
-    </a>
+    {links.map(link => (
+      <Link
+        key={link.url}
+        to={link.url}
+        style={{
+          display: 'block',
+          textDecoration: 'none',
+          marginBottom: '1rem'
+        }}
+      >
+        {link.title}
+      </Link>
+    ))}
   </footer>
 )
