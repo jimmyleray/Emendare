@@ -6,7 +6,7 @@ const textSizeDisplayed = 100
 export const Amend = ({ data }) => (
   <Box>
     <p className="has-text-centered is-size-5">
-      Amendement sur {data.text.name}
+      Amendement sur : {data.text.name}
     </p>
     <p className="has-text-centered is-size-5 has-text-weight-bold">
       {data.name}
