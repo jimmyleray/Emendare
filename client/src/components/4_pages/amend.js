@@ -176,7 +176,7 @@ export class AmendPage extends React.Component {
                           className="button is-light"
                           disabled={this.state.amend.text.rules}
                         >
-                          Se désabonner de ce texte
+                          Se désabonner
                         </Button>
                       ) : (
                         <Button
@@ -184,7 +184,7 @@ export class AmendPage extends React.Component {
                           className="button is-success"
                           disabled={this.state.amend.text.rules}
                         >
-                          S'abonner à ce texte
+                          S'abonner
                         </Button>
                       ))}
                   </Buttons>
@@ -270,14 +270,13 @@ export class AmendPage extends React.Component {
                           </p>
                         )}
 
-                        <hr />
-
                         {user &&
                           user.followedTexts.find(
                             followedText =>
                               this.state.amend.text._id === followedText._id
                           ) && (
                             <>
+                              <hr />
                               <Buttons className="is-fullwidth">
                                 <Button
                                   className={

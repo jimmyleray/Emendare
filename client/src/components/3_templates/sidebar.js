@@ -43,7 +43,9 @@ export const Sidebar = ({ width }) => (
               <br />
               <div className="has-text-centered">
                 <Link to={path.profile} style={{ textDecoration: 'none' }}>
-                  <Button className="is-link">Mon profil</Button>
+                  <Button className="is-warning is-fullwidth is-outlined">
+                    Mon profil
+                  </Button>
                 </Link>
               </div>
               <br />
@@ -128,7 +130,9 @@ export const Sidebar = ({ width }) => (
               <br />
               <div className="has-text-centered">
                 <Link to={path.login} style={{ textDecoration: 'none' }}>
-                  <Button className="is-link">Connexion</Button>
+                  <Button className="is-success is-fullwidth is-outlined">
+                    Connexion
+                  </Button>
                 </Link>
               </div>
             </>
@@ -136,7 +140,7 @@ export const Sidebar = ({ width }) => (
             <>
               <br />
               <div className="has-text-centered">
-                <Button disabled className="is-link">
+                <Button disabled className="is-link is-fullwidth is-outlined">
                   Mon profil
                 </Button>
               </div>

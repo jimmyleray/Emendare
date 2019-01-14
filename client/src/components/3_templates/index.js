@@ -1,4 +1,3 @@
-export * from './alert'
 export * from './edit'
 export * from './footer'
 export * from './group'
