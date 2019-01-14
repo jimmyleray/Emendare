@@ -61,7 +61,8 @@ export const Sidebar = ({ width }) => (
                     style={{
                       textDecoration: 'none',
                       display: 'block',
-                      marginBottom: '1rem'
+                      marginBottom: '1rem',
+                      marginLeft: '6px'
                     }}
                   >
                     <Icon
@@ -86,7 +87,8 @@ export const Sidebar = ({ width }) => (
                     style={{
                       textDecoration: 'none',
                       display: 'block',
-                      marginBottom: '1rem'
+                      marginBottom: '1rem',
+                      marginLeft: '6px'
                     }}
                   >
                     <Icon
@@ -107,7 +109,8 @@ export const Sidebar = ({ width }) => (
                     style={{
                       textDecoration: 'none',
                       display: 'block',
-                      marginBottom: '1rem'
+                      marginBottom: '1rem',
+                      marginLeft: '6px'
                     }}
                   >
                     <Icon
