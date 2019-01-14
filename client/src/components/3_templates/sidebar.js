@@ -143,7 +143,10 @@ export const Sidebar = ({ width }) => (
             <>
               <br />
               <div className="has-text-centered">
-                <Button disabled className="is-link is-fullwidth is-outlined">
+                <Button
+                  disabled
+                  className="is-warning is-fullwidth is-outlined"
+                >
                   Mon profil
                 </Button>
               </div>
