@@ -19,12 +19,12 @@ export default class Database {
     return this.connection
   }
 
-  private initData() {
+  private async initData() {
     if (process.env.NODE_ENV === 'production') {
-      this.connection.dropDatabase()
+      await this.connection.dropDatabase()
       this.initProdData()
     } else {
-      this.connection.dropDatabase()
+      await this.connection.dropDatabase()
       this.initDevData()
     }
   }

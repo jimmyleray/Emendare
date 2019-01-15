@@ -125,6 +125,7 @@ export const Sidebar = ({ width }) => (
                 <>
                   <span>Vous ne suivez aucun texte.</span>{' '}
                   <Link to={path.explore}>Explorer ?</Link>
+                  <br />
                 </>
               )}
             </>
