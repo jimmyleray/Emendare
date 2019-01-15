@@ -228,18 +228,19 @@ export default class Database {
     privateGroup.texts.push(sandboxZText._id)
     await privateGroup.save()
 
-    const ceText = await new Text.model({
-      name: "Comité d'entreprise",
-      description: 'Texte pour définir les actions du CE de Zenika Rennes',
+    const oberthurText = await new Text.model({
+      name: "Noms des salles d'Oberthur",
+      description:
+        'Texte pour définir les noms des salles de la nouvelle agence de Rennes',
       group: privateGroup._id
     }).save()
 
     await new Event.model({
       targetType: 'text',
-      target: JSON.stringify({ ...ceText._doc, group: privateGroup })
+      target: JSON.stringify({ ...oberthurText._doc, group: privateGroup })
     }).save()
 
-    privateGroup.texts.push(ceText._id)
+    privateGroup.texts.push(oberthurText._id)
     await privateGroup.save()
   }
 }
