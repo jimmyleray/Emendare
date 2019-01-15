@@ -21,8 +21,8 @@ export default class Database {
 
   private initData() {
     if (process.env.NODE_ENV === 'production') {
-      // this.database.dropDatabase()
-      // this.initProdData()
+      this.connection.dropDatabase()
+      this.initProdData()
     } else {
       this.connection.dropDatabase()
       this.initDevData()
