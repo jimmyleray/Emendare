@@ -199,7 +199,21 @@ export class AmendPage extends React.Component {
                           }}
                         />
 
-                        {!this.state.amend.closed && (
+                        {this.state.amend.closed ? (
+                          <div
+                            className="has-text-centered"
+                            style={{
+                              position: 'relative',
+                              top: '-92px',
+                              marginBottom: '-72px'
+                            }}
+                          >
+                            <p>Le scrutin est clos</p>
+                            <p className="has-text-weight-semibold is-size-3">
+                              {this.state.amend.accepted ? 'ACCEPTE' : 'REFUSE'}
+                            </p>
+                          </div>
+                        ) : (
                           <div
                             className="has-text-centered"
                             style={{
@@ -293,28 +307,16 @@ export class AmendPage extends React.Component {
                           </>
                         )}
 
-                        {this.state.amend.closed && (
-                          <>
-                            <p className="has-text-centered has-text-weight-semibold has-text-danger">
-                              Le scrutin est clos. L'amendement a été{' '}
-                              {this.state.amend.accepted ? 'accepté' : 'refusé'}{' '}
-                              par les participants.
+                        {this.state.amend.closed &&
+                          this.state.amend.conflicted && (
+                            <p className="has-text-centered has-text-weight-semibold">
+                              Mais des conflits ont été détectés à l'application
+                              de l'amendement. Une nouvelle fonctionalité
+                              permettra prochainement aux auteurs des
+                              amendements de corriger ces conflits avant les
+                              scrutins.
                             </p>
-
-                            {this.state.amend.conflicted && (
-                              <>
-                                <br />
-                                <p className="has-text-centered has-text-weight-semibold">
-                                  Mais des conflits ont été détectés à
-                                  l'application de l'amendement. Une nouvelle
-                                  fonctionalité permettra prochainement aux
-                                  auteurs des amendements de corriger ces
-                                  conflits avant les scrutins.
-                                </p>
-                              </>
-                            )}
-                          </>
-                        )}
+                          )}
                       </Box>
                     </Column>
                   </Columns>
