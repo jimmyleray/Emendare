@@ -61,5 +61,7 @@ const resolveData = data => {
 }
 
 export const Results = ({ data }) => (
-  <Doughnut data={resolveData(data)} options={options} />
+  <div style={{ position: 'relative', zIndex: 1 }}>
+    <Doughnut data={resolveData(data)} options={options} />
+  </div>
 )
