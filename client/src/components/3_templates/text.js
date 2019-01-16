@@ -125,6 +125,7 @@ export const Text = ({ data, refetch }) => {
                     <p className="has-text-weight-semibold">
                       Liste des scrutins en cours
                     </p>
+                    <br />
                     {data.amends.filter(amend => !amend.closed).length > 0 ? (
                       <>
                         {data.amends
@@ -165,6 +166,7 @@ export const Text = ({ data, refetch }) => {
                         <p className="has-text-weight-semibold">
                           Liste des anciens scrutins
                         </p>
+                        <br />
                         {data.amends
                           .filter(amend => amend.closed)
                           .sort(
