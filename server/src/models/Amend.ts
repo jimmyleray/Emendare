@@ -21,7 +21,10 @@ const model = mongoose.model(
     upVotesCount: { type: Number, default: 0 },
     downVotesCount: { type: Number, default: 0 },
     totalPotentialVotesCount: { type: Number },
-    delayMin: { type: Number, default: 60 * 60 * 1000 },
+    delayMin: {
+      type: Number,
+      default: process.env.NODE_ENV === 'production' ? 60 * 60 * 1000 : 0
+    },
     delayMax: { type: Number, default: 24 * 60 * 60 * 1000 },
     closed: { type: Boolean, default: false },
     accepted: { type: Boolean, default: false },

@@ -73,7 +73,7 @@ export class Edit extends React.Component {
     const dmp = new diff_match_patch()
     dmp.Diff_EditCost = 8
     const diffs = dmp.diff_main(this.state.initialValue, this.state.amendValue)
-    dmp.diff_cleanupEfficiency(diffs)
+    dmp.diff_cleanupSemantic(diffs)
     const amendComplexity = dmp.diff_levenshtein(diffs)
     const patch = dmp.patch_toText(dmp.patch_make(diffs))
     this.setState({ diffs, amendComplexity, patch })

@@ -32,23 +32,13 @@ export class AmendPage extends React.Component {
   constructor(props) {
     super(props)
 
-    this.upVote = async () => {
-      await this.followText(this.state.amend.text._id)
-      Socket.fetch('upVoteAmend', { id: this.props.match.params.id }).then(
-        this.updateAmend
-      )
-    }
+    this.vote = user => type => async () => {
+      const textID = this.state.amend.text._id
+      if (!user.followedTexts.find(text => text._id === textID)) {
+        await this.followText(textID)
+      }
 
-    this.downVote = async () => {
-      await this.followText(this.state.amend.text._id)
-      Socket.fetch('downVoteAmend', { id: this.props.match.params.id }).then(
-        this.updateAmend
-      )
-    }
-
-    this.unVote = async () => {
-      await this.followText(this.state.amend.text._id)
-      Socket.fetch('unVoteAmend', { id: this.props.match.params.id }).then(
+      Socket.fetch(type + 'VoteAmend', { id: this.props.match.params.id }).then(
         this.updateAmend
       )
     }
@@ -133,7 +123,7 @@ export class AmendPage extends React.Component {
     )[0]
 
     const diffs = dmp.diff_main(previousText, newText)
-    dmp.diff_cleanupEfficiency(diffs)
+    dmp.diff_cleanupSemantic(diffs)
     this.setState({ amend: { diffs, ...this.state.amend } })
   }
 
@@ -242,7 +232,7 @@ export class AmendPage extends React.Component {
                                     : 'is-light'
                                 }
                                 disabled={this.state.amend.closed}
-                                onClick={this.upVote}
+                                onClick={this.vote(user)('up')}
                                 style={{ flex: 1 }}
                               >
                                 Voter pour
@@ -259,7 +249,7 @@ export class AmendPage extends React.Component {
                                     : 'is-light'
                                 }
                                 disabled={this.state.amend.closed}
-                                onClick={this.unVote}
+                                onClick={this.vote(user)('un')}
                                 style={{ flex: 1 }}
                               >
                                 S'abstenir
@@ -273,7 +263,7 @@ export class AmendPage extends React.Component {
                                     : 'is-light'
                                 }
                                 disabled={this.state.amend.closed}
-                                onClick={this.downVote}
+                                onClick={this.vote(user)('down')}
                                 style={{ flex: 1 }}
                               >
                                 Voter contre

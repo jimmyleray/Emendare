@@ -30,7 +30,7 @@ const followText = id => refetch => async () => {
 export const Text = ({ data, refetch }) => {
   return (
     <UserContext.Consumer>
-      {({ isConnected, isConnectionPending, user }) => (
+      {({ isConnected, user }) => (
         <>
           <div className="field has-text-centered">
             <h1 className="is-size-3">
@@ -148,6 +148,21 @@ export const Text = ({ data, refetch }) => {
                                   title="Vous n'êtes pas connecté"
                                 />
                               )}
+
+                              {amend.upVotesCount + amend.downVotesCount >
+                                0 && (
+                                <>
+                                  <span>
+                                    {(
+                                      Math.round(100 * amend.upVotesCount) /
+                                      (amend.upVotesCount +
+                                        amend.downVotesCount)
+                                    ).toFixed(1)}
+                                    {'% de votes favorables : '}
+                                  </span>
+                                </>
+                              )}
+
                               <Link to={path.amend(amend._id)}>
                                 {amend.name}
                               </Link>
@@ -173,16 +188,16 @@ export const Text = ({ data, refetch }) => {
                               new Date(b.finished).getTime() -
                               new Date(a.finished).getTime()
                           )
-                          .map((amend, index, arr) => (
+                          .map(amend => (
                             <p key={amend._id}>
-                              {amend.accepted ? (
+                              {amend.accepted && !amend.conflicted ? (
                                 <Icon
-                                  className="fas fa-circle has-text-success"
+                                  className="fas fa-check-circle has-text-success"
                                   title="Accepté"
                                 />
                               ) : (
                                 <Icon
-                                  className="fas fa-circle has-text-danger"
+                                  className="fas fa-times-circle has-text-danger"
                                   title="Refusé"
                                 />
                               )}
