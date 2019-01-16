@@ -27,7 +27,6 @@ export const Amend = ({ data }) => (
                 : 'has-text-grey-light'
             }
           >
-            {part[0] === 1 ? '(+)' : part[0] === -1 ? '[-]' : ''}
             {part[1].split('\n').map((line, index) => {
               return line ? (
                 <span key={index}>
@@ -41,7 +40,6 @@ export const Amend = ({ data }) => (
                 <br key={index} />
               )
             })}
-            {part[0] === 1 ? '(+)' : part[0] === -1 ? '[-]' : ''}
           </span>
         ))}
     </div>
