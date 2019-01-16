@@ -9,7 +9,6 @@ import {
   Columns,
   Icon,
   Link,
-  Notification,
   Spacer,
   UserContext
 } from '../../components'
@@ -75,7 +74,7 @@ export const Text = ({ data, refetch }) => {
                   className="button is-light"
                   disabled={data.rules}
                 >
-                  Se désabonner
+                  Ne plus participer au texte
                 </Button>
               ) : (
                 <Button
@@ -83,7 +82,7 @@ export const Text = ({ data, refetch }) => {
                   className="button is-success has-text-weight-semibold"
                   disabled={data.rules}
                 >
-                  S'abonner
+                  Participer à ce texte
                 </Button>
               ))}
 
@@ -91,10 +90,7 @@ export const Text = ({ data, refetch }) => {
               <Button
                 to={path.edit(data._id)}
                 className="is-info"
-                disabled={
-                  data.rules ||
-                  !user.followedTexts.find(text => text._id === data._id)
-                }
+                onClick={followText(data._id)(refetch)}
               >
                 <Icon type="fas fa-plus" />
                 <span className="has-text-weight-semibold">
@@ -122,17 +118,6 @@ export const Text = ({ data, refetch }) => {
               </Box>
             </Column>
             <Column>
-              {!user && !isConnectionPending && (
-                <Notification className="is-warning">
-                  <p>
-                    Vous devez être connecté et vous déclarer comme participant
-                    à ce texte pour participer à ses votes, et pour proposer de
-                    nouveaux amendements. Les votes se font entre les
-                    utilisateurs qui se sont déclarés comme participants.
-                  </p>
-                </Notification>
-              )}
-
               <Box>
                 {data.amends.length > 0 && (
                   <>

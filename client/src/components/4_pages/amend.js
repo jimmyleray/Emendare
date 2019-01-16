@@ -21,7 +21,6 @@ import {
   Notification,
   Page,
   Results,
-  Spacer,
   UserContext,
   CountDown
 } from '../../components'
@@ -33,19 +32,22 @@ export class AmendPage extends React.Component {
   constructor(props) {
     super(props)
 
-    this.upVote = () => {
+    this.upVote = async () => {
+      await this.followText(this.state.amend.text._id)
       Socket.fetch('upVoteAmend', { id: this.props.match.params.id }).then(
         this.updateAmend
       )
     }
 
-    this.downVote = () => {
+    this.downVote = async () => {
+      await this.followText(this.state.amend.text._id)
       Socket.fetch('downVoteAmend', { id: this.props.match.params.id }).then(
         this.updateAmend
       )
     }
 
-    this.unVote = () => {
+    this.unVote = async () => {
+      await this.followText(this.state.amend.text._id)
       Socket.fetch('unVoteAmend', { id: this.props.match.params.id }).then(
         this.updateAmend
       )
@@ -58,14 +60,9 @@ export class AmendPage extends React.Component {
       })
     }
 
-    this.unFollowText = id => async () => {
-      await Socket.fetch('unFollowText', { id })
-      Socket.emit('user')
-    }
-
-    this.followText = id => async () => {
+    this.followText = async id => {
       await Socket.fetch('followText', { id })
-      Socket.emit('user')
+      await Socket.fetch('user')
     }
 
     this.convertMsToTime = ms => {
@@ -155,7 +152,7 @@ export class AmendPage extends React.Component {
     return (
       <Page title={this.getTitle()}>
         <UserContext.Consumer>
-          {({ user, isConnected }) => (
+          {({ user }) => (
             <>
               {this.state.amend && (
                 <>
@@ -164,29 +161,6 @@ export class AmendPage extends React.Component {
                       <Icon type="fas fa-chevron-left" />
                       <span>Retour au texte</span>
                     </Button>
-
-                    <Spacer />
-
-                    {isConnected() &&
-                      (user.followedTexts.find(
-                        text => text._id === this.state.amend.text._id
-                      ) ? (
-                        <Button
-                          onClick={this.unFollowText(this.state.amend.text._id)}
-                          className="button is-light"
-                          disabled={this.state.amend.text.rules}
-                        >
-                          Se désabonner
-                        </Button>
-                      ) : (
-                        <Button
-                          onClick={this.followText(this.state.amend.text._id)}
-                          className="button is-success"
-                          disabled={this.state.amend.text.rules}
-                        >
-                          S'abonner
-                        </Button>
-                      ))}
                   </Buttons>
                   <Columns>
                     <Column>
@@ -255,77 +229,58 @@ export class AmendPage extends React.Component {
                           </p>
                         )}
 
-                        {user &&
-                          user.followedTexts.find(
-                            followedText =>
-                              this.state.amend.text._id === followedText._id
-                          ) && (
-                            <>
-                              <hr />
-                              <Buttons className="is-fullwidth">
-                                <Button
-                                  className={
-                                    user.upVotes.find(
-                                      id => id === this.state.amend._id
-                                    )
-                                      ? 'is-success'
-                                      : 'is-light'
-                                  }
-                                  disabled={this.state.amend.closed}
-                                  onClick={this.upVote}
-                                  style={{ flex: 1 }}
-                                >
-                                  Voter pour
-                                </Button>
-                                <Button
-                                  className={
-                                    !user.upVotes.find(
-                                      id => id === this.state.amend._id
-                                    ) &&
-                                    !user.downVotes.find(
-                                      id => id === this.state.amend._id
-                                    )
-                                      ? 'is-dark'
-                                      : 'is-light'
-                                  }
-                                  disabled={this.state.amend.closed}
-                                  onClick={this.unVote}
-                                  style={{ flex: 1 }}
-                                >
-                                  S'abstenir
-                                </Button>
-                                <Button
-                                  className={
-                                    user.downVotes.find(
-                                      id => id === this.state.amend._id
-                                    )
-                                      ? 'is-danger'
-                                      : 'is-light'
-                                  }
-                                  disabled={this.state.amend.closed}
-                                  onClick={this.downVote}
-                                  style={{ flex: 1 }}
-                                >
-                                  Voter contre
-                                </Button>
-                              </Buttons>
-                            </>
-                          )}
-
-                        {user &&
-                          !this.state.amend.closed &&
-                          !user.followedTexts.find(
-                            followedText =>
-                              this.state.amend.text._id === followedText._id
-                          ) && (
-                            <>
-                              <p className="has-text-centered has-text-weight-semibold has-text-danger">
-                                Vous devez participer au texte visé par cet
-                                amendement pour pouvoir participer à ce scrutin
-                                et / ou proposer d'autres amendements.
-                              </p>
-                            </>
-                          )}
+                        {user && (
+                          <>
+                            <hr />
+                            <Buttons className="is-fullwidth">
+                              <Button
+                                className={
+                                  user.upVotes.find(
+                                    id => id === this.state.amend._id
+                                  )
+                                    ? 'is-success'
+                                    : 'is-light'
+                                }
+                                disabled={this.state.amend.closed}
+                                onClick={this.upVote}
+                                style={{ flex: 1 }}
+                              >
+                                Voter pour
+                              </Button>
+                              <Button
+                                className={
+                                  !user.upVotes.find(
+                                    id => id === this.state.amend._id
+                                  ) &&
+                                  !user.downVotes.find(
+                                    id => id === this.state.amend._id
+                                  )
+                                    ? 'is-dark'
+                                    : 'is-light'
+                                }
+                                disabled={this.state.amend.closed}
+                                onClick={this.unVote}
+                                style={{ flex: 1 }}
+                              >
+                                S'abstenir
+                              </Button>
+                              <Button
+                                className={
+                                  user.downVotes.find(
+                                    id => id === this.state.amend._id
+                                  )
+                                    ? 'is-danger'
+                                    : 'is-light'
+                                }
+                                disabled={this.state.amend.closed}
+                                onClick={this.downVote}
+                                style={{ flex: 1 }}
+                              >
+                                Voter contre
+                              </Button>
+                            </Buttons>
+                          </>
+                        )}
 
                         {this.state.amend.closed && (
                           <>
