@@ -67,16 +67,20 @@ const delay = (ms: number) => {
 }
 
 const hasAbsoluteUpMajority = (amend: any) =>
-  amend.upVotesCount >= Math.floor(amend.text.followersCount / 2) + 1
+  amend.upVotesCount > amend.indVotesCount &&
+  amend.upVotesCount + amend.indVotesCount >=
+    Math.floor(amend.text.followersCount / 2) + 1
+
+const hasAbsoluteDownMajority = (amend: any) =>
+  amend.downVotesCount > amend.indVotesCount &&
+  amend.downVotesCount + amend.indVotesCount >=
+    Math.floor(amend.text.followersCount / 2) + 1
+
+const hasAbsoluteMajority = (amend: any) =>
+  hasAbsoluteUpMajority(amend) || hasAbsoluteDownMajority(amend)
 
 const hasRelativeUpMajority = (amend: any) =>
   amend.upVotesCount > amend.downVotesCount
-
-const hasAbsoluteDownMajority = (amend: any) =>
-  amend.downVotesCount >= Math.floor(amend.text.followersCount / 2) + 1
-
-const hasAbsoluteMajority = (amend: any) =>
-  hasAbsoluteDownMajority(amend) || hasAbsoluteUpMajority(amend)
 
 const updateTextWithAmend = async (amend: any) => {
   amend.accepted = true
@@ -107,11 +111,6 @@ const updateTextWithAmend = async (amend: any) => {
   io.emit('text/' + text._id, { data: text })
 }
 
-const broadcastAmend = async (amend: any) => {
-  await amend.save()
-  io.emit('amend/' + amend._id, { data: amend })
-}
-
 const checkAmendVotes = async () => {
   // On récupère tous les scrutins en cours
   const amends = await Amend.model.find({ closed: false }).populate('text')
@@ -133,7 +132,8 @@ const checkAmendVotes = async () => {
         updateTextWithAmend(amend)
       }
 
-      broadcastAmend(amend)
+      await amend.save()
+      io.emit('amend/' + amend._id, { data: amend })
     } else if (now > start + amend.delayMin && hasAbsoluteMajority(amend)) {
       amend.closed = true
       amend.finished = new Date()
@@ -144,7 +144,8 @@ const checkAmendVotes = async () => {
         updateTextWithAmend(amend)
       }
 
-      broadcastAmend(amend)
+      await amend.save()
+      io.emit('amend/' + amend._id, { data: amend })
     }
   })
 
@@ -508,11 +509,18 @@ io.on('connection', socket => {
       if (user.followedTexts.indexOf(amend.text._id) > -1) {
         if (!amend.closed) {
           if (user.upVotes.indexOf(data.id) === -1) {
-            const id = user.downVotes.indexOf(data.id)
-            if (id > -1) {
+            const id1 = user.downVotes.indexOf(data.id)
+            if (id1 > -1) {
               amend.downVotesCount--
-              user.downVotes.splice(id, 1)
+              user.downVotes.splice(id1, 1)
             }
+
+            const id2 = user.indVotes.indexOf(data.id)
+            if (id2 > -1) {
+              amend.indVotesCount--
+              user.indVotes.splice(id2, 1)
+            }
+
             amend.upVotesCount++
             user.upVotes.push(data.id)
 
@@ -553,11 +561,18 @@ io.on('connection', socket => {
       if (user.followedTexts.indexOf(amend.text._id) > -1) {
         if (!amend.closed) {
           if (user.downVotes.indexOf(data.id) === -1) {
-            const id = user.upVotes.indexOf(data.id)
-            if (id > -1) {
+            const id1 = user.upVotes.indexOf(data.id)
+            if (id1 > -1) {
               amend.upVotesCount--
-              user.upVotes.splice(id, 1)
+              user.upVotes.splice(id1, 1)
             }
+
+            const id2 = user.indVotes.indexOf(data.id)
+            if (id2 > -1) {
+              amend.indVotesCount--
+              user.indVotes.splice(id2, 1)
+            }
+
             amend.downVotesCount++
             user.downVotes.push(data.id)
 
@@ -568,7 +583,7 @@ io.on('connection', socket => {
             socket.emit('downVoteAmend', { data: amend })
           } else {
             socket.emit('downVoteAmend', {
-              error: { code: 405, message: 'Vous vous êtes déjà voté contre' }
+              error: { code: 405, message: 'Vous avez déjà voté contre' }
             })
           }
         } else {
@@ -591,6 +606,58 @@ io.on('connection', socket => {
     }
   })
 
+  socket.on('indVoteAmend', async ({ token, data }) => {
+    const user = await User.model.findOne({ token })
+    if (user) {
+      const amend = await Amend.model.findById(data.id).populate('text')
+      if (user.followedTexts.indexOf(amend.text._id) > -1) {
+        if (!amend.closed) {
+          if (user.indVotes.indexOf(data.id) === -1) {
+            const id1 = user.upVotes.indexOf(data.id)
+            if (id1 > -1) {
+              amend.upVotesCount--
+              user.upVotes.splice(id1, 1)
+            }
+
+            const id2 = user.downVotes.indexOf(data.id)
+            if (id2 > -1) {
+              amend.downVotesCount--
+              user.downVotes.splice(id2, 1)
+            }
+
+            amend.indVotesCount++
+            user.indVotes.push(data.id)
+
+            await user.save()
+            await amend.save()
+
+            io.emit('amend/' + amend._id, { data: amend })
+            socket.emit('indVoteAmend', { data: amend })
+          } else {
+            socket.emit('indVoteAmend', {
+              error: { code: 405, message: 'Vous avez déjà voté indifférent' }
+            })
+          }
+        } else {
+          socket.emit('indVoteAmend', {
+            error: { code: 405, message: 'Ce scrutin est terminé' }
+          })
+        }
+      } else {
+        socket.emit('indVoteAmend', {
+          error: {
+            code: 405,
+            message: 'Cet utilisateur ne participe pas au texte'
+          }
+        })
+      }
+    } else {
+      socket.emit('indVoteAmend', {
+        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
+      })
+    }
+  })
+
   socket.on('unVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
     if (user) {
@@ -599,6 +666,7 @@ io.on('connection', socket => {
         if (!amend.closed) {
           const id1 = user.upVotes.indexOf(data.id)
           const id2 = user.downVotes.indexOf(data.id)
+          const id3 = user.indVotes.indexOf(data.id)
 
           if (id1 > -1) {
             amend.upVotesCount--
@@ -610,6 +678,11 @@ io.on('connection', socket => {
             user.downVotes.splice(id2, 1)
           }
 
+          if (id3 > -1) {
+            amend.indVotesCount--
+            user.indVotes.splice(id2, 1)
+          }
+
           await user.save()
           await amend.save()
 
@@ -617,7 +690,7 @@ io.on('connection', socket => {
           socket.emit('unVoteAmend', { data: amend })
         } else {
           socket.emit('unVoteAmend', {
-            error: { code: 405, message: 'Ce scutin est terminé' }
+            error: { code: 405, message: 'Ce scrutin est terminé' }
           })
         }
       } else {

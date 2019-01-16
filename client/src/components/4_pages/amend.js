@@ -158,65 +158,65 @@ export class AmendPage extends React.Component {
                     </Column>
                     <Column>
                       <Box>
-                        <p className="is-size-5 has-text-centered has-text-weight-semibold">
+                        <p className="is-size-4 has-text-centered has-text-weight-semibold">
                           Scrutin{' '}
                           {this.state.amend.closed ? 'clos' : 'en cours'} sur
                           l'amendement
                         </p>
+                        <br />
+
+                        <Notification className="is-warning">
+                          <p>
+                            Le vote est{' '}
+                            <span className="has-text-weight-semibold">
+                              clos à la fin du temps maximum indiqué
+                            </span>{' '}
+                            OU dès lors qu'une{' '}
+                            <span className="has-text-weight-semibold">
+                              majorité absolue
+                            </span>{' '}
+                            est atteinte après un delai minimum d'une heure. Le{' '}
+                            <span className="has-text-weight-semibold">
+                              vote est liquide
+                            </span>
+                            , ce qui veut dire que vous pouvez changer votre
+                            vote jusqu'à la fin du scrutin.
+                          </p>
+                        </Notification>
+
+                        <Results
+                          data={{
+                            up: this.state.amend.upVotesCount,
+                            down: this.state.amend.downVotesCount,
+                            ind: this.state.amend.indVotesCount,
+                            absent:
+                              (this.state.amend.totalPotentialVotesCount
+                                ? this.state.amend.totalPotentialVotesCount
+                                : this.state.amend.text.followersCount) -
+                              (this.state.amend.upVotesCount +
+                                this.state.amend.downVotesCount +
+                                this.state.amend.indVotesCount)
+                          }}
+                        />
 
                         {!this.state.amend.closed && (
-                          <p className="has-text-centered">
-                            Temps restant avant la fin du scrutin :{' '}
+                          <div
+                            className="has-text-centered"
+                            style={{
+                              position: 'relative',
+                              top: '-92px',
+                              marginBottom: '-72px'
+                            }}
+                          >
+                            <p>Temps restant</p>
                             <CountDown
                               date={Time.addTimeToDate(
                                 this.state.amend.created,
                                 this.state.amend.delayMax
                               )}
-                              className="has-text-weight-semibold"
+                              className="has-text-weight-semibold is-size-3"
                             />
-                          </p>
-                        )}
-
-                        <hr />
-
-                        {this.state.amend.upVotesCount +
-                          this.state.amend.downVotesCount >
-                        0 ? (
-                          <>
-                            <Results
-                              value={(
-                                Math.round(
-                                  100 * this.state.amend.upVotesCount
-                                ) /
-                                (this.state.amend.upVotesCount +
-                                  this.state.amend.downVotesCount)
-                              ).toFixed(1)}
-                            />
-                            <p className="has-text-centered">
-                              {this.state.amend.upVotesCount +
-                                this.state.amend.downVotesCount}{' '}
-                              vote(s) exprimé(s) sur{' '}
-                              {this.state.amend.totalPotentialVotesCount
-                                ? this.state.amend.totalPotentialVotesCount
-                                : this.state.amend.text.followersCount}{' '}
-                              participant(s), soit{' '}
-                              <span className="has-text-weight-semibold">
-                                {(
-                                  (100 *
-                                    (this.state.amend.upVotesCount +
-                                      this.state.amend.downVotesCount)) /
-                                  (this.state.amend.totalPotentialVotesCount
-                                    ? this.state.amend.totalPotentialVotesCount
-                                    : this.state.amend.text.followersCount)
-                                ).toFixed(1)}
-                                % de participation
-                              </span>
-                            </p>
-                          </>
-                        ) : (
-                          <p className="has-text-centered">
-                            Aucun vote n'est encore enregistré pour ce scrutin
-                          </p>
+                          </div>
                         )}
 
                         {user && (
@@ -234,25 +234,24 @@ export class AmendPage extends React.Component {
                                 disabled={this.state.amend.closed}
                                 onClick={this.vote(user)('up')}
                                 style={{ flex: 1 }}
+                                title="Vous êtes favorable à cet amendement"
                               >
                                 Voter pour
                               </Button>
                               <Button
                                 className={
-                                  !user.upVotes.find(
-                                    id => id === this.state.amend._id
-                                  ) &&
-                                  !user.downVotes.find(
+                                  user.indVotes.find(
                                     id => id === this.state.amend._id
                                   )
-                                    ? 'is-dark'
+                                    ? 'is-info'
                                     : 'is-light'
                                 }
                                 disabled={this.state.amend.closed}
-                                onClick={this.vote(user)('un')}
+                                onClick={this.vote(user)('ind')}
                                 style={{ flex: 1 }}
+                                title="Vous êtes indifférent au résultat de ce scrutin"
                               >
-                                S'abstenir
+                                Indifférent
                               </Button>
                               <Button
                                 className={
@@ -265,8 +264,30 @@ export class AmendPage extends React.Component {
                                 disabled={this.state.amend.closed}
                                 onClick={this.vote(user)('down')}
                                 style={{ flex: 1 }}
+                                title="Vous êtes défavorable à cet amendement"
                               >
                                 Voter contre
+                              </Button>
+                              <Button
+                                className={
+                                  !user.upVotes.find(
+                                    id => id === this.state.amend._id
+                                  ) &&
+                                  !user.downVotes.find(
+                                    id => id === this.state.amend._id
+                                  ) &&
+                                  !user.indVotes.find(
+                                    id => id === this.state.amend._id
+                                  )
+                                    ? 'is-dark'
+                                    : 'is-light'
+                                }
+                                disabled={this.state.amend.closed}
+                                onClick={this.vote(user)('un')}
+                                style={{ flex: 1 }}
+                                title="Vous ne souhaitez pas voter à ce scrutin"
+                              >
+                                S'abstenir
                               </Button>
                             </Buttons>
                           </>
@@ -295,22 +316,6 @@ export class AmendPage extends React.Component {
                           </>
                         )}
                       </Box>
-
-                      <Notification className="is-light">
-                        <p>
-                          Le vote est{' '}
-                          <span className="has-text-weight-semibold">
-                            clos à la fin du temps imparti
-                          </span>{' '}
-                          ou dès lors qu'une majorité absolue est atteinte après
-                          un delai minimum d'une heure. Le{' '}
-                          <span className="has-text-weight-semibold">
-                            vote est liquide
-                          </span>
-                          , ce qui veut dire que vous pouvez changer votre vote
-                          jusqu'à la fin du scrutin.
-                        </p>
-                      </Notification>
                     </Column>
                   </Columns>
                 </>

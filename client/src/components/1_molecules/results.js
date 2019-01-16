@@ -1,81 +1,65 @@
 import React from 'react'
-import { Progress } from '../../components'
+import { Doughnut } from 'react-chartjs-2'
 
-const display = 'inline-block'
+const datasetDefault = {
+  backgroundColor: [
+    'hsla(141, 71%, 48%, 1)',
+    'hsla(204, 86%, 53%, 1)',
+    'hsla(348, 100%, 61%, 1)',
+    'hsla(0, 0%, 21%, 1)'
+  ],
+  borderColor: 'white',
+  borderWidth: 4,
+  hoverBackgroundColor: [
+    'hsla(141, 71%, 58%, 1)',
+    'hsla(204, 86%, 63%, 1)',
+    'hsla(348, 100%, 71%, 1)',
+    'hsla(0, 0%, 31%, 1)'
+  ],
+  hoverBorderColor: 'white'
+}
 
-export const Results = ({ value }) =>
-  !isNaN(value) ? (
-    <>
-      <div className="has-text-centered">
-        {value > 0 && (
-          <div
-            className="has-text-weight-semibold"
-            style={{
-              display,
-              width: value + '%',
-              minWidth: '120px',
-              maxWidth: 'calc(100% - 120px)'
-            }}
-          >
-            {value + '% POUR'}
-          </div>
-        )}
+const options = {
+  rotation: -Math.PI,
+  circumference: Math.PI,
+  legend: { display: false, position: 'bottom' },
+  animation: { animateRotate: false },
+  tooltips: { mode: 'point', displayColors: false }
+}
 
-        {value < 100 && (
-          <div
-            className="has-text-weight-semibold"
-            style={{
-              display,
-              width: 100 - value + '%',
-              minWidth: '120px',
-              maxWidth: 'calc(100% - 120px)'
-            }}
-          >
-            {(100 - value).toFixed(1) + '% CONTRE'}
-          </div>
-        )}
-      </div>
-      <div>
-        <Progress
-          className="is-success is-large"
-          value="100"
-          max="100"
-          style={{
-            display,
-            margin: 0,
-            width: value + '%',
-            borderTopRightRadius: value < 100 ? 0 : null,
-            borderBottomRightRadius: value < 100 ? 0 : null
-          }}
-        />
-        <Progress
-          className="is-danger is-large"
-          value="100"
-          max="100"
-          style={{
-            margin: 0,
-            display,
-            width: 100 - value + '%',
-            borderTopLeftRadius: value > 0 ? 0 : null,
-            borderBottomLeftRadius: value > 0 ? 0 : null
-          }}
-        />
-      </div>
-    </>
-  ) : (
-    <>
-      <p className="has-text-centered has-text-weight-semibold">
-        Il n'y a pas encore de résultats à afficher
-      </p>
-      <Progress
-        className="is-light is-large"
-        value="100"
-        max="100"
-        style={{
-          margin: 0,
-          display: 'inline-block',
-          width: '100%'
-        }}
-      />
-    </>
-  )
+const resolveData = data => {
+  const res = {
+    labels: ['Vote Pour', 'Vote Indifférent', 'Vote Contre', 'Abstention'],
+    datasets: []
+  }
+
+  if (data.up || data.down) {
+    res.datasets.push({
+      label: 'UpAndDown',
+      ...datasetDefault,
+      data: [data.up || 0, 0, data.down || 0, 0]
+    })
+  }
+
+  if (data.ind) {
+    res.datasets.push({
+      label: 'WithUnknow',
+      ...datasetDefault,
+      data: [data.up || 0, data.ind || 0, data.down || 0, 0]
+    })
+  }
+
+  if (data.absent) {
+    res.datasets.push({
+      label: 'WithAbsent',
+      ...datasetDefault,
+      data: [data.up || 0, data.ind || 0, data.down || 0, data.absent || 0]
+    })
+  }
+
+  return res
+}
+
+export const Results = ({ data }) => (
+  <Doughnut data={resolveData(data)} options={options} />
+)

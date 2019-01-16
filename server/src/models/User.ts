@@ -27,6 +27,10 @@ const model = mongoose.model(
     downVotes: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
       default: []
+    },
+    indVotes: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
+      default: []
     }
   })
 )
