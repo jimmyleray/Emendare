@@ -9,10 +9,11 @@ import {
   Columns,
   Icon,
   Link,
+  ResultsIcon,
   Spacer,
   UserContext
 } from '../../components'
-import { Amend, Socket } from '../../services'
+import { Socket } from '../../services'
 import { path } from '../../config'
 
 const unFollowText = id => refetch => async () => {
@@ -129,44 +130,27 @@ export const Text = ({ data, refetch }) => {
                         {data.amends
                           .filter(amend => !amend.closed)
                           .map((amend, index) => (
-                            <p key={amend._id}>
-                              {user ? (
-                                Amend.isVoted(user)(amend) ? (
-                                  <Icon
-                                    className="fas fa-circle has-text-success"
-                                    title="Vous avez déjà voté"
-                                  />
-                                ) : (
-                                  <Icon
-                                    className="fas fa-circle has-text-danger"
-                                    title="Vous n'avez pas encore voté"
-                                  />
-                                )
-                              ) : (
-                                <Icon
-                                  className="fas fa-circle has-text-light"
-                                  title="Vous n'êtes pas connecté"
-                                />
-                              )}
-
-                              {amend.upVotesCount + amend.downVotesCount >
-                                0 && (
-                                <>
-                                  <span>
-                                    {(
-                                      Math.round(100 * amend.upVotesCount) /
-                                      (amend.upVotesCount +
-                                        amend.downVotesCount)
-                                    ).toFixed(1)}
-                                    {'% de votes favorables : '}
-                                  </span>
-                                </>
-                              )}
+                            <div key={amend._id}>
+                              <ResultsIcon
+                                data={{
+                                  up: amend.upVotesCount,
+                                  down: amend.downVotesCount,
+                                  ind: amend.indVotesCount,
+                                  absent:
+                                    (amend.totalPotentialVotesCount
+                                      ? amend.totalPotentialVotesCount
+                                      : data.followersCount) -
+                                    (amend.upVotesCount +
+                                      amend.downVotesCount +
+                                      amend.indVotesCount)
+                                }}
+                              />
+                              {' > '}
 
                               <Link to={path.amend(amend._id)}>
                                 {amend.name}
                               </Link>
-                            </p>
+                            </div>
                           ))}
                       </>
                     ) : (

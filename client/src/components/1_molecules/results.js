@@ -22,7 +22,7 @@ const datasetDefault = {
 const options = {
   rotation: -Math.PI,
   circumference: Math.PI,
-  legend: { display: false, position: 'bottom' },
+  legend: { display: false },
   animation: { animateRotate: false },
   tooltips: { mode: 'point', displayColors: false }
 }
