@@ -152,7 +152,7 @@ export const Text = ({ data, refetch }) => {
                                 to={path.amend(amend._id)}
                                 className={
                                   user && !Amend.isVoted(user)(amend)
-                                    ? 'has-text-weight-semibold'
+                                    ? 'has-text-weight-bold'
                                     : ''
                                 }
                               >

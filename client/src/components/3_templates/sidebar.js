@@ -64,11 +64,8 @@ export const Sidebar = ({ width }) => (
                       marginBottom: '1rem',
                       marginLeft: '6px'
                     }}
+                    className="has-text-weight-bold"
                   >
-                    <Icon
-                      className={'fas fa-circle has-text-danger'}
-                      title="Vote en cours auquel vous n'avez pas encore participé"
-                    />
                     {followedText.name}
                   </Link>
                 ))}
@@ -90,11 +87,8 @@ export const Sidebar = ({ width }) => (
                       marginBottom: '1rem',
                       marginLeft: '6px'
                     }}
+                    className="has-text-weight-semibold"
                   >
-                    <Icon
-                      className={'fas fa-circle has-text-success'}
-                      title="Vote en cours pour lequel vous avez déjà voté"
-                    />
                     {followedText.name}
                   </Link>
                 ))}
@@ -113,10 +107,6 @@ export const Sidebar = ({ width }) => (
                       marginLeft: '6px'
                     }}
                   >
-                    <Icon
-                      className={'fas fa-circle has-text-light'}
-                      title="Pas de vote en cours"
-                    />
                     {followedText.name}
                   </Link>
                 ))}
