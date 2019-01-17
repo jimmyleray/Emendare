@@ -680,7 +680,7 @@ io.on('connection', socket => {
 
           if (id3 > -1) {
             amend.indVotesCount--
-            user.indVotes.splice(id2, 1)
+            user.indVotes.splice(id3, 1)
           }
 
           await user.save()
