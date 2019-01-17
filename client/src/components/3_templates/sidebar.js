@@ -48,7 +48,9 @@ export const Sidebar = ({ width }) => (
                 </Link>
               </div>
               <br />
-              <p className="has-text-weight-semibold">Textes suivis</p>
+              <p className="is-size-5 has-text-weight-semibold">
+                Textes suivis
+              </p>
               <br />
               {user.followedTexts
                 .filter(Text.hasOpenAmendUnvoted(user))
@@ -61,7 +63,7 @@ export const Sidebar = ({ width }) => (
                       textDecoration: 'none',
                       display: 'block',
                       marginBottom: '1rem',
-                      marginLeft: '6px'
+                      marginLeft: '1rem'
                     }}
                     className="has-text-weight-bold"
                   >
@@ -84,7 +86,7 @@ export const Sidebar = ({ width }) => (
                       textDecoration: 'none',
                       display: 'block',
                       marginBottom: '1rem',
-                      marginLeft: '6px'
+                      marginLeft: '1rem'
                     }}
                     className="has-text-weight-semibold"
                   >
@@ -103,7 +105,7 @@ export const Sidebar = ({ width }) => (
                       textDecoration: 'none',
                       display: 'block',
                       marginBottom: '1rem',
-                      marginLeft: '6px'
+                      marginLeft: '1rem'
                     }}
                   >
                     {followedText.name}
@@ -143,7 +145,7 @@ export const Sidebar = ({ width }) => (
             </>
           )}
           <br />
-          <p className="has-text-weight-semibold">Liens utiles</p>
+          <p className="is-size-5 has-text-weight-semibold">Liens utiles</p>
           <br />
           <Footer />
           <br />

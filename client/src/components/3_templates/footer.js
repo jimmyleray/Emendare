@@ -21,7 +21,7 @@ export const Footer = () => (
           display: 'block',
           textDecoration: 'none',
           marginBottom: '1rem',
-          marginLeft: '6px'
+          marginLeft: '1rem'
         }}
       >
         {link.title}
