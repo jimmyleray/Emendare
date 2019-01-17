@@ -18,50 +18,41 @@ const datasetDefault = {
   ],
   hoverBorderColor: 'white'
 }
-
-const options = {
-  rotation: -Math.PI,
-  circumference: Math.PI,
-  legend: { display: false },
-  animation: { animateRotate: false },
-  tooltips: { mode: 'point', displayColors: false }
-}
-
-const resolveData = data => {
-  const res = {
-    labels: ['Vote Pour', 'Vote Indifférent', 'Vote Contre', 'Abstention'],
-    datasets: []
-  }
-
-  if (data.up || data.down) {
-    res.datasets.push({
-      label: 'UpAndDown',
-      ...datasetDefault,
-      data: [data.up || 0, 0, data.down || 0, 0]
-    })
-  }
-
-  if (data.ind) {
-    res.datasets.push({
-      label: 'WithUnknow',
-      ...datasetDefault,
-      data: [data.up || 0, data.ind || 0, data.down || 0, 0]
-    })
-  }
-
-  if (data.absent) {
-    res.datasets.push({
-      label: 'WithAbsent',
-      ...datasetDefault,
-      data: [data.up || 0, data.ind || 0, data.down || 0, data.absent || 0]
-    })
-  }
-
-  return res
-}
-
 export const Results = ({ data }) => (
   <div style={{ position: 'relative', zIndex: 1 }}>
-    <Doughnut data={resolveData(data)} options={options} />
+    <Doughnut
+      data={{
+        labels: ['Vote Pour', 'Vote Indifférent', 'Vote Contre', 'Abstention'],
+        datasets: [
+          {
+            label: 'UpAndDown',
+            ...datasetDefault,
+            data: [
+              data.up || data.down ? data.up : 50,
+              0,
+              data.up || data.down ? data.down : 50,
+              0
+            ]
+          },
+          {
+            label: 'WithAbsent',
+            ...datasetDefault,
+            data: [
+              data.up || 0,
+              data.ind || 0,
+              data.down || 0,
+              data.absent || 0
+            ]
+          }
+        ]
+      }}
+      options={{
+        rotation: -Math.PI,
+        circumference: Math.PI,
+        legend: { display: false },
+        animation: { animateRotate: false },
+        tooltips: { mode: 'point', displayColors: false }
+      }}
+    />
   </div>
 )

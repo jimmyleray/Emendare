@@ -165,25 +165,6 @@ export class AmendPage extends React.Component {
                         </p>
                         <br />
 
-                        <Notification className="is-warning">
-                          <p>
-                            Le vote est{' '}
-                            <span className="has-text-weight-semibold">
-                              clos à la fin du temps maximum indiqué
-                            </span>{' '}
-                            OU dès lors qu'une{' '}
-                            <span className="has-text-weight-semibold">
-                              majorité absolue
-                            </span>{' '}
-                            est atteinte après un delai minimum d'une heure. Le{' '}
-                            <span className="has-text-weight-semibold">
-                              vote est liquide
-                            </span>
-                            , ce qui veut dire que vous pouvez changer votre
-                            vote jusqu'à la fin du scrutin.
-                          </p>
-                        </Notification>
-
                         <Results
                           data={{
                             up: this.state.amend.upVotesCount,
@@ -318,6 +299,25 @@ export class AmendPage extends React.Component {
                             </p>
                           )}
                       </Box>
+
+                      <Notification className="is-light">
+                        <p>
+                          Le vote est{' '}
+                          <span className="has-text-weight-semibold">
+                            clos à la fin du temps maximum indiqué
+                          </span>{' '}
+                          OU dès lors qu'une{' '}
+                          <span className="has-text-weight-semibold">
+                            majorité absolue
+                          </span>{' '}
+                          est atteinte après un delai minimum d'une heure. Le{' '}
+                          <span className="has-text-weight-semibold">
+                            vote est liquide
+                          </span>
+                          , ce qui veut dire que vous pouvez changer votre vote
+                          jusqu'à la fin du scrutin.
+                        </p>
+                      </Notification>
                     </Column>
                   </Columns>
                 </>
