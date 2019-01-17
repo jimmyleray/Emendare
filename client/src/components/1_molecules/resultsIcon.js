@@ -22,12 +22,7 @@ export const ResultsIcon = ({ data }) => (
               'hsla(0, 0%, 21%, 1)'
             ],
             borderWidth: 0,
-            data: [
-              data.up || 0,
-              data.ind || 0,
-              data.down || 0,
-              data.absent || 0
-            ]
+            data: [data.up || 0, 0, data.down || 0, 0]
           }
         ]
       }}
