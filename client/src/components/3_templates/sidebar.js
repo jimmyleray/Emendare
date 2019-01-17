@@ -2,7 +2,6 @@ import React from 'react'
 import {
   Button,
   Footer,
-  Icon,
   Link,
   Notification,
   ServerState,
