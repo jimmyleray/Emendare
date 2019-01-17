@@ -13,7 +13,7 @@ import {
   Spacer,
   UserContext
 } from '../../components'
-import { Socket } from '../../services'
+import { Amend, Socket } from '../../services'
 import { path } from '../../config'
 
 const unFollowText = id => refetch => async () => {
@@ -148,7 +148,14 @@ export const Text = ({ data, refetch }) => {
                               />
                               {' > '}
 
-                              <Link to={path.amend(amend._id)}>
+                              <Link
+                                to={path.amend(amend._id)}
+                                className={
+                                  user && !Amend.isVoted(user)(amend)
+                                    ? 'has-text-weight-semibold'
+                                    : ''
+                                }
+                              >
                                 {amend.name}
                               </Link>
                             </div>
