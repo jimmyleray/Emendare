@@ -6,6 +6,7 @@ const datasetDefault = {
     'hsla(141, 71%, 48%, 1)',
     'hsla(204, 86%, 53%, 1)',
     'hsla(348, 100%, 61%, 1)',
+    'hsla(0, 0%, 96%, 1)',
     'hsla(0, 0%, 21%, 1)'
   ],
   borderColor: 'white',
@@ -14,6 +15,7 @@ const datasetDefault = {
     'hsla(141, 71%, 58%, 1)',
     'hsla(204, 86%, 63%, 1)',
     'hsla(348, 100%, 71%, 1)',
+    'hsla(0, 0%, 86%, 1)',
     'hsla(0, 0%, 31%, 1)'
   ],
   hoverBorderColor: 'white'
@@ -22,27 +24,29 @@ export const Results = ({ data }) => (
   <div style={{ position: 'relative', zIndex: 1 }}>
     <Doughnut
       data={{
-        labels: ['Vote Pour', 'Vote Indifférent', 'Vote Contre', 'Abstention'],
+        labels: [
+          'Votes "Pour"',
+          'Votes "Indifférent"',
+          'Votes "Contre"',
+          'Votes exprimés',
+          'Abstention'
+        ],
         datasets: [
           {
             label: 'UpAndDown',
             ...datasetDefault,
             data: [
-              data.up || data.down ? data.up : 50,
+              data.up || data.down || data.ind ? data.up : 50,
+              data.up || data.down || data.ind ? data.ind : 0,
+              data.up || data.down || data.ind ? data.down : 50,
               0,
-              data.up || data.down ? data.down : 50,
               0
             ]
           },
           {
             label: 'WithAbsent',
             ...datasetDefault,
-            data: [
-              data.up || 0,
-              data.ind || 0,
-              data.down || 0,
-              data.absent || 0
-            ]
+            data: [0, 0, 0, data.up + data.ind + data.down, data.absent || 0]
           }
         ]
       }}
