@@ -6,8 +6,8 @@ const datasetDefault = {
     'hsla(141, 71%, 48%, 1)',
     'hsla(204, 86%, 53%, 1)',
     'hsla(348, 100%, 61%, 1)',
-    'hsla(0, 0%, 96%, 1)',
-    'hsla(0, 0%, 21%, 1)'
+    'hsla(0, 0%, 21%, 1)',
+    'hsla(0, 0%, 96%, 1)'
   ],
   borderColor: 'white',
   borderWidth: 4,
@@ -15,8 +15,8 @@ const datasetDefault = {
     'hsla(141, 71%, 58%, 1)',
     'hsla(204, 86%, 63%, 1)',
     'hsla(348, 100%, 71%, 1)',
-    'hsla(0, 0%, 86%, 1)',
-    'hsla(0, 0%, 31%, 1)'
+    'hsla(0, 0%, 31%, 1)',
+    'hsla(0, 0%, 86%, 1)'
   ],
   hoverBorderColor: 'white'
 }
@@ -25,9 +25,9 @@ export const Results = ({ data }) => (
     <Doughnut
       data={{
         labels: [
-          'Votes "Pour"',
-          'Votes "Indifférent"',
-          'Votes "Contre"',
+          'Votes Pour',
+          'Votes Indifférent',
+          'Votes Contre',
           'Votes exprimés',
           'Abstention'
         ],
@@ -55,7 +55,7 @@ export const Results = ({ data }) => (
         circumference: Math.PI,
         legend: { display: false },
         animation: { animateRotate: false },
-        tooltips: { mode: 'point', displayColors: false }
+        tooltips: { mode: 'point', displayColors: false, intersect: false }
       }}
     />
   </div>

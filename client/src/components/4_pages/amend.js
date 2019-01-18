@@ -163,6 +163,9 @@ export class AmendPage extends React.Component {
                           {this.state.amend.closed ? 'clos' : 'en cours'} sur
                           l'amendement
                         </p>
+                        <p className="is-size-5 has-text-centered">
+                          Répartition des votes exprimés et participation
+                        </p>
                         <br />
 
                         <Results
@@ -224,7 +227,7 @@ export class AmendPage extends React.Component {
                                     id => id === this.state.amend._id
                                   )
                                     ? 'is-success'
-                                    : 'is-light'
+                                    : ''
                                 }
                                 disabled={this.state.amend.closed}
                                 onClick={this.vote(user)('up')}
@@ -239,7 +242,7 @@ export class AmendPage extends React.Component {
                                     id => id === this.state.amend._id
                                   )
                                     ? 'is-info'
-                                    : 'is-light'
+                                    : ''
                                 }
                                 disabled={this.state.amend.closed}
                                 onClick={this.vote(user)('ind')}
@@ -254,7 +257,7 @@ export class AmendPage extends React.Component {
                                     id => id === this.state.amend._id
                                   )
                                     ? 'is-danger'
-                                    : 'is-light'
+                                    : ''
                                 }
                                 disabled={this.state.amend.closed}
                                 onClick={this.vote(user)('down')}
@@ -274,8 +277,8 @@ export class AmendPage extends React.Component {
                                   !user.indVotes.find(
                                     id => id === this.state.amend._id
                                   )
-                                    ? 'is-dark'
-                                    : 'is-light'
+                                    ? 'is-light'
+                                    : ''
                                 }
                                 disabled={this.state.amend.closed}
                                 onClick={this.vote(user)('un')}
@@ -287,6 +290,8 @@ export class AmendPage extends React.Component {
                             </Buttons>
                           </>
                         )}
+
+                        {!user && <br />}
 
                         {this.state.amend.closed &&
                           this.state.amend.conflicted && (
