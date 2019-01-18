@@ -217,6 +217,20 @@ export class AmendPage extends React.Component {
                           </div>
                         )}
 
+                        {this.state.amend.closed &&
+                          this.state.amend.conflicted && (
+                            <>
+                              <br />
+                              <p className="has-text-centered has-text-danger has-text-weight-semibold">
+                                Mais des conflits ont été détectés à
+                                l'application de l'amendement. Une nouvelle
+                                fonctionalité permettra prochainement aux
+                                auteurs des amendements de corriger ces conflits
+                                avant les scrutins.
+                              </p>
+                            </>
+                          )}
+
                         {user && (
                           <>
                             <hr />
@@ -290,19 +304,6 @@ export class AmendPage extends React.Component {
                             </Buttons>
                           </>
                         )}
-
-                        {!user && <br />}
-
-                        {this.state.amend.closed &&
-                          this.state.amend.conflicted && (
-                            <p className="has-text-centered has-text-weight-semibold">
-                              Mais des conflits ont été détectés à l'application
-                              de l'amendement. Une nouvelle fonctionalité
-                              permettra prochainement aux auteurs des
-                              amendements de corriger ces conflits avant les
-                              scrutins.
-                            </p>
-                          )}
                       </Box>
 
                       <Notification className="is-light">
