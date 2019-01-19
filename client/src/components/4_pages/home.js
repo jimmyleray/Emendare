@@ -7,11 +7,23 @@
  */
 
 import React from 'react'
-import { Button, Buttons, Page } from '../../components'
+import { Button, Buttons, Notification, Page } from '../../components'
 import { path } from '../../config'
 
 export const HomePage = () => (
   <Page title="Accueil">
+    <div className="has-text-centered">
+      <Notification
+        className="is-warning has-text-centered"
+        style={{ maxWidth: '950px', margin: 'auto' }}
+      >
+        <span className="has-text-weight-semibold">
+          Version de démonstration jusqu'au 30 Janvier.
+        </span>{' '}
+        Des remises à zéro de la base de données sont prévues d'ici là.
+      </Notification>
+    </div>
+    <br />
     <div className="field has-text-centered">
       <h1 className="is-size-3">
         Plateforme open source de rédaction de textes amendables

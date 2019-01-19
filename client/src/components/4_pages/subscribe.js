@@ -26,10 +26,8 @@ export class SubscribePage extends React.Component {
         password: this.state.password,
         email: this.state.email
       })
-        .then(async user => {
-          localStorage.setItem('token', user.token)
-          await Socket.fetch('user')
-          this.setState({ redirectToReferrer: true })
+        .then(async () => {
+          this.setState({ redirectToHome: true })
         })
         .catch(error => {
           this.setState({ error })
@@ -40,7 +38,7 @@ export class SubscribePage extends React.Component {
       email: '',
       password: '',
       error: null,
-      redirectToReferrer: false
+      redirectToHome: false
     }
   }
 
@@ -49,15 +47,7 @@ export class SubscribePage extends React.Component {
   }
 
   render() {
-    if (this.state.redirectToReferrer)
-      return (
-        <Redirect
-          to={
-            (this.props.location.state && this.props.location.state.from) ||
-            path.profile
-          }
-        />
-      )
+    if (this.state.redirectToHome) return <Redirect to={path.home} />
 
     return (
       <Page title="Inscription">

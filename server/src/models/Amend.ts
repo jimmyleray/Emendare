@@ -27,7 +27,13 @@ const model = mongoose.model(
       default:
         process.env.NODE_ENV === 'production' ? 60 * 60 * 1000 : 60 * 1000
     },
-    delayMax: { type: Number, default: 24 * 60 * 60 * 1000 },
+    delayMax: {
+      type: Number,
+      default:
+        process.env.NODE_ENV === 'production'
+          ? 24 * 60 * 60 * 1000
+          : 60 * 60 * 1000
+    },
     closed: { type: Boolean, default: false },
     accepted: { type: Boolean, default: false },
     conflicted: { type: Boolean, default: false }

@@ -19,7 +19,7 @@ export const ErrorPage = ({
     </div>
     <div className="field is-grouped is-grouped-centered">
       <p className="control">
-        <Button to={path.home} className="is-medium is-primary">
+        <Button to={path.home} className="has-text-weight-semibold is-primary">
           Retour à l'accueil
         </Button>
       </p>

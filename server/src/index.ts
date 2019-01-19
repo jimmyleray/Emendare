@@ -20,7 +20,7 @@ import isMatch from 'is-match'
 const isMatchZenika = isMatch('*@zenika.com')
 
 // Diff Patch Library
-import * as JsDiff from "diff"
+import * as JsDiff from 'diff'
 
 // MongoDB connection
 import Database from './mongo'
@@ -29,8 +29,9 @@ new Database().connect()
 // MongoDB models
 import { Amend, Event, Group, Text, User } from './models'
 
-// Utils function to generate unique tokens
-import { Crypto } from './services'
+// Services imports
+import { Crypto, Mailer } from './services'
+const Mail = process.env.NODE_ENV === 'production' ? new Mailer() : null
 
 // Public API for get texts by ID
 app.get('/text/:id', async (req, res) => {
@@ -153,6 +154,19 @@ io.on('connection', socket => {
     socket.emit('customPong', data)
   })
 
+  socket.on('activation', async ({ activationToken }) => {
+    const user = await User.model.findOne({ activationToken })
+    if (user && !user.activated) {
+      user.activated = true
+      await user.save()
+      socket.emit('activation', { data: user })
+    } else {
+      socket.emit('activation', {
+        error: { code: 405, message: 'Ce compte est déjà activé' }
+      })
+    }
+  })
+
   socket.on('login', async ({ token, data }) => {
     const { email, password } = data
     if (email && password) {
@@ -161,7 +175,7 @@ io.on('connection', socket => {
         .populate('amends')
         .populate({ path: 'followedTexts', populate: { path: 'amends' } })
         .populate('followedGroups')
-      if (user) {
+      if (user && user.activated) {
         bcrypt.compare(password, user.password, async (err, valid) => {
           if (valid) {
             const newToken = Crypto.getToken()
@@ -170,13 +184,13 @@ io.on('connection', socket => {
             socket.emit('login', { data: user })
           } else {
             socket.emit('login', {
-              error: { code: '401', message: 'Le mot de passe est invalide' }
+              error: { code: 401, message: 'Le mot de passe est invalide' }
             })
           }
         })
       } else {
         socket.emit('login', {
-          error: { code: '405', message: "L'email est invalide" }
+          error: { code: 405, message: "L'email est invalide" }
         })
       }
     } else if (token) {
@@ -225,13 +239,19 @@ io.on('connection', socket => {
           })
         } else {
           bcrypt.hash(password, 10, async (err, hash) => {
-            const token = Crypto.getToken()
-            const user = await new User.model({
+            const activationToken = Crypto.getToken()
+            await new User.model({
               email,
               password: hash,
-              token
+              activationToken
             }).save()
-            socket.emit('subscribe', { data: user })
+            Mail.send({
+              to: email,
+              subject: 'Activation de votre compte Emendare',
+              html: `<p>Cliquez sur le lien suivant pour activer votre compte :</p>
+              <a href="https://emendare.org/activation/${activationToken}">Activer mon compte Emendare</a>`
+            })
+            socket.emit('subscribe')
           })
         }
       }
@@ -340,7 +360,7 @@ io.on('connection', socket => {
   socket.on('postAmend', async ({ token, data }) => {
     const { name, description, patch, version, textID } = data
     const user = await User.model.findOne({ token })
-    if (user) {
+    if (user && user.activated) {
       const amend = await new Amend.model({
         description,
         name,
@@ -379,7 +399,7 @@ io.on('connection', socket => {
 
   socket.on('joinGroup', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (user) {
+    if (user && user.activated) {
       if (user.followedGroups.indexOf(data.id) === -1) {
         user.followedGroups.push(data.id)
         await user.save()
@@ -409,7 +429,7 @@ io.on('connection', socket => {
 
   socket.on('quitGroup', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (user) {
+    if (user && user.activated) {
       const id = user.followedGroups.indexOf(data.id)
       if (id >= 0) {
         user.followedGroups.splice(id, 1)
@@ -440,7 +460,7 @@ io.on('connection', socket => {
 
   socket.on('followText', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (user) {
+    if (user && user.activated) {
       if (user.followedTexts.indexOf(data.id) === -1) {
         user.followedTexts.push(data.id)
         await user.save()
@@ -468,7 +488,7 @@ io.on('connection', socket => {
 
   socket.on('unFollowText', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (user) {
+    if (user && user.activated) {
       const id = user.followedTexts.indexOf(data.id)
       if (id >= 0) {
         user.followedTexts.splice(id, 1)
@@ -497,7 +517,7 @@ io.on('connection', socket => {
 
   socket.on('upVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (user) {
+    if (user && user.activated) {
       const amend = await Amend.model.findById(data.id).populate('text')
       if (user.followedTexts.indexOf(amend.text._id) > -1) {
         if (!amend.closed) {
@@ -549,7 +569,7 @@ io.on('connection', socket => {
 
   socket.on('downVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (user) {
+    if (user && user.activated) {
       const amend = await Amend.model.findById(data.id).populate('text')
       if (user.followedTexts.indexOf(amend.text._id) > -1) {
         if (!amend.closed) {
@@ -601,7 +621,7 @@ io.on('connection', socket => {
 
   socket.on('indVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (user) {
+    if (user && user.activated) {
       const amend = await Amend.model.findById(data.id).populate('text')
       if (user.followedTexts.indexOf(amend.text._id) > -1) {
         if (!amend.closed) {
@@ -653,7 +673,7 @@ io.on('connection', socket => {
 
   socket.on('unVoteAmend', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
-    if (user) {
+    if (user && user.activated) {
       const amend = await Amend.model.findById(data.id).populate('text')
       if (user.followedTexts.indexOf(amend.text._id) > -1) {
         if (!amend.closed) {

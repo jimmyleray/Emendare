@@ -190,7 +190,8 @@ export class AmendPage extends React.Component {
                             <>
                               <p>Le scrutin est clos</p>
                               <p className="has-text-weight-semibold is-size-3">
-                                {this.state.amend.accepted
+                                {this.state.amend.accepted &&
+                                !this.state.amend.conflicted
                                   ? 'ACCEPTE'
                                   : 'REFUSE'}
                               </p>
@@ -214,11 +215,11 @@ export class AmendPage extends React.Component {
                             <>
                               <br />
                               <p className="has-text-centered has-text-danger has-text-weight-semibold">
-                                Mais des conflits ont été détectés à
-                                l'application de l'amendement. Une nouvelle
-                                fonctionalité permettra prochainement aux
-                                auteurs des amendements de corriger ces conflits
-                                avant les scrutins.
+                                Des conflits ont été détectés à l'application de
+                                l'amendement. Une nouvelle fonctionalité
+                                permettra prochainement aux auteurs des
+                                amendements de corriger ces conflits avant les
+                                scrutins.
                               </p>
                             </>
                           )}
