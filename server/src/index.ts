@@ -85,7 +85,6 @@ const hasRelativeUpMajority = (amend: any) =>
 const updateTextWithAmend = async (amend: any) => {
   amend.accepted = true
   const newText = JsDiff.applyPatch(amend.text.actual, amend.patch)
-  console.log(newText)
 
   if (newText) {
     amend.version = amend.text.patches.length
@@ -156,13 +155,19 @@ io.on('connection', socket => {
 
   socket.on('activation', async ({ activationToken }) => {
     const user = await User.model.findOne({ activationToken })
-    if (user && !user.activated) {
-      user.activated = true
-      await user.save()
-      socket.emit('activation', { data: user })
+    if (user) {
+      if (!user.activated) {
+        user.activated = true
+        await user.save()
+        socket.emit('activation', { data: user })
+      } else {
+        socket.emit('activation', {
+          error: { code: 405, message: 'Ce compte est déjà activé 2' }
+        })
+      }
     } else {
       socket.emit('activation', {
-        error: { code: 405, message: 'Ce compte est déjà activé' }
+        error: { code: 405, message: 'Votre token est invalide' }
       })
     }
   })
@@ -246,21 +251,30 @@ io.on('connection', socket => {
               activationToken
             }).save()
 
-            Mail.send({
-              to: email,
-              subject: 'Activation de votre compte Emendare',
-              html: `<p>Cliquez sur le lien suivant pour activer votre compte :</p>
+            if (Mail) {
+              Mail.send({
+                to: email,
+                subject: 'Activation de votre compte Emendare',
+                html: `<p>Cliquez sur le lien ci-dessous pour activer votre compte :</p>
               <a href="https://emendare.org/activation/${activationToken}">Activer mon compte Emendare</a>`
-            })
-              .then(() => {
-                socket.emit('subscribe')
               })
-              .catch(error => {
-                console.error(error)
-                socket.emit('subscribe', {
-                  error: { code: 500, message: "Erreur dans l'envoi du mail" }
+                .then(() => {
+                  socket.emit('subscribe')
                 })
+                .catch(error => {
+                  console.error(error)
+                  socket.emit('subscribe', {
+                    error: { code: 500, message: "Erreur dans l'envoi du mail" }
+                  })
+                })
+            } else {
+              socket.emit('subscribe', {
+                error: {
+                  code: 500,
+                  message: "Les mails ne sont activés qu'en production"
+                }
               })
+            }
           })
         }
       }
