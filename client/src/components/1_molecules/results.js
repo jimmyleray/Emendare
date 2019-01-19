@@ -35,13 +35,7 @@ export const Results = ({ data }) => (
           {
             label: 'UpAndDown',
             ...datasetDefault,
-            data: [
-              data.up || data.down || data.ind ? data.up : 50,
-              data.up || data.down || data.ind ? data.ind : 0,
-              data.up || data.down || data.ind ? data.down : 50,
-              0,
-              0
-            ]
+            data: [data.up || 0, data.ind || 0, data.down || 0, 0, 0]
           },
           {
             label: 'WithAbsent',

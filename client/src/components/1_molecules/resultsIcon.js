@@ -12,17 +12,37 @@ export const ResultsIcon = ({ data }) => (
   >
     <Pie
       data={{
-        labels: ['Vote Pour', 'Vote Indifférent', 'Vote Contre', 'Abstention'],
+        labels: [
+          'Votes Pour',
+          'Votes Indifférent',
+          'Votes Contre',
+          'Votes exprimés',
+          'Abstention'
+        ],
         datasets: [
           {
             backgroundColor: [
               'hsla(141, 71%, 48%, 1)',
               'hsla(204, 86%, 53%, 1)',
               'hsla(348, 100%, 61%, 1)',
-              'hsla(0, 0%, 21%, 1)'
+              'hsla(0, 0%, 21%, 1)',
+              'hsla(0, 0%, 96%, 1)'
+            ],
+            hoverBackgroundColor: [
+              'hsla(141, 71%, 58%, 1)',
+              'hsla(204, 86%, 63%, 1)',
+              'hsla(348, 100%, 71%, 1)',
+              'hsla(0, 0%, 31%, 1)',
+              'hsla(0, 0%, 86%, 1)'
             ],
             borderWidth: 0,
-            data: [data.up || 0, 0, data.down || 0, 0]
+            data: [
+              data.up || 0,
+              data.ind || 0,
+              data.down || 0,
+              0,
+              !data.up && !data.ind && !data.down ? data.absent : 0
+            ]
           }
         ]
       }}

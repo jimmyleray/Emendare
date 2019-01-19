@@ -178,39 +178,36 @@ export class AmendPage extends React.Component {
                           }}
                         />
 
-                        {this.state.amend.closed ? (
-                          <div
-                            className="has-text-centered"
-                            style={{
-                              position: 'relative',
-                              top: '-92px',
-                              marginBottom: '-72px'
-                            }}
-                          >
-                            <p>Le scrutin est clos</p>
-                            <p className="has-text-weight-semibold is-size-3">
-                              {this.state.amend.accepted ? 'ACCEPTE' : 'REFUSE'}
-                            </p>
-                          </div>
-                        ) : (
-                          <div
-                            className="has-text-centered"
-                            style={{
-                              position: 'relative',
-                              top: '-92px',
-                              marginBottom: '-72px'
-                            }}
-                          >
-                            <p>Temps restant</p>
-                            <CountDown
-                              date={Time.addTimeToDate(
-                                this.state.amend.created,
-                                this.state.amend.delayMax
-                              )}
-                              className="has-text-weight-semibold is-size-3"
-                            />
-                          </div>
-                        )}
+                        <div
+                          className="has-text-centered is-hidden-mobile"
+                          style={{
+                            position: 'relative',
+                            top: '-72px',
+                            marginBottom: '-72px'
+                          }}
+                        >
+                          {this.state.amend.closed ? (
+                            <>
+                              <p>Le scrutin est clos</p>
+                              <p className="has-text-weight-semibold is-size-3">
+                                {this.state.amend.accepted
+                                  ? 'ACCEPTE'
+                                  : 'REFUSE'}
+                              </p>
+                            </>
+                          ) : (
+                            <>
+                              <p>Temps restant</p>
+                              <CountDown
+                                date={Time.addTimeToDate(
+                                  this.state.amend.created,
+                                  this.state.amend.delayMax
+                                )}
+                                className="has-text-weight-semibold is-size-3"
+                              />
+                            </>
+                          )}
+                        </div>
 
                         {this.state.amend.closed &&
                           this.state.amend.conflicted && (
@@ -301,24 +298,26 @@ export class AmendPage extends React.Component {
                         )}
                       </Box>
 
-                      <Notification className="is-light">
-                        <p>
-                          Le vote est{' '}
-                          <span className="has-text-weight-semibold">
-                            clos à la fin du temps maximum indiqué
-                          </span>{' '}
-                          OU dès lors qu'une{' '}
-                          <span className="has-text-weight-semibold">
-                            majorité absolue
-                          </span>{' '}
-                          est atteinte après un delai minimum d'une heure. Le{' '}
-                          <span className="has-text-weight-semibold">
-                            vote est liquide
-                          </span>
-                          , ce qui veut dire que vous pouvez changer votre vote
-                          jusqu'à la fin du scrutin.
-                        </p>
-                      </Notification>
+                      {!this.state.amend.closed && (
+                        <Notification className="is-light">
+                          <p>
+                            Le vote est{' '}
+                            <span className="has-text-weight-semibold">
+                              clos à la fin du temps maximum indiqué
+                            </span>{' '}
+                            OU dès lors qu'une{' '}
+                            <span className="has-text-weight-semibold">
+                              majorité absolue
+                            </span>{' '}
+                            est atteinte après un delai minimum d'une heure. Le{' '}
+                            <span className="has-text-weight-semibold">
+                              vote est liquide
+                            </span>
+                            , ce qui veut dire que vous pouvez changer votre
+                            vote jusqu'à la fin du scrutin.
+                          </p>
+                        </Notification>
+                      )}
                     </Column>
                   </Columns>
                 </>
