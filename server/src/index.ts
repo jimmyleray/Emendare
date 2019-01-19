@@ -180,19 +180,25 @@ io.on('connection', socket => {
         .populate('amends')
         .populate({ path: 'followedTexts', populate: { path: 'amends' } })
         .populate('followedGroups')
-      if (user && user.activated) {
-        bcrypt.compare(password, user.password, async (err, valid) => {
-          if (valid) {
-            const newToken = Crypto.getToken()
-            user.token = newToken
-            await user.save()
-            socket.emit('login', { data: user })
-          } else {
-            socket.emit('login', {
-              error: { code: 401, message: 'Le mot de passe est invalide' }
-            })
-          }
-        })
+      if (user) {
+        if (user.activated) {
+          bcrypt.compare(password, user.password, async (err, valid) => {
+            if (valid) {
+              const newToken = Crypto.getToken()
+              user.token = newToken
+              await user.save()
+              socket.emit('login', { data: user })
+            } else {
+              socket.emit('login', {
+                error: { code: 405, message: 'Le mot de passe est invalide' }
+              })
+            }
+          })
+        } else {
+          socket.emit('login', {
+            error: { code: 405, message: "Votre compte n'est pas activé" }
+          })
+        }
       } else {
         socket.emit('login', {
           error: { code: 405, message: "L'email est invalide" }
