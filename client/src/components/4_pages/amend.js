@@ -25,8 +25,8 @@ import {
   CountDown
 } from '../../components'
 import { Socket, Time } from '../../services'
-import diff_match_patch from 'diff-match-patch'
 import { path } from '../../config'
+import * as JsDiff from 'diff'
 
 export class AmendPage extends React.Component {
   constructor(props) {
@@ -107,23 +107,16 @@ export class AmendPage extends React.Component {
   }
 
   computeDiff() {
-    const dmp = new diff_match_patch()
-    dmp.Diff_EditCost = 8
-
     let previousText = ''
 
     for (let index = 0; index < this.state.amend.version; index++) {
       const patch = this.state.amend.text.patches[index]
-      previousText = dmp.patch_apply(dmp.patch_fromText(patch), previousText)[0]
+      previousText = JsDiff.applyPatch(previousText, patch)
     }
 
-    const newText = dmp.patch_apply(
-      dmp.patch_fromText(this.state.amend.patch),
-      previousText
-    )[0]
+    const newText = JsDiff.applyPatch(previousText, this.state.amend.patch)
 
-    const diffs = dmp.diff_main(previousText, newText)
-    dmp.diff_cleanupSemantic(diffs)
+    const diffs = JsDiff.diffLines(previousText, newText)
     this.setState({ amend: { diffs, ...this.state.amend } })
   }
 

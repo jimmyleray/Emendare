@@ -8,14 +8,12 @@ import {
   Column,
   Columns,
   Icon,
-  Notification,
-  Progress,
   Spacer,
   UserContext
 } from '../../components'
 import { Socket } from '../../services'
-import diff_match_patch from 'diff-match-patch'
 import { path } from '../../config'
+import * as JsDiff from 'diff'
 
 export class Edit extends React.Component {
   constructor(props) {
@@ -53,8 +51,6 @@ export class Edit extends React.Component {
     this.state = {
       amendName: '',
       amendDescription: '',
-      amendComplexity: 0,
-      textSizeDisplayed: 100,
       redirectToAmend: false,
       redirectID: null,
       initialValue: props.data.actual,
@@ -70,13 +66,16 @@ export class Edit extends React.Component {
   }
 
   computeDiff() {
-    const dmp = new diff_match_patch()
-    dmp.Diff_EditCost = 8
-    const diffs = dmp.diff_main(this.state.initialValue, this.state.amendValue)
-    dmp.diff_cleanupSemantic(diffs)
-    const amendComplexity = dmp.diff_levenshtein(diffs)
-    const patch = dmp.patch_toText(dmp.patch_make(diffs))
-    this.setState({ diffs, amendComplexity, patch })
+    const diffs = JsDiff.diffLines(
+      this.state.initialValue,
+      this.state.amendValue
+    )
+    const patch = JsDiff.createPatch(
+      '',
+      this.state.initialValue,
+      this.state.amendValue
+    )
+    this.setState({ diffs, patch })
   }
 
   render() {
@@ -169,27 +168,6 @@ export class Edit extends React.Component {
               </Column>
 
               <Column>
-                <Notification>
-                  <Progress
-                    className={
-                      'is-small ' +
-                      (this.state.amendComplexity >= 400
-                        ? 'is-danger'
-                        : this.state.amendComplexity >= 200
-                        ? 'is-warning'
-                        : 'is-success')
-                    }
-                    value={this.state.amendComplexity}
-                    max={500}
-                  />
-                  <p>
-                    La complexité est donnée à titre indicatif et ne vous limite
-                    pas. Une complexité trop élevée peut cependant nuire à
-                    l'adoption de votre amendement. Nous vous conseillons donc
-                    de proposer des amendements avec une complexité moderée.
-                  </p>
-                </Notification>
-
                 <p className="has-text-centered is-size-4">
                   Pré-visualisation de votre amendement
                 </p>

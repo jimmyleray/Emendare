@@ -19,9 +19,8 @@ import bcrypt from 'bcrypt'
 import isMatch from 'is-match'
 const isMatchZenika = isMatch('*@zenika.com')
 
-// Diff Match Patch Library
-// https://github.com/google/diff-match-patch
-import { diff_match_patch } from 'diff-match-patch'
+// Diff Patch Library
+import * as JsDiff from "diff"
 
 // MongoDB connection
 import Database from './mongo'
@@ -84,16 +83,10 @@ const hasRelativeUpMajority = (amend: any) =>
 
 const updateTextWithAmend = async (amend: any) => {
   amend.accepted = true
+  const newText = JsDiff.applyPatch(amend.text.actual, amend.patch)
+  console.log(newText)
 
-  const dmp = new diff_match_patch()
-  dmp.Diff_EditCost = 8
-
-  const [newText, patchesAreApplied] = dmp.patch_apply(
-    dmp.patch_fromText(amend.patch),
-    amend.text.actual
-  )
-
-  if (patchesAreApplied.indexOf(false) < 0) {
+  if (newText) {
     amend.version = amend.text.patches.length
     amend.text.patches.push(amend.patch)
     amend.text.actual = newText

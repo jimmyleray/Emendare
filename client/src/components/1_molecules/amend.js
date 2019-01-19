@@ -1,8 +1,6 @@
 import React from 'react'
 import { Box } from '../../components'
 
-const textSizeDisplayed = 100
-
 export const Amend = ({ data }) => (
   <Box>
     <p className="has-text-centered is-size-5">
@@ -17,30 +15,25 @@ export const Amend = ({ data }) => (
     <div>
       {data.diffs &&
         data.diffs.map((part, index) => (
-          <span
+          <p
             key={index}
             className={
-              part[0] === 1
+              part.added
                 ? 'has-text-weight-bold has-text-success'
-                : part[0] === -1
+                : part.removed
                 ? 'has-text-weight-bold has-text-danger'
                 : 'has-text-grey-light'
             }
           >
-            {part[1].split('\n').map((line, index) => {
-              return line ? (
-                <span key={index}>
-                  {line.length > textSizeDisplayed * 2
-                    ? line.slice(0, textSizeDisplayed) +
-                      ' (...) ' +
-                      line.slice(-textSizeDisplayed, -1)
-                    : line}
-                </span>
-              ) : (
-                <br key={index} />
-              )
-            })}
-          </span>
+            {part.count > 1
+              ? part.value.split('\n').map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    <br />
+                  </span>
+                ))
+              : part.value}
+          </p>
         ))}
     </div>
   </Box>
