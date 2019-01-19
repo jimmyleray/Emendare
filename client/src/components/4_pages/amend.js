@@ -110,8 +110,10 @@ export class AmendPage extends React.Component {
     let previousText = ''
 
     for (let index = 0; index < this.state.amend.version; index++) {
-      const patch = this.state.amend.text.patches[index]
-      previousText = JsDiff.applyPatch(previousText, patch)
+      previousText = JsDiff.applyPatch(
+        previousText,
+        this.state.amend.text.patches[index]
+      )
     }
 
     const newText = JsDiff.applyPatch(previousText, this.state.amend.patch)
