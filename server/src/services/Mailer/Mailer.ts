@@ -6,15 +6,10 @@ export class Mailer {
   constructor() {
     this.transporter = nodemailer.createTransport(
       {
-        host: process.env.MAIL_HOST,
-        port: Number(process.env.MAIL_PORT),
-        secure: Boolean(process.env.MAIL_SECURE),
+        service: 'Gmail',
         auth: {
           user: process.env.MAIL_AUTH_USER,
           pass: process.env.MAIL_AUTH_PASS
-        },
-        tls: {
-          rejectUnauthorized: false
         }
       },
       {
