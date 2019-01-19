@@ -6,7 +6,6 @@
  */
 
 import React from 'react'
-import { Redirect } from 'react-router-dom'
 import { Button, Icon, Notification, Page } from '../../components'
 import { Socket } from '../../services'
 import { path } from '../../config'
@@ -25,20 +24,15 @@ export class SubscribePage extends React.Component {
       Socket.fetch('subscribe', {
         password: this.state.password,
         email: this.state.email
+      }).catch(error => {
+        this.setState({ error })
       })
-        .then(async () => {
-          this.setState({ redirectToHome: true })
-        })
-        .catch(error => {
-          this.setState({ error })
-        })
     }
 
     this.state = {
       email: '',
       password: '',
-      error: null,
-      redirectToHome: false
+      error: null
     }
   }
 
@@ -47,8 +41,6 @@ export class SubscribePage extends React.Component {
   }
 
   render() {
-    if (this.state.redirectToHome) return <Redirect to={path.home} />
-
     return (
       <Page title="Inscription">
         <form
@@ -102,10 +94,12 @@ export class SubscribePage extends React.Component {
               {this.state.error.message}
             </Notification>
           )}
-          <Notification className="is-info has-text-centered">
-            Vous allez recevoir dans quelques instants un email avec un lien
-            pour activer votre compte. Pensez le cas échéant à vérifier vos
-            spams.
+          <Notification className="is-warning has-text-centered">
+            <span className="has-text-weight-semibold">
+              Vous allez recevoir dans quelques minutes un email avec un lien
+              pour activer votre compte.
+            </span>{' '}
+            Pensez le cas échéant à vérifier vos spams.
           </Notification>
         </form>
       </Page>

@@ -245,13 +245,22 @@ io.on('connection', socket => {
               password: hash,
               activationToken
             }).save()
+
             Mail.send({
               to: email,
               subject: 'Activation de votre compte Emendare',
               html: `<p>Cliquez sur le lien suivant pour activer votre compte :</p>
               <a href="https://emendare.org/activation/${activationToken}">Activer mon compte Emendare</a>`
             })
-            socket.emit('subscribe')
+              .then(() => {
+                socket.emit('subscribe')
+              })
+              .catch(error => {
+                console.error(error)
+                socket.emit('subscribe', {
+                  error: { code: 500, message: "Erreur dans l'envoi du mail" }
+                })
+              })
           })
         }
       }

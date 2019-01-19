@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 
 export class Mailer {
-  private transporter: any
+  private transporter: any = null
 
   constructor() {
     if (process.env.NODE_ENV === 'production') {
