@@ -12,6 +12,9 @@ export class Mailer {
         auth: {
           user: process.env.MAIL_AUTH_USER,
           pass: process.env.MAIL_AUTH_PASS
+        },
+        tls: {
+          ciphers: 'SSLv3'
         }
       },
       {
