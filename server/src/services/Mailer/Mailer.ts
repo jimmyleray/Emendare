@@ -1,11 +1,11 @@
 import nodemailer from 'nodemailer'
 
 export class Mailer {
-  private transporter: any = null
+  private transporter: any
 
   constructor() {
-    if (process.env.NODE_ENV === 'production') {
-      this.transporter = nodemailer.createTransport({
+    this.transporter = nodemailer.createTransport(
+      {
         host: process.env.MAIL_HOST,
         port: Number(process.env.MAIL_PORT),
         secure: Boolean(process.env.MAIL_SECURE),
@@ -14,8 +14,11 @@ export class Mailer {
           user: process.env.MAIL_AUTH_USER,
           pass: process.env.MAIL_AUTH_PASS
         }
-      })
-    }
+      },
+      {
+        from: process.env.MAIL_AUTH_USER
+      }
+    )
   }
 
   /**
@@ -29,11 +32,6 @@ export class Mailer {
    * }
    */
   public send(options: any): Promise<any> {
-    return process.env.NODE_ENV === 'production' && this.transporter
-      ? this.transporter.sendMail({
-          ...options,
-          from: process.env.MAIL_AUTH_USER
-        })
-      : Promise.reject()
+    return this.transporter.sendMail(options)
   }
 }

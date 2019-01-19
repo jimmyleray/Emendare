@@ -31,7 +31,10 @@ import { Amend, Event, Group, Text, User } from './models'
 
 // Services imports
 import { Crypto, Mailer } from './services'
+
+// Create Mailer instance only for production
 const Mail = process.env.NODE_ENV === 'production' ? new Mailer() : null
+console.log(process.versions)
 
 // Public API for get texts by ID
 app.get('/text/:id', async (req, res) => {
