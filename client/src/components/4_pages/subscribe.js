@@ -112,6 +112,11 @@ export class SubscribePage extends React.Component {
               {this.state.error.message}
             </Notification>
           )}
+          <Notification className="is-info has-text-centered">
+            Vous allez recevoir dans quelques instants un email avec un lien
+            pour activer votre compte. Pensez le cas échéant à vérifier vos
+            spams.
+          </Notification>
         </form>
       </Page>
     )

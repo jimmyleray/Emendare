@@ -15,7 +15,8 @@ export const routes = [
   { name: 'profile', path: '/profil', private: true },
   { name: 'text', path: withID('/texte/') },
   { name: 'edit', path: withID('/editer/'), private: true },
-  { name: 'amend', path: withID('/amendement/') }
+  { name: 'amend', path: withID('/amendement/') },
+  { name: 'activate', path: withID('/activation/') }
 ]
 
 // To be use like that : path.text("42") => /text/42

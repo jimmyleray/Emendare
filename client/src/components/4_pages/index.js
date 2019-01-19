@@ -1,3 +1,4 @@
+export * from './activate'
 export * from './amend'
 export * from './code'
 export * from './contributors'
