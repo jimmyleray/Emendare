@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "index.js",
   "engines": {
-    "node": ">=8.11.4"
+    "node": "^8.11.4"
   },
   "license": "GPL-3.0",
   "scripts": {
