@@ -31,7 +31,7 @@ import { Amend, Event, Group, Text, User } from './models'
 
 // Services and emails templates imports
 import { Crypto, Mailer } from './services'
-import { activation } from './emails';
+import { activation } from './emails'
 
 // Create Mailer instance only for production
 const Mail = process.env.NODE_ENV === 'production' ? new Mailer() : null
@@ -162,6 +162,7 @@ io.on('connection', socket => {
     if (user) {
       if (!user.activated) {
         user.activated = true
+        user.activationToken = null
         await user.save()
         socket.emit('activation')
       } else {
