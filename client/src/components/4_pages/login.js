@@ -103,10 +103,7 @@ export class LoginPage extends React.Component {
               </Button>
             </div>
             <div className="control">
-              <Button
-                to={path.subscribe}
-                className="is-medium is-info is-outlined"
-              >
+              <Button to={path.subscribe} className="is-medium">
                 Je n'ai pas de compte
               </Button>
             </div>

@@ -95,10 +95,7 @@ export class SubscribePage extends React.Component {
                   </Button>
                 </div>
                 <div className="control">
-                  <Button
-                    to={path.login}
-                    className="is-medium is-info is-outlined"
-                  >
+                  <Button to={path.login} className="is-medium">
                     J'ai déjà un compte
                   </Button>
                 </div>
