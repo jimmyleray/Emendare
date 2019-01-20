@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Icon, Page } from '../../components'
+import { Button, Icon, Notification, Page } from '../../components'
 import { path } from '../../config'
 import { Socket } from '../../services'
 
@@ -19,7 +19,7 @@ export class ActivatePage extends React.Component {
       activationToken: this.props.match.params.id
     })
       .then(() => {
-        this.setState({ pending: false, activated: true })
+        this.setState({ pending: false, activated: true, error: null })
       })
       .catch(error => {
         this.setState({ pending: false, error })
@@ -32,7 +32,7 @@ export class ActivatePage extends React.Component {
         <div className="field has-text-centered">
           <Icon
             className={
-              'fas fa-3x ' +
+              'fas fa-3x is-large ' +
               (this.state.pending
                 ? 'fa-question-circle'
                 : this.state.activated
@@ -50,6 +50,7 @@ export class ActivatePage extends React.Component {
               : "Votre compte n'a pas été activé"}
           </h2>
         </div>
+
         {this.state.activated && (
           <div className="field is-grouped is-grouped-centered">
             <p className="control">
@@ -61,6 +62,12 @@ export class ActivatePage extends React.Component {
               </Button>
             </p>
           </div>
+        )}
+
+        {this.state.error && (
+          <Notification className="is-danger has-text-centered">
+            {this.state.error}
+          </Notification>
         )}
       </Page>
     )

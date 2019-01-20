@@ -54,6 +54,7 @@ export class SubscribePage extends React.Component {
         >
           <p className="is-size-3 has-text-centered">Créez votre compte</p>
           <br />
+
           {!this.state.send && (
             <>
               <div className="field">
@@ -109,6 +110,7 @@ export class SubscribePage extends React.Component {
               )}
             </>
           )}
+
           {this.state.send && (
             <Notification className="is-warning has-text-centered">
               <span className="has-text-weight-semibold">
