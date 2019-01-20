@@ -155,16 +155,17 @@ io.on('connection', socket => {
     socket.emit('customPong', data)
   })
 
-  socket.on('activation', async ({ activationToken }) => {
+  socket.on('activation', async ({ data }) => {
+    const activationToken = data.activationToken
     const user = await User.model.findOne({ activationToken })
     if (user) {
       if (!user.activated) {
         user.activated = true
         await user.save()
-        socket.emit('activation', { data: user })
+        socket.emit('activation')
       } else {
         socket.emit('activation', {
-          error: { code: 405, message: 'Ce compte est déjà activé 2' }
+          error: { code: 405, message: 'Ce compte est déjà activé' }
         })
       }
     } else {
