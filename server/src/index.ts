@@ -29,8 +29,9 @@ new Database().connect()
 // MongoDB models
 import { Amend, Event, Group, Text, User } from './models'
 
-// Services imports
+// Services and emails templates imports
 import { Crypto, Mailer } from './services'
+import { activation } from './emails';
 
 // Create Mailer instance only for production
 const Mail = process.env.NODE_ENV === 'production' ? new Mailer() : null
@@ -264,8 +265,7 @@ io.on('connection', socket => {
               Mail.send({
                 to: email,
                 subject: 'Activation de votre compte Emendare',
-                html: `<p>Cliquez sur le lien ci-dessous pour activer votre compte :</p>
-              <a href="https://emendare.org/activation/${activationToken}">Activer mon compte Emendare</a>`
+                html: activation(activationToken)
               })
                 .then(() => {
                   socket.emit('subscribe')
