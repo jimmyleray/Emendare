@@ -65,8 +65,11 @@ export class ActivatePage extends React.Component {
         )}
 
         {this.state.error && (
-          <Notification className="is-danger has-text-centered">
-            {this.state.error}
+          <Notification
+            className="is-danger has-text-centered has-text-weight-semibold"
+            style={{ maxWidth: '300px', margin: 'auto' }}
+          >
+            {this.state.error.message}
           </Notification>
         )}
       </Page>
