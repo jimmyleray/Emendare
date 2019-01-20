@@ -162,7 +162,6 @@ io.on('connection', socket => {
     if (user) {
       if (!user.activated) {
         user.activated = true
-        user.activationToken = null
         await user.save()
         socket.emit('activation')
       } else {
