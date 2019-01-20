@@ -112,15 +112,10 @@ export class SubscribePage extends React.Component {
           )}
 
           {this.state.send && (
-            <Notification
-              className="is-success has-text-centered"
-              style={{ maxWidth: '600px' }}
-            >
-              <span className="has-text-weight-semibold">
-                Vous allez recevoir dans quelques instants un email avec un lien
-                pour activer votre compte.
-              </span>{' '}
-              Pensez le cas échéant à vérifier vos spams.
+            <Notification className="is-success has-text-centered">
+              Vous allez recevoir dans quelques instants un email avec un lien
+              pour activer votre compte. Pensez le cas échéant à vérifier vos
+              spams.
             </Notification>
           )}
         </form>
