@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Icon, Notification, Page } from '../../components'
+import { Button, Icon, Page } from '../../components'
 import { path } from '../../config'
 import { Socket } from '../../services'
 
@@ -47,6 +47,8 @@ export class ActivatePage extends React.Component {
               ? "Votre compte est en cours d'activation"
               : this.state.activated
               ? 'Votre compte a bien été activé'
+              : this.state.error
+              ? this.state.error.message
               : "Votre compte n'a pas été activé"}
           </h2>
         </div>
@@ -62,15 +64,6 @@ export class ActivatePage extends React.Component {
               </Button>
             </p>
           </div>
-        )}
-
-        {this.state.error && (
-          <Notification
-            className="is-danger has-text-centered has-text-weight-semibold"
-            style={{ maxWidth: '300px', margin: 'auto' }}
-          >
-            {this.state.error.message}
-          </Notification>
         )}
       </Page>
     )
