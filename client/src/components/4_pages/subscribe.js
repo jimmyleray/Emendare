@@ -24,15 +24,20 @@ export class SubscribePage extends React.Component {
       Socket.fetch('subscribe', {
         password: this.state.password,
         email: this.state.email
-      }).catch(error => {
-        this.setState({ error })
       })
+        .then(() => {
+          this.setState({ send: true, error: null })
+        })
+        .catch(error => {
+          this.setState({ error })
+        })
     }
 
     this.state = {
       email: '',
       password: '',
-      error: null
+      error: null,
+      send: false
     }
   }
 
@@ -49,58 +54,70 @@ export class SubscribePage extends React.Component {
         >
           <p className="is-size-3 has-text-centered">Créez votre compte</p>
           <br />
-          <div className="field">
-            <p className="control has-icons-left has-icons-right">
-              <input
-                placeholder="Email"
-                value={this.state.email}
-                onChange={this.change('email')}
-                className="input is-medium"
-                type="email"
-              />
-              <Icon type="fas fa-envelope" className="icon is-medium is-left" />
-            </p>
-          </div>
-          <div className="field">
-            <p className="control has-icons-left">
-              <input
-                placeholder="Mot de passe"
-                value={this.state.password}
-                onChange={this.change('password')}
-                className="input is-medium"
-                type="password"
-              />
-              <Icon type="fas fa-lock" className="icon is-medium is-left" />
-            </p>
-          </div>
-          <div className="field is-grouped is-grouped-centered">
-            <div className="control">
-              <Button
-                type="submit"
-                className="is-medium is-success"
-                disabled={!this.state.email || !this.state.password}
-              >
-                Inscription
-              </Button>
-            </div>
-            <div className="control">
-              <Button to={path.login} className="is-medium is-info is-outlined">
-                J'ai déjà un compte
-              </Button>
-            </div>
-          </div>
-          {this.state.error && (
-            <Notification className="is-danger has-text-centered">
-              {this.state.error.message}
+          {!this.state.send && (
+            <>
+              <div className="field">
+                <p className="control has-icons-left has-icons-right">
+                  <input
+                    placeholder="Email"
+                    value={this.state.email}
+                    onChange={this.change('email')}
+                    className="input is-medium"
+                    type="email"
+                  />
+                  <Icon
+                    type="fas fa-envelope"
+                    className="icon is-medium is-left"
+                  />
+                </p>
+              </div>
+              <div className="field">
+                <p className="control has-icons-left">
+                  <input
+                    placeholder="Mot de passe"
+                    value={this.state.password}
+                    onChange={this.change('password')}
+                    className="input is-medium"
+                    type="password"
+                  />
+                  <Icon type="fas fa-lock" className="icon is-medium is-left" />
+                </p>
+              </div>
+              <div className="field is-grouped is-grouped-centered">
+                <div className="control">
+                  <Button
+                    type="submit"
+                    className="is-medium is-success"
+                    disabled={!this.state.email || !this.state.password}
+                  >
+                    Inscription
+                  </Button>
+                </div>
+                <div className="control">
+                  <Button
+                    to={path.login}
+                    className="is-medium is-info is-outlined"
+                  >
+                    J'ai déjà un compte
+                  </Button>
+                </div>
+              </div>
+              {this.state.error && (
+                <Notification className="is-danger has-text-centered">
+                  {this.state.error.message}
+                </Notification>
+              )}
+            </>
+          )}
+          {this.state.send && (
+            <Notification className="is-warning has-text-centered">
+              <span className="has-text-weight-semibold">
+                Vous allez recevoir dans quelques instants un email avec un lien
+                pour activer votre compte.
+              </span>{' '}
+              Pensez le cas échéant à vérifier vos spams.
             </Notification>
           )}
-          <Notification className="is-warning has-text-centered">
-            <span className="has-text-weight-semibold">
-              Vous allez recevoir dans quelques minutes un email avec un lien
-              pour activer votre compte.
-            </span>{' '}
-            Pensez le cas échéant à vérifier vos spams.
-          </Notification>
         </form>
       </Page>
     )
