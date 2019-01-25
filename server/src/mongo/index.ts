@@ -30,10 +30,10 @@ export default class Database {
   }
 
   private async initDevData() {
-    bcrypt.hash('tmp', 10, async (err, hash) => {
+    bcrypt.hash('admin', 10, async (err, hash) => {
       await new User.model({
         password: hash,
-        email: 'admin@zenika.com'
+        email: 'jimmy.leray@zenika.com'
       }).save()
 
       const globalGroup = await new Group.model({

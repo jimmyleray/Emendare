@@ -21,13 +21,11 @@ export class Edit extends React.Component {
 
     this.onChange = name => event => {
       this.setState({ [name]: event.target.value }, () => {
-        if (name === 'amendValue') {
-          this.computeDiff()
-        }
+        this.computeDiff()
       })
     }
 
-    this.restoreInitialValue = event => {
+    this.restoreInitialValue = () => {
       this.setState({ amendValue: this.state.initialValue }, () => {
         this.computeDiff()
       })
@@ -39,9 +37,9 @@ export class Edit extends React.Component {
       Socket.fetch('postAmend', {
         name: this.state.amendName,
         description: this.state.amendDescription,
-        version: this.props.data.patches.length,
+        version: this.state.text.patches.length,
         patch: this.state.patch,
-        textID: this.props.data._id
+        textID: this.state.text._id
       }).then(amend => {
         Socket.emit('user')
         this.setState({ redirectID: amend._id, redirectToAmend: true })
@@ -53,11 +51,10 @@ export class Edit extends React.Component {
       amendDescription: '',
       redirectToAmend: false,
       redirectID: null,
-      initialValue: props.data.actual,
-      amendValue: props.data.actual,
-      text: props.data,
-      patch: null,
-      diffs: []
+      initialValue: this.props.data.actual,
+      amendValue: this.props.data.actual,
+      text: this.props.data,
+      patch: null
     }
   }
 
@@ -66,16 +63,12 @@ export class Edit extends React.Component {
   }
 
   computeDiff() {
-    const diffs = JsDiff.diffLines(
-      this.state.initialValue,
-      this.state.amendValue
-    )
     const patch = JsDiff.createPatch(
       '',
       this.state.initialValue,
       this.state.amendValue
     )
-    this.setState({ diffs, patch })
+    this.setState({ patch })
   }
 
   render() {
@@ -175,12 +168,13 @@ export class Edit extends React.Component {
 
                 {this.hasDiffs() ? (
                   <Amend
-                    data={{
+                    amend={{
                       name: this.state.amendName,
                       description: this.state.amendDescription,
-                      diffs: this.state.diffs,
-                      text: this.state.text
+                      patch: this.state.patch,
+                      version: this.state.text.patches.length
                     }}
+                    text={this.state.text}
                   />
                 ) : (
                   <Box>

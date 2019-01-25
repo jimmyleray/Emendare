@@ -10,56 +10,24 @@
  */
 
 import React from 'react'
-import { Edit, Page, ErrorPage } from '../../components'
-import { Socket } from '../../services'
+import { DataContext, ErrorPage, Edit, Page } from '../../components'
 
-export class EditPage extends React.Component {
-  constructor(props) {
-    super(props)
+export const EditPage = props => (
+  <DataContext.Consumer>
+    {({ get }) => {
+      const text = get('text')(props.match.params.id)
 
-    this.state = {
-      text: null,
-      error: null
-    }
-  }
-
-  fetchData() {
-    Socket.fetch('text', { id: this.props.match.params.id })
-      .then(text => {
-        this.setState({ text })
-      })
-      .catch(error => {
-        this.setState({ error })
-      })
-  }
-
-  componentDidMount() {
-    this.fetchData()
-  }
-
-  componentWillUnmount() {
-    Socket.off('text')
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.match.params.id !== this.props.match.params.id) {
-      this.fetchData()
-    }
-  }
-
-  getTitle() {
-    return this.state.text
-      ? 'Amendement de ' + this.state.text.group.name
-      : 'Amendement'
-  }
-
-  render() {
-    if (this.state.error) return <ErrorPage error={this.state.error} />
-
-    return (
-      <Page title={this.getTitle()}>
-        {this.state.text && <Edit data={this.state.text} />}
-      </Page>
-    )
-  }
-}
+      if (text) {
+        if (text.error) {
+          return <ErrorPage error={text.error} />
+        } else if (text.data) {
+          return (
+            <Page title={'Amendement de ' + text.data.name}>
+              <Edit data={text.data} />
+            </Page>
+          )
+        }
+      }
+    }}
+  </DataContext.Consumer>
+)

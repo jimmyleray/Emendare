@@ -11,7 +11,8 @@
     "plugin:prettier/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:sonarjs/recommended",
-    "plugin:cypress/recommended"
+    "plugin:cypress/recommended",
+    "plugin:compat/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -20,7 +21,7 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["prettier", "jsx-a11y", "sonarjs", "cypress", "chai-friendly"],
+  "plugins": ["prettier", "jsx-a11y", "sonarjs", "cypress", "chai-friendly", "compat"],
   "settings": {
     "react": {
       "version": "detect"

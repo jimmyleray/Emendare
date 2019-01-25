@@ -5,57 +5,24 @@
  */
 
 import React from 'react'
-import { ErrorPage, Group, Page } from '../../components'
-import { Socket } from '../../services'
+import { DataContext, ErrorPage, Group, Page } from '../../components'
 
-export class ExplorePage extends React.Component {
-  constructor(props) {
-    super(props)
+export const ExplorePage = () => (
+  <DataContext.Consumer>
+    {({ get }) => {
+      const group = get('group')('root')
 
-    this.state = {
-      rootGroup: null,
-      error: null
-    }
-  }
-  componentDidMount() {
-    this.fetchData()
-    Socket.on('rootGroup', ({ error, data }) => {
-      if (!error) {
-        this.setState({ rootGroup: data }, () => {
-          Socket.emit('user')
-        })
+      if (group) {
+        if (group.error) {
+          return <ErrorPage error={group.error} />
+        } else if (group.data) {
+          return (
+            <Page title={'Explorer'}>
+              <Group data={group.data} />
+            </Page>
+          )
+        }
       }
-    })
-  }
-
-  componentWillUnmount() {
-    Socket.off('rootGroup')
-  }
-
-  fetchData() {
-    Socket.fetch('rootGroup')
-      .then(rootGroup => {
-        this.setState({ rootGroup }, () => {
-          Socket.emit('user')
-        })
-      })
-      .catch(error => {
-        this.setState({ error })
-      })
-  }
-
-  render() {
-    if (this.state.error) return <ErrorPage error={this.state.error} />
-
-    return (
-      <Page title="Explorer">
-        {this.state.rootGroup && (
-          <Group
-            data={this.state.rootGroup}
-            refetch={this.fetchData.bind(this)}
-          />
-        )}
-      </Page>
-    )
-  }
-}
+    }}
+  </DataContext.Consumer>
+)

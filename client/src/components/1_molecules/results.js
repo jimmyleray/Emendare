@@ -45,6 +45,7 @@ export const Results = ({ data }) => (
         ]
       }}
       options={{
+        responsive: true,
         rotation: -Math.PI,
         circumference: Math.PI,
         legend: { display: false },

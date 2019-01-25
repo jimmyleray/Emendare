@@ -13,70 +13,24 @@
  */
 
 import React from 'react'
-import { Text, Page, ErrorPage } from '../../components'
-import { Socket } from '../../services'
+import { DataContext, ErrorPage, Text, Page } from '../../components'
 
-export class TextPage extends React.Component {
-  constructor(props) {
-    super(props)
+export const TextPage = props => (
+  <DataContext.Consumer>
+    {({ get }) => {
+      const text = get('text')(props.match.params.id)
 
-    this.state = {
-      text: null,
-      error: null
-    }
-  }
-
-  fetchData() {
-    Socket.fetch('text', { id: this.props.match.params.id })
-      .then(text => {
-        this.setState({ text }, () => {
-          Socket.emit('user')
-        })
-      })
-      .catch(error => {
-        this.setState({ error })
-      })
-  }
-
-  componentDidMount() {
-    this.fetchData()
-    Socket.on('text/' + this.props.match.params.id, ({ error, data }) => {
-      if (!error) {
-        this.setState({ text: data }, () => {
-          Socket.emit('user')
-        })
+      if (text) {
+        if (text.error) {
+          return <ErrorPage error={text.error} />
+        } else if (text.data) {
+          return (
+            <Page title={text.data.name || 'Texte'}>
+              <Text data={text.data} />
+            </Page>
+          )
+        }
       }
-    })
-  }
-
-  componentWillUnmount() {
-    Socket.off('text')
-    Socket.off('text/' + this.props.match.params.id)
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.match.params.id !== this.props.match.params.id) {
-      this.fetchData()
-    }
-  }
-
-  getTitle() {
-    return this.state.text
-      ? this.state.text.rules
-        ? 'Règles de ' + this.state.text.group.name
-        : this.state.text.name
-      : 'Texte'
-  }
-
-  render() {
-    if (this.state.error) return <ErrorPage error={this.state.error} />
-
-    return (
-      <Page title={this.getTitle()}>
-        {this.state.text && (
-          <Text data={this.state.text} refetch={this.fetchData.bind(this)} />
-        )}
-      </Page>
-    )
-  }
-}
+    }}
+  </DataContext.Consumer>
+)
