@@ -34,12 +34,28 @@ export const Sidebar = ({ width }) => (
                   style={{ textDecoration: 'none' }}
                 >
                   <img
-                    src={'/images/logo.png'}
-                    alt={'Emendare logo'}
+                    src={'/images/logo-white-arrows.png'}
+                    alt={'Emendare logo arrows'}
                     style={{
-                      filter: 'invert(1)',
                       verticalAlign: 'middle',
-                      width: '48px'
+                      width: '48px',
+                      animationName: 'rotate',
+                      animationDuration: '15s',
+                      animationIterationCount: 'infinite',
+                      animationDelay: '3s'
+                    }}
+                  />
+                  <img
+                    src={'/images/logo-white-bubble.png'}
+                    alt={'Emendare logo bubble'}
+                    style={{
+                      marginLeft: '-48px',
+                      verticalAlign: 'middle',
+                      width: '48px',
+                      animationName: 'bubble',
+                      animationDuration: '15s',
+                      animationIterationCount: 'infinite',
+                      animationDelay: '3s'
                     }}
                   />
                   <span style={{ marginLeft: '6px' }}>Emendare</span>
