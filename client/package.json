@@ -32,7 +32,7 @@
     ]
   },
   "browserslist": [
-    "> 3%"
+    "> 5%"
   ],
   "dependencies": {
     "chart.js": "^2.7.3",

@@ -16,13 +16,18 @@ export class DataProvider extends React.Component {
           return this.state.memo[type][id]
         } else if (!this.state.listeners.includes(listener)) {
           Socket.on(listener, ({ error, data }) => {
-            this.setState(prevState => ({
-              ...prevState,
-              memo: {
-                ...prevState.memo,
-                [type]: { ...prevState.memo[type], [id]: { error, data } }
+            this.setState(
+              prevState => ({
+                ...prevState,
+                memo: {
+                  ...prevState.memo,
+                  [type]: { ...prevState.memo[type], [id]: { error, data } }
+                }
+              }),
+              () => {
+                Socket.emit('user')
               }
-            }))
+            )
           })
           this.setState(
             prevState => ({

@@ -17,14 +17,12 @@ import {
 import { Amend, Socket } from '../../services'
 import { path } from '../../config'
 
-const unFollowText = id => async () => {
-  await Socket.fetch('unFollowText', { id })
-  Socket.emit('user')
+const unFollowText = id => () => {
+  Socket.emit('unFollowText', { id })
 }
 
-const followText = id => async () => {
-  await Socket.fetch('followText', { id })
-  Socket.emit('user')
+const followText = id => () => {
+  Socket.emit('followText', { id })
 }
 
 export const Text = ({ data }) => {

@@ -17,6 +17,7 @@ import {
   Columns,
   Link,
   Page,
+  NotificationSettings,
   DataContext,
   UserContext
 } from '../../components'
@@ -41,28 +42,11 @@ export const ProfilePage = () => (
                 <br />
                 <Columns>
                   <Column>
-                    {user.followedTexts.length > 0 && (
-                      <Box>
-                        <p>Liste des textes auxquels vous participez</p>
-                        <ul>
-                          {user.followedTexts
-                            .map(get('text'))
-                            .filter(text => text && text.data)
-                            .map(text => text.data)
-                            .map(followedText => (
-                              <li key={followedText._id}>
-                                <Link to={path.text(followedText._id)}>
-                                  {followedText.name}
-                                </Link>
-                              </li>
-                            ))}
-                        </ul>
-                      </Box>
-                    )}
-
-                    {user.followedGroups.length > 0 && (
-                      <Box>
-                        <p>Liste des groupes que vous avez rejoint</p>
+                    <Box>
+                      <p className="has-text-weight-semibold">
+                        Liste des groupes que vous avez rejoint
+                      </p>
+                      {user.followedGroups.length > 0 ? (
                         <ul>
                           {user.followedGroups
                             .map(get('group'))
@@ -76,14 +60,41 @@ export const ProfilePage = () => (
                               </li>
                             ))}
                         </ul>
-                      </Box>
-                    )}
-                  </Column>
+                      ) : (
+                        <p className="has-text-weight-semibold has-text-danger">
+                          Aucun groupe rejoint
+                        </p>
+                      )}
+                      <br />
 
-                  <Column>
-                    {user.amends.length > 0 && (
-                      <Box>
-                        <p>Liste des amendements que vous avez proposés</p>
+                      <p className="has-text-weight-semibold">
+                        Liste des textes auxquels vous participez
+                      </p>
+                      {user.followedTexts.length > 0 ? (
+                        <ul>
+                          {user.followedTexts
+                            .map(get('text'))
+                            .filter(text => text && text.data)
+                            .map(text => text.data)
+                            .map(followedText => (
+                              <li key={followedText._id}>
+                                <Link to={path.text(followedText._id)}>
+                                  {followedText.name}
+                                </Link>
+                              </li>
+                            ))}
+                        </ul>
+                      ) : (
+                        <p className="has-text-weight-semibold has-text-danger">
+                          Aucun texte suivi
+                        </p>
+                      )}
+                      <br />
+
+                      <p className="has-text-weight-semibold">
+                        Liste des amendements que vous avez proposés
+                      </p>
+                      {user.amends.length > 0 ? (
                         <ul>
                           {user.amends
                             .map(get('amend'))
@@ -97,8 +108,16 @@ export const ProfilePage = () => (
                               </li>
                             ))}
                         </ul>
-                      </Box>
-                    )}
+                      ) : (
+                        <p className="has-text-weight-semibold has-text-danger">
+                          Aucun amendement proposé
+                        </p>
+                      )}
+                    </Box>
+                  </Column>
+
+                  <Column>
+                    <NotificationSettings user={user} />
                   </Column>
                 </Columns>
               </>

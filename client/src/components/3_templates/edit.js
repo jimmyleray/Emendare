@@ -41,7 +41,6 @@ export class Edit extends React.Component {
         patch: this.state.patch,
         textID: this.state.text._id
       }).then(amend => {
-        Socket.emit('user')
         this.setState({ redirectID: amend._id, redirectToAmend: true })
       })
     }

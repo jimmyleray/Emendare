@@ -1,4 +1,4 @@
-export * from './app'
+export * from './layout'
 export * from './page'
 export * from './private'
 export * from './providers'

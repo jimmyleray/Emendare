@@ -35,6 +35,13 @@ const model = mongoose.model(
     indVotes: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
       default: []
+    },
+    notifications: {
+      newGroup: { type: Boolean, default: true },
+      newText: { type: Boolean, default: true },
+      newAmend: { type: Boolean, default: true },
+      amendAccepted: { type: Boolean, default: true },
+      amendRefused: { type: Boolean, default: true }
     }
   })
 )

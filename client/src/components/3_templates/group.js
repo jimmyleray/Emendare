@@ -14,14 +14,12 @@ import {
 import { Socket } from '../../services'
 import { path } from '../../config'
 
-const quitGroup = id => async () => {
-  await Socket.fetch('quitGroup', { id })
-  Socket.emit('user')
+const quitGroup = id => () => {
+  Socket.emit('quitGroup', { id })
 }
 
-const joinGroup = id => async () => {
-  await Socket.fetch('joinGroup', { id })
-  Socket.emit('user')
+const joinGroup = id => () => {
+  Socket.emit('joinGroup', { id })
 }
 
 export const Group = ({ data }) => {

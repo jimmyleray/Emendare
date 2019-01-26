@@ -1,11 +1,20 @@
 import React from 'react'
-import { DataProvider, UserProvider } from '../../components'
-
-const providers = [UserProvider, DataProvider]
+import {
+  DataProvider,
+  NotificationsProvider,
+  UserProvider,
+  UserContext
+} from '../../components'
 
 // Return all providers encapsulated in order
-export const Providers = ({ children }) =>
-  providers.reduceRight(
-    (children, Provider) => <Provider>{children}</Provider>,
-    children
-  )
+export const Providers = ({ children }) => (
+  <UserProvider>
+    <UserContext.Consumer>
+      {({ user }) => (
+        <DataProvider user={user}>
+          <NotificationsProvider user={user}>{children}</NotificationsProvider>
+        </DataProvider>
+      )}
+    </UserContext.Consumer>
+  </UserProvider>
+)

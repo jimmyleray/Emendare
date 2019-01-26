@@ -1,5 +1,10 @@
 import mongoose from 'mongoose'
 
+const oneSecond = 1000
+const oneMinute = oneSecond * 60
+const oneHour = oneMinute * 60
+const oneDay = oneHour * 24
+
 const model = mongoose.model(
   'Amend',
   new mongoose.Schema({
@@ -24,15 +29,11 @@ const model = mongoose.model(
     totalPotentialVotesCount: { type: Number },
     delayMin: {
       type: Number,
-      default:
-        process.env.NODE_ENV === 'production' ? 60 * 60 * 1000 : 60 * 1000
+      default: process.env.NODE_ENV === 'production' ? oneHour : oneMinute
     },
     delayMax: {
       type: Number,
-      default:
-        process.env.NODE_ENV === 'production'
-          ? 24 * 60 * 60 * 1000
-          : 60 * 60 * 1000
+      default: process.env.NODE_ENV === 'production' ? oneDay : oneHour
     },
     closed: { type: Boolean, default: false },
     accepted: { type: Boolean, default: false },

@@ -150,10 +150,6 @@ const checkAmendVotes = async () => {
 checkAmendVotes()
 
 io.on('connection', socket => {
-  socket.on('customPing', ({ data }) => {
-    socket.emit('customPong', data)
-  })
-
   socket.on('activation', async ({ data }) => {
     const activationToken = data.activationToken
     const user = await User.model.findOne({ activationToken })
@@ -392,6 +388,32 @@ io.on('connection', socket => {
     }
   })
 
+  socket.on('toggleNotificationSetting', async ({ token, data }) => {
+    if (token) {
+      const user = await User.model.findOne({ token })
+      if (user) {
+        if (typeof user.notifications[data.key] !== "undefined") {
+          user.notifications[data.key] = !user.notifications[data.key]
+          await user.save()
+          socket.emit('toggleNotificationSetting')
+          socket.emit('user', { data: user })
+        } else {
+          socket.emit('toggleNotificationSetting', {
+            error: { code: 405, message: 'Cette clé de requête est invalide' }
+          })
+        }
+      } else {
+        socket.emit('toggleNotificationSetting', {
+          error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
+        })
+      }
+    } else {
+      socket.emit('toggleNotificationSetting', {
+        error: { code: 405, message: 'Le token est invalide' }
+      })
+    }
+  })
+
   socket.on('joinGroup', async ({ token, data }) => {
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
@@ -403,6 +425,9 @@ io.on('connection', socket => {
         group.followersCount++
         await group.save()
 
+        if (!group.parent) {
+          io.emit('group/root', { data: group })
+        }
         io.emit('group/' + group._id, { data: group })
         socket.emit('joinGroup')
       } else {
@@ -429,6 +454,9 @@ io.on('connection', socket => {
         group.followersCount--
         await group.save()
 
+        if (!group.parent) {
+          io.emit('group/root', { data: group })
+        }
         io.emit('group/' + group._id, { data: group })
         socket.emit('quitGroup')
       } else {
