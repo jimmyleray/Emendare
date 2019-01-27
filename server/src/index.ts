@@ -220,12 +220,11 @@ io.on('connection', socket => {
 
   socket.on('subscribe', async ({ data }) => {
     const { email, password } = data
-    if (!email || !isMatchZenika(email)) {
+    if (!email) {
       socket.emit('subscribe', {
         error: {
           code: 405,
-          message:
-            'Pendant cette phase de test, seules les adresses électroniques se terminant par @zenika.com sont acceptées.'
+          message: "L'email est requis"
         }
       })
     } else {
