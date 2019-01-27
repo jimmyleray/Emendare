@@ -71,7 +71,7 @@ export class Explore extends React.Component {
                       <br />
                       <Button
                         className={
-                          'is-fullwidth is-outlined ' +
+                          'is-fullwidth ' +
                           (this.state.displayAddGroupForm
                             ? 'is-danger'
                             : 'is-dark')
@@ -213,7 +213,7 @@ export class Explore extends React.Component {
                   ).map((row, index) => (
                     <Columns key={index}>
                       {row.map(group => (
-                        <Column key={group._id}>
+                        <Column key={group._id} className="is-one-third">
                           <Link to={path.group(group._id)}>
                             <Notification
                               className={group.color || colors[0].class}
