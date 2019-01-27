@@ -42,12 +42,16 @@ export const Group = ({ data }) => {
                 <br />
 
                 <Buttons>
-                  {data.parent && (
-                    <Button to={path.group(data.parent)}>
-                      <Icon type="fas fa-chevron-left" />
-                      <span>Retour au groupe parent</span>
-                    </Button>
-                  )}
+                  <Button
+                    to={data.parent ? path.group(data.parent) : path.home}
+                  >
+                    <Icon type="fas fa-chevron-left" />
+                    <span>
+                      {data.parent
+                        ? 'Retour au groupe parent'
+                        : "Retour à l'accueil"}
+                    </span>
+                  </Button>
 
                   <Spacer />
 
