@@ -163,7 +163,7 @@ export const Text = ({ data }) => {
                                       <Link
                                         to={path.amend(amend.data._id)}
                                         className={
-                                          user &&
+                                          isConnected() &&
                                           !Amend.isVoted(user)(amend.data)
                                             ? 'has-text-weight-bold'
                                             : ''

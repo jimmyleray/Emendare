@@ -59,14 +59,14 @@ export class Explore extends React.Component {
   render() {
     return (
       <UserContext.Consumer>
-        {({ user }) => (
+        {({ isConnected }) => (
           <DataContext.Consumer>
             {({ get }) => {
               const groups = get('group')('all')
 
               return groups && groups.data ? (
                 <>
-                  {user && (
+                  {isConnected() && (
                     <>
                       <br />
                       <Button
@@ -94,7 +94,7 @@ export class Explore extends React.Component {
                     </>
                   )}
 
-                  {user && this.state.displayAddGroupForm && (
+                  {isConnected() && this.state.displayAddGroupForm && (
                     <>
                       <Box style={{ marginBottom: 0 }}>
                         <Columns>

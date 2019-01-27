@@ -38,9 +38,9 @@ export const Sidebar = ({ width }) => (
       <DataContext.Consumer>
         {({ get }) => (
           <UserContext.Consumer>
-            {({ user, isConnectionPending }) => (
+            {({ user, isConnected, isConnectionPending }) => (
               <>
-                {user ? (
+                {isConnected() ? (
                   <>
                     <div className="has-text-centered">
                       <Link
