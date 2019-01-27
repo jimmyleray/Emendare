@@ -220,6 +220,10 @@ export class Explore extends React.Component {
                             >
                               <p className="is-size-3">{group.name}</p>
                               <p>{group.description}</p>
+                              <p>
+                                {group.followersCount} membre
+                                {group.followersCount > 1 ? 's' : ''}
+                              </p>
                             </Notification>
                           </Link>
                         </Column>

@@ -353,7 +353,7 @@ io.on('connection', socket => {
       io.emit('events/all', { data: events })
 
       const groups = await Group.model.find({ parent: null })
-      socket.emit('group/all', { data: groups })
+      io.emit('group/all', { data: groups })
 
       socket.emit('postGroup', { data: group })
     } else {
@@ -470,6 +470,11 @@ io.on('connection', socket => {
         group.followersCount++
         await group.save()
 
+        if (!group.parent) {
+          const groups = await Group.model.find({ parent: null })
+          io.emit('group/all', { data: groups })
+        }
+
         io.emit('group/' + group._id, { data: group })
         socket.emit('joinGroup')
       } else {
@@ -496,6 +501,11 @@ io.on('connection', socket => {
         const group = await Group.model.findById(data.id)
         group.followersCount--
         await group.save()
+
+        if (!group.parent) {
+          const groups = await Group.model.find({ parent: null })
+          io.emit('group/all', { data: groups })
+        }
 
         io.emit('group/' + group._id, { data: group })
         socket.emit('quitGroup')
