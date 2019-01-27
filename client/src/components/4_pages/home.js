@@ -13,8 +13,7 @@ export const HomePage = () => (
   <Page title="Accueil">
     <div className="field has-text-centered">
       <h1 className="is-size-3 has-text-weight-semibold">
-        Emendare est une plateforme open source de rédaction de textes
-        amendables
+        Emendare est une plateforme de rédaction de textes amendables
       </h1>
       <h2 className="is-size-4">
         Un amendement est une modification d'un texte, soumise au vote d'un
