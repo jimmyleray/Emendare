@@ -24,7 +24,7 @@ export const Logo = () => (
         animationName: 'bubble',
         animationDuration: '15s',
         animationIterationCount: 'infinite',
-        animationDelay: '3s'
+        animationDelay: '2s'
       }}
     />
   </div>
