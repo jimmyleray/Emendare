@@ -21,7 +21,8 @@ const model = mongoose.model(
       ref: 'Group',
       default: null
     },
-    whitelist: { type: [String], default: ['*'] }
+    whitelist: { type: [String], default: ['*'] },
+    color: { type: String }
   })
 )
 

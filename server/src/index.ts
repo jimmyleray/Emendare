@@ -150,6 +150,8 @@ const checkAmendVotes = async () => {
 checkAmendVotes()
 
 io.on('connection', socket => {
+  const session: any = {}
+
   socket.on('activation', async ({ data }) => {
     const activationToken = data.activationToken
     const user = await User.model.findOne({ activationToken })
@@ -178,9 +180,9 @@ io.on('connection', socket => {
         if (user.activated) {
           bcrypt.compare(password, user.password, async (err, valid) => {
             if (valid) {
-              const newToken = Crypto.getToken()
-              user.token = newToken
+              user.token = Crypto.getToken()
               await user.save()
+              session.user = user
               socket.emit('login', { data: user })
             } else {
               socket.emit('login', {
@@ -201,8 +203,10 @@ io.on('connection', socket => {
     } else if (token) {
       const user = await User.model.findOne({ token })
       if (user) {
+        session.user = user
         socket.emit('login', { data: user })
       } else {
+        session.user = null
         socket.emit('login', {
           error: { code: 405, message: 'Le token est invalide' }
         })
@@ -281,6 +285,7 @@ io.on('connection', socket => {
     if (user) {
       user.token = null
       await user.save()
+      session.user = null
     }
     socket.emit('logout')
   })
@@ -308,15 +313,53 @@ io.on('connection', socket => {
   })
 
   socket.on('group', async ({ data }) => {
-    const group =
-      data.id === 'root'
-        ? await Group.model.findOne({ parent: null })
-        : await Group.model.findById(data.id)
-    if (group) {
-      socket.emit('group/' + data.id, { data: group })
+    if (data.id === 'all') {
+      const groups = await Group.model.find({ parent: null })
+      if (groups) {
+        socket.emit('group/all', { data: groups })
+      } else {
+        socket.emit('group/all', {
+          error: { code: 405, message: "Oups, il y'a eu une erreur" }
+        })
+      }
     } else {
-      socket.emit('group/' + data.id, {
-        error: { code: 404, message: "Oups, ce groupe n'existe pas ou plus" }
+      const group = await Group.model.findById(data.id)
+      if (group) {
+        socket.emit('group/' + data.id, { data: group })
+      } else {
+        socket.emit('group/' + data.id, {
+          error: { code: 404, message: "Oups, ce groupe n'existe pas ou plus" }
+        })
+      }
+    }
+  })
+
+  socket.on('postGroup', async ({ token, data }) => {
+    const { name, description, whitelist, color } = data
+    const user = await User.model.findOne({ token })
+    if (user && user.activated) {
+      const group = await new Group.model({
+        description,
+        name,
+        whitelist,
+        color
+      }).save()
+
+      await new Event.model({
+        targetID: group._id,
+        targetType: 'group'
+      }).save()
+
+      const events = await Event.model.find().sort('-created')
+      io.emit('events/all', { data: events })
+
+      const groups = await Group.model.find({ parent: null })
+      socket.emit('group/all', { data: groups })
+
+      socket.emit('postGroup', { data: group })
+    } else {
+      socket.emit('postGroup', {
+        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
       })
     }
   })
@@ -360,6 +403,7 @@ io.on('connection', socket => {
 
       user.amends.push(amend._id)
       await user.save()
+      session.user = user
 
       let text = await Text.model.findById(textID)
       text.amends.push(amend._id)
@@ -371,7 +415,7 @@ io.on('connection', socket => {
         .populate('group')
 
       await new Event.model({
-        target: JSON.stringify({ ...amend._doc, text }),
+        targetID: amend._id,
         targetType: 'amend'
       }).save()
 
@@ -392,9 +436,10 @@ io.on('connection', socket => {
     if (token) {
       const user = await User.model.findOne({ token })
       if (user) {
-        if (typeof user.notifications[data.key] !== "undefined") {
+        if (typeof user.notifications[data.key] !== 'undefined') {
           user.notifications[data.key] = !user.notifications[data.key]
           await user.save()
+          session.user = user
           socket.emit('toggleNotificationSetting')
           socket.emit('user', { data: user })
         } else {
@@ -420,14 +465,12 @@ io.on('connection', socket => {
       if (user.followedGroups.indexOf(data.id) === -1) {
         user.followedGroups.push(data.id)
         await user.save()
+        session.user = user
 
         const group = await Group.model.findById(data.id)
         group.followersCount++
         await group.save()
 
-        if (!group.parent) {
-          io.emit('group/root', { data: group })
-        }
         io.emit('group/' + group._id, { data: group })
         socket.emit('joinGroup')
       } else {
@@ -449,14 +492,12 @@ io.on('connection', socket => {
       if (id >= 0) {
         user.followedGroups.splice(id, 1)
         await user.save()
+        session.user = user
 
         const group = await Group.model.findById(data.id)
         group.followersCount--
         await group.save()
 
-        if (!group.parent) {
-          io.emit('group/root', { data: group })
-        }
         io.emit('group/' + group._id, { data: group })
         socket.emit('quitGroup')
       } else {
@@ -477,6 +518,7 @@ io.on('connection', socket => {
       if (user.followedTexts.indexOf(data.id) === -1) {
         user.followedTexts.push(data.id)
         await user.save()
+        session.user = user
 
         const text = await Text.model.findById(data.id)
         text.followersCount++
@@ -503,6 +545,7 @@ io.on('connection', socket => {
       if (id >= 0) {
         user.followedTexts.splice(id, 1)
         await user.save()
+        session.user = user
 
         const text = await Text.model.findById(data.id)
         text.followersCount--
@@ -545,6 +588,8 @@ io.on('connection', socket => {
             user.upVotes.push(data.id)
 
             await user.save()
+            session.user = user
+
             await amend.save()
 
             io.emit('amend/' + amend._id, { data: amend })
@@ -597,6 +642,8 @@ io.on('connection', socket => {
             user.downVotes.push(data.id)
 
             await user.save()
+            session.user = user
+
             await amend.save()
 
             io.emit('amend/' + amend._id, { data: amend })
@@ -649,6 +696,8 @@ io.on('connection', socket => {
             user.indVotes.push(data.id)
 
             await user.save()
+            session.user = user
+
             await amend.save()
 
             io.emit('amend/' + amend._id, { data: amend })
@@ -704,6 +753,8 @@ io.on('connection', socket => {
           }
 
           await user.save()
+          session.user = user
+
           await amend.save()
 
           io.emit('amend/' + amend._id, { data: amend })

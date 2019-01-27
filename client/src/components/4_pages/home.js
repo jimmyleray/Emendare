@@ -7,30 +7,24 @@
  */
 
 import React from 'react'
-import { Button, Buttons, Page } from '../../components'
-import { path } from '../../config'
+import { Explore, Page } from '../../components'
 
 export const HomePage = () => (
   <Page title="Accueil">
     <div className="field has-text-centered">
-      <h1 className="is-size-3">
-        Plateforme open source de rédaction de textes amendables
+      <h1 className="is-size-3 has-text-weight-semibold">
+        Emendare est une plateforme open source de rédaction de textes
+        amendables
       </h1>
-      <h2 className="is-size-5">
+      <h2 className="is-size-4">
         Un amendement est une modification d'un texte, soumise au vote d'un
         groupe
       </h2>
+      <p className="is-size-4">
+        Vous pouvez parcourir ci-dessous l'ensemble des groupes disponibles sur
+        Emendare
+      </p>
     </div>
-    <Buttons style={{ justifyContent: 'center' }}>
-      <Button to={path.explore} className="is-medium is-link">
-        Découvrir Emendare
-      </Button>
-      <Button to={path.code} className="is-medium is-info">
-        Pourquoi Emendare
-      </Button>
-      <Button to={path.subscribe} className="is-medium is-primary">
-        Créer votre compte
-      </Button>
-    </Buttons>
+    <Explore />
   </Page>
 )

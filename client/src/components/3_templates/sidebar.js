@@ -52,48 +52,46 @@ export const Sidebar = ({ width }) => (
                         </Button>
                       </Link>
                     </div>
-                    <br />
-                    <p className="is-size-5 has-text-weight-semibold">
-                      Textes suivis
-                    </p>
-                    <br />
-                    {user.followedTexts
-                      .map(get('text'))
-                      .filter(text => text && text.data)
-                      .map(text => text.data)
-                      .sort((a, b) => b.followersCount - a.followersCount)
-                      .map(followedText => {
-                        const amends = getAmends(get)(followedText)
-                        return (
-                          <Link
-                            key={followedText._id}
-                            to={path.text(followedText._id)}
-                            style={{
-                              textDecoration: 'none',
-                              display: 'block',
-                              marginBottom: '1rem',
-                              marginLeft: '1rem'
-                            }}
-                            className={
-                              amends && Text.hasOpenAmendUnvoted(user)(amends)
-                                ? 'has-text-weight-bold'
-                                : amends &&
-                                  Text.hasOpenAmend(amends) &&
-                                  !Text.hasOpenAmendUnvoted(user)(amends)
-                                ? 'has-text-weight-semibold'
-                                : ''
-                            }
-                          >
-                            {followedText.name}
-                          </Link>
-                        )
-                      })}
 
-                    {user.followedTexts.length === 0 && (
+                    {user.followedTexts.length > 0 && (
                       <>
-                        <span>Vous ne suivez aucun texte.</span>{' '}
-                        <Link to={path.explore}>Explorer ?</Link>
                         <br />
+                        <p className="is-size-5 has-text-weight-semibold">
+                          Textes suivis
+                        </p>
+                        <br />
+                        {user.followedTexts
+                          .map(get('text'))
+                          .filter(text => text && text.data)
+                          .map(text => text.data)
+                          .sort((a, b) => b.followersCount - a.followersCount)
+                          .map(followedText => {
+                            const amends = getAmends(get)(followedText)
+                            return (
+                              <Link
+                                key={followedText._id}
+                                to={path.text(followedText._id)}
+                                style={{
+                                  textDecoration: 'none',
+                                  display: 'block',
+                                  marginBottom: '1rem',
+                                  marginLeft: '1rem'
+                                }}
+                                className={
+                                  amends &&
+                                  Text.hasOpenAmendUnvoted(user)(amends)
+                                    ? 'has-text-weight-bold'
+                                    : amends &&
+                                      Text.hasOpenAmend(amends) &&
+                                      !Text.hasOpenAmendUnvoted(user)(amends)
+                                    ? 'has-text-weight-semibold'
+                                    : ''
+                                }
+                              >
+                                {followedText.name}
+                              </Link>
+                            )
+                          })}
                       </>
                     )}
                   </>

@@ -43,7 +43,7 @@ export default class Database {
 
       await new Event.model({
         targetType: 'group',
-        target: JSON.stringify(globalGroup)
+        targetID: globalGroup._id
       }).save()
 
       const globalGroupRules = await new Text.model({
@@ -54,51 +54,6 @@ export default class Database {
       globalGroup.rules = globalGroupRules._id
       await globalGroup.save()
 
-      const officialGroup = await new Group.model({
-        name: 'Francais',
-        description: 'Groupe officiel francophone',
-        parent: globalGroup._id
-      }).save()
-
-      await new Event.model({
-        targetType: 'group',
-        target: JSON.stringify({ ...officialGroup._doc, parent: globalGroup })
-      }).save()
-
-      const officialGroupRules = await new Text.model({
-        group: officialGroup._id,
-        rules: true
-      }).save()
-
-      officialGroup.rules = officialGroupRules._id
-      await officialGroup.save()
-
-      const privateGroup = await new Group.model({
-        name: 'Zenika',
-        description: 'Groupe privé Zenika',
-        parent: officialGroup._id,
-        whitelist: ['*@zenika.com']
-      }).save()
-
-      await new Event.model({
-        targetType: 'group',
-        target: JSON.stringify({ ...privateGroup._doc, parent: officialGroup })
-      }).save()
-
-      const privateGroupRules = await new Text.model({
-        group: privateGroup._id,
-        rules: true
-      }).save()
-
-      privateGroup.rules = privateGroupRules._id
-      await privateGroup.save()
-
-      globalGroup.subgroups.push(officialGroup._id)
-      await globalGroup.save()
-
-      officialGroup.subgroups.push(privateGroup._id)
-      await officialGroup.save()
-
       const globalText = await new Text.model({
         name: "Roadmap d'Emendare",
         description: 'Participez à définir les futures fonctionnalités',
@@ -107,37 +62,23 @@ export default class Database {
 
       await new Event.model({
         targetType: 'text',
-        target: JSON.stringify({ ...globalText._doc, group: globalGroup })
-      }).save()
-
-      const privateText = await new Text.model({
-        name: "Description de l'agence de Rennes",
-        description: 'Texte utilisé sur rennes.zenika.com',
-        group: privateGroup._id
-      }).save()
-
-      await new Event.model({
-        targetType: 'text',
-        target: JSON.stringify({ ...privateText._doc, group: privateGroup })
+        targetID: globalText._id
       }).save()
 
       globalGroup.texts.push(globalText._id)
       await globalGroup.save()
-
-      privateGroup.texts.push(privateText._id)
-      await privateGroup.save()
     })
   }
 
   private async initProdData() {
     const globalGroup = await new Group.model({
-      name: 'Global',
-      description: 'Groupe officiel global'
+      name: 'Emendare',
+      description: 'Groupe officiel du projet'
     }).save()
 
     await new Event.model({
       targetType: 'group',
-      target: JSON.stringify(globalGroup)
+      targetID: globalGroup._id
     }).save()
 
     const globalGroupRules = await new Text.model({
@@ -156,7 +97,7 @@ export default class Database {
 
     await new Event.model({
       targetType: 'text',
-      target: JSON.stringify({ ...roadmapText._doc, group: globalGroup })
+      targetID: roadmapText._id
     }).save()
 
     globalGroup.texts.push(roadmapText._id)
@@ -170,7 +111,7 @@ export default class Database {
 
     await new Event.model({
       targetType: 'text',
-      target: JSON.stringify({ ...ethicText._doc, group: globalGroup })
+      targetID: ethicText._id
     }).save()
 
     globalGroup.texts.push(ethicText._id)
@@ -184,7 +125,7 @@ export default class Database {
 
     await new Event.model({
       targetType: 'text',
-      target: JSON.stringify({ ...sandboxText._doc, group: globalGroup })
+      targetID: sandboxText._id
     }).save()
 
     globalGroup.texts.push(sandboxText._id)
@@ -193,13 +134,13 @@ export default class Database {
     const privateGroup = await new Group.model({
       name: 'Zenika',
       description: 'Groupe privé Zenika',
-      parent: globalGroup._id,
-      whitelist: ['*@zenika.com']
+      whitelist: ['*@zenika.com'],
+      color: 'is-danger'
     }).save()
 
     await new Event.model({
       targetType: 'group',
-      target: JSON.stringify({ ...privateGroup._doc, parent: globalGroup })
+      targetID: privateGroup._id
     }).save()
 
     const privateGroupRules = await new Text.model({
@@ -210,9 +151,6 @@ export default class Database {
     privateGroup.rules = privateGroupRules._id
     await privateGroup.save()
 
-    globalGroup.subgroups.push(privateGroup._id)
-    await globalGroup.save()
-
     const sandboxZText = await new Text.model({
       name: 'Sandbox Zenika',
       description:
@@ -222,7 +160,7 @@ export default class Database {
 
     await new Event.model({
       targetType: 'text',
-      target: JSON.stringify({ ...sandboxZText._doc, group: privateGroup })
+      targetID: sandboxZText._id
     }).save()
 
     privateGroup.texts.push(sandboxZText._id)
@@ -237,7 +175,7 @@ export default class Database {
 
     await new Event.model({
       targetType: 'text',
-      target: JSON.stringify({ ...oberthurText._doc, group: privateGroup })
+      targetID: oberthurText._id
     }).save()
 
     privateGroup.texts.push(oberthurText._id)

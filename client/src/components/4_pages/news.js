@@ -126,17 +126,7 @@ export class NewsPage extends React.Component {
                               ? this.state.displayAmendEvents
                               : true
                           )
-                          .map(event => (
-                            <Event
-                              key={event._id}
-                              data={{
-                                ...event,
-                                target: event.target
-                                  ? JSON.parse(event.target)
-                                  : null
-                              }}
-                            />
-                          ))}
+                          .map(event => <Event key={event._id} data={event} />)}
                     </div>
                   </>
                 )

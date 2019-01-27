@@ -8,7 +8,6 @@ export const routes = [
   { name: 'code', path: '/charte-ethique' },
   { name: 'legal', path: '/mentions-legales' },
   { name: 'contributors', path: '/contributeurs' },
-  { name: 'explore', path: '/explorer' },
   { name: 'group', path: withID('/groupe/') },
   { name: 'login', path: '/connexion' },
   { name: 'subscribe', path: '/inscription' },

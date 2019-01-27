@@ -5,7 +5,7 @@ const model = mongoose.model(
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
     targetType: { type: String, required: true },
-    target: { type: String, default: JSON.stringify({}) }
+    targetID: { type: mongoose.Schema.Types.ObjectId, required: true }
   })
 )
 

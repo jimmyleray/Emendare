@@ -3,7 +3,6 @@ import { Link } from '../../components'
 import { path } from '../../config'
 
 const links = [
-  { url: path.explore, title: 'Explorer' },
   { url: path.news, title: 'Actualités' },
   { url: path.code, title: 'Charte éthique' },
   { url: path.contributors, title: 'Contributeurs' },
