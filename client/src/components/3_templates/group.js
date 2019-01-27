@@ -7,7 +7,6 @@ import {
   Column,
   Columns,
   Icon,
-  Spacer,
   DataContext,
   UserContext
 } from '../../components'
@@ -53,8 +52,6 @@ export const Group = ({ data }) => {
                     </span>
                   </Button>
 
-                  <Spacer />
-
                   {isConnected() &&
                     (user.followedGroups.find(group => group === data._id) ? (
                       <Button
@@ -71,17 +68,6 @@ export const Group = ({ data }) => {
                         Rejoindre le groupe
                       </Button>
                     ))}
-
-                  {isConnected() && data.rules && (
-                    <Button
-                      className="is-info"
-                      to={path.text(data.rules)}
-                      disabled
-                    >
-                      <Icon type="fas fa-cog" />
-                      <span>Voir les règles du groupe</span>
-                    </Button>
-                  )}
                 </Buttons>
 
                 <Columns>

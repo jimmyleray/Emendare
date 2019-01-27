@@ -10,7 +10,6 @@ import {
   Icon,
   Link,
   ResultsIcon,
-  Spacer,
   DataContext,
   UserContext
 } from '../../components'
@@ -69,8 +68,6 @@ export const Text = ({ data }) => {
                       </Button>
                     )}
 
-                    <Spacer />
-
                     {isConnected() &&
                       (user.followedTexts.find(text => text === data._id) ? (
                         <Button
@@ -83,7 +80,7 @@ export const Text = ({ data }) => {
                       ) : (
                         <Button
                           onClick={followText(data._id)}
-                          className="button is-success has-text-weight-semibold"
+                          className="button is-success"
                           disabled={data.rules}
                         >
                           Participer à ce texte
@@ -97,9 +94,7 @@ export const Text = ({ data }) => {
                         onClick={followText(data._id)}
                       >
                         <Icon type="fas fa-plus" />
-                        <span className="has-text-weight-semibold">
-                          Proposer un amendement
-                        </span>
+                        <span>Proposer un amendement</span>
                       </Button>
                     )}
                   </Buttons>
