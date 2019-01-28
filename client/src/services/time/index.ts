@@ -1,1 +1,1 @@
-export * from './time'
+export * from './Time'
