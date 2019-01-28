@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "es7"],
+    "lib": [
+      "dom",
+      "es7"
+    ],
     "target": "es6",
     "allowJs": true,
     "skipLibCheck": false,
@@ -14,8 +17,13 @@
     "isolatedModules": true,
     "noImplicitAny": false,
     "noEmit": true,
-    "types": ["node", "jest"],
+    "types": [
+      "node",
+      "jest"
+    ],
     "jsx": "preserve"
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ]
 }
