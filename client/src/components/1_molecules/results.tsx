@@ -20,7 +20,7 @@ const datasetDefault = {
   ],
   hoverBorderColor: 'white'
 }
-export const Results = ({ data }) => (
+export const Results = ({ data }: { data: any }) => (
   <div style={{ position: 'relative', zIndex: 1 }}>
     <Doughnut
       data={{

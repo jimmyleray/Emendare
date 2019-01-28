@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 
-export const Box = ({ children, className = '', ...rest }) => (
+interface IProps {
+  children: React.ReactNode
+  className?: string
+  style?: CSSProperties
+}
+
+export const Box = ({ children, className = '', ...rest }: IProps) => (
   <div className={'box ' + className} {...rest}>
     {children}
   </div>

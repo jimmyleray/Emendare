@@ -1,6 +1,11 @@
 import React from 'react'
 
-export const Progress = ({ children, className = '', ...rest }) => (
+interface IProps {
+  children: React.ReactNode
+  className?: string
+}
+
+export const Progress = ({ children, className = '', ...rest }: IProps) => (
   <progress className={'progress ' + className} {...rest}>
     {children}
   </progress>

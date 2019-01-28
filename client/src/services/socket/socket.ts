@@ -7,19 +7,19 @@ const insecureSocket = io(apiConfig.url[process.env.NODE_ENV])
 // Overwrited Socket.io Instance
 // With fetch method and token prop
 export const Socket = {
-  on: (name, callback) => {
+  on: (name: string, callback: any) => {
     return insecureSocket.on(name, callback)
   },
-  off: name => {
+  off: (name: string) => {
     return insecureSocket.off(name)
   },
-  emit: (name, data = {}) => {
+  emit: (name: string, data = {}) => {
     return insecureSocket.emit(name, {
       token: localStorage.getItem('token'),
       data
     })
   },
-  fetch: (name, params = {}) => {
+  fetch: (name: string, params = {}) => {
     Socket.emit(name, params)
     return new Promise((resolve, reject) => {
       Socket.on(name, ({ data, error }: any = {}) => {

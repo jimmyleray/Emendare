@@ -15,11 +15,11 @@ import { Socket } from '../../services'
 import { path } from '../../config'
 import * as JsDiff from 'diff'
 
-interface EditProps {
+interface IEditProps {
   data: any
 }
 
-interface EditState {
+interface IEditState {
   amendName: string
   amendDescription: string
   redirectToAmend: boolean
@@ -30,13 +30,13 @@ interface EditState {
   patch: string | null
 }
 
-export class Edit extends React.Component<EditProps, EditState> {
+export class Edit extends React.Component<IEditProps, IEditState> {
   private onChange: any
   private restoreInitialValue: any
   private hasDiffs: any
   private addAmend: any
 
-  constructor(props) {
+  constructor(props: IEditProps) {
     super(props)
 
     this.onChange = (name: string) => (event: any) => {
@@ -77,22 +77,14 @@ export class Edit extends React.Component<EditProps, EditState> {
     }
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.computeDiff()
   }
 
-  computeDiff() {
-    const patch = JsDiff.createPatch(
-      '',
-      this.state.initialValue,
-      this.state.amendValue
-    )
-    this.setState({ patch })
-  }
-
-  render() {
-    if (this.state.redirectToAmend)
+  public render() {
+    if (this.state.redirectToAmend) {
       return <Redirect to={path.amend(this.state.redirectID)} />
+    }
 
     return (
       <UserContext.Consumer>
@@ -221,5 +213,16 @@ export class Edit extends React.Component<EditProps, EditState> {
         )}
       </UserContext.Consumer>
     )
+  }
+
+  private computeDiff() {
+    const patch = JsDiff.createPatch(
+      '',
+      this.state.initialValue,
+      this.state.amendValue,
+      '',
+      ''
+    )
+    this.setState({ patch })
   }
 }

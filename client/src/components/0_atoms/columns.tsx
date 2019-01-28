@@ -1,6 +1,11 @@
 import React from 'react'
 
-export const Columns = ({ children, className = '', ...rest }) => (
+interface IProps {
+  children: React.ReactNode
+  className?: string
+}
+
+export const Columns = ({ children, className = '', ...rest }: IProps) => (
   <div className={'columns ' + className} {...rest}>
     {children}
   </div>

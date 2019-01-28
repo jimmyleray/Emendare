@@ -4,7 +4,7 @@ import { PendingPage, UserContext } from '..'
 import { path } from '../../config'
 
 // Wait auto-connect to display private page or redirect to Login
-export const PrivateRoute = ({ component: Component, ...rest }) => (
+export const PrivateRoute = ({ component: Component, ...rest }: any) => (
   <UserContext.Consumer>
     {({ isConnected, isConnectionPending }) => (
       <Route

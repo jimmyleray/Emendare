@@ -1,3 +1,5 @@
+import { ComponentClass } from 'react'
+
 // For paths like that for example : /text/:id
 const withID = (pathname: string) => (id = ':id') => pathname + id
 
@@ -6,7 +8,7 @@ interface IRoute {
   path: string | ((id?: string) => string)
   exact?: boolean
   private?: boolean
-  component?: string
+  component?: ComponentClass<any, any>
 }
 
 // All application routes

@@ -24,9 +24,7 @@ const colors = [
   { class: 'is-danger', name: 'Rouge' }
 ]
 
-interface ExploreProps {}
-
-interface ExploreState {
+interface IExploreState {
   displayAddGroupForm: boolean
   groupName: string
   groupDescription: string
@@ -34,12 +32,12 @@ interface ExploreState {
   groupColor: string
 }
 
-export class Explore extends React.Component<ExploreProps, ExploreState> {
+export class Explore extends React.Component<{}, IExploreState> {
   private onChange: any
   private confirm: any
   private initialState: any
 
-  constructor(props) {
+  constructor(props: {}) {
     super(props)
 
     this.onChange = (name: string) => (event: any) => {
@@ -69,7 +67,7 @@ export class Explore extends React.Component<ExploreProps, ExploreState> {
     }
   }
 
-  render() {
+  public render() {
     return (
       <UserContext.Consumer>
         {({ isConnected }) => (
@@ -212,7 +210,7 @@ export class Explore extends React.Component<ExploreProps, ExploreState> {
                   <br />
                   {chunk(
                     groups.data.sort(
-                      (a, b) => b.followersCount - a.followersCount
+                      (a: any, b: any) => b.followersCount - a.followersCount
                     ),
                     3
                   ).map((row, index) => (

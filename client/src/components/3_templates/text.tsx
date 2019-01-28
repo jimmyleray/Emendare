@@ -16,15 +16,15 @@ import {
 import { Amend, Socket } from '../../services'
 import { path } from '../../config'
 
-const unFollowText = id => () => {
+const unFollowText = (id: string) => () => {
   Socket.emit('unFollowText', { id })
 }
 
-const followText = id => () => {
+const followText = (id: string) => () => {
   Socket.emit('followText', { id })
 }
 
-export const Text = ({ data }) => {
+export const Text = ({ data }: any) => {
   return (
     <UserContext.Consumer>
       {({ isConnected, user }) => (
@@ -69,7 +69,9 @@ export const Text = ({ data }) => {
                     )}
 
                     {isConnected() &&
-                      (user.followedTexts.find(text => text === data._id) ? (
+                      (user.followedTexts.find(
+                        (text: any) => text === data._id
+                      ) ? (
                         <Button
                           onClick={unFollowText(data._id)}
                           className="button is-light"
@@ -105,7 +107,7 @@ export const Text = ({ data }) => {
                         {data.actual &&
                           data.actual
                             .split('\n')
-                            .map((line, index) =>
+                            .map((line: string, index: number) =>
                               line ? (
                                 <p key={index}>{line}</p>
                               ) : (
@@ -131,17 +133,17 @@ export const Text = ({ data }) => {
                             {data.amends
                               .map(get('amend'))
                               .filter(
-                                amend =>
+                                (amend: any) =>
                                   amend && amend.data && !amend.data.closed
                               ).length > 0 ? (
                               <>
                                 {data.amends
                                   .map(get('amend'))
                                   .filter(
-                                    amend =>
+                                    (amend: any) =>
                                       amend && amend.data && !amend.data.closed
                                   )
-                                  .map(amend => (
+                                  .map((amend: any) => (
                                     <div key={amend.data._id}>
                                       <ResultsIcon
                                         data={{
@@ -183,7 +185,7 @@ export const Text = ({ data }) => {
                             {data.amends
                               .map(get('amend'))
                               .filter(
-                                amend =>
+                                (amend: any) =>
                                   amend && amend.data && amend.data.closed
                               ).length > 0 && (
                               <>
@@ -195,16 +197,16 @@ export const Text = ({ data }) => {
                                 {data.amends
                                   .map(get('amend'))
                                   .filter(
-                                    amend =>
+                                    (amend: any) =>
                                       amend && amend.data && amend.data.closed
                                   )
-                                  .map(amend => amend.data)
+                                  .map((amend: any) => amend.data)
                                   .sort(
-                                    (a, b) =>
+                                    (a: any, b: any) =>
                                       new Date(b.finished).getTime() -
                                       new Date(a.finished).getTime()
                                   )
-                                  .map(amend => (
+                                  .map((amend: any) => (
                                     <p key={amend._id}>
                                       {amend.accepted && !amend.conflicted ? (
                                         <Icon

@@ -2,7 +2,7 @@ import React from 'react'
 import { NotificationAlert, Sidebar } from '..'
 
 // Main Application layout
-export const Layout = ({ children }) => {
+export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="is-flex" style={{ flexDirection: 'column' }}>
       <NotificationAlert />

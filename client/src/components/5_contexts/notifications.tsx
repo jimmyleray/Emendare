@@ -3,24 +3,24 @@ import { Redirect } from 'react-router-dom'
 import { path } from '../../config'
 
 export const NotificationsContext = React.createContext(
-  {} as NotificationsProviderState
+  {} as INotificationsProviderState
 )
 
-interface NotificationsProviderProps {
+interface INotificationsProviderProps {
   user: any
 }
 
-interface NotificationsProviderState {
+interface INotificationsProviderState {
   redirectTo: string | null
   permission: NotificationPermission
   request: () => void
 }
 
 export class NotificationsProvider extends React.Component<
-  NotificationsProviderProps,
-  NotificationsProviderState
+  INotificationsProviderProps,
+  INotificationsProviderState
 > {
-  constructor(props) {
+  constructor(props: INotificationsProviderProps) {
     super(props)
 
     this.state = {
@@ -47,8 +47,10 @@ export class NotificationsProvider extends React.Component<
     }
   }
 
-  render() {
-    if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+  public render() {
+    if (this.state.redirectTo) {
+      return <Redirect to={this.state.redirectTo} />
+    }
 
     return (
       <NotificationsContext.Provider value={this.state}>

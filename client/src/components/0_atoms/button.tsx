@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 
-export const Button = ({ children, className = '', ...rest }) =>
+interface IProps {
+  children: React.ReactNode
+  style?: CSSProperties
+  onClick?: () => void
+  className?: string
+  disabled?: boolean
+  to?: string
+}
+
+export const Button = ({ children, className = '', ...rest }: IProps) =>
   rest.to && !rest.disabled ? (
     <Link to={rest.to} className={'button ' + className} {...rest}>
       {children}

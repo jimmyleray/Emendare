@@ -12,11 +12,11 @@ const keys = [
   'amendRefused'
 ]
 
-const change = key => async () => {
+const change = (key: string) => async () => {
   await Socket.fetch('toggleNotificationSetting', { key })
 }
 
-const mapKeyToTitle = key => {
+const mapKeyToTitle = (key: string) => {
   switch (key) {
     case 'newGroup':
       return 'Nouveau groupe'
@@ -33,7 +33,11 @@ const mapKeyToTitle = key => {
   }
 }
 
-export const NotificationSettings = props => (
+interface INotificationSettingsProps {
+  user: any
+}
+
+export const NotificationSettings = (props: INotificationSettingsProps) => (
   <NotificationsContext.Consumer>
     {({ permission, request }) => (
       <Box>

@@ -1,6 +1,11 @@
 import React from 'react'
 
-export const Tag = ({ children, className = '', ...rest }) => (
+interface IProps {
+  children: React.ReactNode
+  className?: string
+}
+
+export const Tag = ({ children, className = '', ...rest }: IProps) => (
   <span className={'tag ' + className} {...rest}>
     {children}
   </span>

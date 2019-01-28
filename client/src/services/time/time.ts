@@ -1,3 +1,5 @@
+import { ITime } from '../../interfaces'
+
 /**
  * This service will help to manage Time
  */
@@ -6,7 +8,7 @@ export class Time {
    * Retrieve the value of sec, min and hrs of a timestamp
    * @param {number} ms
    */
-  public static convertMsToTime = milliSeconds => {
+  public static convertMsToTime = (milliSeconds: number): ITime => {
     let seconds = Math.floor(milliSeconds / 1000)
     const days = Math.floor(seconds / 86400)
     const hours = Math.floor((seconds - days * 86400) / 3600)
@@ -21,7 +23,7 @@ export class Time {
    * Calculate the time spent between now and a date
    * @param {string || Date} date
    */
-  public static getTimeSpent = (date, from = new Date()) => {
+  public static getTimeSpent = (date: string | Date, from = new Date()) => {
     if (typeof date === 'string') {
       date = new Date(date)
     }
@@ -33,7 +35,7 @@ export class Time {
    * @param {string || Date} date
    * @param {number} delay
    */
-  public static getTimeLeft = (date, from = new Date()) => {
+  public static getTimeLeft = (date: string | Date, from = new Date()) => {
     if (typeof date === 'string') {
       date = new Date(date)
     }
@@ -42,10 +44,10 @@ export class Time {
 
   /**
    * Convert an object of time (sec, min, hrs) to an adaptable string
-   * @param {{sec:number, min:number, hrs: number}} time
+   * @param {ITime} time
    * @param {string} defaultView
    */
-  public static toTimeString = time => {
+  public static toTimeString = (time: ITime) => {
     if (time.days > 0) {
       return `${time.days} jour${time.days > 1 ? 's' : ''}`
     } else if (time.hours > 0) {
@@ -62,7 +64,7 @@ export class Time {
    * @param {Date || string} date
    * @param {number} time
    */
-  public static addTimeToDate = (date, time) => {
+  public static addTimeToDate = (date: string | Date, time: number) => {
     if (typeof date === 'string') {
       date = new Date(date)
     }
@@ -71,9 +73,9 @@ export class Time {
 
   /**
    * Return true if the time is equal or less to 0 else false
-   * @param {{sec:number, min: number, hrs: number}} time
+   * @param {ITime} time
    */
-  public static isNegative = time =>
+  public static isNegative = (time: ITime) =>
     time.seconds < 0 ||
     time.minutes < 0 ||
     time.hours < 0 ||

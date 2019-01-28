@@ -2,7 +2,7 @@ import React from 'react'
 import { DataContext, Icon, Link, Notification, StopWatch } from '..'
 import { path } from '../../config'
 
-const typeToUrl = (type: string) => target => {
+const typeToUrl = (type: string) => (target: any) => {
   const id = target._id ? target._id : ''
   switch (type) {
     case 'amend':
@@ -16,7 +16,7 @@ const typeToUrl = (type: string) => target => {
   }
 }
 
-const typeToText = type => target => {
+const typeToText = (type: string) => (target: any) => {
   const created = new Date(target.created)
   switch (type) {
     case 'amend':
@@ -71,7 +71,7 @@ const typeToText = type => target => {
   }
 }
 
-export const Event = ({ data }) => (
+export const Event = ({ data }: { data: any }) => (
   <DataContext.Consumer>
     {({ get }) => {
       if (data.targetType && data.targetID) {

@@ -16,13 +16,18 @@ export const Router = () => (
               typeof route.path === 'string' ? route.path : route.path()
 
             // Resolve Page Component
-            route.component = Pages[capitalize(route.name) + 'Page']
-
-            // Resolve Route Privacy
-            const Component = route.private ? PrivateRoute : Route
+            route.component = (Pages as any)[capitalize(route.name) + 'Page']
 
             // Then return the Route
-            return <Component key={route.path} {...route} />
+            return route.private ? (
+              <PrivateRoute key={route.path} {...route} />
+            ) : (
+              <Route
+                key={route.path}
+                path={route.path}
+                component={route.component}
+              />
+            )
           })}
           <Route component={Pages.ErrorPage} />
         </Switch>

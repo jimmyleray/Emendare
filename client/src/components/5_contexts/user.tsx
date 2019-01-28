@@ -1,29 +1,24 @@
 import React from 'react'
 import { Socket } from '../../services'
 
-export const UserContext = React.createContext({} as UserProviderState)
+export const UserContext = React.createContext({} as IUserProviderState)
 
-interface UserProviderProps {}
-
-interface UserProviderState {
+interface IUserProviderState {
   user: any
   isConnectionPending: boolean
   isConnected: any
   logout: any
 }
 
-export class UserProvider extends React.Component<
-  UserProviderProps,
-  UserProviderState
-> {
-  constructor(props) {
+export class UserProvider extends React.Component<{}, IUserProviderState> {
+  constructor(props: {}) {
     super(props)
 
     this.state = {
       user: null,
       isConnectionPending: true,
       isConnected: () => this.state.user !== null,
-      logout: async event => {
+      logout: async (event: any) => {
         event.preventDefault()
         await Socket.fetch('logout')
         localStorage.removeItem('token')
@@ -32,8 +27,8 @@ export class UserProvider extends React.Component<
     }
   }
 
-  componentDidMount() {
-    Socket.on('user', ({ error, data }) => {
+  public componentDidMount() {
+    Socket.on('user', ({ error, data }: any) => {
       if (!error) {
         this.setState({ user: data })
       }
@@ -55,12 +50,12 @@ export class UserProvider extends React.Component<
     }
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     Socket.off('user')
     Socket.off('login')
   }
 
-  render() {
+  public render() {
     return (
       <UserContext.Provider value={this.state}>
         {this.props.children}

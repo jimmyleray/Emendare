@@ -12,13 +12,13 @@ import {
 import { Text } from '../../services'
 import { path } from '../../config'
 
-const getAmends = get => text =>
+const getAmends = (get: (type: string) => (id: string) => any) => (text: any) =>
   text.amends
     .map(get('amend'))
-    .filter(amend => amend && amend.data)
-    .map(amend => amend.data)
+    .filter((amend: any) => amend && amend.data)
+    .map((amend: any) => amend.data)
 
-export const Sidebar = ({ width }) => (
+export const Sidebar = ({ width }: { width: string }) => (
   <div className="is-hidden-mobile" style={{ flex: 'none', width }}>
     <Notification
       className="is-dark"
@@ -62,10 +62,13 @@ export const Sidebar = ({ width }) => (
                         <br />
                         {user.followedTexts
                           .map(get('text'))
-                          .filter(text => text && text.data)
-                          .map(text => text.data)
-                          .sort((a, b) => b.followersCount - a.followersCount)
-                          .map(followedText => {
+                          .filter((text: any) => text && text.data)
+                          .map((text: any) => text.data)
+                          .sort(
+                            (a: any, b: any) =>
+                              b.followersCount - a.followersCount
+                          )
+                          .map((followedText: any) => {
                             const amends = getAmends(get)(followedText)
                             return (
                               <Link

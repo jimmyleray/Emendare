@@ -1,7 +1,7 @@
 import React from 'react'
 import { Pie } from 'react-chartjs-2'
 
-export const ResultsIcon = ({ data }) => (
+export const ResultsIcon = ({ data }: { data: any }) => (
   <div
     style={{
       height: '1.5rem',

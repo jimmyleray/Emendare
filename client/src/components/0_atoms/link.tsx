@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 
-export const Link = ({ children, to, ...rest }) =>
+interface IProps {
+  children: React.ReactNode
+  style?: CSSProperties
+  className?: string
+  to: string
+}
+
+export const Link = ({ children, to, ...rest }: IProps) =>
   to.indexOf('http') === 0 ? (
     <a href={to} {...rest}>
       {children}

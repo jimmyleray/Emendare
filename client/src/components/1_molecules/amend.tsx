@@ -2,17 +2,17 @@ import React from 'react'
 import { Box } from '..'
 import * as JsDiff from 'diff'
 
-interface AmendProps {
+interface IAmendProps {
   amend: any
   text: any
 }
 
-interface AmendState {
+interface IAmendState {
   diffs: any[]
 }
 
-export class Amend extends React.Component<AmendProps, AmendState> {
-  constructor(props) {
+export class Amend extends React.Component<IAmendProps, IAmendState> {
+  constructor(props: IAmendProps) {
     super(props)
 
     this.state = {
@@ -20,31 +20,17 @@ export class Amend extends React.Component<AmendProps, AmendState> {
     }
   }
 
-  componentWillMount() {
+  public componentWillMount() {
     this.computeDiff()
   }
 
-  componentDidUpdate(prevProps) {
+  public componentDidUpdate(prevProps: IAmendProps) {
     if (prevProps.amend !== this.props.amend) {
       this.computeDiff()
     }
   }
 
-  computeDiff() {
-    let previousText = ''
-
-    for (let index = 0; index < this.props.amend.version; index++) {
-      previousText = JsDiff.applyPatch(
-        previousText,
-        this.props.text.patches[index]
-      )
-    }
-    const newText = JsDiff.applyPatch(previousText, this.props.amend.patch)
-    const diffs = JsDiff.diffLines(previousText, newText)
-    this.setState({ diffs })
-  }
-
-  render() {
+  public render() {
     return (
       <Box>
         <p className="has-text-centered is-size-5">
@@ -58,9 +44,9 @@ export class Amend extends React.Component<AmendProps, AmendState> {
         <hr />
         <div>
           {this.state.diffs &&
-            this.state.diffs.map((part, index) => (
+            this.state.diffs.map((part: any, i: number) => (
               <p
-                key={index}
+                key={i}
                 className={
                   part.added
                     ? 'has-text-weight-bold has-text-success'
@@ -70,8 +56,8 @@ export class Amend extends React.Component<AmendProps, AmendState> {
                 }
               >
                 {part.count > 1
-                  ? part.value.split('\n').map((line, index) => (
-                      <span key={index}>
+                  ? part.value.split('\n').map((line: string, j: number) => (
+                      <span key={j}>
                         {line}
                         <br />
                       </span>
@@ -82,5 +68,19 @@ export class Amend extends React.Component<AmendProps, AmendState> {
         </div>
       </Box>
     )
+  }
+
+  private computeDiff() {
+    let previousText = ''
+
+    for (let index = 0; index < this.props.amend.version; index++) {
+      previousText = JsDiff.applyPatch(
+        previousText,
+        this.props.text.patches[index]
+      )
+    }
+    const newText = JsDiff.applyPatch(previousText, this.props.amend.patch)
+    const diffs = JsDiff.diffLines(previousText, newText)
+    this.setState({ diffs })
   }
 }

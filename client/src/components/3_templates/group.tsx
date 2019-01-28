@@ -13,15 +13,15 @@ import {
 import { Socket } from '../../services'
 import { path } from '../../config'
 
-const quitGroup = id => () => {
+const quitGroup = (id: string) => () => {
   Socket.emit('quitGroup', { id })
 }
 
-const joinGroup = id => () => {
+const joinGroup = (id: string) => () => {
   Socket.emit('joinGroup', { id })
 }
 
-export const Group = ({ data }) => {
+export const Group = ({ data }: any) => {
   return (
     <UserContext.Consumer>
       {({ isConnected, user }) => (
@@ -53,7 +53,9 @@ export const Group = ({ data }) => {
                   </Button>
 
                   {isConnected() &&
-                    (user.followedGroups.find(group => group === data._id) ? (
+                    (user.followedGroups.find(
+                      (group: any) => group === data._id
+                    ) ? (
                       <Button
                         onClick={quitGroup(data._id)}
                         className="is-light"
@@ -77,18 +79,20 @@ export const Group = ({ data }) => {
                         <>
                           <p>Groupes</p>
                           <ul>
-                            {data.subgroups.map(get('group')).map(subgroup => {
-                              return (
-                                subgroup &&
-                                subgroup.data && (
-                                  <li key={subgroup.data._id}>
-                                    <Link to={path.group(subgroup.data._id)}>
-                                      {subgroup.data.name}
-                                    </Link>
-                                  </li>
+                            {data.subgroups
+                              .map(get('group'))
+                              .map((subgroup: any) => {
+                                return (
+                                  subgroup &&
+                                  subgroup.data && (
+                                    <li key={subgroup.data._id}>
+                                      <Link to={path.group(subgroup.data._id)}>
+                                        {subgroup.data.name}
+                                      </Link>
+                                    </li>
+                                  )
                                 )
-                              )
-                            })}
+                              })}
                           </ul>
                         </>
                       )}
@@ -101,7 +105,7 @@ export const Group = ({ data }) => {
                         <>
                           <p>Textes</p>
                           <ul>
-                            {data.texts.map(get('text')).map(text => {
+                            {data.texts.map(get('text')).map((text: any) => {
                               return (
                                 text &&
                                 text.data && (

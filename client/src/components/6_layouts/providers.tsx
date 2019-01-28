@@ -7,7 +7,7 @@ import {
 } from '../../components'
 
 // Return all providers encapsulated in order
-export const Providers = ({ children }) => (
+export const Providers = ({ children }: { children: React.ReactNode }) => (
   <UserProvider>
     <UserContext.Consumer>
       {({ user }) => (

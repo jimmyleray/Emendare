@@ -1,10 +1,14 @@
 import React from 'react'
 import { Time } from '../../services'
+import { ITime } from '../../interfaces'
 
-interface ClockProps {}
+interface IClockProps {
+  date: Date
+  className: string
+}
 
-interface ClockState {
-  time: number
+interface IClockState {
+  time: ITime
   intervalDelay: number
 }
 
@@ -14,30 +18,35 @@ interface ClockState {
  *
  *  @param {function} getTime  provides a time object
  */
-export const Clock = getTime => {
-  return class extends React.Component<ClockProps, ClockState> {
+export const Clock = (getTime: (date: Date) => ITime) => {
+  return class extends React.Component<IClockProps, IClockState> {
     private clock: number = 0
 
-    constructor(props) {
+    constructor(props: IClockProps) {
       super(props)
+
       this.state = {
-        time: getTime(this.props),
+        time: getTime(this.props.date),
         intervalDelay: 1000
       }
     }
 
-    componentDidMount() {
+    public componentDidMount() {
       this.start(this.state.intervalDelay)
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount() {
       this.stop()
     }
 
-    start = intervalDelay => {
+    public render() {
+      return <span {...this.props}>{Time.toTimeString(this.state.time)}</span>
+    }
+
+    private start = (intervalDelay: number) => {
       this.setState({ intervalDelay })
       this.clock = window.setInterval(() => {
-        const time = getTime(this.props)
+        const time: ITime = getTime(this.props.date)
         if (Time.isNegative(time)) {
           this.stop()
         } else {
@@ -47,7 +56,7 @@ export const Clock = getTime => {
       }, intervalDelay)
     }
 
-    update = time => {
+    private update = (time: ITime) => {
       // if the time is under 1 minute set the
       // intervalDelay to 1 second else set to 1 minute
       const { intervalDelay } = this.state
@@ -67,12 +76,10 @@ export const Clock = getTime => {
       }
     }
 
-    stop = () => {
-      if (this.clock) window.clearInterval(this.clock)
-    }
-
-    render() {
-      return <span {...this.props}>{Time.toTimeString(this.state.time)}</span>
+    private stop = () => {
+      if (this.clock) {
+        window.clearInterval(this.clock)
+      }
     }
   }
 }
