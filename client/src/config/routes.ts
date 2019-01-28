@@ -3,7 +3,7 @@ const withID = (pathname: string) => (id = ':id') => pathname + id
 
 interface IRoute {
   name: string
-  path: string | ((path: string) => string)
+  path: string | ((id?: string) => string)
   exact?: boolean
   private?: boolean
   component?: string
