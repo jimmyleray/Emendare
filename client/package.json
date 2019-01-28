@@ -14,9 +14,9 @@
     "test:coverage": "react-scripts test --coverage",
     "cypress:open": "npx cypress open",
     "eject": "react-scripts eject",
-    "lint": "./node_modules/.bin/eslint {src,public,cypress}/**/*.js",
-    "format": "prettier --write {src,public,cypress}/**/*.{js,jsx,css,scss,json,md}",
-    "format:ci": "prettier --list-different {src,public,cypress}/**/*.{js,jsx,css,scss,json,md}",
+    "lint": "tslint -c tslint.json src/**/*.ts",
+    "format": "prettier --write {src,public,cypress}/**/*.{ts,tsx,js,jsx,css,scss,json,md}",
+    "format:ci": "prettier --list-different {src,public,cypress}/**/*.{ts,tsx,js,jsx,css,scss,json,md}",
     "codecov": "codecov -t 187fc664-9fb9-4a79-9064-c7e6d96fc023"
   },
   "husky": {
@@ -47,9 +47,15 @@
     "react-dom": "^16.6.3",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
-    "socket.io-client": "^2.2.0"
+    "socket.io-client": "^2.2.0",
+    "typescript": "^3.2.4"
   },
   "devDependencies": {
+    "@types/chart.js": "^2.7.42",
+    "@types/jest": "^23.3.13",
+    "@types/node": "^10.12.18",
+    "@types/react": "^16.7.22",
+    "@types/react-dom": "^16.0.11",
     "babel-eslint": "^9.0.0",
     "codecov": "^3.1.0",
     "cypress": "^3.1.4",
@@ -66,6 +72,7 @@
     "eslint-plugin-sonarjs": "^0.2.0",
     "husky": "^1.3.1",
     "lint-staged": "^8.1.0",
-    "prettier": "^1.15.3"
+    "prettier": "^1.15.3",
+    "tslint": "^5.12.1"
   }
 }

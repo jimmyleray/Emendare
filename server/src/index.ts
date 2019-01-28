@@ -289,6 +289,33 @@ io.on('connection', socket => {
     socket.emit('logout')
   })
 
+  socket.on('updateLastEventDate', async ({ token, data }) => {
+    const { lastEventDate } = data
+    if (lastEventDate) {
+      if (token) {
+        const user = await User.model.findOne({ token })
+        if (user) {
+          user.lastEventDate = lastEventDate
+          await user.save()
+          socket.emit('user', { data: user })
+          socket.emit('updateLastEventDate')
+        } else {
+          socket.emit('updateLastEventDate', {
+            error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
+          })
+        }
+      } else {
+        socket.emit('updateLastEventDate', {
+          error: { code: 405, message: 'Le token est invalide' }
+        })
+      }
+    } else {
+      socket.emit('updateLastEventDate', {
+        error: { code: 405, message: 'La requête est invalide' }
+      })
+    }
+  })
+
   socket.on('user', async ({ token }) => {
     if (token) {
       const user = await User.model.findOne({ token })

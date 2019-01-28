@@ -10,6 +10,7 @@ const model = mongoose.model(
     password: { type: String, required: true },
     email: { type: String, required: true },
     created: { type: Date, default: Date.now },
+    lastEventDate: { type: Date, default: Date.now },
     token: { type: String, default: null },
     activationToken: { type: String, default: null },
     followedGroups: {
