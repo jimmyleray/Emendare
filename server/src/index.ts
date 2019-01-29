@@ -123,6 +123,14 @@ const checkAmendVotes = async () => {
       await amend.save()
       const newAmend = await Amend.model.findById(amend._id)
       io.emit('amend/' + amend._id, { data: newAmend })
+
+      await new Event.model({
+        targetType: 'result',
+        targetID: newAmend._id
+      }).save()
+
+      const events = await Event.model.find().sort('-created')
+      io.emit('events/all', { data: events })
     } else if (now > start + amend.delayMin && hasAbsoluteMajority(amend)) {
       amend.closed = true
       amend.finished = new Date()
@@ -136,6 +144,14 @@ const checkAmendVotes = async () => {
       await amend.save()
       const newAmend = await Amend.model.findById(amend._id)
       io.emit('amend/' + amend._id, { data: newAmend })
+
+      await new Event.model({
+        targetType: 'result',
+        targetID: newAmend._id
+      }).save()
+
+      const events = await Event.model.find().sort('-created')
+      io.emit('events/all', { data: events })
     }
   })
 
@@ -284,29 +300,22 @@ io.on('connection', socket => {
     socket.emit('logout')
   })
 
-  socket.on('updateLastEventDate', async ({ token, data }) => {
-    const { lastEventDate } = data
-    if (lastEventDate) {
-      if (token) {
-        const user = await User.model.findOne({ token })
-        if (user) {
-          user.lastEventDate = lastEventDate
-          await user.save()
-          socket.emit('user', { data: user })
-          socket.emit('updateLastEventDate')
-        } else {
-          socket.emit('updateLastEventDate', {
-            error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
-          })
-        }
+  socket.on('updateLastEventDate', async ({ token }) => {
+    if (token) {
+      const user = await User.model.findOne({ token })
+      if (user) {
+        user.lastEventDate = new Date()
+        await user.save()
+        socket.emit('user', { data: user })
+        socket.emit('updateLastEventDate')
       } else {
         socket.emit('updateLastEventDate', {
-          error: { code: 405, message: 'Le token est invalide' }
+          error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
         })
       }
     } else {
       socket.emit('updateLastEventDate', {
-        error: { code: 405, message: 'La requête est invalide' }
+        error: { code: 405, message: 'Le token est invalide' }
       })
     }
   })

@@ -1,38 +1,69 @@
 import React from 'react'
-import { DataContext, Icon, Link, Notification, StopWatch } from '..'
+import {
+  DataContext,
+  Icon,
+  Link,
+  Notification,
+  StopWatch
+} from '../../components'
 import { path } from '../../config'
 
 const typeToUrl = (type: string) => (target: any) => {
-  const id = target._id ? target._id : ''
   switch (type) {
     case 'amend':
-      return path.amend(id)
+    case 'result':
+      return path.amend(target._id)
     case 'text':
-      return path.text(id)
+      return path.text(target._id)
     case 'group':
-      return path.group(id)
+      return path.group(target._id)
     default:
       return path.home
   }
 }
 
 const typeToText = (type: string) => (target: any) => {
-  const created = new Date(target.created)
   switch (type) {
     case 'amend':
       return (
         <p>
-          <Icon type="fas fa-pencil-alt" className="fa-lg has-text-primary" />
+          <Icon type="far fa-comment-alt" className="fa-lg has-text-primary" />
           <Icon type="fas fa-chevron-right" />
           <span>
             Il y a{' '}
-            <StopWatch date={created} className="has-text-weight-semibold" />
+            <StopWatch
+              date={target.created}
+              className="has-text-weight-semibold"
+            />
           </span>
           {' - '}
-          Un <span className="has-text-weight-semibold">
-            nouvel amendement
-          </span>{' '}
-          a été proposé
+          Un nouvel amendement{' '}
+          <span className="has-text-weight-semibold">{target.name}</span> a été
+          proposé
+        </p>
+      )
+    case 'result':
+      return (
+        <p>
+          <Icon
+            type="fas fa-poll"
+            className={
+              'fa-lg ' +
+              (target.accepted ? 'has-text-success' : 'has-text-danger')
+            }
+          />
+          <Icon type="fas fa-chevron-right" />
+          <span>
+            Il y a{' '}
+            <StopWatch
+              date={target.finished}
+              className="has-text-weight-semibold"
+            />
+          </span>
+          {' - '}
+          Un amendement{' '}
+          <span className="has-text-weight-semibold">{target.name}</span> a été{' '}
+          {target.accepted ? 'accepté' : 'refusé'}
         </p>
       )
     case 'text':
@@ -42,12 +73,15 @@ const typeToText = (type: string) => (target: any) => {
           <Icon type="fas fa-chevron-right" />
           <span>
             Il y a{' '}
-            <StopWatch date={created} className="has-text-weight-semibold" />
+            <StopWatch
+              date={target.created}
+              className="has-text-weight-semibold"
+            />
           </span>
           {' - '}
           Un nouveau texte{' '}
           <span className="has-text-weight-semibold">{target.name}</span> a été
-          crée
+          créé
         </p>
       )
     case 'group':
@@ -57,12 +91,15 @@ const typeToText = (type: string) => (target: any) => {
           <Icon type="fas fa-chevron-right" />
           <span>
             Il y a{' '}
-            <StopWatch date={created} className="has-text-weight-semibold" />
+            <StopWatch
+              date={target.created}
+              className="has-text-weight-semibold"
+            />
           </span>
           {' - '}
           Un nouveau groupe{' '}
           <span className="has-text-weight-semibold">{target.name}</span> a été
-          crée
+          créé
         </p>
       )
 
@@ -75,7 +112,9 @@ export const Event = ({ data }: { data: any }) => (
   <DataContext.Consumer>
     {({ get }) => {
       if (data.targetType && data.targetID) {
-        const target = get(data.targetType)(data.targetID)
+        const target = get(
+          data.targetType === 'result' ? 'amend' : data.targetType
+        )(data.targetID)
 
         return target && target.data ? (
           <>

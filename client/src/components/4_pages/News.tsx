@@ -100,7 +100,7 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                         style={{ flex: 1 }}
                       >
                         <Icon
-                          type="fas fa-pencil-alt"
+                          type="far fa-comment-alt"
                           className={
                             this.state.displayAmendEvents ? light : dark
                           }
@@ -113,11 +113,11 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                             ? 'is-success'
                             : 'is-light'
                         }
-                        onClick={this.toggle('displayAmendEvents')}
+                        onClick={this.toggle('displayResultEvents')}
                         style={{ flex: 1 }}
                       >
                         <Icon
-                          type="fas fa-pencil-alt"
+                          type="fas fa-poll"
                           className={
                             this.state.displayResultEvents ? light : dark
                           }
@@ -127,32 +127,30 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                     </Buttons>
                     <hr />
                     <div>
-                      {events &&
-                        events.data &&
-                        events.data
-                          .filter((event: any) =>
-                            event.targetType === 'group'
-                              ? this.state.displayGroupEvents
-                              : true
-                          )
-                          .filter((event: any) =>
-                            event.targetType === 'text'
-                              ? this.state.displayTextEvents
-                              : true
-                          )
-                          .filter((event: any) =>
-                            event.targetType === 'amend'
-                              ? this.state.displayAmendEvents
-                              : true
-                          )
-                          .filter((event: any) =>
-                            event.targetType === 'result'
-                              ? this.state.displayResultEvents
-                              : true
-                          )
-                          .map((event: any) => {
-                            return <Event key={event._id} data={event} />
-                          })}
+                      {events.data
+                        .filter((event: any) =>
+                          event.targetType === 'group'
+                            ? this.state.displayGroupEvents
+                            : true
+                        )
+                        .filter((event: any) =>
+                          event.targetType === 'text'
+                            ? this.state.displayTextEvents
+                            : true
+                        )
+                        .filter((event: any) =>
+                          event.targetType === 'amend'
+                            ? this.state.displayAmendEvents
+                            : true
+                        )
+                        .filter((event: any) =>
+                          event.targetType === 'result'
+                            ? this.state.displayResultEvents
+                            : true
+                        )
+                        .map((event: any) => {
+                          return <Event key={event._id} data={event} />
+                        })}
                     </div>
                   </>
                 )
