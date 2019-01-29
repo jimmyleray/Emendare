@@ -1,5 +1,6 @@
 import React, { CSSProperties } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
+import { startsWith } from 'lodash'
 
 interface IProps {
   children: React.ReactNode
@@ -9,7 +10,7 @@ interface IProps {
 }
 
 export const Link = ({ children, to, ...rest }: IProps) =>
-  to.indexOf('http') === 0 ? (
+  startsWith(to, 'http') ? (
     <a href={to} {...rest}>
       {children}
     </a>

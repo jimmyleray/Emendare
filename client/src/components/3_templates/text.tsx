@@ -15,6 +15,7 @@ import {
 } from '..'
 import { Amend, Socket } from '../../services'
 import { path } from '../../config'
+import { sortBy } from 'lodash'
 
 const unFollowText = (id: string) => () => {
   Socket.emit('unFollowText', { id })
@@ -194,18 +195,17 @@ export const Text = ({ data }: any) => {
                                   Liste des anciens scrutins
                                 </p>
                                 <br />
-                                {data.amends
-                                  .map(get('amend'))
-                                  .filter(
-                                    (amend: any) =>
-                                      amend && amend.data && amend.data.closed
-                                  )
-                                  .map((amend: any) => amend.data)
-                                  .sort(
-                                    (a: any, b: any) =>
-                                      new Date(b.finished).getTime() -
-                                      new Date(a.finished).getTime()
-                                  )
+                                {sortBy(
+                                  data.amends
+                                    .map(get('amend'))
+                                    .filter(
+                                      (amend: any) =>
+                                        amend && amend.data && amend.data.closed
+                                    )
+                                    .map((amend: any) => amend.data),
+                                  ['finished']
+                                )
+                                  .reverse()
                                   .map((amend: any) => (
                                     <p key={amend._id}>
                                       {amend.accepted && !amend.conflicted ? (

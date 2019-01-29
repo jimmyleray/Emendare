@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Layout, PrivateRoute, Providers } from '../../components'
 import * as Pages from '../4_pages'
 import { routes } from '../../config'
-import { capitalize } from 'lodash'
+import { capitalize, isString } from 'lodash'
 
 export const Router = () => (
   <BrowserRouter>
@@ -12,8 +12,7 @@ export const Router = () => (
         <Switch>
           {routes.map(route => {
             // Resolve Default Path
-            route.path =
-              typeof route.path === 'string' ? route.path : route.path()
+            route.path = isString(route.path) ? route.path : route.path()
 
             // Resolve Page Component
             route.component = (Pages as any)[capitalize(route.name) + 'Page']

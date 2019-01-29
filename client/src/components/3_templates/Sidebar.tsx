@@ -11,6 +11,7 @@ import {
 } from '..'
 import { Text } from '../../services'
 import { path } from '../../config'
+import { sortBy } from 'lodash'
 
 const getAmends = (get: (type: string) => (id: string) => any) => (text: any) =>
   text.amends
@@ -60,14 +61,14 @@ export const Sidebar = ({ width }: { width: string }) => (
                           Textes suivis
                         </p>
                         <br />
-                        {user.followedTexts
-                          .map(get('text'))
-                          .filter((text: any) => text && text.data)
-                          .map((text: any) => text.data)
-                          .sort(
-                            (a: any, b: any) =>
-                              b.followersCount - a.followersCount
-                          )
+                        {sortBy(
+                          user.followedTexts
+                            .map(get('text'))
+                            .filter((text: any) => text && text.data)
+                            .map((text: any) => text.data),
+                          ['followersCount']
+                        )
+                          .reverse()
                           .map((followedText: any) => {
                             const amends = getAmends(get)(followedText)
                             return (

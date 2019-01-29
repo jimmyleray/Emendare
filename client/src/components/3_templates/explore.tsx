@@ -13,7 +13,7 @@ import {
 } from '..'
 import { path } from '../../config'
 import { Socket } from '../../services'
-import { chunk } from 'lodash'
+import { chunk, sortBy } from 'lodash'
 
 const colors = [
   { class: 'is-link', name: 'Bleu' },
@@ -209,9 +209,7 @@ export class Explore extends React.Component<{}, IExploreState> {
                   )}
                   <br />
                   {chunk(
-                    groups.data.sort(
-                      (a: any, b: any) => b.followersCount - a.followersCount
-                    ),
+                    sortBy(groups.data, ['followersCount']).reverse(),
                     3
                   ).map((row, index) => (
                     <Columns key={index}>

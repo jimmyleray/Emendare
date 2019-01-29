@@ -1,6 +1,7 @@
 import React from 'react'
 import { Time } from '../../services'
 import { ITime } from '../../interfaces'
+import { throttle } from 'lodash'
 
 interface IClockProps {
   date: Date | string
@@ -20,7 +21,7 @@ interface IClockState {
  */
 export const Clock = (getTime: any) => {
   return class extends React.Component<IClockProps, IClockState> {
-    private clock: number = 0
+    private clock: any
 
     constructor(props: IClockProps) {
       super(props)
@@ -45,7 +46,7 @@ export const Clock = (getTime: any) => {
 
     private start = (intervalDelay: number) => {
       this.setState({ intervalDelay })
-      this.clock = window.setInterval(() => {
+      this.clock = throttle(() => {
         const time: ITime = getTime(this.props.date)
         if (Time.isNegative(time)) {
           this.stop()
@@ -78,7 +79,7 @@ export const Clock = (getTime: any) => {
 
     private stop = () => {
       if (this.clock) {
-        window.clearInterval(this.clock)
+        this.clock.cancel()
       }
     }
   }

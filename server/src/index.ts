@@ -19,6 +19,8 @@ import bcrypt from 'bcrypt'
 import isMatch from 'is-match'
 const isMatchZenika = isMatch('*@zenika.com')
 
+import { delay, isUndefined } from 'lodash'
+
 // Diff Patch Library
 import * as JsDiff from 'diff'
 
@@ -62,12 +64,6 @@ const io = socketIO(http, {
   pingTimeout: 5000,
   serveClient: false
 })
-
-const delay = (ms: number) => {
-  return new Promise(resolve => {
-    setTimeout(resolve, ms)
-  })
-}
 
 const hasAbsoluteUpMajority = (amend: any) =>
   amend.upVotesCount > amend.indVotesCount &&
@@ -143,8 +139,7 @@ const checkAmendVotes = async () => {
     }
   })
 
-  await delay(10 * 1000)
-  checkAmendVotes()
+  delay(checkAmendVotes, 1000)
 }
 
 checkAmendVotes()
@@ -462,7 +457,7 @@ io.on('connection', socket => {
     if (token) {
       const user = await User.model.findOne({ token })
       if (user) {
-        if (typeof user.notifications[data.key] !== 'undefined') {
+        if (!isUndefined(user.notifications[data.key])) {
           user.notifications[data.key] = !user.notifications[data.key]
           await user.save()
           session.user = user

@@ -1,4 +1,5 @@
 import { ITime } from '../../interfaces'
+import { isString } from 'lodash'
 
 /**
  * This service will help to manage Time
@@ -24,7 +25,7 @@ export class Time {
    * @param {string || Date} date
    */
   public static getTimeSpent = (date: string | Date, from = new Date()) => {
-    if (typeof date === 'string') {
+    if (isString(date)) {
       date = new Date(date)
     }
     return Math.floor(from.getTime() - date.getTime())
@@ -36,7 +37,7 @@ export class Time {
    * @param {number} delay
    */
   public static getTimeLeft = (date: string | Date, from = new Date()) => {
-    if (typeof date === 'string') {
+    if (isString(date)) {
       date = new Date(date)
     }
     return Math.floor(date.getTime() - from.getTime())
@@ -65,7 +66,7 @@ export class Time {
    * @param {number} time
    */
   public static addTimeToDate = (date: string | Date, time: number) => {
-    if (typeof date === 'string') {
+    if (isString(date)) {
       date = new Date(date)
     }
     return new Date(date.getTime() + time)
