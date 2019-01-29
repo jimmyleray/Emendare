@@ -41,7 +41,7 @@ export class Layout extends React.Component<ILayoutProps, ILayoutState> {
             }
             style={{
               flex: 'none',
-              width: this.state.displaySidebarOnMobile ? '200px' : '250px',
+              width: '250px',
               maxHeight: '100vh',
               marginBottom: 0
             }}
