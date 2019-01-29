@@ -3,21 +3,14 @@ import { Socket } from '../../services'
 
 export const DataContext = React.createContext({} as IDataProviderState)
 
-interface IDataProviderProps {
-  user: any
-}
-
 interface IDataProviderState {
   memo: any
   listeners: string[]
   get: (type: string) => (id: string) => any
 }
 
-export class DataProvider extends React.Component<
-  IDataProviderProps,
-  IDataProviderState
-> {
-  constructor(props: IDataProviderProps) {
+export class DataProvider extends React.Component<{}, IDataProviderState> {
+  constructor(props: {}) {
     super(props)
 
     this.state = {

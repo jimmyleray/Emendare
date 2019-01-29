@@ -6,10 +6,6 @@ export const NotificationsContext = React.createContext(
   {} as INotificationsProviderState
 )
 
-interface INotificationsProviderProps {
-  user: any
-}
-
 interface INotificationsProviderState {
   redirectTo: string | null
   permission: NotificationPermission
@@ -17,10 +13,10 @@ interface INotificationsProviderState {
 }
 
 export class NotificationsProvider extends React.Component<
-  INotificationsProviderProps,
+  {},
   INotificationsProviderState
 > {
-  constructor(props: INotificationsProviderProps) {
+  constructor(props: {}) {
     super(props)
 
     this.state = {
