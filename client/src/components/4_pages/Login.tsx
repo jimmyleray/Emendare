@@ -8,7 +8,7 @@
 
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import { Button, Icon, Notification, Page } from '..'
+import { Button, Buttons, Icon, Notification, Page } from '..'
 import { Socket } from '../../services'
 import { path } from '../../config'
 
@@ -110,22 +110,21 @@ export class LoginPage extends React.Component<
               <Icon type="fas fa-lock" className="icon is-medium is-left" />
             </p>
           </div>
-          <div className="field is-grouped is-grouped-centered">
-            <div className="control">
+          <div className="has-text-centered">
+            <Buttons>
               <Button
                 type="submit"
-                className="is-medium is-success"
+                className="is-medium is-success is-fullwidth"
                 disabled={!this.state.email || !this.state.password}
               >
                 Connexion
               </Button>
-            </div>
-            <div className="control">
-              <Button to={path.subscribe} className="is-medium">
+              <Button to={path.subscribe} className="is-fullwidth">
                 Je n'ai pas de compte
               </Button>
-            </div>
+            </Buttons>
           </div>
+          <br />
           {this.state.error && (
             <Notification className="is-danger has-text-centered">
               {this.state.error.message}

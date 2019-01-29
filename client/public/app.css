@@ -1,5 +1,6 @@
-html {
-  overflow: auto;
+html,
+#app-root {
+  overflow: hidden;
 }
 
 @keyframes bubble {

@@ -6,7 +6,7 @@
  */
 
 import React from 'react'
-import { Button, Icon, Notification, Page } from '..'
+import { Button, Buttons, Icon, Notification, Page } from '..'
 import { Socket } from '../../services'
 import { path } from '../../config'
 
@@ -101,22 +101,21 @@ export class SubscribePage extends React.Component<
                   <Icon type="fas fa-lock" className="icon is-medium is-left" />
                 </p>
               </div>
-              <div className="field is-grouped is-grouped-centered">
-                <div className="control">
+              <div className="has-text-centered">
+                <Buttons>
                   <Button
                     type="submit"
-                    className="is-medium is-success"
+                    className="is-medium is-success is-fullwidth"
                     disabled={!this.state.email || !this.state.password}
                   >
                     Inscription
                   </Button>
-                </div>
-                <div className="control">
-                  <Button to={path.login} className="is-medium">
+                  <Button to={path.login} className="is-fullwidth">
                     J'ai déjà un compte
                   </Button>
-                </div>
+                </Buttons>
               </div>
+              <br />
               {this.state.error && (
                 <Notification className="is-danger has-text-centered">
                   {this.state.error.message}

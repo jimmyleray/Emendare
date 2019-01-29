@@ -7,7 +7,7 @@ export const NotificationAlert = () => (
       <>
         {permission === 'default' && (
           <Notification
-            className="is-info has-text-centered"
+            className="is-info has-text-centered is-hidden-mobile"
             style={{ margin: 0, borderRadius: 0 }}
           >
             <span className="has-text-weight-semibold">Emendare</span> a besoin
