@@ -102,7 +102,7 @@ export const Sidebar = ({ width }: { width: string }) => (
                 ) : !isConnectionPending ? (
                   <div className="has-text-centered">
                     <Link to={path.login} style={{ textDecoration: 'none' }}>
-                      <Button className="is-success is-fullwidth is-outlined">
+                      <Button className="is-primary is-fullwidth is-outlined">
                         Connexion
                       </Button>
                     </Link>

@@ -1,3 +1,7 @@
+html {
+  overflow: auto;
+}
+
 @keyframes bubble {
   0% {
     transform: scale(1);

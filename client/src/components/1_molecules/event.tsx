@@ -38,15 +38,17 @@ const typeToText = (type: string) => (target: any) => {
           </span>
           {' - '}
           Un nouvel amendement{' '}
-          <span className="has-text-weight-semibold">{target.name}</span> a été
-          proposé
+          <span className="has-text-weight-semibold">"{target.name}"</span> a
+          été proposé
         </p>
       )
     case 'result':
       return (
         <p>
           <Icon
-            type="fas fa-poll"
+            type={
+              'fas ' + (target.accepted ? 'fa-check-circle' : 'fa-times-circle')
+            }
             className={
               'fa-lg ' +
               (target.accepted ? 'has-text-success' : 'has-text-danger')
@@ -61,9 +63,9 @@ const typeToText = (type: string) => (target: any) => {
             />
           </span>
           {' - '}
-          Un amendement{' '}
-          <span className="has-text-weight-semibold">{target.name}</span> a été{' '}
-          {target.accepted ? 'accepté' : 'refusé'}
+          L'amendement{' '}
+          <span className="has-text-weight-semibold">"{target.name}"</span> a
+          été {target.accepted ? 'accepté' : 'refusé'}
         </p>
       )
     case 'text':
@@ -80,8 +82,8 @@ const typeToText = (type: string) => (target: any) => {
           </span>
           {' - '}
           Un nouveau texte{' '}
-          <span className="has-text-weight-semibold">{target.name}</span> a été
-          créé
+          <span className="has-text-weight-semibold">"{target.name}"</span> a
+          été créé
         </p>
       )
     case 'group':
@@ -98,8 +100,8 @@ const typeToText = (type: string) => (target: any) => {
           </span>
           {' - '}
           Un nouveau groupe{' '}
-          <span className="has-text-weight-semibold">{target.name}</span> a été
-          créé
+          <span className="has-text-weight-semibold">"{target.name}"</span> a
+          été créé
         </p>
       )
 
@@ -123,7 +125,6 @@ export const Event = ({ data }: { data: any }) => (
                 {typeToText(data.targetType)(target.data)}
               </Notification>
             </Link>
-            <br />
           </>
         ) : (
           <></>

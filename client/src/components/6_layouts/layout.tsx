@@ -13,7 +13,13 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         <Sidebar width="250px" />
         <div
           className="is-flex"
-          style={{ flex: '1', flexDirection: 'column', width: '100%' }}
+          style={{
+            flex: '1',
+            flexDirection: 'column',
+            width: '100%',
+            height: '100vh',
+            overflow: 'auto'
+          }}
         >
           <main style={{ flex: 1, padding: '2rem' }}>{children}</main>
         </div>

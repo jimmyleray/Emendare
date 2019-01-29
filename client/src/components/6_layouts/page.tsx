@@ -1,4 +1,5 @@
 import React from 'react'
+import { Title } from '../../services'
 
 // Main Page component that also update document title
 export const Page = ({
@@ -8,7 +9,6 @@ export const Page = ({
   children: React.ReactNode
   title: string
 }) => {
-  document.title = title ? 'Emendare | ' + title : 'Emendare'
-
+  Title.pageTitle = title
   return <>{children}</>
 }
