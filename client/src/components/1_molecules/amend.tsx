@@ -48,21 +48,34 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
               <p
                 key={i}
                 className={
-                  part.added
-                    ? 'has-text-weight-bold has-text-success'
-                    : part.removed
-                    ? 'has-text-weight-bold has-text-danger'
-                    : 'has-text-grey-light'
+                  !part.added && !part.removed ? 'has-text-grey-light' : ''
                 }
               >
-                {part.count > 1
-                  ? part.value.split('\n').map((line: string, j: number) => (
-                      <span key={j}>
-                        {line}
-                        <br />
+                {part.value
+                  .split('\n')
+                  .filter(
+                    (line: string, index: number, arr: string[]) =>
+                      index < arr.length - 1 || line !== ''
+                  )
+                  .map((line: string, j: number) => (
+                    <span key={j}>
+                      <span className="has-text-weight-semibold">
+                        {part.added ? '+> ' : part.removed ? '-> ' : ''}
                       </span>
-                    ))
-                  : part.value}
+                      <span
+                        style={{
+                          backgroundColor: part.added
+                            ? 'rgba(35, 209, 96, 0.25)'
+                            : part.removed
+                            ? 'rgba(255, 56, 96, 0.25)'
+                            : ''
+                        }}
+                      >
+                        {line}
+                      </span>
+                      <br />
+                    </span>
+                  ))}
               </p>
             ))}
         </div>

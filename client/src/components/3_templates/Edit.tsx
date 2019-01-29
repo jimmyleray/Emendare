@@ -13,6 +13,7 @@ import {
 } from '..'
 import { Socket } from '../../services'
 import { path } from '../../config'
+import { debounce } from 'lodash'
 import * as JsDiff from 'diff'
 
 interface IEditProps {
@@ -35,6 +36,17 @@ export class Edit extends React.Component<IEditProps, IEditState> {
   private restoreInitialValue: any
   private hasDiffs: any
   private addAmend: any
+
+  private computeDiff = debounce(() => {
+    const patch = JsDiff.createPatch(
+      '',
+      this.state.initialValue,
+      this.state.amendValue,
+      '',
+      ''
+    )
+    this.setState({ patch })
+  }, 250)
 
   constructor(props: IEditProps) {
     super(props)
@@ -213,16 +225,5 @@ export class Edit extends React.Component<IEditProps, IEditState> {
         )}
       </UserContext.Consumer>
     )
-  }
-
-  private computeDiff() {
-    const patch = JsDiff.createPatch(
-      '',
-      this.state.initialValue,
-      this.state.amendValue,
-      '',
-      ''
-    )
-    this.setState({ patch })
   }
 }
