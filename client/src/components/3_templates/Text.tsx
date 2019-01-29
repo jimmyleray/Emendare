@@ -105,6 +105,17 @@ export const Text = ({ data }: any) => {
                   <Columns>
                     <Column>
                       <Box>
+                        {data.actual ? (
+                          <p className="has-text-weight-semibold">
+                            Version actuelle du texte
+                          </p>
+                        ) : (
+                          <p className="has-text-weight-semibold has-text-danger">
+                            Texte actuellement vide
+                          </p>
+                        )}
+                        <br />
+
                         {data.actual &&
                           data.actual
                             .split('\n')
@@ -115,12 +126,6 @@ export const Text = ({ data }: any) => {
                                 <br key={index} />
                               )
                             )}
-
-                        {!data.actual && (
-                          <p className="has-text-weight-semibold has-text-danger">
-                            Texte actuellement vide
-                          </p>
-                        )}
                       </Box>
                     </Column>
                     <Column>

@@ -95,13 +95,7 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                               onClick={this.toggle('displayGroupEvents')}
                               style={{ flex: 1 }}
                             >
-                              <Icon
-                                type="fas fa-users"
-                                className={
-                                  this.state.displayGroupEvents ? light : dark
-                                }
-                              />{' '}
-                              <span>Groupe</span>
+                              <Icon type="fas fa-users" /> <span>Groupe</span>
                             </Button>
                             <Button
                               className={
@@ -112,12 +106,7 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                               onClick={this.toggle('displayTextEvents')}
                               style={{ flex: 1 }}
                             >
-                              <Icon
-                                type="fas fa-align-center"
-                                className={
-                                  this.state.displayTextEvents ? light : dark
-                                }
-                              />{' '}
+                              <Icon type="fas fa-align-center" />{' '}
                               <span>Texte</span>
                             </Button>
                             <Button
@@ -129,12 +118,7 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                               onClick={this.toggle('displayAmendEvents')}
                               style={{ flex: 1 }}
                             >
-                              <Icon
-                                type="far fa-comment-alt"
-                                className={
-                                  this.state.displayAmendEvents ? light : dark
-                                }
-                              />{' '}
+                              <Icon type="far fa-comment-alt" />{' '}
                               <span>Amendement</span>
                             </Button>
                             <Button
@@ -146,23 +130,10 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                               onClick={this.toggle('displayResultEvents')}
                               style={{ flex: 1 }}
                             >
-                              <Icon
-                                type="fas fa-poll"
-                                className={
-                                  this.state.displayResultEvents ? light : dark
-                                }
-                              />{' '}
-                              <span>Résultat</span>
+                              <Icon type="fas fa-poll" /> <span>Résultat</span>
                             </Button>
                           </Buttons>
-                          {newEventsCount > 0 && (
-                            <Button
-                              className="is-fullwidth is-dark"
-                              onClick={this.updateLastEventDate}
-                            >
-                              Tout marquer comme lu
-                            </Button>
-                          )}
+
                           <Divider
                             content={
                               newEventsCount > 0
@@ -170,6 +141,17 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                                 : 'Liste des évènements'
                             }
                           />
+
+                          {newEventsCount > 0 && (
+                            <Button
+                              className="is-fullwidth is-dark is-outlined"
+                              style={{ marginBottom: '4px' }}
+                              onClick={this.updateLastEventDate}
+                            >
+                              Tout marquer comme lu
+                            </Button>
+                          )}
+
                           <div>
                             {events.data
                               .filter((event: any) =>
