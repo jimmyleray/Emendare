@@ -106,15 +106,17 @@ export const Text = ({ data }: any) => {
                     <Column>
                       <Box>
                         {data.actual ? (
-                          <p className="has-text-weight-semibold">
-                            Version actuelle du texte
-                          </p>
+                          <>
+                            <p className="has-text-weight-semibold">
+                              Version actuelle du texte
+                            </p>
+                            <br />
+                          </>
                         ) : (
                           <p className="has-text-weight-semibold has-text-danger">
                             Texte actuellement vide
                           </p>
                         )}
-                        <br />
 
                         {data.actual &&
                           data.actual

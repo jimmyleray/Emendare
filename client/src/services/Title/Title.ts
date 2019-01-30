@@ -11,6 +11,7 @@ class TitleService {
     this._pageTitle = newPageTitle
     this.updateTitle()
   }
+
   set badgeCount(newBadgeCount: number) {
     this._badgeCount = newBadgeCount
     this.updateTitle()

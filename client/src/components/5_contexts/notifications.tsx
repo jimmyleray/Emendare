@@ -9,7 +9,7 @@ export const NotificationsContext = React.createContext(
 interface INotificationsProviderState {
   redirectTo: string | null
   permission: NotificationPermission
-  request: () => void
+  requestPermission: () => void
 }
 
 export class NotificationsProvider extends React.Component<
@@ -22,7 +22,7 @@ export class NotificationsProvider extends React.Component<
     this.state = {
       redirectTo: null,
       permission: Notification.permission,
-      request: () => {
+      requestPermission: () => {
         Notification.requestPermission(permission => {
           this.setState({ permission }, () => {
             if (permission === 'granted') {

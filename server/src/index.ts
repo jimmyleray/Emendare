@@ -97,6 +97,24 @@ const updateTextWithAmend = async (amend: any) => {
 
   const text = await Text.model.findById(amend.text._id)
   io.emit('text/' + text._id, { data: text })
+
+  const othersAmends = await Amend.model.find({ text: text._id, closed: false })
+
+  othersAmends.forEach(async (otherAmend: any) => {
+    const isPatchable = JsDiff.applyPatch(text.actual, otherAmend.patch)
+
+    if (isPatchable) {
+      otherAmend.version = text.patches.length
+    } else {
+      otherAmend.conflicted = true
+      otherAmend.closed = true
+      otherAmend.finished = new Date()
+      otherAmend.totalPotentialVotesCount = text.followersCount
+    }
+
+    otherAmend.save()
+    io.emit('amend/' + otherAmend._id, { data: otherAmend })
+  })
 }
 
 const checkAmendVotes = async () => {
@@ -155,7 +173,7 @@ const checkAmendVotes = async () => {
     }
   })
 
-  delay(checkAmendVotes, 1000)
+  delay(checkAmendVotes, 5000)
 }
 
 checkAmendVotes()
@@ -510,7 +528,7 @@ io.on('connection', socket => {
         socket.emit('joinGroup')
       } else {
         socket.emit('joinGroup', {
-          error: { code: 405, message: 'Vous participez déjà ce groupe' }
+          error: { code: 405, message: 'Vous participez déjà à ce groupe' }
         })
       }
     } else {

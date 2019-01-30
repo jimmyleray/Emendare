@@ -3,7 +3,7 @@ import { Notification, NotificationsContext } from '..'
 
 export const NotificationAlert = () => (
   <NotificationsContext.Consumer>
-    {({ permission, request }) => (
+    {({ permission, requestPermission }) => (
       <>
         {permission === 'default' && (
           <Notification
@@ -24,7 +24,7 @@ export const NotificationAlert = () => (
                 font: 'inherit'
               }}
               title="Demander l'autorisation d'activer les notifications"
-              onClick={request}
+              onClick={requestPermission}
             >
               activer les notifications de bureau
             </button>

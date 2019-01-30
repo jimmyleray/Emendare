@@ -39,14 +39,14 @@ interface INotificationSettingsProps {
 
 export const NotificationSettings = (props: INotificationSettingsProps) => (
   <NotificationsContext.Consumer>
-    {({ permission, request }) => (
+    {({ permission, requestPermission }) => (
       <Box>
         <p className="has-text-weight-semibold">Réglages des notifications</p>
         <br />
         {permission === 'default' && (
           <>
             <div>
-              <Button className="is-success" onClick={request}>
+              <Button className="is-success" onClick={requestPermission}>
                 Activer les notifications
               </Button>
             </div>

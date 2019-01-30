@@ -92,6 +92,7 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
         this.props.text.patches[index]
       )
     }
+
     const newText = JsDiff.applyPatch(previousText, this.props.amend.patch)
     const diffs = JsDiff.diffLines(previousText, newText)
     this.setState({ diffs })

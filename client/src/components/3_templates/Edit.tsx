@@ -43,7 +43,8 @@ export class Edit extends React.Component<IEditProps, IEditState> {
       this.state.initialValue,
       this.state.amendValue,
       '',
-      ''
+      '',
+      { context: 1 }
     )
     this.setState({ patch })
   }, 250)
