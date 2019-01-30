@@ -29,11 +29,11 @@ const model = mongoose.model(
     totalPotentialVotesCount: { type: Number },
     delayMin: {
       type: Number,
-      default: process.env.NODE_ENV === 'production' ? 5 * oneMinute : oneMinute
+      default: process.env.NODE_ENV === 'production' ? oneHour : oneMinute
     },
     delayMax: {
       type: Number,
-      default: process.env.NODE_ENV === 'production' ? 15 * oneMinute : oneHour
+      default: process.env.NODE_ENV === 'production' ? oneDay : oneHour
     },
     closed: { type: Boolean, default: false },
     accepted: { type: Boolean, default: false },
