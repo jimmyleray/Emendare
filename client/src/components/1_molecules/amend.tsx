@@ -45,7 +45,7 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
         <div>
           {this.state.diffs &&
             this.state.diffs.map((part: any, i: number) => (
-              <p
+              <div
                 key={i}
                 className={
                   !part.added && !part.removed ? 'has-text-grey-light' : ''
@@ -58,25 +58,20 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
                       index < arr.length - 1 || line !== ''
                   )
                   .map((line: string, j: number) => (
-                    <span key={j}>
-                      <span className="has-text-weight-semibold">
-                        {part.added ? '+> ' : part.removed ? '-> ' : ''}
-                      </span>
-                      <span
-                        style={{
-                          backgroundColor: part.added
-                            ? 'rgba(35, 209, 96, 0.25)'
-                            : part.removed
-                            ? 'rgba(255, 56, 96, 0.25)'
-                            : ''
-                        }}
-                      >
-                        {line}
-                      </span>
-                      <br />
-                    </span>
+                    <p
+                      key={j}
+                      style={{
+                        backgroundColor: part.added
+                          ? 'rgba(35, 209, 96, 0.25)'
+                          : part.removed
+                          ? 'rgba(255, 56, 96, 0.25)'
+                          : ''
+                      }}
+                    >
+                      {line || <>&nbsp;</>}
+                    </p>
                   ))}
-              </p>
+              </div>
             ))}
         </div>
       </Box>

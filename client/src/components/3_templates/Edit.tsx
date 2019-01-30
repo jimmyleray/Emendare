@@ -47,7 +47,7 @@ export class Edit extends React.Component<IEditProps, IEditState> {
       { context: 1 }
     )
     this.setState({ patch })
-  }, 250)
+  }, 100)
 
   constructor(props: IEditProps) {
     super(props)
