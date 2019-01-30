@@ -103,23 +103,9 @@ export default class Database {
     globalGroup.texts.push(roadmapText._id)
     await globalGroup.save()
 
-    const ethicText = await new Text.model({
-      name: 'Charte éthique',
-      description: 'Participez à définir les valeurs de la plateforme',
-      group: globalGroup._id
-    }).save()
-
-    await new Event.model({
-      targetType: 'text',
-      targetID: ethicText._id
-    }).save()
-
-    globalGroup.texts.push(ethicText._id)
-    await globalGroup.save()
-
     const sandboxText = await new Text.model({
-      name: 'Sandbox',
-      description: "Un espace pour tester ce que vous voulez pendant l'alpha",
+      name: 'Soirée FDLN',
+      description: 'Une synthèse de la soirée pour le Grand Débat National',
       group: globalGroup._id
     }).save()
 
@@ -130,55 +116,5 @@ export default class Database {
 
     globalGroup.texts.push(sandboxText._id)
     await globalGroup.save()
-
-    const privateGroup = await new Group.model({
-      name: 'Zenika',
-      description: 'Groupe privé Zenika',
-      whitelist: ['*@zenika.com'],
-      color: 'is-danger'
-    }).save()
-
-    await new Event.model({
-      targetType: 'group',
-      targetID: privateGroup._id
-    }).save()
-
-    const privateGroupRules = await new Text.model({
-      group: privateGroup._id,
-      rules: true
-    }).save()
-
-    privateGroup.rules = privateGroupRules._id
-    await privateGroup.save()
-
-    const sandboxZText = await new Text.model({
-      name: 'Sandbox Zenika',
-      description:
-        "Un autre espace pour tester ce que vous voulez pendant l'alpha",
-      group: privateGroup._id
-    }).save()
-
-    await new Event.model({
-      targetType: 'text',
-      targetID: sandboxZText._id
-    }).save()
-
-    privateGroup.texts.push(sandboxZText._id)
-    await privateGroup.save()
-
-    const oberthurText = await new Text.model({
-      name: "Noms des salles d'Oberthur",
-      description:
-        'Texte pour définir les noms des salles de la nouvelle agence de Rennes',
-      group: privateGroup._id
-    }).save()
-
-    await new Event.model({
-      targetType: 'text',
-      targetID: oberthurText._id
-    }).save()
-
-    privateGroup.texts.push(oberthurText._id)
-    await privateGroup.save()
   }
 }
