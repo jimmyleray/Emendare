@@ -112,7 +112,7 @@ const updateTextWithAmend = async (amend: any) => {
       otherAmend.totalPotentialVotesCount = text.followersCount
     }
 
-    otherAmend.save()
+    await otherAmend.save()
     io.emit('amend/' + otherAmend._id, { data: otherAmend })
   })
 }
