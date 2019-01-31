@@ -110,6 +110,11 @@ const updateTextWithAmend = async (amend: any) => {
       otherAmend.closed = true
       otherAmend.finished = new Date()
       otherAmend.totalPotentialVotesCount = text.followersCount
+
+      await new Event.model({
+        targetType: 'result',
+        targetID: otherAmend._id
+      }).save()
     }
 
     await otherAmend.save()
