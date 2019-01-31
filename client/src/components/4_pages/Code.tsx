@@ -26,12 +26,6 @@ export const CodePage = () => (
         compte.
       </p>
       <p>
-        Emendare souhaite essayer des interactions anonymes entre les
-        utilisateurs, pour se concentrer sur les amendements plutôt que sur les
-        individus.
-      </p>
-      <br />
-      <p>
         La plateforme n'utilise aucun tracking, et n'a aucune intention
         commerciale. Vos données vous appartiennent strictement ici.
       </p>
