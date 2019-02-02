@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-for */
 
 import React from 'react'
-import { Box, Button, NotificationsContext } from '..'
+import { Box, Button, NotificationsContext } from '../../components'
 import { Socket } from '../../services'
 
 const keys = [

@@ -9,7 +9,7 @@ import {
   Icon,
   DataContext,
   UserContext
-} from '..'
+} from '../../components'
 import { Socket } from '../../services'
 import { path } from '../../config'
 
@@ -97,9 +97,8 @@ export const Group = ({ data }: any) => {
                         </>
                       )}
 
-                      {data.subgroups.length > 0 && data.texts.length > 0 && (
-                        <hr />
-                      )}
+                      {data.subgroups.length > 0 &&
+                        data.texts.length > 0 && <hr />}
 
                       {data.texts.length > 0 && (
                         <>

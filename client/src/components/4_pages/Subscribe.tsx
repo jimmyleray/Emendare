@@ -6,7 +6,7 @@
  */
 
 import React from 'react'
-import { Button, Buttons, Icon, Notification, Page } from '..'
+import { Button, Buttons, Icon, Notification, Page } from '../../components'
 import { Socket } from '../../services'
 import { path } from '../../config'
 

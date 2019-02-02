@@ -20,7 +20,7 @@ import {
   NotificationSettings,
   DataContext,
   UserContext
-} from '..'
+} from '../../components'
 import { path } from '../../config'
 
 export const ProfilePage = () => (

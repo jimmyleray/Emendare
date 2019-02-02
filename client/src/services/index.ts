@@ -1,4 +1,4 @@
-export * from './Amend'
+export * from './amend'
 export * from './socket'
 export * from './text'
 export * from './title'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, UserContext } from '..'
+import { Link, UserContext } from '../../components'
 import { path } from '../../config'
 
 export const Navbar = () => (

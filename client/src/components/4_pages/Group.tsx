@@ -9,7 +9,7 @@
  */
 
 import React from 'react'
-import { DataContext, ErrorPage, Group, Page } from '..'
+import { DataContext, ErrorPage, Group, Page } from '../../components'
 
 export const GroupPage = (props: any) => (
   <DataContext.Consumer>

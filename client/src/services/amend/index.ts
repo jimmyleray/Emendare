@@ -1,1 +1,1 @@
-export * from './Amend'
+export * from './amend'

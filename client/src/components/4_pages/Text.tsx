@@ -13,7 +13,7 @@
  */
 
 import React from 'react'
-import { DataContext, ErrorPage, Text, Page } from '..'
+import { DataContext, ErrorPage, Text, Page } from '../../components'
 
 export const TextPage = (props: any) => (
   <DataContext.Consumer>

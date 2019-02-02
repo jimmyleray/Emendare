@@ -1,4 +1,4 @@
-import { Time } from './Time'
+import { Time } from './time'
 
 describe('convertMsToTime', () => {
   test('should convert ms to seconds', () => {

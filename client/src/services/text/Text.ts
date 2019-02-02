@@ -1,4 +1,4 @@
-import { Amend } from '..'
+import { Amend } from '../../services'
 
 /**
  * This service will help to manage Text
