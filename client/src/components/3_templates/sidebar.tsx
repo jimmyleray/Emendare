@@ -54,7 +54,7 @@ export const Sidebar = ({ className, style }: any) => (
               </div>
               <br />
 
-              <div className="has-text-centered">
+              <div className="has-text-centered has-text-weight-semibold">
                 <Link to={path.home} style={{ textDecoration: 'none' }}>
                   Groupes
                 </Link>
