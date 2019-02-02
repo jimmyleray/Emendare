@@ -3,5 +3,8 @@
 # Node dependencies
 /node_modules
 
+# Documentation
+/docs
+
 # Build files
 /build

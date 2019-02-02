@@ -6,6 +6,9 @@
 # Testing
 /coverage
 
+# Documentation
+/docs
+
 # Build files
 /build
 
