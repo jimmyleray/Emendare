@@ -17,7 +17,8 @@
     "lint": "tslint -c tslint.json src/**/*.ts",
     "format": "prettier --write {src,public,cypress}/**/*.{ts,tsx,js,jsx,css,scss,json,md}",
     "format:ci": "prettier --list-different {src,public,cypress}/**/*.{ts,tsx,js,jsx,css,scss,json,md}",
-    "codecov": "codecov -t 187fc664-9fb9-4a79-9064-c7e6d96fc023"
+    "codecov": "codecov -t 187fc664-9fb9-4a79-9064-c7e6d96fc023",
+    "doc": "typedoc --out ./docs --name Emendare --readme ../README.md --target ES6 --downlevelIteration ./src"
   },
   "husky": {
     "hooks": {
@@ -76,6 +77,7 @@
     "lint-staged": "^8.1.1",
     "prettier": "^1.16.3",
     "tslint": "^5.12.1",
+    "typedoc": "^0.14.2",
     "typescript": "^3.3.1"
   }
 }

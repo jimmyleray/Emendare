@@ -38,7 +38,9 @@ export class DataProvider extends React.Component<{}, IDataProviderState> {
           this.setState(
             prevState => ({
               ...prevState,
-              listeners: [...new Set([...prevState.listeners, listener])]
+              listeners: [
+                ...new Set<string>([...prevState.listeners, listener])
+              ]
             }),
             () => {
               Socket.emit(type, { id })

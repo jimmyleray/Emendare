@@ -16,7 +16,8 @@
     "test:coverage": "jest --coverage",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "format": "prettier --write src/**/*.{js,ts,json,md}",
-    "format:ci": "prettier --list-different --write src/**/*.{js,ts,json,md}"
+    "format:ci": "prettier --list-different --write src/**/*.{js,ts,json,md}",
+    "doc": "typedoc --out ./docs --name Emendare --readme ../README.md --target ES6 --downlevelIteration ./src"
   },
   "husky": {
     "hooks": {
@@ -60,6 +61,7 @@
     "prettier": "^1.16.3",
     "ts-jest": "^23.10.5",
     "tslint": "^5.12.1",
+    "typedoc": "^0.14.2",
     "typescript": "^3.3.1"
   }
 }
