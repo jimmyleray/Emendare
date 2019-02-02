@@ -97,8 +97,9 @@ export const Group = ({ data }: any) => {
                         </>
                       )}
 
-                      {data.subgroups.length > 0 &&
-                        data.texts.length > 0 && <hr />}
+                      {data.subgroups.length > 0 && data.texts.length > 0 && (
+                        <hr />
+                      )}
 
                       {data.texts.length > 0 && (
                         <>

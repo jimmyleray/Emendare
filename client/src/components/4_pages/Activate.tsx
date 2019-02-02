@@ -49,8 +49,8 @@ export class ActivatePage extends React.Component<
               (this.state.pending
                 ? 'fa-question-circle'
                 : this.state.activated
-                  ? 'fa-check-circle has-text-success'
-                  : 'fa-times-circle has-text-danger')
+                ? 'fa-check-circle has-text-success'
+                : 'fa-times-circle has-text-danger')
             }
             className="fa-3x is-large"
             title="Activé"
@@ -60,10 +60,10 @@ export class ActivatePage extends React.Component<
             {this.state.pending
               ? "Votre compte est en cours d'activation"
               : this.state.activated
-                ? 'Votre compte a bien été activé'
-                : this.state.error
-                  ? this.state.error.message
-                  : "Votre compte n'a pas été activé"}
+              ? 'Votre compte a bien été activé'
+              : this.state.error
+              ? this.state.error.message
+              : "Votre compte n'a pas été activé"}
           </h2>
         </div>
 

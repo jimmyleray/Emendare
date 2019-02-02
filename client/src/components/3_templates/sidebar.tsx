@@ -113,8 +113,8 @@ export const Sidebar = ({ className, style }: any) => (
                                   : amends &&
                                     Text.hasOpenAmend(amends) &&
                                     !Text.hasOpenAmendUnvoted(user)(amends)
-                                    ? 'has-text-weight-semibold'
-                                    : ''
+                                  ? 'has-text-weight-semibold'
+                                  : ''
                               }
                             >
                               {followedText.name}

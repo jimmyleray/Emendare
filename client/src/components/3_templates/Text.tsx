@@ -121,13 +121,12 @@ export const Text = ({ data }: any) => {
                         {data.actual &&
                           data.actual
                             .split('\n')
-                            .map(
-                              (line: string, index: number) =>
-                                line ? (
-                                  <p key={index}>{line}</p>
-                                ) : (
-                                  <br key={index} />
-                                )
+                            .map((line: string, index: number) =>
+                              line ? (
+                                <p key={index}>{line}</p>
+                              ) : (
+                                <br key={index} />
+                              )
                             )}
                       </Box>
                     </Column>

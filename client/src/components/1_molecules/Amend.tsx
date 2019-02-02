@@ -64,8 +64,8 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
                         backgroundColor: part.added
                           ? 'rgba(35, 209, 96, 0.25)'
                           : part.removed
-                            ? 'rgba(255, 56, 96, 0.25)'
-                            : ''
+                          ? 'rgba(255, 56, 96, 0.25)'
+                          : ''
                       }}
                     >
                       {line || <>&nbsp;</>}
