@@ -10,7 +10,7 @@
  */
 
 import React from 'react'
-import { DataContext, ErrorPage, Edit, Page } from '..'
+import { DataContext, ErrorPage, Edit, Page } from '../../components'
 
 export const EditPage = (props: any) => (
   <DataContext.Consumer>

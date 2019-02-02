@@ -1,5 +1,5 @@
 import React from 'react'
-import { Page } from '..'
+import { Page } from '../../components'
 import { Socket } from '../../services'
 import { shuffle } from 'lodash'
 

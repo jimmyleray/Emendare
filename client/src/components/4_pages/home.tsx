@@ -7,7 +7,7 @@
  */
 
 import React from 'react'
-import { Explore, Page } from '..'
+import { Explore, Page } from '../../components'
 
 export const HomePage = () => (
   <Page title="Accueil">

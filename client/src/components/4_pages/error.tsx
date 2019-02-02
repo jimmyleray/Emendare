@@ -6,7 +6,7 @@
  */
 
 import React from 'react'
-import { Button, Page } from '..'
+import { Button, Page } from '../../components'
 import { path } from '../../config'
 
 export const ErrorPage = ({

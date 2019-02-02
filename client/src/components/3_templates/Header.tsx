@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon, Link, Logo, Notification } from '..'
+import { Icon, Link, Logo, Notification } from '../../components'
 import { path } from '../../config'
 
 export const Header = ({ setSidebarDisplay, sidebarDisplayed }: any) => (

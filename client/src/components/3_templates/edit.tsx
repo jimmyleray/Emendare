@@ -10,7 +10,7 @@ import {
   Icon,
   Spacer,
   UserContext
-} from '..'
+} from '../../components'
 import { Socket } from '../../services'
 import { path } from '../../config'
 import { debounce } from 'lodash'

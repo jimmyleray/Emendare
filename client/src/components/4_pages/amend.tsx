@@ -24,7 +24,7 @@ import {
   DataContext,
   UserContext,
   CountDown
-} from '..'
+} from '../../components'
 import { Socket, Time } from '../../services'
 import { path } from '../../config'
 
@@ -137,18 +137,19 @@ export const AmendPage = ({ match }: any) => (
                             )}
                           </div>
 
-                          {amend.data.closed && amend.data.conflicted && (
-                            <>
-                              <br />
-                              <p className="has-text-centered has-text-danger has-text-weight-semibold">
-                                Des conflits ont été détectés à l'application de
-                                l'amendement. Une nouvelle fonctionalité
-                                permettra prochainement aux auteurs des
-                                amendements de corriger ces conflits avant les
-                                scrutins.
-                              </p>
-                            </>
-                          )}
+                          {amend.data.closed &&
+                            amend.data.conflicted && (
+                              <>
+                                <br />
+                                <p className="has-text-centered has-text-danger has-text-weight-semibold">
+                                  Des conflits ont été détectés à l'application
+                                  de l'amendement. Une nouvelle fonctionalité
+                                  permettra prochainement aux auteurs des
+                                  amendements de corriger ces conflits avant les
+                                  scrutins.
+                                </p>
+                              </>
+                            )}
 
                           {user && (
                             <>

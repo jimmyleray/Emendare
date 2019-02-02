@@ -8,7 +8,7 @@ import {
   Notification,
   DataContext,
   UserContext
-} from '..'
+} from '../../components'
 import { Text, Title } from '../../services'
 import { path } from '../../config'
 import { sortBy } from 'lodash'
@@ -113,8 +113,8 @@ export const Sidebar = ({ className, style }: any) => (
                                   : amends &&
                                     Text.hasOpenAmend(amends) &&
                                     !Text.hasOpenAmendUnvoted(user)(amends)
-                                  ? 'has-text-weight-semibold'
-                                  : ''
+                                    ? 'has-text-weight-semibold'
+                                    : ''
                               }
                             >
                               {followedText.name}

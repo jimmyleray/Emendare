@@ -1,3 +1,3 @@
-export * from './Data'
-export * from './Notifications'
-export * from './User'
+export * from './data'
+export * from './notifications'
+export * from './user'

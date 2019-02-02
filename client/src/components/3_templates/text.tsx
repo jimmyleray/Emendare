@@ -12,7 +12,7 @@ import {
   ResultsIcon,
   DataContext,
   UserContext
-} from '..'
+} from '../../components'
 import { Amend, Socket } from '../../services'
 import { path } from '../../config'
 import { sortBy } from 'lodash'
@@ -121,12 +121,13 @@ export const Text = ({ data }: any) => {
                         {data.actual &&
                           data.actual
                             .split('\n')
-                            .map((line: string, index: number) =>
-                              line ? (
-                                <p key={index}>{line}</p>
-                              ) : (
-                                <br key={index} />
-                              )
+                            .map(
+                              (line: string, index: number) =>
+                                line ? (
+                                  <p key={index}>{line}</p>
+                                ) : (
+                                  <br key={index} />
+                                )
                             )}
                       </Box>
                     </Column>

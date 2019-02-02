@@ -1,2 +1,2 @@
-export * from './Api'
-export * from './Routes'
+export * from './api'
+export * from './routes'
