@@ -11,7 +11,7 @@ interface IProps {
 
 export const Link = ({ children, to, ...rest }: IProps) =>
   startsWith(to, 'http') ? (
-    <a href={to} {...rest}>
+    <a href={to} target="_blank" {...rest}>
       {children}
     </a>
   ) : (
