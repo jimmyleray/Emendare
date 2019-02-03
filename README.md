@@ -2,7 +2,7 @@
 
 > Plateforme open source de rédaction de textes amendables
 
-[![CircleCI](https://circleci.com/gh/jimmyleray/Emendare.svg?style=svg)](https://circleci.com/gh/jimmyleray/Emendare) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0a1f29651edb493ba197fd794d4bc5d4)](https://www.codacy.com/app/jimmy.leray/Emendare?utm_source=github.com&utm_medium=referral&utm_content=JimmyLeray/Emendare&utm_campaign=Badge_Grade) [![Codecov](https://codecov.io/gh/JimmyLeray/Emendare/branch/master/graph/badge.svg)](https://codecov.io/gh/JimmyLeray/Emendare) [![Greenkeeper badge](https://badges.greenkeeper.io/jimmyleray/Emendare.svg)](https://greenkeeper.io/) [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://gitlab.com/emendare/emendare/issues) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![CircleCI](https://circleci.com/gh/jimmyleray/Emendare.svg?style=svg)](https://circleci.com/gh/jimmyleray/Emendare) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0a1f29651edb493ba197fd794d4bc5d4)](https://www.codacy.com/app/jimmy.leray/Emendare?utm_source=github.com&utm_medium=referral&utm_content=JimmyLeray/Emendare&utm_campaign=Badge_Grade) [![Codecov](https://codecov.io/gh/JimmyLeray/Emendare/branch/master/graph/badge.svg)](https://codecov.io/gh/JimmyLeray/Emendare) [![Greenkeeper badge](https://badges.greenkeeper.io/jimmyleray/Emendare.svg)](https://greenkeeper.io/) [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jimmyleray/Emendare/issues) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## Tech/framework utilisés
 
@@ -105,4 +105,4 @@ Le serveur app.js va permettre la redirection http vers https ainsi que la compr
 
 ## Contribution
 
-Pour contribuer à ce projet veuillez vour référencer au [Guide pour les contributeurs](https://gitlab.com/emendare/emendare/blob/master/CONTRIBUTING.md)
+Pour contribuer à ce projet veuillez vour référencer au [Guide pour les contributeurs](https://github.com/jimmyleray/Emendare/blob/master/CONTRIBUTING.md)
