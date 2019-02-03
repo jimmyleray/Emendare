@@ -77,7 +77,7 @@ export class Explore extends React.Component<{}, IExploreState> {
 
               return groups && groups.data ? (
                 <>
-                  {isConnected() && (
+                  {false && isConnected() && (
                     <>
                       <br />
                       <Button
