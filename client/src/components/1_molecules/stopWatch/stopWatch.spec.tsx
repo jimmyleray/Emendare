@@ -12,5 +12,5 @@ it('should render a StopWatch', () => {
     <StopWatch date={Time.addTimeToDate(new Date(), -10000)} />
   )
   expect(component).toBeTruthy()
-  expect(component.html()).toContain('10 secondes')
+  expect(component.html()).toContain('secondes')
 })
