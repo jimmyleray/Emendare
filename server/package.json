@@ -31,6 +31,12 @@
       "git add"
     ]
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/**/index.ts"
+    ]
+  },
   "dependencies": {
     "bcrypt": "^3.0.2",
     "crypto": "^1.0.1",

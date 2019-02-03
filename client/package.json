@@ -35,6 +35,12 @@
   "browserslist": [
     "> 5%"
   ],
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/**/index.ts"
+    ]
+  },
   "dependencies": {
     "chart.js": "2.7.3",
     "compression": "1.7.3",
