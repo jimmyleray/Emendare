@@ -1,5 +1,5 @@
 import React from 'react'
-import { Page } from '../../components'
+import { Link, Page } from '../../components'
 import { Socket } from '../../services'
 import { shuffle } from 'lodash'
 
@@ -44,9 +44,14 @@ export class ContributorsPage extends React.Component<
         {this.state.contributors.length > 1 && (
           <div className="has-text-centered">
             Merci à{' '}
-            {this.state.contributors
-              .map(contributor => contributor.name)
-              .join(', ')}
+            {this.state.contributors.map((contributor, index, arr) => (
+              <span key={contributor.author.path}>
+                <Link to={'https://github.com' + contributor.author.path}>
+                  {contributor.author.login}
+                </Link>
+                {index < arr.length - 1 && <span>{', '}</span>}
+              </span>
+            ))}
           </div>
         )}
       </Page>

@@ -1,6 +1,3 @@
-// TS Interfaces import
-import { IContribution, IContributors } from './interfaces'
-
 // Global configuration
 import config from './config'
 
@@ -844,19 +841,7 @@ io.on('connection', socket => {
 
   socket.on('contributors', async () => {
     const res = await fetch(config.contributions)
-    const contributions: IContribution[] = await res.json()
-    const data = contributions.reduce<IContributors>((acc, commit) => {
-      if (acc[commit.author_email]) {
-        acc[commit.author_email].count++
-      } else {
-        acc[commit.author_email] = {
-          count: 1,
-          name: commit.author_name
-        }
-      }
-      return acc
-    }, {})
-
+    const data: any[] = await res.json()
     socket.emit('contributors', { data })
   })
 })
