@@ -35,9 +35,9 @@ export class ContributorsPage extends React.Component<
           <h1 className="is-size-3">Remerciements à tous les contributeurs</h1>
           <h2 className="is-size-5">
             Pour contribuer à la plateforme rendez-vous sur le{' '}
-            <a href="https://gitlab.com/emendare/emendare">
-              GitLab officiel d'Emendare
-            </a>
+            <Link to="https://github.com/jimmyleray/Emendare">
+              GitHub d'Emendare
+            </Link>
           </h2>
         </div>
         <br />
