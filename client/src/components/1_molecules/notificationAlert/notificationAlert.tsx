@@ -1,5 +1,5 @@
 import React from 'react'
-import { Notification, NotificationsContext } from '../../components'
+import { Notification, NotificationsContext } from '../../../components'
 
 export const NotificationAlert = () => (
   <NotificationsContext.Consumer>

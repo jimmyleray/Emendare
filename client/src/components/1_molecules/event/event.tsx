@@ -5,8 +5,8 @@ import {
   Link,
   Notification,
   StopWatch
-} from '../../components'
-import { path } from '../../config'
+} from '../../../components'
+import { path } from '../../../config'
 
 const typeToUrl = (type: string) => (target: any) => {
   switch (type) {

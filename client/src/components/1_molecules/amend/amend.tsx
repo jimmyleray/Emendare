@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '../../components'
+import { Box } from '../../../components'
 import * as JsDiff from 'diff'
 
 interface IAmendProps {
@@ -34,13 +34,20 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
     return (
       <Box>
         <p className="has-text-centered is-size-5">
-          Amendement sur : {this.props.text.name}
+          {this.props.text && this.props.text.name
+            ? 'Amendement sur : ' + this.props.text.name
+            : 'Amendement'}
         </p>
-        <p className="has-text-centered is-size-5 has-text-weight-bold">
-          {this.props.amend.name}
-        </p>
-        <br />
-        <p>{this.props.amend.description}</p>
+        {this.props.amend && (
+          <>
+            <p className="has-text-centered is-size-5 has-text-weight-bold">
+              {this.props.amend.name}
+            </p>
+            )
+            <br />
+            <p>{this.props.amend.description}</p>
+          </>
+        )}
         <hr />
         <div>
           {this.state.diffs &&
@@ -79,17 +86,19 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
   }
 
   private computeDiff() {
-    let previousText = ''
+    if (this.props.amend && this.props.text) {
+      let previousText = ''
 
-    for (let index = 0; index < this.props.amend.version; index++) {
-      previousText = JsDiff.applyPatch(
-        previousText,
-        this.props.text.patches[index]
-      )
+      for (let index = 0; index < this.props.amend.version; index++) {
+        previousText = JsDiff.applyPatch(
+          previousText,
+          this.props.text.patches[index]
+        )
+      }
+
+      const newText = JsDiff.applyPatch(previousText, this.props.amend.patch)
+      const diffs = JsDiff.diffLines(previousText, newText)
+      this.setState({ diffs })
     }
-
-    const newText = JsDiff.applyPatch(previousText, this.props.amend.patch)
-    const diffs = JsDiff.diffLines(previousText, newText)
-    this.setState({ diffs })
   }
 }
