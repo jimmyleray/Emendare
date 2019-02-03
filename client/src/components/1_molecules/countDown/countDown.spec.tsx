@@ -12,5 +12,5 @@ it('should render a CountDown', () => {
     <CountDown date={Time.addTimeToDate(new Date(), 10000)} />
   )
   expect(component).toBeTruthy()
-  expect(component.html()).toContain('9 secondes')
+  expect(component.html()).toContain('secondes')
 })
