@@ -3,8 +3,8 @@ import { Box } from '../../../components'
 import * as JsDiff from 'diff'
 
 interface IAmendProps {
-  amend: any
-  text: any
+  amend?: any
+  text?: any
 }
 
 interface IAmendState {

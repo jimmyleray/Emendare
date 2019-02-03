@@ -113,7 +113,7 @@ const typeToText = (type: string) => (target: any) => {
 export const Event = ({ data }: { data: any }) => (
   <DataContext.Consumer>
     {({ get }) => {
-      if (data.targetType && data.targetID) {
+      if (data && data.targetType && data.targetID) {
         const target = get(
           data.targetType === 'result' ? 'amend' : data.targetType
         )(data.targetID)
