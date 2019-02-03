@@ -57,6 +57,8 @@ export class Time {
       return `${time.minutes} minute${time.minutes > 1 ? 's' : ''}`
     } else if (time.seconds > 0) {
       return `${time.seconds} seconde${time.seconds > 1 ? 's' : ''}`
+    } else {
+      return '0 seconde'
     }
   }
 

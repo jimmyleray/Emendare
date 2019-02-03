@@ -45,7 +45,6 @@ export const Clock = (getTime: any) => {
     }
 
     private start = (intervalDelay: number) => {
-      this.setState({ intervalDelay })
       this.clock = throttle(() => {
         const time: ITime = getTime(this.props.date)
         if (Time.isNegative(time)) {

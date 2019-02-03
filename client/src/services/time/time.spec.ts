@@ -103,6 +103,9 @@ describe('toTimeString', () => {
 
     const time4 = { seconds: 53, minutes: 25, hours: 0, days: 0 }
     expect(Time.toTimeString(time4)).toBe('25 minutes')
+
+    const time5 = { seconds: 0, minutes: 0, hours: 0, days: 0 }
+    expect(Time.toTimeString(time5)).toBe('0 seconde')
   })
 })
 
