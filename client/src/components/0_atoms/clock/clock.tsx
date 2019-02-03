@@ -1,11 +1,11 @@
 import React from 'react'
-import { Time } from '../../services'
-import { ITime } from '../../interfaces'
+import { Time } from '../../../services'
+import { ITime } from '../../../interfaces'
 import { throttle } from 'lodash'
 
 interface IClockProps {
   date: Date | string
-  className: string
+  className?: string
 }
 
 interface IClockState {

@@ -53,6 +53,8 @@
   "devDependencies": {
     "@types/chart.js": "2.7.43",
     "@types/diff": "4.0.1",
+    "@types/enzyme": "^3.1.16",
+    "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/jest": "23.3.13",
     "@types/node": "10.12.21",
     "@types/react": "16.8.1",
@@ -62,6 +64,8 @@
     "babel-eslint": "9.0.0",
     "codecov": "3.1.0",
     "cypress": "3.1.5",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.8.0",
     "eslint-config-prettier": "4.0.0",
     "eslint-config-react-app": "3.0.6",
     "eslint-plugin-chai-friendly": "0.4.1",
