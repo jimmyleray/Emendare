@@ -1,9 +1,9 @@
 import { ComponentClass } from 'react'
 
 // For paths like that for example : /text/:id
-const withID = (pathname: string) => (id = ':id') => pathname + id
+export const withID = (pathname: string) => (id = ':id') => pathname + id
 
-interface IRoute {
+export interface IRoute {
   name: string
   path: string | ((id?: string) => string)
   exact?: boolean

@@ -17,10 +17,14 @@ class TitleService {
     this.updateTitle()
   }
 
-  private updateTitle() {
-    document.title = `${this._badgeCount > 0 ? `(${this._badgeCount}) ` : ''}${
+  get documentTitle(): string {
+    return `${this._badgeCount > 0 ? `(${this._badgeCount}) ` : ''}${
       this.applicationTitle
     }${this._pageTitle ? ` | ${this._pageTitle}` : ''}`
+  }
+
+  private updateTitle() {
+    document.title = this.documentTitle
   }
 }
 
