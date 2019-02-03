@@ -43,7 +43,6 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
             <p className="has-text-centered is-size-5 has-text-weight-bold">
               {this.props.amend.name}
             </p>
-            )
             <br />
             <p>{this.props.amend.description}</p>
           </>
