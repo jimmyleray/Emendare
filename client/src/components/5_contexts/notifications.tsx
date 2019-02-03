@@ -21,24 +21,29 @@ export class NotificationsProvider extends React.Component<
 
     this.state = {
       redirectTo: null,
-      permission: Notification.permission,
+      permission: Notification ? Notification.permission : 'denied',
       requestPermission: () => {
-        Notification.requestPermission(permission => {
-          this.setState({ permission }, () => {
-            if (permission === 'granted') {
-              const notification = new Notification('Bienvenue sur Emendare', {
-                body:
-                  'Vous pouvez paramétrer en détails les notifications que vous souhaitez recevoir sur votre page de profil.',
-                icon: '/images/logo-white.png'
-              })
-              notification.onclick = () => {
-                this.setState({ redirectTo: path.profile }, () => {
-                  this.setState({ redirectTo: null })
-                })
+        if (Notification) {
+          Notification.requestPermission(permission => {
+            this.setState({ permission }, () => {
+              if (permission === 'granted') {
+                const notification = new Notification(
+                  'Bienvenue sur Emendare',
+                  {
+                    body:
+                      'Vous pouvez paramétrer en détails les notifications que vous souhaitez recevoir sur votre page de profil.',
+                    icon: '/images/logo-white.png'
+                  }
+                )
+                notification.onclick = () => {
+                  this.setState({ redirectTo: path.profile }, () => {
+                    this.setState({ redirectTo: null })
+                  })
+                }
               }
-            }
+            })
           })
-        })
+        }
       }
     }
   }

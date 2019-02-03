@@ -78,6 +78,7 @@ describe('getTimeSpent', () => {
   test('should return 0ms spent between now and now', () => {
     const now = new Date()
     expect(Time.getTimeSpent(now, now)).toBe(0)
+    expect(Time.getTimeSpent(now.toISOString(), now)).toBe(0)
   })
 })
 
@@ -85,16 +86,23 @@ describe('getTimeLeft', () => {
   test('should return 0ms spent between now and now', () => {
     const now = new Date()
     expect(Time.getTimeLeft(now, now)).toBe(0)
+    expect(Time.getTimeLeft(now.toISOString(), now)).toBe(0)
   })
 })
 
 describe('toTimeString', () => {
   test('should return a formatted date string', () => {
-    const time = { seconds: 2, minutes: 1, hours: 1, days: 0 }
-    expect(Time.toTimeString(time)).toBe('1 heure')
+    const time1 = { seconds: 2, minutes: 1, hours: 1, days: 0 }
+    expect(Time.toTimeString(time1)).toBe('1 heure')
 
-    const timeBis = { seconds: 53, minutes: 0, hours: 0, days: 0 }
-    expect(Time.toTimeString(timeBis)).toBe('53 secondes')
+    const time2 = { seconds: 2, minutes: 1, hours: 1, days: 2 }
+    expect(Time.toTimeString(time2)).toBe('2 jours')
+
+    const time3 = { seconds: 53, minutes: 0, hours: 0, days: 0 }
+    expect(Time.toTimeString(time3)).toBe('53 secondes')
+
+    const time4 = { seconds: 53, minutes: 25, hours: 0, days: 0 }
+    expect(Time.toTimeString(time4)).toBe('25 minutes')
   })
 })
 
@@ -103,6 +111,9 @@ describe('addTimeToDate', () => {
     const now = new Date()
     const addedTime = 1000
     expect(Time.addTimeToDate(now, addedTime).getTime()).toBe(
+      now.getTime() + addedTime
+    )
+    expect(Time.addTimeToDate(now.toISOString(), addedTime).getTime()).toBe(
       now.getTime() + addedTime
     )
   })

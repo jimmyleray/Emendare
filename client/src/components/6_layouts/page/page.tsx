@@ -1,5 +1,5 @@
 import React from 'react'
-import { Title } from '../../services'
+import { Title } from '../../../services'
 
 // Main Page component that also update document title
 export const Page = ({

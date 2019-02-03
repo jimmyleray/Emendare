@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { Layout, PrivateRoute, Providers } from '../../components'
-import * as Pages from '../4_pages'
-import { routes } from '../../config'
+import { Layout, PrivateRoute, Providers } from '../../../components'
+import * as Pages from '../../4_pages'
+import { routes } from '../../../config'
 import { capitalize, isString } from 'lodash'
 
 export const Router = () => (

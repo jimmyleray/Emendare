@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, NotificationAlert, Sidebar } from '../../components'
+import { Header, NotificationAlert, Sidebar } from '../../../components'
 
 interface ILayoutProps {
   children: React.ReactNode

@@ -3,7 +3,7 @@ import {
   DataProvider,
   NotificationsProvider,
   UserProvider
-} from '../../components'
+} from '../../../components'
 
 const providers = [UserProvider, DataProvider, NotificationsProvider]
 
