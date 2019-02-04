@@ -1,4 +1,4 @@
-# [Emendare](https://emendare.org/) [![CircleCI](https://circleci.com/gh/jimmyleray/Emendare.svg?style=svg)](https://circleci.com/gh/jimmyleray/Emendare)
+# [Emendare.org](https://emendare.org/) [![CircleCI](https://circleci.com/gh/jimmyleray/Emendare.svg?style=svg)](https://circleci.com/gh/jimmyleray/Emendare) ![Uptime](https://img.shields.io/website-up-down-green-red/https/emendare.org.svg?style=flat)
 
 > Plateforme open source de rédaction de textes amendables
 
