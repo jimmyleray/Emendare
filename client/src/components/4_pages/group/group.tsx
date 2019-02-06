@@ -11,22 +11,15 @@
 import React from 'react'
 import { DataContext, ErrorPage, Group, Page } from '../../../components'
 
-export const GroupPage = (props: any) => (
-  <DataContext.Consumer>
-    {({ get }) => {
-      const group = get('group')(props.match.params.id)
+export const GroupPage = (props: any) => {
+  const data = React.useContext(DataContext)
+  const group = data.get('group')(props.match.params.id)
 
-      if (group) {
-        if (group.error) {
-          return <ErrorPage error={group.error} />
-        } else if (group.data) {
-          return (
-            <Page title={group.data.name || 'Groupe'}>
-              <Group data={group.data} />
-            </Page>
-          )
-        }
-      }
-    }}
-  </DataContext.Consumer>
-)
+  return group && group.data ? (
+    <Page title={group.data.name || 'Groupe'}>
+      <Group data={group.data} />
+    </Page>
+  ) : group && group.error ? (
+    <ErrorPage error={group.error} />
+  ) : null
+}

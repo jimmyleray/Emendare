@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Header, NotificationAlert, Sidebar } from '../../../components'
 
 interface IProps {
@@ -7,7 +7,7 @@ interface IProps {
 
 // Main Application layout
 export const Layout = (props: IProps) => {
-  const [displaySidebarOnMobile, setSidebarDisplay] = useState(false)
+  const [displaySidebarOnMobile, setSidebarDisplay] = React.useState(false)
 
   return (
     <div className="is-flex" style={{ flexDirection: 'column' }}>

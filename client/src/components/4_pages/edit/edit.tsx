@@ -12,22 +12,15 @@
 import React from 'react'
 import { DataContext, ErrorPage, Edit, Page } from '../../../components'
 
-export const EditPage = (props: any) => (
-  <DataContext.Consumer>
-    {({ get }) => {
-      const text = get('text')(props.match.params.id)
+export const EditPage = (props: any) => {
+  const data = React.useContext(DataContext)
+  const text = data.get('text')(props.match.params.id)
 
-      if (text) {
-        if (text.error) {
-          return <ErrorPage error={text.error} />
-        } else if (text.data) {
-          return (
-            <Page title={'Amendement de ' + text.data.name}>
-              <Edit data={text.data} />
-            </Page>
-          )
-        }
-      }
-    }}
-  </DataContext.Consumer>
-)
+  return text && text.data ? (
+    <Page title={'Amendement de ' + text.data.name}>
+      <Edit data={text.data} />
+    </Page>
+  ) : text && text.error ? (
+    <ErrorPage error={text.error} />
+  ) : null
+}

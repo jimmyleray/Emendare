@@ -9,9 +9,12 @@ import React from 'react'
 import { Button, Page } from '../../../components'
 import { path } from '../../../config'
 
-export const ErrorPage = ({
-  error = { code: 404, message: "Oups, cette page n'existe pas ou plus" }
-}) => (
+const defaultError = {
+  code: 404,
+  message: "Oups, cette page n'existe pas ou plus"
+}
+
+export const ErrorPage = ({ error = defaultError }) => (
   <Page title="Introuvable">
     <div className="field has-text-centered">
       <h1 className="is-size-3">Erreur {error.code}</h1>
