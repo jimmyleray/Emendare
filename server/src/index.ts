@@ -13,8 +13,8 @@ import bcrypt from 'bcrypt'
 
 // Matcher utility
 // https://github.com/jonschlinkert/is-match
-import isMatch from 'is-match'
-const isMatchZenika = isMatch('*@zenika.com')
+// import isMatch from 'is-match'
+// const isMatchZenika = isMatch('*@zenika.com')
 
 import { delay, isUndefined } from 'lodash'
 
@@ -455,14 +455,9 @@ io.on('connection', socket => {
       await user.save()
       session.user = user
 
-      let text = await Text.model.findById(textID)
+      const text = await Text.model.findById(textID)
       text.amends.push(amend._id)
       await text.save()
-
-      text = await Text.model
-        .findById(textID)
-        .populate('amends')
-        .populate('group')
 
       await new Event.model({
         targetID: amend._id,
@@ -472,7 +467,6 @@ io.on('connection', socket => {
       const events = await Event.model.find().sort('-created')
       io.emit('events/all', { data: events })
 
-      text = await Text.model.findById(textID)
       io.emit('text/' + text._id, { data: text })
       socket.emit('postAmend', { data: amend })
     } else {
