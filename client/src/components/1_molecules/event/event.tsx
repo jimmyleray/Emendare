@@ -47,11 +47,20 @@ const typeToText = (type: string) => (target: any) => {
         <p>
           <Icon
             type={
-              'fas ' + (target.accepted ? 'fa-check-circle' : 'fa-times-circle')
+              'fas ' +
+              (target.conflicted
+                ? 'fa-minus-circle'
+                : target.accepted
+                ? 'fa-check-circle'
+                : 'fa-times-circle')
             }
             className={
               'fa-lg ' +
-              (target.accepted ? 'has-text-success' : 'has-text-danger')
+              (target.conflicted
+                ? 'has-text-dark'
+                : target.accepted
+                ? 'has-text-success'
+                : 'has-text-danger')
             }
           />
           <Icon type="fas fa-chevron-right" />
@@ -65,7 +74,12 @@ const typeToText = (type: string) => (target: any) => {
           {' - '}
           L'amendement{' '}
           <span className="has-text-weight-semibold">"{target.name}"</span> a
-          été {target.accepted ? 'accepté' : 'refusé'}
+          été{' '}
+          {target.conflicted
+            ? "refusé à cause d'un conflit technique"
+            : target.accepted
+            ? 'accepté par les participants'
+            : 'refusé par les participants'}
         </p>
       )
     case 'text':

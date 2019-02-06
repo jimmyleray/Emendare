@@ -215,17 +215,23 @@ export const Text = ({ data }: any) => {
                                   .reverse()
                                   .map((amend: any) => (
                                     <p key={amend._id}>
-                                      {amend.accepted && !amend.conflicted ? (
+                                      {amend.conflicted ? (
+                                        <Icon
+                                          type="fas fa-minus-circle"
+                                          className="has-text-dark"
+                                          title="Refusé à cause d'un conflit technique"
+                                        />
+                                      ) : amend.accepted ? (
                                         <Icon
                                           type="fas fa-check-circle"
                                           className="has-text-success"
-                                          title="Accepté"
+                                          title="Accepté par les participants"
                                         />
                                       ) : (
                                         <Icon
                                           type="fas fa-times-circle"
                                           className="has-text-danger"
-                                          title="Refusé"
+                                          title="Refusé par les participants"
                                         />
                                       )}
                                       <Link to={path.amend(amend._id)}>
