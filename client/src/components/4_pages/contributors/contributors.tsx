@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link, Page } from '../../../components'
 import { Socket } from '../../../services'
-import { shuffle } from 'lodash'
 
 interface IContributorsPageState {
   contributors: any[]
@@ -20,7 +19,9 @@ export class ContributorsPage extends React.Component<
   }
 
   public async componentDidMount() {
-    const contributors = shuffle(await Socket.fetch('contributors'))
+    const contributors = ((await Socket.fetch(
+      'contributors'
+    )) as any[]).reverse()
     this.setState({ contributors })
   }
 
