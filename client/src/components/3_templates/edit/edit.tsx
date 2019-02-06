@@ -67,15 +67,16 @@ export class Edit extends React.Component<IEditProps, IEditState> {
     this.hasDiffs = () => this.state.initialValue !== this.state.amendValue
 
     this.addAmend = () => {
-      Socket.fetch('postAmend', {
-        name: this.state.amendName,
-        description: this.state.amendDescription,
-        version: this.state.text.patches.length,
-        patch: this.state.patch,
-        textID: this.state.text._id
-      }).then((amend: any) => {
-        this.setState({ redirectID: amend._id, redirectToAmend: true })
-      })
+      // Add a newline at the amendValue end
+      // by default to avoid some conflicts
+      if (!this.state.amendValue.endsWith('\n')) {
+        this.setState({ amendValue: this.state.amendValue + '\n' }, () => {
+          this.computeDiff()
+          this.postAmend()
+        })
+      } else {
+        this.postAmend()
+      }
     }
 
     this.state = {
@@ -226,5 +227,17 @@ export class Edit extends React.Component<IEditProps, IEditState> {
         )}
       </UserContext.Consumer>
     )
+  }
+
+  private postAmend = () => {
+    Socket.fetch('postAmend', {
+      name: this.state.amendName,
+      description: this.state.amendDescription,
+      version: this.state.text.patches.length,
+      patch: this.state.patch,
+      textID: this.state.text._id
+    }).then((amend: any) => {
+      this.setState({ redirectID: amend._id, redirectToAmend: true })
+    })
   }
 }
