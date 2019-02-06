@@ -49,7 +49,7 @@
     "express": "4.16.4",
     "express-sslify": "1.2.0",
     "lodash": "4.17.11",
-    "react": "16.8.0",
+    "react": "16.8.1",
     "react-chartjs-2": "2.7.4",
     "react-dom": "16.8.0",
     "react-router-dom": "4.3.1",
