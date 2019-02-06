@@ -83,9 +83,10 @@ export class Explore extends React.Component<{}, IExploreState> {
                       <Button
                         className="is-fullwidth"
                         onClick={() => {
-                          this.setState({
-                            displayAddGroupForm: !this.state.displayAddGroupForm
-                          })
+                          this.setState(prevState => ({
+                            ...prevState,
+                            displayAddGroupForm: !prevState.displayAddGroupForm
+                          }))
                         }}
                       >
                         <span>

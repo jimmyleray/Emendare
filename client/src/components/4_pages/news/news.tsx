@@ -35,7 +35,10 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
     super(props)
 
     this.toggle = (name: string) => () => {
-      this.setState({ [name]: !(this.state as any)[name] } as any)
+      this.setState(
+        prevState =>
+          ({ ...prevState, [name]: !(prevState as any)[name] } as any)
+      )
     }
 
     this.updateLastEventDate = () => {

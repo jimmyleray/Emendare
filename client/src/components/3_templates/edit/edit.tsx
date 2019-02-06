@@ -59,9 +59,12 @@ export class Edit extends React.Component<IEditProps, IEditState> {
     }
 
     this.restoreInitialValue = () => {
-      this.setState({ amendValue: this.state.initialValue }, () => {
-        this.computeDiff()
-      })
+      this.setState(
+        prevState => ({ ...prevState, amendValue: prevState.initialValue }),
+        () => {
+          this.computeDiff()
+        }
+      )
     }
 
     this.hasDiffs = () => this.state.initialValue !== this.state.amendValue
@@ -70,10 +73,16 @@ export class Edit extends React.Component<IEditProps, IEditState> {
       // Add a newline at the amendValue end
       // by default to avoid some conflicts
       if (!this.state.amendValue.endsWith('\n')) {
-        this.setState({ amendValue: this.state.amendValue + '\n' }, () => {
-          this.computeDiff()
-          this.postAmend()
-        })
+        this.setState(
+          prevState => ({
+            ...prevState,
+            amendValue: prevState.initialValue + '\n'
+          }),
+          () => {
+            this.computeDiff()
+            this.postAmend()
+          }
+        )
       } else {
         this.postAmend()
       }
