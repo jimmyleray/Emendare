@@ -1,80 +1,58 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Header, NotificationAlert, Sidebar } from '../../../components'
 
-interface ILayoutProps {
+interface IProps {
   children: React.ReactNode
 }
 
-interface ILayoutState {
-  displaySidebarOnMobile: boolean
-}
-
 // Main Application layout
-export class Layout extends React.Component<ILayoutProps, ILayoutState> {
-  private setSidebarDisplay: any
+export const Layout = (props: IProps) => {
+  const [displaySidebarOnMobile, setSidebarDisplay] = useState(false)
 
-  constructor(props: ILayoutProps) {
-    super(props)
-
-    this.setSidebarDisplay = (displaySidebarOnMobile: boolean) => {
-      this.setState({
-        displaySidebarOnMobile
-      })
-    }
-
-    this.state = {
-      displaySidebarOnMobile: false
-    }
-  }
-
-  public render() {
-    return (
-      <div className="is-flex" style={{ flexDirection: 'column' }}>
-        <NotificationAlert />
+  return (
+    <div className="is-flex" style={{ flexDirection: 'column' }}>
+      <NotificationAlert />
+      <div
+        className="is-flex"
+        style={{ flex: '1', flexDirection: 'row', height: '100vh' }}
+      >
+        <Sidebar
+          className={displaySidebarOnMobile ? '' : 'is-hidden-mobile'}
+          style={{
+            flex: 'none',
+            width: '250px',
+            maxHeight: '100vh',
+            marginBottom: 0
+          }}
+        />
         <div
           className="is-flex"
-          style={{ flex: '1', flexDirection: 'row', height: '100vh' }}
+          style={{
+            flex: '1',
+            flexDirection: 'column',
+            width: '100%',
+            height: '100vh'
+          }}
         >
-          <Sidebar
-            className={
-              this.state.displaySidebarOnMobile ? '' : 'is-hidden-mobile'
-            }
-            style={{
-              flex: 'none',
-              width: '250px',
-              maxHeight: '100vh',
-              marginBottom: 0
-            }}
+          <Header
+            setSidebarDisplay={setSidebarDisplay}
+            sidebarDisplayed={displaySidebarOnMobile}
           />
-          <div
-            className="is-flex"
+          <main
             style={{
-              flex: '1',
-              flexDirection: 'column',
-              width: '100%',
-              height: '100vh'
+              flex: 1,
+              padding: '1.5rem',
+              minHeight: 'calc(100vh - 70px)',
+              overflow: 'auto'
+            }}
+            onClick={() => {
+              setSidebarDisplay(false)
             }}
           >
-            <Header
-              setSidebarDisplay={this.setSidebarDisplay}
-              sidebarDisplayed={this.state.displaySidebarOnMobile}
-            />
-            <main
-              style={{
-                flex: 1,
-                padding: '1.5rem',
-                minHeight: 'calc(100vh - 70px)',
-                overflow: 'auto'
-              }}
-              onClick={() => {
-                this.setSidebarDisplay(false)
-              }}
-            >
-              {this.props.children}
-            </main>
-          </div>
+            {props.children}
+          </main>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
