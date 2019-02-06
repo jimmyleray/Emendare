@@ -11,7 +11,7 @@ export const NotificationAlert = () => (
             style={{ margin: 0, borderRadius: 0 }}
           >
             <span className="has-text-weight-semibold">Emendare</span> a besoin
-            de votre autorisation pour{' '}
+            de savoir si vous souhaitez{' '}
             <button
               className="has-text-weight-semibold"
               style={{
@@ -26,10 +26,8 @@ export const NotificationAlert = () => (
               title="Demander l'autorisation d'activer les notifications"
               onClick={requestPermission}
             >
-              activer les notifications de bureau
+              autoriser ou non les notifications
             </button>
-            <br /> Vous pourrez ensuite les paramétrer plus finement sur votre
-            page de profil
           </Notification>
         )}
       </>
