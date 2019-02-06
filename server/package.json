@@ -38,7 +38,7 @@
     ]
   },
   "dependencies": {
-    "bcrypt": "^3.0.2",
+    "bcrypt": "^3.0.4",
     "crypto": "^1.0.1",
     "diff": "^4.0.1",
     "express": "^4.16.3",
