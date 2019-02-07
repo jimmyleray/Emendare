@@ -1,7 +1,6 @@
 import React from 'react'
 import { Time } from '../../../services'
 import { ITime } from '../../../interfaces'
-import { throttle } from 'lodash'
 
 interface IClockProps {
   date: Date | string
@@ -10,7 +9,6 @@ interface IClockProps {
 
 interface IClockState {
   time: ITime
-  intervalDelay: number
 }
 
 /**
@@ -21,19 +19,18 @@ interface IClockState {
  */
 export const Clock = (getTime: any) => {
   return class extends React.Component<IClockProps, IClockState> {
-    private clock: any
+    private clock: number = 0
 
     constructor(props: IClockProps) {
       super(props)
 
       this.state = {
-        time: getTime(this.props.date),
-        intervalDelay: 1000
+        time: getTime(this.props.date)
       }
     }
 
     public componentDidMount() {
-      this.start(this.state.intervalDelay)
+      this.start()
     }
 
     public componentWillUnmount() {
@@ -44,22 +41,22 @@ export const Clock = (getTime: any) => {
       return <span {...this.props}>{Time.toTimeString(this.state.time)}</span>
     }
 
-    private start = (intervalDelay: number) => {
-      this.clock = throttle(() => {
+    private start = (intervalDelay: number = 1000) => {
+      this.clock = window.setInterval(() => {
         const time: ITime = getTime(this.props.date)
         if (Time.isNegative(time)) {
           this.stop()
         } else {
-          this.setState({ time })
-          this.update(time)
+          this.setState({ time }, () => {
+            this.update(time, intervalDelay)
+          })
         }
       }, intervalDelay)
     }
 
-    private update = (time: ITime) => {
+    private update = (time: ITime, intervalDelay: number) => {
       // if the time is under 1 minute set the
       // intervalDelay to 1 second else set to 1 minute
-      const { intervalDelay } = this.state
       if (
         time.minutes === 0 &&
         time.hours === 0 &&
@@ -71,14 +68,12 @@ export const Clock = (getTime: any) => {
       } else if (time.minutes !== 0 && intervalDelay !== 60000) {
         this.stop()
         this.start(60000)
-      } else {
-        this.stop()
       }
     }
 
     private stop = () => {
       if (this.clock) {
-        this.clock.cancel()
+        clearInterval(this.clock)
       }
     }
   }
