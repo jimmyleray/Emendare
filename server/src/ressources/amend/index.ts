@@ -1,0 +1,6 @@
+export * from './amend'
+export * from './downVoteAmend'
+export * from './indVoteAmend'
+export * from './postAmend'
+export * from './unVoteAmend'
+export * from './upVoteAmend'
