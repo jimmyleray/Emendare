@@ -175,11 +175,10 @@ import * as ressources from './ressources'
 io.on('connection', socket => {
   const session: any = {}
 
-  Object.keys(ressources)
-    .map(key => (ressources as any)[key])
-    .forEach((ressource: any) => {
-      socket.on(ressource.name, ressource.callback({ io, socket, session }))
-    })
+  Object.keys(ressources).forEach(key => {
+    const ressource = (ressources as any)[key]
+    socket.on(ressource.name, ressource.callback({ io, socket, session }))
+  })
 })
 
 // Start Http Server
