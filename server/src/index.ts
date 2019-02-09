@@ -32,7 +32,6 @@ io.on('connection', socket => {
 
 // Server tasks
 import * as tasks from './tasks'
-tasks.updateDatabase()
 tasks.checkAmendVotes(io)
 
 // Start Http Server
