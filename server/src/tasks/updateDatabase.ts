@@ -1,8 +1,11 @@
-import { Group, Text, User } from '../models'
+import { Event, Group, Text, User } from '../models'
 
 export const updateDatabase = async () => {
   // On supprime tous les anciens groupes
   await Group.model.deleteMany({})
+
+  // On supprime tous les anciens events de groupe
+  await Event.model.deleteMany({ targetType: 'group' })
 
   // On supprime les références aux
   // groupes dans les users et texts
