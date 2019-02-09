@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "bcrypt": "^3.0.4",
+    "chalk": "^2.4.2",
     "crypto": "^1.0.1",
     "diff": "^4.0.1",
     "express": "^4.16.3",
@@ -51,6 +52,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "3.0.0",
+    "@types/chalk": "^2.2.0",
     "@types/diff": "4.0.1",
     "@types/express": "4.16.1",
     "@types/jest": "24.0.0",

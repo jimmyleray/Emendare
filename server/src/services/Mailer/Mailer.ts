@@ -1,5 +1,8 @@
 import nodemailer from 'nodemailer'
 
+// Chalk for colored logs
+import chalk from 'chalk'
+
 export class Mailer {
   private transporter: any
 
@@ -35,3 +38,8 @@ export class Mailer {
 
 // Create Mailer instance only for production
 export const Mail = process.env.NODE_ENV === 'production' ? new Mailer() : null
+console.log(
+  Mail
+    ? chalk.cyan('Mailer service is activate')
+    : chalk.yellow('Mailer service is for production only')
+)
