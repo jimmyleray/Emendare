@@ -73,7 +73,7 @@ export class Explore extends React.Component<{}, IExploreState> {
         {({ isConnected }) => (
           <DataContext.Consumer>
             {({ get }) => {
-              const groups = get('group')('all')
+              const groups = get('groups')('all')
 
               return groups && groups.data ? (
                 <>
