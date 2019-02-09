@@ -21,7 +21,6 @@ import {
 import { Socket } from '../../../services'
 
 interface INewsPageState {
-  displayGroupEvents: boolean
   displayTextEvents: boolean
   displayAmendEvents: boolean
   displayResultEvents: boolean
@@ -46,7 +45,6 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
     }
 
     this.state = {
-      displayGroupEvents: true,
       displayTextEvents: true,
       displayAmendEvents: true,
       displayResultEvents: true
@@ -86,17 +84,6 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                           </div>
                           <br />
                           <Buttons style={{ display: 'flex', marginBottom: 0 }}>
-                            <Button
-                              className={
-                                this.state.displayGroupEvents
-                                  ? 'is-danger'
-                                  : 'is-light'
-                              }
-                              onClick={this.toggle('displayGroupEvents')}
-                              style={{ flex: 1 }}
-                            >
-                              <Icon type="fas fa-users" /> <span>Groupe</span>
-                            </Button>
                             <Button
                               className={
                                 this.state.displayTextEvents
@@ -154,11 +141,6 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
 
                           <div>
                             {events.data
-                              .filter((event: any) =>
-                                event.targetType === 'group'
-                                  ? this.state.displayGroupEvents
-                                  : true
-                              )
                               .filter((event: any) =>
                                 event.targetType === 'text'
                                   ? this.state.displayTextEvents

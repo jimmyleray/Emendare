@@ -8,28 +8,16 @@ import {
   Columns,
   UserContext,
   DataContext,
-  Link,
-  Notification
+  Link
 } from '../../../components'
 import { path } from '../../../config'
 import { Socket } from '../../../services'
-import { chunk, sortBy } from 'lodash'
-
-const colors = [
-  { class: 'is-link', name: 'Bleu' },
-  { class: 'is-info', name: 'Ciel' },
-  { class: 'is-primary', name: 'Cyan' },
-  { class: 'is-success', name: 'Vert' },
-  { class: 'is-warning', name: 'Jaune' },
-  { class: 'is-danger', name: 'Rouge' }
-]
+import { chunk, isUndefined, sortBy } from 'lodash'
 
 interface IExploreState {
-  displayAddGroupForm: boolean
-  groupName: string
-  groupDescription: string
-  groupWhitelist: string
-  groupColor: string
+  displayAddTextForm: boolean
+  textName: string
+  textDescription: string
 }
 
 export class Explore extends React.Component<{}, IExploreState> {
@@ -45,24 +33,20 @@ export class Explore extends React.Component<{}, IExploreState> {
     }
 
     this.confirm = async () => {
-      await Socket.fetch('postGroup', {
-        name: this.state.groupName,
-        description: this.state.groupDescription,
-        whitelist: this.state.groupWhitelist,
-        color: this.state.groupColor
+      await Socket.fetch('postText', {
+        name: this.state.textName,
+        description: this.state.textDescription
       })
-      this.setState({ displayAddGroupForm: false, ...this.initialState })
+      this.setState({ displayAddTextForm: false, ...this.initialState })
     }
 
     this.initialState = {
-      groupName: '',
-      groupDescription: '',
-      groupWhitelist: '*',
-      groupColor: 'is-link'
+      textName: '',
+      textDescription: ''
     }
 
     this.state = {
-      displayAddGroupForm: false,
+      displayAddTextForm: false,
       ...this.initialState
     }
   }
@@ -73,9 +57,18 @@ export class Explore extends React.Component<{}, IExploreState> {
         {({ isConnected }) => (
           <DataContext.Consumer>
             {({ get }) => {
-              const groups = get('groups')('all')
+              const textsID = get('texts')('all')
 
-              return groups && groups.data ? (
+              let texts = []
+
+              if (textsID && textsID.data) {
+                texts = textsID.data
+                  .map((textID: string) => get('text')(textID))
+                  .filter((text: any) => !isUndefined(text))
+                  .map((text: any) => text.data)
+              }
+
+              return texts && texts.length > 0 ? (
                 <>
                   {false && isConnected() && (
                     <>
@@ -85,36 +78,36 @@ export class Explore extends React.Component<{}, IExploreState> {
                         onClick={() => {
                           this.setState(prevState => ({
                             ...prevState,
-                            displayAddGroupForm: !prevState.displayAddGroupForm
+                            displayAddTextForm: !prevState.displayAddTextForm
                           }))
                         }}
                       >
                         <span>
-                          {this.state.displayAddGroupForm
-                            ? 'Annuler la création du groupe'
-                            : 'Créer un nouveau groupe'}
+                          {this.state.displayAddTextForm
+                            ? 'Annuler la création du texte'
+                            : 'Créer un nouveau texte'}
                         </span>
                       </Button>
                     </>
                   )}
 
-                  {isConnected() && this.state.displayAddGroupForm && (
+                  {isConnected() && this.state.displayAddTextForm && (
                     <>
                       <Box style={{ marginBottom: 0 }}>
                         <Columns>
                           <Column>
                             <div className="field">
                               <label htmlFor="name" className="label">
-                                Nom du groupe
+                                Nom du texte
                                 <div className="control">
                                   <input
                                     required
                                     name="name"
                                     className="input"
                                     type="text"
-                                    value={this.state.groupName}
-                                    onChange={this.onChange('groupName')}
-                                    placeholder="Dénomination du nouveau groupe"
+                                    value={this.state.textName}
+                                    onChange={this.onChange('textName')}
+                                    placeholder="Nom du nouveau texte"
                                   />
                                 </div>
                               </label>
@@ -123,73 +116,19 @@ export class Explore extends React.Component<{}, IExploreState> {
                           <Column>
                             <div className="field">
                               <label htmlFor="description" className="label">
-                                Description du groupe
+                                Description du texte
                                 <div className="control">
                                   <input
                                     required
                                     name="description"
                                     className="input"
                                     type="text"
-                                    value={this.state.groupDescription}
-                                    onChange={this.onChange('groupDescription')}
-                                    placeholder="Description du nouveau groupe"
+                                    value={this.state.textDescription}
+                                    onChange={this.onChange('textDescription')}
+                                    placeholder="Description du nouveau texte"
                                   />
                                 </div>
                               </label>
-                            </div>
-                          </Column>
-                        </Columns>
-                        <Columns>
-                          <Column>
-                            <div className="field">
-                              <label htmlFor="description" className="label">
-                                Liste blanche{' '}
-                                <span className="has-text-weight-semibold">
-                                  (patterns d'emails séparés par des virgules)
-                                </span>
-                                <div className="control">
-                                  <input
-                                    required
-                                    name="description"
-                                    className="input"
-                                    type="text"
-                                    value={this.state.groupWhitelist}
-                                    onChange={this.onChange('groupWhitelist')}
-                                    placeholder="Description du nouveau groupe"
-                                  />
-                                </div>
-                              </label>
-                            </div>
-                          </Column>
-                          <Column>
-                            <div className="field">
-                              <span className="label">Couleur du groupe</span>
-                              <div
-                                style={{
-                                  display: 'flex',
-                                  flexWrap: 'wrap'
-                                }}
-                              >
-                                {colors.map(color => (
-                                  <Button
-                                    key={color.name}
-                                    className={
-                                      'is-rounded ' +
-                                      (color.class === this.state.groupColor
-                                        ? 'is-focused ' + color.class
-                                        : '')
-                                    }
-                                    style={{ flex: 1 }}
-                                    onClick={() => {
-                                      this.setState({
-                                        groupColor: color.class
-                                      })
-                                    }}
-                                  >
-                                    {color.name}
-                                  </Button>
-                                ))}
-                              </div>
                             </div>
                           </Column>
                         </Columns>
@@ -197,41 +136,35 @@ export class Explore extends React.Component<{}, IExploreState> {
                       <Button
                         className="is-fullwidth is-success"
                         disabled={
-                          !this.state.groupName ||
-                          !this.state.groupDescription ||
-                          !this.state.groupWhitelist ||
-                          !this.state.groupColor
+                          !this.state.textName || !this.state.textDescription
                         }
                         onClick={this.confirm}
                       >
-                        Confirmer la création du groupe
+                        Confirmer la création du texte
                       </Button>
                     </>
                   )}
                   <br />
-                  {chunk(
-                    sortBy(groups.data, ['followersCount']).reverse(),
-                    3
-                  ).map((row, index) => (
-                    <Columns key={index}>
-                      {row.map((group: any) => (
-                        <Column key={group._id} className="is-one-third">
-                          <Link to={path.group(group._id)}>
-                            <Notification
-                              className={group.color || colors[0].class}
-                            >
-                              <p className="is-size-3">{group.name}</p>
-                              <p>{group.description}</p>
-                              <p>
-                                {group.followersCount} membre
-                                {group.followersCount > 1 ? 's' : ''}
-                              </p>
-                            </Notification>
-                          </Link>
-                        </Column>
-                      ))}
-                    </Columns>
-                  ))}
+                  {chunk(sortBy(texts, ['followersCount']).reverse(), 3).map(
+                    (row, index) => (
+                      <Columns key={index}>
+                        {row.map((text: any) => (
+                          <Column key={text._id} className="is-one-third">
+                            <Link to={path.text(text._id)}>
+                              <Box>
+                                <p className="is-size-3">{text.name}</p>
+                                <p>{text.description}</p>
+                                <p>
+                                  {text.followersCount} participant
+                                  {text.followersCount > 1 ? 's' : ''}
+                                </p>
+                              </Box>
+                            </Link>
+                          </Column>
+                        ))}
+                      </Columns>
+                    )
+                  )}
                 </>
               ) : (
                 <></>

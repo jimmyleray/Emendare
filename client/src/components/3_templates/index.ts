@@ -1,7 +1,6 @@
 export * from './edit'
 export * from './explore'
 export * from './footer'
-export * from './group'
 export * from './header'
 export * from './navbar'
 export * from './sidebar'

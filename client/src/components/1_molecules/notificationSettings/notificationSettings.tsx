@@ -4,13 +4,7 @@ import React from 'react'
 import { Box, Button, NotificationsContext } from '../../../components'
 import { Socket } from '../../../services'
 
-const keys = [
-  'newGroup',
-  'newText',
-  'newAmend',
-  'amendAccepted',
-  'amendRefused'
-]
+const keys = ['newText', 'newAmend', 'amendAccepted', 'amendRefused']
 
 const change = (key: string) => async () => {
   await Socket.fetch('toggleNotificationSetting', { key })
@@ -18,8 +12,6 @@ const change = (key: string) => async () => {
 
 const mapKeyToTitle = (key: string) => {
   switch (key) {
-    case 'newGroup':
-      return 'Nouveau groupe'
     case 'newText':
       return 'Nouveau texte'
     case 'newAmend':

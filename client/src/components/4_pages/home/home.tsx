@@ -20,7 +20,7 @@ export const HomePage = () => (
         groupe
       </h2>
       <p className="is-size-5">
-        Vous pouvez parcourir ci-dessous l'ensemble des groupes disponibles sur
+        Vous pouvez parcourir ci-dessous l'ensemble des textes disponibles sur
         Emendare
       </p>
     </div>

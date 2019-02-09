@@ -9,11 +9,6 @@ const model = mongoose.model(
     followersCount: { type: Number, default: 0 },
     actual: { type: String, default: '' },
     patches: { type: [String], default: [] },
-    group: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Group',
-      required: true
-    },
     amends: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
       default: []

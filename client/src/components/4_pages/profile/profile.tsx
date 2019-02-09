@@ -44,30 +44,6 @@ export const ProfilePage = () => (
                   <Column>
                     <Box>
                       <p className="has-text-weight-semibold">
-                        Liste des groupes que vous avez rejoint
-                      </p>
-                      {user.followedGroups.length > 0 ? (
-                        <ul>
-                          {user.followedGroups
-                            .map(get('group'))
-                            .filter((group: any) => group && group.data)
-                            .map((group: any) => group.data)
-                            .map((followedGroup: any) => (
-                              <li key={followedGroup._id}>
-                                <Link to={path.group(followedGroup._id)}>
-                                  {followedGroup.name}
-                                </Link>
-                              </li>
-                            ))}
-                        </ul>
-                      ) : (
-                        <p className="has-text-weight-semibold has-text-danger">
-                          Aucun groupe rejoint
-                        </p>
-                      )}
-                      <br />
-
-                      <p className="has-text-weight-semibold">
                         Liste des textes auxquels vous participez
                       </p>
                       {user.followedTexts.length > 0 ? (

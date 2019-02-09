@@ -115,23 +115,17 @@ export class Edit extends React.Component<IEditProps, IEditState> {
           <>
             <div className="field has-text-centered">
               <h1 className="is-size-3">Proposition d'amendement</h1>
-              <h2 className="is-size-5">
-                {this.props.data.rules
-                  ? this.props.data.group.name
-                  : this.props.data.name}
-              </h2>
+              <h2 className="is-size-5">{this.props.data.name}</h2>
             </div>
             <br />
 
             <Buttons>
-              {this.props.data.group && (
+              {this.props.data && (
                 <Button to={path.text(this.props.data._id)}>
                   <Icon type="fas fa-chevron-left" />
                   <span>Retour au texte</span>
                 </Button>
               )}
-
-              <Spacer />
             </Buttons>
 
             <Columns>

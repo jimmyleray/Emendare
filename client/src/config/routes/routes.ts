@@ -18,7 +18,6 @@ export const routes: IRoute[] = [
   { name: 'code', path: '/charte-ethique' },
   { name: 'legal', path: '/mentions-legales' },
   { name: 'contributors', path: '/contributeurs' },
-  { name: 'group', path: withID('/groupe/') },
   { name: 'login', path: '/connexion' },
   { name: 'subscribe', path: '/inscription' },
   { name: 'profile', path: '/profil', private: true },

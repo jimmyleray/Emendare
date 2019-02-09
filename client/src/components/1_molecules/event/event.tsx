@@ -15,8 +15,6 @@ const typeToUrl = (type: string) => (target: any) => {
       return path.amend(target._id)
     case 'text':
       return path.text(target._id)
-    case 'group':
-      return path.group(target._id)
     default:
       return path.home
   }
@@ -96,24 +94,6 @@ const typeToText = (type: string) => (target: any) => {
           </span>
           {' - '}
           Un nouveau texte{' '}
-          <span className="has-text-weight-semibold">"{target.name}"</span> a
-          été créé
-        </p>
-      )
-    case 'group':
-      return (
-        <p>
-          <Icon type="fas fa-users" className="fa-lg has-text-danger" />
-          <Icon type="fas fa-chevron-right" />
-          <span>
-            Il y a{' '}
-            <StopWatch
-              date={target.created}
-              className="has-text-weight-semibold"
-            />
-          </span>
-          {' - '}
-          Un nouveau groupe{' '}
           <span className="has-text-weight-semibold">"{target.name}"</span> a
           été créé
         </p>

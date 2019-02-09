@@ -3,10 +3,10 @@ import { Link } from '../../../components'
 import { path } from '../../../config'
 
 const links: any[] = [
-  { url: 'https://github.com/jimmyleray/Emendare', title: 'GitHub' },
   { url: path.code, title: 'Charte éthique' },
   { url: path.contributors, title: 'Contributeurs' },
-  { url: path.legal, title: 'Mentions légales' }
+  { url: path.legal, title: 'Mentions légales' },
+  { url: 'https://github.com/jimmyleray/Emendare', title: 'Sources / GitHub' }
 ]
 
 export const Footer = () => (

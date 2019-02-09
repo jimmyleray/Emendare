@@ -1,8 +1,8 @@
 import socketIO from 'socket.io'
-import { Group, Event, User } from '../../models'
+import { Text, Event, User } from '../../models'
 
-export const postGroup = {
-  name: 'postGroup',
+export const postText = {
+  name: 'postText',
   callback: ({
     io,
     socket
@@ -10,30 +10,28 @@ export const postGroup = {
     io: socketIO.Server
     socket: socketIO.Socket
   }) => async ({ token, data }: any) => {
-    const { name, description, whitelist, color } = data
+    const { name, description } = data
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
-      const group = await new Group.model({
+      const text = await new Text.model({
         description,
-        name,
-        whitelist,
-        color
+        name
       }).save()
 
       await new Event.model({
-        targetID: group._id,
-        targetType: 'group'
+        targetID: text._id,
+        targetType: 'text'
       }).save()
 
       const events = await Event.model.find().sort('-created')
       io.emit('events/all', { data: events })
 
-      const groups = await Group.model.find({ parent: null })
-      io.emit('group/all', { data: groups })
+      const texts = await Text.model.find({ rules: false })
+      io.emit('texts/all', { data: texts })
 
-      socket.emit('postGroup', { data: group })
+      socket.emit('postText', { data: text })
     } else {
-      socket.emit('postGroup', {
+      socket.emit('postText', {
         error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
       })
     }

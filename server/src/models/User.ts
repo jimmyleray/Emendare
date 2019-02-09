@@ -13,10 +13,6 @@ const model = mongoose.model(
     lastEventDate: { type: Date, default: Date.now },
     token: { type: String, default: null },
     activationToken: { type: String, default: null },
-    followedGroups: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],
-      default: []
-    },
     followedTexts: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Text' }],
       default: []
@@ -38,7 +34,6 @@ const model = mongoose.model(
       default: []
     },
     notifications: {
-      newGroup: { type: Boolean, default: true },
       newText: { type: Boolean, default: true },
       newAmend: { type: Boolean, default: true },
       amendAccepted: { type: Boolean, default: true },
