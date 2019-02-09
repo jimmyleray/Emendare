@@ -5,11 +5,8 @@ import { User } from '../../models'
 import bcrypt from 'bcrypt'
 
 // Services and emails templates imports
-import { Crypto, Mailer } from '../../services'
+import { Crypto, Mail } from '../../services'
 import { activation } from '../../emails'
-
-// Create Mailer instance only for production
-const Mail = process.env.NODE_ENV === 'production' ? new Mailer() : null
 
 export const subscribe = {
   name: 'subscribe',

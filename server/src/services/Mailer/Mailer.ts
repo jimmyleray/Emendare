@@ -32,3 +32,6 @@ export class Mailer {
     return this.transporter.sendMail(options)
   }
 }
+
+// Create Mailer instance only for production
+export const Mail = process.env.NODE_ENV === 'production' ? new Mailer() : null
