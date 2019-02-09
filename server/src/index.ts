@@ -5,24 +5,9 @@ import config from './config'
 import express from 'express'
 const app = express()
 
-// Matcher utility
-// import isMatch from 'is-match'
-
 // MongoDB connection
-import Database from './mongo'
+import { Database } from './services'
 new Database().connect()
-
-// Public API
-import * as routes from './routes'
-Object.keys(routes).forEach(key => {
-  const route = (routes as any)[key]
-  app.get(route.path, route.callback)
-})
-
-// Error 404 Middleware
-app.use((req, res) => {
-  res.status(404).end()
-})
 
 // Add Socket.io to Express server
 import { Server } from 'http'
@@ -36,18 +21,16 @@ const io = socketIO(http, {
   serveClient: false
 })
 
-// SocketIO ressources
-import * as ressources from './ressources'
+// SocketIO routes
+import * as routes from './routes'
 io.on('connection', socket => {
-  const session: any = {}
-
-  Object.keys(ressources).forEach(key => {
-    const ressource = (ressources as any)[key]
-    socket.on(ressource.name, ressource.callback({ io, socket, session }))
+  Object.keys(routes).forEach(key => {
+    const route = (routes as any)[key]
+    socket.on(route.name, route.callback({ io, socket }))
   })
 })
 
-// Specific server tasks
+// Server tasks
 import * as tasks from './tasks'
 tasks.checkAmendVotes(io)
 
