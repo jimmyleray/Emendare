@@ -6,9 +6,11 @@ import {
   Button,
   Column,
   Columns,
+  Icon,
   UserContext,
   DataContext,
-  Link
+  Link,
+  Spacer
 } from '../../../components'
 import { path } from '../../../config'
 import { Socket } from '../../../services'
@@ -152,12 +154,23 @@ export class Explore extends React.Component<{}, IExploreState> {
                           <Column key={text._id} className="is-one-third">
                             <Link to={path.text(text._id)}>
                               <Box>
-                                <p className="is-size-3">{text.name}</p>
+                                <div
+                                  className="is-size-4 is-flex"
+                                  style={{ flexWrap: 'wrap' }}
+                                >
+                                  <p>{text.name}</p>
+                                  <Spacer />
+                                  <p>
+                                    {text.followersCount}{' '}
+                                    <Icon
+                                      type={
+                                        'fa fa-user' +
+                                        (text.followersCount > 1 ? 's' : '')
+                                      }
+                                    />
+                                  </p>
+                                </div>
                                 <p>{text.description}</p>
-                                <p>
-                                  {text.followersCount} participant
-                                  {text.followersCount > 1 ? 's' : ''}
-                                </p>
                               </Box>
                             </Link>
                           </Column>
