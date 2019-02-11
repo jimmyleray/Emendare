@@ -57,7 +57,7 @@
     "socket.io-client": "2.2.0"
   },
   "devDependencies": {
-    "@types/chart.js": "2.7.43",
+    "@types/chart.js": "2.7.44",
     "@types/diff": "4.0.1",
     "@types/enzyme": "^3.1.17",
     "@types/enzyme-adapter-react-16": "^1.0.3",
