@@ -1,7 +1,7 @@
-export const apiConfig = {
+export const apiConfig: any = {
   url: {
-    test: 'http://localhost:3030',
-    development: 'http://localhost:3030',
+    local: 'http://localhost:3030',
+    integration: 'https://emendare-api-integration.cleverapps.io',
     production: 'https://emendare-api.cleverapps.io'
   }
 }
