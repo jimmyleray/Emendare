@@ -1,8 +1,9 @@
 import io from 'socket.io-client'
-import { apiConfig } from '../../config'
 
 // Default Socket.io Instance
-const insecureSocket = io(apiConfig.url[process.env.DEPLOY_ENV || 'local'])
+const insecureSocket = io(
+  process.env.REACT_APP_API_URL || 'http://localhost:3030'
+)
 
 // Overwrited Socket.io Instance
 // With fetch method and token prop
