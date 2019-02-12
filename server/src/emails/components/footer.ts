@@ -1,9 +1,14 @@
 /**
  * Footer section
  */
-export const footer = `<mj-section background-color="hsl(0, 0%, 86%)">
-    <mj-column>
-      <mj-text font-size="10px"align="center">https://emendare.org/</mj-text>
-    </mj-column>
-  </mj-section>
+export const footer = `  
+<mj-section background-color="hsl(0, 0%, 86%)">
+<mj-column>
+  <mj-text font-size="18px" align="center">
+    <mj-raw>
+      <a style="text-decoration:none;" href="https://emendare.org"> Emendare</a>
+    </mj-raw>
+    </mj-text>
+</mj-column>
+</mj-section>
   `
