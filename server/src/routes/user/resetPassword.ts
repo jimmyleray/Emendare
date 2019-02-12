@@ -21,7 +21,7 @@ export const resetPassword = {
         }
       })
     } else {
-      let user = await User.model.findOne({ email })
+      const user = await User.model.findOne({ email })
       if (!user) {
         socket.emit('reset-password', {
           error: {
