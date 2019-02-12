@@ -20,4 +20,4 @@ export const activation = (activationToken: string) =>
   ${footer}
 </mj-body>
 </mjml>
-`)
+`).html
