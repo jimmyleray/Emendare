@@ -8,9 +8,9 @@ export const reset = (newPassword: string) =>
   ${header}
   <mj-section background-color="#fafafa">
     <mj-column width="400px">
-      <mj-text font-style="italic" font-size="20px" color="#626262">Réinitilisation du mot de passe</mj-text>
-      <mj-text color="#525252">Suite à votre demande de réinitialisation de mot de passe veuilliez trouver ci-joint le nouveau mot de passe pour vous connecter à votre session. Il est recomandé de le changer le plus rapidement.</mj-text>
-      <mj-text font-size="16px">Mot de passe : ${newPassword}</mj-text>
+      <mj-text font-style="italic" font-size="20px" color="#626262">Réinitialisation du mot de passe</mj-text>
+      <mj-text color="#525252">Suite à votre demande de réinitialisation de mot de passe, veuilliez trouver ci-joint votre nouveau mot de passe pour vous connecter à votre compte. Il est recomandé de le changer rapidement sur votre page de profil.</mj-text>
+      <mj-text font-size="18px">Mot de passe : ${newPassword}</mj-text>
       <mj-text color="#525252">L'équipe d'Emendare</mj-text>
     </mj-column>
   </mj-section>

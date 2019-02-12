@@ -8,7 +8,14 @@
 
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import { Button, Buttons, Icon, Notification, Page } from '../../../components'
+import {
+  Button,
+  Buttons,
+  Icon,
+  Link,
+  Notification,
+  Page
+} from '../../../components'
 import { Socket } from '../../../services'
 import { path } from '../../../config'
 
@@ -112,9 +119,9 @@ export class LoginPage extends React.Component<
               <Icon type="fas fa-lock" className="icon is-medium is-left" />
             </p>
             <div className="has-text-right" style={{ marginTop: 4 }}>
-              <Button to={path.reset} className="is-text">
+              <Link to={path.reset} className="is-text">
                 Mot de passe oublié ?
-              </Button>
+              </Link>
             </div>
           </div>
           <div className="has-text-centered">

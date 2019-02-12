@@ -28,24 +28,6 @@ export class ResetPage extends React.Component<{}, IResetPageState> {
     Socket.off('reset-password')
   }
 
-  private change = (name: string) => (event: any) => {
-    this.setState({ [name]: event.target.value } as IResetPageState)
-  }
-
-  private submit = (event: any) => {
-    event.preventDefault()
-
-    Socket.fetch('reset-password', {
-      email: this.state.email
-    })
-      .then(() => {
-        this.setState({ send: true, error: null })
-      })
-      .catch(error => {
-        this.setState({ error })
-      })
-  }
-
   public render() {
     return (
       <Page title="Reset password">
@@ -79,7 +61,7 @@ export class ResetPage extends React.Component<{}, IResetPageState> {
                   className="is-medium is-success is-fullwidth"
                   disabled={!this.state.email}
                 >
-                  Réinitiliser le mot de passe
+                  Réinitialiser le mot de passe
                 </Button>
               </div>
               <br />
@@ -93,13 +75,29 @@ export class ResetPage extends React.Component<{}, IResetPageState> {
           {this.state.send && (
             <Notification className="is-success has-text-centered">
               Vous allez recevoir dans quelques instants un email avec votre
-              nouveau mot de passe. Il est conseillé de changer ce mot de passe
-              le plus rapidement possible en allant dans les paramètres de votre
-              compte. Pensez le cas échéant à vérifier vos spams.
+              nouveau mot de passe. Pensez le cas échéant à vérifier vos spams.
             </Notification>
           )}
         </form>
       </Page>
     )
+  }
+
+  private change = (name: string) => (event: any) => {
+    this.setState({ [name]: event.target.value } as IResetPageState)
+  }
+
+  private submit = (event: any) => {
+    event.preventDefault()
+
+    Socket.fetch('reset-password', {
+      email: this.state.email
+    })
+      .then(() => {
+        this.setState({ send: true, error: null })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
   }
 }
