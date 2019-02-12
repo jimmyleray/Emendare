@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt'
 // Services and emails templates import
 import { Mail, Crypto } from '../../services'
 import { reset } from '../../emails'
-let user
+
 export const resetPassword = {
   name: 'reset-password',
   callback: ({ socket }: { socket: SocketIO.Socket }) => async ({

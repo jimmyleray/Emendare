@@ -65,7 +65,7 @@ export class ResetPage extends React.Component<{}, IResetPageState> {
                     value={this.state.email}
                     className="input is-medium"
                     type="email"
-                    aria-label="email-input"
+                    aria-label="email input"
                   />
                   <Icon
                     type="fas fa-envelope"
