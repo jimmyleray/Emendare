@@ -1,7 +1,7 @@
 /**
  * Footer section
  */
-export const footer = `  
+export const footer = `
 <mj-section background-color="hsl(0, 0%, 86%)">
 <mj-column>
   <mj-text font-size="18px" align="center">
@@ -11,4 +11,4 @@ export const footer = `
     </mj-text>
 </mj-column>
 </mj-section>
-  `
+`
