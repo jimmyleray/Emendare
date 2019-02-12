@@ -12,7 +12,7 @@ export const activation = (activationToken: string) =>
       <mj-text font-style="italic" font-size="20px" color="#626262">Activation du compte</mj-text>
       <mj-text color="#525252">Cliquez sur le lien ci-dessous pour activer votre compte sur Emendare:</mj-text>
       <mj-button background-color="#2a3448" href="${
-        config.myUrl
+        config.clientUrl
       }/activation/${activationToken}">Activer mon compte</mj-button>
       <mj-text color="#525252">L'équipe d'Emendare</mj-text>
     </mj-column>
