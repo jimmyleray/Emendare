@@ -6,7 +6,7 @@ export const footer = `
 <mj-column>
   <mj-text font-size="18px" align="center">
     <mj-raw>
-      <a style="text-decoration:none;" href="https://emendare.org"> Emendare</a>
+      <a style="text-decoration:none;" href="https://emendare.org">Emendare</a>
     </mj-raw>
     </mj-text>
 </mj-column>
