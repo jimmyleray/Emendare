@@ -38,6 +38,7 @@
     ]
   },
   "dependencies": {
+    "@types/mjml": "^4.0.1",
     "bcrypt": "^3.0.4",
     "chalk": "^2.4.2",
     "crypto": "^1.0.1",
@@ -45,6 +46,7 @@
     "express": "^4.16.3",
     "is-match": "^1.0.0",
     "lodash": "^4.17.11",
+    "mjml": "^4.3.1",
     "mongoose": "^5.4.10",
     "node-fetch": "^2.3.0",
     "nodemailer": "^5.1.1",

@@ -16,7 +16,6 @@ export const Router = () => (
 
             // Resolve Page Component
             route.component = (Pages as any)[capitalize(route.name) + 'Page']
-
             // Then return the Route
             return route.private ? (
               <PrivateRoute key={route.path} {...route} />
