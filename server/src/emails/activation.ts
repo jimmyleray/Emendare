@@ -1,4 +1,5 @@
 import mjml2html from 'mjml'
+import config from '../config'
 import { header, footer } from './components'
 
 export const activation = (activationToken: string) =>
@@ -9,8 +10,10 @@ export const activation = (activationToken: string) =>
   <mj-section background-color="#fafafa">
     <mj-column width="400px">
       <mj-text font-style="italic" font-size="20px" color="#626262">Activation du compte</mj-text>
-      <mj-text color="#525252">Cliquez sur le lien ci-dessous pour activer votre compte :</mj-text>
-      <mj-button background-color="#2a3448" href="https://emendare.org/activation/${activationToken}">Activer mon compte</mj-button>
+      <mj-text color="#525252">Cliquez sur le lien ci-dessous pour activer votre compte sur Emendare:</mj-text>
+      <mj-button background-color="#2a3448" href="${
+        config.myUrl
+      }/activation/${activationToken}">Activer mon compte</mj-button>
       <mj-text color="#525252">L'équipe d'Emendare</mj-text>
     </mj-column>
   </mj-section>
