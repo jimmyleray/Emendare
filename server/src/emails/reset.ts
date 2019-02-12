@@ -17,4 +17,4 @@ export const reset = (newPassword: string) =>
   ${footer}
 </mj-body>
 </mjml>
-`)
+`).html
