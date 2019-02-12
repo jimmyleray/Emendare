@@ -24,6 +24,9 @@ export class ResetPage extends React.Component<{}, IResetPageState> {
       send: false
     }
   }
+  public componentWillUnmount() {
+    Socket.off('reset-password')
+  }
 
   private change = (name: string) => (event: any) => {
     this.setState({ [name]: event.target.value } as IResetPageState)
@@ -41,10 +44,6 @@ export class ResetPage extends React.Component<{}, IResetPageState> {
       .catch(error => {
         this.setState({ error })
       })
-  }
-
-  public componentWillUnmount() {
-    Socket.off('reset-password')
   }
 
   public render() {
@@ -66,6 +65,7 @@ export class ResetPage extends React.Component<{}, IResetPageState> {
                     value={this.state.email}
                     className="input is-medium"
                     type="email"
+                    aria-label="email-input"
                   />
                   <Icon
                     type="fas fa-envelope"
