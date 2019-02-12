@@ -111,6 +111,11 @@ export class LoginPage extends React.Component<
               />
               <Icon type="fas fa-lock" className="icon is-medium is-left" />
             </p>
+            <div className="has-text-right" style={{ marginTop: 4 }}>
+              <Button to={path.reset} className="is-text">
+                Mot de passe oublié ?
+              </Button>
+            </div>
           </div>
           <div className="has-text-centered">
             <Buttons>
