@@ -51,7 +51,7 @@ export const resetPassword = {
                 socket.emit('reset-password', {
                   error: {
                     code: 500,
-                    message: "Erreur lors de l'envoie du mot du mail"
+                    message: "Erreur lors de l'envoi du mail"
                   }
                 })
               })
