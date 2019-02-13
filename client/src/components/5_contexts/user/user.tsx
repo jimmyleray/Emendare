@@ -1,10 +1,11 @@
 import React from 'react'
 import { Socket } from '../../../services'
+import { IError, IUser } from '../../../interfaces'
 
 export const UserContext = React.createContext({} as IUserProviderState)
 
 interface IUserProviderState {
-  user: any
+  user: IUser | null
   isConnectionPending: boolean
   isConnected: any
   logout: any
@@ -28,7 +29,7 @@ export class UserProvider extends React.Component<{}, IUserProviderState> {
   }
 
   public componentDidMount() {
-    Socket.on('user', ({ error, data }: any) => {
+    Socket.on('user', ({ error, data }: { error: IError; data: IUser }) => {
       if (!error) {
         this.setState({ user: data })
       }
@@ -38,7 +39,7 @@ export class UserProvider extends React.Component<{}, IUserProviderState> {
     if (token) {
       this.setState({ isConnectionPending: true })
       Socket.fetch('login')
-        .then(user => {
+        .then((user: any) => {
           this.setState({ user, isConnectionPending: false })
         })
         .catch(() => {

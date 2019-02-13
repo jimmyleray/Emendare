@@ -164,7 +164,7 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                                       style={{ marginBottom: '4px' }}
                                     >
                                       <Event data={event} />
-                                      {user &&
+                                      {lastEventDate &&
                                         newEventsCount > 0 &&
                                         (new Date(event.created).getTime() >
                                           lastEventDate &&

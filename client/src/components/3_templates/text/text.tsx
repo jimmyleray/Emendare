@@ -59,7 +59,8 @@ export const Text = ({ data }: any) => {
                   </Button>
 
                   {isConnected() &&
-                    (user.followedTexts.find(
+                    (user &&
+                    user.followedTexts.find(
                       (text: any) => text === data._id
                     ) ? (
                       <Button

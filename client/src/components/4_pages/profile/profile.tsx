@@ -31,76 +31,78 @@ export const ProfilePage = () => (
         <DataContext.Consumer>
           {({ get }) => {
             return (
-              <>
-                <div className="field has-text-centered">
-                  <h1 className="is-size-3">Mon profil</h1>
-                  <h2 className="is-size-5">{user.email}</h2>
+              user && (
+                <>
+                  <div className="field has-text-centered">
+                    <h1 className="is-size-3">Mon profil</h1>
+                    <h2 className="is-size-5">{user.email}</h2>
+                    <br />
+                    <Button onClick={logout} className="is-danger is-medium">
+                      Se déconnecter
+                    </Button>
+                  </div>
                   <br />
-                  <Button onClick={logout} className="is-danger is-medium">
-                    Se déconnecter
-                  </Button>
-                </div>
-                <br />
-                <Columns>
-                  <Column>
-                    <Box>
-                      <p className="has-text-weight-semibold">
-                        Liste des textes auxquels vous participez
-                      </p>
-                      {user.followedTexts.length > 0 ? (
-                        <ul>
-                          {user.followedTexts
-                            .map(get('text'))
-                            .filter((text: any) => text && text.data)
-                            .map((text: any) => text.data)
-                            .map((followedText: any) => (
-                              <li key={followedText._id}>
-                                <Link to={path.text(followedText._id)}>
-                                  {followedText.name}
-                                </Link>
-                              </li>
-                            ))}
-                        </ul>
-                      ) : (
-                        <p className="has-text-weight-semibold has-text-danger">
-                          Aucun texte suivi
+                  <Columns>
+                    <Column>
+                      <Box>
+                        <p className="has-text-weight-semibold">
+                          Liste des textes auxquels vous participez
                         </p>
-                      )}
-                      <br />
+                        {user.followedTexts.length > 0 ? (
+                          <ul>
+                            {user.followedTexts
+                              .map(get('text'))
+                              .filter((text: any) => text && text.data)
+                              .map((text: any) => text.data)
+                              .map((followedText: any) => (
+                                <li key={followedText._id}>
+                                  <Link to={path.text(followedText._id)}>
+                                    {followedText.name}
+                                  </Link>
+                                </li>
+                              ))}
+                          </ul>
+                        ) : (
+                          <p className="has-text-weight-semibold has-text-danger">
+                            Aucun texte suivi
+                          </p>
+                        )}
+                        <br />
 
-                      <p className="has-text-weight-semibold">
-                        Liste des amendements que vous avez proposés
-                      </p>
-                      {user.amends.length > 0 ? (
-                        <ul>
-                          {user.amends
-                            .map(get('amend'))
-                            .filter((amend: any) => amend && amend.data)
-                            .map((amend: any) => amend.data)
-                            .map((amend: any) => (
-                              <li key={amend._id}>
-                                <Link to={path.amend(amend._id)}>
-                                  {amend.name}
-                                </Link>
-                              </li>
-                            ))}
-                        </ul>
-                      ) : (
-                        <p className="has-text-weight-semibold has-text-danger">
-                          Aucun amendement proposé
+                        <p className="has-text-weight-semibold">
+                          Liste des amendements que vous avez proposés
                         </p>
-                      )}
-                    </Box>
-                  </Column>
+                        {user.amends.length > 0 ? (
+                          <ul>
+                            {user.amends
+                              .map(get('amend'))
+                              .filter((amend: any) => amend && amend.data)
+                              .map((amend: any) => amend.data)
+                              .map((amend: any) => (
+                                <li key={amend._id}>
+                                  <Link to={path.amend(amend._id)}>
+                                    {amend.name}
+                                  </Link>
+                                </li>
+                              ))}
+                          </ul>
+                        ) : (
+                          <p className="has-text-weight-semibold has-text-danger">
+                            Aucun amendement proposé
+                          </p>
+                        )}
+                      </Box>
+                    </Column>
 
-                  <Column>
-                    <NotificationSettings user={user} />
-                  </Column>
-                  <Column>
-                    <UserCredentials user={user} />
-                  </Column>
-                </Columns>
-              </>
+                    <Column>
+                      <NotificationSettings user={user} />
+                    </Column>
+                    <Column>
+                      <UserCredentials user={user} />
+                    </Column>
+                  </Columns>
+                </>
+              )
             )
           }}
         </DataContext.Consumer>

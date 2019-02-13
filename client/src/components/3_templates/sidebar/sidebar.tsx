@@ -76,7 +76,7 @@ export const Sidebar = ({ className, style }: any) => (
                     </Link>
                   </div>
 
-                  {user.followedTexts.length > 0 && (
+                  {user && user.followedTexts.length > 0 && (
                     <>
                       <br />
                       <p className="is-size-5 has-text-weight-semibold">
