@@ -7,6 +7,7 @@ import {
   StopWatch
 } from '../../../components'
 import { path } from '../../../config'
+import { IEvent } from '../../../interfaces'
 
 const typeToUrl = (type: string) => (target: any) => {
   switch (type) {
@@ -104,7 +105,7 @@ const typeToText = (type: string) => (target: any) => {
   }
 }
 
-export const Event = ({ data }: { data: any }) => (
+export const Event = ({ data }: { data: IEvent }) => (
   <DataContext.Consumer>
     {({ get }) => {
       if (data && data.targetType && data.targetID) {
