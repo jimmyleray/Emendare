@@ -1,16 +1,16 @@
-# Guide pour les contributeurs
+# Guide for contributors
 
-> Merci à vous de vous intéresser à Emendare !
-> La plateforme a besoin de vos contributions pour s'améliorer et perdurer.
+> Thank you for your interest in Emendare!
+> The platform needs your contributions to improve.
 
-Vous pouvez contribuer de plusieurs manières :
+You can contribute in several ways:
 
-- En rapportant des erreurs et bugs de la plateforme et / ou en proposant des corrections dans les [Issues](https://gitlab.com/emendare/emendare/issues)
-- En participant au développement et à la résolution d'un ticket du [Board](https://gitlab.com/emendare/emendare/boards)
-- En participant aux discussions sur le [slack Zenika](https://zenika.slack.com/messages/CD1BQ03A9/) (bientôt un slack dédié)
-- En participant au texte Roadmap sur la plateforme
-- Et bien sur en parlant d'Emendare autour de vous
+- By reporting errors and bugs of the platform and / or by proposing corrections in the [Issues](https://gitlab.com/emendare/emendare/issues)
+- By participating in the development and resolution of a [Board ticket](https://gitlab.com/emendare/emendare/boards)
+- By participating in discussions on the [slack Zenika](https://zenika.slack.com/messages/CD1BQ03A9/) (soon a dedicated slack)
+- By participating in the Roadmap text on the platform
+- And of course, talking about Emendare around you
 
-Vous pouvez aussi nous aider à enrichir cette page pour améliorer l'expérience des contributeurs.
+You can also help us to enrich this page to improve the contributors' experience.
 
-> N'hésitez pas à rejoindre la communauté Emendare.
+> Feel free to join the Emendare community.

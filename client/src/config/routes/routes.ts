@@ -19,6 +19,7 @@ export const routes: IRoute[] = [
   { name: 'legal', path: '/mentions-legales' },
   { name: 'contributors', path: '/contributeurs' },
   { name: 'login', path: '/connexion' },
+  { name: 'reset', path: '/reset-password' },
   { name: 'subscribe', path: '/inscription' },
   { name: 'profile', path: '/profil', private: true },
   { name: 'text', path: withID('/texte/') },
