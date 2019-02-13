@@ -28,8 +28,9 @@ export const updatePassword = {
         })
       } else {
         bcrypt.hash(password, 10, async (error, hash) => {
-          if (error) console.error(error)
-          else {
+          if (error) {
+            console.error(error)
+          } else {
             user.password = hash
             await user.save()
             // send the user updated
