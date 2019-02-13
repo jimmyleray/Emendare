@@ -18,6 +18,7 @@ import {
   Link,
   Page,
   NotificationSettings,
+  UserCredentials,
   DataContext,
   UserContext
 } from '../../../components'
@@ -94,6 +95,9 @@ export const ProfilePage = () => (
 
                   <Column>
                     <NotificationSettings user={user} />
+                  </Column>
+                  <Column>
+                    <UserCredentials user={user} />
                   </Column>
                 </Columns>
               </>
