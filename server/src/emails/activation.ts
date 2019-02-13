@@ -5,7 +5,7 @@ import { header, footer } from './components'
 export const activation = (activationToken: string) =>
   mjml2html(`
 <mjml>
-<mj-body>
+<mj-body width="100%">
   ${header}
   <mj-section background-color="#fafafa">
     <mj-column width="400px">
@@ -14,7 +14,7 @@ export const activation = (activationToken: string) =>
       <mj-button  href="${
         config.clientUrl
       }/activation/${activationToken}">Activer mon compte</mj-button>
-      <mj-text color="#525252">L'équipe d'Emendare</mj-text>
+      <mj-text align="right" color="#525252">L'équipe d'Emendare</mj-text>
     </mj-column>
   </mj-section>
   ${footer}

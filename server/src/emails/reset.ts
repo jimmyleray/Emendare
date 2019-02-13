@@ -4,7 +4,7 @@ import { header, footer } from './components'
 export const reset = (newPassword: string) =>
   mjml2html(`
 <mjml>
-<mj-body>
+<mj-body width="100%">
   ${header}
   <mj-section background-color="#fafafa">
       <mj-column width="400px">
@@ -15,7 +15,7 @@ export const reset = (newPassword: string) =>
             Mot de passe : <span style="border-radius:5%; background-color:hsl(0, 0%, 96%); padding:7px">${newPassword}</span>
           </mj-raw>
         </mj-text>
-        <mj-text color="#525252">L'équipe d'Emendare</mj-text>
+        <mj-text align="right" color="#525252">L'équipe d'Emendare</mj-text>
       </mj-column>
     </mj-section>
   ${footer}
