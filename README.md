@@ -1,4 +1,5 @@
 # [Emendare.org](https://emendare.org/) [![CircleCI](https://circleci.com/gh/jimmyleray/Emendare.svg?style=svg)](https://circleci.com/gh/jimmyleray/Emendare)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjimmyleray%2FEmendare.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjimmyleray%2FEmendare?ref=badge_shield)
 
 > Open source platform for drafting modifiable texts
 
@@ -106,3 +107,7 @@ The app.js server will allow http redirection to https as well as Gzip compressi
 ## Contributions
 
 To contribute to this project please refer to [Guide for contributors](https://github.com/jimmyleray/Emendare/blob/master/CONTRIBUTING.md)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjimmyleray%2FEmendare.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjimmyleray%2FEmendare?ref=badge_large)
