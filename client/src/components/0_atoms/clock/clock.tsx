@@ -47,28 +47,9 @@ export const Clock = (getTime: any) => {
         if (Time.isNegative(time)) {
           this.stop()
         } else {
-          this.setState({ time }, () => {
-            this.update(time, intervalDelay)
-          })
+          this.setState({ time })
         }
       }, intervalDelay)
-    }
-
-    private update = (time: ITime, intervalDelay: number) => {
-      // if the time is under 1 minute set the
-      // intervalDelay to 1 second else set to 1 minute
-      if (
-        time.minutes === 0 &&
-        time.hours === 0 &&
-        time.days === 0 &&
-        intervalDelay !== 1000
-      ) {
-        this.stop()
-        this.start(1000)
-      } else if (time.minutes !== 0 && intervalDelay !== 60000) {
-        this.stop()
-        this.start(60000)
-      }
     }
 
     private stop = () => {
