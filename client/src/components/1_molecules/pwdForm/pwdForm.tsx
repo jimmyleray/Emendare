@@ -68,7 +68,7 @@ export class PwdForm extends React.Component<IPwdFormProps, IPwdFormState> {
       })
       .catch((error: any) => {
         console.error(error)
-        this.setState({ error: error })
+        this.setState({ error })
       })
   }
 
@@ -76,7 +76,9 @@ export class PwdForm extends React.Component<IPwdFormProps, IPwdFormState> {
     if (inputValue) {
       if (isValid) {
         return 'input is-success'
-      } else return 'input is-danger'
+      } else {
+        return 'input is-danger'
+      }
     }
     return 'input'
   }
@@ -87,8 +89,11 @@ export class PwdForm extends React.Component<IPwdFormProps, IPwdFormState> {
     message: { true: string; false: string }
   ) {
     if (inputValue) {
-      if (isValid) return <p className="help is-success">{message.true}</p>
-      else return <p className="help is-danger">{message.false}</p>
+      if (isValid) {
+        return <p className="help is-success">{message.true}</p>
+      } else {
+        return <p className="help is-danger">{message.false}</p>
+      }
     }
     return null
   }
@@ -107,6 +112,7 @@ export class PwdForm extends React.Component<IPwdFormProps, IPwdFormState> {
                 this.state.pwdValidLength,
                 this.state.password
               )}
+              aria-label="email input"
               type="password"
             />
             <Icon type="fas fa-lock" className="icon is-medium is-left" />
@@ -131,6 +137,7 @@ export class PwdForm extends React.Component<IPwdFormProps, IPwdFormState> {
                 this.state.checkPassword
               )}
               type="password"
+              aria-label="password input"
             />
             <Icon type="fas fa-lock" className="icon is-medium is-left" />
           </div>
