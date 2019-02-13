@@ -5,8 +5,9 @@ import Adapter from 'enzyme-adapter-react-16'
 enzyme.configure({ adapter: new Adapter() })
 
 import { Clock } from './clock'
+import { delay } from 'lodash'
 
-it('should render a Clock', () => {
+it('should render a Clock', done => {
   const now = new Date()
   const getTime = () => now
   const HOC = Clock(getTime)
@@ -16,7 +17,11 @@ it('should render a Clock', () => {
   expect(component.instance()).toBeTruthy()
   const stop = jest.fn()
   component.instance().stop = stop
-  component.unmount()
-  expect(stop).toHaveBeenCalled()
-  expect(component.instance()).toBeFalsy()
+
+  delay(() => {
+    component.unmount()
+    expect(stop).toHaveBeenCalled()
+    expect(component.instance()).toBeFalsy()
+    done()
+  }, 2000)
 })
