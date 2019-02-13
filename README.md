@@ -2,7 +2,7 @@
 
 > Open source platform for drafting modifiable texts
 
-[![CodeFactor](https://www.codefactor.io/repository/github/jimmyleray/emendare/badge)](https://www.codefactor.io/repository/github/jimmyleray/emendare) [![Codecov](https://img.shields.io/codecov/c/github/jimmyleray/Emendare.svg?style=flat)](https://codecov.io/gh/JimmyLeray/Emendare) ![Code Size](https://img.shields.io/github/languages/code-size/jimmyleray/Emendare.svg?style=flat) ![Last commit](https://img.shields.io/github/last-commit/jimmyleray/Emendare.svg?style=flat) [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jimmyleray/Emendare/issues) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjimmyleray%2FEmendare.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjimmyleray%2FEmendare?ref=badge_shield)
+[![CodeFactor](https://www.codefactor.io/repository/github/jimmyleray/emendare/badge)](https://www.codefactor.io/repository/github/jimmyleray/emendare) [![Codecov](https://img.shields.io/codecov/c/github/jimmyleray/Emendare.svg?style=flat)](https://codecov.io/gh/JimmyLeray/Emendare) ![Code Size](https://img.shields.io/github/languages/code-size/jimmyleray/Emendare.svg?style=flat) ![Last commit](https://img.shields.io/github/last-commit/jimmyleray/Emendare.svg?style=flat) [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jimmyleray/Emendare/issues) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## Tech / framework used
 
@@ -107,6 +107,6 @@ The app.js server will allow http redirection to https as well as Gzip compressi
 
 To contribute to this project please refer to [Guide for contributors](https://github.com/jimmyleray/Emendare/blob/master/CONTRIBUTING.md)
 
-
 ## License
+
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjimmyleray%2FEmendare.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjimmyleray%2FEmendare?ref=badge_large)
