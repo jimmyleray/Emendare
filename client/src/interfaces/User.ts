@@ -3,12 +3,12 @@ export interface IUser {
   _id: string
   activated: boolean
   activationToken: string
-  amends: Array<any>
+  amends: any[]
   created: string
-  downVotes: Array<any>
+  downVotes: any[]
   email: string
-  followedTexts: Array<any>
-  indVotes: Array<any>
+  followedTexts: any[]
+  indVotes: any[]
   lastEventDate: string
   notification: {
     amendAccepted: boolean
@@ -18,5 +18,5 @@ export interface IUser {
   }
   password: string
   token: string
-  upVotes: Array<any>
+  upVotes: any[]
 }
