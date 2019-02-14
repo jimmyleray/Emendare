@@ -35,7 +35,7 @@ context('Cypress.Commands', () => {
     // @ts-ignore TS2339
     cy.get('button')
       .console('info')
-      .then($button => {
+      .then(($button: any) => {
         // subject is still $button
       })
   })
@@ -113,7 +113,7 @@ context('Cypress.config()', () => {
 
   it('Get and set configuration options', () => {
     // https://on.cypress.io/config
-    let myConfig = Cypress.config()
+    const myConfig = Cypress.config()
 
     expect(myConfig).to.have.property('animationDistanceThreshold', 5)
     expect(myConfig).to.have.property('baseUrl', null)
@@ -143,8 +143,8 @@ context('Cypress.dom', () => {
 
   // https://on.cypress.io/dom
   it('.isHidden() - determine if a DOM element is hidden', () => {
-    let hiddenP = Cypress.$('.dom-p p.hidden').get(0)
-    let visibleP = Cypress.$('.dom-p p.visible').get(0)
+    const hiddenP = Cypress.$('.dom-p p.hidden').get(0)
+    const visibleP = Cypress.$('.dom-p p.visible').get(0)
 
     // our first paragraph has css class 'hidden'
     expect(Cypress.dom.isHidden(hiddenP)).to.be.true

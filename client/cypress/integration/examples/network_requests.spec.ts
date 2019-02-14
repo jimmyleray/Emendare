@@ -61,7 +61,7 @@ context('Network Requests', () => {
   it('cy.route() - route responses to matching requests', () => {
     // https://on.cypress.io/route
 
-    let message = 'whoa, this comment does not exist'
+    const message = 'whoa, this comment does not exist'
     cy.server()
 
     // Listen to GET to comments/1
@@ -85,7 +85,7 @@ context('Network Requests', () => {
     cy.wait('@postComment')
 
     // get the route
-    cy.get('@postComment').should(xhr => {
+    cy.get('@postComment').should((xhr: any) => {
       expect(xhr.requestBody).to.include('email')
       expect(xhr.requestHeaders).to.have.property('Content-Type')
       expect(xhr.responseBody).to.have.property(
