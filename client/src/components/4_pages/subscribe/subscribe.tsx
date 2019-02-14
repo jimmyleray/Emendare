@@ -103,6 +103,7 @@ export class SubscribePage extends React.Component<{}, ISubscribePageState> {
                     onChange={this.change('email')}
                     className="input is-medium"
                     type="email"
+                    aria-label="email input"
                   />
                   <Icon
                     type="fas fa-envelope"
