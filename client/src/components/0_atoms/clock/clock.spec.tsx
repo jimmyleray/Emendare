@@ -24,5 +24,5 @@ it('should render a Clock', done => {
     component.unmount()
     expect(stop).toHaveBeenCalledTimes(2)
     done()
-  }, 3000)
+  }, 4000)
 })
