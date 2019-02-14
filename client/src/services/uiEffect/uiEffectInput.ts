@@ -13,18 +13,18 @@ export class UiEffectInput {
     if (inputValue || inputValue === 0) {
       if (isValid) {
         if (customCssColor && customCssColor.true) {
-          return 'input ' + customCssColor.true
+          return customCssColor.true
         } else {
-          return 'input is-success'
+          return 'is-success'
         }
       } else {
         if (customCssColor && customCssColor.false) {
-          return 'input ' + customCssColor.false
+          return customCssColor.false
         } else {
-          return 'input is-danger'
+          return 'is-danger'
         }
       }
     }
-    return 'input'
+    return ''
   }
 }
