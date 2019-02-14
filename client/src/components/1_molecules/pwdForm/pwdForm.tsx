@@ -1,146 +1,90 @@
 import React from 'react'
-import { Button, Icon } from '../..'
-import { IUser } from '../../../interfaces'
-import { Socket, Password, UiEffectInput } from '../../../services'
+import { Icon } from '../..'
+import { Password, UiEffectInput } from '../../../services'
 
 interface IPwdFormProps {
-  user: IUser
-}
-
-interface IPwdFormState {
+  change: any
   password: string
   checkPassword: string
-  error: any
-  pwdValidLength: boolean
+  pwdValid: boolean
   pwdSame: boolean
+  className?: string
 }
 
-export class PwdForm extends React.Component<IPwdFormProps, IPwdFormState> {
-  constructor(props: IPwdFormProps) {
-    super(props)
-
-    this.state = {
-      password: '',
-      checkPassword: '',
-      error: null,
-      pwdSame: false,
-      pwdValidLength: false
+const displayHelper = (
+  isValid: boolean,
+  inputValue: any,
+  message: { true: string; false: string }
+) => {
+  if (inputValue) {
+    if (isValid) {
+      return <p className="help is-success">{message.true}</p>
+    } else {
+      return <p className="help is-danger">{message.false}</p>
     }
   }
+  return null
+}
 
-  public componentWillUnmount() {
-    Socket.off('update-password')
-  }
-
-  public render() {
-    return (
-      <form onSubmit={this.submit}>
-        <div className="field">
-          <label>Changement de mot de passe</label>
-          <div className="control has-icons-left has-icons-right">
-            <input
-              placeholder="Mot de passe"
-              value={this.state.password}
-              onChange={this.change('password')}
-              className={UiEffectInput.setColor(
-                this.state.pwdValidLength,
-                this.state.password
-              )}
-              aria-label="email input"
-              type="password"
-            />
-            <Icon type="fas fa-lock" className="icon is-medium is-left" />
-          </div>
-          {this.displayHelper(this.state.pwdValidLength, this.state.password, {
-            true: 'Mot de passe valide',
-            false: 'Le mot de passe doit contenir au moins 8 charactères'
-          })}
+export const PwdForm = ({
+  password,
+  pwdValid,
+  change,
+  pwdSame,
+  checkPassword,
+  className
+}: IPwdFormProps) => {
+  return (
+    <React.Fragment>
+      <div className="field">
+        <div className="control has-icons-left has-icons-right">
+          <input
+            placeholder="Mot de passe"
+            value={password}
+            onChange={(event: any) =>
+              change(
+                'password',
+                Password.isLengthPasswordValid(event.target.value)
+              )(event)
+            }
+            className={
+              `input ${className} ` + UiEffectInput.setColor(pwdValid, password)
+            }
+            aria-label="email input"
+            type="password"
+          />
+          <Icon type="fas fa-lock" className="icon is-medium is-left" />
         </div>
-        <div className="field">
-          <div className="control has-icons-left has-icons-right">
-            <input
-              placeholder="Vérification du mot de passe"
-              value={this.state.checkPassword}
-              onChange={this.change('checkPassword')}
-              className={UiEffectInput.setColor(
-                this.state.pwdSame,
-                this.state.checkPassword
-              )}
-              type="password"
-              aria-label="password input"
-            />
-            <Icon type="fas fa-lock" className="icon is-medium is-left" />
-          </div>
-          {this.displayHelper(this.state.pwdSame, this.state.checkPassword, {
-            true: 'Mot de passe valide',
-            false: 'Les mots de passe ne sont pas les mêmes'
-          })}
+        {displayHelper(pwdValid, password, {
+          true: 'Mot de passe valide',
+          false: 'Le mot de passe doit contenir au moins 8 charactères'
+        })}
+      </div>
+      <div className="field">
+        <div className="control has-icons-left has-icons-right">
+          <input
+            placeholder="Vérification du mot de passe"
+            value={checkPassword}
+            onChange={(event: any) =>
+              change(
+                'checkPassword',
+                Password.isSamePassword(password, event.target.value)
+              )(event)
+            }
+            className={
+              `input ${className} ` +
+              UiEffectInput.setColor(pwdSame, checkPassword)
+            }
+            type="password"
+            aria-label="password input"
+          />
+          <Icon type="fas fa-lock" className="icon is-medium is-left" />
         </div>
-        <div className="field is-grouped is-grouped-right">
-          <Button
-            type="submit"
-            className="is-success"
-            disabled={!this.state.pwdValidLength || !this.state.pwdSame}
-          >
-            Validez
-          </Button>
-        </div>
-      </form>
-    )
-  }
-
-  private change = (field: string) => (event: any) => {
-    switch (field) {
-      case 'password':
-        this.setState({
-          [field]: event.target.value,
-          pwdValidLength: Password.isLengthPasswordValid(event.target.value)
-        } as any)
-        break
-      case 'checkPassword':
-        this.setState({
-          [field]: event.target.value,
-          pwdSame: Password.isSamePassword(
-            event.target.value,
-            this.state.password
-          )
-        } as any)
-        break
-    }
-  }
-
-  private submit = (event: any) => {
-    event.preventDefault()
-    Socket.fetch('update-password', {
-      token: this.props.user.token,
-      password: this.state.password
-    })
-      .then(() => {
-        this.setState({
-          password: '',
-          checkPassword: '',
-          pwdSame: false,
-          pwdValidLength: false
-        })
-      })
-      .catch((error: any) => {
-        console.error(error)
-        this.setState({ error })
-      })
-  }
-
-  private displayHelper(
-    isValid: boolean,
-    inputValue: any,
-    message: { true: string; false: string }
-  ) {
-    if (inputValue) {
-      if (isValid) {
-        return <p className="help is-success">{message.true}</p>
-      } else {
-        return <p className="help is-danger">{message.false}</p>
-      }
-    }
-    return null
-  }
+        {displayHelper(pwdSame, checkPassword, {
+          true: 'Mot de passe valide',
+          false: 'Les mots de passe ne sont pas les mêmes'
+        })}
+      </div>
+    </React.Fragment>
+  )
 }
