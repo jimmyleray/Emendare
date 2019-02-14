@@ -58,6 +58,7 @@ export class UserCredentials extends React.Component<
                   onChange={this.change('email')}
                   className="input"
                   type="email"
+                  aria-label=" email input"
                 />
                 <Icon
                   type="fas fa-envelope"
