@@ -19,49 +19,52 @@ export const updateEmail = {
           message: 'Requête invalide'
         }
       })
-    } else if (await User.model.find({ email })) {
-      socket.emit('update-email', {
-        error: {
-          code: 405,
-          message: 'Cet email est déjà utilisée'
-        }
-      })
     } else {
-      const user = await User.model.find({ token })
-      if (!user) {
+      if (await User.model.findOne({ email })) {
         socket.emit('update-email', {
           error: {
             code: 405,
-            message: 'Token invalide'
+            message: 'Cet email est déjà utilisée'
           }
         })
       } else {
-        // Set the new email and the token for the activation
-        const activationToken = Crypto.getToken()
-        user.activationToken = activationToken
-        user.email = email
-        user.activated = false
-        user.token = null
-        await user.save()
-        if (Mail) {
-          Mail.send({
-            to: email,
-            subject: 'Activation de votre compte Emendare',
-            html: activation(activationToken)
-          })
-            .then(() => {
-              // TODO: deconnect the user
-            })
-            .catch(error => {
-              console.error(error)
-            })
-        } else {
+        const user = await User.model.findOne({ token })
+        if (!user) {
           socket.emit('update-email', {
             error: {
-              code: 500,
-              message: "Les mails ne sont activés qu'en production"
+              code: 405,
+              message: 'Token invalide'
             }
           })
+        } else {
+          // Set the new email and the token for the activation
+          const activationToken = Crypto.getToken()
+          user.activationToken = activationToken
+          user.email = email
+          user.activated = false
+          user.token = null
+          await user.save()
+          if (Mail) {
+            Mail.send({
+              to: email,
+              subject: 'Activation de votre compte Emendare',
+              html: activation(activationToken)
+            })
+              .then(() => {
+                // deconnect the user
+                socket.emit('logout')
+              })
+              .catch(error => {
+                console.error(error)
+              })
+          } else {
+            socket.emit('update-email', {
+              error: {
+                code: 500,
+                message: "Les mails ne sont activés qu'en production"
+              }
+            })
+          }
         }
       }
     }
