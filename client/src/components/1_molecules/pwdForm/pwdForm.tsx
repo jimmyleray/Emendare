@@ -32,61 +32,6 @@ export class PwdForm extends React.Component<IPwdFormProps, IPwdFormState> {
     Socket.off('update-password')
   }
 
-  private change = (field: string) => (event: any) => {
-    switch (field) {
-      case 'password':
-        this.setState({
-          [field]: event.target.value,
-          pwdValidLength: Password.isLengthPasswordValid(event.target.value)
-        } as any)
-        break
-      case 'checkPassword':
-        this.setState({
-          [field]: event.target.value,
-          pwdSame: Password.isSamePassword(
-            event.target.value,
-            this.state.password
-          )
-        } as any)
-        break
-    }
-  }
-
-  private submit = (event: any) => {
-    event.preventDefault()
-    Socket.fetch('update-password', {
-      token: this.props.user.token,
-      password: this.state.password
-    })
-      .then(() => {
-        this.setState({
-          password: '',
-          checkPassword: '',
-          pwdSame: false,
-          pwdValidLength: false
-        })
-      })
-      .catch((error: any) => {
-        console.error(error)
-        this.setState({ error })
-      })
-  }
-
-  private displayHelper(
-    isValid: boolean,
-    inputValue: any,
-    message: { true: string; false: string }
-  ) {
-    if (inputValue) {
-      if (isValid) {
-        return <p className="help is-success">{message.true}</p>
-      } else {
-        return <p className="help is-danger">{message.false}</p>
-      }
-    }
-    return null
-  }
-
   public render() {
     return (
       <form onSubmit={this.submit}>
@@ -182,17 +127,6 @@ export class PwdForm extends React.Component<IPwdFormProps, IPwdFormState> {
         console.error(error)
         this.setState({ error })
       })
-  }
-
-  private setColorInput = (isValid: boolean, inputValue: any) => {
-    if (inputValue) {
-      if (isValid) {
-        return 'input is-success'
-      } else {
-        return 'input is-danger'
-      }
-    }
-    return 'input'
   }
 
   private displayHelper(
