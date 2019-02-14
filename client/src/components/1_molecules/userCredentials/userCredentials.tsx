@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, PwdForm } from '../../../components'
+import { Box, Button, PwdForm, Icon, Notification } from '../../../components'
 import { IUser } from '../../../interfaces'
 import { Socket } from '../../../services'
 
@@ -8,11 +8,13 @@ interface IUserCredentialsProps {
 }
 
 interface IUserCredentialsStates {
+  email: string
   password: string
   checkPassword: string
   error: any
   pwdValid: boolean
   pwdSame: boolean
+  showWarning: boolean
 }
 
 export class UserCredentials extends React.Component<
@@ -22,16 +24,19 @@ export class UserCredentials extends React.Component<
   constructor(props: IUserCredentialsProps) {
     super(props)
     this.state = {
+      email: this.props.user.email,
       password: '',
       checkPassword: '',
       error: null,
       pwdSame: false,
-      pwdValid: false
+      pwdValid: false,
+      showWarning: false
     }
   }
 
   public componentWillUnmount() {
     Socket.off('update-password')
+    Socket.off('update-email')
   }
 
   public render() {
@@ -39,8 +44,39 @@ export class UserCredentials extends React.Component<
       <Box>
         <p className="has-text-weight-semibold">Identifiants utilisateur</p>
         <br />
-        <form onSubmit={this.submit}>
-          <p style={{ marginBottom: '2%' }}>Changement de mot de passe</p>
+        <p style={{ marginBottom: '2%' }}>Changement d'email</p>
+        {!this.state.showWarning ? (
+          <form
+            onSubmit={() => this.setState({ showWarning: true })}
+            style={{ marginBottom: '4%' }}
+          >
+            <div className="field">
+              <p className="control has-icons-left has-icons-right">
+                <input
+                  placeholder="Email"
+                  value={this.state.email}
+                  onChange={this.change('email')}
+                  className="input"
+                  type="email"
+                  aria-label=" email input"
+                />
+                <Icon
+                  type="fas fa-envelope"
+                  className="icon is-medium is-left"
+                />
+              </p>
+            </div>
+            <div className="field is-grouped is-grouped-right">
+              <Button type="submit" className="is-success">
+                Validez
+              </Button>
+            </div>
+          </form>
+        ) : (
+          this.displayWarning()
+        )}
+        <p style={{ marginBottom: '2%' }}>Changement de mot de passe</p>
+        <form onSubmit={this.submitPassword}>
           <PwdForm
             change={this.change}
             password={this.state.password}
@@ -76,13 +112,77 @@ export class UserCredentials extends React.Component<
           pwdSame: validInput ? validInput : false
         } as any)
         break
+      default:
+        this.setState({
+          [field]: event.target.value
+        } as any)
     }
   }
 
-  private submit = (event: any) => {
+  private displayWarning = () => {
+    if (this.state.error) {
+      return (
+        <Notification className="is-danger">
+          {this.state.error.message}
+          <div
+            style={{ marginTop: '2%' }}
+            className="field is-grouped is-grouped-right"
+          >
+            <Button
+              onClick={() =>
+                this.setState({
+                  showWarning: false,
+                  error: null,
+                  email: this.props.user.email
+                })
+              }
+              className="button is-inverted is-outlined is-danger"
+            >
+              Ok
+            </Button>
+          </div>
+        </Notification>
+      )
+    } else {
+      return (
+        <Notification className="is-warning">
+          <strong>Attention</strong> cette action va vous déconnecter, pour vous
+          connectez veuillez dans un premier temps{' '}
+          <strong>valider votre nouveau mail</strong>
+          <div
+            style={{ marginTop: '2%' }}
+            className="field is-grouped is-grouped-right"
+          >
+            <Button
+              onClick={this.submitEmail}
+              className="button is-inverted is-outlined is-warning"
+            >
+              Ok
+            </Button>
+          </div>
+        </Notification>
+      )
+    }
+  }
+
+  private submitEmail = () => {
+    Socket.fetch('update-email', {
+      email: this.state.email
+    })
+      .then(() => {
+        this.setState({
+          showWarning: false
+        })
+      })
+      .catch((error: any) => {
+        console.error(error)
+        this.setState({ error })
+      })
+  }
+
+  private submitPassword = (event: any) => {
     event.preventDefault()
     Socket.fetch('update-password', {
-      token: this.props.user.token,
       password: this.state.password
     })
       .then(() => {
