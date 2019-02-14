@@ -41,6 +41,7 @@ export const PwdForm = ({
           <input
             placeholder="Mot de passe"
             value={password}
+            aria-label="password input"
             onChange={(event: any) =>
               change(
                 'password',
@@ -50,7 +51,6 @@ export const PwdForm = ({
             className={
               `input ${className} ` + UiEffectInput.setColor(pwdValid, password)
             }
-            aria-label="email input"
             type="password"
           />
           <Icon type="fas fa-lock" className="icon is-medium is-left" />
@@ -64,6 +64,7 @@ export const PwdForm = ({
         <div className="control has-icons-left has-icons-right">
           <input
             placeholder="Vérification du mot de passe"
+            aria-label="password verification input"
             value={checkPassword}
             onChange={(event: any) =>
               change(
@@ -76,7 +77,6 @@ export const PwdForm = ({
               UiEffectInput.setColor(pwdSame, checkPassword)
             }
             type="password"
-            aria-label="password input"
           />
           <Icon type="fas fa-lock" className="icon is-medium is-left" />
         </div>
