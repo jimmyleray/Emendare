@@ -1,8 +1,9 @@
 import mjml2html from 'mjml'
 import config from '../config'
 import { header, footer } from './components'
+import { IEmail } from '../interfaces'
 
-export const activation = {
+export const activation: IEmail = {
   subject: 'Activation de votre compte Emendare',
   html: (activationToken: string) =>
     mjml2html(`
