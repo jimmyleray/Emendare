@@ -12,16 +12,17 @@ it('should render a Clock', done => {
   const getTime = (date: Date | string) =>
     Time.convertMsToTime(Time.getTimeLeft(date))
   const HOC = Clock(getTime)
-  const now = new Date()
-  const component = shallow(<HOC date={now} />)
+  const component = shallow(<HOC date={Time.addTimeToDate(new Date(), 1000)} />)
   expect(component).toBeTruthy()
 
   expect(component.instance()).toBeTruthy()
-  const stop = jest.fn()
+  const stop = jest.fn(component.instance().stop.bind(component.instance()))
   component.instance().stop = stop
 
   delay(() => {
-    expect(stop).toHaveBeenCalled()
+    expect(stop).toHaveBeenCalledTimes(1)
+    component.unmount()
+    expect(stop).toHaveBeenCalledTimes(2)
     done()
-  }, 2000)
+  }, 3000)
 })
