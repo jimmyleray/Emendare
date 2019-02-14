@@ -4,14 +4,16 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
+import { Time } from '../../../services'
 import { Clock } from './clock'
 import { delay } from 'lodash'
 
 it('should render a Clock', done => {
-  const now = new Date()
-  const getTime = () => now
+  const getTime = (date: Date | string) =>
+    Time.convertMsToTime(Time.getTimeLeft(date))
   const HOC = Clock(getTime)
-  const component = shallow(<HOC date={new Date()} />)
+  const now = new Date()
+  const component = shallow(<HOC date={now} />)
   expect(component).toBeTruthy()
 
   expect(component.instance()).toBeTruthy()
@@ -19,9 +21,7 @@ it('should render a Clock', done => {
   component.instance().stop = stop
 
   delay(() => {
-    component.unmount()
     expect(stop).toHaveBeenCalled()
-    expect(component.instance()).toBeFalsy()
     done()
   }, 2000)
 })
