@@ -8,9 +8,10 @@ import { activation } from '../../emails'
 export const updateEmail = {
   name: 'update-email',
   callback: ({ socket }: { socket: socketIO.Socket }) => async ({
-    data
+    data,
+    token
   }: any) => {
-    const { token, email } = data
+    const { email } = data
     if (!email || !token) {
       socket.emit('update-email', {
         error: {

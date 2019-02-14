@@ -7,9 +7,10 @@ import bcrypt from 'bcrypt'
 export const updatePassword = {
   name: 'update-password',
   callback: ({ socket }: { socket: socketIO.Socket }) => async ({
-    data
+    data,
+    token
   }: any) => {
-    const { token, password } = data
+    const { password } = data
     if (!password || !token) {
       socket.emit('update-password', {
         error: {
