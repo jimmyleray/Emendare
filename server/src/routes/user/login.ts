@@ -45,6 +45,7 @@ export const login = {
         socket.emit('login', {
           error: { code: 405, message: 'Le token est invalide' }
         })
+        socket.emit('logout')
       }
     } else {
       socket.emit('login', {

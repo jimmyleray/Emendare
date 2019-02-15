@@ -21,9 +21,7 @@ export class UserProvider extends React.Component<{}, IUserProviderState> {
       isConnected: () => this.state.user !== null,
       logout: async (event: any) => {
         event.preventDefault()
-        await Socket.fetch('logout')
-        localStorage.removeItem('token')
-        this.setState(() => ({ user: null }))
+        Socket.emit('logout')
       }
     }
   }
@@ -33,6 +31,9 @@ export class UserProvider extends React.Component<{}, IUserProviderState> {
       if (!error) {
         this.setState({ user: data })
       }
+    }).on('logout', () => {
+      localStorage.removeItem('token')
+      this.setState(() => ({ user: null }))
     })
 
     const token = localStorage.getItem('token')
