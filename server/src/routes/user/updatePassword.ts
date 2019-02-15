@@ -27,6 +27,7 @@ export const updatePassword = {
             message: 'Token invalide'
           }
         })
+        socket.emit('logout')
       } else {
         bcrypt.hash(password, 10, async (error, hash) => {
           if (error) {

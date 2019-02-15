@@ -36,6 +36,7 @@ export const updateEmail = {
               message: 'Token invalide'
             }
           })
+          socket.emit('logout')
         } else {
           // Set the new email and the token for the activation
           const activationToken = Crypto.getToken()
