@@ -47,8 +47,8 @@ export const subscribe = {
             if (Mail) {
               Mail.send({
                 to: email,
-                subject: 'Activation de votre compte Emendare',
-                html: activation(activationToken)
+                subject: activation.subject,
+                html: activation.html(activationToken)
               })
                 .then(() => {
                   socket.emit('subscribe')

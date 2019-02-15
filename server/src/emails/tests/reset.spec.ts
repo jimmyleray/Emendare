@@ -1,6 +1,6 @@
 import { reset } from '../reset'
 
 test('templating reset email', () => {
-  const pwd = 'abcdevrgsdsd'
-  expect(typeof reset(pwd)).toBe('string')
+  const pwd: string = 'abcdevrgsdsd'
+  expect(typeof reset.html(pwd)).toBe('string')
 })

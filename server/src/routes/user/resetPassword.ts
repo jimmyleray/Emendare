@@ -40,8 +40,8 @@ export const resetPassword = {
           if (Mail) {
             Mail.send({
               to: email,
-              subject: 'Réinitialisation de votre mot de passe',
-              html: reset(newPassword)
+              subject: reset.subject,
+              html: reset.html(newPassword)
             })
               .then(() => {
                 socket.emit('reset-password')
