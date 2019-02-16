@@ -37,14 +37,14 @@ export const NotificationSettings = (props: INotificationSettingsProps) => (
         <p className="has-text-weight-semibold">Réglages des notifications</p>
         <br />
         {permission === 'default' && (
-          <>
+          <React.Fragment>
             <div>
               <Button className="is-success" onClick={requestPermission}>
                 Activer les notifications
               </Button>
             </div>
             <br />
-          </>
+          </React.Fragment>
         )}
         {keys.map(key => (
           <div key={key} className="field">

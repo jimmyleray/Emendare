@@ -4,13 +4,13 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { Navbar } from './navbar'
+import { EarlyAlert } from './earlyAlert'
 import { Providers } from '../../../components'
 
-it('should render a Navbar', () => {
+it('should render a EarlyAlert', () => {
   const component = shallow(
     <Providers>
-      <Navbar />
+      <EarlyAlert />
     </Providers>
   )
   expect(component).toBeTruthy()

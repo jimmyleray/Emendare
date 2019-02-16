@@ -1,12 +1,10 @@
 import React from 'react'
-import { Page } from '../../../components'
+import { Hero, Page } from '../../../components'
 
 export const CodePage = () => (
   <Page title="Charte éthique">
-    <div className="field has-text-centered">
-      <h1 className="is-size-3">Charte éthique</h1>
-      <h2 className="is-size-5">Nos engagements et motivations</h2>
-      <br />
+    <Hero title="Charte éthique" subtitle="Nos engagements et motivations" />
+    <div>
       <p>
         Emendare est une plateforme dont l'objectif est de permettre à des
         organisations horizontales de produire des textes communs.

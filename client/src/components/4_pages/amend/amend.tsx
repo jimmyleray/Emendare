@@ -69,7 +69,7 @@ export const AmendPage = ({ match }: any) => (
             <UserContext.Consumer>
               {({ user }) => {
                 return (
-                  <>
+                  <React.Fragment>
                     <Buttons>
                       <Button to={path.text(amend.data.text)}>
                         <Icon type="fas fa-chevron-left" />
@@ -115,16 +115,16 @@ export const AmendPage = ({ match }: any) => (
                             }}
                           >
                             {amend.data.closed ? (
-                              <>
+                              <React.Fragment>
                                 <p>Le scrutin est clos</p>
                                 <p className="has-text-weight-semibold is-size-3">
                                   {amend.data.accepted && !amend.data.conflicted
                                     ? 'ACCEPTE'
                                     : 'REFUSE'}
                                 </p>
-                              </>
+                              </React.Fragment>
                             ) : (
-                              <>
+                              <React.Fragment>
                                 <p>Temps restant</p>
                                 <CountDown
                                   date={Time.addTimeToDate(
@@ -133,12 +133,12 @@ export const AmendPage = ({ match }: any) => (
                                   )}
                                   className="has-text-weight-semibold is-size-3"
                                 />
-                              </>
+                              </React.Fragment>
                             )}
                           </div>
 
                           {amend.data.closed && amend.data.conflicted && (
-                            <>
+                            <React.Fragment>
                               <br />
                               <p className="has-text-centered has-text-danger has-text-weight-semibold">
                                 Des conflits ont été détectés à l'application de
@@ -147,11 +147,11 @@ export const AmendPage = ({ match }: any) => (
                                 amendements de corriger ces conflits avant les
                                 scrutins.
                               </p>
-                            </>
+                            </React.Fragment>
                           )}
 
                           {user && (
-                            <>
+                            <React.Fragment>
                               <hr />
                               <Buttons
                                 className="is-fullwidth"
@@ -226,7 +226,7 @@ export const AmendPage = ({ match }: any) => (
                                   Je m'abstiens
                                 </Button>
                               </Buttons>
-                            </>
+                            </React.Fragment>
                           )}
                         </Box>
 
@@ -253,7 +253,7 @@ export const AmendPage = ({ match }: any) => (
                         )}
                       </Column>
                     </Columns>
-                  </>
+                  </React.Fragment>
                 )
               }}
             </UserContext.Consumer>

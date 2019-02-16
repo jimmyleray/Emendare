@@ -4,9 +4,9 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { Header } from './header'
+import { Alerts } from './alerts'
 
-it('should render a Header', () => {
-  const component = shallow(<Header />)
+it('should render an Alerts', () => {
+  const component = shallow(<Alerts />)
   expect(component).toBeTruthy()
 })

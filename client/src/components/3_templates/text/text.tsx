@@ -11,7 +11,8 @@ import {
   Link,
   ResultsIcon,
   DataContext,
-  UserContext
+  UserContext,
+  Hero
 } from '../../../components'
 import { Amend, Socket } from '../../../services'
 import { path } from '../../../config'
@@ -32,31 +33,20 @@ export const Text = ({ data }: any) => {
         <DataContext.Consumer>
           {({ get }) => {
             return (
-              <>
-                <div className="field has-text-centered">
-                  <h1 className="is-size-3">{data.name}</h1>
-                  <h2 className="is-size-5">{data.description}</h2>
-                  <p>
-                    <span className="has-text-weight-semibold">
-                      {data.followersCount +
-                        ' participant' +
-                        (data.followersCount > 1 ? 's' : '')}
-                    </span>{' '}
-                    -{' '}
-                    {data.patches.length +
-                      ' amendement' +
-                      (data.patches.length > 1 ? 's' : '') +
-                      ' accepté' +
-                      (data.patches.length > 1 ? 's' : '')}
-                  </p>
-                </div>
-                <br />
+              <React.Fragment>
+                <Hero title={data.name} subtitle={data.description} />
 
                 <Buttons>
-                  <Button to={path.home}>
-                    <Icon type="fas fa-chevron-left" />
-                    <span>Retour à l'accueil</span>
-                  </Button>
+                  {isConnected() && (
+                    <Button
+                      to={path.edit(data._id)}
+                      className="is-info"
+                      onClick={followText(data._id)}
+                    >
+                      <Icon type="fas fa-plus" />
+                      <span>Proposer un amendement</span>
+                    </Button>
+                  )}
 
                   {isConnected() &&
                     (user &&
@@ -79,29 +69,18 @@ export const Text = ({ data }: any) => {
                         Participer à ce texte
                       </Button>
                     ))}
-
-                  {isConnected() && (
-                    <Button
-                      to={path.edit(data._id)}
-                      className="is-info"
-                      onClick={followText(data._id)}
-                    >
-                      <Icon type="fas fa-plus" />
-                      <span>Proposer un amendement</span>
-                    </Button>
-                  )}
                 </Buttons>
 
                 <Columns>
                   <Column>
                     <Box>
                       {data.actual ? (
-                        <>
+                        <React.Fragment>
                           <p className="has-text-weight-semibold">
                             Version actuelle du texte
                           </p>
                           <br />
-                        </>
+                        </React.Fragment>
                       ) : (
                         <p className="has-text-weight-semibold has-text-danger">
                           Texte actuellement vide
@@ -123,7 +102,7 @@ export const Text = ({ data }: any) => {
                   <Column>
                     <Box>
                       {data.amends.length > 0 && (
-                        <>
+                        <React.Fragment>
                           <p className="has-text-weight-semibold">
                             Liste des scrutins en cours
                           </p>
@@ -134,7 +113,7 @@ export const Text = ({ data }: any) => {
                               (amend: any) =>
                                 amend && amend.data && !amend.data.closed
                             ).length > 0 ? (
-                            <>
+                            <React.Fragment>
                               {data.amends
                                 .map(get('amend'))
                                 .filter(
@@ -173,7 +152,7 @@ export const Text = ({ data }: any) => {
                                     </Link>
                                   </div>
                                 ))}
-                            </>
+                            </React.Fragment>
                           ) : (
                             <p className="has-text-weight-semibold has-text-danger">
                               Aucun vote en cours
@@ -186,7 +165,7 @@ export const Text = ({ data }: any) => {
                               (amend: any) =>
                                 amend && amend.data && amend.data.closed
                             ).length > 0 && (
-                            <>
+                            <React.Fragment>
                               <hr />
                               <p className="has-text-weight-semibold">
                                 Liste des anciens scrutins
@@ -229,9 +208,9 @@ export const Text = ({ data }: any) => {
                                     </Link>
                                   </p>
                                 ))}
-                            </>
+                            </React.Fragment>
                           )}
-                        </>
+                        </React.Fragment>
                       )}
 
                       {data.amends.length === 0 && (
@@ -242,7 +221,7 @@ export const Text = ({ data }: any) => {
                     </Box>
                   </Column>
                 </Columns>
-              </>
+              </React.Fragment>
             )
           }}
         </DataContext.Consumer>

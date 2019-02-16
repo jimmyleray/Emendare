@@ -53,6 +53,16 @@ export class Database {
         targetType: 'text',
         targetID: globalText._id
       }).save()
+
+      const secondText = await new Text.model({
+        name: 'Texte de test',
+        description: 'Juste un texte pour tester'
+      }).save()
+
+      await new Event.model({
+        targetType: 'text',
+        targetID: secondText._id
+      }).save()
     })
   }
 }

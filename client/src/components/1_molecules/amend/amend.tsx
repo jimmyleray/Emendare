@@ -40,13 +40,13 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
             : 'Amendement'}
         </p>
         {this.props.amend && (
-          <>
+          <React.Fragment>
             <p className="has-text-centered is-size-5 has-text-weight-bold">
               {this.props.amend.name}
             </p>
             <br />
             <p>{this.props.amend.description}</p>
-          </>
+          </React.Fragment>
         )}
         <hr />
         <div>
@@ -75,7 +75,7 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
                           : ''
                       }}
                     >
-                      {line || <>&nbsp;</>}
+                      {line || <React.Fragment>&nbsp;</React.Fragment>}
                     </p>
                   ))}
               </div>
