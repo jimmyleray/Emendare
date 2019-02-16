@@ -81,7 +81,7 @@ export class LoginPage extends React.Component<
             (this.props.location &&
               this.props.location.state &&
               this.props.location.state.from) ||
-            path.profile
+            path.home
           }
         />
       )

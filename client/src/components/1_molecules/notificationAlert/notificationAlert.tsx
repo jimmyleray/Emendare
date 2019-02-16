@@ -1,20 +1,27 @@
 import React from 'react'
-import { Notification, NotificationsContext } from '../../../components'
+import {
+  Icon,
+  Notification,
+  NotificationsContext,
+  UserContext
+} from '../../../components'
 
-export const NotificationAlert = () => (
-  <NotificationsContext.Consumer>
-    {({ permission, requestPermission }) => (
-      <>
-        {permission === 'default' && (
+export const NotificationAlert = () => {
+  const notificationsContext = React.useContext(NotificationsContext)
+  const userContext = React.useContext(UserContext)
+
+  return (
+    <>
+      {userContext.isConnected() &&
+        notificationsContext.permission === 'default' && (
           <Notification
             className="is-info has-text-centered is-hidden-mobile"
             style={{ margin: 0, borderRadius: 0 }}
           >
             <div className="container is-fluid">
-              <span className="has-text-weight-semibold">Emendare</span> a
-              besoin de savoir si vous souhaitez{' '}
+              <Icon type="fas fa-exclamation-circle" />
+              Emendare a besoin de savoir si vous souhaitez{' '}
               <button
-                className="has-text-weight-semibold"
                 style={{
                   cursor: 'pointer',
                   textDecoration: 'underline',
@@ -25,14 +32,13 @@ export const NotificationAlert = () => (
                   font: 'inherit'
                 }}
                 title="Demander l'autorisation d'activer les notifications"
-                onClick={requestPermission}
+                onClick={notificationsContext.requestPermission}
               >
                 autoriser ou non les notifications
               </button>
             </div>
           </Notification>
         )}
-      </>
-    )}
-  </NotificationsContext.Consumer>
-)
+    </>
+  )
+}

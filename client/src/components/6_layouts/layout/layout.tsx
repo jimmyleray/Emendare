@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, NotificationAlert } from '../../../components'
+import { Navbar, Alerts } from '../../../components'
 
 interface IProps {
   children: React.ReactNode
@@ -11,8 +11,8 @@ export const Layout = (props: IProps) => (
     className="is-flex"
     style={{ flex: '1', flexDirection: 'column', height: '100vh' }}
   >
+    <Alerts />
     <Navbar />
-    <NotificationAlert />
     <div style={{ flex: 1, overflow: 'auto' }}>
       <div className="container">
         <main style={{ padding: '2rem' }}>{props.children}</main>

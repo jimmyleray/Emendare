@@ -1,3 +1,4 @@
+export * from './alerts'
 export * from './edit'
 export * from './explore'
 export * from './navbar'
