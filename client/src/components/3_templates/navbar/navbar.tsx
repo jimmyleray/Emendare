@@ -95,7 +95,7 @@ export const Navbar = () => {
                 Mon Profil
               </Link>
             ) : (
-              <>
+              <React.Fragment>
                 <Link
                   to={path.login}
                   onClick={() => setActive(false)}
@@ -110,7 +110,7 @@ export const Navbar = () => {
                 >
                   Inscription
                 </Link>
-              </>
+              </React.Fragment>
             )}
 
             <Divider vertical={true} className="is-hidden-mobile" />

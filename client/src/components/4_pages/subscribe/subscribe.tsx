@@ -94,7 +94,7 @@ export class SubscribePage extends React.Component<{}, ISubscribePageState> {
           <br />
 
           {!this.state.send && (
-            <>
+            <React.Fragment>
               <div className="field">
                 <p className="control has-icons-left has-icons-right">
                   <input
@@ -144,7 +144,7 @@ export class SubscribePage extends React.Component<{}, ISubscribePageState> {
                   {this.state.error.message}
                 </Notification>
               )}
-            </>
+            </React.Fragment>
           )}
 
           {this.state.send && (

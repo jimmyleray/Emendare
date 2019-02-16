@@ -34,7 +34,7 @@ export const Text = ({ data }: any) => {
         <DataContext.Consumer>
           {({ get }) => {
             return (
-              <>
+              <React.Fragment>
                 <Hero title={data.name} subtitle={data.description} />
 
                 <Buttons>
@@ -76,12 +76,12 @@ export const Text = ({ data }: any) => {
                   <Column>
                     <Box>
                       {data.actual ? (
-                        <>
+                        <React.Fragment>
                           <p className="has-text-weight-semibold">
                             Version actuelle du texte
                           </p>
                           <br />
-                        </>
+                        </React.Fragment>
                       ) : (
                         <p className="has-text-weight-semibold has-text-danger">
                           Texte actuellement vide
@@ -103,7 +103,7 @@ export const Text = ({ data }: any) => {
                   <Column>
                     <Box>
                       {data.amends.length > 0 && (
-                        <>
+                        <React.Fragment>
                           <p className="has-text-weight-semibold">
                             Liste des scrutins en cours
                           </p>
@@ -114,7 +114,7 @@ export const Text = ({ data }: any) => {
                               (amend: any) =>
                                 amend && amend.data && !amend.data.closed
                             ).length > 0 ? (
-                            <>
+                            <React.Fragment>
                               {data.amends
                                 .map(get('amend'))
                                 .filter(
@@ -153,7 +153,7 @@ export const Text = ({ data }: any) => {
                                     </Link>
                                   </div>
                                 ))}
-                            </>
+                            </React.Fragment>
                           ) : (
                             <p className="has-text-weight-semibold has-text-danger">
                               Aucun vote en cours
@@ -166,7 +166,7 @@ export const Text = ({ data }: any) => {
                               (amend: any) =>
                                 amend && amend.data && amend.data.closed
                             ).length > 0 && (
-                            <>
+                            <React.Fragment>
                               <hr />
                               <p className="has-text-weight-semibold">
                                 Liste des anciens scrutins
@@ -209,9 +209,9 @@ export const Text = ({ data }: any) => {
                                     </Link>
                                   </p>
                                 ))}
-                            </>
+                            </React.Fragment>
                           )}
-                        </>
+                        </React.Fragment>
                       )}
 
                       {data.amends.length === 0 && (
@@ -222,7 +222,7 @@ export const Text = ({ data }: any) => {
                     </Box>
                   </Column>
                 </Columns>
-              </>
+              </React.Fragment>
             )
           }}
         </DataContext.Consumer>

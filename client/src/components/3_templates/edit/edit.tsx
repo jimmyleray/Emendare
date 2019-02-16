@@ -112,7 +112,7 @@ export class Edit extends React.Component<IEditProps, IEditState> {
     return (
       <UserContext.Consumer>
         {({ isConnected }) => (
-          <>
+          <React.Fragment>
             <Hero
               title="Proposition d'amendement"
               subtitle={this.props.data.name}
@@ -226,7 +226,7 @@ export class Edit extends React.Component<IEditProps, IEditState> {
                 </Button>
               </Column>
             </Columns>
-          </>
+          </React.Fragment>
         )}
       </UserContext.Consumer>
     )

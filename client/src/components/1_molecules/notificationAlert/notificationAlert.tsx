@@ -11,7 +11,7 @@ export const NotificationAlert = () => {
   const userContext = React.useContext(UserContext)
 
   return (
-    <>
+    <React.Fragment>
       {userContext.isConnected() &&
         notificationsContext.permission === 'default' && (
           <Notification
@@ -39,6 +39,6 @@ export const NotificationAlert = () => {
             </div>
           </Notification>
         )}
-    </>
+    </React.Fragment>
   )
 }

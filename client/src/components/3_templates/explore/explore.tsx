@@ -73,9 +73,9 @@ export class Explore extends React.Component<{}, IExploreState> {
               }
 
               return texts && texts.length > 0 ? (
-                <>
+                <React.Fragment>
                   {false && isConnected() && (
-                    <>
+                    <React.Fragment>
                       <br />
                       <Button
                         className="is-fullwidth"
@@ -92,11 +92,11 @@ export class Explore extends React.Component<{}, IExploreState> {
                             : 'Créer un nouveau texte'}
                         </span>
                       </Button>
-                    </>
+                    </React.Fragment>
                   )}
 
                   {isConnected() && this.state.displayAddTextForm && (
-                    <>
+                    <React.Fragment>
                       <Box style={{ marginBottom: 0 }}>
                         <Columns>
                           <Column>
@@ -146,7 +146,7 @@ export class Explore extends React.Component<{}, IExploreState> {
                       >
                         Confirmer la création du texte
                       </Button>
-                    </>
+                    </React.Fragment>
                   )}
                   <br />
                   <Grid
@@ -188,10 +188,8 @@ export class Explore extends React.Component<{}, IExploreState> {
                         </React.Fragment>
                       ))}
                   </Grid>
-                </>
-              ) : (
-                <></>
-              )
+                </React.Fragment>
+              ) : null
             }}
           </DataContext.Consumer>
         )}

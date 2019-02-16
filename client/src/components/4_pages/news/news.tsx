@@ -76,7 +76,7 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                         : 0
 
                       return (
-                        <>
+                        <React.Fragment>
                           <Hero
                             title="Fil d'actualités"
                             subtitle="Vous pouvez filtrer par type d'actualités"
@@ -177,7 +177,7 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                                 }
                               )}
                           </div>
-                        </>
+                        </React.Fragment>
                       )
                     }
                   }

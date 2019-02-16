@@ -101,7 +101,7 @@ const typeToText = (type: string) => (target: any) => {
       )
 
     default:
-      return <></>
+      return null
   }
 }
 
@@ -114,16 +114,14 @@ export const Event = ({ data }: { data: IEvent }) => (
         )(data.targetID)
 
         return target && target.data ? (
-          <>
+          <React.Fragment>
             <Link to={typeToUrl(data.targetType)(target.data)}>
               <Notification className="is-light">
                 {typeToText(data.targetType)(target.data)}
               </Notification>
             </Link>
-          </>
-        ) : (
-          <></>
-        )
+          </React.Fragment>
+        ) : null
       }
     }}
   </DataContext.Consumer>

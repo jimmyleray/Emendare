@@ -6,7 +6,7 @@ export const EarlyAlert = () => {
   const userContext = React.useContext(UserContext)
 
   return (
-    <>
+    <React.Fragment>
       {!userContext.isConnected() && (
         <Notification
           className="is-info has-text-centered"
@@ -19,6 +19,6 @@ export const EarlyAlert = () => {
           </div>
         </Notification>
       )}
-    </>
+    </React.Fragment>
   )
 }

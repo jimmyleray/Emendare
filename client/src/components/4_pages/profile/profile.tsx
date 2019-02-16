@@ -33,7 +33,7 @@ export const ProfilePage = () => (
           {({ get }) => {
             return (
               user && (
-                <>
+                <React.Fragment>
                   <Hero title="Mon profil" subtitle={user.email} />
                   <div>
                     <Button onClick={logout} className="is-danger is-medium">
@@ -100,7 +100,7 @@ export const ProfilePage = () => (
                       <UserCredentials user={user} />
                     </Column>
                   </Columns>
-                </>
+                </React.Fragment>
               )
             )
           }}
