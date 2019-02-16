@@ -1,7 +1,4 @@
 export * from './edit'
 export * from './explore'
-export * from './footer'
-export * from './header'
 export * from './navbar'
-export * from './sidebar'
 export * from './text'

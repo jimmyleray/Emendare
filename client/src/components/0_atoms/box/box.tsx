@@ -7,7 +7,12 @@ interface IProps {
 }
 
 export const Box = ({ children, className = '', ...rest }: IProps) => (
-  <div className={'box ' + className} {...rest}>
-    {children}
-  </div>
+  <>
+    <div className={'is-hidden-mobile box ' + className} {...rest}>
+      {children}
+    </div>
+    <div className={'is-hidden-tablet ' + className} {...rest}>
+      {children}
+    </div>
+  </>
 )

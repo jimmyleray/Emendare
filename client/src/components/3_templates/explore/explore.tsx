@@ -4,6 +4,7 @@ import React from 'react'
 import {
   Box,
   Button,
+  Divider,
   Column,
   Columns,
   Icon,
@@ -157,31 +158,34 @@ export class Explore extends React.Component<{}, IExploreState> {
                     {sortBy(texts, ['followersCount'])
                       .reverse()
                       .map(text => (
-                        <Link
-                          key={text._id}
-                          to={path.text(text._id)}
-                          style={{ display: 'inline-grid' }}
-                        >
-                          <Box>
-                            <div
-                              className="is-size-4 is-flex"
-                              style={{ flexWrap: 'wrap' }}
-                            >
-                              <p>{text.name}</p>
-                              <Spacer />
-                              <p>
-                                {text.followersCount}{' '}
-                                <Icon
-                                  type={
-                                    'fa fa-user' +
-                                    (text.followersCount > 1 ? 's' : '')
-                                  }
-                                />
-                              </p>
-                            </div>
-                            <p>{text.description}</p>
-                          </Box>
-                        </Link>
+                        <React.Fragment key={text._id}>
+                          <Divider className="is-hidden-tablet" />
+                          <Link
+                            to={path.text(text._id)}
+                            style={{ display: 'inline-grid' }}
+                            className="has-text-dark"
+                          >
+                            <Box>
+                              <div
+                                className="is-size-4 is-flex"
+                                style={{ flexWrap: 'wrap' }}
+                              >
+                                <p>{text.name}</p>
+                                <Spacer />
+                                <p>
+                                  {text.followersCount}{' '}
+                                  <Icon
+                                    type={
+                                      'fa fa-user' +
+                                      (text.followersCount > 1 ? 's' : '')
+                                    }
+                                  />
+                                </p>
+                              </div>
+                              <p>{text.description}</p>
+                            </Box>
+                          </Link>
+                        </React.Fragment>
                       ))}
                   </Grid>
                 </>

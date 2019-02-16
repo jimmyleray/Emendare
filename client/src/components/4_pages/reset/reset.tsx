@@ -42,6 +42,7 @@ export class ResetPage extends React.Component<{}, IResetPageState> {
               <div className="field">
                 <p className="control has-icons-left has-icons-right">
                   <input
+                    autoFocus={true}
                     placeholder="Email"
                     onChange={this.change('email')}
                     value={this.state.email}

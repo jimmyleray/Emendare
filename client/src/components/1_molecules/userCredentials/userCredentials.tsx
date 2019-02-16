@@ -24,7 +24,7 @@ export class UserCredentials extends React.Component<
   constructor(props: IUserCredentialsProps) {
     super(props)
     this.state = {
-      email: this.props.user.email,
+      email: '',
       password: '',
       checkPassword: '',
       error: null,
@@ -53,12 +53,12 @@ export class UserCredentials extends React.Component<
             <div className="field">
               <p className="control has-icons-left has-icons-right">
                 <input
-                  placeholder="Email"
-                  value={this.state.email}
+                  placeholder="Nouvel email"
                   onChange={this.change('email')}
                   className="input"
                   type="email"
-                  aria-label=" email input"
+                  aria-label="email input"
+                  value={this.state.email}
                 />
                 <Icon
                   type="fas fa-envelope"
@@ -67,8 +67,12 @@ export class UserCredentials extends React.Component<
               </p>
             </div>
             <div className="field is-grouped is-grouped-right">
-              <Button type="submit" className="is-success">
-                Validez
+              <Button
+                type="submit"
+                className="is-success"
+                disabled={!this.state.email}
+              >
+                Valider
               </Button>
             </div>
           </form>
@@ -90,7 +94,7 @@ export class UserCredentials extends React.Component<
               className="is-success"
               disabled={!this.state.pwdValid || !this.state.pwdSame}
             >
-              Validez
+              Valider
             </Button>
           </div>
         </form>

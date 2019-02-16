@@ -11,7 +11,9 @@ import {
   Link,
   ResultsIcon,
   DataContext,
-  UserContext
+  UserContext,
+  Spacer,
+  Hero
 } from '../../../components'
 import { Amend, Socket } from '../../../services'
 import { path } from '../../../config'
@@ -33,30 +35,19 @@ export const Text = ({ data }: any) => {
           {({ get }) => {
             return (
               <>
-                <div className="field has-text-centered">
-                  <h1 className="is-size-3">{data.name}</h1>
-                  <h2 className="is-size-5">{data.description}</h2>
-                  <p>
-                    <span className="has-text-weight-semibold">
-                      {data.followersCount +
-                        ' participant' +
-                        (data.followersCount > 1 ? 's' : '')}
-                    </span>{' '}
-                    -{' '}
-                    {data.patches.length +
-                      ' amendement' +
-                      (data.patches.length > 1 ? 's' : '') +
-                      ' accepté' +
-                      (data.patches.length > 1 ? 's' : '')}
-                  </p>
-                </div>
-                <br />
+                <Hero title={data.name} subtitle={data.description} />
 
                 <Buttons>
-                  <Button to={path.home}>
-                    <Icon type="fas fa-chevron-left" />
-                    <span>Retour à l'accueil</span>
-                  </Button>
+                  {isConnected() && (
+                    <Button
+                      to={path.edit(data._id)}
+                      className="is-info"
+                      onClick={followText(data._id)}
+                    >
+                      <Icon type="fas fa-plus" />
+                      <span>Proposer un amendement</span>
+                    </Button>
+                  )}
 
                   {isConnected() &&
                     (user &&
@@ -79,17 +70,6 @@ export const Text = ({ data }: any) => {
                         Participer à ce texte
                       </Button>
                     ))}
-
-                  {isConnected() && (
-                    <Button
-                      to={path.edit(data._id)}
-                      className="is-info"
-                      onClick={followText(data._id)}
-                    >
-                      <Icon type="fas fa-plus" />
-                      <span>Proposer un amendement</span>
-                    </Button>
-                  )}
                 </Buttons>
 
                 <Columns>

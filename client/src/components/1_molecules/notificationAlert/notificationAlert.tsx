@@ -10,24 +10,26 @@ export const NotificationAlert = () => (
             className="is-info has-text-centered is-hidden-mobile"
             style={{ margin: 0, borderRadius: 0 }}
           >
-            <span className="has-text-weight-semibold">Emendare</span> a besoin
-            de savoir si vous souhaitez{' '}
-            <button
-              className="has-text-weight-semibold"
-              style={{
-                cursor: 'pointer',
-                textDecoration: 'underline',
-                padding: 0,
-                border: 'none',
-                backgroundColor: 'transparent',
-                color: 'inherit',
-                font: 'inherit'
-              }}
-              title="Demander l'autorisation d'activer les notifications"
-              onClick={requestPermission}
-            >
-              autoriser ou non les notifications
-            </button>
+            <div className="container is-fluid">
+              <span className="has-text-weight-semibold">Emendare</span> a
+              besoin de savoir si vous souhaitez{' '}
+              <button
+                className="has-text-weight-semibold"
+                style={{
+                  cursor: 'pointer',
+                  textDecoration: 'underline',
+                  padding: 0,
+                  border: 'none',
+                  backgroundColor: 'transparent',
+                  color: 'inherit',
+                  font: 'inherit'
+                }}
+                title="Demander l'autorisation d'activer les notifications"
+                onClick={requestPermission}
+              >
+                autoriser ou non les notifications
+              </button>
+            </div>
           </Notification>
         )}
       </>

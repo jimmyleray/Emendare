@@ -8,8 +8,8 @@ import {
   Column,
   Columns,
   Icon,
-  Spacer,
-  UserContext
+  UserContext,
+  Hero
 } from '../../../components'
 import { Socket } from '../../../services'
 import { path } from '../../../config'
@@ -113,11 +113,10 @@ export class Edit extends React.Component<IEditProps, IEditState> {
       <UserContext.Consumer>
         {({ isConnected }) => (
           <>
-            <div className="field has-text-centered">
-              <h1 className="is-size-3">Proposition d'amendement</h1>
-              <h2 className="is-size-5">{this.props.data.name}</h2>
-            </div>
-            <br />
+            <Hero
+              title="Proposition d'amendement"
+              subtitle={this.props.data.name}
+            />
 
             <Buttons>
               {this.props.data && (
@@ -139,6 +138,7 @@ export class Edit extends React.Component<IEditProps, IEditState> {
                         name="title"
                         className="input"
                         type="text"
+                        autoFocus={true}
                         value={this.state.amendName}
                         onChange={this.onChange('amendName')}
                         placeholder="Nommez votre amendement en quelques mots"

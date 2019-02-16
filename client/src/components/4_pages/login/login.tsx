@@ -98,6 +98,7 @@ export class LoginPage extends React.Component<
           <div className="field">
             <p className="control has-icons-left has-icons-right">
               <input
+                autoFocus={true}
                 placeholder="Email"
                 value={this.state.email}
                 onChange={this.change('email')}

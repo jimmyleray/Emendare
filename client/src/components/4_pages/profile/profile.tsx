@@ -20,7 +20,8 @@ import {
   NotificationSettings,
   UserCredentials,
   DataContext,
-  UserContext
+  UserContext,
+  Hero
 } from '../../../components'
 import { path } from '../../../config'
 
@@ -33,10 +34,8 @@ export const ProfilePage = () => (
             return (
               user && (
                 <>
-                  <div className="field has-text-centered">
-                    <h1 className="is-size-3">Mon profil</h1>
-                    <h2 className="is-size-5">{user.email}</h2>
-                    <br />
+                  <Hero title="Mon profil" subtitle={user.email} />
+                  <div>
                     <Button onClick={logout} className="is-danger is-medium">
                       Se déconnecter
                     </Button>
