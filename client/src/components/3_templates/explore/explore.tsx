@@ -7,6 +7,7 @@ import {
   Column,
   Columns,
   Icon,
+  Grid,
   UserContext,
   DataContext,
   Link,
@@ -14,7 +15,7 @@ import {
 } from '../../../components'
 import { path } from '../../../config'
 import { Socket } from '../../../services'
-import { chunk, isUndefined, sortBy } from 'lodash'
+import { isUndefined, sortBy } from 'lodash'
 
 interface IExploreState {
   displayAddTextForm: boolean
@@ -147,37 +148,33 @@ export class Explore extends React.Component<{}, IExploreState> {
                     </>
                   )}
                   <br />
-                  {chunk(sortBy(texts, ['followersCount']).reverse(), 3).map(
-                    (row, index) => (
-                      <Columns key={index}>
-                        {row.map((text: any) => (
-                          <Column key={text._id} className="is-one-third">
-                            <Link to={path.text(text._id)}>
-                              <Box>
-                                <div
-                                  className="is-size-4 is-flex"
-                                  style={{ flexWrap: 'wrap' }}
-                                >
-                                  <p>{text.name}</p>
-                                  <Spacer />
-                                  <p>
-                                    {text.followersCount}{' '}
-                                    <Icon
-                                      type={
-                                        'fa fa-user' +
-                                        (text.followersCount > 1 ? 's' : '')
-                                      }
-                                    />
-                                  </p>
-                                </div>
-                                <p>{text.description}</p>
-                              </Box>
-                            </Link>
-                          </Column>
-                        ))}
-                      </Columns>
-                    )
-                  )}
+                  <Grid>
+                    {sortBy(texts, ['followersCount'])
+                      .reverse()
+                      .map(text => (
+                        <Link to={path.text(text._id)}>
+                          <Box>
+                            <div
+                              className="is-size-4 is-flex"
+                              style={{ flexWrap: 'wrap' }}
+                            >
+                              <p>{text.name}</p>
+                              <Spacer />
+                              <p>
+                                {text.followersCount}{' '}
+                                <Icon
+                                  type={
+                                    'fa fa-user' +
+                                    (text.followersCount > 1 ? 's' : '')
+                                  }
+                                />
+                              </p>
+                            </div>
+                            <p>{text.description}</p>
+                          </Box>
+                        </Link>
+                      ))}
+                  </Grid>
                 </>
               ) : (
                 <></>
