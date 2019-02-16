@@ -4,7 +4,6 @@ import {
   DataContext,
   Link,
   Icon,
-  Spacer,
   UserContext
 } from '../../../components'
 import { path } from '../../../config'

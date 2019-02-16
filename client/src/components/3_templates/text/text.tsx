@@ -12,7 +12,6 @@ import {
   ResultsIcon,
   DataContext,
   UserContext,
-  Spacer,
   Hero
 } from '../../../components'
 import { Amend, Socket } from '../../../services'
