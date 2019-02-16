@@ -6,7 +6,7 @@ interface IProps {
 }
 
 export const Grid = ({ children, style = {}, ...rest }: IProps) => (
-  <div style={{ ...style, display: 'grid' }} {...rest}>
+  <div className="grid" style={{ ...style, display: 'grid' }} {...rest}>
     {children}
   </div>
 )

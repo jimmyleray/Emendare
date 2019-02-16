@@ -148,11 +148,20 @@ export class Explore extends React.Component<{}, IExploreState> {
                     </>
                   )}
                   <br />
-                  <Grid>
+                  <Grid
+                    style={{
+                      gridTemplateColumns: 'repeat(3, 1fr)',
+                      gridGap: '1.5rem'
+                    }}
+                  >
                     {sortBy(texts, ['followersCount'])
                       .reverse()
                       .map(text => (
-                        <Link key={text._id} to={path.text(text._id)}>
+                        <Link
+                          key={text._id}
+                          to={path.text(text._id)}
+                          style={{ display: 'inline-grid' }}
+                        >
                           <Box>
                             <div
                               className="is-size-4 is-flex"
