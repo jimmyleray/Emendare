@@ -152,7 +152,7 @@ export class Explore extends React.Component<{}, IExploreState> {
                     {sortBy(texts, ['followersCount'])
                       .reverse()
                       .map(text => (
-                        <Link to={path.text(text._id)}>
+                        <Link key={text._id} to={path.text(text._id)}>
                           <Box>
                             <div
                               className="is-size-4 is-flex"
