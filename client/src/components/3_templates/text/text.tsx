@@ -28,6 +28,13 @@ export const Text = ({ data }: { data: IText }) => {
     (data && data.patches.length) || 0
   )
 
+  const amends = data && data.amends.map(dataContext.get('amend'))
+
+  let versionedAmend = null
+  if (historyVersion > 0) {
+    versionedAmend = dataContext.get('amend')(data.amends[historyVersion - 1])
+  }
+
   let versionedText = ''
   if (data && data.patches.length > 0) {
     for (let index = 0; index < historyVersion; index++) {
@@ -59,8 +66,7 @@ export const Text = ({ data }: { data: IText }) => {
               >
                 <span
                   className={
-                    data.amends
-                      .map(dataContext.get('amend'))
+                    amends
                       .filter(
                         (amend: any) =>
                           amend && amend.data && !amend.data.closed
@@ -69,8 +75,7 @@ export const Text = ({ data }: { data: IText }) => {
                       : ''
                   }
                   data-badge={
-                    data.amends
-                      .map(dataContext.get('amend'))
+                    amends
                       .filter(
                         (amend: any) =>
                           amend && amend.data && !amend.data.closed
@@ -171,14 +176,12 @@ export const Text = ({ data }: { data: IText }) => {
                     Liste des scrutins en cours
                   </p>
                   <br />
-                  {data.amends
-                    .map(dataContext.get('amend'))
+                  {amends
                     .filter(
                       (amend: any) => amend && amend.data && !amend.data.closed
                     ).length > 0 ? (
                     <React.Fragment>
-                      {data.amends
-                        .map(dataContext.get('amend'))
+                      {amends
                         .filter(
                           (amend: any) =>
                             amend && amend.data && !amend.data.closed
@@ -219,8 +222,7 @@ export const Text = ({ data }: { data: IText }) => {
                     <p className="has-text-danger">Aucun vote en cours</p>
                   )}
 
-                  {data.amends
-                    .map(dataContext.get('amend'))
+                  {amends
                     .filter(
                       (amend: any) => amend && amend.data && amend.data.closed
                     ).length > 0 && (
@@ -231,8 +233,7 @@ export const Text = ({ data }: { data: IText }) => {
                       </p>
                       <br />
                       {sortBy(
-                        data.amends
-                          .map(dataContext.get('amend'))
+                        amends
                           .filter(
                             (amend: any) =>
                               amend && amend.data && amend.data.closed
@@ -341,6 +342,14 @@ export const Text = ({ data }: { data: IText }) => {
                       : 'n°' + historyVersion}{' '}
                     du texte
                   </p>
+                  {versionedAmend && versionedAmend.data && (
+                    <p className="has-text-centered">
+                      <span>Suite à l'amendement : </span>
+                      <Link to={path.amend(versionedAmend.data._id)}>
+                        {versionedAmend.data.name}
+                      </Link>
+                    </p>
+                  )}
                   <br />
                 </React.Fragment>
               ) : (
