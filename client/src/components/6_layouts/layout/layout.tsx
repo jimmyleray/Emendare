@@ -13,10 +13,10 @@ export const Layout = (props: IProps) => (
   >
     <Alerts />
     <Navbar />
-    <div style={{ flex: 1, overflow: 'auto' }}>
+    <section className="section" style={{ flex: 1, overflow: 'auto' }}>
       <div className="container">
-        <main style={{ padding: '2rem' }}>{props.children}</main>
+        <main>{props.children}</main>
       </div>
-    </div>
+    </section>
   </div>
 )
