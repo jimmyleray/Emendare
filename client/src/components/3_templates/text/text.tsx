@@ -66,20 +66,16 @@ export const Text = ({ data }: { data: IText }) => {
               >
                 <span
                   className={
-                    amends
-                      .filter(
-                        (amend: any) =>
-                          amend && amend.data && !amend.data.closed
-                      ).length > 0
+                    amends.filter(
+                      (amend: any) => amend && amend.data && !amend.data.closed
+                    ).length > 0
                       ? 'badge is-badge-danger'
                       : ''
                   }
                   data-badge={
-                    amends
-                      .filter(
-                        (amend: any) =>
-                          amend && amend.data && !amend.data.closed
-                      ).length
+                    amends.filter(
+                      (amend: any) => amend && amend.data && !amend.data.closed
+                    ).length
                   }
                 >
                   Scrutins
@@ -176,10 +172,9 @@ export const Text = ({ data }: { data: IText }) => {
                     Liste des scrutins en cours
                   </p>
                   <br />
-                  {amends
-                    .filter(
-                      (amend: any) => amend && amend.data && !amend.data.closed
-                    ).length > 0 ? (
+                  {amends.filter(
+                    (amend: any) => amend && amend.data && !amend.data.closed
+                  ).length > 0 ? (
                     <React.Fragment>
                       {amends
                         .filter(
@@ -222,10 +217,9 @@ export const Text = ({ data }: { data: IText }) => {
                     <p className="has-text-danger">Aucun vote en cours</p>
                   )}
 
-                  {amends
-                    .filter(
-                      (amend: any) => amend && amend.data && amend.data.closed
-                    ).length > 0 && (
+                  {amends.filter(
+                    (amend: any) => amend && amend.data && amend.data.closed
+                  ).length > 0 && (
                     <React.Fragment>
                       <hr />
                       <p className="has-text-weight-semibold">
