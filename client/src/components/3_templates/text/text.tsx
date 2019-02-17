@@ -31,8 +31,10 @@ export const Text = ({ data }: { data: IText }) => {
   const amends = data && data.amends.map(dataContext.get('amend'))
 
   let versionedAmend = null
-  if (historyVersion > 0) {
-    versionedAmend = dataContext.get('amend')(data.amends[historyVersion - 1])
+  if (historyVersion > 0 && amends) {
+    versionedAmend = amends.filter(amend => amend && amend.data && amend.data.accepted)[
+      historyVersion - 1
+    ]
   }
 
   let versionedText = ''
