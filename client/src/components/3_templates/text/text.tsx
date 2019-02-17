@@ -32,9 +32,9 @@ export const Text = ({ data }: { data: IText }) => {
 
   let versionedAmend = null
   if (historyVersion > 0 && amends) {
-    versionedAmend = amends.filter(amend => amend && amend.data && amend.data.accepted)[
-      historyVersion - 1
-    ]
+    versionedAmend = amends.filter(
+      amend => amend && amend.data && amend.data.accepted
+    )[historyVersion - 1]
   }
 
   let versionedText = ''
