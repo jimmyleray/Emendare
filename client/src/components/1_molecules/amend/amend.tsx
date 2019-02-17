@@ -1,10 +1,11 @@
 import React from 'react'
 import { Box } from '../../../components'
 import * as JsDiff from 'diff'
+import { IAmend, IText } from '../../../interfaces'
 
 interface IAmendProps {
-  amend?: any
-  text?: any
+  amend?: Partial<IAmend>
+  text?: IText
 }
 
 interface IAmendState {
@@ -39,13 +40,13 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
             : 'Amendement'}
         </p>
         {this.props.amend && (
-          <>
+          <React.Fragment>
             <p className="has-text-centered is-size-5 has-text-weight-bold">
               {this.props.amend.name}
             </p>
             <br />
             <p>{this.props.amend.description}</p>
-          </>
+          </React.Fragment>
         )}
         <hr />
         <div>
@@ -74,7 +75,7 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
                           : ''
                       }}
                     >
-                      {line || <>&nbsp;</>}
+                      {line || <React.Fragment>&nbsp;</React.Fragment>}
                     </p>
                   ))}
               </div>
@@ -88,14 +89,17 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
     if (this.props.amend && this.props.text) {
       let previousText = ''
 
-      for (let index = 0; index < this.props.amend.version; index++) {
+      for (let index = 0; index < (this.props.amend.version || 0); index++) {
         previousText = JsDiff.applyPatch(
           previousText,
           this.props.text.patches[index]
         )
       }
 
-      const newText = JsDiff.applyPatch(previousText, this.props.amend.patch)
+      const newText = JsDiff.applyPatch(
+        previousText,
+        this.props.amend.patch || ''
+      )
       const diffs = JsDiff.diffLines(previousText, newText)
       this.setState({ diffs })
     }

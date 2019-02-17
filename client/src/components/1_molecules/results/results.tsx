@@ -1,5 +1,6 @@
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2'
+import { IResult } from '../../../interfaces'
 
 const datasetDefault = {
   backgroundColor: [
@@ -20,7 +21,7 @@ const datasetDefault = {
   ],
   hoverBorderColor: 'white'
 }
-export const Results = ({ data }: { data: any }) => (
+export const Results = ({ data }: { data: IResult }) => (
   <div style={{ position: 'relative', zIndex: 1 }}>
     {data && (
       <Doughnut

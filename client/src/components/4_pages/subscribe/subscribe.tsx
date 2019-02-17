@@ -6,13 +6,23 @@
  */
 
 import React from 'react'
-import { Button, Buttons, Icon, Notification, Page } from '../../../components'
+import {
+  Button,
+  Buttons,
+  Icon,
+  Notification,
+  Page,
+  PwdForm
+} from '../../../components'
 import { Socket } from '../../../services'
 import { path } from '../../../config'
 
 interface ISubscribePageState {
   email: string
   password: string
+  checkPassword: string
+  pwdSame: boolean
+  pwdValid: boolean
   error: any
   send: boolean
 }
@@ -24,8 +34,23 @@ export class SubscribePage extends React.Component<{}, ISubscribePageState> {
   constructor(props: {}) {
     super(props)
 
-    this.change = (name: string) => (event: any) => {
-      this.setState({ [name]: event.target.value } as any)
+    this.change = (name: string, validInput?: boolean) => (event: any) => {
+      switch (name) {
+        case 'password':
+          this.setState({
+            [name]: event.target.value,
+            pwdValid: validInput ? validInput : false
+          } as any)
+          break
+        case 'checkPassword':
+          this.setState({
+            [name]: event.target.value,
+            pwdSame: validInput ? validInput : false
+          } as any)
+          break
+        default:
+          this.setState({ [name]: event.target.value } as any)
+      }
     }
 
     this.submit = (event: any) => {
@@ -46,6 +71,9 @@ export class SubscribePage extends React.Component<{}, ISubscribePageState> {
     this.state = {
       email: '',
       password: '',
+      checkPassword: '',
+      pwdSame: false,
+      pwdValid: false,
       error: null,
       send: false
     }
@@ -66,15 +94,17 @@ export class SubscribePage extends React.Component<{}, ISubscribePageState> {
           <br />
 
           {!this.state.send && (
-            <>
+            <React.Fragment>
               <div className="field">
                 <p className="control has-icons-left has-icons-right">
                   <input
+                    autoFocus={true}
                     placeholder="Email"
                     value={this.state.email}
                     onChange={this.change('email')}
                     className="input is-medium"
                     type="email"
+                    aria-label="email input"
                   />
                   <Icon
                     type="fas fa-envelope"
@@ -82,24 +112,24 @@ export class SubscribePage extends React.Component<{}, ISubscribePageState> {
                   />
                 </p>
               </div>
-              <div className="field">
-                <p className="control has-icons-left">
-                  <input
-                    placeholder="Mot de passe"
-                    value={this.state.password}
-                    onChange={this.change('password')}
-                    className="input is-medium"
-                    type="password"
-                  />
-                  <Icon type="fas fa-lock" className="icon is-medium is-left" />
-                </p>
-              </div>
+              <PwdForm
+                change={this.change}
+                password={this.state.password}
+                checkPassword={this.state.checkPassword}
+                pwdSame={this.state.pwdSame}
+                pwdValid={this.state.pwdValid}
+                className="is-medium"
+              />
               <div className="has-text-centered">
                 <Buttons>
                   <Button
                     type="submit"
                     className="is-medium is-success is-fullwidth"
-                    disabled={!this.state.email || !this.state.password}
+                    disabled={
+                      !this.state.email ||
+                      (!this.state.password && !this.state.pwdValid) ||
+                      !this.state.pwdSame
+                    }
                   >
                     Inscription
                   </Button>
@@ -114,7 +144,7 @@ export class SubscribePage extends React.Component<{}, ISubscribePageState> {
                   {this.state.error.message}
                 </Notification>
               )}
-            </>
+            </React.Fragment>
           )}
 
           {this.state.send && (

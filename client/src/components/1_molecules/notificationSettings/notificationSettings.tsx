@@ -3,6 +3,7 @@
 import React from 'react'
 import { Box, Button, NotificationsContext } from '../../../components'
 import { Socket } from '../../../services'
+import { IUser } from '../../../interfaces'
 
 const keys = ['newText', 'newAmend', 'amendAccepted', 'amendRefused']
 
@@ -26,7 +27,7 @@ const mapKeyToTitle = (key: string) => {
 }
 
 interface INotificationSettingsProps {
-  user: any
+  user: IUser
 }
 
 export const NotificationSettings = (props: INotificationSettingsProps) => (
@@ -36,14 +37,14 @@ export const NotificationSettings = (props: INotificationSettingsProps) => (
         <p className="has-text-weight-semibold">Réglages des notifications</p>
         <br />
         {permission === 'default' && (
-          <>
+          <React.Fragment>
             <div>
               <Button className="is-success" onClick={requestPermission}>
                 Activer les notifications
               </Button>
             </div>
             <br />
-          </>
+          </React.Fragment>
         )}
         {keys.map(key => (
           <div key={key} className="field">
@@ -53,7 +54,7 @@ export const NotificationSettings = (props: INotificationSettingsProps) => (
               name={key}
               className="switch is-rounded is-success"
               disabled={permission !== 'granted'}
-              checked={props.user.notifications[key]}
+              checked={(props.user.notifications as any)[key] as boolean}
               onChange={change(key)}
             />
             <label htmlFor={key}>{mapKeyToTitle(key)}</label>

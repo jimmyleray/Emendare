@@ -2,7 +2,6 @@
 
 import React from 'react'
 import {
-  Box,
   Button,
   Buttons,
   Column,
@@ -11,241 +10,357 @@ import {
   Link,
   ResultsIcon,
   DataContext,
-  UserContext
+  UserContext,
+  Hero,
+  Spacer
 } from '../../../components'
-import { Amend, Socket } from '../../../services'
+import { Amend, Socket, Pagination } from '../../../services'
+import { IText } from '../../../interfaces'
 import { path } from '../../../config'
+import * as JsDiff from 'diff'
 import { sortBy } from 'lodash'
 
-const unFollowText = (id: string) => () => {
-  Socket.emit('unFollowText', { id })
-}
+export const Text = ({ data }: { data: IText }) => {
+  const userContext = React.useContext(UserContext)
+  const dataContext = React.useContext(DataContext)
+  const [selectedTab, setSelectedTab] = React.useState('text')
+  const [historyVersion, setHistoryVersion] = React.useState(
+    (data && data.patches.length) || 0
+  )
 
-const followText = (id: string) => () => {
-  Socket.emit('followText', { id })
-}
+  const amends = data && data.amends.map(dataContext.get('amend'))
 
-export const Text = ({ data }: any) => {
+  let versionedAmend = null
+  if (historyVersion > 0) {
+    versionedAmend = dataContext.get('amend')(data.amends[historyVersion - 1])
+  }
+
+  let versionedText = ''
+  if (data && data.patches.length > 0) {
+    for (let index = 0; index < historyVersion; index++) {
+      versionedText = JsDiff.applyPatch(versionedText, data.patches[index])
+    }
+  }
+
   return (
-    <UserContext.Consumer>
-      {({ isConnected, user }) => (
-        <DataContext.Consumer>
-          {({ get }) => {
-            return (
-              <>
-                <div className="field has-text-centered">
-                  <h1 className="is-size-3">{data.name}</h1>
-                  <h2 className="is-size-5">{data.description}</h2>
-                  <p>
-                    <span className="has-text-weight-semibold">
-                      {data.followersCount +
-                        ' participant' +
-                        (data.followersCount > 1 ? 's' : '')}
-                    </span>{' '}
-                    -{' '}
-                    {data.patches.length +
-                      ' amendement' +
-                      (data.patches.length > 1 ? 's' : '') +
-                      ' accepté' +
-                      (data.patches.length > 1 ? 's' : '')}
-                  </p>
-                </div>
-                <br />
+    data && (
+      <React.Fragment>
+        <Hero title={data.name} subtitle={data.description} />
 
-                <Buttons>
-                  <Button to={path.home}>
-                    <Icon type="fas fa-chevron-left" />
-                    <span>Retour à l'accueil</span>
+        <div className="tabs is-boxed is-fullwidth">
+          <ul>
+            <li className={selectedTab === 'text' ? 'is-active' : ''}>
+              <a
+                onClick={() => {
+                  setSelectedTab('text')
+                }}
+              >
+                Texte
+              </a>
+            </li>
+            <li className={selectedTab === 'votes' ? 'is-active' : ''}>
+              <a
+                onClick={() => {
+                  setSelectedTab('votes')
+                }}
+              >
+                <span
+                  className={
+                    amends.filter(
+                      (amend: any) => amend && amend.data && !amend.data.closed
+                    ).length > 0
+                      ? 'badge is-badge-danger'
+                      : ''
+                  }
+                  data-badge={
+                    amends.filter(
+                      (amend: any) => amend && amend.data && !amend.data.closed
+                    ).length
+                  }
+                >
+                  Scrutins
+                </span>
+              </a>
+            </li>
+            {data.patches.length > 0 && (
+              <li className={selectedTab === 'history' ? 'is-active' : ''}>
+                <a
+                  onClick={() => {
+                    setSelectedTab('history')
+                  }}
+                >
+                  Historique
+                </a>
+              </li>
+            )}
+          </ul>
+        </div>
+
+        <Columns>
+          {selectedTab === 'text' && (
+            <Column>
+              <Buttons className="is-centered">
+                {userContext.isConnected() && (
+                  <Button
+                    to={path.edit(data._id)}
+                    className="is-info is-rounded"
+                    onClick={() => {
+                      Socket.emit('followText', { id: data._id })
+                    }}
+                  >
+                    <Icon type="fas fa-plus" />
+                    <span>Proposer un amendement</span>
                   </Button>
+                )}
 
-                  {isConnected() &&
-                    (user.followedTexts.find(
-                      (text: any) => text === data._id
-                    ) ? (
-                      <Button
-                        onClick={unFollowText(data._id)}
-                        className="button is-light"
-                        disabled={data.rules}
-                      >
-                        Ne plus participer au texte
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={followText(data._id)}
-                        className="button is-success"
-                        disabled={data.rules}
-                      >
-                        Participer à ce texte
-                      </Button>
-                    ))}
+                <Spacer className="is-hidden-mobile" />
 
-                  {isConnected() && (
+                {userContext.isConnected() &&
+                  (userContext.user &&
+                  userContext.user.followedTexts.find(
+                    (text: any) => text === data._id
+                  ) ? (
                     <Button
-                      to={path.edit(data._id)}
-                      className="is-info"
-                      onClick={followText(data._id)}
+                      onClick={() => {
+                        Socket.emit('unFollowText', { id: data._id })
+                      }}
+                      className="button is-light is-rounded"
+                      disabled={data.rules}
                     >
-                      <Icon type="fas fa-plus" />
-                      <span>Proposer un amendement</span>
+                      Ne plus participer au texte
                     </Button>
+                  ) : (
+                    <Button
+                      onClick={() => {
+                        Socket.emit('followText', { id: data._id })
+                      }}
+                      className="button is-success is-rounded"
+                      disabled={data.rules}
+                    >
+                      Participer à ce texte
+                    </Button>
+                  ))}
+              </Buttons>
+
+              {data.actual ? (
+                <React.Fragment>
+                  <p className="has-text-weight-semibold has-text-centered">
+                    Version actuelle du texte
+                  </p>
+                  <br />
+                </React.Fragment>
+              ) : (
+                <p className="has-text-danger has-text-centered">
+                  Texte actuellement vide
+                </p>
+              )}
+
+              {data.actual &&
+                data.actual
+                  .split('\n')
+                  .map((line: string, index: number) =>
+                    line ? <p key={index}>{line}</p> : <br key={index} />
                   )}
-                </Buttons>
+            </Column>
+          )}
 
-                <Columns>
-                  <Column>
-                    <Box>
-                      {data.actual ? (
-                        <>
-                          <p className="has-text-weight-semibold">
-                            Version actuelle du texte
-                          </p>
-                          <br />
-                        </>
-                      ) : (
-                        <p className="has-text-weight-semibold has-text-danger">
-                          Texte actuellement vide
-                        </p>
-                      )}
+          {selectedTab === 'votes' && (
+            <Column>
+              {data.amends.length > 0 && (
+                <React.Fragment>
+                  <p className="has-text-weight-semibold">
+                    Liste des scrutins en cours
+                  </p>
+                  <br />
+                  {amends.filter(
+                    (amend: any) => amend && amend.data && !amend.data.closed
+                  ).length > 0 ? (
+                    <React.Fragment>
+                      {amends
+                        .filter(
+                          (amend: any) =>
+                            amend && amend.data && !amend.data.closed
+                        )
+                        .map((amend: any) => (
+                          <div key={amend.data._id}>
+                            <ResultsIcon
+                              data={{
+                                up: amend.data.upVotesCount,
+                                down: amend.data.downVotesCount,
+                                ind: amend.data.indVotesCount,
+                                absent:
+                                  (amend.data.totalPotentialVotesCount
+                                    ? amend.data.totalPotentialVotesCount
+                                    : data.followersCount) -
+                                  (amend.data.upVotesCount +
+                                    amend.data.downVotesCount +
+                                    amend.data.indVotesCount)
+                              }}
+                            />
+                            {' > '}
 
-                      {data.actual &&
-                        data.actual
-                          .split('\n')
-                          .map((line: string, index: number) =>
-                            line ? (
-                              <p key={index}>{line}</p>
+                            <Link
+                              to={path.amend(amend.data._id)}
+                              className={
+                                userContext.isConnected() &&
+                                !Amend.isVoted(userContext.user)(amend.data)
+                                  ? 'has-text-weight-bold'
+                                  : ''
+                              }
+                            >
+                              {amend.data.name}
+                            </Link>
+                          </div>
+                        ))}
+                    </React.Fragment>
+                  ) : (
+                    <p className="has-text-danger">Aucun vote en cours</p>
+                  )}
+
+                  {amends.filter(
+                    (amend: any) => amend && amend.data && amend.data.closed
+                  ).length > 0 && (
+                    <React.Fragment>
+                      <hr />
+                      <p className="has-text-weight-semibold">
+                        Liste des anciens scrutins
+                      </p>
+                      <br />
+                      {sortBy(
+                        amends
+                          .filter(
+                            (amend: any) =>
+                              amend && amend.data && amend.data.closed
+                          )
+                          .map((amend: any) => amend.data),
+                        ['finished']
+                      )
+                        .reverse()
+                        .map((amend: any) => (
+                          <p key={amend._id}>
+                            {amend.conflicted ? (
+                              <Icon
+                                type="fas fa-minus-circle"
+                                className="has-text-dark"
+                                title="Refusé à cause d'un conflit technique"
+                              />
+                            ) : amend.accepted ? (
+                              <Icon
+                                type="fas fa-check-circle"
+                                className="has-text-success"
+                                title="Accepté par les participants"
+                              />
                             ) : (
-                              <br key={index} />
-                            )
-                          )}
-                    </Box>
-                  </Column>
-                  <Column>
-                    <Box>
-                      {data.amends.length > 0 && (
-                        <>
-                          <p className="has-text-weight-semibold">
-                            Liste des scrutins en cours
+                              <Icon
+                                type="fas fa-times-circle"
+                                className="has-text-danger"
+                                title="Refusé par les participants"
+                              />
+                            )}
+                            <Link to={path.amend(amend._id)}>{amend.name}</Link>
                           </p>
-                          <br />
-                          {data.amends
-                            .map(get('amend'))
-                            .filter(
-                              (amend: any) =>
-                                amend && amend.data && !amend.data.closed
-                            ).length > 0 ? (
-                            <>
-                              {data.amends
-                                .map(get('amend'))
-                                .filter(
-                                  (amend: any) =>
-                                    amend && amend.data && !amend.data.closed
-                                )
-                                .map((amend: any) => (
-                                  <div key={amend.data._id}>
-                                    <ResultsIcon
-                                      data={{
-                                        up: amend.data.upVotesCount,
-                                        down: amend.data.downVotesCount,
-                                        ind: amend.data.indVotesCount,
-                                        absent:
-                                          (amend.data.totalPotentialVotesCount
-                                            ? amend.data
-                                                .totalPotentialVotesCount
-                                            : data.followersCount) -
-                                          (amend.data.upVotesCount +
-                                            amend.data.downVotesCount +
-                                            amend.data.indVotesCount)
-                                      }}
-                                    />
-                                    {' > '}
+                        ))}
+                    </React.Fragment>
+                  )}
+                </React.Fragment>
+              )}
 
-                                    <Link
-                                      to={path.amend(amend.data._id)}
-                                      className={
-                                        isConnected() &&
-                                        !Amend.isVoted(user)(amend.data)
-                                          ? 'has-text-weight-bold'
-                                          : ''
-                                      }
-                                    >
-                                      {amend.data.name}
-                                    </Link>
-                                  </div>
-                                ))}
-                            </>
-                          ) : (
-                            <p className="has-text-weight-semibold has-text-danger">
-                              Aucun vote en cours
-                            </p>
-                          )}
+              {data.amends.length === 0 && (
+                <p className="has-text-danger">Aucun amendement proposé</p>
+              )}
+            </Column>
+          )}
 
-                          {data.amends
-                            .map(get('amend'))
-                            .filter(
-                              (amend: any) =>
-                                amend && amend.data && amend.data.closed
-                            ).length > 0 && (
-                            <>
-                              <hr />
-                              <p className="has-text-weight-semibold">
-                                Liste des anciens scrutins
-                              </p>
-                              <br />
-                              {sortBy(
-                                data.amends
-                                  .map(get('amend'))
-                                  .filter(
-                                    (amend: any) =>
-                                      amend && amend.data && amend.data.closed
-                                  )
-                                  .map((amend: any) => amend.data),
-                                ['finished']
-                              )
-                                .reverse()
-                                .map((amend: any) => (
-                                  <p key={amend._id}>
-                                    {amend.conflicted ? (
-                                      <Icon
-                                        type="fas fa-minus-circle"
-                                        className="has-text-dark"
-                                        title="Refusé à cause d'un conflit technique"
-                                      />
-                                    ) : amend.accepted ? (
-                                      <Icon
-                                        type="fas fa-check-circle"
-                                        className="has-text-success"
-                                        title="Accepté par les participants"
-                                      />
-                                    ) : (
-                                      <Icon
-                                        type="fas fa-times-circle"
-                                        className="has-text-danger"
-                                        title="Refusé par les participants"
-                                      />
-                                    )}
-                                    <Link to={path.amend(amend._id)}>
-                                      {amend.name}
-                                    </Link>
-                                  </p>
-                                ))}
-                            </>
-                          )}
-                        </>
-                      )}
+          {selectedTab === 'history' && (
+            <Column>
+              <nav
+                className="pagination is-right is-rounded"
+                role="navigation"
+                aria-label="pagination"
+              >
+                <Button
+                  className="pagination-previous"
+                  disabled={historyVersion <= 1}
+                  onClick={() => {
+                    setHistoryVersion(historyVersion - 1)
+                  }}
+                >
+                  Précédent
+                </Button>
+                <Button
+                  className="pagination-next"
+                  disabled={historyVersion >= data.patches.length}
+                  onClick={() => {
+                    setHistoryVersion(historyVersion + 1)
+                  }}
+                >
+                  Suivant
+                </Button>
+                <ul className="pagination-list">
+                  {Pagination.getRange(
+                    1,
+                    data.patches.length,
+                    historyVersion
+                  ).map((version, index) => {
+                    return version === '&' ? (
+                      <li key={index}>
+                        <span className="pagination-ellipsis">&hellip;</span>
+                      </li>
+                    ) : (
+                      <li key={index}>
+                        <a
+                          className={
+                            'pagination-link ' +
+                            (version === historyVersion ? 'is-current' : '')
+                          }
+                          aria-label={'Goto page ' + version}
+                          onClick={() => {
+                            setHistoryVersion(version)
+                          }}
+                        >
+                          {version}
+                        </a>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </nav>
+              <br />
 
-                      {data.amends.length === 0 && (
-                        <p className="has-text-weight-semibold has-text-danger">
-                          Aucun amendement proposé
-                        </p>
-                      )}
-                    </Box>
-                  </Column>
-                </Columns>
-              </>
-            )
-          }}
-        </DataContext.Consumer>
-      )}
-    </UserContext.Consumer>
+              {data.patches.length > 0 ? (
+                <React.Fragment>
+                  <p className="has-text-weight-semibold has-text-centered">
+                    Version{' '}
+                    {historyVersion === data.patches.length
+                      ? 'actuelle'
+                      : 'n°' + historyVersion}{' '}
+                    du texte
+                  </p>
+                  {versionedAmend && versionedAmend.data && (
+                    <p className="has-text-centered">
+                      <span>Suite à l'amendement : </span>
+                      <Link to={path.amend(versionedAmend.data._id)}>
+                        {versionedAmend.data.name}
+                      </Link>
+                    </p>
+                  )}
+                  <br />
+                </React.Fragment>
+              ) : (
+                <p className="has-text-danger has-text-centered">
+                  Texte actuellement vide
+                </p>
+              )}
+
+              {versionedText
+                .split('\n')
+                .map((line: string, index: number) =>
+                  line ? <p key={index}>{line}</p> : <br key={index} />
+                )}
+            </Column>
+          )}
+        </Columns>
+      </React.Fragment>
+    )
   )
 }

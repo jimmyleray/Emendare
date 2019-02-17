@@ -7,6 +7,7 @@ import {
   StopWatch
 } from '../../../components'
 import { path } from '../../../config'
+import { IEvent } from '../../../interfaces'
 
 const typeToUrl = (type: string) => (target: any) => {
   switch (type) {
@@ -100,11 +101,11 @@ const typeToText = (type: string) => (target: any) => {
       )
 
     default:
-      return <></>
+      return null
   }
 }
 
-export const Event = ({ data }: { data: any }) => (
+export const Event = ({ data }: { data: IEvent }) => (
   <DataContext.Consumer>
     {({ get }) => {
       if (data && data.targetType && data.targetID) {
@@ -113,16 +114,14 @@ export const Event = ({ data }: { data: any }) => (
         )(data.targetID)
 
         return target && target.data ? (
-          <>
+          <React.Fragment>
             <Link to={typeToUrl(data.targetType)(target.data)}>
               <Notification className="is-light">
                 {typeToText(data.targetType)(target.data)}
               </Notification>
             </Link>
-          </>
-        ) : (
-          <></>
-        )
+          </React.Fragment>
+        ) : null
       }
     }}
   </DataContext.Consumer>

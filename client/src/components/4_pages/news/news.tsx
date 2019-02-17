@@ -8,6 +8,7 @@
 
 import React from 'react'
 import {
+  Hero,
   Button,
   Buttons,
   Divider,
@@ -75,14 +76,11 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                         : 0
 
                       return (
-                        <>
-                          <div className="has-text-centered">
-                            <p className="is-size-3">Fil d'actualités</p>
-                            <p className="is-size-5">
-                              Vous pouvez filtrer par type d'actualités
-                            </p>
-                          </div>
-                          <br />
+                        <React.Fragment>
+                          <Hero
+                            title="Fil d'actualités"
+                            subtitle="Vous pouvez filtrer par type d'actualités"
+                          />
                           <Buttons style={{ display: 'flex', marginBottom: 0 }}>
                             <Button
                               className={
@@ -164,7 +162,7 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                                       style={{ marginBottom: '4px' }}
                                     >
                                       <Event data={event} />
-                                      {user &&
+                                      {lastEventDate &&
                                         newEventsCount > 0 &&
                                         (new Date(event.created).getTime() >
                                           lastEventDate &&
@@ -179,7 +177,7 @@ export class NewsPage extends React.Component<{}, INewsPageState> {
                                 }
                               )}
                           </div>
-                        </>
+                        </React.Fragment>
                       )
                     }
                   }

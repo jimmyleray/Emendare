@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Page } from '../../../components'
+import { Hero, Link, Page } from '../../../components'
 import { Socket } from '../../../services'
 
 interface IContributorsPageState {
@@ -32,18 +32,12 @@ export class ContributorsPage extends React.Component<
   public render() {
     return (
       <Page title="Contributeurs">
-        <div className="field has-text-centered">
-          <h1 className="is-size-3">Remerciements à tous les contributeurs</h1>
-          <h2 className="is-size-5">
-            Pour contribuer à la plateforme rendez-vous sur le{' '}
-            <Link to="https://github.com/jimmyleray/Emendare">
-              GitHub d'Emendare
-            </Link>
-          </h2>
-        </div>
-        <br />
+        <Hero
+          title="Remerciements à tous les contributeurs"
+          subtitle="Pour contribuer à la plateforme rendez-vous sur le Github d'Emendare"
+        />
         {this.state.contributors.length > 1 && (
-          <div className="has-text-centered">
+          <div>
             Merci à{' '}
             {this.state.contributors.map((contributor, index, arr) => (
               <span key={contributor.author.path}>

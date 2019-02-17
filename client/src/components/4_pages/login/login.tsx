@@ -8,7 +8,14 @@
 
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import { Button, Buttons, Icon, Notification, Page } from '../../../components'
+import {
+  Button,
+  Buttons,
+  Icon,
+  Link,
+  Notification,
+  Page
+} from '../../../components'
 import { Socket } from '../../../services'
 import { path } from '../../../config'
 
@@ -74,7 +81,7 @@ export class LoginPage extends React.Component<
             (this.props.location &&
               this.props.location.state &&
               this.props.location.state.from) ||
-            path.profile
+            path.home
           }
         />
       )
@@ -91,6 +98,7 @@ export class LoginPage extends React.Component<
           <div className="field">
             <p className="control has-icons-left has-icons-right">
               <input
+                autoFocus={true}
                 placeholder="Email"
                 value={this.state.email}
                 onChange={this.change('email')}
@@ -111,6 +119,11 @@ export class LoginPage extends React.Component<
               />
               <Icon type="fas fa-lock" className="icon is-medium is-left" />
             </p>
+            <div className="has-text-right" style={{ marginTop: 4 }}>
+              <Link to={path.reset} className="is-text">
+                Mot de passe oublié ?
+              </Link>
+            </div>
           </div>
           <div className="has-text-centered">
             <Buttons>

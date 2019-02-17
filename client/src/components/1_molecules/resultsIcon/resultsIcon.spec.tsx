@@ -5,8 +5,9 @@ import Adapter from 'enzyme-adapter-react-16'
 enzyme.configure({ adapter: new Adapter() })
 
 import { ResultsIcon } from './resultsIcon'
+import { resultMock } from '../../../interfaces'
 
 it('should render a ResultsIcon', () => {
-  const component = shallow(<ResultsIcon data={null} />)
+  const component = shallow(<ResultsIcon data={resultMock} />)
   expect(component).toBeTruthy()
 })

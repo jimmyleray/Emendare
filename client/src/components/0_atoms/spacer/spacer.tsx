@@ -1,3 +1,5 @@
 import React from 'react'
 
-export const Spacer = () => <div style={{ flex: 1 }} />
+export const Spacer = ({ className = '' }) => (
+  <div className={className} style={{ flex: 1 }} />
+)

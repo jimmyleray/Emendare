@@ -1,10 +1,20 @@
 import React from 'react'
 
 interface IProps {
-  content: string
+  content?: string
   className?: string
+  vertical?: boolean
 }
 
-export const Divider = ({ content, className = '', ...rest }: IProps) => (
-  <div className={'is-divider ' + className} {...rest} data-content={content} />
+export const Divider = ({
+  content,
+  vertical = false,
+  className = '',
+  ...rest
+}: IProps) => (
+  <div
+    className={(vertical ? 'is-divider-vertical ' : 'is-divider ') + className}
+    data-content={content}
+    {...rest}
+  />
 )
