@@ -1,15 +1,7 @@
-import { ComponentClass } from 'react'
+import { IRoute } from '../../interfaces'
 
 // For paths like that for example : /text/:id
 export const withID = (pathname: string) => (id = ':id') => pathname + id
-
-export interface IRoute {
-  name: string
-  path: string | ((id?: string) => string)
-  exact?: boolean
-  private?: boolean
-  component?: ComponentClass<any, any>
-}
 
 // All application routes
 export const routes: IRoute[] = [
@@ -22,6 +14,7 @@ export const routes: IRoute[] = [
   { name: 'reset', path: '/reset-password' },
   { name: 'subscribe', path: '/inscription' },
   { name: 'profile', path: '/profil', private: true },
+  { name: 'create', path: '/create', private: true },
   { name: 'text', path: withID('/texte/') },
   { name: 'edit', path: withID('/editer/'), private: true },
   { name: 'amend', path: withID('/amendement/') },

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import {
   Divider,
   DataContext,
   Link,
   Icon,
-  UserContext
+  UserContext,
+  SearchContext
 } from '../../../components'
 import { path } from '../../../config'
 import { Title } from '../../../services'
@@ -13,6 +14,7 @@ import { IUser } from '../../../interfaces'
 export const Navbar = () => {
   const userContext = React.useContext(UserContext)
   const dataContext = React.useContext(DataContext)
+  const searchContext = React.useContext(SearchContext)
   const events = dataContext.get && dataContext.get('events')('all')
   let newEventsCount = 0
 
@@ -82,6 +84,24 @@ export const Navbar = () => {
                 Actualités
               </span>
             </Link>
+            <Divider vertical={true} className="is-hidden-mobile" />
+            <div className="navbar-item">
+              <div className="field">
+                <p className="control has-icons-right">
+                  <input
+                    autoFocus={true}
+                    className="input is-rounded"
+                    type="text"
+                    placeholder="Rechercher un texte"
+                    value={searchContext.search}
+                    onChange={event => {
+                      searchContext.setSearch(event.target.value)
+                    }}
+                  />
+                  <Icon type="fa fa-search" className="is-right" />
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="navbar-end">
