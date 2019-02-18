@@ -30,13 +30,6 @@ export const Text = ({ data }: { data: IText }) => {
 
   const amends = data && data.amends.map(dataContext.get('amend'))
 
-  let versionedAmend = null
-  if (historyVersion > 0 && amends) {
-    versionedAmend = amends.filter(
-      amend => amend && amend.data && amend.data.accepted
-    )[historyVersion - 1]
-  }
-
   let versionedText = ''
   if (data && data.patches.length > 0) {
     for (let index = 0; index < historyVersion; index++) {
@@ -338,14 +331,6 @@ export const Text = ({ data }: { data: IText }) => {
                       : 'n°' + historyVersion}{' '}
                     du texte
                   </p>
-                  {versionedAmend && versionedAmend.data && (
-                    <p className="has-text-centered">
-                      <span>Suite à l'amendement : </span>
-                      <Link to={path.amend(versionedAmend.data._id)}>
-                        {versionedAmend.data.name}
-                      </Link>
-                    </p>
-                  )}
                   <br />
                 </React.Fragment>
               ) : (
