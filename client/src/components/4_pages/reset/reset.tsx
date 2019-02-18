@@ -38,10 +38,11 @@ export class ResetPage extends React.Component<{}, IResetPageState> {
           <p className="is-size-3 has-text-centered">Mot de passe oublié</p>
           <br />
           {!this.state.send && (
-            <>
+            <React.Fragment>
               <div className="field">
                 <p className="control has-icons-left has-icons-right">
                   <input
+                    autoFocus={true}
                     placeholder="Email"
                     onChange={this.change('email')}
                     value={this.state.email}
@@ -70,7 +71,7 @@ export class ResetPage extends React.Component<{}, IResetPageState> {
                   {this.state.error.message}
                 </Notification>
               )}
-            </>
+            </React.Fragment>
           )}
           {this.state.send && (
             <Notification className="is-success has-text-centered">

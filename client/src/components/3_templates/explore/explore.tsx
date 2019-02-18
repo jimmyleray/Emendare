@@ -4,9 +4,11 @@ import React from 'react'
 import {
   Box,
   Button,
+  Divider,
   Column,
   Columns,
   Icon,
+  Grid,
   UserContext,
   DataContext,
   Link,
@@ -14,7 +16,7 @@ import {
 } from '../../../components'
 import { path } from '../../../config'
 import { Socket } from '../../../services'
-import { chunk, isUndefined, sortBy } from 'lodash'
+import { isUndefined, sortBy } from 'lodash'
 
 interface IExploreState {
   displayAddTextForm: boolean
@@ -71,9 +73,9 @@ export class Explore extends React.Component<{}, IExploreState> {
               }
 
               return texts && texts.length > 0 ? (
-                <>
+                <React.Fragment>
                   {false && isConnected() && (
-                    <>
+                    <React.Fragment>
                       <br />
                       <Button
                         className="is-fullwidth"
@@ -90,11 +92,11 @@ export class Explore extends React.Component<{}, IExploreState> {
                             : 'Créer un nouveau texte'}
                         </span>
                       </Button>
-                    </>
+                    </React.Fragment>
                   )}
 
                   {isConnected() && this.state.displayAddTextForm && (
-                    <>
+                    <React.Fragment>
                       <Box style={{ marginBottom: 0 }}>
                         <Columns>
                           <Column>
@@ -144,44 +146,50 @@ export class Explore extends React.Component<{}, IExploreState> {
                       >
                         Confirmer la création du texte
                       </Button>
-                    </>
+                    </React.Fragment>
                   )}
                   <br />
-                  {chunk(sortBy(texts, ['followersCount']).reverse(), 3).map(
-                    (row, index) => (
-                      <Columns key={index}>
-                        {row.map((text: any) => (
-                          <Column key={text._id} className="is-one-third">
-                            <Link to={path.text(text._id)}>
-                              <Box>
-                                <div
-                                  className="is-size-4 is-flex"
-                                  style={{ flexWrap: 'wrap' }}
-                                >
-                                  <p>{text.name}</p>
-                                  <Spacer />
-                                  <p>
-                                    {text.followersCount}{' '}
-                                    <Icon
-                                      type={
-                                        'fa fa-user' +
-                                        (text.followersCount > 1 ? 's' : '')
-                                      }
-                                    />
-                                  </p>
-                                </div>
-                                <p>{text.description}</p>
-                              </Box>
-                            </Link>
-                          </Column>
-                        ))}
-                      </Columns>
-                    )
-                  )}
-                </>
-              ) : (
-                <></>
-              )
+                  <Grid
+                    style={{
+                      gridTemplateColumns: 'repeat(3, 1fr)',
+                      gridGap: '1.5rem'
+                    }}
+                  >
+                    {sortBy(texts, ['followersCount'])
+                      .reverse()
+                      .map(text => (
+                        <React.Fragment key={text._id}>
+                          <Divider className="is-hidden-tablet" />
+                          <Link
+                            to={path.text(text._id)}
+                            style={{ display: 'inline-grid' }}
+                            className="has-text-dark"
+                          >
+                            <Box>
+                              <div
+                                className="is-size-4 is-flex"
+                                style={{ flexWrap: 'wrap' }}
+                              >
+                                <p>{text.name}</p>
+                                <Spacer />
+                                <p>
+                                  {text.followersCount}{' '}
+                                  <Icon
+                                    type={
+                                      'fa fa-user' +
+                                      (text.followersCount > 1 ? 's' : '')
+                                    }
+                                  />
+                                </p>
+                              </div>
+                              <p>{text.description}</p>
+                            </Box>
+                          </Link>
+                        </React.Fragment>
+                      ))}
+                  </Grid>
+                </React.Fragment>
+              ) : null
             }}
           </DataContext.Consumer>
         )}

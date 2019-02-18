@@ -39,7 +39,7 @@ export const PwdForm = ({
       <div className="field">
         <div className="control has-icons-left has-icons-right">
           <input
-            placeholder="Mot de passe"
+            placeholder="Nouveau mot de passe"
             value={password}
             aria-label="password input"
             onChange={(event: any) =>
@@ -63,7 +63,7 @@ export const PwdForm = ({
       <div className="field">
         <div className="control has-icons-left has-icons-right">
           <input
-            placeholder="Vérification du mot de passe"
+            placeholder="Vérification du nouveau mot de passe"
             aria-label="password verification input"
             value={checkPassword}
             onChange={(event: any) =>

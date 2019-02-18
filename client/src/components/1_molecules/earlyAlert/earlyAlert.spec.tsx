@@ -4,14 +4,13 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { Text } from './text'
-import { textMock } from '../../../interfaces'
+import { EarlyAlert } from './earlyAlert'
 import { Providers } from '../../../components'
 
-it('should render a Text', () => {
+it('should render a EarlyAlert', () => {
   const component = shallow(
     <Providers>
-      <Text data={textMock} />
+      <EarlyAlert />
     </Providers>
   )
   expect(component).toBeTruthy()

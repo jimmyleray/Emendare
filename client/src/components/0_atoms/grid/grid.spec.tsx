@@ -4,9 +4,10 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { Footer } from './footer'
+import { Grid } from './grid'
 
-it('should render a Footer', () => {
-  const component = shallow(<Footer />)
+it('should render a Box', () => {
+  const component = shallow(<Grid>Test</Grid>)
   expect(component).toBeTruthy()
+  expect(component.html()).toContain('Test')
 })

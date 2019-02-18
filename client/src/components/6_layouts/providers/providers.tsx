@@ -15,5 +15,5 @@ const providers = [UserProvider, DataProvider, NotificationsProvider]
 export const Providers = (props: IProps) =>
   providers.reduce(
     (acc, Provider) => <Provider>{acc}</Provider>,
-    <>{props.children}</>
+    <React.Fragment>{props.children}</React.Fragment>
   )
