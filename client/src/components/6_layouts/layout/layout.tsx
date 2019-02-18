@@ -9,13 +9,17 @@ interface IProps {
 export const Layout = (props: IProps) => (
   <div
     className="is-flex"
-    style={{ flex: '1', flexDirection: 'column', height: '100vh' }}
+    style={{
+      flex: '1',
+      flexDirection: 'column',
+      height: '100vh'
+    }}
   >
     <Alerts />
     <Navbar />
-    <section className="section" style={{ flex: 1, overflow: 'auto' }}>
+    <section className="section" style={{ flex: 1, overflowY: 'scroll' }}>
       <div className="container">
-        <main>{props.children}</main>
+        <main style={{ paddingBottom: '100px' }}>{props.children}</main>
       </div>
     </section>
   </div>
