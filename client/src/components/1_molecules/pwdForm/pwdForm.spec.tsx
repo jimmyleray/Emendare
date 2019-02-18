@@ -8,6 +8,14 @@ enzyme.configure({ adapter: new Adapter() })
 import { PwdForm } from './pwdForm'
 
 it('should render an AmendPage', () => {
-  const component = shallow(<PwdForm user={userMock} />)
+  const component = shallow(
+    <PwdForm
+      change={null}
+      password={'abcd'}
+      checkPassword={'abcd'}
+      pwdValid={false}
+      pwdSame={true}
+    />
+  )
   expect(component).toBeTruthy()
 })

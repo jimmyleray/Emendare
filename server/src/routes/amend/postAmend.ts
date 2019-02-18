@@ -1,5 +1,5 @@
 import socketIO from 'socket.io'
-import { Amend, Event, Text, User } from '../../models'
+import { Amend } from '../../models'
 
 export const postAmend = {
   name: 'postAmend',
@@ -11,37 +11,21 @@ export const postAmend = {
     socket: socketIO.Socket
   }) => async ({ token, data }: any) => {
     const { name, description, patch, version, textID } = data
-    const user = await User.model.findOne({ token })
-    if (user && user.activated) {
-      const amend = await new Amend.model({
-        description,
-        name,
-        patch,
-        text: textID,
-        version
-      }).save()
-
-      user.amends.push(amend._id)
-      await user.save()
-
-      const text = await Text.model.findById(textID)
-      text.amends.push(amend._id)
-      await text.save()
-
-      await new Event.model({
-        targetID: amend._id,
-        targetType: 'amend'
-      }).save()
-
-      const events = await Event.model.find().sort('-created')
-      io.emit('events/all', { data: events })
-
-      io.emit('text/' + text._id, { data: text })
-      socket.emit('postAmend', { data: amend })
+    const res = await Amend.postAmend(
+      name,
+      description,
+      patch,
+      version,
+      textID,
+      token
+    )
+    if ('data' in res) {
+      const { data } = res
+      io.emit('events/all', { data: data.events })
+      io.emit('text/' + textID, { data: data.text })
+      socket.emit('postAmend', { data: data.amend })
     } else {
-      socket.emit('postAmend', {
-        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
-      })
+      socket.emit('postAmend', res)
     }
   }
 }
