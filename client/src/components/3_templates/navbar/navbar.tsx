@@ -86,16 +86,21 @@ export const Navbar = () => {
             </Link>
             <Divider vertical={true} className="is-hidden-mobile" />
             <div className="navbar-item">
-              <input
-                autoFocus={true}
-                className="input"
-                type="text"
-                placeholder="Rechercher un texte"
-                value={searchContext.search}
-                onChange={event => {
-                  searchContext.setSearch(event.target.value)
-                }}
-              />
+              <div className="field">
+                <p className="control has-icons-right">
+                  <input
+                    autoFocus={true}
+                    className="input is-rounded"
+                    type="text"
+                    placeholder="Rechercher un texte"
+                    value={searchContext.search}
+                    onChange={event => {
+                      searchContext.setSearch(event.target.value)
+                    }}
+                  />
+                  <Icon type="fa fa-search" className="is-right" />
+                </p>
+              </div>
             </div>
           </div>
 

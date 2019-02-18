@@ -49,13 +49,13 @@ export const Explore = () => {
         .reverse()
         .map(text => (
           <React.Fragment key={text._id}>
-            <Divider className="is-hidden-tablet" />
+            <Divider className="is-hidden-tablet" style={{ margin: 0 }} />
             <Link
               to={path.text(text._id)}
               style={{ display: 'inline-grid' }}
               className="has-text-dark"
             >
-              <Box>
+              <Box style={{ marginBottom: '0px' }}>
                 <div className="is-size-4 is-flex" style={{ flexWrap: 'wrap' }}>
                   <p>{text.name}</p>
                   <Spacer />
@@ -72,9 +72,9 @@ export const Explore = () => {
           </React.Fragment>
         ))}
 
-      <Divider className="is-hidden-tablet" />
+      <Divider className="is-hidden-tablet" style={{ margin: 0 }} />
       <Link to={path.create} style={{ display: 'inline-grid' }}>
-        <Box className="has-text-info">
+        <Box style={{ marginBottom: '0px' }} className="has-text-info">
           <div className="is-size-4 is-flex" style={{ flexWrap: 'wrap' }}>
             <p>Ajouter un texte</p>
             <Spacer />
