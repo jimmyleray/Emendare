@@ -1,2 +1,5 @@
 export * from './email'
-export * from './User'
+export * from './user'
+export * from './event'
+export * from './text'
+export * from './amend'
