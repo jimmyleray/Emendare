@@ -43,11 +43,11 @@ const model = mongoose.model(
 )
 
 export class Amend {
-  static get model(): any {
+  public static get model(): any {
     return model
   }
 
-  static async getAmend(id: string): Promise<any> {
+  public static async getAmend(id: string): Promise<any> {
     const gettedAmend = await this.model.findById(id)
     if (gettedAmend) {
       return { data: gettedAmend }
@@ -61,7 +61,7 @@ export class Amend {
     }
   }
 
-  static async downVoteAmend(id: string, token: string): Promise<any> {
+  public static async downVoteAmend(id: string, token: string): Promise<any> {
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
       const amend = await this.model.findById(id)
@@ -112,7 +112,7 @@ export class Amend {
     }
   }
 
-  static async indVoteAmend(id: string, token: string): Promise<any> {
+  public static async indVoteAmend(id: string, token: string): Promise<any> {
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
       const amend = await this.model.findById(id)
@@ -163,7 +163,7 @@ export class Amend {
     }
   }
 
-  static async postAmend(
+  public static async postAmend(
     name: string,
     description: string,
     patch: any,
@@ -197,9 +197,9 @@ export class Amend {
 
       return {
         data: {
-          events: events,
-          amend: amend,
-          text: text
+          events,
+          amend,
+          text
         }
       }
     } else {
@@ -209,7 +209,7 @@ export class Amend {
     }
   }
 
-  static async unVoteAmend(id: string, token: string): Promise<any> {
+  public static async unVoteAmend(id: string, token: string): Promise<any> {
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
       const amend = await this.model.findById(id)
@@ -258,7 +258,7 @@ export class Amend {
     }
   }
 
-  static async upVoteAmend(id: string, token: string): Promise<any> {
+  public static async upVoteAmend(id: string, token: string): Promise<any> {
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
       const amend = await this.model.findById(id)

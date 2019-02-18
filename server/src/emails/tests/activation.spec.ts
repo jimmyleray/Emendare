@@ -5,7 +5,7 @@ describe('Activation Email template', () => {
     expect(activation).toHaveProperty('subject')
     expect(activation).toHaveProperty('html')
   })
-  test('should have subject proprety type of string', () => {
+  test('should have subject property type of string', () => {
     expect(typeof activation.subject).toBe('string')
   })
   test('should render html string', () => {

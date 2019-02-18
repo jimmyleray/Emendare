@@ -47,11 +47,11 @@ const model = mongoose.model(
 )
 
 export class User {
-  static get model(): any {
+  public static get model(): any {
     return model
   }
 
-  static async login(
+  public static async login(
     email: string,
     password: string,
     token: string
@@ -99,7 +99,7 @@ export class User {
     }
   }
 
-  static async subscribe(email: string, password: string): Promise<any> {
+  public static async subscribe(email: string, password: string): Promise<any> {
     if (await this.model.findOne({ email })) {
       return {
         error: {
@@ -143,7 +143,7 @@ export class User {
     }
   }
 
-  static async logout(token: string): Promise<any> {
+  public static async logout(token: string): Promise<any> {
     const user = await this.model.findOne({ token })
     if (user) {
       user.token = null
@@ -152,7 +152,7 @@ export class User {
     return
   }
 
-  static async activateUser(activationToken: string): Promise<any> {
+  public static async activateUser(activationToken: string): Promise<any> {
     const user = await this.model.findOne({ activationToken })
     if (user) {
       if (!user.activated) {
@@ -174,7 +174,7 @@ export class User {
     }
   }
 
-  static async resetPassword(email: string): Promise<any> {
+  public static async resetPassword(email: string): Promise<any> {
     const user = await this.model.findOne({ email })
     if (!user) {
       return {
@@ -187,7 +187,7 @@ export class User {
       // Generate a new Password
       const newPassword = Crypto.getToken(16)
       // Update the user password
-      var hash = bcrypt.hashSync(newPassword, 10)
+      const hash = bcrypt.hashSync(newPassword, 10)
       user.password = hash
       await user.save()
 
@@ -220,7 +220,7 @@ export class User {
     }
   }
 
-  static async updatePassword(password: string, token: string) {
+  public static async updatePassword(password: string, token: string) {
     const user = await this.model.findOne({ token })
     if (!user) {
       return {
@@ -238,7 +238,7 @@ export class User {
     }
   }
 
-  static async updateEmail(email: string, token: string) {
+  public static async updateEmail(email: string, token: string) {
     if (await this.model.findOne({ email })) {
       return {
         error: {
@@ -288,7 +288,7 @@ export class User {
     }
   }
 
-  static async updateLastEventDate(token: string) {
+  public static async updateLastEventDate(token: string) {
     const user = await this.model.findOne({ token })
     if (user) {
       user.lastEventDate = new Date()
@@ -301,7 +301,7 @@ export class User {
     }
   }
 
-  static async toggleNotificationSetting(key: any, token: string) {
+  public static async toggleNotificationSetting(key: any, token: string) {
     const user = await User.model.findOne({ token })
     if (user) {
       if (!isUndefined(user.notifications[key])) {

@@ -5,7 +5,7 @@ describe('Reset Email template', () => {
     expect(reset).toHaveProperty('subject')
     expect(reset).toHaveProperty('html')
   })
-  test('should have subject proprety type of string', () => {
+  test('should have subject property type of string', () => {
     expect(typeof reset.subject).toBe('string')
   })
   test('should render html string', () => {

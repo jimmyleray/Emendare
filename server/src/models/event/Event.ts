@@ -10,11 +10,11 @@ const model = mongoose.model(
 )
 
 export class Event {
-  static get model(): any {
+  public static get model(): any {
     return model
   }
 
-  static async getEvents(): Promise<any> {
+  public static async getEvents(): Promise<any> {
     return await this.model.find().sort('-created')
   }
 }

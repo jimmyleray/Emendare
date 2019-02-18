@@ -19,11 +19,11 @@ const model = mongoose.model(
 )
 
 export class Text {
-  static get model(): any {
+  public static get model(): any {
     return model
   }
 
-  static async followText(id: string, token: string): Promise<any> {
+  public static async followText(id: string, token: string): Promise<any> {
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
       if (user.followedTexts.indexOf(id) === -1) {
@@ -47,7 +47,10 @@ export class Text {
     }
   }
 
-  static async unFollowText(idText: string, token: string): Promise<any> {
+  public static async unFollowText(
+    idText: string,
+    token: string
+  ): Promise<any> {
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
       const id = user.followedTexts.indexOf(idText)
@@ -72,7 +75,7 @@ export class Text {
     }
   }
 
-  static async postText(
+  public static async postText(
     name: string,
     description: string,
     token: string
@@ -92,9 +95,9 @@ export class Text {
       const texts = await this.model.find({ rules: false })
       return {
         data: {
-          texts: texts,
-          text: text,
-          events: events
+          texts,
+          text,
+          events
         }
       }
     } else {
@@ -104,7 +107,7 @@ export class Text {
     }
   }
 
-  static async getText(id: string): Promise<any> {
+  public static async getText(id: string): Promise<any> {
     const gettedText = await this.model.findById(id)
     if (gettedText) {
       return { data: gettedText }
@@ -115,7 +118,7 @@ export class Text {
     }
   }
 
-  static async getTexts(): Promise<any> {
+  public static async getTexts(): Promise<any> {
     const gettedTexts = await this.model.find({ rules: false })
     if (gettedTexts) {
       return {
