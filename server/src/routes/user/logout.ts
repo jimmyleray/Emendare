@@ -6,11 +6,6 @@ export const logout = {
   callback: ({ socket }: { socket: socketIO.Socket }) => async ({
     token
   }: any) => {
-    const user = await User.model.findOne({ token })
-    if (user) {
-      user.token = null
-      await user.save()
-    }
-    socket.emit('logout')
+    socket.emit('logout', await User.logout(token))
   }
 }

@@ -1,6 +1,5 @@
 import socketIO from 'socket.io'
 import { User } from '../../models'
-import { isUndefined } from 'lodash'
 
 export const toggleNotificationSetting = {
   name: 'toggleNotificationSetting',
@@ -9,22 +8,12 @@ export const toggleNotificationSetting = {
     data
   }: any) => {
     if (token) {
-      const user = await User.model.findOne({ token })
-      if (user) {
-        if (!isUndefined(user.notifications[data.key])) {
-          user.notifications[data.key] = !user.notifications[data.key]
-          await user.save()
-          socket.emit('toggleNotificationSetting')
-          socket.emit('user', { data: user })
-        } else {
-          socket.emit('toggleNotificationSetting', {
-            error: { code: 405, message: 'Cette clé de requête est invalide' }
-          })
-        }
+      const res = User.toggleNotificationSetting(data.key, token)
+      if ('data' in res) {
+        socket.emit('user', res)
+        socket.emit('toggleNotificationSetting')
       } else {
-        socket.emit('toggleNotificationSetting', {
-          error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
-        })
+        socket.emit('toggleNotificationSetting', res)
       }
     } else {
       socket.emit('toggleNotificationSetting', {
