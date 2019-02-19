@@ -11,6 +11,10 @@ import config from './config'
 import express from 'express'
 const app = express()
 
+// CORS definition
+import cors from 'cors'
+app.use(cors({ origin: config.clientUrl }))
+
 // Server basics imports
 import { Server } from 'http'
 import socketIO from 'socket.io'
