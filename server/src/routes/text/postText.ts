@@ -10,30 +10,14 @@ export const postText = {
     io: socketIO.Server
     socket: socketIO.Socket
   }) => async ({ token, data }: any) => {
-    const { name, description } = data
-    const user = await User.model.findOne({ token })
-    if (user && user.activated) {
-      const text = await new Text.model({
-        description,
-        name
-      }).save()
-
-      await new Event.model({
-        targetID: text._id,
-        targetType: 'text'
-      }).save()
-
-      const events = await Event.model.find().sort('-created')
-      io.emit('events/all', { data: events })
-
-      const texts = await Text.model.find({ rules: false })
-      io.emit('texts/all', { data: texts })
-
-      socket.emit('postText', { data: text })
+    const res = await Text.postText(data.name, data.description, token)
+    if ('data' in res) {
+      const { data } = res
+      io.emit('events/all', { data: data.events })
+      io.emit('texts/all', { data: data.texts })
+      socket.emit('postText', { data: data.text })
     } else {
-      socket.emit('postText', {
-        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
-      })
+      socket.emit('postText', res)
     }
   }
 }

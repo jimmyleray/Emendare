@@ -10,8 +10,7 @@ export const updatePassword = {
     data,
     token
   }: any) => {
-    const { password } = data
-    if (!password || !token) {
+    if (!data.password || !token) {
       socket.emit('update-password', {
         error: {
           code: 405,
@@ -19,27 +18,15 @@ export const updatePassword = {
         }
       })
     } else {
-      const user = await User.model.findOne({ token })
-      if (!user) {
-        socket.emit('update-password', {
-          error: {
-            code: 405,
-            message: 'Token invalide'
-          }
-        })
+      const res = await User.updatePassword(data.password, token)
+      if ('data' in res) {
+        // send user updated
+        socket.emit('user', res)
+        socket.emit('update-password')
+      } else if (res.error.message === 'Token invalide') {
         socket.emit('logout')
       } else {
-        bcrypt.hash(password, 10, async (error, hash) => {
-          if (error) {
-            console.error(error)
-          } else {
-            user.password = hash
-            await user.save()
-            // send the user updated
-            socket.emit('user', { data: user })
-            socket.emit('update-password')
-          }
-        })
+        socket.emit('update-password', res)
       }
     }
   }
