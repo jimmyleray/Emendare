@@ -1,5 +1,9 @@
 import React from 'react'
 
-export const Spacer = ({ className = '' }) => (
+interface IProps {
+  className?: string
+}
+
+export const Spacer = React.memo(({ className = '' }: IProps) => (
   <div className={className} style={{ flex: 1 }} />
-)
+))

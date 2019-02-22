@@ -11,7 +11,7 @@ interface IProps {
   to: string
 }
 
-export const Link = ({ children, title, to, ...rest }: IProps) =>
+export const Link = React.memo(({ children, title, to, ...rest }: IProps) =>
   startsWith(to, 'http') ? (
     <a href={to} title={title} target="_blank" {...rest}>
       {children}
@@ -21,3 +21,4 @@ export const Link = ({ children, title, to, ...rest }: IProps) =>
       {children}
     </RouterLink>
   )
+)
