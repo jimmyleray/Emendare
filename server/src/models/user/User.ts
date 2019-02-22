@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt'
 import { isUndefined } from 'lodash'
 import { Crypto, Mail } from '../../services'
 import { activation, reset } from '../../emails'
+import { Amend, Text } from '../../models'
+import { IUser } from '../../interfaces'
 
 const model = mongoose.model(
   'User',
@@ -220,7 +222,10 @@ export class User {
     }
   }
 
-  public static async updatePassword(password: string, token: string) {
+  public static async updatePassword(
+    password: string,
+    token: string
+  ): Promise<any> {
     const user = await this.model.findOne({ token })
     if (!user) {
       return {
@@ -238,7 +243,7 @@ export class User {
     }
   }
 
-  public static async updateEmail(email: string, token: string) {
+  public static async updateEmail(email: string, token: string): Promise<any> {
     if (await this.model.findOne({ email })) {
       return {
         error: {
@@ -288,7 +293,7 @@ export class User {
     }
   }
 
-  public static async updateLastEventDate(token: string) {
+  public static async updateLastEventDate(token: string): Promise<any> {
     const user = await this.model.findOne({ token })
     if (user) {
       user.lastEventDate = new Date()
@@ -301,7 +306,10 @@ export class User {
     }
   }
 
-  public static async toggleNotificationSetting(key: any, token: string) {
+  public static async toggleNotificationSetting(
+    key: any,
+    token: string
+  ): Promise<any> {
     const user = await User.model.findOne({ token })
     if (user) {
       if (!isUndefined(user.notifications[key])) {
@@ -318,5 +326,64 @@ export class User {
         error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
       }
     }
+  }
+
+  public static async delete(token: string): Promise<any> {
+    const user = await this.model.findOne({ token })
+    if (user) {
+      const openAmends = await this.getOpenAmends(user)
+      const updatedAmend = []
+      for (let amend of openAmends) {
+        const currentAmend = await Amend.model.findById(amend)
+        if (currentAmend) {
+          const amendUpdated = (await Amend.unVoteAmend(amend, token)).data
+          updatedAmend.push(amendUpdated)
+          await Text.unFollowText(currentAmend.text, token)
+        }
+      }
+      try {
+        await this.model.deleteOne({ token })
+        const texts = await Text.getTexts()
+        return { data: { texts, amends: updatedAmend } }
+      } catch (error) {
+        console.error(error)
+        return {
+          error: {
+            code: 500,
+            message: 'Impossible de supprimer cet utilisateur'
+          }
+        }
+      }
+    } else {
+      return {
+        error: {
+          code: 401,
+          message: "Cet utilisateur n'est pas connecté"
+        }
+      }
+    }
+  }
+
+  private static async getOpenAmends(user: IUser): Promise<string[]> {
+    let res = []
+    for (let amend of user.indVotes) {
+      const currentAmend = await Amend.model.findById(amend)
+      if (currentAmend && !currentAmend.closed) {
+        res.push(amend)
+      }
+    }
+    for (let amend of user.upVotes) {
+      const currentAmend = await Amend.model.findById(amend)
+      if (currentAmend && !currentAmend.closed) {
+        res.push(amend)
+      }
+    }
+    for (let amend of user.downVotes) {
+      const currentAmend = await Amend.model.findById(amend)
+      if (currentAmend && !currentAmend.closed) {
+        res.push(amend)
+      }
+    }
+    return res
   }
 }
