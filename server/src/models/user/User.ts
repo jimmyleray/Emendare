@@ -333,7 +333,7 @@ export class User {
     if (user) {
       const openAmends = await this.getOpenAmends(user)
       const updatedAmend = []
-      for (let amend of openAmends) {
+      for (const amend of openAmends) {
         const currentAmend = await Amend.model.findById(amend)
         if (currentAmend) {
           const amendUpdated = (await Amend.unVoteAmend(amend, token)).data
@@ -365,20 +365,20 @@ export class User {
   }
 
   private static async getOpenAmends(user: IUser): Promise<string[]> {
-    let res = []
-    for (let amend of user.indVotes) {
+    const res = []
+    for (const amend of user.indVotes) {
       const currentAmend = await Amend.model.findById(amend)
       if (currentAmend && !currentAmend.closed) {
         res.push(amend)
       }
     }
-    for (let amend of user.upVotes) {
+    for (const amend of user.upVotes) {
       const currentAmend = await Amend.model.findById(amend)
       if (currentAmend && !currentAmend.closed) {
         res.push(amend)
       }
     }
-    for (let amend of user.downVotes) {
+    for (const amend of user.downVotes) {
       const currentAmend = await Amend.model.findById(amend)
       if (currentAmend && !currentAmend.closed) {
         res.push(amend)

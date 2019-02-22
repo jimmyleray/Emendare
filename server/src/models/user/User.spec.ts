@@ -160,7 +160,7 @@ describe('updatePassword', () => {
 
   test('should return user data', async () => {
     mockingoose.User.toReturn(userMock, 'findOne')
-    let res = await User.updatePassword('abcde', 'bfb82457793d31a7')
+    const res = await User.updatePassword('abcde', 'bfb82457793d31a7')
     expect(bcrypt.compareSync('abcde', res.data.password)).toBeTruthy()
   })
 })
