@@ -97,7 +97,7 @@ export const ProfilePage = () => (
                       <NotificationSettings user={user} />
                     </Column>
                     <Column>
-                      <UserCredentials user={user} />
+                      <UserCredentials />
                     </Column>
                   </Columns>
                 </React.Fragment>
