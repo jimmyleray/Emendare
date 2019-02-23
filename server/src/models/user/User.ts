@@ -4,7 +4,7 @@ import { isUndefined } from 'lodash'
 import { Crypto, Mail } from '../../services'
 import { activation, reset } from '../../emails'
 import { Amend, Text } from '../../models'
-import { IUser } from '../../interfaces'
+import { IAmend, IUser, IText } from '../../interfaces'
 
 const model = mongoose.model(
   'User',
@@ -325,28 +325,45 @@ export class User {
   }
 
   public static async delete(token: string): Promise<any> {
-    const user = await this.model.findOne({ token })
+    let user: IUser = await this.model.findOne({ token })
     if (user) {
-      const openAmends = await this.getOpenAmends(user)
-      const updatedAmend = []
-      for (const amend of openAmends) {
-        const currentAmend = await Amend.model.findById(amend)
-        if (currentAmend) {
-          const amendUpdated = (await Amend.unVoteAmend(amend, token)).data
-          updatedAmend.push(amendUpdated)
-          await Text.unFollowText(currentAmend.text, token)
-        }
+      let openAmends = await this.getOpenAmends(user)
+      const followedTexts: IText[] = []
+      const amends: IAmend[] = []
+
+      for (const id of openAmends) {
+        await Amend.unVoteAmend(id, token)
+        const amend = await Amend.model.findById(id)
+        amends.push(amend)
       }
-      try {
-        await this.model.deleteOne({ token })
-        const texts = await Text.getTexts()
-        return { data: { texts, amends: updatedAmend } }
-      } catch (error) {
-        console.error(error)
+
+      for (const id of user.followedTexts) {
+        await Text.unFollowText(id, token)
+        const text = await Text.model.findById(id)
+        followedTexts.push(text)
+      }
+
+      user = await this.model.findOne({ token })
+      openAmends = await this.getOpenAmends(user)
+      if (user.followedTexts.length === 0 && openAmends.length === 0) {
+        try {
+          await this.model.deleteOne({ token })
+          return { data: { amends, texts: followedTexts } }
+        } catch (error) {
+          console.error(error)
+          return {
+            error: {
+              code: 500,
+              message: 'Impossible de supprimer cet utilisateur'
+            }
+          }
+        }
+      } else {
         return {
           error: {
-            code: 500,
-            message: 'Impossible de supprimer cet utilisateur'
+            code: 401,
+            message:
+              "Toutes les données de l'utilisateur n'ont pas été supprimées"
           }
         }
       }
@@ -361,25 +378,16 @@ export class User {
   }
 
   private static async getOpenAmends(user: IUser): Promise<string[]> {
-    const res = []
-    for (const amend of user.indVotes) {
-      const currentAmend = await Amend.model.findById(amend)
-      if (currentAmend && !currentAmend.closed) {
-        res.push(amend)
-      }
+    const amends: IAmend[] = []
+    const votes = [...user.indVotes, ...user.upVotes, ...user.downVotes]
+
+    for (const id of votes) {
+      const amend = await Amend.model.findById(id)
+      amends.push(amend)
     }
-    for (const amend of user.upVotes) {
-      const currentAmend = await Amend.model.findById(amend)
-      if (currentAmend && !currentAmend.closed) {
-        res.push(amend)
-      }
-    }
-    for (const amend of user.downVotes) {
-      const currentAmend = await Amend.model.findById(amend)
-      if (currentAmend && !currentAmend.closed) {
-        res.push(amend)
-      }
-    }
-    return res
+
+    return amends
+      .filter(amend => amend && !amend.closed)
+      .map(amend => amend._id)
   }
 }

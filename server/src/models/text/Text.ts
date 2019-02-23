@@ -13,8 +13,7 @@ const model = mongoose.model(
     amends: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
       default: []
-    },
-    rules: { type: Boolean, default: false }
+    }
   })
 )
 
@@ -119,7 +118,7 @@ export class Text {
   }
 
   public static async getTexts(): Promise<any> {
-    const gettedTexts = await this.model.find({ rules: false })
+    const gettedTexts = await this.model.find({})
     if (gettedTexts) {
       return {
         data: gettedTexts.map((text: any) => text._id)

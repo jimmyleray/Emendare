@@ -1,6 +1,6 @@
 import socketIO from 'socket.io'
 import { User } from '../../models'
-import { IAmend } from '../../interfaces'
+import { IAmend, IText } from '../../interfaces'
 
 export const deleteAccount = {
   name: 'deleteAccount',
@@ -14,7 +14,9 @@ export const deleteAccount = {
     const res = await User.delete(token)
     if ('data' in res) {
       // update texts and amends
-      io.emit('texts/all', res.data.texts)
+      res.data.texts.forEach((text: IText) => {
+        io.emit('text/' + text._id, { data: text })
+      })
       res.data.amends.forEach((amend: IAmend) => {
         io.emit('amend/' + amend._id, { data: amend })
       })
