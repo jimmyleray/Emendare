@@ -6,7 +6,7 @@ enzyme.configure({ adapter: new Adapter() })
 
 import { UserCredentials } from './userCredentials'
 
-it('should render an AmendPage', () => {
+it('should render an UserCredentials', () => {
   const component = shallow(<UserCredentials />)
   expect(component).toBeTruthy()
 })
