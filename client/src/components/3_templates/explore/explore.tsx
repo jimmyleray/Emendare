@@ -3,6 +3,7 @@
 import React from 'react'
 import {
   Box,
+  Button,
   Divider,
   Icon,
   Grid,
@@ -72,19 +73,14 @@ export const Explore = () => {
           </React.Fragment>
         ))}
 
-      <Divider className="is-hidden-tablet" style={{ margin: 0 }} />
-      <Link to={path.create} style={{ display: 'inline-grid' }}>
-        <Box style={{ marginBottom: '0px' }} className="has-text-info">
-          <div className="is-size-4 is-flex" style={{ flexWrap: 'wrap' }}>
-            <p>Ajouter un texte</p>
-            <Spacer />
-            <p>
-              <Icon type={'fa fa-plus-circle'} />
-            </p>
-          </div>
-          <p>Accès au formulaire d'ajout</p>
-        </Box>
-      </Link>
+      {texts.length === 0 && (
+        <Link to={path.create} style={{ display: 'inline-grid' }}>
+          <Button className="is-info">
+            <Icon type="fa fa-plus" />
+            <span>Ajouter un texte</span>
+          </Button>
+        </Link>
+      )}
     </Grid>
   )
 }
