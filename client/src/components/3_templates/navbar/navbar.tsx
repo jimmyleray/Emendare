@@ -26,6 +26,8 @@ export const Navbar = () => {
     ).length
 
     Title.badgeCount = newEventsCount
+  } else {
+    Title.badgeCount = 0
   }
 
   const [isActive, setActive] = React.useState(false)
