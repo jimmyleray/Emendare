@@ -6,6 +6,11 @@ export const text = {
   callback: ({ socket }: { socket: socketIO.Socket }) => async ({
     data
   }: any) => {
-    socket.emit('text/' + data.id, await Text.getText(data.id))
+    try {
+      const response = await Text.getText(data.id)
+      socket.emit('text/' + data.id, response)
+    } catch (error) {
+      console.error(error)
+    }
   }
 }

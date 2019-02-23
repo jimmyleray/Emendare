@@ -19,6 +19,7 @@ export interface IUser {
   password: string
   token: string
   upVotes: string[]
+  save?: any
 }
 
 export const userMock: IUser = {

@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
+import socketIO from 'socket.io'
 import { User, Event } from '../../models'
+import { IResponse, IText, IEvent } from '../../interfaces'
 
 const model = mongoose.model(
   'Text',
@@ -22,7 +24,11 @@ export class Text {
     return model
   }
 
-  public static async followText(id: string, token: string): Promise<any> {
+  public static async followText(
+    id: string,
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IText>> {
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
       if (user.followedTexts.indexOf(id) === -1) {
@@ -33,7 +39,11 @@ export class Text {
         text.followersCount++
         await text.save()
 
-        return { textId: text._id, data: text }
+        if (io) {
+          io.emit('text/' + text._id, { data: text })
+        }
+
+        return { data: text }
       } else {
         return {
           error: { code: 405, message: 'Vous participez déjà à ce texte' }
@@ -48,8 +58,9 @@ export class Text {
 
   public static async unFollowText(
     idText: string,
-    token: string
-  ): Promise<any> {
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IText>> {
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
       const id = user.followedTexts.indexOf(idText)
@@ -60,6 +71,10 @@ export class Text {
         const text = await this.model.findById(idText)
         text.followersCount--
         await text.save()
+
+        if (io) {
+          io.emit('text/' + text._id, { data: text })
+        }
 
         return { data: text }
       } else {
@@ -75,30 +90,31 @@ export class Text {
   }
 
   public static async postText(
-    name: string,
-    description: string,
-    token: string
-  ): Promise<any> {
+    { name, description }: { name: string; description: string },
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IText>> {
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
-      const text = await new this.model({
+      const data = await new this.model({
         description,
         name
       }).save()
 
       await new Event.model({
-        targetID: text._id,
+        targetID: data._id,
         targetType: 'text'
       }).save()
-      const events = await Event.model.find().sort('-created')
-      const texts = await this.model.find({ rules: false })
-      return {
-        data: {
-          texts,
-          text,
-          events
-        }
+
+      const events: IEvent[] = await Event.model.find().sort('-created')
+      const texts: IText[] = await this.model.find({})
+
+      if (io) {
+        io.emit('events/all', { data: events.map(event => event._id) })
+        io.emit('texts/all', { data: texts.map(texte => texte._id) })
       }
+
+      return { data }
     } else {
       return {
         error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
@@ -106,27 +122,23 @@ export class Text {
     }
   }
 
-  public static async getText(id: string): Promise<any> {
-    const gettedText = await this.model.findById(id)
-    if (gettedText) {
-      return { data: gettedText }
-    } else {
-      return {
-        error: { code: 404, message: "Oups, ce texte n'existe pas ou plus" }
-      }
-    }
+  public static async getText(id: string): Promise<IResponse<IText>> {
+    const data = await this.model.findById(id)
+    return data
+      ? { data }
+      : {
+          error: { code: 404, message: "Oups, ce texte n'existe pas ou plus" }
+        }
   }
 
-  public static async getTexts(): Promise<any> {
-    const gettedTexts = await this.model.find({})
-    if (gettedTexts) {
-      return {
-        data: gettedTexts.map((text: any) => text._id)
-      }
-    } else {
-      return {
-        error: { code: 405, message: "Oups, il y'a eu une erreur" }
-      }
-    }
+  public static async getTexts(): Promise<IResponse<string[]>> {
+    const data: IText[] = await this.model.find({})
+    return data
+      ? {
+          data: data.map(text => text._id)
+        }
+      : {
+          error: { code: 405, message: "Oups, il y'a eu une erreur" }
+        }
   }
 }

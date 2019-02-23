@@ -10,10 +10,11 @@ export const downVoteAmend = {
     io: socketIO.Server
     socket: socketIO.Socket
   }) => async ({ token, data }: any) => {
-    const res = await Amend.downVoteAmend(data.id, token)
-    if ('data' in res) {
-      io.emit('amend/' + data.id, res)
+    try {
+      const response = await Amend.downVoteAmend(data.id, token, io)
+      socket.emit('downVoteAmend', response)
+    } catch (error) {
+      console.error(error)
     }
-    socket.emit('downVoteAmend', res)
   }
 }

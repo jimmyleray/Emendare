@@ -287,11 +287,14 @@ describe('getAmend', () => {
     mockingoose.User.toReturn(null, 'findOne')
     expect(
       await Amend.postAmend(
-        'test',
-        'test',
-        'test',
-        '1',
-        '5c64389cae3ae3695c711e44',
+        {
+          name: 'test',
+          description: 'test',
+          patch: 'test',
+          version: 1,
+          textID: '5c64389cae3ae3695c711e44'
+        },
+
         'wrongId'
       )
     ).toMatchObject({
@@ -305,15 +308,15 @@ describe('getAmend', () => {
     mockingoose.Event.toReturn(new Array(eventMock), 'find')
     mockingoose.Text.toReturn(textMock, 'findOne')
     const res = await Amend.postAmend(
-      'test',
-      'test',
-      'test',
-      '1',
-      '5c64389cae3ae3695c711e44',
+      {
+        name: 'test',
+        description: 'test',
+        patch: 'test',
+        version: 1,
+        textID: '5c64389cae3ae3695c711e44'
+      },
       'wrongId'
     )
-    expect(res.data).toHaveProperty('text')
-    expect(res.data).toHaveProperty('events')
-    expect(res.data).toHaveProperty('amend')
+    expect(res).toHaveProperty('data')
   })
 })

@@ -11,19 +11,12 @@ export const deleteAccount = {
     io: socketIO.Server
     socket: socketIO.Socket
   }) => async ({ token }: any) => {
-    const res = await User.delete(token)
-    if ('data' in res) {
-      // logout user
+    try {
+      const response = await User.delete(token, io)
+      socket.emit('deleteAccount', response)
       socket.emit('logout')
-
-      // update texts and amends
-      res.data.texts.forEach((text: IText) => {
-        io.emit('text/' + text._id, { data: text })
-      })
-      res.data.amends.forEach((amend: IAmend) => {
-        io.emit('amend/' + amend._id, { data: amend })
-      })
+    } catch (error) {
+      console.error(error)
     }
-    socket.emit('deleteAccount', res)
   }
 }

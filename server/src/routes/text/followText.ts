@@ -10,12 +10,11 @@ export const followText = {
     io: socketIO.Server
     socket: socketIO.Socket
   }) => async ({ token, data }: any) => {
-    const res = await Text.followText(data.id, token)
-    if ('textId' in res) {
-      io.emit('text/' + res.textId, { data: res.data })
-      socket.emit('followText')
-    } else {
-      socket.emit('followText', res)
+    try {
+      const response = await Text.followText(data.id, token, io)
+      socket.emit('followText', response)
+    } catch (error) {
+      console.error(error)
     }
   }
 }

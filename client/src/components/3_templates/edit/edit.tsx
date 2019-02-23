@@ -104,6 +104,10 @@ export class Edit extends React.Component<IEditProps, IEditState> {
     this.computeDiff()
   }
 
+  public componentWillUnmount() {
+    Socket.off('postAmend')
+  }
+
   public render() {
     if (this.state.redirectToAmend) {
       return <Redirect to={path.amend(this.state.redirectID)} />

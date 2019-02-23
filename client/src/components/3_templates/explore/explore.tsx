@@ -73,14 +73,15 @@ export const Explore = () => {
           </React.Fragment>
         ))}
 
-      {texts.length === 0 && (
-        <Link to={path.create} style={{ display: 'inline-grid' }}>
-          <Button className="is-info">
-            <Icon type="fa fa-plus" />
-            <span>Ajouter un texte</span>
-          </Button>
-        </Link>
-      )}
+      <Link
+        to={path.create}
+        style={{ display: 'inline-grid', gridColumnStart: 1 }}
+      >
+        <Button className="is-info">
+          <Icon type="fa fa-plus" />
+          <span>Ajouter un texte</span>
+        </Button>
+      </Link>
     </Grid>
   )
 }

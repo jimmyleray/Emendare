@@ -7,13 +7,13 @@ export const login = {
     token,
     data
   }: any) => {
-    let res
+    let response
     if (!data && token) {
-      res = await User.login('', '', token)
+      response = await User.login(undefined, undefined, token)
     } else if (data) {
-      res = await User.login(data.email, data.password, token)
-      if (!res) {
-        res = {
+      response = await User.login(data.email, data.password, token)
+      if (!response) {
+        response = {
           error: {
             code: 500,
             message: 'Problème avec le service de login'
@@ -21,13 +21,13 @@ export const login = {
         }
       }
     } else {
-      res = {
+      response = {
         error: {
           code: 405,
           message: 'La requête est invalide'
         }
       }
     }
-    socket.emit('login', res)
+    socket.emit('login', response)
   }
 }

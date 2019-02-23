@@ -6,6 +6,7 @@ export const activation = {
   callback: ({ socket }: { socket: socketIO.Socket }) => async ({
     data
   }: any) => {
-    socket.emit('activation', await User.activateUser(data.activationToken))
+    const response = await User.activateUser(data.activationToken)
+    socket.emit('activation', response)
   }
 }

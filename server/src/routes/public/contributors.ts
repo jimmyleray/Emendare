@@ -9,7 +9,7 @@ export const contributors = {
   callback: ({ socket }: { socket: socketIO.Socket }) => async () => {
     try {
       const res = await fetch(config.contributions)
-      const data: any[] = await res.json()
+      const data: any = await res.json()
       socket.emit('contributors', { data })
     } catch (error) {
       console.error(error)

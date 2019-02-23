@@ -9,6 +9,7 @@ export interface IText {
   patches: string[]
   amends: string[]
   rules: boolean
+  save?: any
 }
 
 export const textMock: IText = {

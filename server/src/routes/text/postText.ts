@@ -10,13 +10,11 @@ export const postText = {
     io: socketIO.Server
     socket: socketIO.Socket
   }) => async ({ token, data }: any) => {
-    const res = await Text.postText(data.name, data.description, token)
-    if ('data' in res) {
-      io.emit('events/all', { data: res.data.events })
-      io.emit('texts/all', { data: res.data.texts })
-      socket.emit('postText', { data: res.data.text })
-    } else {
-      socket.emit('postText', res)
+    try {
+      const response = await Text.postText(data, token, io)
+      socket.emit('postText', response)
+    } catch (error) {
+      console.error(error)
     }
   }
 }

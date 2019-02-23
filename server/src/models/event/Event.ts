@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { IEvent, IResponse } from '../../interfaces'
 
 const model = mongoose.model(
   'Event',
@@ -14,7 +15,8 @@ export class Event {
     return model
   }
 
-  public static async getEvents(): Promise<any> {
-    return await this.model.find().sort('-created')
+  public static async getEvents(): Promise<IResponse<IEvent[]>> {
+    const data = await this.model.find().sort('-created')
+    return { data }
   }
 }

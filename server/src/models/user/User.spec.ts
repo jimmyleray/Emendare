@@ -35,7 +35,7 @@ describe('activateUser', () => {
     mockingoose.User.toReturn(notActivatedUser, 'save')
     expect(
       await User.activateUser('4d55a560ea0be764c55dc01a872c8fc8205cf262994c8')
-    ).toBe(undefined)
+    ).toHaveProperty('data')
   })
 })
 
@@ -120,10 +120,10 @@ describe('logout', () => {
     mockingoose.resetAll()
   })
 
-  test('should return nothing ', async () => {
+  test('should return an error ', async () => {
     mockingoose.User.toReturn(null, 'findOne')
-    expect(await User.logout('')).toBe(undefined)
-    expect(await User.logout('bfb82457793d31a7')).toBe(undefined)
+    expect(await User.logout('')).toHaveProperty('error')
+    expect(await User.logout('bfb82457793d31a7')).toHaveProperty('error')
   })
 })
 
@@ -134,7 +134,9 @@ describe('resetPassword', () => {
 
   test("should return email doesn't exist ", async () => {
     mockingoose.User.toReturn(null, 'findOne')
-    expect(await User.resetPassword('wrong.email@test.com')).toMatchObject({
+    expect(
+      await User.resetPassword({ email: 'wrong.email@test.com' })
+    ).toMatchObject({
       error: {
         code: 405,
         message: "Cet email n'existe pas."
@@ -272,12 +274,11 @@ describe('delete', () => {
     })
   })
 
-  test('should return data with all the texts and the amends which have changed', async () => {
+  test('should delete user without error', async () => {
     mockingoose.User.toReturn(userMock, 'findOne')
     mockingoose.Amend.toReturn(amendMock, 'findOne')
     mockingoose.Text.toReturn(new Array(textMock), 'findOne')
     const res = await User.delete('13I9H0H0U3')
-    expect(res.data).toHaveProperty('texts')
-    expect(res.data).toHaveProperty('amends')
+    expect(res).not.toHaveProperty('error')
   })
 })

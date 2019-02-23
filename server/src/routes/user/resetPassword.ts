@@ -4,17 +4,13 @@ import { User } from '../../models'
 export const resetPassword = {
   name: 'reset-password',
   callback: ({ socket }: { socket: SocketIO.Socket }) => async ({
-    data
+    data = {}
   }: any) => {
-    if (!data.email) {
-      return {
-        error: {
-          code: 405,
-          message: "L'email est requis."
-        }
-      }
-    } else {
-      socket.emit('reset-password', await User.resetPassword(data.email))
+    try {
+      const response = await User.resetPassword(data)
+      socket.emit('reset-password', response)
+    } catch (error) {
+      console.error(error)
     }
   }
 }

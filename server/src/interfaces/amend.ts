@@ -17,6 +17,7 @@ export interface IAmend {
   closed: boolean
   accepted: boolean
   conflicted: boolean
+  save?: any
 }
 
 export const amendMock: IAmend = {

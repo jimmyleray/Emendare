@@ -30,6 +30,7 @@ export const Socket = {
         } else {
           resolve(res && res.data)
         }
+        Socket.off(name)
       })
     })
   }

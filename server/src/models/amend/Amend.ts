@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
+import socketIO from 'socket.io'
 import { User, Text, Event } from '../../models'
+import { IAmend, IResponse, IUser, IText, IEvent } from '../../interfaces'
 
 const oneSecond = 1000
 const oneMinute = oneSecond * 60
@@ -47,24 +49,26 @@ export class Amend {
     return model
   }
 
-  public static async getAmend(id: string): Promise<any> {
-    const gettedAmend = await this.model.findById(id)
-    if (gettedAmend) {
-      return { data: gettedAmend }
-    } else {
-      return {
-        error: {
-          code: 404,
-          message: "Oups, cet amendement n'existe pas ou plus"
+  public static async getAmend(id: string): Promise<IResponse<IAmend>> {
+    const data: IAmend = await this.model.findById(id)
+    return data
+      ? { data }
+      : {
+          error: {
+            code: 404,
+            message: "Oups, cet amendement n'existe pas ou plus"
+          }
         }
-      }
-    }
   }
 
-  public static async downVoteAmend(id: string, token: string): Promise<any> {
-    const user = await User.model.findOne({ token })
+  public static async downVoteAmend(
+    id: string,
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IAmend>> {
+    const user: IUser = await User.model.findOne({ token })
     if (user && user.activated) {
-      const amend = await this.model.findById(id)
+      const amend: IAmend = await this.model.findById(id)
       if (user.followedTexts.indexOf(amend.text) > -1) {
         if (!amend.closed) {
           if (user.downVotes.indexOf(id) === -1) {
@@ -85,6 +89,10 @@ export class Amend {
 
             await user.save()
             await amend.save()
+
+            if (io) {
+              io.emit('amend/' + id, { data: amend })
+            }
 
             return { data: amend }
           } else {
@@ -112,10 +120,14 @@ export class Amend {
     }
   }
 
-  public static async indVoteAmend(id: string, token: string): Promise<any> {
-    const user = await User.model.findOne({ token })
+  public static async indVoteAmend(
+    id: string,
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IAmend>> {
+    const user: IUser = await User.model.findOne({ token })
     if (user && user.activated) {
-      const amend = await this.model.findById(id)
+      const amend: IAmend = await this.model.findById(id)
       if (user.followedTexts.indexOf(amend.text) > -1) {
         if (!amend.closed) {
           if (user.indVotes.indexOf(id) === -1) {
@@ -136,6 +148,10 @@ export class Amend {
 
             await user.save()
             await amend.save()
+
+            if (io) {
+              io.emit('amend/' + id, { data: amend })
+            }
 
             return { data: amend }
           } else {
@@ -164,16 +180,25 @@ export class Amend {
   }
 
   public static async postAmend(
-    name: string,
-    description: string,
-    patch: any,
-    version: any,
-    textID: any,
-    token: string
-  ): Promise<any> {
-    const user = await User.model.findOne({ token })
+    {
+      name,
+      description,
+      patch,
+      version,
+      textID
+    }: {
+      name: string
+      description: string
+      patch: string
+      version: number
+      textID: string
+    },
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IAmend>> {
+    const user: IUser = await User.model.findOne({ token })
     if (user && user.activated) {
-      const amend = await new this.model({
+      const amend: IAmend = await new this.model({
         description,
         name,
         patch,
@@ -181,7 +206,7 @@ export class Amend {
         version
       }).save()
 
-      const text = await Text.model.findById(textID)
+      const text: IText = await Text.model.findById(textID)
       text.amends.push(amend._id)
       await text.save()
 
@@ -190,15 +215,14 @@ export class Amend {
         targetType: 'amend'
       }).save()
 
-      const events = await Event.model.find().sort('-created')
+      const events: IEvent[] = await Event.model.find().sort('-created')
 
-      return {
-        data: {
-          events,
-          amend,
-          text
-        }
+      if (io) {
+        io.emit('events/all', { data: events })
+        io.emit('text/' + textID, { data: text })
       }
+
+      return { data: amend }
     } else {
       return {
         error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
@@ -206,8 +230,12 @@ export class Amend {
     }
   }
 
-  public static async unVoteAmend(id: string, token: string): Promise<any> {
-    const user = await User.model.findOne({ token })
+  public static async unVoteAmend(
+    id: string,
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IAmend>> {
+    const user: IUser = await User.model.findOne({ token })
     if (user && user.activated) {
       const amend = await this.model.findById(id)
       if (user.followedTexts.indexOf(amend.text) > -1) {
@@ -234,6 +262,10 @@ export class Amend {
           await user.save()
           await amend.save()
 
+          if (io) {
+            io.emit('amend/' + id, { data: amend })
+          }
+
           return { data: amend }
         } else {
           return {
@@ -255,10 +287,14 @@ export class Amend {
     }
   }
 
-  public static async upVoteAmend(id: string, token: string): Promise<any> {
-    const user = await User.model.findOne({ token })
+  public static async upVoteAmend(
+    id: string,
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IAmend>> {
+    const user: IUser = await User.model.findOne({ token })
     if (user && user.activated) {
-      const amend = await this.model.findById(id)
+      const amend: IAmend = await this.model.findById(id)
       if (user.followedTexts.indexOf(amend.text) > -1) {
         if (!amend.closed) {
           if (user.upVotes.indexOf(id) === -1) {
@@ -279,6 +315,10 @@ export class Amend {
 
             await user.save()
             await amend.save()
+
+            if (io) {
+              io.emit('amend/' + id, { data: amend })
+            }
 
             return { data: amend }
           } else {

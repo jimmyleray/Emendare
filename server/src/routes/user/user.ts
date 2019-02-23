@@ -7,13 +7,17 @@ export const user = {
     token
   }: any) => {
     if (token) {
-      const gettedUser = await User.model.findOne({ token })
-      if (gettedUser) {
-        socket.emit('user', { data: gettedUser })
-      } else {
-        socket.emit('user', {
-          error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
-        })
+      try {
+        const data = await User.model.findOne({ token })
+        if (data) {
+          socket.emit('user', { data })
+        } else {
+          socket.emit('user', {
+            error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
+          })
+        }
+      } catch (error) {
+        console.error(error)
       }
     } else {
       socket.emit('user', {

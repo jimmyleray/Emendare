@@ -4,6 +4,7 @@ export interface IEvent {
   created: Date | string
   targetType: string
   targetID: string
+  save?: any
 }
 
 export const eventMock: IEvent = {
