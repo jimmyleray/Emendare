@@ -326,9 +326,10 @@ export class User {
 
   public static async delete(token: string): Promise<any> {
     let user: IUser = await this.model.findOne({ token })
+
     if (user) {
       let openAmends = await this.getOpenAmends(user)
-      const followedTexts: IText[] = []
+      const texts: IText[] = []
       const amends: IAmend[] = []
 
       for (const id of openAmends) {
@@ -340,15 +341,16 @@ export class User {
       for (const id of user.followedTexts) {
         await Text.unFollowText(id, token)
         const text = await Text.model.findById(id)
-        followedTexts.push(text)
+        texts.push(text)
       }
 
       user = await this.model.findOne({ token })
       openAmends = await this.getOpenAmends(user)
+
       if (user.followedTexts.length === 0 && openAmends.length === 0) {
         try {
           await this.model.deleteOne({ token })
-          return { data: { amends, texts: followedTexts } }
+          return { data: { amends, texts } }
         } catch (error) {
           console.error(error)
           return {
