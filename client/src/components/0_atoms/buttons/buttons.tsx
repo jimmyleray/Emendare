@@ -1,15 +1,13 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
 
 interface IProps {
   children: React.ReactNode
-  style?: CSSProperties
+  style?: React.CSSProperties
   className?: string
 }
 
-export const Buttons = React.memo(
-  ({ children, className = '', ...rest }: IProps) => (
-    <div className={'buttons ' + className} {...rest}>
-      {children}
-    </div>
-  )
+export const Buttons = ({ children, className = '', ...rest }: IProps) => (
+  <div className={'buttons ' + className} {...rest}>
+    {children}
+  </div>
 )

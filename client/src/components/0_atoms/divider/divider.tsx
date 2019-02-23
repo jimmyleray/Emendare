@@ -7,14 +7,15 @@ interface IProps {
   style?: React.CSSProperties
 }
 
-export const Divider = React.memo(
-  ({ content, vertical = false, className = '', ...rest }: IProps) => (
-    <div
-      className={
-        (vertical ? 'is-divider-vertical ' : 'is-divider ') + className
-      }
-      data-content={content}
-      {...rest}
-    />
-  )
+export const Divider = ({
+  content,
+  vertical = false,
+  className = '',
+  ...rest
+}: IProps) => (
+  <div
+    className={(vertical ? 'is-divider-vertical ' : 'is-divider ') + className}
+    data-content={content}
+    {...rest}
+  />
 )

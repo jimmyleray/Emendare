@@ -6,8 +6,8 @@ interface IProps {
   title?: string
 }
 
-export const Icon = React.memo(({ type, className = '', ...rest }: IProps) => (
+export const Icon = ({ type, className = '', ...rest }: IProps) => (
   <span className={'icon ' + className} {...rest}>
     <i className={type} />
   </span>
-))
+)

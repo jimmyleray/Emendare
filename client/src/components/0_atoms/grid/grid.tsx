@@ -1,12 +1,12 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
 
 interface IProps {
   children: React.ReactNode
-  style?: CSSProperties
+  style?: React.CSSProperties
 }
 
-export const Grid = React.memo(({ children, style = {}, ...rest }: IProps) => (
+export const Grid = ({ children, style = {}, ...rest }: IProps) => (
   <div className="grid" style={{ ...style, display: 'grid' }} {...rest}>
     {children}
   </div>
-))
+)

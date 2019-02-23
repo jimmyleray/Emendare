@@ -1,9 +1,9 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 interface IProps {
   children?: React.ReactNode
-  style?: CSSProperties
+  style?: React.CSSProperties
   onClick?: () => void
   className?: string
   disabled?: boolean
@@ -12,15 +12,13 @@ interface IProps {
   to?: string
 }
 
-export const Button = React.memo(
-  ({ children, className = '', ...rest }: IProps) =>
-    rest.to && !rest.disabled ? (
-      <Link to={rest.to} className={'button ' + className} {...rest}>
-        {children}
-      </Link>
-    ) : (
-      <button className={'button ' + className} {...rest}>
-        {children}
-      </button>
-    )
-)
+export const Button = ({ children, className = '', ...rest }: IProps) =>
+  rest.to && !rest.disabled ? (
+    <Link to={rest.to} className={'button ' + className} {...rest}>
+      {children}
+    </Link>
+  ) : (
+    <button className={'button ' + className} {...rest}>
+      {children}
+    </button>
+  )
