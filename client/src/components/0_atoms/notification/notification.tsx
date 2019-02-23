@@ -1,9 +1,10 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
 
 interface IProps {
   children: React.ReactNode
   className?: string
-  style?: CSSProperties
+  onClick?: any
+  style?: React.CSSProperties
 }
 
 export const Notification = ({ children, className = '', ...rest }: IProps) => (

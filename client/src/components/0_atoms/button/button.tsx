@@ -1,9 +1,9 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 interface IProps {
-  children: React.ReactNode
-  style?: CSSProperties
+  children?: React.ReactNode
+  style?: React.CSSProperties
   onClick?: () => void
   className?: string
   disabled?: boolean

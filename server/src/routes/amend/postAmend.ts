@@ -20,10 +20,9 @@ export const postAmend = {
       token
     )
     if ('data' in res) {
-      const { data } = res
-      io.emit('events/all', { data: data.events })
-      io.emit('text/' + textID, { data: data.text })
-      socket.emit('postAmend', { data: data.amend })
+      io.emit('events/all', { data: res.data.events })
+      io.emit('text/' + textID, { data: res.data.text })
+      socket.emit('postAmend', { data: res.data.amend })
     } else {
       socket.emit('postAmend', res)
     }

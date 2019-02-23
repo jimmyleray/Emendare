@@ -3,7 +3,7 @@ import mockingoose from 'mockingoose'
 import bcrypt from 'bcrypt'
 // Models and interfaces
 import { User } from './User'
-import { userMock } from '../../interfaces'
+import { userMock, amendMock, textMock } from '../../interfaces'
 
 describe('activateUser', () => {
   beforeEach(() => {
@@ -255,5 +255,29 @@ describe('toggleNotificationSetting', () => {
         message: 'Cette clé de requête est invalide'
       }
     })
+  })
+})
+
+describe('delete', () => {
+  beforeEach(() => {
+    mockingoose.resetAll()
+  })
+  test('should user not connected', async () => {
+    mockingoose.User.toReturn(null, 'findOne')
+    expect(await User.delete('wrongToken')).toMatchObject({
+      error: {
+        code: 401,
+        message: "Cet utilisateur n'est pas connecté"
+      }
+    })
+  })
+
+  test('should return data with all the texts and the amends which have changed', async () => {
+    mockingoose.User.toReturn(userMock, 'findOne')
+    mockingoose.Amend.toReturn(amendMock, 'findOne')
+    mockingoose.Text.toReturn(new Array(textMock), 'findOne')
+    const res = await User.delete('13I9H0H0U3')
+    expect(res.data).toHaveProperty('texts')
+    expect(res.data).toHaveProperty('amends')
   })
 })

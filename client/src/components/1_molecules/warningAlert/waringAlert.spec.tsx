@@ -1,13 +1,14 @@
 import * as React from 'react'
 import enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { userMock } from '../../../interfaces'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { UserCredentials } from './userCredentials'
+import { WarningAlert } from './warinigAlert'
 
-it('should render an AmendPage', () => {
-  const component = shallow(<UserCredentials />)
+it('should render a EarlyAlert', () => {
+  const component = shallow(
+    <WarningAlert message={test} onClick={() => console.log('close')} />
+  )
   expect(component).toBeTruthy()
 })

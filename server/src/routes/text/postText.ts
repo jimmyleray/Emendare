@@ -12,10 +12,9 @@ export const postText = {
   }) => async ({ token, data }: any) => {
     const res = await Text.postText(data.name, data.description, token)
     if ('data' in res) {
-      const { data } = res
-      io.emit('events/all', { data: data.events })
-      io.emit('texts/all', { data: data.texts })
-      socket.emit('postText', { data: data.text })
+      io.emit('events/all', { data: res.data.events })
+      io.emit('texts/all', { data: res.data.texts })
+      socket.emit('postText', { data: res.data.text })
     } else {
       socket.emit('postText', res)
     }

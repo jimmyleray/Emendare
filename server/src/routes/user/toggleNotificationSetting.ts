@@ -19,6 +19,7 @@ export const toggleNotificationSetting = {
       socket.emit('toggleNotificationSetting', {
         error: { code: 405, message: 'Le token est invalide' }
       })
+      socket.emit('logout')
     }
   }
 }
