@@ -98,7 +98,7 @@ export const Text = ({ data }: { data: IText }) => {
                 {userContext.isConnected() && (
                   <Button
                     to={path.edit(data._id)}
-                    className="is-info is-rounded"
+                    className="is-info"
                     onClick={() => {
                       Socket.emit('followText', { id: data._id })
                     }}
@@ -119,7 +119,7 @@ export const Text = ({ data }: { data: IText }) => {
                       onClick={() => {
                         Socket.emit('unFollowText', { id: data._id })
                       }}
-                      className="button is-light is-rounded"
+                      className="button is-light"
                       disabled={data.rules}
                     >
                       Ne plus participer au texte
@@ -129,7 +129,7 @@ export const Text = ({ data }: { data: IText }) => {
                       onClick={() => {
                         Socket.emit('followText', { id: data._id })
                       }}
-                      className="button is-success is-rounded"
+                      className="button is-success"
                       disabled={data.rules}
                     >
                       Participer à ce texte

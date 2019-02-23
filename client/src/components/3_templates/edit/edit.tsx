@@ -111,7 +111,7 @@ export class Edit extends React.Component<IEditProps, IEditState> {
 
     return (
       <UserContext.Consumer>
-        {({ isConnected }) => (
+        {({ isConnected }: any) => (
           <React.Fragment>
             <Hero
               title="Proposition d'amendement"
@@ -179,13 +179,13 @@ export class Edit extends React.Component<IEditProps, IEditState> {
                   </label>
                 </div>
 
-                <button
+                <Button
                   onClick={this.restoreInitialValue}
-                  className="button is-danger is-outlined"
+                  className="is-danger is-outlined"
                 >
                   <Icon type="fas fa-undo" />
                   <span>Restaurer le texte initial</span>
-                </button>
+                </Button>
               </Column>
 
               <Column>

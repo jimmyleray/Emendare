@@ -23,10 +23,6 @@ const model = mongoose.model(
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Text' }],
       default: []
     },
-    amends: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
-      default: []
-    },
     upVotes: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
       default: []

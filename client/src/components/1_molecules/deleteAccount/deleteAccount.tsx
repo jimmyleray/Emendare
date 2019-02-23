@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { ConfirmAlert, Button, Columns, Column } from '../../../components'
+import { ConfirmAlert, Button, Icon } from '../../../components'
 import { Socket } from '../../../services'
 import { useAlert } from '../../../hooks'
 import { callAll } from '../../../helpers'
@@ -14,33 +14,27 @@ export const DeleteAccount = () => {
   })
 
   const deleteAccount = () => {
-    Socket.fetch('deleteAccount').catch((error: any) => {
-      console.error(error)
-    })
+    Socket.fetch('deleteAccount').catch(console.error)
   }
 
-  return showAlert ? (
-    <ConfirmAlert
-      message="Attention cette action est irréversible et entrainera la suppression de toutes vos données"
-      onConfirm={callAll(deleteAccount, closeAlert)}
-      onCancel={closeAlert}
-      className="is-danger"
-    />
-  ) : (
-    <Columns>
-      <Column>
-        <p className="title is-6">Suppression de compte</p>
-        <p className="subtitle is-7">
-          Attention toutes vos données seront supprimées !
-        </p>
-      </Column>
-      <Column className="is-one-fifth">
-        <Button onClick={() => openAlert()}>
-          <span className="icon has-text-danger">
-            <i className="fas fa-trash-alt" />
-          </span>
+  return (
+    <React.Fragment>
+      {showAlert ? (
+        <ConfirmAlert
+          message="Attention cette action est définitive et irréversible. Elle entrainera la suppression de toutes vos données."
+          onConfirm={callAll(deleteAccount, closeAlert)}
+          onCancel={closeAlert}
+          className="is-danger"
+        />
+      ) : (
+        <Button
+          onClick={openAlert}
+          className="is-danger is-outlined is-fullwidth"
+        >
+          <Icon type="fas fa-trash-alt" />
+          <span>Supprimer mon compte</span>
         </Button>
-      </Column>
-    </Columns>
+      )}
+    </React.Fragment>
   )
 }

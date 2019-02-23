@@ -181,9 +181,6 @@ export class Amend {
         version
       }).save()
 
-      user.amends.push(amend._id)
-      await user.save()
-
       const text = await Text.model.findById(textID)
       text.amends.push(amend._id)
       await text.save()
