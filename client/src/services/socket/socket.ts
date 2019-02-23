@@ -23,7 +23,7 @@ export const Socket = {
   fetch: (name: string, params = {}) => {
     Socket.emit(name, params)
     return new Promise((resolve, reject) => {
-      Socket.on(name, ({ data, error }: any = {}) => {
+      Socket.on(name, ({ data, error }: any = { data: null, error: null }) => {
         if (error) {
           console.warn(name, error)
           reject(error)

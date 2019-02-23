@@ -14,16 +14,14 @@ export const DeleteAccount = () => {
   })
 
   const deleteAccount = () => {
-    Socket.fetch('deleteAccount')
-      .then(() => {})
-      .catch((error: any) => {
-        console.error(error)
-      })
+    Socket.fetch('deleteAccount').catch((error: any) => {
+      console.error(error)
+    })
   }
 
   return showAlert ? (
     <ConfirmAlert
-      message="Attention cette action est irréversible et cela entrainera la suppression de toutes vos données: texts suivis, votes en cours, données utilisateur"
+      message="Attention cette action est irréversible et entrainera la suppression de toutes vos données"
       onConfirm={callAll(deleteAccount, closeAlert)}
       onCancel={closeAlert}
       className="is-danger"

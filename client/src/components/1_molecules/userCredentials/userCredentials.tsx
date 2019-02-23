@@ -16,6 +16,5 @@ export const UserCredentials = () => (
     <UpdatePassword />
     <hr />
     <DeleteAccount />
-    <hr />
   </Box>
 )
