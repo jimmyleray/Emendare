@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import socketIO from 'socket.io'
 import { User, Text, Event } from '../../models'
 import { IAmend, IResponse, IUser, IText, IEvent } from '../../interfaces'
+import { delay } from 'lodash'
 
 const oneSecond = 1000
 const oneMinute = oneSecond * 60
@@ -59,6 +60,32 @@ export class Amend {
             message: "Oups, cet amendement n'existe pas ou plus"
           }
         }
+  }
+
+  public static hasAbsoluteUpMajority(amend: any) {
+    return (
+      amend.upVotesCount > amend.indVotesCount &&
+      amend.upVotesCount + amend.indVotesCount >=
+        Math.floor(amend.text.followersCount / 2) + 1
+    )
+  }
+
+  public static hasAbsoluteDownMajority(amend: any) {
+    return (
+      amend.downVotesCount > amend.indVotesCount &&
+      amend.downVotesCount + amend.indVotesCount >=
+        Math.floor(amend.text.followersCount / 2) + 1
+    )
+  }
+
+  public static hasAbsoluteMajority(amend: any) {
+    return (
+      this.hasAbsoluteUpMajority(amend) || this.hasAbsoluteDownMajority(amend)
+    )
+  }
+
+  public static hasRelativeUpMajority(amend: any) {
+    return amend.upVotesCount > amend.downVotesCount
   }
 
   public static async downVoteAmend(
@@ -344,5 +371,69 @@ export class Amend {
         error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
       }
     }
+  }
+
+  public static async checkAmendVotes(io?: socketIO.Server) {
+    // On récupère tous les scrutins en cours
+    const amends = await Amend.model.find({ closed: false }).populate('text')
+
+    const date = new Date()
+    const now = date.getTime()
+
+    amends.forEach(async (amend: any) => {
+      const start = amend.created.getTime()
+
+      // Si le scrutin est terminé
+      if (now > start + amend.delayMax) {
+        amend.closed = true
+        amend.finished = new Date()
+        amend.totalPotentialVotesCount = amend.text.followersCount
+
+        // Si il y'a une majorité relative
+        if (Amend.hasRelativeUpMajority(amend)) {
+          Text.updateTextWithAmend(amend, io)
+        }
+
+        await amend.save()
+        const newAmend = await Amend.model.findById(amend._id)
+        io.emit('amend/' + amend._id, { data: newAmend })
+
+        await new Event.model({
+          targetType: 'result',
+          targetID: newAmend._id
+        }).save()
+
+        const events = await Event.model.find().sort('-created')
+        io.emit('events/all', { data: events })
+      } else if (
+        now > start + amend.delayMin &&
+        Amend.hasAbsoluteMajority(amend)
+      ) {
+        amend.closed = true
+        amend.finished = new Date()
+        amend.totalPotentialVotesCount = amend.text.followersCount
+
+        // Si il y'a une majorité absolue
+        if (Amend.hasAbsoluteUpMajority(amend)) {
+          Text.updateTextWithAmend(amend, io)
+        }
+
+        await amend.save()
+        const newAmend = await Amend.model.findById(amend._id)
+        io.emit('amend/' + amend._id, { data: newAmend })
+
+        await new Event.model({
+          targetType: 'result',
+          targetID: newAmend._id
+        }).save()
+
+        const events = await Event.model.find().sort('-created')
+        io.emit('events/all', { data: events })
+      }
+    })
+
+    delay(() => {
+      this.checkAmendVotes(io)
+    }, 5000)
   }
 }

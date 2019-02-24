@@ -1,7 +1,10 @@
 import mongoose from 'mongoose'
 import socketIO from 'socket.io'
-import { User, Event } from '../../models'
+import { Amend, User, Event } from '../../models'
 import { IResponse, IText, IEvent } from '../../interfaces'
+
+// Diff Patch Library
+import * as JsDiff from 'diff'
 
 const model = mongoose.model(
   'Text',
@@ -140,5 +143,55 @@ export class Text {
       : {
           error: { code: 405, message: "Oups, il y'a eu une erreur" }
         }
+  }
+
+  public static async updateTextWithAmend(amend: any, io?: SocketIO.Server) {
+    amend.accepted = true
+    const newText = JsDiff.applyPatch(amend.text.actual, amend.patch)
+
+    if (newText) {
+      amend.version = amend.text.patches.length
+      amend.text.patches.push(amend.patch)
+      amend.text.actual = newText
+    } else {
+      amend.conflicted = true
+    }
+
+    await amend.text.save()
+
+    const text = await Text.model.findById(amend.text._id)
+
+    if (io) {
+      io.emit('text/' + text._id, { data: text })
+    }
+
+    const othersAmends = await Amend.model.find({
+      text: text._id,
+      closed: false
+    })
+
+    othersAmends.forEach(async (otherAmend: any) => {
+      const isPatchable = JsDiff.applyPatch(text.actual, otherAmend.patch)
+
+      if (isPatchable) {
+        otherAmend.version = text.patches.length
+      } else {
+        otherAmend.conflicted = true
+        otherAmend.closed = true
+        otherAmend.finished = new Date()
+        otherAmend.totalPotentialVotesCount = text.followersCount
+
+        await new Event.model({
+          targetType: 'result',
+          targetID: otherAmend._id
+        }).save()
+      }
+
+      await otherAmend.save()
+
+      if (io) {
+        io.emit('amend/' + otherAmend._id, { data: otherAmend })
+      }
+    })
   }
 }
