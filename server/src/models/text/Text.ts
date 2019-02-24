@@ -110,7 +110,7 @@ export class Text {
       }).save()
 
       const events: IEvent[] = await Event.model.find().sort('-created')
-      const texts: IText[] = await this.model.find({})
+      const texts: IText[] = await this.model.find({ rules: false })
 
       if (io) {
         io.emit('events/all', { data: events.map(event => event._id) })
@@ -135,7 +135,7 @@ export class Text {
   }
 
   public static async getTexts(): Promise<IResponse<string[]>> {
-    const data: IText[] = await this.model.find({})
+    const data: IText[] = await this.model.find({ rules: false })
     return data
       ? {
           data: data.map(text => text._id)
