@@ -207,13 +207,7 @@ export class Amend {
   }
 
   public static async postAmend(
-    {
-      name,
-      description,
-      patch,
-      version,
-      textID
-    }: {
+    data: {
       name: string
       description: string
       patch: string
@@ -223,6 +217,7 @@ export class Amend {
     token: string,
     io?: socketIO.Server
   ): Promise<IResponse<IAmend>> {
+    const { name, description, patch, version, textID } = data
     const user: IUser = await User.model.findOne({ token })
     if (user && user.activated) {
       const amend: IAmend = await new this.model({
