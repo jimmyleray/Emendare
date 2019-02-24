@@ -66,6 +66,7 @@ export const UpdateEmail = () => {
             type="email"
             aria-label="email input"
             value={email}
+            autoComplete="off"
           />
           <Icon type="fas fa-envelope" className="icon is-medium is-left" />
         </p>

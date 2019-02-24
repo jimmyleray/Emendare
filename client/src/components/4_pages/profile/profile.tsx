@@ -9,6 +9,7 @@
  */
 
 import React from 'react'
+import JSONTree from 'react-json-tree'
 import {
   Button,
   Page,
@@ -45,6 +46,15 @@ export const ProfilePage = () => {
               Notifications
             </a>
           </li>
+          <li className={selectedTab === 'data' ? 'is-active' : ''}>
+            <a
+              onClick={() => {
+                setSelectedTab('data')
+              }}
+            >
+              Mes données
+            </a>
+          </li>
           <li className={selectedTab === 'settings' ? 'is-active' : ''}>
             <a
               onClick={() => {
@@ -59,6 +69,19 @@ export const ProfilePage = () => {
       {userContext.user && (
         <React.Fragment>
           {selectedTab === 'notifications' && <NotificationSettings />}
+          {selectedTab === 'data' && (
+            <React.Fragment>
+              <p>
+                Par soucis de transparence, vous pouvez retrouver ci-dessous la
+                liste exhaustive des données brutes concernant votre compte :
+              </p>
+              <JSONTree
+                data={userContext.user}
+                theme="default"
+                hideRoot={true}
+              />
+            </React.Fragment>
+          )}
           {selectedTab === 'settings' && <UserCredentials />}
         </React.Fragment>
       )}

@@ -42,6 +42,7 @@ export const PwdForm = ({
             placeholder="Nouveau mot de passe"
             value={password}
             aria-label="password input"
+            autoComplete="off"
             onChange={(event: any) =>
               change(
                 'password',
@@ -66,6 +67,7 @@ export const PwdForm = ({
             placeholder="Confirmez le nouveau mot de passe"
             aria-label="password verification input"
             value={checkPassword}
+            autoComplete="off"
             onChange={(event: any) =>
               change(
                 'checkPassword',

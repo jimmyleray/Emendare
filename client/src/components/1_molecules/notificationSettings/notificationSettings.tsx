@@ -3,12 +3,12 @@
 import React from 'react'
 import { Button, NotificationsContext, UserContext } from '../../../components'
 import { Socket } from '../../../services'
-import { IUser } from '../../../../../interfaces'
 
 const keys = ['newText', 'newAmend', 'amendAccepted', 'amendRefused']
 
 const change = (key: string) => async () => {
   await Socket.fetch('toggleNotificationSetting', { key })
+  Socket.emit('user')
 }
 
 const mapKeyToTitle = (key: string) => {
