@@ -37,7 +37,7 @@ export const Navbar = () => {
       aria-label="main navigation"
       style={{ padding: '0 1rem' }}
     >
-      <div className="container is-fluid">
+      <div className="container">
         <div className="navbar-brand">
           <Link
             to={path.home}
