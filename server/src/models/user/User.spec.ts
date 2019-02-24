@@ -3,7 +3,7 @@ import mockingoose from 'mockingoose'
 import bcrypt from 'bcrypt'
 // Models and interfaces
 import { User } from './User'
-import { userMock, amendMock, textMock } from '../../interfaces'
+import { userMock, amendMock, textMock } from '../../../../interfaces'
 
 describe('activateUser', () => {
   beforeEach(() => {

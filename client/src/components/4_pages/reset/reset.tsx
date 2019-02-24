@@ -5,7 +5,7 @@
  */
 import React from 'react'
 import { Page, Icon, Button, Notification } from '../../../components'
-import { IError } from '../../../interfaces'
+import { IError } from '../../../../../interfaces'
 import { Socket } from '../../../services'
 
 interface IResetPageState {

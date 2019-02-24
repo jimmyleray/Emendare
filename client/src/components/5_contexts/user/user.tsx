@@ -1,6 +1,6 @@
 import React from 'react'
-import { Socket, Title } from '../../../services'
-import { IError, IUser } from '../../../interfaces'
+import { Socket } from '../../../services'
+import { IError, IUser } from '../../../../../interfaces'
 
 export const UserContext = React.createContext({} as IUserProviderState)
 

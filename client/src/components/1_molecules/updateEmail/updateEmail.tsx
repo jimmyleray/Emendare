@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { ConfirmAlert, WarningAlert, Button, Icon } from '../../../components'
+import { IError } from '../../../../../interfaces'
 import { Socket } from '../../../services'
 import { useAlert } from '../../../hooks'
 import { callAll } from '../../../helpers'
@@ -7,7 +8,7 @@ import { callAll } from '../../../helpers'
 export const UpdateEmail = () => {
   const { showAlert, openAlert, closeAlert } = useAlert()
   const [email, setEmail] = useState('')
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<IError | null>(null)
 
   useEffect(() => {
     return () => {
@@ -16,14 +17,10 @@ export const UpdateEmail = () => {
   })
 
   const submitEmail = () => {
-    Socket.fetch('update-email', {
-      email: email
+    Socket.fetch('update-email', { email }).catch((err: any) => {
+      console.error(err)
+      setError(err)
     })
-      .then(() => {})
-      .catch((error: any) => {
-        console.error(error)
-        setError(error)
-      })
   }
 
   const reset = useCallback(() => {
@@ -36,9 +33,9 @@ export const UpdateEmail = () => {
   }, [])
 
   return showAlert || error ? (
-    error ? (
+    error && error.message ? (
       <WarningAlert
-        message={error['message']}
+        message={error.message}
         className={'is-danger'}
         onClick={callAll(reset, closeAlert)}
       />

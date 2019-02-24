@@ -1,4 +1,4 @@
-import { ITime } from '../../interfaces'
+import { ITime } from '../../../../interfaces'
 import { isString } from 'lodash'
 
 /**

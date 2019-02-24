@@ -14,7 +14,7 @@ import {
 } from '../../../components'
 import { path } from '../../../config'
 import { isUndefined, sortBy } from 'lodash'
-import { IText } from '../../../interfaces'
+import { IText } from '../../../../../interfaces'
 
 export const Explore = () => {
   const dataContext = React.useContext(DataContext)

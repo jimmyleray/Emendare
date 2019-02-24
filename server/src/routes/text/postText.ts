@@ -1,5 +1,5 @@
 import socketIO from 'socket.io'
-import { Text, Event, User } from '../../models'
+import { Text } from '../../models'
 
 export const postText = {
   name: 'postText',

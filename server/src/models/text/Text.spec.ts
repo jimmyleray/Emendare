@@ -1,8 +1,6 @@
-// librairies
 import mockingoose from 'mockingoose'
-// Models and librairies
 import { Text } from './Text'
-import { textMock, userMock, eventMock } from '../../interfaces'
+import { textMock, userMock, eventMock } from '../../../../interfaces'
 
 describe('followText', () => {
   beforeEach(() => {

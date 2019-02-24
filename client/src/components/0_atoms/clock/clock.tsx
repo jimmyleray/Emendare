@@ -1,6 +1,6 @@
 import React from 'react'
 import { Time } from '../../../services'
-import { ITime } from '../../../interfaces'
+import { ITime } from '../../../../../interfaces'
 
 interface IClockProps {
   date: Date | string

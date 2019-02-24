@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import socketIO from 'socket.io'
 import { Amend, User, Event } from '../../models'
-import { IResponse, IText, IEvent } from '../../interfaces'
+import { IResponse, IText, IEvent } from '../../../../interfaces'
 
 // Diff Patch Library
 import * as JsDiff from 'diff'

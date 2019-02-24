@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import socketIO from 'socket.io'
 import { User, Text, Event } from '../../models'
-import { IAmend, IResponse, IUser, IText, IEvent } from '../../interfaces'
+import { IAmend, IResponse, IUser, IText, IEvent } from '../../../../interfaces'
 import { delay } from 'lodash'
 
 const oneSecond = 1000

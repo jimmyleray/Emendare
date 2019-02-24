@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon } from '../..'
+import { Icon } from '../../../components'
 import { Password, UiEffectInput } from '../../../services'
 
 interface IPwdFormProps {

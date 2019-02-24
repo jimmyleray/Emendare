@@ -1,5 +1,5 @@
 import socketIO from 'socket.io'
-import { Amend, User } from '../../models'
+import { Amend } from '../../models'
 
 export const downVoteAmend = {
   name: 'downVoteAmend',

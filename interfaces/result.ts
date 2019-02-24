@@ -1,8 +1,8 @@
 export interface IResult {
-  up: number
-  ind: number
-  down: number
-  absent: number
+  up: number;
+  ind: number;
+  down: number;
+  absent: number;
 }
 
 export const resultMock: IResult = {
@@ -10,4 +10,4 @@ export const resultMock: IResult = {
   ind: 1,
   down: 1,
   absent: 1
-}
+};

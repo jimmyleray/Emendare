@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { IEvent, IResponse } from '../../interfaces'
+import { IEvent, IResponse } from '../../../../interfaces'
 
 const model = mongoose.model(
   'Event',

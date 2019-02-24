@@ -5,15 +5,13 @@ import Adapter from 'enzyme-adapter-react-16'
 enzyme.configure({ adapter: new Adapter() })
 
 import { TextPage } from './text'
-import { DataContext } from '../../../components'
+import { Providers } from '../../../components'
 
 it('should render a TextPage', () => {
   const component = mount(
-    <DataContext.Provider
-      value={{ memo: {}, listeners: [], get: type => id => null }}
-    >
+    <Providers>
       <TextPage match={{ params: { id: 'test' } }} />
-    </DataContext.Provider>
+    </Providers>
   )
   expect(component).toBeTruthy()
 })

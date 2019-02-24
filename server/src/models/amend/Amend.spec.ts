@@ -2,7 +2,12 @@
 import mockingoose from 'mockingoose'
 // Models and librairies
 import { Amend } from './Amend'
-import { textMock, userMock, eventMock, amendMock } from '../../interfaces'
+import {
+  textMock,
+  userMock,
+  eventMock,
+  amendMock
+} from '../../../../interfaces'
 
 describe('getAmend', () => {
   beforeEach(() => {

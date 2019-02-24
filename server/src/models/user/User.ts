@@ -5,7 +5,7 @@ import { isUndefined } from 'lodash'
 import { Crypto, Mail } from '../../services'
 import { activation, reset } from '../../emails'
 import { Amend, Text } from '../../models'
-import { IAmend, IUser, IText, IResponse } from '../../interfaces'
+import { IAmend, IUser, IResponse } from '../../../../interfaces'
 
 const model = mongoose.model(
   'User',

@@ -3,7 +3,7 @@
 import React from 'react'
 import { Box, Button, NotificationsContext } from '../../../components'
 import { Socket } from '../../../services'
-import { IUser } from '../../../interfaces'
+import { IUser } from '../../../../../interfaces'
 
 const keys = ['newText', 'newAmend', 'amendAccepted', 'amendRefused']
 

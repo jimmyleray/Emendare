@@ -1,6 +1,6 @@
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2'
-import { IResult } from '../../../interfaces'
+import { IResult } from '../../../../../interfaces'
 
 const datasetDefault = {
   backgroundColor: [

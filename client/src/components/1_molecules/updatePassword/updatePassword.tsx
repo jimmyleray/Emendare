@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { PwdForm, Button } from '../..'
+import { PwdForm, Button } from '../../../components'
 import { Socket } from '../../../services'
 
 export const UpdatePassword = () => {
@@ -32,18 +32,14 @@ export const UpdatePassword = () => {
 
   const submitPassword = (event: any) => {
     event.preventDefault()
-    Socket.fetch('update-password', {
-      password: password
-    })
+    Socket.fetch('update-password', { password })
       .then(() => {
         setPassword('')
         setCheckPassword('')
         setPwdSame(false)
         setPwdValid(false)
       })
-      .catch((error: any) => {
-        console.error(error)
-      })
+      .catch(console.error)
   }
 
   return (

@@ -1,4 +1,4 @@
-import { IRoute } from '../../interfaces'
+import { IRoute } from '../../../../interfaces'
 
 // For paths like that for example : /text/:id
 export const withID = (pathname: string) => (id = ':id') => pathname + id

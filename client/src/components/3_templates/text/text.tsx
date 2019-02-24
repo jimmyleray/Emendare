@@ -15,7 +15,7 @@ import {
   Spacer
 } from '../../../components'
 import { Amend, Socket, Pagination } from '../../../services'
-import { IText } from '../../../interfaces'
+import { IText } from '../../../../../interfaces'
 import { path } from '../../../config'
 import * as JsDiff from 'diff'
 import { sortBy } from 'lodash'
@@ -120,7 +120,6 @@ export const Text = ({ data }: { data: IText }) => {
                         Socket.emit('unFollowText', { id: data._id })
                       }}
                       className="button is-light"
-                      disabled={data.rules}
                     >
                       Ne plus participer au texte
                     </Button>
@@ -130,7 +129,6 @@ export const Text = ({ data }: { data: IText }) => {
                         Socket.emit('followText', { id: data._id })
                       }}
                       className="button is-success"
-                      disabled={data.rules}
                     >
                       Participer à ce texte
                     </Button>
