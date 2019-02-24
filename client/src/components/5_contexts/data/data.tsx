@@ -52,9 +52,7 @@ export class DataProvider extends React.Component<{}, IDataProviderState> {
   }
 
   public componentWillUnmount() {
-    this.state.listeners.forEach(listener => {
-      Socket.off(listener)
-    })
+    this.state.listeners.forEach(Socket.off)
   }
 
   public render() {

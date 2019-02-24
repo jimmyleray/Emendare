@@ -15,14 +15,12 @@ const defaultError = {
 }
 
 export const ErrorPage = ({ error = defaultError }) => (
-  <Page title="Introuvable">
+  <Page title="Erreur">
     <Hero title={'Erreur ' + error.code} subtitle={error.message} />
-    <div className="field is-grouped is-grouped-centered">
-      <p className="control">
-        <Button to={path.home} className="has-text-weight-semibold is-primary">
-          Retour à l'accueil
-        </Button>
-      </p>
+    <div>
+      <Button to={path.home} className="has-text-weight-semibold is-primary">
+        Retour à l'accueil
+      </Button>
     </div>
   </Page>
 )

@@ -5,20 +5,14 @@ export const toggleNotificationSetting = {
   name: 'toggleNotificationSetting',
   callback: ({ socket }: { socket: socketIO.Socket }) => async ({
     token,
-    data
+    data = {}
   }: any) => {
-    if (token) {
-      const res = User.toggleNotificationSetting(data.key, token)
-      if ('data' in res) {
-        socket.emit('user', res)
-        socket.emit('toggleNotificationSetting')
-      } else {
-        socket.emit('toggleNotificationSetting', res)
-      }
-    } else {
-      socket.emit('toggleNotificationSetting', {
-        error: { code: 405, message: 'Le token est invalide' }
-      })
+    try {
+      const response = User.toggleNotificationSetting(data.key, token)
+      socket.emit('toggleNotificationSetting', response)
+      socket.emit('user', response)
+    } catch (error) {
+      console.error(error)
     }
   }
 }

@@ -10,12 +10,11 @@ export const unFollowText = {
     io: socketIO.Server
     socket: socketIO.Socket
   }) => async ({ token, data }: any) => {
-    const res = await Text.unFollowText(data.id, token)
-    if ('data' in res) {
-      io.emit('text/' + data.id, res)
-      socket.emit('unFollowText')
-    } else {
-      socket.emit('unFollowText', res)
+    try {
+      const response = await Text.unFollowText(data.id, token, io)
+      socket.emit('unFollowText', response)
+    } catch (error) {
+      console.error(error)
     }
   }
 }

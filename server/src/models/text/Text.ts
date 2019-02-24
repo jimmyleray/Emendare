@@ -1,5 +1,10 @@
 import mongoose from 'mongoose'
-import { User, Event } from '../../models'
+import socketIO from 'socket.io'
+import { Amend, User, Event } from '../../models'
+import { IResponse, IText, IEvent } from '../../../../interfaces'
+
+// Diff Patch Library
+import * as JsDiff from 'diff'
 
 const model = mongoose.model(
   'Text',
@@ -13,8 +18,7 @@ const model = mongoose.model(
     amends: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
       default: []
-    },
-    rules: { type: Boolean, default: false }
+    }
   })
 )
 
@@ -23,7 +27,11 @@ export class Text {
     return model
   }
 
-  public static async followText(id: string, token: string): Promise<any> {
+  public static async followText(
+    id: string,
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IText>> {
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
       if (user.followedTexts.indexOf(id) === -1) {
@@ -34,7 +42,11 @@ export class Text {
         text.followersCount++
         await text.save()
 
-        return { textId: text._id, data: text }
+        if (io) {
+          io.emit('text/' + text._id, { data: text })
+        }
+
+        return { data: text }
       } else {
         return {
           error: { code: 405, message: 'Vous participez déjà à ce texte' }
@@ -49,8 +61,9 @@ export class Text {
 
   public static async unFollowText(
     idText: string,
-    token: string
-  ): Promise<any> {
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IText>> {
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
       const id = user.followedTexts.indexOf(idText)
@@ -61,6 +74,10 @@ export class Text {
         const text = await this.model.findById(idText)
         text.followersCount--
         await text.save()
+
+        if (io) {
+          io.emit('text/' + text._id, { data: text })
+        }
 
         return { data: text }
       } else {
@@ -76,30 +93,31 @@ export class Text {
   }
 
   public static async postText(
-    name: string,
-    description: string,
-    token: string
-  ): Promise<any> {
+    { name, description }: { name: string; description: string },
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IText>> {
     const user = await User.model.findOne({ token })
     if (user && user.activated) {
-      const text = await new this.model({
+      const data = await new this.model({
         description,
         name
       }).save()
 
       await new Event.model({
-        targetID: text._id,
+        targetID: data._id,
         targetType: 'text'
       }).save()
-      const events = await Event.model.find().sort('-created')
-      const texts = await this.model.find({ rules: false })
-      return {
-        data: {
-          texts,
-          text,
-          events
-        }
+
+      const events: IEvent[] = await Event.model.find().sort('-created')
+      const texts: IText[] = await this.model.find({})
+
+      if (io) {
+        io.emit('events/all', { data: events.map(event => event._id) })
+        io.emit('texts/all', { data: texts.map(texte => texte._id) })
       }
+
+      return { data }
     } else {
       return {
         error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
@@ -107,27 +125,73 @@ export class Text {
     }
   }
 
-  public static async getText(id: string): Promise<any> {
-    const gettedText = await this.model.findById(id)
-    if (gettedText) {
-      return { data: gettedText }
-    } else {
-      return {
-        error: { code: 404, message: "Oups, ce texte n'existe pas ou plus" }
-      }
-    }
+  public static async getText(id: string): Promise<IResponse<IText>> {
+    const data = await this.model.findById(id)
+    return data
+      ? { data }
+      : {
+          error: { code: 404, message: "Oups, ce texte n'existe pas ou plus" }
+        }
   }
 
-  public static async getTexts(): Promise<any> {
-    const gettedTexts = await this.model.find({ rules: false })
-    if (gettedTexts) {
-      return {
-        data: gettedTexts.map((text: any) => text._id)
-      }
+  public static async getTexts(): Promise<IResponse<string[]>> {
+    const data: IText[] = await this.model.find({})
+    return data
+      ? {
+          data: data.map(text => text._id)
+        }
+      : {
+          error: { code: 405, message: "Oups, il y'a eu une erreur" }
+        }
+  }
+
+  public static async updateTextWithAmend(amend: any, io?: SocketIO.Server) {
+    amend.accepted = true
+    const newText = JsDiff.applyPatch(amend.text.actual, amend.patch)
+
+    if (newText) {
+      amend.version = amend.text.patches.length
+      amend.text.patches.push(amend.patch)
+      amend.text.actual = newText
     } else {
-      return {
-        error: { code: 405, message: "Oups, il y'a eu une erreur" }
-      }
+      amend.conflicted = true
     }
+
+    await amend.text.save()
+
+    const text = await Text.model.findById(amend.text._id)
+
+    if (io) {
+      io.emit('text/' + text._id, { data: text })
+    }
+
+    const othersAmends = await Amend.model.find({
+      text: text._id,
+      closed: false
+    })
+
+    othersAmends.forEach(async (otherAmend: any) => {
+      const isPatchable = JsDiff.applyPatch(text.actual, otherAmend.patch)
+
+      if (isPatchable) {
+        otherAmend.version = text.patches.length
+      } else {
+        otherAmend.conflicted = true
+        otherAmend.closed = true
+        otherAmend.finished = new Date()
+        otherAmend.totalPotentialVotesCount = text.followersCount
+
+        await new Event.model({
+          targetType: 'result',
+          targetID: otherAmend._id
+        }).save()
+      }
+
+      await otherAmend.save()
+
+      if (io) {
+        io.emit('amend/' + otherAmend._id, { data: otherAmend })
+      }
+    })
   }
 }

@@ -34,7 +34,7 @@ const vote = (user: any) => (amend: any) => (type: string) => (
   id: string
 ) => async () => {
   const textID = amend.text
-  if (!user.followedTexts.includes(textID)) {
+  if (user.followedTexts.indexOf(textID) === -1) {
     await Socket.fetch('followText', { id: textID })
   }
 

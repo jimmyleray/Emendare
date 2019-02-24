@@ -2,7 +2,7 @@
 import mockingoose from 'mockingoose'
 // Models and interfaces
 import { Event } from './Event'
-import { eventMock } from '../../interfaces'
+import { eventMock } from '../../../../interfaces'
 
 describe('getEvents', () => {
   beforeEach(() => {

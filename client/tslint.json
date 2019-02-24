@@ -1,5 +1,5 @@
 {
-  "extends": ["tslint:recommended"],
+  "extends": ["tslint:recommended", "tslint-react-hooks"],
   "rules": {
     "semicolon": false,
     "quotemark": false,
@@ -9,6 +9,7 @@
     "no-console": false,
     "ordered-imports": false,
     "object-literal-sort-keys": false,
-    "variable-name": false
+    "variable-name": false,
+    "react-hooks-nesting": "error"
   }
 }

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { eventMock } from '../../../interfaces'
+import { eventMock } from '../../../../../interfaces'
 
 enzyme.configure({ adapter: new Adapter() })
 

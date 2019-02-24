@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon } from '../..'
+import { Icon } from '../../../components'
 import { Password, UiEffectInput } from '../../../services'
 
 interface IPwdFormProps {
@@ -63,7 +63,7 @@ export const PwdForm = ({
       <div className="field">
         <div className="control has-icons-left has-icons-right">
           <input
-            placeholder="Vérification du nouveau mot de passe"
+            placeholder="Confirmez le nouveau mot de passe"
             aria-label="password verification input"
             value={checkPassword}
             onChange={(event: any) =>

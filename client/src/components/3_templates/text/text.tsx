@@ -15,7 +15,7 @@ import {
   Spacer
 } from '../../../components'
 import { Amend, Socket, Pagination } from '../../../services'
-import { IText } from '../../../interfaces'
+import { IText } from '../../../../../interfaces'
 import { path } from '../../../config'
 import * as JsDiff from 'diff'
 import { sortBy } from 'lodash'
@@ -98,7 +98,7 @@ export const Text = ({ data }: { data: IText }) => {
                 {userContext.isConnected() && (
                   <Button
                     to={path.edit(data._id)}
-                    className="is-info is-rounded"
+                    className="is-info"
                     onClick={() => {
                       Socket.emit('followText', { id: data._id })
                     }}
@@ -119,8 +119,7 @@ export const Text = ({ data }: { data: IText }) => {
                       onClick={() => {
                         Socket.emit('unFollowText', { id: data._id })
                       }}
-                      className="button is-light is-rounded"
-                      disabled={data.rules}
+                      className="button is-light"
                     >
                       Ne plus participer au texte
                     </Button>
@@ -129,8 +128,7 @@ export const Text = ({ data }: { data: IText }) => {
                       onClick={() => {
                         Socket.emit('followText', { id: data._id })
                       }}
-                      className="button is-success is-rounded"
-                      disabled={data.rules}
+                      className="button is-success"
                     >
                       Participer à ce texte
                     </Button>

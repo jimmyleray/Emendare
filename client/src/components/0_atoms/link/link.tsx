@@ -1,10 +1,10 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { startsWith } from 'lodash'
 
 interface IProps {
   children: React.ReactNode
-  style?: CSSProperties
+  style?: React.CSSProperties
   onClick?: any
   className?: string
   title?: string

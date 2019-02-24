@@ -1,6 +1,6 @@
 import React from 'react'
 import { Socket } from '../../../services'
-import { IError, IUser } from '../../../interfaces'
+import { IError, IUser } from '../../../../../interfaces'
 
 export const UserContext = React.createContext({} as IUserProviderState)
 
@@ -31,7 +31,9 @@ export class UserProvider extends React.Component<{}, IUserProviderState> {
       if (!error) {
         this.setState({ user: data })
       }
-    }).on('logout', () => {
+    })
+
+    Socket.on('logout', () => {
       localStorage.removeItem('token')
       this.setState(() => ({ user: null }))
     })
@@ -55,6 +57,7 @@ export class UserProvider extends React.Component<{}, IUserProviderState> {
   public componentWillUnmount() {
     Socket.off('user')
     Socket.off('login')
+    Socket.off('logout')
   }
 
   public render() {

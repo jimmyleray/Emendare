@@ -1,8 +1,6 @@
-// librairies
 import mockingoose from 'mockingoose'
-// Models and librairies
 import { Text } from './Text'
-import { textMock, userMock, eventMock } from '../../interfaces'
+import { textMock, userMock, eventMock } from '../../../../interfaces'
 
 describe('followText', () => {
   beforeEach(() => {
@@ -51,7 +49,6 @@ describe('followText', () => {
       'uv65v76v6779b9'
     )
     expect('data' in res).toBeTruthy()
-    expect('textId' in res).toBeTruthy()
   })
 })
 
@@ -110,11 +107,15 @@ describe('postText', () => {
 
   test('should return user not connected', async () => {
     mockingoose.User.toReturn(null, 'findOne')
-    expect(await Text.postText('test', 'test', '')).toMatchObject({
+    expect(
+      await Text.postText({ name: 'test', description: 'test' }, '')
+    ).toMatchObject({
       error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
     })
     mockingoose.User.toReturn({ ...userMock, activated: false }, 'findOne')
-    expect(await Text.postText('test', 'test', '77g96g983Edz')).toMatchObject({
+    expect(
+      await Text.postText({ name: 'test', description: 'test' }, '77g96g983Edz')
+    ).toMatchObject({
       error: {
         code: 401,
         message: "Cet utilisateur n'est pas connecté"
@@ -127,10 +128,11 @@ describe('postText', () => {
     mockingoose.Text.toReturn(textMock, 'findOne')
     mockingoose.Text.toReturn(new Array(textMock), 'find')
     mockingoose.Event.toReturn(new Array(eventMock), 'find')
-    const res = await Text.postText('test', 'test', '77g96g983Edz')
-    expect(res.data).toHaveProperty('texts')
-    expect(res.data).toHaveProperty('text')
-    expect(res.data).toHaveProperty('events')
+    const res = await Text.postText(
+      { name: 'test', description: 'test' },
+      '77g96g983Edz'
+    )
+    expect(res).toHaveProperty('data')
   })
 })
 

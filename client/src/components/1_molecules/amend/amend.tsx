@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from '../../../components'
 import * as JsDiff from 'diff'
-import { IAmend, IText } from '../../../interfaces'
+import { IAmend, IText } from '../../../../../interfaces'
 
 interface IAmendProps {
   amend?: Partial<IAmend>

@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
+import socketIO from 'socket.io'
 import { User, Text, Event } from '../../models'
+import { IAmend, IResponse, IUser, IText, IEvent } from '../../../../interfaces'
+import { delay } from 'lodash'
 
 const oneSecond = 1000
 const oneMinute = oneSecond * 60
@@ -47,24 +50,52 @@ export class Amend {
     return model
   }
 
-  public static async getAmend(id: string): Promise<any> {
-    const gettedAmend = await this.model.findById(id)
-    if (gettedAmend) {
-      return { data: gettedAmend }
-    } else {
-      return {
-        error: {
-          code: 404,
-          message: "Oups, cet amendement n'existe pas ou plus"
+  public static async getAmend(id: string): Promise<IResponse<IAmend>> {
+    const data: IAmend = await this.model.findById(id)
+    return data
+      ? { data }
+      : {
+          error: {
+            code: 404,
+            message: "Oups, cet amendement n'existe pas ou plus"
+          }
         }
-      }
-    }
   }
 
-  public static async downVoteAmend(id: string, token: string): Promise<any> {
-    const user = await User.model.findOne({ token })
+  public static hasAbsoluteUpMajority(amend: any) {
+    return (
+      amend.upVotesCount > amend.indVotesCount &&
+      amend.upVotesCount + amend.indVotesCount >=
+        Math.floor(amend.text.followersCount / 2) + 1
+    )
+  }
+
+  public static hasAbsoluteDownMajority(amend: any) {
+    return (
+      amend.downVotesCount > amend.indVotesCount &&
+      amend.downVotesCount + amend.indVotesCount >=
+        Math.floor(amend.text.followersCount / 2) + 1
+    )
+  }
+
+  public static hasAbsoluteMajority(amend: any) {
+    return (
+      this.hasAbsoluteUpMajority(amend) || this.hasAbsoluteDownMajority(amend)
+    )
+  }
+
+  public static hasRelativeUpMajority(amend: any) {
+    return amend.upVotesCount > amend.downVotesCount
+  }
+
+  public static async downVoteAmend(
+    id: string,
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IAmend>> {
+    const user: IUser = await User.model.findOne({ token })
     if (user && user.activated) {
-      const amend = await this.model.findById(id)
+      const amend: IAmend = await this.model.findById(id)
       if (user.followedTexts.indexOf(amend.text) > -1) {
         if (!amend.closed) {
           if (user.downVotes.indexOf(id) === -1) {
@@ -85,6 +116,10 @@ export class Amend {
 
             await user.save()
             await amend.save()
+
+            if (io) {
+              io.emit('amend/' + id, { data: amend })
+            }
 
             return { data: amend }
           } else {
@@ -112,10 +147,14 @@ export class Amend {
     }
   }
 
-  public static async indVoteAmend(id: string, token: string): Promise<any> {
-    const user = await User.model.findOne({ token })
+  public static async indVoteAmend(
+    id: string,
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IAmend>> {
+    const user: IUser = await User.model.findOne({ token })
     if (user && user.activated) {
-      const amend = await this.model.findById(id)
+      const amend: IAmend = await this.model.findById(id)
       if (user.followedTexts.indexOf(amend.text) > -1) {
         if (!amend.closed) {
           if (user.indVotes.indexOf(id) === -1) {
@@ -136,6 +175,10 @@ export class Amend {
 
             await user.save()
             await amend.save()
+
+            if (io) {
+              io.emit('amend/' + id, { data: amend })
+            }
 
             return { data: amend }
           } else {
@@ -164,16 +207,20 @@ export class Amend {
   }
 
   public static async postAmend(
-    name: string,
-    description: string,
-    patch: any,
-    version: any,
-    textID: any,
-    token: string
-  ): Promise<any> {
-    const user = await User.model.findOne({ token })
+    data: {
+      name: string
+      description: string
+      patch: string
+      version: number
+      textID: string
+    },
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IAmend>> {
+    const { name, description, patch, version, textID } = data
+    const user: IUser = await User.model.findOne({ token })
     if (user && user.activated) {
-      const amend = await new this.model({
+      const amend: IAmend = await new this.model({
         description,
         name,
         patch,
@@ -181,10 +228,7 @@ export class Amend {
         version
       }).save()
 
-      user.amends.push(amend._id)
-      await user.save()
-
-      const text = await Text.model.findById(textID)
+      const text: IText = await Text.model.findById(textID)
       text.amends.push(amend._id)
       await text.save()
 
@@ -193,15 +237,14 @@ export class Amend {
         targetType: 'amend'
       }).save()
 
-      const events = await Event.model.find().sort('-created')
+      const events: IEvent[] = await Event.model.find().sort('-created')
 
-      return {
-        data: {
-          events,
-          amend,
-          text
-        }
+      if (io) {
+        io.emit('events/all', { data: events })
+        io.emit('text/' + textID, { data: text })
       }
+
+      return { data: amend }
     } else {
       return {
         error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
@@ -209,8 +252,12 @@ export class Amend {
     }
   }
 
-  public static async unVoteAmend(id: string, token: string): Promise<any> {
-    const user = await User.model.findOne({ token })
+  public static async unVoteAmend(
+    id: string,
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IAmend>> {
+    const user: IUser = await User.model.findOne({ token })
     if (user && user.activated) {
       const amend = await this.model.findById(id)
       if (user.followedTexts.indexOf(amend.text) > -1) {
@@ -237,6 +284,10 @@ export class Amend {
           await user.save()
           await amend.save()
 
+          if (io) {
+            io.emit('amend/' + id, { data: amend })
+          }
+
           return { data: amend }
         } else {
           return {
@@ -258,10 +309,14 @@ export class Amend {
     }
   }
 
-  public static async upVoteAmend(id: string, token: string): Promise<any> {
-    const user = await User.model.findOne({ token })
+  public static async upVoteAmend(
+    id: string,
+    token: string,
+    io?: socketIO.Server
+  ): Promise<IResponse<IAmend>> {
+    const user: IUser = await User.model.findOne({ token })
     if (user && user.activated) {
-      const amend = await this.model.findById(id)
+      const amend: IAmend = await this.model.findById(id)
       if (user.followedTexts.indexOf(amend.text) > -1) {
         if (!amend.closed) {
           if (user.upVotes.indexOf(id) === -1) {
@@ -282,6 +337,10 @@ export class Amend {
 
             await user.save()
             await amend.save()
+
+            if (io) {
+              io.emit('amend/' + id, { data: amend })
+            }
 
             return { data: amend }
           } else {
@@ -307,5 +366,69 @@ export class Amend {
         error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
       }
     }
+  }
+
+  public static async checkAmendVotes(io?: socketIO.Server) {
+    // On récupère tous les scrutins en cours
+    const amends = await Amend.model.find({ closed: false }).populate('text')
+
+    const date = new Date()
+    const now = date.getTime()
+
+    amends.forEach(async (amend: any) => {
+      const start = amend.created.getTime()
+
+      // Si le scrutin est terminé
+      if (now > start + amend.delayMax) {
+        amend.closed = true
+        amend.finished = new Date()
+        amend.totalPotentialVotesCount = amend.text.followersCount
+
+        // Si il y'a une majorité relative
+        if (Amend.hasRelativeUpMajority(amend)) {
+          Text.updateTextWithAmend(amend, io)
+        }
+
+        await amend.save()
+        const newAmend = await Amend.model.findById(amend._id)
+        io.emit('amend/' + amend._id, { data: newAmend })
+
+        await new Event.model({
+          targetType: 'result',
+          targetID: newAmend._id
+        }).save()
+
+        const events = await Event.model.find().sort('-created')
+        io.emit('events/all', { data: events })
+      } else if (
+        now > start + amend.delayMin &&
+        Amend.hasAbsoluteMajority(amend)
+      ) {
+        amend.closed = true
+        amend.finished = new Date()
+        amend.totalPotentialVotesCount = amend.text.followersCount
+
+        // Si il y'a une majorité absolue
+        if (Amend.hasAbsoluteUpMajority(amend)) {
+          Text.updateTextWithAmend(amend, io)
+        }
+
+        await amend.save()
+        const newAmend = await Amend.model.findById(amend._id)
+        io.emit('amend/' + amend._id, { data: newAmend })
+
+        await new Event.model({
+          targetType: 'result',
+          targetID: newAmend._id
+        }).save()
+
+        const events = await Event.model.find().sort('-created')
+        io.emit('events/all', { data: events })
+      }
+    })
+
+    delay(() => {
+      this.checkAmendVotes(io)
+    }, 5000)
   }
 }

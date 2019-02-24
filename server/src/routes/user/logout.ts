@@ -6,6 +6,11 @@ export const logout = {
   callback: ({ socket }: { socket: socketIO.Socket }) => async ({
     token
   }: any) => {
-    socket.emit('logout', await User.logout(token))
+    try {
+      const response = await User.logout(token)
+      socket.emit('logout', response)
+    } catch (error) {
+      console.error(error)
+    }
   }
 }

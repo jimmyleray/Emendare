@@ -6,6 +6,11 @@ export const amend = {
   callback: ({ socket }: { socket: socketIO.Socket }) => async ({
     data
   }: any) => {
-    socket.emit('amend/' + data.id, await Amend.getAmend(data.id))
+    try {
+      const response = await Amend.getAmend(data.id)
+      socket.emit('amend/' + data.id, response)
+    } catch (error) {
+      console.error(error)
+    }
   }
 }

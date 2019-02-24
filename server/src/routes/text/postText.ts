@@ -1,5 +1,5 @@
 import socketIO from 'socket.io'
-import { Text, Event, User } from '../../models'
+import { Text } from '../../models'
 
 export const postText = {
   name: 'postText',
@@ -10,14 +10,11 @@ export const postText = {
     io: socketIO.Server
     socket: socketIO.Socket
   }) => async ({ token, data }: any) => {
-    const res = await Text.postText(data.name, data.description, token)
-    if ('data' in res) {
-      const { data } = res
-      io.emit('events/all', { data: data.events })
-      io.emit('texts/all', { data: data.texts })
-      socket.emit('postText', { data: data.text })
-    } else {
-      socket.emit('postText', res)
+    try {
+      const response = await Text.postText(data, token, io)
+      socket.emit('postText', response)
+    } catch (error) {
+      console.error(error)
     }
   }
 }

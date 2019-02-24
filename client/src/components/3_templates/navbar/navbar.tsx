@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import {
   Divider,
   DataContext,
@@ -9,7 +9,7 @@ import {
 } from '../../../components'
 import { path } from '../../../config'
 import { Title } from '../../../services'
-import { IUser } from '../../../interfaces'
+import { IUser } from '../../../../../interfaces'
 
 export const Navbar = () => {
   const userContext = React.useContext(UserContext)
@@ -26,6 +26,8 @@ export const Navbar = () => {
     ).length
 
     Title.badgeCount = newEventsCount
+  } else {
+    Title.badgeCount = 0
   }
 
   const [isActive, setActive] = React.useState(false)

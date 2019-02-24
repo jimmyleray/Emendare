@@ -7,7 +7,7 @@ import {
   StopWatch
 } from '../../../components'
 import { path } from '../../../config'
-import { IEvent } from '../../../interfaces'
+import { IEvent } from '../../../../../interfaces'
 
 const typeToUrl = (type: string) => (target: any) => {
   switch (type) {

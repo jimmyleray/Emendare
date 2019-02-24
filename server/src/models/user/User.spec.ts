@@ -3,7 +3,7 @@ import mockingoose from 'mockingoose'
 import bcrypt from 'bcrypt'
 // Models and interfaces
 import { User } from './User'
-import { userMock } from '../../interfaces'
+import { userMock, amendMock, textMock } from '../../../../interfaces'
 
 describe('activateUser', () => {
   beforeEach(() => {
@@ -35,7 +35,7 @@ describe('activateUser', () => {
     mockingoose.User.toReturn(notActivatedUser, 'save')
     expect(
       await User.activateUser('4d55a560ea0be764c55dc01a872c8fc8205cf262994c8')
-    ).toBe(undefined)
+    ).toHaveProperty('data')
   })
 })
 
@@ -120,10 +120,10 @@ describe('logout', () => {
     mockingoose.resetAll()
   })
 
-  test('should return nothing ', async () => {
+  test('should return an error ', async () => {
     mockingoose.User.toReturn(null, 'findOne')
-    expect(await User.logout('')).toBe(undefined)
-    expect(await User.logout('bfb82457793d31a7')).toBe(undefined)
+    expect(await User.logout('')).toHaveProperty('error')
+    expect(await User.logout('bfb82457793d31a7')).toHaveProperty('error')
   })
 })
 
@@ -134,7 +134,9 @@ describe('resetPassword', () => {
 
   test("should return email doesn't exist ", async () => {
     mockingoose.User.toReturn(null, 'findOne')
-    expect(await User.resetPassword('wrong.email@test.com')).toMatchObject({
+    expect(
+      await User.resetPassword({ email: 'wrong.email@test.com' })
+    ).toMatchObject({
       error: {
         code: 405,
         message: "Cet email n'existe pas."
@@ -255,5 +257,28 @@ describe('toggleNotificationSetting', () => {
         message: 'Cette clé de requête est invalide'
       }
     })
+  })
+})
+
+describe('delete', () => {
+  beforeEach(() => {
+    mockingoose.resetAll()
+  })
+  test('should user not connected', async () => {
+    mockingoose.User.toReturn(null, 'findOne')
+    expect(await User.delete('wrongToken')).toMatchObject({
+      error: {
+        code: 401,
+        message: "Cet utilisateur n'est pas connecté"
+      }
+    })
+  })
+
+  test('should delete user without error', async () => {
+    mockingoose.User.toReturn(userMock, 'findOne')
+    mockingoose.Amend.toReturn(amendMock, 'findOne')
+    mockingoose.Text.toReturn(new Array(textMock), 'findOne')
+    const res = await User.delete('13I9H0H0U3')
+    expect(res).not.toHaveProperty('error')
   })
 })

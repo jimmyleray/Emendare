@@ -1,5 +1,4 @@
 export * from './amend'
-export * from './Argument'
 export * from './event'
 export * from './text'
 export * from './user'
