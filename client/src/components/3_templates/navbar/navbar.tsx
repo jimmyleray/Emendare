@@ -4,8 +4,7 @@ import {
   DataContext,
   Link,
   Icon,
-  UserContext,
-  SearchContext
+  UserContext
 } from '../../../components'
 import { path } from '../../../config'
 import { Title } from '../../../services'
@@ -14,7 +13,6 @@ import { IUser } from '../../../../../interfaces'
 export const Navbar = () => {
   const userContext = React.useContext(UserContext)
   const dataContext = React.useContext(DataContext)
-  const searchContext = React.useContext(SearchContext)
   const events = dataContext.get && dataContext.get('events')('all')
   let newEventsCount = 0
 
@@ -47,7 +45,12 @@ export const Navbar = () => {
             className="navbar-item has-text-weight-semibold"
             style={{ textDecoration: 'none' }}
           >
-            Emendare
+            <span
+              className={newEventsCount > 0 ? 'badge is-badge-info' : ''}
+              data-badge={newEventsCount}
+            >
+              Emendare
+            </span>
           </Link>
           <a
             role="button"
@@ -59,53 +62,13 @@ export const Navbar = () => {
           >
             <span aria-hidden="true" />
             <span aria-hidden="true" />
-            <span
-              aria-hidden="true"
-              className={
-                !isActive && newEventsCount > 0 ? 'badge is-badge-info' : ''
-              }
-              data-badge={newEventsCount}
-            />
+            <span aria-hidden="true" />
           </a>
         </div>
         <div
           id="navbar-menu"
           className={'navbar-menu ' + (isActive ? 'is-active' : '')}
         >
-          <div className="navbar-start">
-            <Link
-              to={path.news}
-              onClick={() => setActive(false)}
-              style={{ textDecoration: 'none' }}
-              className="navbar-item"
-            >
-              <span
-                className={newEventsCount > 0 ? 'badge is-badge-info' : ''}
-                data-badge={newEventsCount}
-              >
-                Actualités
-              </span>
-            </Link>
-            <Divider vertical={true} className="is-hidden-mobile" />
-            <div className="navbar-item">
-              <div className="field">
-                <p className="control has-icons-right">
-                  <input
-                    autoFocus={true}
-                    className="input is-rounded"
-                    type="text"
-                    placeholder="Rechercher un texte"
-                    value={searchContext.search}
-                    onChange={event => {
-                      searchContext.setSearch(event.target.value)
-                    }}
-                  />
-                  <Icon type="fa fa-search" className="is-right" />
-                </p>
-              </div>
-            </div>
-          </div>
-
           <div className="navbar-end">
             {userContext.isConnected() ? (
               <Link

@@ -6,7 +6,6 @@ export const withID = (pathname: string) => (id = ':id') => pathname + id
 // All application routes
 export const routes: IRoute[] = [
   { name: 'home', path: '/', exact: true },
-  { name: 'news', path: '/actualites' },
   { name: 'code', path: '/charte-ethique' },
   { name: 'legal', path: '/mentions-legales' },
   { name: 'contributors', path: '/contributeurs' },

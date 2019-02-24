@@ -11,8 +11,6 @@
 import React from 'react'
 import {
   Button,
-  Column,
-  Columns,
   Page,
   NotificationSettings,
   UserCredentials,
@@ -20,30 +18,50 @@ import {
   Hero
 } from '../../../components'
 
-export const ProfilePage = () => (
-  <Page title="Profil">
-    <UserContext.Consumer>
-      {({ user, logout }: any) =>
-        user && (
-          <React.Fragment>
-            <Hero title="Mon profil" subtitle={user.email} />
-            <div>
-              <Button onClick={logout} className="is-danger is-medium">
-                Se déconnecter
-              </Button>
-            </div>
-            <br />
-            <Columns>
-              <Column>
-                <NotificationSettings user={user} />
-              </Column>
-              <Column>
-                <UserCredentials />
-              </Column>
-            </Columns>
-          </React.Fragment>
-        )
-      }
-    </UserContext.Consumer>
-  </Page>
-)
+export const ProfilePage = () => {
+  const [selectedTab, setSelectedTab] = React.useState('notifications')
+  const userContext = React.useContext(UserContext)
+
+  return (
+    <Page title="Profil">
+      <Hero
+        title="Mon profil"
+        subtitle={userContext.user ? userContext.user.email : ''}
+      />
+      <div>
+        <Button onClick={userContext.logout} className="is-danger is-medium">
+          Se déconnecter
+        </Button>
+      </div>
+      <br />
+      <div className="tabs is-boxed is-fullwidth">
+        <ul>
+          <li className={selectedTab === 'notifications' ? 'is-active' : ''}>
+            <a
+              onClick={() => {
+                setSelectedTab('notifications')
+              }}
+            >
+              Notifications
+            </a>
+          </li>
+          <li className={selectedTab === 'settings' ? 'is-active' : ''}>
+            <a
+              onClick={() => {
+                setSelectedTab('settings')
+              }}
+            >
+              Paramètres
+            </a>
+          </li>
+        </ul>
+      </div>
+      {userContext.user && (
+        <React.Fragment>
+          {selectedTab === 'notifications' && <NotificationSettings />}
+          {selectedTab === 'settings' && <UserCredentials />}
+        </React.Fragment>
+      )}
+    </Page>
+  )
+}

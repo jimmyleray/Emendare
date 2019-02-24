@@ -51,7 +51,7 @@ export const UpdatePassword = () => {
         pwdSame={pwdSame}
         pwdValid={pwdValid}
       />
-      <div className="field is-grouped is-grouped-right">
+      <div className="field is-grouped">
         <Button
           type="submit"
           className="is-success"

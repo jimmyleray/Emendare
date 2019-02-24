@@ -1,13 +1,8 @@
 import React from 'react'
-import {
-  Box,
-  UpdatePassword,
-  UpdateEmail,
-  DeleteAccount
-} from '../../../components'
+import { UpdatePassword, UpdateEmail, DeleteAccount } from '../../../components'
 
 export const UserCredentials = () => (
-  <Box>
+  <React.Fragment>
     <p className="has-text-weight-semibold">Identifiants utilisateur</p>
     <br />
     <p style={{ marginBottom: '0.7rem' }}>Changement d'email</p>
@@ -16,5 +11,5 @@ export const UserCredentials = () => (
     <UpdatePassword />
     <hr />
     <DeleteAccount />
-  </Box>
+  </React.Fragment>
 )
