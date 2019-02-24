@@ -9,8 +9,8 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
-    "start": "node build/index.js",
-    "dev": "nodemon build/index.js",
+    "start": "node build/server/src/index.js",
+    "dev": "nodemon build/server/src/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
