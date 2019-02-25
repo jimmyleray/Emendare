@@ -1,10 +1,34 @@
-import React, { useEffect } from 'react'
-import { ConfirmAlert, Button, Icon } from '../../../components'
+import React, { useEffect, useState, useCallback } from 'react'
+import { ConfirmAlert, Button, Icon, Input } from '../../../components'
 import { Socket } from '../../../services'
 import { useAlert } from '../../../hooks'
 import { callAll } from '../../../helpers'
+import { IUser } from '../../../../../interfaces'
 
-export const DeleteAccount = () => {
+const DeleteAccountMessage = ({ type, placeholder, ...rest }: any) => (
+  <React.Fragment>
+    <p>
+      <strong>Attention cette action est définitive et irréversible</strong>.
+      Elle entrainera la suppression de toutes vos données.
+    </p>
+    <div className="field" style={{ marginTop: '0.4rem' }}>
+      <Input
+        type="email"
+        placeholder="Confirmez votre email"
+        iconLeft="fa-envelope"
+        className="is-danger"
+        {...rest}
+      />
+    </div>
+  </React.Fragment>
+)
+
+interface IDeleteAccountProps {
+  user: IUser
+}
+
+export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
+  const [email, setEmail] = useState('')
   const { showAlert, openAlert, closeAlert } = useAlert()
 
   useEffect(() => {
@@ -12,6 +36,8 @@ export const DeleteAccount = () => {
       Socket.off('deleteAccount')
     }
   })
+
+  const change = useCallback((event: any) => setEmail(event.target.value), [])
 
   const deleteAccount = () => {
     Socket.fetch('deleteAccount').catch(console.error)
@@ -21,7 +47,8 @@ export const DeleteAccount = () => {
     <React.Fragment>
       {showAlert ? (
         <ConfirmAlert
-          message="Attention cette action est définitive et irréversible. Elle entrainera la suppression de toutes vos données."
+          message={<DeleteAccountMessage onChange={change} />}
+          disabled={user.email !== email}
           onConfirm={callAll(deleteAccount, closeAlert)}
           onCancel={closeAlert}
           className="is-danger"
