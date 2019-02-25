@@ -1,7 +1,12 @@
 import React from 'react'
 import { UpdatePassword, UpdateEmail, DeleteAccount } from '../../../components'
+import { IUser } from '../../../../../interfaces'
 
-export const UserCredentials = () => (
+interface IUserCredentialsProps {
+  user: IUser
+}
+
+export const UserCredentials = ({ user }: IUserCredentialsProps) => (
   <React.Fragment>
     <p className="has-text-weight-semibold">Identifiants utilisateur</p>
     <br />
@@ -10,6 +15,6 @@ export const UserCredentials = () => (
     <p style={{ marginBottom: '0.7rem' }}>Changement de mot de passe</p>
     <UpdatePassword />
     <hr />
-    <DeleteAccount />
+    <DeleteAccount user={user} />
   </React.Fragment>
 )

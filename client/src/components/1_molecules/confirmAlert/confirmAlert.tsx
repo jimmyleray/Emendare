@@ -5,6 +5,7 @@ interface IConfirmAlert {
   message: any
   onConfirm: any
   onCancel: any
+  disabled?: boolean
   className?: string
 }
 
@@ -12,6 +13,7 @@ export const ConfirmAlert = ({
   message,
   onConfirm,
   onCancel,
+  disabled,
   className
 }: IConfirmAlert) => (
   <Notification className={className}>
@@ -30,6 +32,7 @@ export const ConfirmAlert = ({
         <Button
           onClick={onConfirm}
           className={'button is-inverted  ' + className}
+          disabled={disabled}
         >
           Confimer
         </Button>
