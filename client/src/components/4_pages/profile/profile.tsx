@@ -82,7 +82,9 @@ export const ProfilePage = () => {
               />
             </React.Fragment>
           )}
-          {selectedTab === 'settings' && <UserCredentials />}
+          {selectedTab === 'settings' && (
+            <UserCredentials user={userContext.user} />
+          )}
         </React.Fragment>
       )}
     </Page>
