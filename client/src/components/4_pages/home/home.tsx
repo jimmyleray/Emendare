@@ -13,7 +13,8 @@ import {
   News,
   Page,
   UserContext,
-  DataContext
+  DataContext,
+  I18nContext
 } from '../../../components'
 import { IUser } from '../../../../../interfaces'
 import { Title } from '../../../services'
@@ -21,6 +22,7 @@ import { Title } from '../../../services'
 export const HomePage = () => {
   const [selectedTab, setSelectedTab] = React.useState('texts')
 
+  const { translate } = React.useContext(I18nContext)
   const userContext = React.useContext(UserContext)
   const dataContext = React.useContext(DataContext)
   const events = dataContext.get && dataContext.get('events')('all')
@@ -41,8 +43,8 @@ export const HomePage = () => {
   return (
     <Page title="Accueil">
       <Hero
-        title="Emendare est une plateforme de rédaction de textes amendables"
-        subtitle="Un amendement est une modification d'un texte, soumise au vote d'un groupe"
+        title={translate('HOME_TITLE')}
+        subtitle={translate('HOME_SUBTITLE')}
       />
       <div className="tabs is-boxed is-fullwidth">
         <ul>

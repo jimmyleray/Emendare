@@ -130,7 +130,7 @@ export const Navbar = () => {
             <div className="navbar-item has-dropdown is-hoverable">
               <a className="navbar-link">{i18nContext.locale}</a>
 
-              {i18nContext.languages
+              {i18nContext.availableLanguages
                 .filter(language => language !== i18nContext.locale)
                 .map(language => (
                   <div key={language} className="navbar-dropdown">
