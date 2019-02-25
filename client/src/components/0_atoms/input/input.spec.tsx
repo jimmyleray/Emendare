@@ -6,7 +6,7 @@ enzyme.configure({ adapter: new Adapter() })
 
 import { Input } from './input'
 
-it('should render an Icon', () => {
+it('should render an Input', () => {
   const component = shallow(
     <Input type="email" placeholder="email" ariaLabel="email" />
   )
