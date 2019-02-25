@@ -16,6 +16,7 @@ const DeleteAccountMessage = ({ type, placeholder, ...rest }: any) => (
         type="email"
         placeholder="Confirmez votre email"
         iconLeft="fa-envelope"
+        ariaLabel="Confirmez votre email"
         className="is-danger"
         {...rest}
       />
