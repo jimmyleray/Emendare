@@ -14,9 +14,9 @@ const DeleteAccountMessage = ({ type, placeholder, ...rest }: any) => (
     <div className="field" style={{ marginTop: '0.4rem' }}>
       <Input
         type="email"
-        placeholder="Confirmez votre email"
+        placeholder="Tapez votre email pour confirmer"
         iconLeft="fa-envelope"
-        ariaLabel="Confirmez votre email"
+        ariaLabel="Tapez votre email pour confirmer"
         className="is-danger"
         {...rest}
       />
@@ -38,7 +38,9 @@ export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
     }
   })
 
-  const change = useCallback((event: any) => setEmail(event.target.value), [])
+  const change = useCallback((event: any) => {
+    setEmail(event.target.value)
+  }, [])
 
   const deleteAccount = () => {
     Socket.fetch('deleteAccount').catch(console.error)
