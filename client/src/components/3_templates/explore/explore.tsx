@@ -8,6 +8,7 @@ import {
   Icon,
   Grid,
   DataContext,
+  I18nContext,
   Link,
   Spacer
 } from '../../../components'
@@ -17,6 +18,7 @@ import { IText } from '../../../../../interfaces'
 
 export const Explore = () => {
   const dataContext = React.useContext(DataContext)
+  const { translate } = React.useContext(I18nContext)
   const textsID = dataContext.get('texts')('all')
   const [search, setSearch] = React.useState('')
 
@@ -41,7 +43,7 @@ export const Explore = () => {
           <input
             className="input is-rounded"
             type="text"
-            placeholder="Rechercher un texte"
+            placeholder={translate('SEARCH_A_TEXT')}
             value={search}
             onChange={event => {
               setSearch(event.target.value)
@@ -50,7 +52,7 @@ export const Explore = () => {
           <Icon type="fa fa-search" className="is-right" />
         </p>
       </div>
-      <Divider content="Liste des textes" />
+      <Divider content={translate('TEXTS_LIST')} />
       <Grid
         style={{
           gridTemplateColumns: 'repeat(3, 1fr)',
@@ -95,7 +97,7 @@ export const Explore = () => {
         >
           <Button className="is-info">
             <Icon type="fa fa-plus" />
-            <span>Ajouter un texte</span>
+            <span>{translate('ADD_A_TEXT')}</span>
           </Button>
         </Link>
       </Grid>

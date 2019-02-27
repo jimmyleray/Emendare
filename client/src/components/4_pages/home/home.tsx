@@ -41,7 +41,7 @@ export const HomePage = () => {
   }
 
   return (
-    <Page title="Accueil">
+    <Page title={translate('HOME')}>
       <Hero
         title={translate('HOME_TITLE')}
         subtitle={translate('HOME_SUBTITLE')}
@@ -54,7 +54,7 @@ export const HomePage = () => {
                 setSelectedTab('texts')
               }}
             >
-              Textes
+              {translate('TEXTS')}
             </a>
           </li>
           <li className={selectedTab === 'news' ? 'is-active' : ''}>
@@ -67,7 +67,7 @@ export const HomePage = () => {
                 className={newEventsCount > 0 ? 'badge is-badge-info' : ''}
                 data-badge={newEventsCount}
               >
-                Actualités
+                {translate('NEWS')}
               </span>
             </a>
           </li>

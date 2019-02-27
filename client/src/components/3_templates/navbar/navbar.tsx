@@ -15,6 +15,7 @@ export const Navbar = () => {
   const userContext = React.useContext(UserContext)
   const dataContext = React.useContext(DataContext)
   const i18nContext = React.useContext(I18nContext)
+  const { translate } = i18nContext
   const events = dataContext.get && dataContext.get('events')('all')
   let newEventsCount = 0
 
@@ -80,7 +81,7 @@ export const Navbar = () => {
                 onClick={() => setBurgerActive(false)}
                 className="navbar-item"
               >
-                Mon Profil
+                {translate('MY_PROFILE')}
               </Link>
             ) : (
               <React.Fragment>
@@ -89,14 +90,14 @@ export const Navbar = () => {
                   onClick={() => setBurgerActive(false)}
                   className="navbar-item has-text-weight-semibold"
                 >
-                  Connexion
+                  {translate('LOGIN')}
                 </Link>
                 <Link
                   to={path.subscribe}
                   onClick={() => setBurgerActive(false)}
                   className="navbar-item"
                 >
-                  Inscription
+                  {translate('REGISTER')}
                 </Link>
               </React.Fragment>
             )}
@@ -108,21 +109,21 @@ export const Navbar = () => {
               onClick={() => setBurgerActive(false)}
               className="navbar-item"
             >
-              Charte éthique
+              {translate('ETHIC_CODE')}
             </Link>
             <Link
               to={path.contributors}
               onClick={() => setBurgerActive(false)}
               className="navbar-item"
             >
-              Contributeurs
+              {translate('CONTRIBUTORS')}
             </Link>
             <Link
               to={path.legal}
               onClick={() => setBurgerActive(false)}
               className="navbar-item"
             >
-              Mentions légales
+              {translate('LEGAL_MENTIONS')}
             </Link>
 
             <Divider vertical={true} className="is-hidden-mobile" />
@@ -150,7 +151,7 @@ export const Navbar = () => {
               to="https://github.com/jimmyleray/Emendare"
               onClick={() => setBurgerActive(false)}
               className="navbar-item is-hidden-mobile"
-              title="Sources / Github"
+              title={translate('SOURCES')}
             >
               <Icon className="fa-lg" type="fab fa-github" />
             </Link>
@@ -159,7 +160,7 @@ export const Navbar = () => {
               onClick={() => setBurgerActive(false)}
               className="navbar-item is-hidden-tablet"
             >
-              Sources
+              {translate('SOURCES')}
             </Link>
           </div>
         </div>

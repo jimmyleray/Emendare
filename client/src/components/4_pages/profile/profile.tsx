@@ -15,6 +15,7 @@ import {
   Page,
   NotificationSettings,
   UserCredentials,
+  I18nContext,
   UserContext,
   Hero
 } from '../../../components'
@@ -22,11 +23,12 @@ import {
 export const ProfilePage = () => {
   const [selectedTab, setSelectedTab] = React.useState('notifications')
   const userContext = React.useContext(UserContext)
+  const { translate } = React.useContext(I18nContext)
 
   return (
-    <Page title="Profil">
+    <Page title={translate('MY_PROFILE')}>
       <Hero
-        title="Mon profil"
+        title={translate('MY_PROFILE')}
         subtitle={userContext.user ? userContext.user.email : ''}
       />
       <div>
