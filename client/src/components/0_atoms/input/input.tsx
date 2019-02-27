@@ -1,17 +1,33 @@
 import React from 'react'
+import { Icon } from '../../../components'
 
 interface IProps {
+  /** Type of the input */
   type: string
+  /** Placeholder of the input */
   placeholder: string
+  /** aria-label of the input */
   ariaLabel: string
+  /** Set a value to the input */
   value?: any
+  /** icon font name to put it in the right of the input */
   iconRight?: string
+  /** icon font name to put it in the right of the input */
   iconLeft?: string
+  /** onChange event */
   onChange?: any
+  /** Possibility to disable the input */
   disabled?: boolean
+  /** Id of the input */
   id?: any
+  /** Name of the input */
   name?: any
+  /** Additional CSS UI class */
   className?: string
+  /** Autocomplete the input */
+  autoComplete?: string
+  /** Auto focus the input */
+  autoFocus?: boolean
 }
 
 export const Input = ({
@@ -34,14 +50,10 @@ export const Input = ({
             {...rest}
           />
           {iconLeft && (
-            <span className="icon is-left">
-              <i className={`fas ${iconLeft}`} />
-            </span>
+            <Icon type={iconLeft} className="icon is-medium is-left" />
           )}
           {iconRight && (
-            <span className="icon is-right">
-              <i className={`fas ${iconRight}`} />
-            </span>
+            <Icon type={iconRight} className="icon is-medium is-right" />
           )}
         </div>
       ) : (
