@@ -3,11 +3,17 @@ import { Input } from '../../../components'
 import { Password, UiEffectInput } from '../../../services'
 
 interface IPwdFormProps {
+  /** Function to handle onChange event */
   change: any
+  /** The current value of the first input */
   password: string
+  /** The current value of the second input */
   checkPassword: string
+  /** True if the password repect the rules you set */
   pwdValid: boolean
+  /** True if the password and the verification password are the same */
   pwdSame: boolean
+  /** Additional CSS UI class */
   className?: string
 }
 

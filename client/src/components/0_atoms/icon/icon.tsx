@@ -1,7 +1,9 @@
 import React from 'react'
 
 interface IProps {
+  /** Name of the icon */
   type: string
+  /** Additional CSS UI class */
   className?: string
   title?: string
 }

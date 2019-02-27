@@ -25,6 +25,7 @@ const DeleteAccountMessage = ({ type, placeholder, ...rest }: any) => (
 )
 
 interface IDeleteAccountProps {
+  /** User data */
   user: IUser
 }
 

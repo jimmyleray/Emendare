@@ -1,8 +1,11 @@
 import React from 'react'
 
 interface IProps {
+  /** Additional CSS UI class */
   className?: string
+  /** Subtitle of the banner */
   subtitle: string
+  /** Title of the banner */
   title: string
 }
 

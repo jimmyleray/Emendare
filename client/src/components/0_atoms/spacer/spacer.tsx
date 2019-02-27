@@ -1,6 +1,7 @@
 import React from 'react'
 
 interface IProps {
+  /** Addtional CSS UI class */
   className?: string
 }
 
