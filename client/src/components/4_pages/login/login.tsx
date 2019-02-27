@@ -11,7 +11,6 @@ import { Redirect } from 'react-router-dom'
 import {
   Button,
   Buttons,
-  Icon,
   Link,
   Notification,
   Page,
