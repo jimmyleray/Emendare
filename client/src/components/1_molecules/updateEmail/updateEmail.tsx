@@ -66,11 +66,12 @@ export const UpdateEmail = () => {
             type="email"
             aria-label="email input"
             value={email}
+            autoComplete="off"
           />
           <Icon type="fas fa-envelope" className="icon is-medium is-left" />
         </p>
       </div>
-      <div className="field is-grouped is-grouped-right">
+      <div className="field is-grouped">
         <Button type="submit" className="is-success" disabled={!email}>
           Valider
         </Button>

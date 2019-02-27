@@ -4,9 +4,9 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { NewsPage } from './news'
+import { News } from './news'
 
-it('should render a NewsPage', () => {
-  const component = shallow(<NewsPage />)
+it('should render News', () => {
+  const component = shallow(<News />)
   expect(component).toBeTruthy()
 })

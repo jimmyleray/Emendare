@@ -4,13 +4,13 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { SearchContext, SearchProvider } from './search'
+import { I18nContext, I18nProvider } from './i18n'
 
-it('should render a SearchContext', () => {
+it('should render a i18nContext', () => {
   const component = shallow(
-    <SearchProvider>
-      <SearchContext.Consumer>{() => <p>Test</p>}</SearchContext.Consumer>
-    </SearchProvider>
+    <I18nProvider>
+      <I18nContext.Consumer>{() => <p>Test</p>}</I18nContext.Consumer>
+    </I18nProvider>
   )
   expect(component).toBeTruthy()
   expect(component.html()).toContain('Test')

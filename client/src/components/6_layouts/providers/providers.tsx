@@ -2,8 +2,8 @@ import React from 'react'
 import {
   DataProvider,
   NotificationsProvider,
-  SearchProvider,
-  UserProvider
+  UserProvider,
+  I18nProvider
 } from '../../../components'
 
 interface IProps {
@@ -14,7 +14,7 @@ const providers = [
   UserProvider,
   DataProvider,
   NotificationsProvider,
-  SearchProvider
+  I18nProvider
 ]
 
 // Return all providers encapsulated in order

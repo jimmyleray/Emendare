@@ -1,4 +1,4 @@
 export * from './data'
 export * from './notifications'
 export * from './user'
-export * from './search'
+export * from './i18n'

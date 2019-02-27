@@ -4,14 +4,11 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { NotificationSettings } from './notificationSettings'
-import { Providers } from '../../../components'
+import { Input } from './input'
 
-it('should render a NotificationSettings', () => {
+it('should render an Input', () => {
   const component = shallow(
-    <Providers>
-      <NotificationSettings />
-    </Providers>
+    <Input type="email" placeholder="email" ariaLabel="email" />
   )
   expect(component).toBeTruthy()
 })

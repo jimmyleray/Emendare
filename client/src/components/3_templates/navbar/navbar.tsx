@@ -5,7 +5,7 @@ import {
   Link,
   Icon,
   UserContext,
-  SearchContext
+  I18nContext
 } from '../../../components'
 import { path } from '../../../config'
 import { Title } from '../../../services'
@@ -14,7 +14,8 @@ import { IUser } from '../../../../../interfaces'
 export const Navbar = () => {
   const userContext = React.useContext(UserContext)
   const dataContext = React.useContext(DataContext)
-  const searchContext = React.useContext(SearchContext)
+  const i18nContext = React.useContext(I18nContext)
+  const { translate } = i18nContext
   const events = dataContext.get && dataContext.get('events')('all')
   let newEventsCount = 0
 
@@ -30,106 +31,73 @@ export const Navbar = () => {
     Title.badgeCount = 0
   }
 
-  const [isActive, setActive] = React.useState(false)
+  const [burgerIsActive, setBurgerActive] = React.useState(false)
 
   return (
     <nav
-      className="navbar is-transparent"
+      className="navbar"
       role="navigation"
       aria-label="main navigation"
       style={{ padding: '0 1rem' }}
     >
-      <div className="container is-fluid">
+      <div className="container">
         <div className="navbar-brand">
           <Link
             to={path.home}
-            onClick={() => setActive(false)}
+            onClick={() => setBurgerActive(false)}
             className="navbar-item has-text-weight-semibold"
             style={{ textDecoration: 'none' }}
           >
-            Emendare
+            <span
+              className={newEventsCount > 0 ? 'badge is-badge-info' : ''}
+              data-badge={newEventsCount}
+            >
+              Emendare
+            </span>
           </Link>
           <a
             role="button"
-            onClick={() => setActive(!isActive)}
-            className={'navbar-burger burger ' + (isActive ? 'is-active' : '')}
+            onClick={() => setBurgerActive(!burgerIsActive)}
+            className={
+              'navbar-burger burger ' + (burgerIsActive ? 'is-active' : '')
+            }
             aria-label="menu"
-            aria-expanded={isActive}
+            aria-expanded={burgerIsActive}
             data-target="navbar-menu"
           >
             <span aria-hidden="true" />
             <span aria-hidden="true" />
-            <span
-              aria-hidden="true"
-              className={
-                !isActive && newEventsCount > 0 ? 'badge is-badge-info' : ''
-              }
-              data-badge={newEventsCount}
-            />
+            <span aria-hidden="true" />
           </a>
         </div>
         <div
           id="navbar-menu"
-          className={'navbar-menu ' + (isActive ? 'is-active' : '')}
+          className={'navbar-menu ' + (burgerIsActive ? 'is-active' : '')}
         >
-          <div className="navbar-start">
-            <Link
-              to={path.news}
-              onClick={() => setActive(false)}
-              style={{ textDecoration: 'none' }}
-              className="navbar-item"
-            >
-              <span
-                className={newEventsCount > 0 ? 'badge is-badge-info' : ''}
-                data-badge={newEventsCount}
-              >
-                Actualités
-              </span>
-            </Link>
-            <Divider vertical={true} className="is-hidden-mobile" />
-            <div className="navbar-item">
-              <div className="field">
-                <p className="control has-icons-right">
-                  <input
-                    autoFocus={true}
-                    className="input is-rounded"
-                    type="text"
-                    placeholder="Rechercher un texte"
-                    value={searchContext.search}
-                    onChange={event => {
-                      searchContext.setSearch(event.target.value)
-                    }}
-                  />
-                  <Icon type="fa fa-search" className="is-right" />
-                </p>
-              </div>
-            </div>
-          </div>
-
           <div className="navbar-end">
             {userContext.isConnected() ? (
               <Link
                 to={path.profile}
-                onClick={() => setActive(false)}
+                onClick={() => setBurgerActive(false)}
                 className="navbar-item"
               >
-                Mon Profil
+                {translate('MY_PROFILE')}
               </Link>
             ) : (
               <React.Fragment>
                 <Link
                   to={path.login}
-                  onClick={() => setActive(false)}
+                  onClick={() => setBurgerActive(false)}
                   className="navbar-item has-text-weight-semibold"
                 >
-                  Connexion
+                  {translate('LOGIN')}
                 </Link>
                 <Link
                   to={path.subscribe}
-                  onClick={() => setActive(false)}
+                  onClick={() => setBurgerActive(false)}
                   className="navbar-item"
                 >
-                  Inscription
+                  {translate('REGISTER')}
                 </Link>
               </React.Fragment>
             )}
@@ -138,42 +106,61 @@ export const Navbar = () => {
 
             <Link
               to={path.code}
-              onClick={() => setActive(false)}
+              onClick={() => setBurgerActive(false)}
               className="navbar-item"
             >
-              Charte éthique
+              {translate('ETHIC_CODE')}
             </Link>
             <Link
               to={path.contributors}
-              onClick={() => setActive(false)}
+              onClick={() => setBurgerActive(false)}
               className="navbar-item"
             >
-              Contributeurs
+              {translate('CONTRIBUTORS')}
             </Link>
             <Link
               to={path.legal}
-              onClick={() => setActive(false)}
+              onClick={() => setBurgerActive(false)}
               className="navbar-item"
             >
-              Mentions légales
+              {translate('LEGAL_MENTIONS')}
             </Link>
 
             <Divider vertical={true} className="is-hidden-mobile" />
 
+            <div className="navbar-item has-dropdown is-hoverable">
+              <a className="navbar-link">{i18nContext.locale}</a>
+
+              {i18nContext.availableLanguages
+                .filter(language => language !== i18nContext.locale)
+                .map(language => (
+                  <div key={language} className="navbar-dropdown">
+                    <a
+                      className="navbar-item"
+                      onClick={() => {
+                        i18nContext.setLocaleWithStorage(language)
+                      }}
+                    >
+                      {language}
+                    </a>
+                  </div>
+                ))}
+            </div>
+
             <Link
               to="https://github.com/jimmyleray/Emendare"
-              onClick={() => setActive(false)}
+              onClick={() => setBurgerActive(false)}
               className="navbar-item is-hidden-mobile"
-              title="Sources / Github"
+              title={translate('SOURCES')}
             >
               <Icon className="fa-lg" type="fab fa-github" />
             </Link>
             <Link
               to="https://github.com/jimmyleray/Emendare"
-              onClick={() => setActive(false)}
+              onClick={() => setBurgerActive(false)}
               className="navbar-item is-hidden-tablet"
             >
-              Sources
+              {translate('SOURCES')}
             </Link>
           </div>
         </div>
