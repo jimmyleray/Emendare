@@ -2,10 +2,15 @@ import React from 'react'
 import { Notification, Buttons, Button } from '../../../components'
 
 interface IConfirmAlert {
+  /** The message you want to display */
   message: any
+  /** Action to do when the user accept */
   onConfirm: any
+  /** Action to do when the user decline */
   onCancel: any
+  /** Disable the confirm button */
   disabled?: boolean
+  /** Additional CSS UI class */
   className?: string
 }
 
