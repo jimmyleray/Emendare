@@ -1,9 +1,13 @@
 import React from 'react'
 
 interface IProps {
+  /** children node */
   children: React.ReactNode
+  /** Additional CSS UI class */
   className?: string
+  /** onClick event */
   onClick?: any
+  /** Custom CSS */
   style?: React.CSSProperties
 }
 

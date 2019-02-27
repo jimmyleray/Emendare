@@ -1,7 +1,9 @@
 import React from 'react'
 
 interface IProps {
+  /** Children node */
   children: React.ReactNode
+  /** Additional CSS IU class */
   className?: string
 }
 
