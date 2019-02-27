@@ -4,7 +4,7 @@ import * as JsDiff from 'diff'
 import { IAmend, IText } from '../../../../../interfaces'
 
 interface IAmendProps {
-  /** Current amend object*/
+  /** Current amend object */
   amend?: Partial<IAmend>
   /** Current text object */
   text?: IText
