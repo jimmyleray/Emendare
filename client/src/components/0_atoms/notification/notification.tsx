@@ -11,8 +11,10 @@ interface IProps {
   style?: React.CSSProperties
 }
 
-export const Notification = ({ children, className = '', ...rest }: IProps) => (
-  <div className={'notification ' + className} {...rest}>
-    {children}
-  </div>
+export const Notification = React.memo(
+  ({ children, className = '', ...rest }: IProps) => (
+    <div className={'notification ' + className} {...rest}>
+      {children}
+    </div>
+  )
 )

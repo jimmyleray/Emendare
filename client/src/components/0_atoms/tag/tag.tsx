@@ -7,8 +7,10 @@ interface IProps {
   className?: string
 }
 
-export const Tag = ({ children, className = '', ...rest }: IProps) => (
-  <span className={'tag ' + className} {...rest}>
-    {children}
-  </span>
+export const Tag = React.memo(
+  ({ children, className = '', ...rest }: IProps) => (
+    <span className={'tag ' + className} {...rest}>
+      {children}
+    </span>
+  )
 )

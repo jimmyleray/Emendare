@@ -30,41 +30,37 @@ interface IProps {
   autoFocus?: boolean
 }
 
-export const Input = ({
-  className,
-  iconRight,
-  iconLeft,
-  ariaLabel,
-  ...rest
-}: IProps) => {
-  return (
-    <React.Fragment>
-      {iconLeft || iconRight ? (
-        <div
-          className={`control ${iconLeft && 'has-icons-left '} ${iconRight &&
-            'has-icons-right '}`}
-        >
-          <input
-            className={`input ${className}`}
-            aria-label={ariaLabel}
-            {...rest}
-          />
-          {iconLeft && (
-            <Icon type={iconLeft} className="icon is-medium is-left" />
-          )}
-          {iconRight && (
-            <Icon type={iconRight} className="icon is-medium is-right" />
-          )}
-        </div>
-      ) : (
-        <div className="control">
-          <input
-            className={`input ${className}`}
-            aria-label={ariaLabel}
-            {...rest}
-          />
-        </div>
-      )}
-    </React.Fragment>
-  )
-}
+export const Input = React.memo(
+  ({ className, iconRight, iconLeft, ariaLabel, ...rest }: IProps) => {
+    return (
+      <React.Fragment>
+        {iconLeft || iconRight ? (
+          <div
+            className={`control ${iconLeft && 'has-icons-left '} ${iconRight &&
+              'has-icons-right '}`}
+          >
+            <input
+              className={`input ${className}`}
+              aria-label={ariaLabel}
+              {...rest}
+            />
+            {iconLeft && (
+              <Icon type={iconLeft} className="icon is-medium is-left" />
+            )}
+            {iconRight && (
+              <Icon type={iconRight} className="icon is-medium is-right" />
+            )}
+          </div>
+        ) : (
+          <div className="control">
+            <input
+              className={`input ${className}`}
+              aria-label={ariaLabel}
+              {...rest}
+            />
+          </div>
+        )}
+      </React.Fragment>
+    )
+  }
+)
