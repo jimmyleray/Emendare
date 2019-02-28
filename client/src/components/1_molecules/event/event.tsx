@@ -11,7 +11,7 @@ import { IEvent } from '../../../../../interfaces'
 
 const typeToUrl = (type: string) => (target: any) => {
   switch (type) {
-    case '':
+    case 'amend':
     case 'result':
       return path.amend(target._id)
     case 'text':
