@@ -1,13 +1,10 @@
 import * as React from 'react'
-import enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-enzyme.configure({ adapter: new Adapter() })
+import { render } from 'react-testing-library'
 
 import { Column } from './column'
 
 it('should render a Column', () => {
-  const component = shallow(<Column>Test</Column>)
-  expect(component).toBeTruthy()
-  expect(component.html()).toContain('Test')
+  const { container, getByText } = render(<Column>Test</Column>)
+  expect(container).toBeTruthy()
+  expect(getByText('Test')).toBeTruthy()
 })

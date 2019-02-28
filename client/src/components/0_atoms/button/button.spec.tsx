@@ -1,13 +1,12 @@
 import * as React from 'react'
-import enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-enzyme.configure({ adapter: new Adapter() })
+import { render } from 'react-testing-library'
 
 import { Button } from './button'
 
-it('should render a Button', () => {
-  const component = shallow(<Button>Test</Button>)
-  expect(component).toBeTruthy()
-  expect(component.html()).toContain('Test')
+describe('<Button/>', () => {
+  it('should render a Button', () => {
+    const { container, getByText } = render(<Button>Test</Button>)
+    expect(container).toBeTruthy()
+    expect(getByText('Test')).toBeTruthy()
+  })
 })

@@ -1,13 +1,9 @@
 import * as React from 'react'
-import enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-enzyme.configure({ adapter: new Adapter() })
+import { render } from 'react-testing-library'
 
 import { Divider } from './divider'
 
 it('should render a Divider', () => {
-  const component = shallow(<Divider content="Test" />)
-  expect(component).toBeTruthy()
-  expect(component.html()).toContain('Test')
+  const { container } = render(<Divider content="Test" />)
+  expect(container).toBeTruthy()
 })
