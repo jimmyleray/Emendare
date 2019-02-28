@@ -105,7 +105,12 @@ const typeToText = (type: string) => (target: any) => {
   }
 }
 
-export const Event = ({ data }: { data: IEvent }) => (
+interface IEventProps {
+  /** Event object  */
+  data: IEvent
+}
+
+export const Event = ({ data }: IEventProps) => (
   <DataContext.Consumer>
     {({ get }) => {
       if (data && data.targetType && data.targetID) {

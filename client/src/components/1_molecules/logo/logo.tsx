@@ -1,5 +1,7 @@
 import React from 'react'
 
+interface ILogoProps {}
+
 export const Logo = () => (
   <div style={{ height: '28px', width: '28px', display: 'inline-block' }}>
     <img
