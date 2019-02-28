@@ -67,12 +67,9 @@ import { Button } from './button'
 
 Use this button when you want to go to an other page
 
-```jsx
+```tsx
 import { Button } from './button'
-import { Router } from 'react-router-dom'
 ;<div>
-  <Router>
-    <Button to={'path/you/want'}>Link</Button>
-  </Router>
+  <Button to={'path/you/want'}>Link</Button>
 </div>
 ```

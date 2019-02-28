@@ -2,7 +2,12 @@ import React from 'react'
 import { Pie } from 'react-chartjs-2'
 import { IResult } from '../../../../../interfaces'
 
-export const ResultsIcon = ({ data }: { data: IResult }) => (
+interface IResultsIcon {
+  /** Result object */
+  data: IResult
+}
+
+export const ResultsIcon = ({ data }: IResultsIcon) => (
   <div
     style={{
       height: '1.5rem',

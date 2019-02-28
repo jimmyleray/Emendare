@@ -21,7 +21,13 @@ const datasetDefault = {
   ],
   hoverBorderColor: 'white'
 }
-export const Results = ({ data }: { data: IResult }) => (
+
+interface IResultProps {
+  /** Result object */
+  data: IResult
+}
+
+export const Results = ({ data }: IResultProps) => (
   <div style={{ position: 'relative', zIndex: 1 }}>
     {data && (
       <Doughnut

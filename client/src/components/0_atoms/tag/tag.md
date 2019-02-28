@@ -15,17 +15,11 @@ import { Tag } from '../../../components'
 
 ```jsx
 import { Tag } from '../../../components'
-;<Tag className="is-black">Tag</Tag>
-```
-
-```jsx
-import { Tag } from '../../../components'
-;<Tag className="is-dark">Tag</Tag>
-```
-
-```jsx
-import { Tag } from '../../../components'
 ;<div className="tags">
+  <Tag className="is-black">Tag</Tag>
+
+  <Tag className="is-dark">Tag</Tag>
+
   <Tag className="is-light">Tag</Tag>
 
   <Tag className="is-white">Tag</Tag>
