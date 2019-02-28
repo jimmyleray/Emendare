@@ -9,8 +9,10 @@ interface IProps {
   className?: string
 }
 
-export const Buttons = ({ children, className = '', ...rest }: IProps) => (
-  <div className={'buttons ' + className} {...rest}>
-    {children}
-  </div>
+export const Buttons = React.memo(
+  ({ children, className = '', ...rest }: IProps) => (
+    <div className={'buttons ' + className} {...rest}>
+      {children}
+    </div>
+  )
 )

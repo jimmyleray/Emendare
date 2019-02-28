@@ -1,13 +1,10 @@
 import * as React from 'react'
-import enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-enzyme.configure({ adapter: new Adapter() })
+import { render } from 'react-testing-library'
 
 import { Tag } from './tag'
 
 it('should render a Tag', () => {
-  const component = shallow(<Tag>Test</Tag>)
-  expect(component).toBeTruthy()
-  expect(component.html()).toContain('Test')
+  const { container, getByText } = render(<Tag>Test</Tag>)
+  expect(container).toBeTruthy()
+  expect(getByText('Test')).toBeTruthy()
 })

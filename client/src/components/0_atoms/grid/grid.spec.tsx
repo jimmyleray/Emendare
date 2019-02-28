@@ -1,13 +1,10 @@
 import * as React from 'react'
-import enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-enzyme.configure({ adapter: new Adapter() })
+import { render } from 'react-testing-library'
 
 import { Grid } from './grid'
 
-it('should render a Box', () => {
-  const component = shallow(<Grid>Test</Grid>)
-  expect(component).toBeTruthy()
-  expect(component.html()).toContain('Test')
+it('should render a Grid', () => {
+  const { container, getByText } = render(<Grid>Test</Grid>)
+  expect(container).toBeTruthy()
+  expect(getByText('Test')).toBeTruthy()
 })

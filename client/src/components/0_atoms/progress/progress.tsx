@@ -11,8 +11,10 @@ interface IProps {
   max?: number
 }
 
-export const Progress = ({ children, className = '', ...rest }: IProps) => (
-  <progress className={'progress ' + className} {...rest}>
-    {children}
-  </progress>
+export const Progress = React.memo(
+  ({ children, className = '', ...rest }: IProps) => (
+    <progress className={'progress ' + className} {...rest}>
+      {children}
+    </progress>
+  )
 )
