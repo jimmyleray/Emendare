@@ -81,32 +81,34 @@ export const Navbar = () => {
           className={'navbar-menu ' + (burgerIsActive ? 'is-active' : '')}
         >
           <div className="navbar-end">
-            {userContext.isConnected() ? (
-              <Link
-                to={path.profile}
-                onClick={() => setBurgerActive(false)}
-                className="navbar-item"
-              >
-                {translate('MY_PROFILE')}
-              </Link>
-            ) : (
-              <React.Fragment>
+            {!userContext.isConnectionPending ? (
+              userContext.isConnected() ? (
                 <Link
-                  to={path.login}
-                  onClick={() => setBurgerActive(false)}
-                  className="navbar-item has-text-weight-semibold"
-                >
-                  {translate('LOGIN')}
-                </Link>
-                <Link
-                  to={path.subscribe}
+                  to={path.profile}
                   onClick={() => setBurgerActive(false)}
                   className="navbar-item"
                 >
-                  {translate('REGISTER')}
+                  {translate('MY_PROFILE')}
                 </Link>
-              </React.Fragment>
-            )}
+              ) : (
+                <React.Fragment>
+                  <Link
+                    to={path.login}
+                    onClick={() => setBurgerActive(false)}
+                    className="navbar-item has-text-weight-semibold"
+                  >
+                    {translate('LOGIN')}
+                  </Link>
+                  <Link
+                    to={path.subscribe}
+                    onClick={() => setBurgerActive(false)}
+                    className="navbar-item"
+                  >
+                    {translate('REGISTER')}
+                  </Link>
+                </React.Fragment>
+              )
+            ) : null}
 
             <Divider vertical={true} className="is-hidden-mobile" />
 
