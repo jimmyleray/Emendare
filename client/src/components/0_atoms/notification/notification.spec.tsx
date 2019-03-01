@@ -1,13 +1,10 @@
 import * as React from 'react'
-import enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-enzyme.configure({ adapter: new Adapter() })
+import { render } from 'react-testing-library'
 
 import { Notification } from './notification'
 
 it('should render a Notification', () => {
-  const component = shallow(<Notification>Test</Notification>)
-  expect(component).toBeTruthy()
-  expect(component.html()).toContain('Test')
+  const { container, getByText } = render(<Notification>Test</Notification>)
+  expect(container).toBeTruthy()
+  expect(getByText('Test')).toBeTruthy()
 })

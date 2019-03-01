@@ -1,1 +1,1 @@
-export * from './warinigAlert'
+export * from './warningAlert'

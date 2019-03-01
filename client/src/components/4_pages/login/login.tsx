@@ -11,10 +11,10 @@ import { Redirect } from 'react-router-dom'
 import {
   Button,
   Buttons,
-  Icon,
   Link,
   Notification,
-  Page
+  Page,
+  Input
 } from '../../../components'
 import { Socket } from '../../../services'
 import { path } from '../../../config'
@@ -97,27 +97,29 @@ export class LoginPage extends React.Component<
           <br />
           <div className="field">
             <p className="control has-icons-left has-icons-right">
-              <input
+              <Input
                 autoFocus={true}
+                ariaLabel="email"
                 placeholder="Email"
                 value={this.state.email}
                 onChange={this.change('email')}
                 className="input is-medium"
                 type="email"
+                iconLeft="fas fa-envelope"
               />
-              <Icon type="fas fa-envelope" className="icon is-medium is-left" />
             </p>
           </div>
           <div className="field">
             <p className="control has-icons-left">
-              <input
+              <Input
                 placeholder="Mot de passe"
+                ariaLabel="Mot de passe"
                 value={this.state.password}
                 onChange={this.change('password')}
                 className="input is-medium"
                 type="password"
+                iconLeft="fas fa-lock"
               />
-              <Icon type="fas fa-lock" className="icon is-medium is-left" />
             </p>
             <div className="has-text-right" style={{ marginTop: 4 }}>
               <Link to={path.reset} className="is-text">

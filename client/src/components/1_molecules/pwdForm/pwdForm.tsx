@@ -1,13 +1,19 @@
 import React from 'react'
-import { Icon } from '../../../components'
+import { Input } from '../../../components'
 import { Password, UiEffectInput } from '../../../services'
 
 interface IPwdFormProps {
+  /** Function to handle onChange event */
   change: any
+  /** The current value of the first input */
   password: string
+  /** The current value of the second input */
   checkPassword: string
+  /** True if the password repect the rules you set */
   pwdValid: boolean
+  /** True if the password and the verification password are the same */
   pwdSame: boolean
+  /** Additional CSS UI class */
   className?: string
 }
 
@@ -38,10 +44,10 @@ export const PwdForm = ({
     <React.Fragment>
       <div className="field">
         <div className="control has-icons-left has-icons-right">
-          <input
+          <Input
             placeholder="Nouveau mot de passe"
             value={password}
-            aria-label="password input"
+            ariaLabel="password input"
             autoComplete="off"
             onChange={(event: any) =>
               change(
@@ -53,8 +59,8 @@ export const PwdForm = ({
               `input ${className} ` + UiEffectInput.setColor(pwdValid, password)
             }
             type="password"
+            iconLeft="fas fa-lock"
           />
-          <Icon type="fas fa-lock" className="icon is-medium is-left" />
         </div>
         {displayHelper(pwdValid, password, {
           true: 'Mot de passe valide',
@@ -63,9 +69,9 @@ export const PwdForm = ({
       </div>
       <div className="field">
         <div className="control has-icons-left has-icons-right">
-          <input
-            placeholder="Confirmez le nouveau mot de passe"
-            aria-label="password verification input"
+          <Input
+            placeholder="Verification du mot de passe"
+            ariaLabel="password verification input"
             value={checkPassword}
             autoComplete="off"
             onChange={(event: any) =>
@@ -79,8 +85,8 @@ export const PwdForm = ({
               UiEffectInput.setColor(pwdSame, checkPassword)
             }
             type="password"
+            iconLeft="fas fa-lock"
           />
-          <Icon type="fas fa-lock" className="icon is-medium is-left" />
         </div>
         {displayHelper(pwdSame, checkPassword, {
           true: 'Mot de passe valide',

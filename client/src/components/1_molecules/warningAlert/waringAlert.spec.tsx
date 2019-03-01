@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { WarningAlert } from './warinigAlert'
+import { WarningAlert } from './warningAlert'
 
 it('should render a EarlyAlert', () => {
   const component = shallow(

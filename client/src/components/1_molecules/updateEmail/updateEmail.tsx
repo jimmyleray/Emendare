@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { ConfirmAlert, WarningAlert, Button, Icon } from '../../../components'
+import { ConfirmAlert, WarningAlert, Button, Input } from '../../../components'
 import { IError } from '../../../../../interfaces'
 import { Socket } from '../../../services'
 import { useAlert } from '../../../hooks'
@@ -59,16 +59,16 @@ export const UpdateEmail = () => {
     >
       <div className="field">
         <p className="control has-icons-left has-icons-right">
-          <input
+          <Input
             placeholder="Nouvel email"
             onChange={change}
             className="input"
             type="email"
-            aria-label="email input"
+            ariaLabel="email input"
             value={email}
             autoComplete="off"
+            iconLeft="fas fa-envelope"
           />
-          <Icon type="fas fa-envelope" className="icon is-medium is-left" />
         </p>
       </div>
       <div className="field is-grouped">

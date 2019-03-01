@@ -1,9 +1,12 @@
 import React from 'react'
-import { Button, Notification } from '../../../components'
+import { Button, Notification } from '../..'
 
 interface IWarningAlertProps {
+  /** Additional CSS UI class */
   className?: string
+  /** onClick Event */
   onClick: any
+  /** Message of the alert */
   message: any
 }
 

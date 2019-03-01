@@ -15,7 +15,7 @@ const DeleteAccountMessage = ({ type, placeholder, ...rest }: any) => (
       <Input
         type="email"
         placeholder="Tapez votre email pour confirmer"
-        iconLeft="fa-envelope"
+        iconLeft="fas fa-envelope"
         ariaLabel="Tapez votre email pour confirmer"
         className="is-danger"
         {...rest}
@@ -25,6 +25,7 @@ const DeleteAccountMessage = ({ type, placeholder, ...rest }: any) => (
 )
 
 interface IDeleteAccountProps {
+  /** User data */
   user: IUser
 }
 
