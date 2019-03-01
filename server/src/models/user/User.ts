@@ -176,6 +176,7 @@ export class User {
     if (user) {
       if (!user.activated) {
         user.activated = true
+        user.activationToken = null
         await user.save()
         return { data: user }
       } else {
