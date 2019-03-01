@@ -96,7 +96,7 @@ export class SubscribePage extends React.Component<{}, ISubscribePageState> {
           {!this.state.send && (
             <React.Fragment>
               <div className="field">
-                <p className="control has-icons-left has-icons-right">
+                <div className="control has-icons-left has-icons-right">
                   <input
                     autoFocus={true}
                     placeholder="Email"
@@ -110,7 +110,7 @@ export class SubscribePage extends React.Component<{}, ISubscribePageState> {
                     type="fas fa-envelope"
                     className="icon is-medium is-left"
                   />
-                </p>
+                </div>
               </div>
               <PwdForm
                 change={this.change}

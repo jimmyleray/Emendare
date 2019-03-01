@@ -40,7 +40,7 @@ export class ResetPage extends React.Component<{}, IResetPageState> {
           {!this.state.send && (
             <React.Fragment>
               <div className="field">
-                <p className="control has-icons-left has-icons-right">
+                <div className="control has-icons-left has-icons-right">
                   <input
                     autoFocus={true}
                     placeholder="Email"
@@ -54,7 +54,7 @@ export class ResetPage extends React.Component<{}, IResetPageState> {
                     type="fas fa-envelope"
                     className="icon is-medium is-left"
                   />
-                </p>
+                </div>
               </div>
               <div className=" has-text-centered">
                 <Button
