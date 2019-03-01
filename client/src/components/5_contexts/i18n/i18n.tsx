@@ -16,7 +16,7 @@ interface Ii18nProviderState extends Ii18nStoreState {
 }
 
 interface Ii18nStoreAction {
-  readonly type: 'setLanguage' | 'toggleLanguage'
+  readonly type: 'setLanguage'
   readonly payload?: any
 }
 
@@ -63,15 +63,6 @@ const reducer = (state: Ii18nStoreState, action: Ii18nStoreAction) => {
         ...state,
         actualLanguage: action.payload,
         translate: translate(action.payload)
-      }
-    case 'toggleLanguage':
-      const newLanguage =
-        state.actualLanguage === language.EN ? language.FR : language.EN
-      localStorage.setItem('language', newLanguage)
-      return {
-        ...state,
-        actualLanguage: newLanguage,
-        translate: translate(newLanguage)
       }
     default:
       return { ...state }
