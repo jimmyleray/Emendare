@@ -10,7 +10,6 @@ export interface IText {
   amends: string[];
   rules?: boolean;
   save?: any;
-  remove?: any;
 }
 
 export const textMock: IText = {
