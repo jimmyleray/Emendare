@@ -58,7 +58,7 @@ export const UpdateEmail = () => {
       style={{ marginBottom: '4%' }}
     >
       <div className="field">
-        <p className="control has-icons-left has-icons-right">
+        <div className="control has-icons-left has-icons-right">
           <Input
             placeholder="Nouvel email"
             onChange={change}
@@ -69,7 +69,7 @@ export const UpdateEmail = () => {
             autoComplete="off"
             iconLeft="fas fa-envelope"
           />
-        </p>
+        </div>
       </div>
       <div className="field is-grouped">
         <Button type="submit" className="is-success" disabled={!email}>
