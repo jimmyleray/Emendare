@@ -50,7 +50,7 @@ export const Navbar = () => {
             style={{ textDecoration: 'none' }}
           >
             <span className="has-text-danger">Alpha</span>
-            {'|'}
+            <span className="has-text-dark">&nbsp;|&nbsp;</span>
             <span
               className={
                 'has-text-weight-semibold ' +
