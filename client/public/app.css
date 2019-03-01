@@ -4,9 +4,9 @@ html,
 }
 
 * {
-  font-family: Lato, BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    Helvetica, Arial, sans-serif;
+  font-family: Montserrat, Lato, BlinkMacSystemFont, -apple-system, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 @keyframes bubble {
