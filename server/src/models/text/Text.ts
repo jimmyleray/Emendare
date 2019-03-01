@@ -10,8 +10,8 @@ const model = mongoose.model(
   'Text',
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
-    name: { type: String, default: '' },
-    description: { type: String, default: '' },
+    name: { type: String, required: true },
+    description: { type: String, required: true },
     followersCount: { type: Number, default: 0 },
     actual: { type: String, default: '' },
     patches: { type: [String], default: [] },
