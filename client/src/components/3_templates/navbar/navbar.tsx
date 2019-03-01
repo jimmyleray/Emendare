@@ -46,11 +46,16 @@ export const Navbar = () => {
           <Link
             to={path.home}
             onClick={() => setBurgerActive(false)}
-            className="navbar-item has-text-weight-semibold"
+            className="navbar-item"
             style={{ textDecoration: 'none' }}
           >
+            <span className="has-text-danger">Alpha</span>
+            {'|'}
             <span
-              className={newEventsCount > 0 ? 'badge is-badge-info' : ''}
+              className={
+                'has-text-weight-semibold ' +
+                (newEventsCount > 0 ? 'badge is-badge-info' : '')
+              }
               data-badge={newEventsCount}
             >
               Emendare
