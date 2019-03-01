@@ -127,32 +127,28 @@ export const Navbar = () => {
               {translate('LEGAL_MENTIONS')}
             </Link>
 
-            <Divider vertical={true} className="is-hidden-mobile" />
-
-            <a
+            <Link
+              to="https://github.com/jimmyleray/Emendare"
+              onClick={() => setBurgerActive(false)}
               className="navbar-item"
-              onClick={() => {
-                i18nContext.dispatch({ type: 'toggleLanguage' })
-              }}
-            >
-              {i18nContext.actualLanguage}
-            </a>
-
-            <Link
-              to="https://github.com/jimmyleray/Emendare"
-              onClick={() => setBurgerActive(false)}
-              className="navbar-item is-hidden-mobile"
-              title={translate('SOURCES')}
-            >
-              <Icon className="fa-lg" type="fab fa-github" />
-            </Link>
-            <Link
-              to="https://github.com/jimmyleray/Emendare"
-              onClick={() => setBurgerActive(false)}
-              className="navbar-item is-hidden-tablet"
             >
               {translate('SOURCES')}
             </Link>
+
+            <Divider vertical={true} className="is-hidden-mobile" />
+
+            <a
+              role="button"
+              className="navbar-item"
+              onClick={() => {
+                i18nContext.dispatch({
+                  type: 'setLanguage',
+                  payload: i18nContext.actualLanguage === 'EN' ? 'FR' : 'EN'
+                })
+              }}
+            >
+              {i18nContext.actualLanguage === 'EN' ? 'FR' : 'EN'}
+            </a>
           </div>
         </div>
       </div>
