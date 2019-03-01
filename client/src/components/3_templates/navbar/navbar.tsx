@@ -46,11 +46,16 @@ export const Navbar = () => {
           <Link
             to={path.home}
             onClick={() => setBurgerActive(false)}
-            className="navbar-item has-text-weight-semibold"
+            className="navbar-item"
             style={{ textDecoration: 'none' }}
           >
+            <span className="has-text-danger">Alpha</span>
+            <span className="has-text-dark">&nbsp;|&nbsp;</span>
             <span
-              className={newEventsCount > 0 ? 'badge is-badge-info' : ''}
+              className={
+                'has-text-weight-semibold ' +
+                (newEventsCount > 0 ? 'badge is-badge-info' : '')
+              }
               data-badge={newEventsCount}
             >
               Emendare
@@ -76,32 +81,34 @@ export const Navbar = () => {
           className={'navbar-menu ' + (burgerIsActive ? 'is-active' : '')}
         >
           <div className="navbar-end">
-            {userContext.isConnected() ? (
-              <Link
-                to={path.profile}
-                onClick={() => setBurgerActive(false)}
-                className="navbar-item"
-              >
-                {translate('MY_PROFILE')}
-              </Link>
-            ) : (
-              <React.Fragment>
+            {!userContext.isConnectionPending ? (
+              userContext.isConnected() ? (
                 <Link
-                  to={path.login}
-                  onClick={() => setBurgerActive(false)}
-                  className="navbar-item has-text-weight-semibold"
-                >
-                  {translate('LOGIN')}
-                </Link>
-                <Link
-                  to={path.subscribe}
+                  to={path.profile}
                   onClick={() => setBurgerActive(false)}
                   className="navbar-item"
                 >
-                  {translate('REGISTER')}
+                  {translate('MY_PROFILE')}
                 </Link>
-              </React.Fragment>
-            )}
+              ) : (
+                <React.Fragment>
+                  <Link
+                    to={path.login}
+                    onClick={() => setBurgerActive(false)}
+                    className="navbar-item has-text-weight-semibold"
+                  >
+                    {translate('LOGIN')}
+                  </Link>
+                  <Link
+                    to={path.subscribe}
+                    onClick={() => setBurgerActive(false)}
+                    className="navbar-item"
+                  >
+                    {translate('REGISTER')}
+                  </Link>
+                </React.Fragment>
+              )
+            ) : null}
 
             <Divider vertical={true} className="is-hidden-mobile" />
 

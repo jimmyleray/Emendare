@@ -114,7 +114,7 @@ export class Text {
       const texts: IText[] = await this.model.find()
 
       if (io) {
-        io.emit('events/all', { data: events.map(event => event._id) })
+        io.emit('events/all', { data: events })
         io.emit('texts/all', { data: texts.map(texte => texte._id) })
       }
 

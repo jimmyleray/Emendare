@@ -6,18 +6,18 @@ export const withID = (pathname: string) => (id = ':id') => pathname + id
 // All application routes
 export const routes: IRoute[] = [
   { name: 'home', path: '/', exact: true },
-  { name: 'code', path: '/charte-ethique' },
-  { name: 'legal', path: '/mentions-legales' },
-  { name: 'contributors', path: '/contributeurs' },
-  { name: 'login', path: '/connexion' },
+  { name: 'code', path: '/ethics-code' },
+  { name: 'legal', path: '/legal-notice' },
+  { name: 'contributors', path: '/contributors' },
+  { name: 'login', path: '/login' },
   { name: 'reset', path: '/reset-password' },
-  { name: 'subscribe', path: '/inscription' },
-  { name: 'profile', path: '/profil', private: true },
+  { name: 'subscribe', path: '/register' },
+  { name: 'profile', path: '/profile', private: true },
   { name: 'create', path: '/create', private: true },
-  { name: 'text', path: withID('/texte/') },
-  { name: 'edit', path: withID('/editer/'), private: true },
-  { name: 'amend', path: withID('/amendement/') },
-  { name: 'activate', path: withID('/activation/') }
+  { name: 'text', path: withID('/text/') },
+  { name: 'edit', path: withID('/edit/'), private: true },
+  { name: 'amend', path: withID('/amend/') },
+  { name: 'activate', path: withID('/activate/') }
 ]
 
 // To be use like that : path.text("42") => /text/42

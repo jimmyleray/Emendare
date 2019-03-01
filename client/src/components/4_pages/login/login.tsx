@@ -96,7 +96,7 @@ export class LoginPage extends React.Component<
           <p className="is-size-3 has-text-centered">Se connecter</p>
           <br />
           <div className="field">
-            <p className="control has-icons-left has-icons-right">
+            <div className="control has-icons-left has-icons-right">
               <Input
                 autoFocus={true}
                 ariaLabel="email"
@@ -107,10 +107,10 @@ export class LoginPage extends React.Component<
                 type="email"
                 iconLeft="fas fa-envelope"
               />
-            </p>
+            </div>
           </div>
           <div className="field">
-            <p className="control has-icons-left">
+            <div className="control has-icons-left">
               <Input
                 placeholder="Mot de passe"
                 ariaLabel="Mot de passe"
@@ -120,7 +120,7 @@ export class LoginPage extends React.Component<
                 type="password"
                 iconLeft="fas fa-lock"
               />
-            </p>
+            </div>
             <div className="has-text-right" style={{ marginTop: 4 }}>
               <Link to={path.reset} className="is-text">
                 Mot de passe oublié ?

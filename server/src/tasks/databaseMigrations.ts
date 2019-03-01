@@ -11,8 +11,8 @@ export const databaseMigrations = async () => {
     }
   })
 
-  // Remove void text like old rules
-  await Text.model.remove({ name: '' })
+  // Remove void texts like old rules
+  await Text.model.deleteMany({ name: '' })
 
   // Remove old activationToken if already activated user
   const users: IUser[] = await User.model.find()
