@@ -19,7 +19,7 @@ const model = mongoose.model(
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
       default: []
     },
-    rules: { type: Boolean, default: false }
+    rules: { type: Boolean }
   })
 )
 
@@ -111,7 +111,7 @@ export class Text {
       }).save()
 
       const events: IEvent[] = await Event.model.find().sort('-created')
-      const texts: IText[] = await this.model.find({ rules: false })
+      const texts: IText[] = await this.model.find()
 
       if (io) {
         io.emit('events/all', { data: events.map(event => event._id) })
@@ -136,7 +136,7 @@ export class Text {
   }
 
   public static async getTexts(): Promise<IResponse<string[]>> {
-    const data: IText[] = await this.model.find({ rules: false })
+    const data: IText[] = await this.model.find()
     return data
       ? {
           data: data.map(text => text._id)

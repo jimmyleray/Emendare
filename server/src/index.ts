@@ -26,6 +26,9 @@ import { Database } from './services'
 new Database()
   .connect()
   .then(() => {
+    // Update database
+    tasks.databaseMigrations()
+
     // Add Socket.io to Express server
     const http = new Server(app)
     const io = socketIO(http, {
