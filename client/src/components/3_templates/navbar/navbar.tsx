@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  Button,
   Divider,
   DataContext,
   Link,
@@ -35,7 +36,7 @@ export const Navbar = () => {
 
   return (
     <nav
-      className="navbar"
+      className="navbar is-transparent"
       role="navigation"
       aria-label="main navigation"
       style={{ padding: '0 1rem' }}
@@ -128,24 +129,14 @@ export const Navbar = () => {
 
             <Divider vertical={true} className="is-hidden-mobile" />
 
-            <div className="navbar-item has-dropdown is-hoverable">
-              <a className="navbar-link">{i18nContext.locale}</a>
-
-              {i18nContext.availableLanguages
-                .filter(language => language !== i18nContext.locale)
-                .map(language => (
-                  <div key={language} className="navbar-dropdown">
-                    <a
-                      className="navbar-item"
-                      onClick={() => {
-                        i18nContext.setLocaleWithStorage(language)
-                      }}
-                    >
-                      {language}
-                    </a>
-                  </div>
-                ))}
-            </div>
+            <a
+              className="navbar-item"
+              onClick={() => {
+                i18nContext.dispatch({ type: 'toggleLanguage' })
+              }}
+            >
+              {i18nContext.actualLanguage}
+            </a>
 
             <Link
               to="https://github.com/jimmyleray/Emendare"

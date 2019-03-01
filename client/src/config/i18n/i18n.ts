@@ -1,4 +1,7 @@
-export type language = 'EN' | 'FR'
+export enum language {
+  EN = 'EN',
+  FR = 'FR'
+}
 
 export type translateKey =
   | 'HOME'

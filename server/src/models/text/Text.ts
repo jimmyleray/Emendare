@@ -18,7 +18,8 @@ const model = mongoose.model(
     amends: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amend' }],
       default: []
-    }
+    },
+    rules: { type: Boolean, default: false }
   })
 )
 
