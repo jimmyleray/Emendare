@@ -106,8 +106,10 @@ export class Text {
       }).save()
 
       await new Event.model({
-        targetID: data._id,
-        targetType: 'text'
+        target: {
+          type: 'text',
+          id: data._id
+        }
       }).save()
 
       const events: IEvent[] = await Event.model.find().sort('-created')
@@ -183,8 +185,10 @@ export class Text {
         otherAmend.totalPotentialVotesCount = text.followersCount
 
         await new Event.model({
-          targetType: 'result',
-          targetID: otherAmend._id
+          target: {
+            type: 'result',
+            id: otherAmend._id
+          }
         }).save()
       }
 

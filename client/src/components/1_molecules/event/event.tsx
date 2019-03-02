@@ -113,16 +113,16 @@ interface IEventProps {
 export const Event = ({ data }: IEventProps) => (
   <DataContext.Consumer>
     {({ get }) => {
-      if (data && data.targetType && data.targetID) {
+      if (data && data.target.type && data.target.id) {
         const target = get(
-          data.targetType === 'result' ? 'amend' : data.targetType
-        )(data.targetID)
+          data.target.type === 'result' ? 'amend' : data.target.type
+        )(data.target.id)
 
         return target && target.data ? (
           <React.Fragment>
-            <Link to={typeToUrl(data.targetType)(target.data)}>
+            <Link to={typeToUrl(data.target.type)(target.data)}>
               <Notification className="is-light">
-                {typeToText(data.targetType)(target.data)}
+                {typeToText(data.target.type)(target.data)}
               </Notification>
             </Link>
           </React.Fragment>

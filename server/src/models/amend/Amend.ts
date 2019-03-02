@@ -23,21 +23,29 @@ const model = mongoose.model(
       ref: 'Text',
       required: true
     },
-    arguments: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Argument' }],
-      default: []
+    arguments: [
+      {
+        created: { type: Date, default: Date.now },
+        text: { type: String, required: true },
+        type: { type: String, required: true },
+        upVotesCount: { type: Number, default: 0 }
+      }
+    ],
+    results: {
+      totalPotentialVotesCount: { type: Number },
+      upVotesCount: { type: Number, default: 0 },
+      downVotesCount: { type: Number, default: 0 },
+      indVotesCount: { type: Number, default: 0 }
     },
-    upVotesCount: { type: Number, default: 0 },
-    downVotesCount: { type: Number, default: 0 },
-    indVotesCount: { type: Number, default: 0 },
-    totalPotentialVotesCount: { type: Number },
-    delayMin: {
-      type: Number,
-      default: process.env.NODE_ENV === 'production' ? oneHour : oneMinute
-    },
-    delayMax: {
-      type: Number,
-      default: process.env.NODE_ENV === 'production' ? oneDay : oneHour
+    rules: {
+      delayMin: {
+        type: Number,
+        default: process.env.NODE_ENV === 'production' ? oneHour : oneMinute
+      },
+      delayMax: {
+        type: Number,
+        default: process.env.NODE_ENV === 'production' ? oneDay : oneHour
+      }
     },
     closed: { type: Boolean, default: false },
     accepted: { type: Boolean, default: false },
@@ -64,16 +72,16 @@ export class Amend {
 
   public static hasAbsoluteUpMajority(amend: any) {
     return (
-      amend.upVotesCount > amend.indVotesCount &&
-      amend.upVotesCount + amend.indVotesCount >=
+      amend.results.upVotesCount > amend.results.indVotesCount &&
+      amend.results.upVotesCount + amend.results.indVotesCount >=
         Math.floor(amend.text.followersCount / 2) + 1
     )
   }
 
   public static hasAbsoluteDownMajority(amend: any) {
     return (
-      amend.downVotesCount > amend.indVotesCount &&
-      amend.downVotesCount + amend.indVotesCount >=
+      amend.results.downVotesCount > amend.results.indVotesCount &&
+      amend.results.downVotesCount + amend.results.indVotesCount >=
         Math.floor(amend.text.followersCount / 2) + 1
     )
   }
@@ -85,7 +93,7 @@ export class Amend {
   }
 
   public static hasRelativeUpMajority(amend: any) {
-    return amend.upVotesCount > amend.downVotesCount
+    return amend.results.upVotesCount > amend.results.downVotesCount
   }
 
   public static async downVoteAmend(
@@ -101,17 +109,17 @@ export class Amend {
           if (user.downVotes.indexOf(id) === -1) {
             const id1 = user.upVotes.indexOf(id)
             if (id1 > -1) {
-              amend.upVotesCount--
+              amend.results.upVotesCount--
               user.upVotes.splice(id1, 1)
             }
 
             const id2 = user.indVotes.indexOf(id)
             if (id2 > -1) {
-              amend.indVotesCount--
+              amend.results.indVotesCount--
               user.indVotes.splice(id2, 1)
             }
 
-            amend.downVotesCount++
+            amend.results.downVotesCount++
             user.downVotes.push(id)
 
             await user.save()
@@ -160,17 +168,17 @@ export class Amend {
           if (user.indVotes.indexOf(id) === -1) {
             const id1 = user.upVotes.indexOf(id)
             if (id1 > -1) {
-              amend.upVotesCount--
+              amend.results.upVotesCount--
               user.upVotes.splice(id1, 1)
             }
 
             const id2 = user.downVotes.indexOf(id)
             if (id2 > -1) {
-              amend.downVotesCount--
+              amend.results.downVotesCount--
               user.downVotes.splice(id2, 1)
             }
 
-            amend.indVotesCount++
+            amend.results.indVotesCount++
             user.indVotes.push(id)
 
             await user.save()
@@ -233,8 +241,10 @@ export class Amend {
       await text.save()
 
       await new Event.model({
-        targetID: amend._id,
-        targetType: 'amend'
+        target: {
+          type: 'amend',
+          id: amend._id
+        }
       }).save()
 
       const events: IEvent[] = await Event.model.find().sort('-created')
@@ -267,17 +277,17 @@ export class Amend {
           const id3 = user.indVotes.indexOf(id)
 
           if (id1 > -1) {
-            amend.upVotesCount--
+            amend.results.upVotesCount--
             user.upVotes.splice(id1, 1)
           }
 
           if (id2 > -1) {
-            amend.downVotesCount--
+            amend.results.downVotesCount--
             user.downVotes.splice(id2, 1)
           }
 
           if (id3 > -1) {
-            amend.indVotesCount--
+            amend.results.indVotesCount--
             user.indVotes.splice(id3, 1)
           }
 
@@ -322,17 +332,17 @@ export class Amend {
           if (user.upVotes.indexOf(id) === -1) {
             const id1 = user.downVotes.indexOf(id)
             if (id1 > -1) {
-              amend.downVotesCount--
+              amend.results.downVotesCount--
               user.downVotes.splice(id1, 1)
             }
 
             const id2 = user.indVotes.indexOf(id)
             if (id2 > -1) {
-              amend.indVotesCount--
+              amend.results.indVotesCount--
               user.indVotes.splice(id2, 1)
             }
 
-            amend.upVotesCount++
+            amend.results.upVotesCount++
             user.upVotes.push(id)
 
             await user.save()
@@ -379,10 +389,10 @@ export class Amend {
       const start = amend.created.getTime()
 
       // Si le scrutin est terminé
-      if (now > start + amend.delayMax) {
+      if (now > start + amend.rules.delayMax) {
         amend.closed = true
         amend.finished = new Date()
-        amend.totalPotentialVotesCount = amend.text.followersCount
+        amend.results.totalPotentialVotesCount = amend.text.followersCount
 
         // Si il y'a une majorité relative
         if (Amend.hasRelativeUpMajority(amend)) {
@@ -394,19 +404,21 @@ export class Amend {
         io.emit('amend/' + amend._id, { data: newAmend })
 
         await new Event.model({
-          targetType: 'result',
-          targetID: newAmend._id
+          target: {
+            type: 'result',
+            id: newAmend._id
+          }
         }).save()
 
         const events = await Event.model.find().sort('-created')
         io.emit('events/all', { data: events })
       } else if (
-        now > start + amend.delayMin &&
+        now > start + amend.rules.delayMin &&
         Amend.hasAbsoluteMajority(amend)
       ) {
         amend.closed = true
         amend.finished = new Date()
-        amend.totalPotentialVotesCount = amend.text.followersCount
+        amend.results.totalPotentialVotesCount = amend.text.followersCount
 
         // Si il y'a une majorité absolue
         if (Amend.hasAbsoluteUpMajority(amend)) {
@@ -418,8 +430,10 @@ export class Amend {
         io.emit('amend/' + amend._id, { data: newAmend })
 
         await new Event.model({
-          targetType: 'result',
-          targetID: newAmend._id
+          target: {
+            type: 'result',
+            id: newAmend._id
+          }
         }).save()
 
         const events = await Event.model.find().sort('-created')
