@@ -31,11 +31,23 @@ const model = mongoose.model(
         upVotesCount: { type: Number, default: 0 }
       }
     ],
+    totalPotentialVotesCount: { type: Number },
+    upVotesCount: { type: Number, default: 0 },
+    downVotesCount: { type: Number, default: 0 },
+    indVotesCount: { type: Number, default: 0 },
     results: {
       totalPotentialVotesCount: { type: Number },
       upVotesCount: { type: Number, default: 0 },
       downVotesCount: { type: Number, default: 0 },
       indVotesCount: { type: Number, default: 0 }
+    },
+    delayMin: {
+      type: Number,
+      default: process.env.NODE_ENV === 'production' ? oneHour : oneMinute
+    },
+    delayMax: {
+      type: Number,
+      default: process.env.NODE_ENV === 'production' ? oneDay : oneHour
     },
     rules: {
       delayMin: {
