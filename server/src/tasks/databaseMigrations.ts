@@ -26,7 +26,7 @@ export const databaseMigrations = async () => {
   // Events update
   const events: IEvent[] = await Event.model.find()
   events.forEach(async event => {
-    if (typeof event.targetID !== 'undefined') {
+    if (!event.target) {
       event.target = {
         id: event.targetID,
         type: event.targetType
@@ -42,7 +42,7 @@ export const databaseMigrations = async () => {
   // Amends update
   const amends: IAmend[] = await Amend.model.find()
   amends.forEach(async amend => {
-    if (typeof amend.upVotesCount !== 'undefined') {
+    if (!amend.results) {
       amend.results = {
         upVotesCount: amend.upVotesCount,
         downVotesCount: amend.downVotesCount,
@@ -58,7 +58,7 @@ export const databaseMigrations = async () => {
       await amend.save()
     }
 
-    if (typeof amend.delayMin !== 'undefined') {
+    if (!amend.rules) {
       amend.rules = {
         delayMin: amend.delayMin,
         delayMax: amend.delayMax

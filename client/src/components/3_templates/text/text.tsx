@@ -178,16 +178,17 @@ export const Text = ({ data }: { data: IText }) => {
                           <div key={amend.data._id}>
                             <ResultsIcon
                               data={{
-                                up: amend.data.upVotesCount,
-                                down: amend.data.downVotesCount,
-                                ind: amend.data.indVotesCount,
+                                up: amend.data.results.upVotesCount,
+                                down: amend.data.results.downVotesCount,
+                                ind: amend.data.results.indVotesCount,
                                 absent:
-                                  (amend.data.totalPotentialVotesCount
-                                    ? amend.data.totalPotentialVotesCount
+                                  (amend.data.results.totalPotentialVotesCount
+                                    ? amend.data.results
+                                        .totalPotentialVotesCount
                                     : data.followersCount) -
-                                  (amend.data.upVotesCount +
-                                    amend.data.downVotesCount +
-                                    amend.data.indVotesCount)
+                                  (amend.data.results.upVotesCount +
+                                    amend.data.results.downVotesCount +
+                                    amend.data.results.indVotesCount)
                               }}
                             />
                             {' > '}
