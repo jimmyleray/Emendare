@@ -93,16 +93,16 @@ export const AmendPage = ({ match }: any) => (
 
                           <Results
                             data={{
-                              up: amend.data.upVotesCount,
-                              down: amend.data.downVotesCount,
-                              ind: amend.data.indVotesCount,
+                              up: amend.data.results.upVotesCount,
+                              down: amend.data.results.downVotesCount,
+                              ind: amend.data.results.indVotesCount,
                               absent:
-                                (amend.data.totalPotentialVotesCount
-                                  ? amend.data.totalPotentialVotesCount
+                                (amend.data.results.totalPotentialVotesCount
+                                  ? amend.data.results.totalPotentialVotesCount
                                   : text.data.followersCount) -
-                                (amend.data.upVotesCount +
-                                  amend.data.downVotesCount +
-                                  amend.data.indVotesCount)
+                                (amend.data.results.upVotesCount +
+                                  amend.data.results.downVotesCount +
+                                  amend.data.results.indVotesCount)
                             }}
                           />
 
@@ -129,7 +129,7 @@ export const AmendPage = ({ match }: any) => (
                                 <CountDown
                                   date={Time.addTimeToDate(
                                     amend.data.created,
-                                    amend.data.delayMax
+                                    amend.data.rules.delayMax
                                   )}
                                   className="has-text-weight-semibold is-size-3"
                                 />

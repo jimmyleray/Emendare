@@ -5,8 +5,12 @@ const model = mongoose.model(
   'Event',
   new mongoose.Schema({
     created: { type: Date, default: Date.now },
-    targetType: { type: String, required: true },
-    targetID: { type: mongoose.Schema.Types.ObjectId, required: true }
+    targetType: { type: String },
+    targetID: { type: mongoose.Schema.Types.ObjectId },
+    target: {
+      type: { type: String, required: true },
+      id: { type: mongoose.Schema.Types.ObjectId, required: true }
+    }
   })
 )
 

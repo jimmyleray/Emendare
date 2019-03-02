@@ -11,6 +11,7 @@ import {
   Icon
 } from '../../../components'
 import { Socket } from '../../../services'
+import { IEvent } from '../../../../../interfaces'
 
 interface INewsState {
   displayTextEvents: boolean
@@ -121,22 +122,22 @@ export class News extends React.Component<{}, INewsState> {
 
                       <div>
                         {events.data
-                          .filter((event: any) =>
-                            event.targetType === 'text'
+                          .filter((event: IEvent) =>
+                            event.target.type === 'text'
                               ? this.state.displayTextEvents
                               : true
                           )
-                          .filter((event: any) =>
-                            event.targetType === 'amend'
+                          .filter((event: IEvent) =>
+                            event.target.type === 'amend'
                               ? this.state.displayAmendEvents
                               : true
                           )
-                          .filter((event: any) =>
-                            event.targetType === 'result'
+                          .filter((event: IEvent) =>
+                            event.target.type === 'result'
                               ? this.state.displayResultEvents
                               : true
                           )
-                          .map((event: any, index: number, array: any[]) => {
+                          .map((event: IEvent, index: number, array: any[]) => {
                             return (
                               <div
                                 key={event._id}

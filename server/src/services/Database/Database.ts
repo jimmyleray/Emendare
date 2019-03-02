@@ -50,8 +50,7 @@ export class Database {
       }).save()
 
       await new Event.model({
-        targetType: 'text',
-        targetID: globalText._id
+        target: { type: 'text', id: globalText._id }
       }).save()
 
       const secondText = await new Text.model({
@@ -60,8 +59,7 @@ export class Database {
       }).save()
 
       await new Event.model({
-        targetType: 'text',
-        targetID: secondText._id
+        target: { type: 'text', id: secondText._id }
       }).save()
     })
   }
