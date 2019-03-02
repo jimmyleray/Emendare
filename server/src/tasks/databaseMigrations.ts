@@ -6,7 +6,7 @@ export const databaseMigrations = async () => {
   const texts: IText[] = await Text.model.find()
   texts.forEach(async text => {
     if (typeof text.rules !== 'undefined') {
-      delete text.rules
+      text.rules = undefined
       await text.save()
     }
   })
@@ -32,8 +32,8 @@ export const databaseMigrations = async () => {
         type: event.targetType
       }
 
-      delete event.targetID
-      delete event.targetType
+      event.targetID = undefined
+      event.targetType = undefined
 
       await event.save()
     }
@@ -50,10 +50,10 @@ export const databaseMigrations = async () => {
         totalPotentialVotesCount: amend.totalPotentialVotesCount
       }
 
-      delete amend.upVotesCount
-      delete amend.downVotesCount
-      delete amend.indVotesCount
-      delete amend.totalPotentialVotesCount
+      amend.upVotesCount = undefined
+      amend.downVotesCount = undefined
+      amend.indVotesCount = undefined
+      amend.totalPotentialVotesCount = undefined
 
       await amend.save()
     }
@@ -64,8 +64,8 @@ export const databaseMigrations = async () => {
         delayMax: amend.delayMax
       }
 
-      delete amend.delayMin
-      delete amend.delayMax
+      amend.delayMin = undefined
+      amend.delayMax = undefined
 
       await amend.save()
     }
