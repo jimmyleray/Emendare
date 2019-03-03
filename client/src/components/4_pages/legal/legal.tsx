@@ -9,8 +9,9 @@ export const LegalPage = () => {
       <Hero
         title={translate('LEGAL_MENTIONS')}
         subtitle={translate('HOST_CONTACT_DETAILS')}
+        className="has-text-centered"
       />
-      <p>
+      <p className="has-text-centered">
         {translate('HOST_BY')}{' '}
         <a href="https://www.clever-cloud.com/en/legal-terms">Clever Cloud</a>
       </p>

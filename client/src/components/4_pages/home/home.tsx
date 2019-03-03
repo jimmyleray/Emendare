@@ -26,7 +26,7 @@ export const HomePage = ({ location }: any) => {
     setSelectedTab,
     selectNextTab,
     selectPreviousTab
-  } = useTabs(['texts', 'news'], 0)
+  } = useTabs(['texts', 'news'])
 
   React.useEffect(() => {
     const params = new URLSearchParams(location.search)

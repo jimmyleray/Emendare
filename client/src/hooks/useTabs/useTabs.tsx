@@ -5,35 +5,41 @@ import React from 'react'
 
 export const useTabs = (
   tabs: string[],
-  initialIndex: number,
+  initialIndex?: number,
   infinite: boolean = true
 ): {
-  selectedTab: string
+  selectedTab: string | undefined
   setSelectedTab: (tab: string) => void
   selectPreviousTab: () => void
   selectNextTab: () => void
 } => {
-  const [selectedTab, setSelectedTab] = React.useState(tabs[initialIndex])
+  const [selectedTab, setSelectedTab] = React.useState(
+    typeof initialIndex !== 'undefined' ? tabs[initialIndex] : undefined
+  )
 
   const selectNextTab = () => {
-    const targetIndex = tabs.indexOf(selectedTab) + 1
-    if (targetIndex > tabs.length - 1) {
-      if (infinite) {
-        setSelectedTab(tabs[0])
+    if (selectedTab) {
+      const targetIndex = tabs.indexOf(selectedTab) + 1
+      if (targetIndex > tabs.length - 1) {
+        if (infinite) {
+          setSelectedTab(tabs[0])
+        }
+      } else {
+        setSelectedTab(tabs[targetIndex])
       }
-    } else {
-      setSelectedTab(tabs[targetIndex])
     }
   }
 
   const selectPreviousTab = () => {
-    const targetIndex = tabs.indexOf(selectedTab) - 1
-    if (targetIndex < 0) {
-      if (infinite) {
-        setSelectedTab(tabs[tabs.length - 1])
+    if (selectedTab) {
+      const targetIndex = tabs.indexOf(selectedTab) - 1
+      if (targetIndex < 0) {
+        if (infinite) {
+          setSelectedTab(tabs[tabs.length - 1])
+        }
+      } else {
+        setSelectedTab(tabs[targetIndex])
       }
-    } else {
-      setSelectedTab(tabs[targetIndex])
     }
   }
 

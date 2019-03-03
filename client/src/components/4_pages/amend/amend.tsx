@@ -29,6 +29,7 @@ import {
 import { Socket, Time } from '../../../services'
 import { path } from '../../../config'
 import { useTabs } from '../../../hooks'
+import { IText, IAmend, IResponse } from '../../../../../interfaces'
 
 const isOutlined = 'is-outlined'
 
@@ -71,8 +72,9 @@ export const AmendPage = ({ match }: any) => {
   const { get } = React.useContext(DataContext)
   const { user } = React.useContext(UserContext)
 
-  const amend = get('amend')(match.params.id)
-  const text = amend && amend.data && get('text')(amend.data.text)
+  const amend: IResponse<IAmend> = get('amend')(match.params.id)
+  const text: IResponse<IText> =
+    amend && amend.data && get('text')(amend.data.text)
 
   if (amend && amend.error) {
     return <ErrorPage error={amend.error} />
@@ -83,6 +85,8 @@ export const AmendPage = ({ match }: any) => {
   }
 
   if (amend && amend.data && text && text.data) {
+    const amendIndex = text.data.amends.indexOf(amend.data._id)
+
     return (
       <Page
         title={
@@ -92,8 +96,15 @@ export const AmendPage = ({ match }: any) => {
         <Hero
           title={
             <React.Fragment>
-              Amendement sur{' '}
-              <Link to={path.text(amend.data.text)}>{text.data.name}</Link>
+              Amendement n°{amendIndex + 1} sur{' '}
+              <Link
+                to={{
+                  pathname: path.text(amend.data.text),
+                  search: '?tab=votes'
+                }}
+              >
+                {text.data.name}
+              </Link>
             </React.Fragment>
           }
           subtitle={amend.data.name}
@@ -133,7 +144,13 @@ export const AmendPage = ({ match }: any) => {
         {selectedTab === 'amend' && (
           <Amend amend={amend.data} text={text.data} />
         )}
-        {selectedTab === 'arguments' && null}
+        {selectedTab === 'arguments' && (
+          <Notification className="is-warning">
+            Cette fonctionnalité sera bientôt disponible et vous permettra de
+            lire les arguments des autres participants, et de noter les plus
+            pertinents.
+          </Notification>
+        )}
         {selectedTab === 'vote' && (
           <Columns>
             <Column>
