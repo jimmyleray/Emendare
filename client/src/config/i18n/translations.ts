@@ -196,5 +196,13 @@ export const translations: ITranslations = {
   OLD_EVENTS: {
     FR: 'Anciens évènements',
     EN: 'Old events'
+  },
+  VOTE: {
+    FR: 'Scrutin',
+    EN: 'Vote'
+  },
+  ARGUMENTS: {
+    FR: 'Arguments',
+    EN: 'Arguments'
   }
 }

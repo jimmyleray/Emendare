@@ -5,7 +5,7 @@ interface IProps {
   children: React.ReactNode
   /** Custom CSS  */
   style?: React.CSSProperties
-  /** additional CSS UI class*/
+  /** additional CSS UI class */
   className?: string
 }
 

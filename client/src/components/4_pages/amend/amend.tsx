@@ -10,8 +10,8 @@
 
 import React from 'react'
 import {
+  Divider,
   Amend,
-  Box,
   Button,
   Buttons,
   Column,
@@ -24,10 +24,12 @@ import {
   Results,
   DataContext,
   UserContext,
-  CountDown
+  CountDown,
+  I18nContext
 } from '../../../components'
 import { Socket, Time } from '../../../services'
 import { path } from '../../../config'
+import { useTabs } from '../../../hooks'
 
 const isOutlined = 'is-outlined'
 
@@ -44,6 +46,29 @@ const vote = (user: any) => (amend: any) => (type: string) => (
 }
 
 export const AmendPage = ({ match }: any) => {
+  const {
+    selectedTab,
+    setSelectedTab,
+    selectNextTab,
+    selectPreviousTab
+  } = useTabs(['amend', 'arguments', 'vote'], 0)
+
+  React.useEffect(() => {
+    const eventHandler = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') {
+        selectNextTab()
+      } else if (event.key === 'ArrowLeft') {
+        selectPreviousTab()
+      }
+    }
+
+    document.addEventListener('keyup', eventHandler)
+    return () => {
+      document.removeEventListener('keyup', eventHandler)
+    }
+  })
+
+  const { translate } = React.useContext(I18nContext)
   const { get } = React.useContext(DataContext)
   const { user } = React.useContext(UserContext)
 
@@ -75,49 +100,48 @@ export const AmendPage = ({ match }: any) => {
             <span>Retour au texte</span>
           </Button>
         </Buttons>
-        <Columns>
-          <Column>
-            <Box>
-              <Amend amend={amend.data} text={text.data} />
-            </Box>
-          </Column>
-          <Column>
-            <Box>
-              <p className="is-size-4 has-text-centered has-text-weight-semibold">
-                Scrutin {amend.data.closed ? 'clos' : 'en cours'} sur
-                l'amendement
-              </p>
-              <p className="is-size-5 has-text-centered">
-                Répartition des votes exprimés et participation
-              </p>
-              <br />
-
-              <Results
-                data={{
-                  up: amend.data.results.upVotesCount,
-                  down: amend.data.results.downVotesCount,
-                  ind: amend.data.results.indVotesCount,
-                  absent:
-                    (amend.data.results.totalPotentialVotesCount
-                      ? amend.data.results.totalPotentialVotesCount
-                      : text.data.followersCount) -
-                    (amend.data.results.upVotesCount +
-                      amend.data.results.downVotesCount +
-                      amend.data.results.indVotesCount)
-                }}
-              />
-
-              <div
-                className="has-text-centered is-hidden-mobile"
-                style={{
-                  position: 'relative',
-                  top: '-82px',
-                  marginBottom: '-72px'
+        <div className="tabs is-boxed is-fullwidth">
+          <ul>
+            <li className={selectedTab === 'amend' ? 'is-active' : ''}>
+              <a
+                onClick={() => {
+                  setSelectedTab('amend')
                 }}
               >
+                {translate('AMEND')}
+              </a>
+            </li>
+            <li className={selectedTab === 'arguments' ? 'is-active' : ''}>
+              <a
+                onClick={() => {
+                  setSelectedTab('arguments')
+                }}
+              >
+                {translate('ARGUMENTS')}
+              </a>
+            </li>
+            <li className={selectedTab === 'vote' ? 'is-active' : ''}>
+              <a
+                onClick={() => {
+                  setSelectedTab('vote')
+                }}
+              >
+                {translate('VOTE')}
+              </a>
+            </li>
+          </ul>
+        </div>
+        {selectedTab === 'amend' && (
+          <Amend amend={amend.data} text={text.data} />
+        )}
+        {selectedTab === 'arguments' && null}
+        {selectedTab === 'vote' && (
+          <Columns>
+            <Column>
+              <div className="has-text-centered">
                 {amend.data.closed ? (
                   <React.Fragment>
-                    <p>Le scrutin est clos</p>
+                    <p className="is-size-4">Le scrutin est clos</p>
                     <p className="has-text-weight-semibold is-size-3">
                       {amend.data.accepted && !amend.data.conflicted
                         ? 'ACCEPTE'
@@ -137,6 +161,28 @@ export const AmendPage = ({ match }: any) => {
                   </React.Fragment>
                 )}
               </div>
+              <br />
+
+              <Results
+                data={{
+                  up: amend.data.results.upVotesCount,
+                  down: amend.data.results.downVotesCount,
+                  ind: amend.data.results.indVotesCount,
+                  absent:
+                    (amend.data.results.totalPotentialVotesCount
+                      ? amend.data.results.totalPotentialVotesCount
+                      : text.data.followersCount) -
+                    (amend.data.results.upVotesCount +
+                      amend.data.results.downVotesCount +
+                      amend.data.results.indVotesCount)
+                }}
+              />
+
+              <br />
+              <p className="is-size-5 has-text-centered">
+                Répartition des votes exprimés et participation
+              </p>
+              <br />
 
               {amend.data.closed && amend.data.conflicted && (
                 <React.Fragment>
@@ -149,14 +195,15 @@ export const AmendPage = ({ match }: any) => {
                   </p>
                 </React.Fragment>
               )}
-
+            </Column>
+            <Column>
               {user && (
                 <React.Fragment>
-                  <hr />
-                  <Buttons
-                    className="is-fullwidth"
-                    style={{ marginBottom: '0px' }}
-                  >
+                  <p className="is-size-5 has-text-centered">
+                    Vos options de vote pour ce scrutin
+                  </p>
+                  <br />
+                  <Buttons className="is-fullwidth" style={{ marginBottom: 0 }}>
                     <Button
                       className={
                         'is-success ' +
@@ -171,6 +218,8 @@ export const AmendPage = ({ match }: any) => {
                     >
                       Je soutiens cette modification
                     </Button>
+                  </Buttons>
+                  <Buttons className="is-fullwidth" style={{ marginBottom: 0 }}>
                     <Button
                       className={
                         'is-danger ' +
@@ -186,7 +235,7 @@ export const AmendPage = ({ match }: any) => {
                       Je préfère la version actuelle
                     </Button>
                   </Buttons>
-                  <Buttons className="is-fullwidth">
+                  <Buttons className="is-fullwidth" style={{ marginBottom: 0 }}>
                     <Button
                       className={
                         'is-info ' +
@@ -201,6 +250,8 @@ export const AmendPage = ({ match }: any) => {
                     >
                       Je suis indifférent
                     </Button>
+                  </Buttons>
+                  <Buttons className="is-fullwidth" style={{ marginBottom: 0 }}>
                     <Button
                       className={
                         'is-dark ' +
@@ -220,30 +271,33 @@ export const AmendPage = ({ match }: any) => {
                   </Buttons>
                 </React.Fragment>
               )}
-            </Box>
 
-            {!amend.data.closed && (
-              <Notification className="is-light">
-                <p>
-                  Le vote est{' '}
-                  <span className="has-text-weight-semibold">
-                    clos à la fin du temps maximum indiqué
-                  </span>{' '}
-                  OU dès lors qu'une{' '}
-                  <span className="has-text-weight-semibold">
-                    majorité absolue
-                  </span>{' '}
-                  est atteinte après un delai minimum d'une heure. Le{' '}
-                  <span className="has-text-weight-semibold">
-                    vote est liquide
-                  </span>
-                  , ce qui veut dire que vous pouvez changer votre vote jusqu'à
-                  la fin du scrutin.
-                </p>
-              </Notification>
-            )}
-          </Column>
-        </Columns>
+              {!amend.data.closed && (
+                <React.Fragment>
+                  <br />
+                  <Notification className="is-light">
+                    <p>
+                      Le vote est{' '}
+                      <span className="has-text-weight-semibold">
+                        clos à la fin du temps maximum
+                      </span>{' '}
+                      OU dès lors qu'une{' '}
+                      <span className="has-text-weight-semibold">
+                        majorité absolue
+                      </span>{' '}
+                      est atteinte après un delai minimum. Le{' '}
+                      <span className="has-text-weight-semibold">
+                        vote est liquide
+                      </span>
+                      , vous pouvez donc changer votre vote jusqu'à la fin du
+                      scrutin.
+                    </p>
+                  </Notification>
+                </React.Fragment>
+              )}
+            </Column>
+          </Columns>
+        )}
       </Page>
     )
   }

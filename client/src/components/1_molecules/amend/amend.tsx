@@ -38,6 +38,8 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
 
     return (
       <React.Fragment>
+        <p>{this.props.amend && this.props.amend.description}</p>
+
         <Divider content="Modifications proposées" />
         <div>
           {this.state.diffs &&

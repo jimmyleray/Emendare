@@ -48,3 +48,5 @@ export type translateKey =
   | 'EVENTS_LIST'
   | 'MARK_AS_READ'
   | 'OLD_EVENTS'
+  | 'VOTE'
+  | 'ARGUMENTS'
