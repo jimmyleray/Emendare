@@ -63,7 +63,11 @@ export const Text = ({ data }: { data: IText }) => {
   return (
     data && (
       <React.Fragment>
-        <Hero title={data.name} subtitle={data.description} />
+        <Hero
+          title={data.name}
+          subtitle={data.description}
+          className="has-text-centered"
+        />
 
         <div className="tabs is-boxed is-fullwidth">
           <ul>

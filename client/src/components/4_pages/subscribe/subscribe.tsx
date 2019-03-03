@@ -12,7 +12,8 @@ import {
   Icon,
   Notification,
   Page,
-  PwdForm
+  PwdForm,
+  Hero
 } from '../../../components'
 import { Socket } from '../../../services'
 import { path } from '../../../config'
@@ -86,13 +87,11 @@ export class SubscribePage extends React.Component<{}, ISubscribePageState> {
   public render() {
     return (
       <Page title="Inscription">
+        <Hero title="Créez votre compte" className="has-text-centered" />
         <form
           onSubmit={this.submit}
           style={{ maxWidth: '350px', margin: 'auto' }}
         >
-          <p className="is-size-3 has-text-centered">Créez votre compte</p>
-          <br />
-
           {!this.state.send && (
             <React.Fragment>
               <div className="field">

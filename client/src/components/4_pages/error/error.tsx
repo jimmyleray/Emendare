@@ -22,8 +22,9 @@ export const ErrorPage = ({ error = defaultError }) => {
       <Hero
         title={translate('ERROR') + ' ' + error.code}
         subtitle={error.message}
+        className="has-text-centered"
       />
-      <div>
+      <div className="has-text-centered">
         <Button to={path.home} className="has-text-weight-semibold is-primary">
           {translate('BACK_HOME')}
         </Button>

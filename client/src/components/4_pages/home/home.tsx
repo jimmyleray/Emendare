@@ -67,6 +67,7 @@ export const HomePage = () => {
       <Hero
         title={translate('HOME_TITLE')}
         subtitle={translate('HOME_SUBTITLE')}
+        className="has-text-centered"
       />
       <div className="tabs is-boxed is-fullwidth">
         <ul>

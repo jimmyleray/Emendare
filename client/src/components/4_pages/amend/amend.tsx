@@ -10,7 +10,6 @@
 
 import React from 'react'
 import {
-  Divider,
   Amend,
   Button,
   Buttons,
@@ -18,7 +17,7 @@ import {
   Columns,
   Hero,
   ErrorPage,
-  Icon,
+  Link,
   Notification,
   Page,
   Results,
@@ -91,15 +90,15 @@ export const AmendPage = ({ match }: any) => {
         }
       >
         <Hero
-          title={'Amendement sur ' + text.data.name}
+          title={
+            <React.Fragment>
+              Amendement sur{' '}
+              <Link to={path.text(amend.data.text)}>{text.data.name}</Link>
+            </React.Fragment>
+          }
           subtitle={amend.data.name}
+          className="has-text-centered"
         />
-        <Buttons>
-          <Button to={path.text(amend.data.text)}>
-            <Icon type="fas fa-chevron-left" />
-            <span>Retour au texte</span>
-          </Button>
-        </Buttons>
         <div className="tabs is-boxed is-fullwidth">
           <ul>
             <li className={selectedTab === 'amend' ? 'is-active' : ''}>
@@ -199,8 +198,8 @@ export const AmendPage = ({ match }: any) => {
             <Column>
               {user && (
                 <React.Fragment>
-                  <p className="is-size-5 has-text-centered">
-                    Vos options de vote pour ce scrutin
+                  <p className="is-size-5 has-text-centered has-text-weight-semibold">
+                    Vos options de vote
                   </p>
                   <br />
                   <Buttons className="is-fullwidth" style={{ marginBottom: 0 }}>

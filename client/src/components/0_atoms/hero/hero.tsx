@@ -4,9 +4,9 @@ interface IProps {
   /** Additional CSS UI class */
   className?: string
   /** Subtitle of the banner */
-  subtitle: string
+  subtitle?: React.ReactElement | string
   /** Title of the banner */
-  title: string
+  title: React.ReactElement | string
 }
 
 export const Hero = React.memo(
@@ -14,7 +14,7 @@ export const Hero = React.memo(
     <section className={'hero ' + className} {...rest}>
       <div className="hero-body">
         <h1 className="title">{title}</h1>
-        <h2 className="subtitle">{subtitle}</h2>
+        {subtitle && <h2 className="subtitle">{subtitle}</h2>}
       </div>
     </section>
   )

@@ -120,6 +120,7 @@ export class Edit extends React.Component<IEditProps, IEditState> {
             <Hero
               title="Proposition d'amendement"
               subtitle={this.props.data.name}
+              className="has-text-centered"
             />
 
             <Buttons>

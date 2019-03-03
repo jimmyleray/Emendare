@@ -52,8 +52,9 @@ export const ProfilePage = () => {
       <Hero
         title={translate('MY_PROFILE')}
         subtitle={userContext.user ? userContext.user.email : ''}
+        className="has-text-centered"
       />
-      <div>
+      <div className="has-text-centered">
         <Button onClick={userContext.logout} className="is-danger is-medium">
           {translate('SIGN_OUT')}
         </Button>
