@@ -20,13 +20,18 @@ import { IUser } from '../../../../../interfaces'
 import { Title } from '../../../services'
 import { useTabs } from '../../../hooks'
 
-export const HomePage = () => {
+export const HomePage = ({ location }: any) => {
   const {
     selectedTab,
     setSelectedTab,
     selectNextTab,
     selectPreviousTab
   } = useTabs(['texts', 'news'], 0)
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    setSelectedTab(params.get('tab') || 'texts')
+  }, [location])
 
   const { translate } = React.useContext(I18nContext)
   const userContext = React.useContext(UserContext)
@@ -87,7 +92,7 @@ export const HomePage = () => {
               }}
             >
               <span
-                className={newEventsCount > 0 ? 'badge is-badge-info' : ''}
+                className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}
                 data-badge={newEventsCount}
               >
                 {translate('NEWS')}

@@ -8,7 +8,7 @@ interface IProps {
   onClick?: any
   className?: string
   title?: string
-  to: string
+  to: any
 }
 
 export const Link = React.memo(({ children, title, to, ...rest }: IProps) =>
