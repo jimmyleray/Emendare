@@ -66,20 +66,34 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
                     (line: string, index: number, arr: string[]) =>
                       index < arr.length - 1 || line !== ''
                   )
-                  .map((line: string, j: number) => (
-                    <p
-                      key={j}
-                      style={{
-                        backgroundColor: part.added
-                          ? 'rgba(35, 209, 96, 0.25)'
-                          : part.removed
-                          ? 'rgba(255, 56, 96, 0.25)'
-                          : ''
-                      }}
-                    >
-                      {line || <React.Fragment>&nbsp;</React.Fragment>}
-                    </p>
-                  ))}
+                  .map((line: string, j: number, arr: string[]) =>
+                    part.added || part.removed ? (
+                      <p
+                        key={j}
+                        style={{
+                          backgroundColor: part.added
+                            ? 'rgba(35, 209, 96, 0.25)'
+                            : part.removed
+                            ? 'rgba(255, 56, 96, 0.25)'
+                            : ''
+                        }}
+                      >
+                        <span className="has-text-weight-semibold">
+                          &nbsp;
+                          {part.added && '+'}
+                          {part.removed && '-'}&nbsp;
+                        </span>
+                        <span>
+                          {line || <React.Fragment>&nbsp;</React.Fragment>}
+                        </span>
+                      </p>
+                    ) : j === 0 || j === arr.length - 1 ? (
+                      <React.Fragment key={j}>
+                        <p>{line || <React.Fragment>&nbsp;</React.Fragment>}</p>
+                        {arr.length > 1 && j === 0 && <p>---</p>}
+                      </React.Fragment>
+                    ) : null
+                  )}
               </div>
             ))}
         </div>
