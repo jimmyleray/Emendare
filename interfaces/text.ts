@@ -8,7 +8,6 @@ export interface IText {
   actual: string;
   patches: string[];
   amends: string[];
-  rules?: boolean;
   save?: any;
 }
 

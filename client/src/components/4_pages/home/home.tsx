@@ -18,13 +18,40 @@ import {
 } from '../../../components'
 import { IUser } from '../../../../../interfaces'
 import { Title } from '../../../services'
+import { useTabs } from '../../../hooks'
 
-export const HomePage = () => {
-  const [selectedTab, setSelectedTab] = React.useState('texts')
+export const HomePage = ({ location }: any) => {
+  const {
+    selectedTab,
+    setSelectedTab,
+    selectNextTab,
+    selectPreviousTab
+  } = useTabs(['texts', 'news'])
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    setSelectedTab(params.get('tab') || 'texts')
+  }, [location])
 
   const { translate } = React.useContext(I18nContext)
   const userContext = React.useContext(UserContext)
   const dataContext = React.useContext(DataContext)
+
+  React.useEffect(() => {
+    const eventHandler = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') {
+        selectNextTab()
+      } else if (event.key === 'ArrowLeft') {
+        selectPreviousTab()
+      }
+    }
+
+    document.addEventListener('keyup', eventHandler)
+    return () => {
+      document.removeEventListener('keyup', eventHandler)
+    }
+  })
+
   const events = dataContext.get && dataContext.get('events')('all')
   let newEventsCount = 0
 
@@ -45,6 +72,7 @@ export const HomePage = () => {
       <Hero
         title={translate('HOME_TITLE')}
         subtitle={translate('HOME_SUBTITLE')}
+        className="has-text-centered"
       />
       <div className="tabs is-boxed is-fullwidth">
         <ul>
@@ -64,7 +92,7 @@ export const HomePage = () => {
               }}
             >
               <span
-                className={newEventsCount > 0 ? 'badge is-badge-info' : ''}
+                className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}
                 data-badge={newEventsCount}
               >
                 {translate('NEWS')}

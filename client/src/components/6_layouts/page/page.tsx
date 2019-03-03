@@ -8,7 +8,11 @@ interface IProps {
 
 // Main Page component that also update document title
 export const Page = (props: IProps) => {
-  Title.pageTitle = props.title
+  const { title } = props
+
+  React.useEffect(() => {
+    Title.pageTitle = title
+  }, [title])
 
   return <React.Fragment>{props.children}</React.Fragment>
 }

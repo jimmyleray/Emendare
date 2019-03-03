@@ -13,6 +13,7 @@ export const PendingPage = () => {
       <Hero
         title="Chargement en cours"
         subtitle="Merci de patentier quelques instants"
+        className="has-text-centered"
       />
     </Page>
   )

@@ -19,21 +19,44 @@ import {
   UserContext,
   Hero
 } from '../../../components'
+import { useTabs } from '../../../hooks'
 
 export const ProfilePage = () => {
-  const [selectedTab, setSelectedTab] = React.useState('notifications')
+  const {
+    selectedTab,
+    setSelectedTab,
+    selectNextTab,
+    selectPreviousTab
+  } = useTabs(['notifications', 'data', 'settings'], 0)
+
   const userContext = React.useContext(UserContext)
   const { translate } = React.useContext(I18nContext)
+
+  React.useEffect(() => {
+    const eventHandler = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') {
+        selectNextTab()
+      } else if (event.key === 'ArrowLeft') {
+        selectPreviousTab()
+      }
+    }
+
+    document.addEventListener('keyup', eventHandler)
+    return () => {
+      document.removeEventListener('keyup', eventHandler)
+    }
+  })
 
   return (
     <Page title={translate('MY_PROFILE')}>
       <Hero
         title={translate('MY_PROFILE')}
         subtitle={userContext.user ? userContext.user.email : ''}
+        className="has-text-centered"
       />
-      <div>
+      <div className="has-text-centered">
         <Button onClick={userContext.logout} className="is-danger is-medium">
-          Se déconnecter
+          {translate('SIGN_OUT')}
         </Button>
       </div>
       <br />
@@ -45,7 +68,7 @@ export const ProfilePage = () => {
                 setSelectedTab('notifications')
               }}
             >
-              Notifications
+              {translate('NOTIFICATIONS')}
             </a>
           </li>
           <li className={selectedTab === 'data' ? 'is-active' : ''}>
@@ -54,7 +77,7 @@ export const ProfilePage = () => {
                 setSelectedTab('data')
               }}
             >
-              Mes données
+              {translate('MY_DATA')}
             </a>
           </li>
           <li className={selectedTab === 'settings' ? 'is-active' : ''}>
@@ -63,7 +86,7 @@ export const ProfilePage = () => {
                 setSelectedTab('settings')
               }}
             >
-              Paramètres
+              {translate('PARAMETERS')}
             </a>
           </li>
         </ul>
@@ -73,10 +96,7 @@ export const ProfilePage = () => {
           {selectedTab === 'notifications' && <NotificationSettings />}
           {selectedTab === 'data' && (
             <React.Fragment>
-              <p>
-                Par soucis de transparence, vous pouvez retrouver ci-dessous la
-                liste exhaustive des données brutes concernant votre compte :
-              </p>
+              <p>{translate('MY_DATA_PROFILE_TEXT')}</p>
               <JSONTree
                 data={userContext.user}
                 theme="default"

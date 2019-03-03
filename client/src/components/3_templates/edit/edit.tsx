@@ -120,6 +120,7 @@ export class Edit extends React.Component<IEditProps, IEditState> {
             <Hero
               title="Proposition d'amendement"
               subtitle={this.props.data.name}
+              className="has-text-centered"
             />
 
             <Buttons>
@@ -199,15 +200,17 @@ export class Edit extends React.Component<IEditProps, IEditState> {
                 <br />
 
                 {this.hasDiffs() ? (
-                  <Amend
-                    amend={{
-                      name: this.state.amendName,
-                      description: this.state.amendDescription,
-                      patch: this.state.patch,
-                      version: this.state.text.patches.length
-                    }}
-                    text={this.state.text}
-                  />
+                  <Box>
+                    <Amend
+                      amend={{
+                        name: this.state.amendName,
+                        description: this.state.amendDescription,
+                        patch: this.state.patch,
+                        version: this.state.text.patches.length
+                      }}
+                      text={this.state.text}
+                    />
+                  </Box>
                 ) : (
                   <Box>
                     <p className="has-text-centered has-text-danger">

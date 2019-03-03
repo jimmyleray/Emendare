@@ -14,7 +14,8 @@ import {
   Link,
   Notification,
   Page,
-  Input
+  Input,
+  Hero
 } from '../../../components'
 import { Socket } from '../../../services'
 import { path } from '../../../config'
@@ -89,12 +90,11 @@ export class LoginPage extends React.Component<
 
     return (
       <Page title="Connexion">
+        <Hero title="Se connecter" className="has-text-centered" />
         <form
           onSubmit={this.submit}
           style={{ maxWidth: '350px', margin: 'auto' }}
         >
-          <p className="is-size-3 has-text-centered">Se connecter</p>
-          <br />
           <div className="field">
             <div className="control has-icons-left has-icons-right">
               <Input

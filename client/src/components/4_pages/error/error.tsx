@@ -6,7 +6,7 @@
  */
 
 import React from 'react'
-import { Button, Hero, Page } from '../../../components'
+import { Button, Hero, Page, I18nContext } from '../../../components'
 import { path } from '../../../config'
 
 const defaultError = {
@@ -14,13 +14,21 @@ const defaultError = {
   message: "Oups, cette page n'existe pas ou plus"
 }
 
-export const ErrorPage = ({ error = defaultError }) => (
-  <Page title="Erreur">
-    <Hero title={'Erreur ' + error.code} subtitle={error.message} />
-    <div>
-      <Button to={path.home} className="has-text-weight-semibold is-primary">
-        Retour à l'accueil
-      </Button>
-    </div>
-  </Page>
-)
+export const ErrorPage = ({ error = defaultError }) => {
+  const { translate } = React.useContext(I18nContext)
+
+  return (
+    <Page title="Erreur">
+      <Hero
+        title={translate('ERROR') + ' ' + error.code}
+        subtitle={error.message}
+        className="has-text-centered"
+      />
+      <div className="has-text-centered">
+        <Button to={path.home} className="has-text-weight-semibold is-primary">
+          {translate('BACK_HOME')}
+        </Button>
+      </div>
+    </Page>
+  )
+}

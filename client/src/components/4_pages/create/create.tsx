@@ -34,6 +34,7 @@ export const CreatePage = () => {
       <Hero
         title="Création de texte"
         subtitle="Formulaire d'ajout d'un nouveau texte"
+        className="has-text-centered"
       />
 
       <form onSubmit={confirm} style={{ maxWidth: '350px', margin: 'auto' }}>
