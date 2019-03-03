@@ -6,26 +6,16 @@ interface IProps {
 }
 
 // Main Application layout
-export const Layout = (props: IProps) => (
-  <div
-    className="is-flex"
-    style={{
-      flex: '1',
-      flexDirection: 'column',
-      height: '100vh'
-    }}
-  >
-    <Alerts />
+export const Layout = ({ children }: IProps) => (
+  <React.Fragment>
     <Navbar />
-    <section
-      tabIndex={-1}
-      id="main-content"
-      className="section"
-      style={{ flex: 1, overflowY: 'scroll', outline: 0 }}
-    >
-      <div className="container">
-        <main style={{ paddingBottom: '50px' }}>{props.children}</main>
-      </div>
-    </section>
-  </div>
+    <div style={{ paddingTop: '64px', paddingBottom: '50px' }}>
+      <Alerts />
+      <section className="section">
+        <div className="container">
+          <main>{children}</main>
+        </div>
+      </section>
+    </div>
+  </React.Fragment>
 )
