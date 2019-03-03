@@ -1,5 +1,5 @@
 import React from 'react'
-import { Title } from '../../../services'
+import { Focus, Title } from '../../../services'
 
 interface IProps {
   children: React.ReactNode
@@ -9,6 +9,10 @@ interface IProps {
 // Main Page component that also update document title
 export const Page = (props: IProps) => {
   Title.pageTitle = props.title
+
+  React.useEffect(() => {
+    Focus.setMain()
+  })
 
   return <React.Fragment>{props.children}</React.Fragment>
 }

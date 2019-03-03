@@ -17,13 +17,36 @@ import {
 import { Amend, Socket, Pagination } from '../../../services'
 import { IText } from '../../../../../interfaces'
 import { path } from '../../../config'
+import { useTabs } from '../../../hooks'
 import * as JsDiff from 'diff'
 import { sortBy } from 'lodash'
 
 export const Text = ({ data }: { data: IText }) => {
   const userContext = React.useContext(UserContext)
   const dataContext = React.useContext(DataContext)
-  const [selectedTab, setSelectedTab] = React.useState('text')
+
+  const {
+    selectedTab,
+    setSelectedTab,
+    selectNextTab,
+    selectPreviousTab
+  } = useTabs(['text', 'votes', 'history'], 0)
+
+  React.useEffect(() => {
+    const eventHandler = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') {
+        selectNextTab()
+      } else if (event.key === 'ArrowLeft') {
+        selectPreviousTab()
+      }
+    }
+
+    document.addEventListener('keyup', eventHandler)
+    return () => {
+      document.removeEventListener('keyup', eventHandler)
+    }
+  })
+
   const [historyVersion, setHistoryVersion] = React.useState(
     (data && data.patches.length) || 0
   )

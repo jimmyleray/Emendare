@@ -145,6 +145,7 @@ export const Navbar = () => {
             <Divider vertical={true} className="is-hidden-mobile" />
 
             <a
+              href="#"
               role="button"
               className="navbar-item"
               onClick={() => {

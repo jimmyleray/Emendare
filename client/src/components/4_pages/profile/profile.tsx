@@ -19,11 +19,33 @@ import {
   UserContext,
   Hero
 } from '../../../components'
+import { useTabs } from '../../../hooks'
 
 export const ProfilePage = () => {
-  const [selectedTab, setSelectedTab] = React.useState('notifications')
+  const {
+    selectedTab,
+    setSelectedTab,
+    selectNextTab,
+    selectPreviousTab
+  } = useTabs(['notifications', 'data', 'settings'], 0)
+
   const userContext = React.useContext(UserContext)
   const { translate } = React.useContext(I18nContext)
+
+  React.useEffect(() => {
+    const eventHandler = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') {
+        selectNextTab()
+      } else if (event.key === 'ArrowLeft') {
+        selectPreviousTab()
+      }
+    }
+
+    document.addEventListener('keyup', eventHandler)
+    return () => {
+      document.removeEventListener('keyup', eventHandler)
+    }
+  })
 
   return (
     <Page title={translate('MY_PROFILE')}>

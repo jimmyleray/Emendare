@@ -18,13 +18,35 @@ import {
 } from '../../../components'
 import { IUser } from '../../../../../interfaces'
 import { Title } from '../../../services'
+import { useTabs } from '../../../hooks'
 
 export const HomePage = () => {
-  const [selectedTab, setSelectedTab] = React.useState('texts')
+  const {
+    selectedTab,
+    setSelectedTab,
+    selectNextTab,
+    selectPreviousTab
+  } = useTabs(['texts', 'news'], 0)
 
   const { translate } = React.useContext(I18nContext)
   const userContext = React.useContext(UserContext)
   const dataContext = React.useContext(DataContext)
+
+  React.useEffect(() => {
+    const eventHandler = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') {
+        selectNextTab()
+      } else if (event.key === 'ArrowLeft') {
+        selectPreviousTab()
+      }
+    }
+
+    document.addEventListener('keyup', eventHandler)
+    return () => {
+      document.removeEventListener('keyup', eventHandler)
+    }
+  })
+
   const events = dataContext.get && dataContext.get('events')('all')
   let newEventsCount = 0
 

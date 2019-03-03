@@ -17,7 +17,12 @@ export const Layout = (props: IProps) => (
   >
     <Alerts />
     <Navbar />
-    <section className="section" style={{ flex: 1, overflowY: 'scroll' }}>
+    <section
+      tabIndex={-1}
+      id="main-content"
+      className="section"
+      style={{ flex: 1, overflowY: 'scroll', outline: 0 }}
+    >
       <div className="container">
         <main style={{ paddingBottom: '50px' }}>{props.children}</main>
       </div>
