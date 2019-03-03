@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '../../../components'
+import { Divider } from '../../../components'
 import * as JsDiff from 'diff'
 import { IAmend, IText } from '../../../../../interfaces'
 
@@ -34,26 +34,14 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
   }
 
   public render() {
+    let lineCounter = 0
+
     return (
-      <Box>
-        <p className="has-text-centered is-size-5">
-          {this.props.text && this.props.text.name
-            ? 'Amendement sur : ' + this.props.text.name
-            : 'Amendement'}
-        </p>
-        {this.props.amend && (
-          <React.Fragment>
-            <p className="has-text-centered is-size-5 has-text-weight-bold">
-              {this.props.amend.name}
-            </p>
-            <br />
-            <p>{this.props.amend.description}</p>
-          </React.Fragment>
-        )}
-        <hr />
+      <React.Fragment>
+        <Divider content="Modifications proposées" />
         <div>
           {this.state.diffs &&
-            this.state.diffs.map((part: any, i: number) => (
+            this.state.diffs.map((part: any, i: number, diffs: any[]) => (
               <div
                 key={i}
                 className={
@@ -66,8 +54,9 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
                     (line: string, index: number, arr: string[]) =>
                       index < arr.length - 1 || line !== ''
                   )
-                  .map((line: string, j: number, arr: string[]) =>
-                    part.added || part.removed ? (
+                  .map((line: string, j: number, arr: string[]) => {
+                    lineCounter++
+                    return part.added || part.removed ? (
                       <p
                         key={j}
                         style={{
@@ -78,26 +67,32 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
                             : ''
                         }}
                       >
-                        <span className="has-text-weight-semibold">
-                          &nbsp;
-                          {part.added && '+'}
-                          {part.removed && '-'}&nbsp;
-                        </span>
+                        <span>{lineCounter}&nbsp;|&nbsp;</span>
                         <span>
                           {line || <React.Fragment>&nbsp;</React.Fragment>}
                         </span>
                       </p>
-                    ) : j === 0 || j === arr.length - 1 ? (
+                    ) : (j === 0 && i !== 0) ||
+                      (j === 1 && i !== 0 && arr[j] === '') ||
+                      (j === arr.length - 1 && i !== diffs.length - 1) ||
+                      (j === arr.length - 2 &&
+                        i !== diffs.length - 1 &&
+                        arr[arr.length - 1] === '') ? (
                       <React.Fragment key={j}>
-                        <p>{line || <React.Fragment>&nbsp;</React.Fragment>}</p>
-                        {arr.length > 1 && j === 0 && <p>---</p>}
+                        <p>
+                          <span>{lineCounter}&nbsp;|&nbsp;</span>
+                          {line || <React.Fragment>&nbsp;</React.Fragment>}
+                        </p>
+                        {arr.length > 1 &&
+                          j === 0 &&
+                          i !== diffs.length - 1 && <hr />}
                       </React.Fragment>
                     ) : null
-                  )}
+                  })}
               </div>
             ))}
         </div>
-      </Box>
+      </React.Fragment>
     )
   }
 
