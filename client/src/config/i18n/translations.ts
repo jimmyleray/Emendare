@@ -122,5 +122,79 @@ export const translations: ITranslations = {
       'Pour cela Emendare utilise ses propres fonctionnalités pour définir avec les utilisateurs, les fonctionnalités à développer.',
     EN:
       'For that Emendare uses its own functionalities to define with the users, the functionalities to be developed.'
+  },
+  SIGN_OUT: {
+    FR: 'Se déconnecter',
+    EN: 'Sign out'
+  },
+  NOTIFICATIONS: {
+    FR: 'Notifications',
+    EN: 'Notifications'
+  },
+  MY_DATA: {
+    FR: 'Mes données',
+    EN: 'My data'
+  },
+  PARAMETERS: {
+    FR: 'Paramètres',
+    EN: 'Parameters'
+  },
+  MY_DATA_PROFILE_TEXT: {
+    FR:
+      'Par soucis de transparence, vous pouvez retrouver ci-dessous la liste exhaustive des données brutes concernant votre compte :',
+    EN:
+      'For the sake of transparency, you can find below the exhaustive list of raw data concerning your account :'
+  },
+  CONTRIBUTORS_THANKS: {
+    FR: 'Remerciements à tous les contributeurs',
+    EN: 'Thanks to all contributors'
+  },
+  CONTRIBUTE_GITHUB: {
+    FR: "Pour contribuer à la plateforme rendez-vous sur le Github d'Emendare",
+    EN: 'To contribute to the platform, visit the Github of Emendare'
+  },
+  THANKS_TO: {
+    FR: 'Merci à',
+    EN: 'Thanks to'
+  },
+  HOST_CONTACT_DETAILS: {
+    FR: "Coordonnées de l'hébergeur",
+    EN: 'Contact details of the host'
+  },
+  HOST_BY: {
+    FR: 'Emendare est hébergé par',
+    EN: 'Emendare is hosted by'
+  },
+  ERROR: {
+    FR: 'Erreur',
+    EN: 'Error'
+  },
+  TEXT: {
+    FR: 'Texte',
+    EN: 'Text'
+  },
+  AMEND: {
+    FR: 'Amendement',
+    EN: 'Amend'
+  },
+  RESULT: {
+    FR: 'Résutat',
+    EN: 'Result'
+  },
+  NEW_EVENTS: {
+    FR: 'Nouveaux évènements',
+    EN: 'New events'
+  },
+  EVENTS_LIST: {
+    FR: 'Liste des évènements',
+    EN: 'Events list'
+  },
+  MARK_AS_READ: {
+    FR: 'Tout marquer comme lu',
+    EN: 'Mark everything as read'
+  },
+  OLD_EVENTS: {
+    FR: 'Anciens évènements',
+    EN: 'Old events'
   }
 }
