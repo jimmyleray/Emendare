@@ -149,7 +149,7 @@ export const AmendPage = ({ match }: any) => {
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
-                    <p>Temps restant</p>
+                    <p className="is-size-4">Temps restant</p>
                     <CountDown
                       date={Time.addTimeToDate(
                         amend.data.created,
