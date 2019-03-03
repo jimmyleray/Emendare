@@ -16,7 +16,7 @@ export const Navbar = () => {
   const dataContext = React.useContext(DataContext)
   const i18nContext = React.useContext(I18nContext)
   const { translate } = i18nContext
-  
+
   const events = dataContext.get && dataContext.get('events')('all')
   let newEventsCount = 0
 
@@ -54,19 +54,17 @@ export const Navbar = () => {
             <span className={'has-text-weight-semibold'}>Emendare</span>
           </Link>
 
-          {newEventsCount > 0 && (
-            <Link
-              to={{ pathname: path.home, search: '?tab=news' }}
-              onClick={() => setBurgerActive(false)}
-              className="navbar-item"
-            >
-              <Icon
-                type={newEventsCount > 0 ? 'fas fa-bell' : 'far fa-bell'}
-                className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}
-                data-badge={newEventsCount}
-              />
-            </Link>
-          )}
+          <Link
+            to={{ pathname: path.home, search: '?tab=news' }}
+            onClick={() => setBurgerActive(false)}
+            className="navbar-item"
+          >
+            <Icon
+              type={newEventsCount > 0 ? 'fas fa-bell' : 'far fa-bell'}
+              className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}
+              data-badge={newEventsCount}
+            />
+          </Link>
 
           <a
             role="button"
