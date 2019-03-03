@@ -10,5 +10,4 @@ import { Amend } from './amend'
 it('should render an Amend', () => {
   const component = shallow(<Amend amend={amendMock} text={textMock} />)
   expect(component).toBeTruthy()
-  expect(component.html()).toContain('Amendement')
 })
