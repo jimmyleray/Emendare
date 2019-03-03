@@ -16,10 +16,6 @@ export interface IAmend {
   version: number;
   text: string;
   arguments: IArgument[];
-  upVotesCount?: number;
-  downVotesCount?: number;
-  indVotesCount?: number;
-  totalPotentialVotesCount?: number | undefined;
   results: {
     upVotesCount: number;
     downVotesCount: number;
@@ -30,8 +26,6 @@ export interface IAmend {
     delayMin: number;
     delayMax: number;
   };
-  delayMin?: number;
-  delayMax?: number;
   closed: boolean;
   accepted: boolean;
   conflicted: boolean;

@@ -2,8 +2,6 @@ export interface IEvent {
   __v: number;
   _id: string;
   created: Date | string;
-  targetType?: string;
-  targetID?: string;
   target: {
     type: string;
     id: string;
