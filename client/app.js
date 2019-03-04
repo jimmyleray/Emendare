@@ -18,6 +18,18 @@ app.use(cors())
 const compression = require('compression')
 app.use(compression())
 
+// Middleware for caching
+const oneWeek = 604800000
+const maxAge = process.env.NODE_ENV === 'production' ? oneWeek : 0
+app.use((req, res, next) => {
+  if (req.url !== '/') {
+    res.header('Cache-Control', `build, max-age=${maxAge}`)
+  } else {
+    res.header('Cache-Control', `build, max-age=0`)
+  }
+  next()
+})
+
 // For static files
 app.use(express.static(__dirname + '/build'))
 
