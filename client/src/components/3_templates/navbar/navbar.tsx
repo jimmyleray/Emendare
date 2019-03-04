@@ -160,7 +160,7 @@ export const Navbar = () => {
                 })
               }}
             >
-              {i18nContext.actualLanguage === 'EN' ? 'FR' : 'EN'}
+              {i18nContext.actualLanguage}
             </a>
           </div>
         </div>
