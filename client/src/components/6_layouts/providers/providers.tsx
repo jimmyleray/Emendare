@@ -18,8 +18,8 @@ const providers = [
 ]
 
 // Return all providers encapsulated in order
-export const Providers = (props: IProps) =>
+export const Providers = ({ children }: IProps) =>
   providers.reduceRight(
     (acc, Provider) => <Provider>{acc}</Provider>,
-    <React.Fragment>{props.children}</React.Fragment>
+    <React.Fragment>{children}</React.Fragment>
   )
