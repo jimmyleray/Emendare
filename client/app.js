@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 
 // Init Express Application
+const path = require('path')
 const express = require('express')
 const app = express()
 
@@ -19,19 +20,22 @@ const compression = require('compression')
 app.use(compression())
 
 // Middleware for caching
+const serveStatic = require('serve-static')
 const oneWeek = 604800000
 const maxAge = process.env.NODE_ENV === 'production' ? oneWeek : 0
-app.use((req, res, next) => {
-  if (req.url !== '/') {
-    res.header('Cache-Control', `build, max-age=${maxAge}`)
-  } else {
-    res.header('Cache-Control', `build, max-age=0`)
+const setCustomCacheControl = (res, path) => {
+  if (serveStatic.mime.lookup(path) === 'text/html') {
+    res.setHeader('cache-Control', 'build, max-age=0')
   }
-  next()
-})
+}
 
 // For static files
-app.use(express.static(__dirname + '/build'))
+app.use(
+  serveStatic(path.join(__dirname + '/build'), {
+    maxAge,
+    setHeaders: setCustomCacheControl
+  })
+)
 
 // For all routes, SPA redirection
 app.get('*', (req, res) => {
