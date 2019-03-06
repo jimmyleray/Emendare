@@ -11,8 +11,7 @@
 import React from 'react'
 import {
   Amend,
-  Button,
-  Buttons,
+  ResultAmend,
   Column,
   Columns,
   Hero,
@@ -24,26 +23,13 @@ import {
   DataContext,
   UserContext,
   CountDown,
-  I18nContext
+  I18nContext,
+  Vote
 } from '../../../components'
-import { Socket, Time } from '../../../services'
+import { Time } from '../../../services'
 import { path } from '../../../config'
 import { useTabs } from '../../../hooks'
 import { IText, IAmend, IResponse } from '../../../../../interfaces'
-
-const isOutlined = 'is-outlined'
-
-const vote = (user: any) => (amend: any) => (type: string) => (
-  id: string
-) => async () => {
-  const textID = amend.text
-  if (user.followedTexts.indexOf(textID) === -1) {
-    await Socket.fetch('followText', { id: textID })
-  }
-
-  await Socket.fetch(type + 'VoteAmend', { id })
-  Socket.emit('user')
-}
 
 export const AmendPage = ({ match }: any) => {
   const {
@@ -110,7 +96,7 @@ export const AmendPage = ({ match }: any) => {
           subtitle={amend.data.name}
           className="has-text-centered"
         />
-        <div className="tabs is-boxed is-fullwidth">
+        <div className="tabs is-boxed is-fullwidth ">
           <ul>
             <li className={selectedTab === 'amend' ? 'is-active' : ''}>
               <a
@@ -142,7 +128,18 @@ export const AmendPage = ({ match }: any) => {
           </ul>
         </div>
         {selectedTab === 'amend' && (
-          <Amend amend={amend.data} text={text.data} />
+          <React.Fragment>
+            <Amend amend={amend.data} text={text.data} />
+            {(!amend.data.closed || user) && (
+              <Vote
+                amend={amend.data}
+                user={user}
+                match={match}
+                className="is-centered "
+                style={{ marginTop: '2rem' }}
+              />
+            )}
+          </React.Fragment>
         )}
         {selectedTab === 'arguments' && (
           <Notification className="is-warning">
@@ -153,11 +150,48 @@ export const AmendPage = ({ match }: any) => {
         )}
         {selectedTab === 'vote' && (
           <Columns>
+            <Column className="is-centered">
+              {user && (
+                <React.Fragment>
+                  <p
+                    className="is-size-5 has-text-centered has-text-weight-semibold"
+                    style={{ paddingBottom: '2rem' }}
+                  >
+                    Détail du résultat
+                  </p>
+                  <ResultAmend amend={amend.data} />
+                  <br />
+                </React.Fragment>
+              )}
+              {!amend.data.closed && (
+                <React.Fragment>
+                  <br />
+                  <Notification className="is-light">
+                    <p>
+                      Le vote est{' '}
+                      <span className="has-text-weight-semibold">
+                        clos à la fin du temps maximum
+                      </span>{' '}
+                      OU dès lors qu'une{' '}
+                      <span className="has-text-weight-semibold">
+                        majorité absolue
+                      </span>{' '}
+                      est atteinte après un delai minimum. Le{' '}
+                      <span className="has-text-weight-semibold">
+                        vote est liquide
+                      </span>
+                      , vous pouvez donc changer votre vote jusqu'à la fin du
+                      vote.
+                    </p>
+                  </Notification>
+                </React.Fragment>
+              )}
+            </Column>
             <Column>
               <div className="has-text-centered">
                 {amend.data.closed ? (
                   <React.Fragment>
-                    <p className="is-size-4">Le scrutin est clos</p>
+                    <p className="is-size-4">Le vote est clos</p>
                     <p className="has-text-weight-semibold is-size-3">
                       {amend.data.accepted && !amend.data.conflicted
                         ? 'ACCEPTE'
@@ -207,108 +241,8 @@ export const AmendPage = ({ match }: any) => {
                     Des conflits ont été détectés à l'application de
                     l'amendement. Une nouvelle fonctionalité permettra
                     prochainement aux auteurs des amendements de corriger ces
-                    conflits avant les scrutins.
+                    conflits avant les votes.
                   </p>
-                </React.Fragment>
-              )}
-            </Column>
-            <Column>
-              {user && (
-                <React.Fragment>
-                  <p className="is-size-5 has-text-centered has-text-weight-semibold">
-                    Vos options de vote
-                  </p>
-                  <br />
-                  <Buttons className="is-fullwidth" style={{ marginBottom: 0 }}>
-                    <Button
-                      className={
-                        'is-success ' +
-                        (!user.upVotes.includes(amend.data._id)
-                          ? isOutlined
-                          : '')
-                      }
-                      disabled={amend.data.closed}
-                      onClick={vote(user)(amend.data)('up')(match.params.id)}
-                      style={{ flex: 1 }}
-                      title="Vous êtes favorable à cet amendement"
-                    >
-                      Je soutiens cette modification
-                    </Button>
-                  </Buttons>
-                  <Buttons className="is-fullwidth" style={{ marginBottom: 0 }}>
-                    <Button
-                      className={
-                        'is-danger ' +
-                        (!user.downVotes.includes(amend.data._id)
-                          ? isOutlined
-                          : '')
-                      }
-                      disabled={amend.data.closed}
-                      onClick={vote(user)(amend.data)('down')(match.params.id)}
-                      style={{ flex: 1 }}
-                      title="Vous êtes défavorable à cet amendement"
-                    >
-                      Je préfère la version actuelle
-                    </Button>
-                  </Buttons>
-                  <Buttons className="is-fullwidth" style={{ marginBottom: 0 }}>
-                    <Button
-                      className={
-                        'is-info ' +
-                        (!user.indVotes.includes(amend.data._id)
-                          ? isOutlined
-                          : '')
-                      }
-                      disabled={amend.data.closed}
-                      onClick={vote(user)(amend.data)('ind')(match.params.id)}
-                      style={{ flex: 1 }}
-                      title="Vous êtes indifférent au résultat de ce scrutin"
-                    >
-                      Je suis indifférent
-                    </Button>
-                  </Buttons>
-                  <Buttons className="is-fullwidth" style={{ marginBottom: 0 }}>
-                    <Button
-                      className={
-                        'is-dark ' +
-                        (user.upVotes.includes(amend.data._id) ||
-                        user.downVotes.includes(amend.data._id) ||
-                        user.indVotes.includes(amend.data._id)
-                          ? isOutlined
-                          : '')
-                      }
-                      disabled={amend.data.closed}
-                      onClick={vote(user)(amend.data)('un')(match.params.id)}
-                      style={{ flex: 1 }}
-                      title="Vous ne souhaitez pas voter à ce scrutin"
-                    >
-                      Je m'abstiens
-                    </Button>
-                  </Buttons>
-                </React.Fragment>
-              )}
-
-              {!amend.data.closed && (
-                <React.Fragment>
-                  <br />
-                  <Notification className="is-light">
-                    <p>
-                      Le vote est{' '}
-                      <span className="has-text-weight-semibold">
-                        clos à la fin du temps maximum
-                      </span>{' '}
-                      OU dès lors qu'une{' '}
-                      <span className="has-text-weight-semibold">
-                        majorité absolue
-                      </span>{' '}
-                      est atteinte après un delai minimum. Le{' '}
-                      <span className="has-text-weight-semibold">
-                        vote est liquide
-                      </span>
-                      , vous pouvez donc changer votre vote jusqu'à la fin du
-                      scrutin.
-                    </p>
-                  </Notification>
                 </React.Fragment>
               )}
             </Column>
