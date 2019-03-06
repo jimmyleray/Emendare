@@ -198,11 +198,55 @@ export const translations: ITranslations = {
     EN: 'Old events'
   },
   VOTE: {
-    FR: 'Scrutin',
+    FR: 'Vote',
     EN: 'Vote'
   },
   ARGUMENTS: {
     FR: 'Arguments',
     EN: 'Arguments'
+  },
+  RULES: {
+    FR: 'Règles',
+    EN: 'Rules'
+  },
+  HISTORY: {
+    FR: 'Historique',
+    EN: 'History'
+  },
+  AMENDS: {
+    FR: 'Amendements',
+    EN: 'Amends'
+  },
+  ABOUT: {
+    FR: 'A propos',
+    EN: 'About'
+  },
+  UP_VOTE: {
+    FR: "J'accepte",
+    EN: 'I accept'
+  },
+  DOWN_VOTE: {
+    FR: 'Je décline',
+    EN: 'I decline'
+  },
+  IND_VOTE: {
+    FR: 'Indifférent',
+    EN: 'Indifferent'
+  },
+  RES_UP_VOTE: {
+    FR: 'Nombre de votes pour',
+    EN: 'Number of vote for'
+  },
+  RES_DOWN_VOTE: {
+    FR: 'Nombre de votes contre',
+    EN: 'Number of votes against'
+  },
+  RES_IND_VOTE: {
+    FR: 'Nombre de votes indifférent',
+    EN: 'Number of votes indifferent'
+  },
+  RES_TOTAL_VOTE: {
+    FR: 'Nombre total de votes',
+    EN: 'Total number of votes'
   }
 }
