@@ -47,13 +47,12 @@ export const Navbar = () => {
           <Link
             to={path.home}
             onClick={() => setBurgerActive(false)}
-            className="navbar-item"
+            className={'navbar-item has-text-weight-semibold'}
             style={{ textDecoration: 'none' }}
           >
-            <span className="has-text-danger">Alpha</span>
-            <span className="has-text-dark">&nbsp;|&nbsp;</span>
-            <span className={'has-text-weight-semibold'}>Emendare</span>
+            Emendare
           </Link>
+
           <Link
             to={{ pathname: path.home, search: '?tab=news' }}
             onClick={() => setBurgerActive(false)}
@@ -85,13 +84,6 @@ export const Navbar = () => {
           className={'navbar-menu ' + (burgerIsActive ? 'is-active' : '')}
         >
           <div className="navbar-end">
-            <Link
-              to={path.home}
-              onClick={() => setBurgerActive(false)}
-              className="navbar-item"
-            >
-              {translate('HOME')}
-            </Link>
             {!userContext.isConnectionPending ? (
               userContext.isConnected() ? (
                 <Link
@@ -122,7 +114,7 @@ export const Navbar = () => {
             ) : null}
 
             <DropDown className="navbar-item" navbar={true}>
-              <DropDown.Trigger title={translate('MORE')} />
+              <DropDown.Trigger title={translate('ABOUT')} />
               <DropDown.Menu>
                 <DropDown.Item>
                   <Link
@@ -162,6 +154,7 @@ export const Navbar = () => {
                 </DropDown.Item>
               </DropDown.Menu>
             </DropDown>
+            <Divider vertical={true} className={'navbar-item'} />
             <a
               href="#"
               role="button"
@@ -173,7 +166,7 @@ export const Navbar = () => {
               onClick={() => {
                 i18nContext.dispatch({
                   type: 'setLanguage',
-                  payload: i18nContext.actualLanguage === 'EN' ? 'FR' : 'EN'
+                  payload: 'FR'
                 })
               }}
             >
@@ -191,7 +184,7 @@ export const Navbar = () => {
               onClick={() => {
                 i18nContext.dispatch({
                   type: 'setLanguage',
-                  payload: i18nContext.actualLanguage === 'EN' ? 'FR' : 'EN'
+                  payload: 'EN'
                 })
               }}
             >

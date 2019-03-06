@@ -13,8 +13,8 @@ export const Hero = React.memo(
   ({ className = '', title, subtitle, ...rest }: IProps) => (
     <section
       className={'hero ' + className}
+      style={{ paddingBottom: '2rem' }}
       {...rest}
-      style={{ paddingBottom: '3rem' }}
     >
       <div className="hero-body">
         <h1 className="title">{title}</h1>

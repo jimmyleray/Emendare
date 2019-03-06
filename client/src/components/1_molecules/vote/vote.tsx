@@ -15,7 +15,6 @@ interface IVoteProps {
   /** Custom CSS */
   style?: React.CSSProperties
 }
-const isOutlined = 'is-outlined'
 
 const vote = (user: any) => (amend: any) => (type: string) => (
   id: string
@@ -41,7 +40,7 @@ export const Vote = ({
   return (
     <Buttons className={className} {...rest}>
       <Button
-        className={`is-success ${
+        className={`is-success is-medium ${
           user.upVotes.includes(amend._id) ? '' : 'is-outlined'
         }`}
         onClick={vote(user)(amend)('up')(match.params.id)}
@@ -51,7 +50,7 @@ export const Vote = ({
         <Icon type="fas fa-smile fa-lg" />
       </Button>
       <Button
-        className={`is-info ${
+        className={`is-info is-medium ${
           user.indVotes.includes(amend._id) ? '' : 'is-outlined'
         }`}
         onClick={vote(user)(amend)('ind')(match.params.id)}
@@ -61,7 +60,7 @@ export const Vote = ({
         <Icon type="fas fa-meh fa-lg" />
       </Button>
       <Button
-        className={`is-danger ${
+        className={`is-danger is-medium ${
           user.downVotes.includes(amend._id) ? '' : 'is-outlined'
         }`}
         onClick={vote(user)(amend)('down')(match.params.id)}
