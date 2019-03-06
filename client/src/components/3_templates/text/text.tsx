@@ -22,7 +22,7 @@ import { useTabs } from '../../../hooks'
 import { sortBy } from 'lodash'
 import * as JsDiff from 'diff'
 
-export const Text = ({ data, location }: { data: IText; location: any }) => {
+export const Text = ({ data, location }: { data: IText; location?: any }) => {
   const userContext = React.useContext(UserContext)
   const dataContext = React.useContext(DataContext)
   const i18nContext = React.useContext(I18nContext)
