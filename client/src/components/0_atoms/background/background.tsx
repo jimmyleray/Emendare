@@ -11,7 +11,7 @@ interface IBackgroundProps {
 
 export const Background = React.memo(
   ({ children, color, ...rest }: IBackgroundProps) => (
-    <div style={{ backgroundColor: color, padding: '1.5rem 1.5rem' }} {...rest}>
+    <div style={{ backgroundColor: color, padding: '1.5rem' }} {...rest}>
       {children}
     </div>
   )
