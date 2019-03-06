@@ -5,7 +5,8 @@ import {
   Link,
   Icon,
   UserContext,
-  I18nContext
+  I18nContext,
+  DropDown
 } from '../../../components'
 import { path } from '../../../config'
 import { Title } from '../../../services'
@@ -53,7 +54,6 @@ export const Navbar = () => {
             <span className="has-text-dark">&nbsp;|&nbsp;</span>
             <span className={'has-text-weight-semibold'}>Emendare</span>
           </Link>
-
           <Link
             to={{ pathname: path.home, search: '?tab=news' }}
             onClick={() => setBurgerActive(false)}
@@ -65,7 +65,6 @@ export const Navbar = () => {
               data-badge={newEventsCount}
             />
           </Link>
-
           <a
             role="button"
             onClick={() => setBurgerActive(!burgerIsActive)}
@@ -86,6 +85,13 @@ export const Navbar = () => {
           className={'navbar-menu ' + (burgerIsActive ? 'is-active' : '')}
         >
           <div className="navbar-end">
+            <Link
+              to={path.home}
+              onClick={() => setBurgerActive(false)}
+              className="navbar-item"
+            >
+              {translate('HOME')}
+            </Link>
             {!userContext.isConnectionPending ? (
               userContext.isConnected() ? (
                 <Link
@@ -115,44 +121,55 @@ export const Navbar = () => {
               )
             ) : null}
 
-            <Divider vertical={true} className="is-hidden-mobile" />
-
-            <Link
-              to={path.code}
-              onClick={() => setBurgerActive(false)}
-              className="navbar-item"
-            >
-              {translate('ETHIC_CODE')}
-            </Link>
-            <Link
-              to={path.contributors}
-              onClick={() => setBurgerActive(false)}
-              className="navbar-item"
-            >
-              {translate('CONTRIBUTORS')}
-            </Link>
-            <Link
-              to={path.legal}
-              onClick={() => setBurgerActive(false)}
-              className="navbar-item"
-            >
-              {translate('LEGAL_MENTIONS')}
-            </Link>
-
-            <Link
-              to="https://github.com/jimmyleray/Emendare"
-              onClick={() => setBurgerActive(false)}
-              className="navbar-item"
-            >
-              {translate('SOURCES')}
-            </Link>
-
-            <Divider vertical={true} className="is-hidden-mobile" />
-
+            <DropDown className="navbar-item" navbar={true}>
+              <DropDown.Trigger title={translate('MORE')} />
+              <DropDown.Menu>
+                <DropDown.Item>
+                  <Link
+                    to={path.code}
+                    onClick={() => setBurgerActive(false)}
+                    className="navbar-item"
+                  >
+                    {translate('ETHIC_CODE')}
+                  </Link>
+                </DropDown.Item>
+                <DropDown.Item>
+                  <Link
+                    to={path.contributors}
+                    onClick={() => setBurgerActive(false)}
+                    className="navbar-item"
+                  >
+                    {translate('CONTRIBUTORS')}
+                  </Link>
+                </DropDown.Item>
+                <DropDown.Item>
+                  <Link
+                    to={path.legal}
+                    onClick={() => setBurgerActive(false)}
+                    className="navbar-item"
+                  >
+                    {translate('LEGAL_MENTIONS')}
+                  </Link>
+                </DropDown.Item>
+                <DropDown.Item>
+                  <Link
+                    to="https://github.com/jimmyleray/Emendare"
+                    onClick={() => setBurgerActive(false)}
+                    className="navbar-item"
+                  >
+                    {translate('SOURCES')}
+                  </Link>
+                </DropDown.Item>
+              </DropDown.Menu>
+            </DropDown>
             <a
               href="#"
               role="button"
-              className="navbar-item"
+              className={`navbar-item ${
+                i18nContext.actualLanguage === 'FR'
+                  ? 'has-text-weight-bold'
+                  : ''
+              }`}
               onClick={() => {
                 i18nContext.dispatch({
                   type: 'setLanguage',
@@ -160,7 +177,25 @@ export const Navbar = () => {
                 })
               }}
             >
-              {i18nContext.actualLanguage}
+              FR
+            </a>
+            <a
+              href="#"
+              role="button"
+              className={`
+                navbar-item ${
+                  i18nContext.actualLanguage === 'EN'
+                    ? 'has-text-weight-bold'
+                    : ''
+                }`}
+              onClick={() => {
+                i18nContext.dispatch({
+                  type: 'setLanguage',
+                  payload: i18nContext.actualLanguage === 'EN' ? 'FR' : 'EN'
+                })
+              }}
+            >
+              EN
             </a>
           </div>
         </div>

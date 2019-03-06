@@ -90,17 +90,15 @@ export const Explore = () => {
               <Divider className="is-hidden-tablet" style={{ margin: 0 }} />
             </React.Fragment>
           ))}
-
-        <Link
-          to={path.create}
-          style={{ display: 'inline-grid', gridColumnStart: 1 }}
-        >
-          <Button className="is-info">
+      </Grid>
+      <div style={{ paddingTop: '3rem' }}>
+        <Link to={path.create}>
+          <Button className="is-info is-fullwidth">
             <Icon type="fa fa-plus" />
             <span>{translate('ADD_A_TEXT')}</span>
           </Button>
         </Link>
-      </Grid>
+      </div>
     </React.Fragment>
   )
 }

@@ -4,8 +4,6 @@ import React from 'react'
 import {
   Button,
   Buttons,
-  Column,
-  Columns,
   Icon,
   Link,
   ResultsIcon,
@@ -13,9 +11,11 @@ import {
   UserContext,
   Notification,
   Hero,
-  Spacer
+  Spacer,
+  Background,
+  I18nContext
 } from '../../../components'
-import { Amend, Socket, Pagination } from '../../../services'
+import { Socket, Pagination } from '../../../services'
 import { IText } from '../../../../../interfaces'
 import { path } from '../../../config'
 import { useTabs } from '../../../hooks'
@@ -25,6 +25,8 @@ import * as JsDiff from 'diff'
 export const Text = ({ data, location }: { data: IText; location: any }) => {
   const userContext = React.useContext(UserContext)
   const dataContext = React.useContext(DataContext)
+  const i18nContext = React.useContext(I18nContext)
+  const { translate } = i18nContext
 
   const {
     selectedTab,
@@ -83,7 +85,7 @@ export const Text = ({ data, location }: { data: IText; location: any }) => {
                   setSelectedTab('text')
                 }}
               >
-                Texte
+                {translate('TEXT')}
               </a>
             </li>
             <li className={selectedTab === 'votes' ? 'is-active' : ''}>
@@ -106,7 +108,7 @@ export const Text = ({ data, location }: { data: IText; location: any }) => {
                     ).length
                   }
                 >
-                  Scrutins
+                  {translate('AMENDS')}
                 </span>
               </a>
             </li>
@@ -116,7 +118,7 @@ export const Text = ({ data, location }: { data: IText; location: any }) => {
                   setSelectedTab('rules')
                 }}
               >
-                Règles
+                {translate('RULES')}
               </a>
             </li>
             {data.patches.length > 0 && (
@@ -126,7 +128,7 @@ export const Text = ({ data, location }: { data: IText; location: any }) => {
                     setSelectedTab('history')
                   }}
                 >
-                  Historique
+                  {translate('HISTORY')}
                 </a>
               </li>
             )}
@@ -160,7 +162,7 @@ export const Text = ({ data, location }: { data: IText; location: any }) => {
                     onClick={() => {
                       Socket.emit('unFollowText', { id: data._id })
                     }}
-                    className="button is-light"
+                    className="button is-success is-outlined"
                   >
                     Ne plus participer au texte
                   </Button>
@@ -178,23 +180,24 @@ export const Text = ({ data, location }: { data: IText; location: any }) => {
 
             {data.actual ? (
               <React.Fragment>
-                <p className="has-text-weight-semibold has-text-centered">
+                <p className="has-text-weight-semibold has-text-centered ">
                   Version actuelle du texte
                 </p>
                 <br />
+                <Background className="has-background-light">
+                  {data.actual &&
+                    data.actual
+                      .split('\n')
+                      .map((line: string, index: number) =>
+                        line ? <p key={index}>{line}</p> : <br key={index} />
+                      )}
+                </Background>
               </React.Fragment>
             ) : (
               <p className="has-text-danger has-text-centered">
                 Texte actuellement vide
               </p>
             )}
-
-            {data.actual &&
-              data.actual
-                .split('\n')
-                .map((line: string, index: number) =>
-                  line ? <p key={index}>{line}</p> : <br key={index} />
-                )}
           </React.Fragment>
         )}
 
@@ -202,9 +205,7 @@ export const Text = ({ data, location }: { data: IText; location: any }) => {
           <React.Fragment>
             {data.amends.length > 0 && (
               <React.Fragment>
-                <p className="has-text-weight-semibold">
-                  Liste des scrutins en cours
-                </p>
+                <p className="has-text-weight-semibold">Votes en cours</p>
                 <br />
                 {amends.filter(
                   (amend: any) => amend && amend.data && !amend.data.closed
@@ -235,12 +236,7 @@ export const Text = ({ data, location }: { data: IText; location: any }) => {
 
                           <Link
                             to={path.amend(amend.data._id)}
-                            className={
-                              userContext.isConnected() &&
-                              !Amend.isVoted(userContext.user)(amend.data)
-                                ? 'has-text-weight-bold'
-                                : ''
-                            }
+                            className="has-text-weight-bold"
                           >
                             {amend.data.name}
                           </Link>
@@ -256,9 +252,7 @@ export const Text = ({ data, location }: { data: IText; location: any }) => {
                 ).length > 0 && (
                   <React.Fragment>
                     <hr />
-                    <p className="has-text-weight-semibold">
-                      Liste des anciens scrutins
-                    </p>
+                    <p className="has-text-weight-semibold">Votes clos</p>
                     <br />
                     {sortBy(
                       amends
@@ -378,18 +372,19 @@ export const Text = ({ data, location }: { data: IText; location: any }) => {
                   du texte
                 </p>
                 <br />
+                <Background className="has-background-light">
+                  {versionedText
+                    .split('\n')
+                    .map((line: string, index: number) =>
+                      line ? <p key={index}>{line}</p> : <br key={index} />
+                    )}
+                </Background>
               </React.Fragment>
             ) : (
               <p className="has-text-danger has-text-centered">
                 Texte actuellement vide
               </p>
             )}
-
-            {versionedText
-              .split('\n')
-              .map((line: string, index: number) =>
-                line ? <p key={index}>{line}</p> : <br key={index} />
-              )}
           </React.Fragment>
         )}
       </React.Fragment>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider } from '../../../components'
+import { Divider, Spacer } from '../../../components'
 import * as JsDiff from 'diff'
 import { IAmend, IText } from '../../../../../interfaces'
 
@@ -39,7 +39,6 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
     return (
       <React.Fragment>
         <p>{this.props.amend && this.props.amend.description}</p>
-
         <Divider content="Modifications proposées" />
         <div>
           {this.state.diffs &&
@@ -63,13 +62,34 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
                         key={j}
                         style={{
                           backgroundColor: part.added
-                            ? 'rgba(35, 209, 96, 0.25)'
+                            ? 'rgba(35, 209, 96, 0.22)'
                             : part.removed
-                            ? 'rgba(255, 56, 96, 0.25)'
-                            : ''
+                            ? 'rgba(255, 56, 96, 0.22)'
+                            : '',
+                          paddingRight: '1rem',
+                          paddingLeft: '1rem'
                         }}
                       >
                         <span>{lineCounter}&nbsp;|&nbsp;</span>
+                        {part.added ? (
+                          <React.Fragment>
+                            <span
+                              className="is-size-5 has-text-weight-semibold"
+                              style={{ marginRight: '1.2rem' }}
+                            >
+                              {'  '}+
+                            </span>
+                          </React.Fragment>
+                        ) : (
+                          <React.Fragment>
+                            <span
+                              className="is-size-5 "
+                              style={{ marginRight: '1.2rem' }}
+                            >
+                              {'  '}-
+                            </span>
+                          </React.Fragment>
+                        )}
                         <span>
                           {line || <React.Fragment>&nbsp;</React.Fragment>}
                         </span>
@@ -85,7 +105,7 @@ export class Amend extends React.Component<IAmendProps, IAmendState> {
                           <span>{lineCounter}&nbsp;|&nbsp;</span>
                           {line || <React.Fragment>&nbsp;</React.Fragment>}
                         </p>
-                        {arr.length > 1 &&
+                        {arr.length > 2 &&
                           j === 0 &&
                           i !== diffs.length - 1 && <hr />}
                       </React.Fragment>
