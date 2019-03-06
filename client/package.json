@@ -69,7 +69,7 @@
     "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/jest": "24.0.7",
     "@types/lodash": "^4.14.122",
-    "@types/node": "11.10.1",
+    "@types/node": "11.10.5",
     "@types/react": "16.8.7",
     "@types/react-dom": "16.8.2",
     "@types/react-json-tree": "^0.6.11",
