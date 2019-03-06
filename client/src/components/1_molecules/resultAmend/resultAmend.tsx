@@ -46,7 +46,11 @@ export const ResultAmend = ({ amend }: IResultAmendProps) => {
           <div className="level">
             <div className="level-left">{translate('RES_TOTAL_VOTE')}</div>
             <div className="level-right">
-              <strong>{amend.results.totalPotentialVotesCount}</strong>
+              <strong>
+                {amend.results.upVotesCount +
+                  amend.results.indVotesCount +
+                  amend.results.downVotesCount}
+              </strong>
             </div>
           </div>
         </div>

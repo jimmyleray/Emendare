@@ -217,12 +217,12 @@ export const translations: ITranslations = {
     FR: 'Amendements',
     EN: 'Amends'
   },
-  MORE: {
-    FR: 'Autre',
-    EN: 'More'
+  ABOUT: {
+    FR: 'A propos',
+    EN: 'About'
   },
   UP_VOTE: {
-    FR: "J'accept",
+    FR: "J'accepte",
     EN: 'I accept'
   },
   DOWN_VOTE: {

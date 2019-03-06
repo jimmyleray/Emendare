@@ -53,7 +53,7 @@ export type translateKey =
   | 'RULES'
   | 'HISTORY'
   | 'AMENDS'
-  | 'MORE'
+  | 'ABOUT'
   | 'UP_VOTE'
   | 'DOWN_VOTE'
   | 'IND_VOTE'

@@ -91,7 +91,7 @@ export const Explore = () => {
             </React.Fragment>
           ))}
       </Grid>
-      <div style={{ paddingTop: '3rem' }}>
+      <div style={{ paddingTop: '2rem' }}>
         <Link to={path.create}>
           <Button className="is-info is-fullwidth">
             <Icon type="fa fa-plus" />
