@@ -58,7 +58,7 @@
     "react-json-tree": "^0.11.2",
     "react-masonry-component": "^6.2.1",
     "react-router-dom": "4.3.1",
-    "react-scripts": "2.1.5",
+    "react-scripts": "2.1.6",
     "socket.io-client": "2.2.0",
     "serve-static": "1.13.2"
   },
