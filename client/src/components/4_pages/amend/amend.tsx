@@ -116,13 +116,13 @@ export const AmendPage = ({ match }: any) => {
                 {translate('ARGUMENTS')}
               </a>
             </li>
-            <li className={selectedTab === 'vote' ? 'is-active' : ''}>
+            <li className={selectedTab === 'result' ? 'is-active' : ''}>
               <a
                 onClick={() => {
-                  setSelectedTab('vote')
+                  setSelectedTab('result')
                 }}
               >
-                {translate('VOTE')}
+                {translate('RESULT')}
               </a>
             </li>
           </ul>
@@ -130,7 +130,7 @@ export const AmendPage = ({ match }: any) => {
         {selectedTab === 'amend' && (
           <React.Fragment>
             <Amend amend={amend.data} text={text.data} />
-            {(!amend.data.closed || user) && (
+            {user ? (
               <Vote
                 amend={amend.data}
                 user={user}
@@ -138,6 +138,10 @@ export const AmendPage = ({ match }: any) => {
                 className="is-centered "
                 style={{ marginTop: '2rem' }}
               />
+            ) : (
+              <Notification style={{ marginTop: '2rem' }}>
+                Vous devez être connecté pour pouvoir voter
+              </Notification>
             )}
           </React.Fragment>
         )}
@@ -148,21 +152,19 @@ export const AmendPage = ({ match }: any) => {
             pertinents.
           </Notification>
         )}
-        {selectedTab === 'vote' && (
+        {selectedTab === 'result' && (
           <Columns>
             <Column className="is-centered">
-              {user && (
-                <React.Fragment>
-                  <p
-                    className="is-size-5 has-text-centered has-text-weight-semibold"
-                    style={{ paddingBottom: '2rem' }}
-                  >
-                    Détail du résultat
-                  </p>
-                  <ResultAmend amend={amend.data} />
-                  <br />
-                </React.Fragment>
-              )}
+              <React.Fragment>
+                <p
+                  className="is-size-5 has-text-centered has-text-weight-semibold"
+                  style={{ paddingBottom: '2rem' }}
+                >
+                  Détail du résultat
+                </p>
+                <ResultAmend amend={amend.data} />
+                <br />
+              </React.Fragment>
               {!amend.data.closed && (
                 <React.Fragment>
                   <br />
