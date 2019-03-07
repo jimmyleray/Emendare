@@ -43,6 +43,13 @@ module.exports = {
   getExampleFilename(componentPath) {
     return componentPath.replace(/\.tsx?$/, '.md')
   },
+  dangerouslyUpdateWebpackConfig(webpackConfig, env) {
+    webpackConfig.output = {
+      ...webpackConfig.output,
+      publicPath: process.env.PUBLIC_URL || ''
+    }
+    return webpackConfig
+  },
   propsParser: require('react-docgen-typescript').parse,
   webpackConfig: require('react-scripts/config/webpack.config'),
   ignore: ['**/*.spec.ts', '**/*.spec.tsx'],
