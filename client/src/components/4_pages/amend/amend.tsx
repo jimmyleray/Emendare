@@ -116,13 +116,13 @@ export const AmendPage = ({ match }: any) => {
                 {translate('ARGUMENTS')}
               </a>
             </li>
-            <li className={selectedTab === 'vote' ? 'is-active' : ''}>
+            <li className={selectedTab === 'result' ? 'is-active' : ''}>
               <a
                 onClick={() => {
-                  setSelectedTab('vote')
+                  setSelectedTab('result')
                 }}
               >
-                {translate('VOTE')}
+                {translate('RESULT')}
               </a>
             </li>
           </ul>
@@ -152,7 +152,7 @@ export const AmendPage = ({ match }: any) => {
             pertinents.
           </Notification>
         )}
-        {selectedTab === 'vote' && (
+        {selectedTab === 'result' && (
           <Columns>
             <Column className="is-centered">
               <React.Fragment>
