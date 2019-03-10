@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  Logo,
   Divider,
   DataContext,
   Link,
@@ -50,7 +51,8 @@ export const Navbar = () => {
             className={'navbar-item has-text-weight-semibold'}
             style={{ textDecoration: 'none' }}
           >
-            Emendare
+            <Logo size={48} style={{ fill: '#363636' }} />
+            <span style={{ marginLeft: 8 }}>{translate('HOME')}</span>
           </Link>
 
           <Link
