@@ -248,5 +248,9 @@ export const translations: ITranslations = {
   RES_TOTAL_VOTE: {
     FR: 'Nombre total de votes',
     EN: 'Total number of votes'
+  },
+  BACK_HOME: {
+    FR: "Retour à l'accueil",
+    EN: 'Back to Home'
   }
 }

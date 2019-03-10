@@ -22,7 +22,13 @@ import { useTabs } from '../../../hooks'
 import { sortBy } from 'lodash'
 import * as JsDiff from 'diff'
 
-export const Text = ({ data, location }: { data: IText; location: any }) => {
+export const Text = ({
+  data,
+  location
+}: {
+  data: IText
+  location?: Location
+}) => {
   const userContext = React.useContext(UserContext)
   const dataContext = React.useContext(DataContext)
   const i18nContext = React.useContext(I18nContext)
@@ -36,8 +42,11 @@ export const Text = ({ data, location }: { data: IText; location: any }) => {
   } = useTabs(['text', 'votes', 'rules', 'history'])
 
   React.useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    setSelectedTab(params.get('tab') || 'text')
+    setSelectedTab(
+      location
+        ? new URLSearchParams(location.search).get('tab') || 'text'
+        : 'text'
+    )
   }, [location])
 
   React.useEffect(() => {
