@@ -115,7 +115,7 @@ export const Navbar = () => {
               )
             ) : null}
 
-            <DropDown className="navbar-item" navbar={true}>
+            <DropDown className="navbar-item" isHoverable={true} navbar={true}>
               <DropDown.Trigger title={translate('ABOUT')} />
               <DropDown.Menu>
                 <DropDown.Item>

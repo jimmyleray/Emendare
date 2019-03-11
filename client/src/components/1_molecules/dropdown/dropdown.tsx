@@ -20,6 +20,8 @@ interface IDropDownProps {
   children: React.ReactNode
   /** navbar mode */
   navbar?: boolean
+  /** is hoverable */
+  isHoverable?: boolean
   /** Additional CSS UI class */
   className?: string
 }
@@ -35,7 +37,8 @@ const DropDownContext = React.createContext({
   drop: () => {
     return
   },
-  navbar: false
+  navbar: false,
+  isHoverable: false
 })
 const useDropDownContext = () => {
   const context = React.useContext(DropDownContext)
@@ -49,19 +52,21 @@ export const DropDown = ({
   children,
   className,
   navbar = false,
+  isHoverable = false,
   ...rest
 }: IDropDownProps) => {
   const [open, setOpen] = useState(false)
   const drop = React.useCallback(() => setOpen(oldOpen => !oldOpen), [])
-
-  const value = React.useMemo(() => ({ open, drop, navbar }), [open])
+  const value = React.useMemo(() => ({ open, drop, navbar, isHoverable }), [
+    open
+  ])
 
   return (
     <DropDownContext.Provider value={value}>
       <div
         className={`${navbar ? 'has-dropdown' : 'dropdown'} ${
           open ? 'is-active' : ''
-        } ${className}`}
+        } ${isHoverable ? 'is-hoverable' : ''} ${className}`}
         {...rest}
       >
         {children}
@@ -70,7 +75,7 @@ export const DropDown = ({
   )
 }
 
-const Menu = ({ children }: IMenuProps) => {
+const Menu = React.memo(({ children }: IMenuProps) => {
   const { navbar } = useDropDownContext()
   return (
     <div
@@ -81,31 +86,41 @@ const Menu = ({ children }: IMenuProps) => {
       {navbar ? children : <div className="dropdown-content">{children}</div>}
     </div>
   )
-}
+})
 
-const Item = ({ children }: IItemProps) => {
-  const { drop, navbar } = useDropDownContext()
+const Item = React.memo(({ children }: IItemProps) => {
+  const { drop, navbar, isHoverable } = useDropDownContext()
   return navbar ? (
-    <div onClick={drop}>{children}</div>
-  ) : (
+    !isHoverable ? (
+      <div onClick={drop}>{children}</div>
+    ) : (
+      <div>{children}</div>
+    )
+  ) : !isHoverable ? (
     <div className="dropdown-item" onClick={drop}>
       {children}
     </div>
+  ) : (
+    <div className="dropdown-item">{children}</div>
   )
-}
+})
 
-const Divider = () => {
+const Divider = React.memo(() => {
   const { navbar } = useDropDownContext()
   return <hr className={`${navbar ? 'navbar-divider' : 'dropdown-divider'}`} />
-}
+})
 
-const Trigger = ({ title, icon }: ITriggerProps) => {
-  const { drop, navbar } = useDropDownContext()
+const Trigger = React.memo(({ title, icon }: ITriggerProps) => {
+  const { drop, navbar, isHoverable } = useDropDownContext()
   return navbar ? (
-    <a className="navbar-link" onClick={drop}>
-      {title}
-    </a>
-  ) : (
+    !isHoverable ? (
+      <a className="navbar-link" onClick={drop}>
+        {title}
+      </a>
+    ) : (
+      <a className="navbar-link">{title}</a>
+    )
+  ) : !isHoverable ? (
     <div className="dropdown-trigger">
       <Button onClick={drop}>
         <span>{title}</span>
@@ -117,8 +132,20 @@ const Trigger = ({ title, icon }: ITriggerProps) => {
         </span>
       </Button>
     </div>
+  ) : (
+    <div className="dropdown-trigger">
+      <Button>
+        <span>{title}</span>
+        <span className="icon">
+          <i
+            className={`fas ${icon ? icon : 'fa-angle-down'}`}
+            aria-hidden="true"
+          />
+        </span>
+      </Button>
+    </div>
   )
-}
+})
 
 DropDown.Item = Item
 DropDown.Divider = Divider
