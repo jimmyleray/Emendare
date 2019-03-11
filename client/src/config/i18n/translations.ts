@@ -106,7 +106,7 @@ export const translations: ITranslations = {
       'To respect these commitments, it is considered hosting the platform in peer-to-peer, and decentralizing the database.'
   },
   ETHIC_CODE_3_1: {
-    FR: 
+    FR:
       'Emendare est une initiative open-source. Les contributions de la communauté sont très encouragées et indispensables.',
     EN:
       'Emendare is an open-source initiative. The contributions of the community are very much encouraged and vital. '
