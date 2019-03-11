@@ -66,11 +66,10 @@ export const Tabs = ({
 
   React.useEffect(() => {
     if (location) {
-      setSelectedTab(
-        location
-          ? new URLSearchParams(location.search).get('tab') || 'text'
-          : 'text'
-      )
+      const url: any = new URLSearchParams(location.search)
+      if (url.get('tab')) {
+        setSelectedTab(location ? url.get('tab') : 'text')
+      }
     }
   }, [location])
 
@@ -96,28 +95,27 @@ export const Tabs = ({
   )
 }
 
-const Menu = ({ children, className }: ITabsMenuProps) => (
+const Menu = React.memo(({ children, className }: ITabsMenuProps) => (
   <div className={`tabs ${className}`}>
     <ul>{children}</ul>
   </div>
-)
+))
 
-const Tab = ({ children, to }: ITabProps) => {
+const Tab = React.memo(({ children, to }: ITabProps) => {
   const { selectedTab, setSelectedTab } = useTabsContext()
-  console.log(selectedTab)
   return (
     <li className={selectedTab === to ? 'is-active' : ''}>
       <a onClick={() => setSelectedTab(to)}>{children}</a>
     </li>
   )
-}
+})
 
-const Content = (props: ITabContentProps) => {
+const Content = React.memo((props: ITabContentProps) => {
   const { selectedTab }: any = useTabsContext()
   return selectedTab === props.for ? (
     <React.Fragment>{props.children}</React.Fragment>
   ) : null
-}
+})
 
 Tabs.Menu = Menu
 Tabs.Tab = Tab
