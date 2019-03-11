@@ -9,7 +9,7 @@ export const translations: ITranslations = {
   },
   HOME_TITLE: {
     FR: 'Emendare est une plateforme de rédaction de textes amendables',
-    EN: 'Emendare is a writing platform for modifiable texts'
+    EN: 'Emendare is a writing platform for amendable texts'
   },
   HOME_SUBTITLE: {
     FR:
@@ -91,7 +91,7 @@ export const translations: ITranslations = {
     FR:
       'Seul un email permet de vous identifier personnellement. Les données liées à votre compte sont supprimées suite à la fermeture de votre compte.',
     EN:
-      'Only an email can identify you personally. Data related to your account is deleted due to the closure of your account. '
+      'Only an email can identify you personally. Data related to your account is deleted if you remove your account. '
   },
   ETHIC_CODE_2_2: {
     FR:
@@ -101,27 +101,27 @@ export const translations: ITranslations = {
   },
   ETHIC_CODE_2_3: {
     FR:
-      "Pour assurer ses engagements, il est envisagé d'héberger la plateforme en peer-to-peer, et d'en décentraliser la base de données.",
+      "Pour assurer ces engagements, il est envisagé d'héberger la plateforme en peer-to-peer, et d'en décentraliser la base de données.",
     EN:
-      'To ensure its commitments, it is envisaged to host the platform in peer-to-peer, and to decentralize the database.'
+      'To respect these commitments, it is considered hosting the platform in peer-to-peer, and decentralizing the database.'
   },
   ETHIC_CODE_3_1: {
-    FR:
+    FR: 
       'Emendare est une initiative open-source. Les contributions de la communauté sont très encouragées et indispensables.',
     EN:
-      'Emendare is an open-source initiative. The contributions of the community are very much encouraged and indispensable. '
+      'Emendare is an open-source initiative. The contributions of the community are very much encouraged and vital. '
   },
   ETHIC_CODE_3_2: {
     FR:
       'Le développement de cette plateforme se veut être un exemple de collaboration entre les utilisateurs et les contributeurs.',
     EN:
-      'The development of this platform is an example of collaboration between users and contributors.'
+      "This platform's development should be an example of collaboration between users and contributors."
   },
   ETHIC_CODE_3_3: {
     FR:
       'Pour cela Emendare utilise ses propres fonctionnalités pour définir avec les utilisateurs, les fonctionnalités à développer.',
     EN:
-      'For that Emendare uses its own functionalities to define with the users, the functionalities to be developed.'
+      "That's why Emendare is itself used to define with the users the functionalities to be developed."
   },
   SIGN_OUT: {
     FR: 'Se déconnecter',
@@ -151,7 +151,7 @@ export const translations: ITranslations = {
   },
   CONTRIBUTE_GITHUB: {
     FR: "Pour contribuer à la plateforme rendez-vous sur le Github d'Emendare",
-    EN: 'To contribute to the platform, visit the Github of Emendare'
+    EN: 'To contribute to the platform, visit the Github page of Emendare'
   },
   THANKS_TO: {
     FR: 'Merci à',
