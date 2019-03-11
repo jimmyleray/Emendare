@@ -17,35 +17,13 @@ import {
   UserCredentials,
   I18nContext,
   UserContext,
-  Hero
+  Hero,
+  Tabs
 } from '../../../components'
-import { useTabs } from '../../../hooks'
 
 export const ProfilePage = () => {
-  const {
-    selectedTab,
-    setSelectedTab,
-    selectNextTab,
-    selectPreviousTab
-  } = useTabs(['notifications', 'data', 'settings'], 0)
-
   const userContext = React.useContext(UserContext)
   const { translate } = React.useContext(I18nContext)
-
-  React.useEffect(() => {
-    const eventHandler = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowRight') {
-        selectNextTab()
-      } else if (event.key === 'ArrowLeft') {
-        selectPreviousTab()
-      }
-    }
-
-    document.addEventListener('keyup', eventHandler)
-    return () => {
-      document.removeEventListener('keyup', eventHandler)
-    }
-  })
 
   return (
     <Page title={translate('MY_PROFILE')}>
@@ -60,55 +38,33 @@ export const ProfilePage = () => {
         </Button>
       </div>
       <br />
-      <div className="tabs is-boxed is-fullwidth">
-        <ul>
-          <li className={selectedTab === 'notifications' ? 'is-active' : ''}>
-            <a
-              onClick={() => {
-                setSelectedTab('notifications')
-              }}
-            >
-              {translate('NOTIFICATIONS')}
-            </a>
-          </li>
-          <li className={selectedTab === 'data' ? 'is-active' : ''}>
-            <a
-              onClick={() => {
-                setSelectedTab('data')
-              }}
-            >
-              {translate('MY_DATA')}
-            </a>
-          </li>
-          <li className={selectedTab === 'settings' ? 'is-active' : ''}>
-            <a
-              onClick={() => {
-                setSelectedTab('settings')
-              }}
-            >
-              {translate('PARAMETERS')}
-            </a>
-          </li>
-        </ul>
-      </div>
-      {userContext.user && (
-        <React.Fragment>
-          {selectedTab === 'notifications' && <NotificationSettings />}
-          {selectedTab === 'data' && (
-            <React.Fragment>
-              <p>{translate('MY_DATA_PROFILE_TEXT')}</p>
-              <JSONTree
-                data={userContext.user}
-                theme="default"
-                hideRoot={true}
-              />
-            </React.Fragment>
-          )}
-          {selectedTab === 'settings' && (
-            <UserCredentials user={userContext.user} />
-          )}
-        </React.Fragment>
-      )}
+      <Tabs tabsName={['notifications', 'settings', 'data']}>
+        <Tabs.Menu className="is-boxed is-fullwidth">
+          <Tabs.Tab to="notifications">{translate('NOTIFICATIONS')}</Tabs.Tab>
+          <Tabs.Tab to="settings">{translate('PARAMETERS')}</Tabs.Tab>
+          <Tabs.Tab to="data"> {translate('MY_DATA')}</Tabs.Tab>
+        </Tabs.Menu>
+        {userContext.user && (
+          <React.Fragment>
+            <Tabs.Content for="notifications">
+              <NotificationSettings />
+            </Tabs.Content>
+            <Tabs.Content for="settings">
+              <UserCredentials user={userContext.user} />
+            </Tabs.Content>
+            <Tabs.Content for="data">
+              <React.Fragment>
+                <p>{translate('MY_DATA_PROFILE_TEXT')}</p>
+                <JSONTree
+                  data={userContext.user}
+                  theme="default"
+                  hideRoot={true}
+                />
+              </React.Fragment>
+            </Tabs.Content>
+          </React.Fragment>
+        )}
+      </Tabs>
     </Page>
   )
 }
