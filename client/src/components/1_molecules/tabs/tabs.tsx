@@ -88,6 +88,7 @@ export const Tabs = ({
       document.removeEventListener('keyup', eventHandler)
     }
   })
+
   return (
     <TabsContext.Provider value={{ selectedTab, setSelectedTab } as any}>
       <React.Fragment>{children}</React.Fragment>
