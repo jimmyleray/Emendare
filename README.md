@@ -27,6 +27,9 @@ These instructions make it possible to create a copy of the project and to be ab
 To set up the project installation, you must have **Node.js** installed.
 To install Node.js, please refer to the [Node.js official documentation](https://nodejs.org/en/)
 
+You can optionnaly install Docker Compose to start more easily the Mongo database.
+To install Docker Compose, please refer to the [Docker Compose official documentation](https://docs.docker.com/compose/install/)
+
 ### Installation
 
 The installation of the project requires 2 steps: a configuration of the server and another of the client.
@@ -50,7 +53,7 @@ docker-compose build
 and to finish throwing the container :
 
 ```bash
-docker-compose start
+docker-compose up
 ```
 
 The database is accessible at the following address: **localhost: 27017 / emendare**.
