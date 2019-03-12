@@ -17,7 +17,6 @@ export interface IUser {
     newText: boolean;
   };
   password: string;
-  token: string | null;
   upVotes: string[];
   save?: any;
 }
@@ -41,6 +40,5 @@ export const userMock: IUser = {
     newText: true
   },
   password: "$2b$10$l94oFgHbt8wv4woE7JfdmOPOrZuLMSMrc6tVBDP3m0mg5U/uCi5VC",
-  token: "bfb82457793d31a7",
   upVotes: []
 };
