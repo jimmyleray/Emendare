@@ -12,14 +12,16 @@ export class Auth {
   public static decodeToken(token: string): IJWT {
     try {
       return njwt.verify(token, config.jwt.secret).body
-    } catch(err) {
+    } catch (err) {
       return null
     }
   }
 
   public static isTokenExpired(token: string): boolean {
     const decoded = Auth.decodeToken(token);
-    if(!decoded) return true
+    if (!decoded) {
+      return true
+    }
     return Math.floor(Date.now() / 1000) >= decoded.exp
   }
 

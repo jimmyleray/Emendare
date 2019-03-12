@@ -69,8 +69,7 @@ export class User {
           error: { code: 405, message: 'Le mot de passe est invalide' }
         }
       }
-      const token = await Auth.createToken({ id: user.id })
-      return { data: token }
+      return { data: await Auth.createToken({ id: user.id }) }
     } else if (token) {
       if (Auth.isTokenValid(token)) {
         return { data: token }
@@ -381,12 +380,12 @@ export class User {
     }
     const openAmends = await this.getOpenAmends(user)
 
-    for (const id of openAmends) {
-      await Amend.unVoteAmend(id, token, io)
+    for (const aId of openAmends) {
+      await Amend.unVoteAmend(aId, token, io)
     }
 
-    for (const id of user.followedTexts) {
-      await Text.unFollowText(id, token, io)
+    for (const fId of user.followedTexts) {
+      await Text.unFollowText(fId, token, io)
     }
 
     try {
