@@ -20,15 +20,15 @@ The current stack of this project is :
 
 ## Getting started
 
-These instructions make it possible to create a copy of the project and to be able to execute it locally, for the development but also in production.
+These instructions explain how to run a local instance of Emendare for development, but also how to build the application for production.
 
 ### Prerequisites
 
-To set up the project installation, you must have **Node.js** installed.
+To set up the project, you must have **Node.js** installed.
 To install Node.js, please refer to the [Node.js official documentation](https://nodejs.org/en/)
 
-You can optionnaly install Docker Compose to start more easily the Mongo database.
-To install Docker Compose, please refer to the [Docker Compose official documentation](https://docs.docker.com/compose/install/)
+You can optionnaly install Docker-Compose to start more easily the Mongo database.
+To install Docker-Compose, please refer to the [Docker Compose official documentation](https://docs.docker.com/compose/install/)
 
 ### Installation
 
@@ -36,21 +36,21 @@ The installation of the project requires 2 steps: a configuration of the server 
 
 #### Server configuration
 
-The first step will be to create the MongoDB database. To do so just create a container containing a Mongo image, following the steps below.
+The first step will be to create the MongoDB database. To do so, just create a docker container with a Mongo image, following the steps below.
 
 ```bash
 cd server/
 ```
 
-then creating the Mongo image :
+then create the Mongo image :
 
 ```bash
 docker-compose build
 ```
 
-> This 'build' command is only to be done during installation.
+> This 'build' command must only be entered during installation.
 
-and to finish throwing the container :
+you can finaly run the container :
 
 ```bash
 docker-compose up
@@ -58,7 +58,7 @@ docker-compose up
 
 The database is accessible at the following address: **localhost: 27017 / emendare**.
 
-Once the database is in place we will be able to install the dependencies :
+Once the database is set up, the dependencies can be installed :
 
 ```bash
 npm install
@@ -67,29 +67,32 @@ npm install
 Then start the server either for production :
 
 ```bash
-npm build
+npm run build
 npm start
 ```
 
-Either for development with these two tasks in parallel :
+Or for development (run these commands in two separates terminals) :
 
 ```bash
 npm run build:watch
+```
+
+```bash
 npm run dev
 ```
 
-These commands are used to launch the server at the following address : **localhost:3030**
+These commands will start the server at the following address : **localhost:3030**
 
 #### Client configuration
 
-For the client installation the first step will be to install the dependencies.
+To run the client, the first step will be to install the dependencies.
 
 ```bash
 cd client/
 npm install
 ```
 
-To launch the client, two solutions will be possible :
+The client can now be started in two modes :
 
 - in development :
 
@@ -100,7 +103,7 @@ npm run dev
 - in production :
 
 ```bash
-npm build
+npm run build
 npm start
 ```
 
