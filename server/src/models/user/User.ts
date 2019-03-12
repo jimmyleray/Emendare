@@ -69,7 +69,7 @@ export class User {
           error: { code: 405, message: 'Le mot de passe est invalide' }
         }
       }
-      const token = await Auth.createToken({ id: user.id, email: user.email })
+      const token = await Auth.createToken({ id: user.id })
       return { data: token }
     } else if (token) {
       if (Auth.isTokenValid(token)) {
