@@ -1,6 +1,7 @@
 import React from 'react'
 import { Socket } from '../../../services'
 import { IError, IUser } from '../../../../../interfaces'
+import { instanceOf } from 'prop-types'
 
 export const UserContext = React.createContext({} as IUserProviderState)
 
@@ -19,8 +20,7 @@ export class UserProvider extends React.Component<{}, IUserProviderState> {
       user: null,
       isConnectionPending: true,
       isConnected: () => this.state.user !== null,
-      logout: async (event: any) => {
-        event.preventDefault()
+      logout: () => {
         localStorage.removeItem('token')
         this.setState(() => ({ user: null }))
       }
@@ -38,7 +38,7 @@ export class UserProvider extends React.Component<{}, IUserProviderState> {
     if (token) {
       this.setState({ isConnectionPending: true })
       Socket.fetch('login')
-        .then((user: any) => {
+        .then(({ user }: any) => {
           this.setState({ user, isConnectionPending: false })
         })
         .catch(() => {

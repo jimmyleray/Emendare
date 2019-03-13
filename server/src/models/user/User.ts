@@ -50,10 +50,10 @@ export class User {
   }
 
   public static async login(
-    email: string | undefined,
-    password: string | undefined,
-    token: string | undefined
-  ): Promise<IResponse<string>> {
+    email?: string,
+    password?: string,
+    token?: string
+  ): Promise<IResponse<any>> {
     if (email && password) {
       const user = await this.model.findOne({ email })
       if (!user) {
@@ -69,10 +69,16 @@ export class User {
           error: { code: 405, message: 'Le mot de passe est invalide' }
         }
       }
-      return { data: await Auth.createToken({ id: user.id }) }
+      const newToken = await Auth.createToken({ id: user.id })
+      return { data: { user, token: newToken } }
     } else if (token) {
       if (Auth.isTokenValid(token)) {
-        return { data: token }
+        const { id } = Auth.decodeToken(token)
+        const user = await this.model.findById(id)
+        if (!user) {
+          return { error: { code: 405, message: 'Ce compte a été supprimé' } }
+        }
+        return { data: { user, token } }
       } else {
         return {
           error: { code: 405, message: 'Le token est invalide' }
@@ -135,7 +141,10 @@ export class User {
         })
     } else {
       return {
-        error: { code: 500, message: "Les mails ne sont activés qu'en production" }
+        error: {
+          code: 500,
+          message: "Les mails ne sont activés qu'en production"
+        }
       }
     }
   }
@@ -360,7 +369,7 @@ export class User {
   public static async delete(
     token: string,
     io?: socketIO.Server
-  ): Promise<IResponse<IUser>> {
+  ): Promise<IResponse<any>> {
     if (!token || !Auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Le token est invalide' }
@@ -389,8 +398,8 @@ export class User {
     }
 
     try {
-      await this.model.deleteOne({ token })
-      return {}
+      await this.model.findOneAndDelete({ _id: id })
+      return { data: {} }
     } catch (error) {
       console.error(error)
     }

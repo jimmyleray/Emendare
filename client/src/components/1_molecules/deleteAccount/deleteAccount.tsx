@@ -1,8 +1,13 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { ConfirmAlert, Button, Icon, Input } from '../../../components'
+import React, { useEffect, useState, useCallback, useContext } from 'react'
+import {
+  ConfirmAlert,
+  Button,
+  Icon,
+  Input,
+  UserContext
+} from '../../../components'
 import { Socket } from '../../../services'
 import { useAlert } from '../../../hooks'
-import { callAll } from '../../../helpers'
 import { IUser } from '../../../../../interfaces'
 
 const DeleteAccountMessage = ({ type, placeholder, ...rest }: any) => (
@@ -32,6 +37,7 @@ interface IDeleteAccountProps {
 export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
   const [email, setEmail] = useState('')
   const { showAlert, openAlert, closeAlert } = useAlert()
+  const { logout } = useContext(UserContext)
 
   useEffect(() => {
     return () => {
@@ -43,8 +49,12 @@ export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
     setEmail(event.target.value)
   }, [])
 
-  const deleteAccount = () => {
-    Socket.fetch('deleteAccount').catch(console.error)
+  const deleteAccount = async () => {
+    await Socket.fetch('deleteAccount')
+      .then(logout)
+      .catch(console.error)
+
+    closeAlert()
   }
 
   return (
@@ -53,7 +63,7 @@ export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
         <ConfirmAlert
           message={<DeleteAccountMessage onChange={change} />}
           disabled={user.email !== email}
-          onConfirm={callAll(deleteAccount, closeAlert)}
+          onConfirm={deleteAccount}
           onCancel={closeAlert}
           className="is-danger"
         />

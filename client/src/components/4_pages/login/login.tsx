@@ -52,7 +52,7 @@ export class LoginPage extends React.Component<
         password: this.state.password,
         email: this.state.email
       })
-        .then(async (token: any) => {
+        .then(async ({ token }: any) => {
           localStorage.setItem('token', token)
           await Socket.fetch('user')
           this.setState({ redirectToReferrer: true })

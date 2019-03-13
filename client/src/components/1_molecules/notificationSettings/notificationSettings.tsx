@@ -28,7 +28,7 @@ const mapKeyToTitle = (key: string) => {
 
 export const NotificationSettings = () => {
   const notificationsContext = React.useContext(NotificationsContext)
-  const userContext = React.useContext(UserContext)
+  const { user } = React.useContext(UserContext)
 
   return (
     <React.Fragment>
@@ -56,9 +56,7 @@ export const NotificationSettings = () => {
             className="switch is-rounded is-success"
             disabled={notificationsContext.permission !== 'granted'}
             checked={
-              userContext.user
-                ? ((userContext.user.notifications as any)[key] as boolean)
-                : false
+              user ? ((user.notifications as any)[key] as boolean) : false
             }
             onChange={change(key)}
           />
