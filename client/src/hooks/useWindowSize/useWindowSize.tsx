@@ -1,26 +1,18 @@
 import { useState, useEffect, useCallback } from 'react'
 
 export const useWindowSize = () => {
-  const isUser = typeof window === 'object'
+  const [windowWidth, setWindowWith] = useState(window.innerWidth)
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight)
 
-  const getSize = useCallback(() => {
-    return {
-      width: isUser ? window.innerWidth : undefined,
-      height: isUser ? window.innerHeight : undefined
-    }
-  }, [isUser])
-
-  const [windowSize, setWindowSize] = useState(getSize)
-
-  const onSizeChange = useCallback(() => setWindowSize(getSize()), [])
+  const onSizeChange = useCallback(() => {
+    setWindowWith(window.innerWidth)
+    setWindowHeight(window.innerHeight)
+  }, [])
 
   useEffect((): any => {
-    if (!isUser) {
-      return
-    }
     window.addEventListener('resize', onSizeChange)
     return () => window.removeEventListener('resize', onSizeChange)
   }, [])
 
-  return windowSize
+  return { windowHeight, windowWidth }
 }
