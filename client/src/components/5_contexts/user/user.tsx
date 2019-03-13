@@ -1,7 +1,6 @@
 import React from 'react'
 import { Socket } from '../../../services'
 import { IError, IUser } from '../../../../../interfaces'
-import { instanceOf } from 'prop-types'
 
 export const UserContext = React.createContext({} as IUserProviderState)
 

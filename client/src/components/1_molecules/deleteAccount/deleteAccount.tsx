@@ -9,6 +9,7 @@ import {
 import { Socket } from '../../../services'
 import { useAlert } from '../../../hooks'
 import { IUser } from '../../../../../interfaces'
+import { callAll } from '../../../helpers'
 
 const DeleteAccountMessage = ({ type, placeholder, ...rest }: any) => (
   <React.Fragment>
@@ -53,8 +54,6 @@ export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
     await Socket.fetch('deleteAccount')
       .then(logout)
       .catch(console.error)
-
-    closeAlert()
   }
 
   return (
@@ -63,7 +62,7 @@ export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
         <ConfirmAlert
           message={<DeleteAccountMessage onChange={change} />}
           disabled={user.email !== email}
-          onConfirm={deleteAccount}
+          onConfirm={callAll(deleteAccount, closeAlert)}
           onCancel={closeAlert}
           className="is-danger"
         />
