@@ -66,10 +66,8 @@ export const Tabs = ({
 
   React.useEffect(() => {
     if (location) {
-      const url: any = new URLSearchParams(location.search)
-      if (url.get('tab')) {
-        setSelectedTab(location ? url.get('tab') : 'text')
-      }
+      const url = new URLSearchParams(location.search)
+      setSelectedTab(url.get('tab') || defaultTab || tabsName[0])
     }
   }, [location])
 
