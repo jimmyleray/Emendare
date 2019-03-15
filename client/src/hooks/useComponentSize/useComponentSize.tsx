@@ -17,11 +17,11 @@ export const useComponentSize = () => {
   const [width, setWidth] = useState(getSize().width)
   const [height, setHeight] = useState(getSize().height)
 
-  const onSizeChange = () => {
+  const onSizeChange = useCallback(() => {
     const { width, height } = getSize()
     setWidth(width)
     setHeight(height)
-  }
+  }, [width, height])
 
   useEffect((): any => {
     if (!ref.current) {

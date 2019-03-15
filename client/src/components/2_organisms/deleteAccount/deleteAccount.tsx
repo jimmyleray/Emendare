@@ -40,8 +40,6 @@ export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
   const { showAlert, openAlert, closeAlert } = useAlert()
   const { logout } = useContext(UserContext)
 
-  const userContext = React.useContext(UserContext)
-
   useEffect(() => {
     return () => {
       Socket.off('deleteAccount')
