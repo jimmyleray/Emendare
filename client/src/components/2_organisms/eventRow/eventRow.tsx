@@ -1,7 +1,7 @@
 import React from 'react'
 import { MeasuredCellParent } from 'react-virtualized/dist/es/CellMeasurer'
 import { CellMeasurer, CellMeasurerCache } from 'react-virtualized'
-import { Event, Divider } from '../../../components'
+import { Event, Divider, I18nContext } from '../../../components'
 import { IEvent } from '../../../../../interfaces'
 
 interface IEventRowProps {
@@ -19,8 +19,6 @@ interface IEventRowProps {
   style: React.CSSProperties
   /** Tell if the event is new */
   isNew: boolean
-  /** Translate function*/
-  translate: Function
 }
 
 export const EventRow = ({
@@ -30,9 +28,10 @@ export const EventRow = ({
   data,
   index,
   style,
-  isNew,
-  translate
+  isNew
 }: IEventRowProps) => {
+  const { translate } = React.useContext(I18nContext)
+
   return (
     <CellMeasurer cache={cache} parent={parent} key={key} rowIndex={index}>
       {({ measure }) => (

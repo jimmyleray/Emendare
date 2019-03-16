@@ -11,6 +11,7 @@
     "types": ["node", "jest"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "incremental": true,
     "paths": {
       "*": ["node_modules/*", "src/types/*"]
     }

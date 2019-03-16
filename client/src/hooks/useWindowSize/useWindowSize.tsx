@@ -1,13 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 
 export const useWindowSize = () => {
-  const getWidth = () => {
-    return window.innerWidth
-  }
-
-  const getHeight = () => {
-    return window.innerHeight
-  }
+  const getWidth = () => window.innerWidth
+  const getHeight = () => window.innerHeight
 
   const [width, setWith] = useState(getWidth)
   const [height, setHeight] = useState(getHeight)

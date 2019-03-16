@@ -1,13 +1,12 @@
-import React, { useContext } from 'react'
-import { EventRow } from './eventRow'
+import React from 'react'
 import { useComponentSize } from '../../../hooks'
-import { I18nContext } from '../../5_contexts'
+import { EventRow } from '../../../components'
 import { CellMeasurerCache, WindowScroller, List } from 'react-virtualized'
 import { IEvent } from '../../../../../interfaces'
 
 interface INewsListProps {
   /** List of events */
-  events: Array<IEvent>
+  events: IEvent[]
   /** Date of the last event */
   lastEventDate: number | null
   /** The number of new events */
@@ -17,19 +16,16 @@ interface INewsListProps {
 const isEventNew = (
   lastEventDate: number | null,
   newEventsCount: number | null,
-  events: Array<IEvent>,
+  events: IEvent[],
   index: number
 ) => {
-  if (lastEventDate && newEventsCount) {
-    if (
-      new Date(events[index].created).getTime() > lastEventDate &&
+  return Boolean(
+    lastEventDate &&
+      newEventsCount &&
       events[index + 1] &&
+      new Date(events[index].created).getTime() > lastEventDate &&
       new Date(events[index + 1].created).getTime() < lastEventDate
-    ) {
-      return true
-    }
-  }
-  return false
+  )
 }
 
 export const NewsList = ({
@@ -38,7 +34,6 @@ export const NewsList = ({
   newEventsCount
 }: INewsListProps) => {
   const { ref, width } = useComponentSize()
-  const { translate } = useContext(I18nContext)
 
   /** Default cache for cell mesurement */
   const cache = new CellMeasurerCache({
@@ -71,9 +66,8 @@ export const NewsList = ({
                   props.index
                 )}
                 cache={cache}
-                translate={translate}
                 parent={props.parent}
-                key={props.key}
+                key={props.index}
                 index={props.index}
                 style={props.style}
                 {...props}
