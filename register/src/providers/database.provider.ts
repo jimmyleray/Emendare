@@ -11,7 +11,7 @@ export const databaseProvider = [
         username: '',
         password: '',
         database: 'register',
-        entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
+        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: true,
         useNewUrlParser: true
       })

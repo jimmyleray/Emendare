@@ -1,1 +1,1 @@
-export * from './application.controller'
+export * from './application'
