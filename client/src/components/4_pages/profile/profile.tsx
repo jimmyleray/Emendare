@@ -39,7 +39,7 @@ export const ProfilePage = () => {
       </div>
       <br />
       <Tabs tabsName={['notifications', 'settings', 'data']}>
-        <Tabs.Menu className="is-boxed is-fullwidth">
+        <Tabs.Menu className="is-fullwidth">
           <Tabs.Tab to="notifications">{translate('NOTIFICATIONS')}</Tabs.Tab>
           <Tabs.Tab to="settings">{translate('PARAMETERS')}</Tabs.Tab>
           <Tabs.Tab to="data"> {translate('MY_DATA')}</Tabs.Tab>

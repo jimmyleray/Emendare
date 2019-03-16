@@ -59,7 +59,7 @@ export const Text = ({
           tabsName={['text', 'votes', 'rules', 'historic']}
           location={location}
         >
-          <Tabs.Menu className="is-boxed is-fullwidth">
+          <Tabs.Menu className="is-fullwidth">
             <Tabs.Tab to="text">{translate('TEXT')}</Tabs.Tab>
             <Tabs.Tab to="votes">
               <span
