@@ -13,9 +13,7 @@ export const useTabs = (
   selectPreviousTab: () => void
   selectNextTab: () => void
 } => {
-  const [selectedTab, setSelectedTab] = React.useState(
-    typeof initialIndex !== 'undefined' ? tabs[initialIndex] : undefined
-  )
+  const [selectedTab, setSelectedTab] = React.useState(tabs[initialIndex || 0])
 
   const selectNextTab = () => {
     if (selectedTab) {

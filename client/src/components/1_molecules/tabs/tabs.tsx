@@ -35,12 +35,7 @@ interface ITabContentProps {
 }
 
 // Create context
-const TabsContext = React.createContext({
-  selectedTab: '',
-  setSelectedTab: (field: string) => {
-    return field
-  }
-})
+const TabsContext = React.createContext<any>(null)
 
 // Check if the component is in the context
 const useTabsContext = () => {
@@ -109,7 +104,7 @@ const Tab = React.memo(({ children, to }: ITabProps) => {
 })
 
 const Content = React.memo((props: ITabContentProps) => {
-  const { selectedTab }: any = useTabsContext()
+  const { selectedTab } = useTabsContext()
   return selectedTab === props.for ? (
     <React.Fragment>{props.children}</React.Fragment>
   ) : null
