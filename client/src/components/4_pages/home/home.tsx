@@ -48,7 +48,7 @@ export const HomePage = ({ location }: any) => {
         className="has-text-centered"
       />
       <Tabs tabsName={['texts', 'news']} location={location}>
-        <Tabs.Menu className="is-boxed is-fullwidth">
+        <Tabs.Menu className="is-fullwidth">
           <Tabs.Tab to="texts">{translate('TEXTS')}</Tabs.Tab>
           <Tabs.Tab to="news">{translate('NEWS')}</Tabs.Tab>
         </Tabs.Menu>
