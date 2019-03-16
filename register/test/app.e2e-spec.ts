@@ -1,21 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import * as request from 'supertest'
-import { ApplicationModule } from '../src/application'
+import { AppModule } from '../src/app.module'
 
 describe('AppController (e2e)', () => {
-  let application
+  let app
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [ApplicationModule],
+      imports: [AppModule]
     }).compile()
 
-    application = moduleFixture.createNestApplication()
-    await application.init()
+    app = moduleFixture.createNestApplication()
+    await app.init()
   })
 
   it('/ (GET)', () => {
-    return request(application.getHttpServer())
+    return request(app.getHttpServer())
       .get('/')
       .expect(200)
       .expect('Hello World!')
