@@ -12,7 +12,6 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "incremental": true,
     "noEmit": true,
     "types": ["node", "jest"],
     "jsx": "preserve"
