@@ -8,17 +8,23 @@ interface IProps {
   onClick?: any
   className?: string
   title?: string
-  to: any
+  to?: any
 }
 
 export const Link = React.memo(({ children, title, to, ...rest }: IProps) =>
-  startsWith(to, 'http') ? (
-    <a href={to} title={title} target="_blank" {...rest}>
+  to ? (
+    startsWith(to, 'http') ? (
+      <a href={to} title={title} target="_blank" {...rest}>
+        {children}
+      </a>
+    ) : (
+      <RouterLink to={to} title={title} {...rest}>
+        {children}
+      </RouterLink>
+    )
+  ) : (
+    <a href="javascript:void(0)" title={title} {...rest}>
       {children}
     </a>
-  ) : (
-    <RouterLink to={to} title={title} {...rest}>
-      {children}
-    </RouterLink>
   )
 )

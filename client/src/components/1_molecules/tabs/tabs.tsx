@@ -1,6 +1,7 @@
 import React from 'react'
 import { useTabs } from '../../../hooks'
 import { getIndexDefaultTab } from './helper'
+import { Link } from '../../../components'
 
 interface ITabsProps {
   /** Children node */
@@ -98,7 +99,7 @@ const Tab = React.memo(({ children, to }: ITabProps) => {
   const { selectedTab, setSelectedTab } = useTabsContext()
   return (
     <li className={selectedTab === to ? 'is-active' : ''}>
-      <a onClick={() => setSelectedTab(to)}>{children}</a>
+      <Link onClick={() => setSelectedTab(to)}>{children}</Link>
     </li>
   )
 })
