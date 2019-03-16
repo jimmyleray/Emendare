@@ -19,9 +19,9 @@ export class UserProvider extends React.Component<{}, IUserProviderState> {
       user: null,
       isConnectionPending: true,
       isConnected: () => this.state.user !== null,
-      logout: async (event: any) => {
-        event.preventDefault()
-        Socket.emit('logout')
+      logout: () => {
+        localStorage.removeItem('token')
+        this.setState(() => ({ user: null }))
       }
     }
   }
@@ -33,16 +33,11 @@ export class UserProvider extends React.Component<{}, IUserProviderState> {
       }
     })
 
-    Socket.on('logout', () => {
-      localStorage.removeItem('token')
-      this.setState(() => ({ user: null }))
-    })
-
     const token = localStorage.getItem('token')
     if (token) {
       this.setState({ isConnectionPending: true })
       Socket.fetch('login')
-        .then((user: any) => {
+        .then(({ user }: any) => {
           this.setState({ user, isConnectionPending: false })
         })
         .catch(() => {
@@ -57,7 +52,6 @@ export class UserProvider extends React.Component<{}, IUserProviderState> {
   public componentWillUnmount() {
     Socket.off('user')
     Socket.off('login')
-    Socket.off('logout')
   }
 
   public render() {

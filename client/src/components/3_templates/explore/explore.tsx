@@ -93,7 +93,7 @@ export const Explore = () => {
       </Grid>
       <div style={{ paddingTop: '2rem' }}>
         <Link to={path.create}>
-          <Button className="is-info is-fullwidth">
+          <Button className="is-info is-fullwidth is-outlined">
             <Icon type="fa fa-plus" />
             <span>{translate('ADD_A_TEXT')}</span>
           </Button>

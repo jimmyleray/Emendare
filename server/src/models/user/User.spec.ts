@@ -87,13 +87,14 @@ describe('login', () => {
     })
   })
 
-  test('should return user data', async () => {
+  test('should return user token', async () => {
     mockingoose.User.toReturn(userMock, 'findOne')
-    expect(typeof (await User.login('test@test.com', 'abcd', '')).data).toBe(
-      'object'
+    const token = (await User.login('test@test.com', 'abcd', '')).data
+    expect(typeof token).toBe(
+      'string'
     )
-    expect(typeof (await User.login('', '', 'bfb82457793d31a7')).data).toBe(
-      'object'
+    expect(typeof (await User.login('', '', token)).data).toBe(
+      'string'
     )
   })
 })
@@ -112,18 +113,6 @@ describe('subscribe', () => {
           "Cet email est déjà utilisé. Si il s'agit de votre compte, essayez de vous y connecter directement."
       }
     })
-  })
-})
-
-describe('logout', () => {
-  beforeEach(() => {
-    mockingoose.resetAll()
-  })
-
-  test('should return an error ', async () => {
-    mockingoose.User.toReturn(null, 'findOne')
-    expect(await User.logout('')).toHaveProperty('error')
-    expect(await User.logout('bfb82457793d31a7')).toHaveProperty('error')
   })
 })
 
@@ -162,7 +151,8 @@ describe('updatePassword', () => {
 
   test('should return user data', async () => {
     mockingoose.User.toReturn(userMock, 'findOne')
-    const res = await User.updatePassword('abcde', 'bfb82457793d31a7')
+    const token = (await User.login('test@test.com', 'abcd', '')).data
+    const res = await User.updatePassword('abcde', token)
     expect(bcrypt.compareSync('abcde', res.data.password)).toBeTruthy()
   })
 })
@@ -170,18 +160,6 @@ describe('updatePassword', () => {
 describe('updateEmail', () => {
   beforeEach(() => {
     mockingoose.resetAll()
-  })
-
-  test('should return email already used', async () => {
-    mockingoose.User.toReturn(userMock, 'findOne')
-    expect(
-      await User.updateEmail('test@test.com', 'bfb82457793d31a7')
-    ).toMatchObject({
-      error: {
-        code: 405,
-        message: 'Cet email est déjà utilisée'
-      }
-    })
   })
 
   test('should return invalid token', async () => {
@@ -192,6 +170,19 @@ describe('updateEmail', () => {
       error: {
         code: 405,
         message: 'Token invalide'
+      }
+    })
+  })
+
+  test('should return email already used', async () => {
+    mockingoose.User.toReturn(userMock, 'findOne')
+    const token = (await User.login('test@test.com', 'abcd', '')).data
+    expect(
+      await User.updateEmail('test@test.com', token)
+    ).toMatchObject({
+      error: {
+        code: 405,
+        message: 'Cet email est déjà utilisée'
       }
     })
   })
@@ -206,16 +197,17 @@ describe('updateLastEventDate', () => {
     mockingoose.User.toReturn(null, 'findOne')
     expect(await User.updateLastEventDate('bfb82457793d31a7')).toMatchObject({
       error: {
-        code: 401,
-        message: "Cet utilisateur n'est pas connecté"
+        code: 405,
+        message: "Le token est invalide"
       }
     })
   })
 
   test('should return user data', async () => {
     mockingoose.User.toReturn(userMock, 'findOne')
+    const token = (await User.login('test@test.com', 'abcd', '')).data
     expect(
-      typeof (await User.updateLastEventDate('bfb82457793d31a7')).data
+      typeof (await User.updateLastEventDate(token)).data
     ).toBe('object')
   })
 })
@@ -231,26 +223,28 @@ describe('toggleNotificationSetting', () => {
       await User.toggleNotificationSetting('test', 'bfb82457793d31a7')
     ).toMatchObject({
       error: {
-        code: 401,
-        message: "Cet utilisateur n'est pas connecté"
+        code: 405,
+        message: "Le token est invalide"
       }
     })
   })
 
   test('should return user data', async () => {
     mockingoose.User.toReturn(userMock, 'findOne')
+    const token = (await User.login('test@test.com', 'abcd', '')).data
     expect(
       typeof (await User.toggleNotificationSetting(
         'newText',
-        'bfb82457793d31a7'
+        token
       )).data
     ).toBe('object')
   })
 
   test('should return error invalid key', async () => {
     mockingoose.User.toReturn(userMock, 'findOne')
+    const token = (await User.login('test@test.com', 'abcd', '')).data
     expect(
-      await User.toggleNotificationSetting('wrongKey', 'bfb82457793d31a7')
+      await User.toggleNotificationSetting('wrongKey', token)
     ).toMatchObject({
       error: {
         code: 405,
@@ -268,8 +262,8 @@ describe('delete', () => {
     mockingoose.User.toReturn(null, 'findOne')
     expect(await User.delete('wrongToken')).toMatchObject({
       error: {
-        code: 401,
-        message: "Cet utilisateur n'est pas connecté"
+        code: 405,
+        message: "Le token est invalide"
       }
     })
   })
@@ -278,7 +272,8 @@ describe('delete', () => {
     mockingoose.User.toReturn(userMock, 'findOne')
     mockingoose.Amend.toReturn(amendMock, 'findOne')
     mockingoose.Text.toReturn(new Array(textMock), 'findOne')
-    const res = await User.delete('13I9H0H0U3')
+    const token = (await User.login('test@test.com', 'abcd', '')).data
+    const res = await User.delete(token)
     expect(res).not.toHaveProperty('error')
   })
 })

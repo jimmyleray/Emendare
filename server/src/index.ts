@@ -31,12 +31,7 @@ new Database()
 
     // Add Socket.io to Express server
     const http = new Server(app)
-    const io = socketIO(http, {
-      cookie: false,
-      pingInterval: 10000,
-      pingTimeout: 5000,
-      serveClient: false
-    })
+    const io = socketIO(http, { cookie: false, serveClient: false })
 
     // SocketIO routes
     io.on('connection', socket => {

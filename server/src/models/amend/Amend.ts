@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import socketIO from 'socket.io'
+import { Auth } from '../../services'
 import { User, Text, Event } from '../../models'
 import { IAmend, IResponse, IUser, IText, IEvent } from '../../../../interfaces'
 import { delay } from 'lodash'
@@ -102,7 +103,17 @@ export class Amend {
     token: string,
     io?: socketIO.Server
   ): Promise<IResponse<IAmend>> {
-    const user: IUser = await User.model.findOne({ token })
+    if (!Auth.isTokenValid(token)) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Token expiré' }
+      }
+    }
+    const user: IUser = await User.model.findById(Auth.decodeToken(token).id)
     if (user && user.activated) {
       const amend: IAmend = await this.model.findById(id)
       if (user.followedTexts.indexOf(amend.text) > -1) {
@@ -161,7 +172,17 @@ export class Amend {
     token: string,
     io?: socketIO.Server
   ): Promise<IResponse<IAmend>> {
-    const user: IUser = await User.model.findOne({ token })
+    if (!Auth.isTokenValid(token)) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Token expiré' }
+      }
+    }
+    const user: IUser = await User.model.findById(Auth.decodeToken(token).id)
     if (user && user.activated) {
       const amend: IAmend = await this.model.findById(id)
       if (user.followedTexts.indexOf(amend.text) > -1) {
@@ -227,7 +248,17 @@ export class Amend {
     io?: socketIO.Server
   ): Promise<IResponse<IAmend>> {
     const { name, description, patch, version, textID } = data
-    const user: IUser = await User.model.findOne({ token })
+    if (!Auth.isTokenValid(token)) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Token expiré' }
+      }
+    }
+    const user: IUser = await User.model.findById(Auth.decodeToken(token).id)
     if (user && user.activated) {
       const amend: IAmend = await new this.model({
         description,
@@ -268,7 +299,17 @@ export class Amend {
     token: string,
     io?: socketIO.Server
   ): Promise<IResponse<IAmend>> {
-    const user: IUser = await User.model.findOne({ token })
+    if (!Auth.isTokenValid(token)) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Token expiré' }
+      }
+    }
+    const user: IUser = await User.model.findById(Auth.decodeToken(token).id)
     if (user && user.activated) {
       const amend = await this.model.findById(id)
       if (user.followedTexts.indexOf(amend.text) > -1) {
@@ -325,7 +366,17 @@ export class Amend {
     token: string,
     io?: socketIO.Server
   ): Promise<IResponse<IAmend>> {
-    const user: IUser = await User.model.findOne({ token })
+    if (!Auth.isTokenValid(token)) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Token expiré' }
+      }
+    }
+    const user: IUser = await User.model.findById(Auth.decodeToken(token).id)
     if (user && user.activated) {
       const amend: IAmend = await this.model.findById(id)
       if (user.followedTexts.indexOf(amend.text) > -1) {

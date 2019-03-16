@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import socketIO from 'socket.io'
 import bcrypt from 'bcrypt'
 import { isUndefined } from 'lodash'
-import { Crypto, Mail } from '../../services'
+import { Auth, Crypto, Mail } from '../../services'
 import { activation, reset } from '../../emails'
 import { Amend, Text } from '../../models'
 import { IAmend, IUser, IResponse } from '../../../../interfaces'
@@ -18,7 +18,6 @@ const model = mongoose.model(
     email: { type: String, required: true },
     created: { type: Date, default: Date.now },
     lastEventDate: { type: Date, default: Date.now },
-    token: { type: String, default: null },
     activationToken: { type: String, default: null },
     followedTexts: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Text' }],
@@ -51,41 +50,38 @@ export class User {
   }
 
   public static async login(
-    email: string | undefined,
-    password: string | undefined,
-    token: string | undefined
-  ): Promise<IResponse<IUser>> {
+    email?: string,
+    password?: string,
+    token?: string
+  ): Promise<IResponse<any>> {
     if (email && password) {
       const user = await this.model.findOne({ email })
-      if (user) {
-        if (user.activated) {
-          if (bcrypt.compareSync(password, user.password)) {
-            user.token = Crypto.getToken()
-            await user.save()
-            return { data: user }
-          } else {
-            return {
-              error: { code: 405, message: 'Le mot de passe est invalide' }
-            }
-          }
-        } else {
-          return {
-            error: { code: 405, message: "Votre compte n'est pas activé" }
-          }
-        }
-      } else {
+      if (!user) {
         return { error: { code: 405, message: "L'email est invalide" } }
       }
+      if (!user.activated) {
+        return {
+          error: { code: 405, message: "Votre compte n'est pas activé" }
+        }
+      }
+      if (!bcrypt.compareSync(password, user.password)) {
+        return {
+          error: { code: 405, message: 'Le mot de passe est invalide' }
+        }
+      }
+      const newToken = await Auth.createToken({ id: user.id })
+      return { data: { user, token: newToken } }
     } else if (token) {
-      const user = await this.model.findOne({ token })
-      if (user) {
-        return { data: user }
+      if (Auth.isTokenValid(token)) {
+        const { id } = Auth.decodeToken(token)
+        const user = await this.model.findById(id)
+        if (!user) {
+          return { error: { code: 405, message: 'Ce compte a été supprimé' } }
+        }
+        return { data: { user, token } }
       } else {
         return {
-          error: {
-            code: 405,
-            message: 'Le token est invalide'
-          }
+          error: { code: 405, message: 'Le token est invalide' }
         }
       }
     } else {
@@ -104,68 +100,52 @@ export class User {
   ): Promise<IResponse<IUser>> {
     if (!email) {
       return {
-        error: {
-          code: 405,
-          message: "L'email est requis"
-        }
+        error: { code: 405, message: "L'email est requis" }
       }
-    } else if (!password) {
+    }
+    if (!password) {
       return {
         error: { code: 405, message: 'Le mot de passe est requis' }
       }
-    } else {
-      if (await this.model.findOne({ email })) {
-        return {
-          error: {
-            code: 405,
-            message:
-              "Cet email est déjà utilisé. Si il s'agit de votre compte, essayez de vous y connecter directement."
-          }
-        }
-      } else {
-        const hash = bcrypt.hashSync(password, 10)
-        const activationToken = Crypto.getToken()
-        const user = await new this.model({
-          email,
-          password: hash,
-          activationToken
-        }).save()
-
-        if (Mail) {
-          Mail.send({
-            to: email,
-            subject: activation.subject,
-            html: activation.html(activationToken)
-          })
-            .then(() => {
-              return { data: user }
-            })
-            .catch(error => {
-              console.error(error)
-              return {
-                error: { code: 500, message: "Erreur dans l'envoi du mail" }
-              }
-            })
-        } else {
-          return {
-            error: {
-              code: 500,
-              message: "Les mails ne sont activés qu'en production"
-            }
-          }
+    }
+    if (await this.model.findOne({ email })) {
+      return {
+        error: {
+          code: 405,
+          message:
+            "Cet email est déjà utilisé. Si il s'agit de votre compte, essayez de vous y connecter directement."
         }
       }
     }
-  }
+    const hash = bcrypt.hashSync(password, 10)
+    const activationToken = Crypto.getToken()
+    const user = await new this.model({
+      email,
+      password: hash,
+      activationToken
+    }).save()
 
-  public static async logout(token: string): Promise<IResponse<IUser>> {
-    const user = await this.model.findOne({ token })
-    if (user) {
-      user.token = null
-      await user.save()
-    }
-    return {
-      error: { code: 405, message: 'Ce token est invalide' }
+    if (Mail) {
+      Mail.send({
+        to: email,
+        subject: activation.subject,
+        html: activation.html(activationToken)
+      })
+        .then(() => {
+          return { data: user }
+        })
+        .catch(error => {
+          return {
+            error: { code: 500, message: "Erreur dans l'envoi du mail" }
+          }
+        })
+    } else {
+      return {
+        error: {
+          code: 500,
+          message: "Les mails ne sont activés qu'en production"
+        }
+      }
     }
   }
 
@@ -173,25 +153,20 @@ export class User {
     activationToken: string
   ): Promise<IResponse<IUser>> {
     const user = await this.model.findOne({ activationToken })
-    if (user) {
-      if (!user.activated) {
-        user.activated = true
-        user.activationToken = null
-        await user.save()
-        return { data: user }
-      } else {
-        return {
-          error: { code: 405, message: 'Ce compte est déjà activé' }
-        }
-      }
-    } else {
+    if (!user) {
       return {
-        error: {
-          code: 405,
-          message: 'Votre token est invalide'
-        }
+        error: { code: 405, message: 'Votre token est invalide' }
       }
     }
+    if (user.activated) {
+      return {
+        error: { code: 405, message: 'Ce compte est déjà activé' }
+      }
+    }
+    user.activated = true
+    user.activationToken = null
+    await user.save()
+    return { data: user }
   }
 
   public static async resetPassword({
@@ -201,56 +176,48 @@ export class User {
   }): Promise<IResponse<IUser>> {
     if (!email) {
       return {
-        error: {
-          code: 405,
-          message: "L'email est requis."
-        }
+        error: { code: 405, message: "L'email est requis." }
       }
-    } else {
-      const user = await this.model.findOne({ email })
-      if (!user) {
-        return {
-          error: {
-            code: 405,
-            message: "Cet email n'existe pas."
-          }
-        }
-      } else {
-        // Generate a new Password
-        const newPassword = Crypto.getToken(16)
-        // Update the user password
-        const hash = bcrypt.hashSync(newPassword, 10)
-        user.password = hash
-        await user.save()
+    }
+    const user = await this.model.findOne({ email })
+    if (!user) {
+      return {
+        error: { code: 405, message: "Cet email n'existe pas." }
+      }
+    }
+    // Generate a new Password
+    const newPassword = Crypto.getToken(16)
+    // Update the user password
+    const hash = bcrypt.hashSync(newPassword, 10)
+    user.password = hash
+    await user.save()
 
-        if (Mail) {
-          Mail.send({
-            to: email,
-            subject: reset.subject,
-            html: reset.html(newPassword)
-          })
-            .then(() => {
-              return { data: user }
-            })
-            .catch((error: any) => {
-              console.error(error)
-              return {
-                error: {
-                  code: 500,
-                  message: "Erreur lors de l'envoi du mail"
-                }
-              }
-            })
-        } else {
-          return {
-            error: {
-              code: 500,
-              message: "Les mails ne sont activés qu'en production"
-            }
-          }
+    if (!Mail) {
+      return {
+        error: {
+          code: 500,
+          message: "Les mails ne sont activés qu'en production"
         }
       }
     }
+
+    Mail.send({
+      to: email,
+      subject: reset.subject,
+      html: reset.html(newPassword)
+    })
+      .then(() => {
+        return { data: user }
+      })
+      .catch((error: any) => {
+        console.error(error)
+        return {
+          error: {
+            code: 500,
+            message: "Erreur lors de l'envoi du mail"
+          }
+        }
+      })
   }
 
   public static async updatePassword(
@@ -259,28 +226,26 @@ export class User {
   ): Promise<IResponse<IUser>> {
     if (!password || !token) {
       return {
-        error: {
-          code: 405,
-          message: 'Requête invalide'
-        }
-      }
-    } else {
-      const user = await this.model.findOne({ token })
-      if (!user) {
-        return {
-          error: {
-            code: 405,
-            message: 'Token invalide'
-          }
-        }
-      } else {
-        const hash = bcrypt.hashSync(password, 10)
-        user.password = hash
-        await user.save()
-        // send the user updated
-        return { data: user }
+        error: { code: 405, message: 'Requête invalide' }
       }
     }
+    if (!Auth.isTokenValid(token)) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Token expiré' }
+      }
+    }
+    const { id } = Auth.decodeToken(token)
+    const user = await this.model.findById(id)
+    const hash = bcrypt.hashSync(password, 10)
+    user.password = hash
+    await user.save()
+    // send the user updated
+    return { data: user }
   }
 
   public static async updateEmail(
@@ -289,141 +254,154 @@ export class User {
   ): Promise<IResponse<IUser>> {
     if (!email || !token) {
       return {
-        error: {
-          code: 405,
-          message: 'Requête invalide'
-        }
+        error: { code: 405, message: 'Requête invalide' }
       }
-    } else {
-      if (await this.model.findOne({ email })) {
-        return {
-          error: {
-            code: 405,
-            message: 'Cet email est déjà utilisée'
-          }
-        }
-      } else {
-        const user = await this.model.findOne({ token })
-        if (!user) {
-          return {
-            error: {
-              code: 405,
-              message: 'Token invalide'
-            }
-          }
-        } else {
-          // Set the new email and the token for the activation
-          const activationToken = Crypto.getToken()
-          user.activationToken = activationToken
-          user.email = email
-          user.activated = false
-          user.token = null
-          await user.save()
-          if (Mail) {
-            Mail.send({
-              to: email,
-              subject: activation.subject,
-              html: activation.html(activationToken)
-            })
-              .then(() => {
-                // deconnect the user
-                return { data: user }
-              })
-              .catch(error => {
-                console.error(error)
-              })
-          } else {
-            return {
-              error: {
-                code: 500,
-                message: "Les mails ne sont activés qu'en production"
-              }
-            }
-          }
+    }
+    if (!Auth.isTokenValid(token)) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Token expiré' }
+      }
+    }
+    if (await this.model.findOne({ email })) {
+      return {
+        error: { code: 405, message: 'Cet email est déjà utilisée' }
+      }
+    }
+    const { id } = Auth.decodeToken(token)
+    const user = await this.model.findById(id)
+    if (!user) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+
+    // Set the new email and the token for the activation
+    const activationToken = Crypto.getToken()
+    user.activationToken = activationToken
+    user.email = email
+    user.activated = false
+    await user.save()
+
+    if (!Mail) {
+      return {
+        error: {
+          code: 500,
+          message: "Les mails ne sont activés qu'en production"
         }
       }
     }
+
+    Mail.send({
+      to: email,
+      subject: activation.subject,
+      html: activation.html(activationToken)
+    })
+      .then(() => {
+        // deconnect the user
+        return { data: user }
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   public static async updateLastEventDate(
     token: string
   ): Promise<IResponse<IUser>> {
-    if (token) {
-      const user = await this.model.findOne({ token })
-      if (user) {
-        user.lastEventDate = new Date()
-        await user.save()
-        return { data: user }
-      } else {
-        return {
-          error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
-        }
-      }
-    } else {
+    if (!token || !Auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Le token est invalide' }
       }
     }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Le token est expiré' }
+      }
+    }
+    const { id } = Auth.decodeToken(token)
+    const user = await this.model.findById(id)
+    if (!user) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    user.lastEventDate = new Date()
+    await user.save()
+    return { data: user }
   }
 
   public static async toggleNotificationSetting(
     key: any,
     token: string
   ): Promise<IResponse<IUser>> {
-    if (token) {
-      const user = await User.model.findOne({ token })
-      if (user) {
-        if (!isUndefined(user.notifications[key])) {
-          user.notifications[key] = !user.notifications[key]
-          await user.save()
-          return { data: user }
-        } else {
-          return {
-            error: { code: 405, message: 'Cette clé de requête est invalide' }
-          }
-        }
-      } else {
-        return {
-          error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
-        }
-      }
-    } else {
+    if (!token || !Auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Le token est invalide' }
       }
     }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Le token est expiré' }
+      }
+    }
+    const { id } = Auth.decodeToken(token)
+    const user = await this.model.findById(id)
+    if (!user) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    if (isUndefined(user.notifications[key])) {
+      return {
+        error: { code: 405, message: 'Cette clé de requête est invalide' }
+      }
+    }
+    user.notifications[key] = !user.notifications[key]
+    await user.save()
+    return { data: user }
   }
 
   public static async delete(
     token: string,
     io?: socketIO.Server
-  ): Promise<IResponse<IUser>> {
-    const user: IUser = await this.model.findOne({ token })
-
-    if (user) {
-      const openAmends = await this.getOpenAmends(user)
-
-      for (const id of openAmends) {
-        await Amend.unVoteAmend(id, token, io)
-      }
-
-      for (const id of user.followedTexts) {
-        await Text.unFollowText(id, token, io)
-      }
-
-      try {
-        await this.model.deleteOne({ token })
-        return {}
-      } catch (error) {
-        console.error(error)
-      }
-    } else {
+  ): Promise<IResponse<any>> {
+    if (!token || !Auth.isTokenValid(token)) {
       return {
-        error: {
-          code: 401,
-          message: "Cet utilisateur n'est pas connecté"
-        }
+        error: { code: 405, message: 'Le token est invalide' }
       }
+    }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Le token est expiré' }
+      }
+    }
+    const { id } = Auth.decodeToken(token)
+    const user = await this.model.findById(id)
+    if (!user) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    const openAmends = await this.getOpenAmends(user)
+
+    for (const aId of openAmends) {
+      await Amend.unVoteAmend(aId, token, io)
+    }
+
+    for (const fId of user.followedTexts) {
+      await Text.unFollowText(fId, token, io)
+    }
+
+    try {
+      await this.model.findOneAndDelete({ _id: id })
+      return { data: {} }
+    } catch (error) {
+      console.error(error)
     }
   }
 

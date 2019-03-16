@@ -13,7 +13,6 @@ export const deleteAccount = {
     try {
       const response = await User.delete(token, io)
       socket.emit('deleteAccount', response)
-      socket.emit('logout')
     } catch (error) {
       console.error(error)
     }

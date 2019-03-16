@@ -14,43 +14,16 @@ import {
   Page,
   UserContext,
   DataContext,
-  I18nContext
+  I18nContext,
+  Tabs
 } from '../../../components'
 import { IUser } from '../../../../../interfaces'
 import { Title } from '../../../services'
-import { useTabs } from '../../../hooks'
 
 export const HomePage = ({ location }: any) => {
-  const {
-    selectedTab,
-    setSelectedTab,
-    selectNextTab,
-    selectPreviousTab
-  } = useTabs(['texts', 'news'])
-
-  React.useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    setSelectedTab(params.get('tab') || 'texts')
-  }, [location])
-
   const { translate } = React.useContext(I18nContext)
   const userContext = React.useContext(UserContext)
   const dataContext = React.useContext(DataContext)
-
-  React.useEffect(() => {
-    const eventHandler = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowRight') {
-        selectNextTab()
-      } else if (event.key === 'ArrowLeft') {
-        selectPreviousTab()
-      }
-    }
-
-    document.addEventListener('keyup', eventHandler)
-    return () => {
-      document.removeEventListener('keyup', eventHandler)
-    }
-  })
 
   const events = dataContext.get && dataContext.get('events')('all')
   let newEventsCount = 0
@@ -74,35 +47,18 @@ export const HomePage = ({ location }: any) => {
         subtitle={translate('HOME_SUBTITLE')}
         className="has-text-centered"
       />
-      <div className="tabs is-boxed is-fullwidth">
-        <ul>
-          <li className={selectedTab === 'texts' ? 'is-active' : ''}>
-            <a
-              onClick={() => {
-                setSelectedTab('texts')
-              }}
-            >
-              {translate('TEXTS')}
-            </a>
-          </li>
-          <li className={selectedTab === 'news' ? 'is-active' : ''}>
-            <a
-              onClick={() => {
-                setSelectedTab('news')
-              }}
-            >
-              <span
-                className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}
-                data-badge={newEventsCount}
-              >
-                {translate('NEWS')}
-              </span>
-            </a>
-          </li>
-        </ul>
-      </div>
-      {selectedTab === 'texts' && <Explore />}
-      {selectedTab === 'news' && <News />}
+      <Tabs tabsName={['texts', 'news']} location={location}>
+        <Tabs.Menu className="is-fullwidth">
+          <Tabs.Tab to="texts">{translate('TEXTS')}</Tabs.Tab>
+          <Tabs.Tab to="news">{translate('NEWS')}</Tabs.Tab>
+        </Tabs.Menu>
+        <Tabs.Content for="texts">
+          <Explore />
+        </Tabs.Content>
+        <Tabs.Content for="news">
+          <News />
+        </Tabs.Content>
+      </Tabs>
     </Page>
   )
 }
