@@ -9,8 +9,6 @@ interface IEventRowProps {
   parent: MeasuredCellParent
   /** Cache for cell measurement */
   cache: CellMeasurerCache
-  /** Key of the row */
-  key: string
   /** Following event */
   data: IEvent
   /** Index of the event */
@@ -24,7 +22,6 @@ interface IEventRowProps {
 export const EventRow = ({
   parent,
   cache,
-  key,
   data,
   index,
   style,
@@ -33,9 +30,9 @@ export const EventRow = ({
   const { translate } = React.useContext(I18nContext)
 
   return (
-    <CellMeasurer cache={cache} parent={parent} key={key} rowIndex={index}>
+    <CellMeasurer cache={cache} parent={parent} rowIndex={index}>
       {({ measure }) => (
-        <div key={key} style={style} onLoad={measure}>
+        <div style={style} onLoad={measure}>
           <div style={{ marginBottom: '4px' }}>
             <Event data={data} />
             {isNew && <Divider content={translate('OLD_EVENTS')} />}

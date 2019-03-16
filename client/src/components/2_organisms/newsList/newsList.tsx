@@ -67,7 +67,6 @@ export const NewsList = ({
                 )}
                 cache={cache}
                 parent={props.parent}
-                key={props.index}
                 index={props.index}
                 style={props.style}
                 {...props}

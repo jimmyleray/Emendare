@@ -39,7 +39,7 @@ export const News = () => {
         />
         {newEventsCount > 0 && (
           <Button
-            className="is-fullwidth is-dark"
+            className="is-fullwidth is-link"
             style={{ marginBottom: '1.5rem' }}
             onClick={() => {
               Socket.emit('updateLastEventDate')
