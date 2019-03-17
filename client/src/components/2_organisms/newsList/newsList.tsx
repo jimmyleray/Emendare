@@ -65,6 +65,7 @@ export const NewsList = ({
                   events,
                   props.index
                 )}
+                isLast={props.index === events.length - 1}
                 cache={cache}
                 parent={props.parent}
                 index={props.index}

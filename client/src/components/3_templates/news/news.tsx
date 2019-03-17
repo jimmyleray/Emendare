@@ -41,13 +41,6 @@ export const News = () => {
             {translate('MARK_AS_READ')}
           </Button>
         )}
-        <Divider
-          content={
-            newEventsCount > 0
-              ? translate('NEW_EVENTS')
-              : translate('EVENTS_LIST')
-          }
-        />
         <NewsList
           events={events.data}
           lastEventDate={lastEventDate}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Alerts } from '../../../components'
+import { Navbar, Alerts, Footer } from '../../../components'
 
 interface IProps {
   children: React.ReactNode
@@ -7,9 +7,9 @@ interface IProps {
 
 // Main Application layout
 export const Layout = ({ children }: IProps) => (
-  <React.Fragment>
+  <div className="is-flex" style={{ flexDirection: 'column', height: '100vh' }}>
     <Navbar />
-    <div style={{ paddingTop: '64px', paddingBottom: '50px' }}>
+    <div style={{ flex: 1, overflowY: 'scroll' }}>
       <Alerts />
       <section className="section">
         <div className="container">
@@ -17,5 +17,6 @@ export const Layout = ({ children }: IProps) => (
         </div>
       </section>
     </div>
-  </React.Fragment>
+    <Footer />
+  </div>
 )
