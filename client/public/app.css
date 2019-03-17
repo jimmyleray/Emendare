@@ -2,6 +2,10 @@
   font-family: Montserrat, Helvetica, Arial, sans-serif;
 }
 
+html {
+  overflow: hidden;
+}
+
 @keyframes bubble {
   0% {
     transform: scale(1);

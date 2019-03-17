@@ -79,7 +79,7 @@ export const Text = ({
                 {translate('AMENDS')}
               </span>
             </Tabs.Tab>
-            <Tabs.Tab to="rules">{translate('RULES')}</Tabs.Tab>
+            {false && <Tabs.Tab to="rules">{translate('RULES')}</Tabs.Tab>}
             <Tabs.Tab to="historic">{translate('HISTORY')}</Tabs.Tab>
           </Tabs.Menu>
           <Tabs.Content for="text">

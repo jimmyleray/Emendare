@@ -252,5 +252,13 @@ export const translations: ITranslations = {
   BACK_HOME: {
     FR: "Retour à l'accueil",
     EN: 'Back to Home'
+  },
+  EXPLORE: {
+    FR: 'Explorer',
+    EN: 'Explore'
+  },
+  PROFILE: {
+    FR: 'Profil',
+    EN: 'Profile'
   }
 }

@@ -59,9 +59,10 @@
     "react-masonry-component": "^6.2.1",
     "react-router-dom": "4.4.0",
     "react-scripts": "2.1.5",
-    "socket.io-client": "2.2.0",
+    "react-use": "^5.7.1",
     "react-virtualized": "9.21.0",
-    "serve-static": "1.13.2"
+    "serve-static": "1.13.2",
+    "socket.io-client": "2.2.0"
   },
   "devDependencies": {
     "@types/chart.js": "2.7.44",
