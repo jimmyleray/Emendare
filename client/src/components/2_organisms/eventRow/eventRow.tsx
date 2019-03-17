@@ -33,10 +33,8 @@ export const EventRow = ({
     <CellMeasurer cache={cache} parent={parent} rowIndex={index}>
       {({ measure }) => (
         <div style={style} onLoad={measure}>
-          <div style={{ marginBottom: '4px' }}>
-            <Event data={data} />
-            {isNew && <Divider content={translate('OLD_EVENTS')} />}
-          </div>
+          <Event data={data} />
+          {isNew ? <Divider content={translate('OLD_EVENTS')} /> : <hr/>}
         </div>
       )}
     </CellMeasurer>

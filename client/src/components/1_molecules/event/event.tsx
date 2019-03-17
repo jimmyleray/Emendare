@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  DataContext,
-  Icon,
-  Link,
-  Notification,
-  StopWatch
-} from '../../../components'
+import { DataContext, Icon, Link, Box, StopWatch } from '../../../components'
 import { path } from '../../../config'
 import { IEvent } from '../../../../../interfaces'
 
@@ -120,10 +114,11 @@ export const Event = ({ data }: IEventProps) => (
 
         return target && target.data ? (
           <React.Fragment>
-            <Link to={typeToUrl(data.target.type)(target.data)}>
-              <Notification className="is-light">
-                {typeToText(data.target.type)(target.data)}
-              </Notification>
+            <Link
+              to={typeToUrl(data.target.type)(target.data)}
+              className="has-text-dark"
+            >
+              {typeToText(data.target.type)(target.data)}
             </Link>
           </React.Fragment>
         ) : null
