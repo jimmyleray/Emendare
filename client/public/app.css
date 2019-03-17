@@ -6,10 +6,6 @@ html {
   overflow: hidden;
 }
 
-.section {
-  padding: 1.5rem;
-}
-
 @keyframes bubble {
   0% {
     transform: scale(1);
