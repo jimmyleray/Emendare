@@ -6,6 +6,12 @@ html {
   overflow: hidden;
 }
 
+html,
+body,
+#app-root {
+  height: 100%;
+}
+
 @keyframes bubble {
   0% {
     transform: scale(1);
