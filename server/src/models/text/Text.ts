@@ -135,18 +135,17 @@ export class Text {
         name
       }).save()
 
-      await new Event.model({
+      const event: IEvent = await new Event.model({
         target: {
           type: 'text',
           id: data._id
         }
       }).save()
 
-      const events: IEvent[] = await Event.model.find().sort('-created')
       const texts: IText[] = await this.model.find()
 
       if (io) {
-        io.emit('events/all', { data: events })
+        io.emit('events/new', { data: event })
         io.emit('texts/all', { data: texts.map(texte => texte._id) })
       }
 

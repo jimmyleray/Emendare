@@ -272,17 +272,15 @@ export class Amend {
       text.amends.push(amend._id)
       await text.save()
 
-      await new Event.model({
+      const event: IEvent = await new Event.model({
         target: {
           type: 'amend',
           id: amend._id
         }
       }).save()
 
-      const events: IEvent[] = await Event.model.find().sort('-created')
-
       if (io) {
-        io.emit('events/all', { data: events })
+        io.emit('events/new', { data: event })
         io.emit('text/' + textID, { data: text })
       }
 
@@ -455,15 +453,14 @@ export class Amend {
         const newAmend = await Amend.model.findById(amend._id)
         io.emit('amend/' + amend._id, { data: newAmend })
 
-        await new Event.model({
+        const event: IEvent = await new Event.model({
           target: {
             type: 'result',
             id: newAmend._id
           }
         }).save()
 
-        const events = await Event.model.find().sort('-created')
-        io.emit('events/all', { data: events })
+        io.emit('events/new', { data: event })
       } else if (
         now > start + amend.rules.delayMin &&
         Amend.hasAbsoluteMajority(amend)
@@ -481,15 +478,14 @@ export class Amend {
         const newAmend = await Amend.model.findById(amend._id)
         io.emit('amend/' + amend._id, { data: newAmend })
 
-        await new Event.model({
+        const event: IEvent = await new Event.model({
           target: {
             type: 'result',
             id: newAmend._id
           }
         }).save()
 
-        const events = await Event.model.find().sort('-created')
-        io.emit('events/all', { data: events })
+        io.emit('events/new', { data: event })
       }
     })
 
