@@ -19,11 +19,14 @@ interface IEventRowProps {
   isNew: boolean
   /** Tell if the event is last */
   isLast: boolean
+  /** Key of the row */
+  keyRow: string
 }
 
 export const EventRow = ({
   parent,
   cache,
+  keyRow,
   data,
   index,
   style,
@@ -31,11 +34,10 @@ export const EventRow = ({
   isLast
 }: IEventRowProps) => {
   const { translate } = React.useContext(I18nContext)
-
   return (
     <CellMeasurer cache={cache} parent={parent} rowIndex={index}>
       {({ measure }) => (
-        <div style={style} onLoad={measure}>
+        <div style={style} onLoad={measure} key={keyRow}>
           <Event data={data} />
           {isNew ? (
             <Divider content={translate('OLD_EVENTS')} />
