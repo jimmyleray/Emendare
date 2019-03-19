@@ -3,9 +3,8 @@
 import React from 'react'
 import {
   Button,
-  Divider,
-  DataContext,
   UserContext,
+  EventsContext,
   NewsList,
   I18nContext
 } from '../../../components'
@@ -14,14 +13,17 @@ import { Socket } from '../../../services'
 export const News = () => {
   const { translate } = React.useContext(I18nContext)
   const { user } = React.useContext(UserContext)
-  const { get } = React.useContext(DataContext)
+  const { events, hasNextPage } = React.useContext(EventsContext)
 
   const lastEventDate = user && new Date(user.lastEventDate).getTime()
-  const events = get('events')('all')
 
-  if (events && events.data) {
+  React.useEffect(() => {
+    Socket.emit('events')
+  }, [])
+
+  if (events.length > 0) {
     const newEventsCount = user
-      ? events.data.filter(
+      ? events.filter(
           (event: any) =>
             new Date(event.created).getTime() >
             new Date(user.lastEventDate).getTime()
@@ -42,9 +44,10 @@ export const News = () => {
           </Button>
         )}
         <NewsList
-          events={events.data}
+          events={events}
           lastEventDate={lastEventDate}
           newEventsCount={newEventsCount}
+          hasNextPage={hasNextPage}
         />
       </React.Fragment>
     )

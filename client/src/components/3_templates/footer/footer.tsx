@@ -1,28 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Link,
   Icon,
   I18nContext,
   UserContext,
-  DataContext
+  EventsContext
 } from '../../../components'
 import { Title } from '../../../services'
 import { IUser } from '../../../../../interfaces'
 import { path } from '../../../config'
 import { useLocation } from 'react-use'
+import { Socket } from '../../../services'
 
 export const Footer = () => {
   const { translate } = React.useContext(I18nContext)
   const location = useLocation()
 
   const userContext = React.useContext(UserContext)
-  const dataContext = React.useContext(DataContext)
+  const { events } = React.useContext(EventsContext)
 
-  const events = dataContext.get && dataContext.get('events')('all')
+  useEffect(() => {
+    if (userContext.user) {
+      Socket.emit('events')
+    }
+  }, [userContext.user])
+
   let newEventsCount = 0
-
-  if (userContext.user && events && events.data) {
-    newEventsCount = events.data.filter(
+  if (userContext.user && events.length > 0) {
+    newEventsCount = events.filter(
       (event: any) =>
         new Date(event.created).getTime() >
         new Date((userContext.user as IUser).lastEventDate).getTime()

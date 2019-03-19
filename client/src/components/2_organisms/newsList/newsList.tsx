@@ -1,8 +1,15 @@
+// Dependencies
 import React from 'react'
+import { CellMeasurerCache, List, InfiniteLoader } from 'react-virtualized'
+// Components
 import { useComponentSize } from '../../../hooks'
 import { EventRow } from '../../../components'
-import { CellMeasurerCache, WindowScroller, List } from 'react-virtualized'
+// Interfaces
 import { IEvent } from '../../../../../interfaces'
+// Helpers
+import { isRowLoaded, loadMoreRows } from './helper'
+// Services
+import { Socket } from '../../../services'
 
 interface INewsListProps {
   /** List of events */
@@ -11,6 +18,8 @@ interface INewsListProps {
   lastEventDate: number | null
   /** The number of new events */
   newEventsCount: number | null
+  /** Tell if there are more events to be loaded */
+  hasNextPage: boolean
 }
 
 const isEventNew = (
@@ -31,7 +40,8 @@ const isEventNew = (
 export const NewsList = ({
   events,
   lastEventDate,
-  newEventsCount
+  newEventsCount,
+  hasNextPage
 }: INewsListProps) => {
   const { ref, width } = useComponentSize()
 
@@ -41,41 +51,54 @@ export const NewsList = ({
     fixedWidth: true
   })
 
+  // If there are more items to be loaded then add an extra row to hold a loading indicator
+  const rowCount = () => {
+    if (events.length !== 0) {
+      return hasNextPage ? events.length + 1 : events.length
+    }
+    return 10
+  }
+
+  // Render list item or loading indicator
+  const rowRenderer = ({ index, parent, style, key, ...rest }: any) => {
+    return (
+      <EventRow
+        data={events[index]}
+        isNew={isEventNew(lastEventDate, newEventsCount, events, index)}
+        isLast={index === events.length - 1}
+        cache={cache}
+        parent={parent}
+        index={index}
+        style={style}
+        keyRow={key}
+        key={key}
+        {...rest}
+      />
+    )
+  }
+
   return (
     <div ref={ref}>
-      <WindowScroller>
-        {({ height, isScrolling, onChildScroll, scrollTop }) => (
+      <InfiniteLoader
+        isRowLoaded={({ index }) => isRowLoaded(events, index, hasNextPage)}
+        loadMoreRows={() => loadMoreRows(events, 10, Socket, hasNextPage)}
+        rowCount={rowCount()}
+      >
+        {({ onRowsRendered, registerChild }) => (
           <List
             autoHeight
             width={width}
-            rowCount={events.length}
+            rowCount={rowCount()}
             itemData={events}
-            height={height}
+            height={500}
+            onRowsRendered={onRowsRendered}
+            ref={registerChild}
             deferredMeasurementCache={cache}
             rowHeight={cache.rowHeight}
-            isScrolling={isScrolling}
-            onScroll={onChildScroll}
-            scrollTop={scrollTop}
-            rowRenderer={props => (
-              <EventRow
-                data={events[props.index]}
-                isNew={isEventNew(
-                  lastEventDate,
-                  newEventsCount,
-                  events,
-                  props.index
-                )}
-                isLast={props.index === events.length - 1}
-                cache={cache}
-                parent={props.parent}
-                index={props.index}
-                style={props.style}
-                {...props}
-              />
-            )}
+            rowRenderer={rowRenderer}
           />
         )}
-      </WindowScroller>
+      </InfiniteLoader>
     </div>
   )
 }
