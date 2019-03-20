@@ -1,42 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Link,
   Icon,
   I18nContext,
   UserContext,
-  DataContext
+  EventsContext
 } from '../../../components'
 import { Title } from '../../../services'
-import { IUser } from '../../../../../interfaces'
 import { path } from '../../../config'
 import { useLocation } from 'react-use'
+import { Socket } from '../../../services'
 
-export const Footer = () => {
+export const Footer = ({ className }: any) => {
   const { translate } = React.useContext(I18nContext)
   const location = useLocation()
 
   const userContext = React.useContext(UserContext)
-  const dataContext = React.useContext(DataContext)
+  const { newEvents, hasNextPage } = React.useContext(EventsContext)
 
-  const events = dataContext.get && dataContext.get('events')('all')
-  let newEventsCount = 0
+  useEffect(() => {
+    if (userContext.user && hasNextPage) {
+      Socket.emit('events')
+    }
+  }, [userContext.user])
 
-  if (userContext.user && events && events.data) {
-    newEventsCount = events.data.filter(
-      (event: any) =>
-        new Date(event.created).getTime() >
-        new Date((userContext.user as IUser).lastEventDate).getTime()
-    ).length
-
-    Title.badgeCount = newEventsCount
-  } else {
-    Title.badgeCount = 0
-  }
+  const newEventsCount = userContext.user ? newEvents.length : 0
+  Title.badgeCount = newEventsCount
 
   return (
     <React.Fragment>
       <hr style={{ margin: 0 }} />
-      <div className="tabs is-fullwidth is-medium">
+      <div className={'tabs is-fullwidth is-medium ' + className}>
         <ul>
           <li className={location.pathname === path.home ? 'is-active' : ''}>
             <Link to={path.home}>
