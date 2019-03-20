@@ -7,7 +7,6 @@ import {
   EventsContext
 } from '../../../components'
 import { Title } from '../../../services'
-import { IUser } from '../../../../../interfaces'
 import { path } from '../../../config'
 import { useLocation } from 'react-use'
 import { Socket } from '../../../services'
@@ -17,26 +16,16 @@ export const Footer = () => {
   const location = useLocation()
 
   const userContext = React.useContext(UserContext)
-  const { events } = React.useContext(EventsContext)
+  const { newEvents, hasNextPage } = React.useContext(EventsContext)
 
   useEffect(() => {
-    if (userContext.user) {
+    if (userContext.user && hasNextPage) {
       Socket.emit('events')
     }
   }, [userContext.user])
 
-  let newEventsCount = 0
-  if (userContext.user && events.length > 0) {
-    newEventsCount = events.filter(
-      (event: any) =>
-        new Date(event.created).getTime() >
-        new Date((userContext.user as IUser).lastEventDate).getTime()
-    ).length
-
-    Title.badgeCount = newEventsCount
-  } else {
-    Title.badgeCount = 0
-  }
+  const newEventsCount = userContext.user ? newEvents.length : 0
+  Title.badgeCount = newEventsCount
 
   return (
     <React.Fragment>
