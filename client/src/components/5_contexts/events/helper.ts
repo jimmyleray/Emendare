@@ -22,8 +22,8 @@ export const getNewEvent = (lastEventDate: any, events: IEvent[]) => {
  */
 export const deleteNewEvent = (eventId: string, newEvents: IEvent[]) => {
   if (eventId && newEvents.length > 0) {
-    return _.remove(newEvents, (e: IEvent) => {
-      return e._id !== eventId
+    return _.remove(newEvents, (event: IEvent) => {
+      return event._id !== eventId
     })
   }
   return newEvents
