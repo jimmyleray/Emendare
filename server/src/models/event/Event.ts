@@ -22,7 +22,7 @@ export class Event {
   }
 
   public static async getEventsByGroup(
-    limit: number = 1,
+    limit: number = 15,
     lastEventDate?: string
   ): Promise<IResponse<{ events: IEvent[]; hasNextPage: boolean }>> {
     if (!lastEventDate) {
@@ -52,7 +52,10 @@ export class Event {
     }
   }
 
-  private static async hasNextPage(newData: IEvent[]) {
+  public static async hasNextPage(newData: IEvent[]) {
+    if (newData.length === 0) {
+      return false
+    }
     // get the oldest date of the new events we are going to send
     const lastEventDate = newData[newData.length - 1].created
     // Check if there are more events to load after
