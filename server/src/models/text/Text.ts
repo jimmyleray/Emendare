@@ -204,7 +204,7 @@ export class Text {
 
     othersAmends.forEach(async (otherAmend: any) => {
       const isPatchable = JsDiff.applyPatch(text.actual, otherAmend.patch)
-
+      let event: IEvent
       if (isPatchable) {
         otherAmend.version = text.patches.length
       } else {
@@ -213,7 +213,7 @@ export class Text {
         otherAmend.finished = new Date()
         otherAmend.totalPotentialVotesCount = text.followersCount
 
-        await new Event.model({
+        event = await new Event.model({
           target: {
             type: 'result',
             id: otherAmend._id
@@ -224,6 +224,9 @@ export class Text {
       await otherAmend.save()
 
       if (io) {
+        if (event) {
+          io.emit('events/new', { data: event })
+        }
         io.emit('amend/' + otherAmend._id, { data: otherAmend })
       }
     })
