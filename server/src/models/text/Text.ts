@@ -135,18 +135,17 @@ export class Text {
         name
       }).save()
 
-      await new Event.model({
+      const event: IEvent = await new Event.model({
         target: {
           type: 'text',
           id: data._id
         }
       }).save()
 
-      const events: IEvent[] = await Event.model.find().sort('-created')
       const texts: IText[] = await this.model.find()
 
       if (io) {
-        io.emit('events/all', { data: events })
+        io.emit('events/new', { data: event })
         io.emit('texts/all', { data: texts.map(texte => texte._id) })
       }
 
@@ -205,7 +204,7 @@ export class Text {
 
     othersAmends.forEach(async (otherAmend: any) => {
       const isPatchable = JsDiff.applyPatch(text.actual, otherAmend.patch)
-
+      let event: IEvent
       if (isPatchable) {
         otherAmend.version = text.patches.length
       } else {
@@ -214,7 +213,7 @@ export class Text {
         otherAmend.finished = new Date()
         otherAmend.totalPotentialVotesCount = text.followersCount
 
-        await new Event.model({
+        event = await new Event.model({
           target: {
             type: 'result',
             id: otherAmend._id
@@ -225,6 +224,9 @@ export class Text {
       await otherAmend.save()
 
       if (io) {
+        if (event) {
+          io.emit('events/new', { data: event })
+        }
         io.emit('amend/' + otherAmend._id, { data: otherAmend })
       }
     })

@@ -19,6 +19,8 @@ interface IEventRowProps {
   isNew: boolean
   /** Tell if the event is last */
   isLast: boolean
+  /** Dipacther from EventProvider */
+  dispatch: any
 }
 
 export const EventRow = ({
@@ -28,14 +30,24 @@ export const EventRow = ({
   index,
   style,
   isNew,
-  isLast
+  isLast,
+  dispatch
 }: IEventRowProps) => {
   const { translate } = React.useContext(I18nContext)
 
   return (
     <CellMeasurer cache={cache} parent={parent} rowIndex={index}>
       {({ measure }) => (
-        <div style={style} onLoad={measure}>
+        <div
+          style={style}
+          onLoad={measure}
+          onClick={() =>
+            dispatch({
+              type: 'NEW_EVENT_READED',
+              payload: { eventId: data._id }
+            })
+          }
+        >
           <Event data={data} />
           {isNew ? (
             <Divider content={translate('OLD_EVENTS')} />
