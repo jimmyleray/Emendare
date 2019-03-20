@@ -42,7 +42,6 @@ export const News = () => {
           events={events}
           newEvents={newEvents}
           hasNextPage={hasNextPage}
-          dispatch={dispatch}
         />
       </React.Fragment>
     )

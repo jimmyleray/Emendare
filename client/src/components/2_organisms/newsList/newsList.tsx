@@ -19,12 +19,10 @@ import { Socket } from '../../../services'
 interface INewsListProps {
   /** List of events */
   events: IEvent[]
-  /** All the new events which havn't been readed yet*/
+  /** All the new events which havn't been readed yet */
   newEvents: IEvent[]
   /** Tell if there are more events to be loaded */
   hasNextPage: boolean
-  /** Dipatcher from the eventProvider */
-  dispatch: any
 }
 
 const isEventNew = (newEvents: IEvent[], events: IEvent[], index: number) => {
@@ -37,8 +35,7 @@ const isEventNew = (newEvents: IEvent[], events: IEvent[], index: number) => {
 export const NewsList = ({
   events,
   newEvents,
-  hasNextPage,
-  dispatch
+  hasNextPage
 }: INewsListProps) => {
   const { ref, width } = useComponentSize()
   /** Default cache for cell mesurement */
@@ -62,7 +59,6 @@ export const NewsList = ({
         index={index}
         style={style}
         key={key}
-        dispatch={dispatch}
         {...rest}
       />
     )

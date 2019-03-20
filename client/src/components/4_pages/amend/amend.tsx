@@ -74,7 +74,7 @@ export const AmendPage = ({ match }: any) => {
           subtitle={amend.data.name}
           className="has-text-centered"
         />
-        <Tabs tabsName={['amend', 'arguments', 'result']}>
+        <Tabs tabsName={['amend', 'result']}>
           <Tabs.Menu className="is-fullwidth">
             <Tabs.Tab to="amend">{translate('AMEND')}</Tabs.Tab>
             {false && (

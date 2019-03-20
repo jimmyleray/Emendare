@@ -4,10 +4,12 @@ import {
   Divider,
   Link,
   UserContext,
+  EventsContext,
   I18nContext,
   DropDown
 } from '../../../components'
 import { path } from '../../../config'
+import { Socket, Title } from '../../../services'
 
 export const Navbar = () => {
   const userContext = React.useContext(UserContext)
@@ -15,6 +17,16 @@ export const Navbar = () => {
   const { translate } = i18nContext
 
   const [burgerIsActive, setBurgerActive] = React.useState(false)
+  const { newEvents, hasNextPage } = React.useContext(EventsContext)
+
+  React.useEffect(() => {
+    if (userContext.user && hasNextPage) {
+      Socket.emit('events')
+    }
+  }, [userContext.user])
+
+  const newEventsCount = userContext.user ? newEvents.length : 0
+  Title.badgeCount = newEventsCount
 
   return (
     <nav
@@ -52,6 +64,19 @@ export const Navbar = () => {
         id="navbar-menu"
         className={'navbar-menu ' + (burgerIsActive ? 'is-active' : '')}
       >
+        <div className="navbar-start is-hidden-mobile">
+          <Link to={path.explore} className="navbar-item">
+            {translate('EXPLORE')}
+          </Link>
+          <Link to={path.news} className="navbar-item">
+            <span
+              className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}
+              data-badge={newEventsCount}
+            >
+              {translate('NEWS')}
+            </span>
+          </Link>
+        </div>
         <div className="navbar-end">
           {!userContext.isConnectionPending ? (
             userContext.isConnected() ? (

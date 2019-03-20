@@ -11,7 +11,7 @@ import { path } from '../../../config'
 import { useLocation } from 'react-use'
 import { Socket } from '../../../services'
 
-export const Footer = () => {
+export const Footer = ({ className }: any) => {
   const { translate } = React.useContext(I18nContext)
   const location = useLocation()
 
@@ -30,7 +30,7 @@ export const Footer = () => {
   return (
     <React.Fragment>
       <hr style={{ margin: 0 }} />
-      <div className="tabs is-fullwidth is-medium">
+      <div className={'tabs is-fullwidth is-medium ' + className}>
         <ul>
           <li className={location.pathname === path.home ? 'is-active' : ''}>
             <Link to={path.home}>
