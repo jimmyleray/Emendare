@@ -52,7 +52,7 @@
     "express": "4.16.4",
     "express-sslify": "1.2.0",
     "lodash": "4.17.11",
-    "react": "16.8.4",
+    "react": "16.8.5",
     "react-chartjs-2": "2.7.4",
     "react-dom": "16.8.4",
     "react-json-tree": "^0.11.2",
