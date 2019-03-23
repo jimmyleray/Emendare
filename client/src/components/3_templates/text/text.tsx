@@ -55,10 +55,7 @@ export const Text = ({
           subtitle={data.description}
           className="has-text-centered"
         />
-        <Tabs
-          tabsName={['text', 'votes', 'historic']}
-          location={location}
-        >
+        <Tabs tabsName={['text', 'votes', 'historic']} location={location}>
           <Tabs.Menu className="is-fullwidth">
             <Tabs.Tab to="text">{translate('TEXT')}</Tabs.Tab>
             <Tabs.Tab to="votes">

@@ -52,9 +52,9 @@
     "express": "4.16.4",
     "express-sslify": "1.2.0",
     "lodash": "4.17.11",
-    "react": "16.8.4",
+    "react": "16.8.5",
     "react-chartjs-2": "2.7.4",
-    "react-dom": "16.8.4",
+    "react-dom": "16.8.5",
     "react-json-tree": "^0.11.2",
     "react-masonry-component": "^6.2.1",
     "react-router-dom": "4.4.0",
@@ -66,18 +66,18 @@
   },
   "devDependencies": {
     "@types/chart.js": "2.7.44",
-    "@types/diff": "4.0.1",
+    "@types/diff": "4.0.2",
     "@types/enzyme": "^3.1.17",
     "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/jest": "24.0.11",
     "@types/lodash": "^4.14.122",
-    "@types/node": "11.11.4",
+    "@types/node": "11.11.6",
     "@types/react": "16.8.8",
     "@types/react-dom": "16.8.3",
     "@types/react-json-tree": "^0.6.11",
     "@types/react-router-dom": "4.3.1",
     "@types/socket.io-client": "1.4.32",
-    "@types/react-virtualized": "9.18.12",
+    "@types/react-virtualized": "9.21.0",
     "babel-eslint": "9.0.0",
     "codecov": "3.1.0",
     "cypress": "3.2.0",
@@ -103,6 +103,6 @@
     "tslint-react-hooks": "^2.0.0",
     "typedoc": "0.14.2",
     "typescript": "3.3.3",
-    "react-testing-library": "6.0.1"
+    "react-testing-library": "6.0.2"
   }
 }

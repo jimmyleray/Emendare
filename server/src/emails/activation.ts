@@ -16,7 +16,7 @@ export const activation: IEmail = {
           <mj-text color="#525252">Cliquez sur le lien ci-dessous pour activer votre compte sur Emendare:</mj-text>
           <mj-button  href="${
             config.clientUrl
-          }/activation/${activationToken}">Activer mon compte</mj-button>
+          }/activate/${activationToken}">Activer mon compte</mj-button>
           <mj-text align="right" color="#525252">L'équipe d'Emendare</mj-text>
         </mj-column>
       </mj-section>

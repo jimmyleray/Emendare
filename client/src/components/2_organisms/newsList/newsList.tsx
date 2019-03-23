@@ -40,7 +40,6 @@ export const NewsList = ({
   const { ref, width } = useComponentSize()
   /** Default cache for cell mesurement */
   const cache = new CellMeasurerCache({
-    defaultHeight: 70,
     fixedWidth: true
   })
 

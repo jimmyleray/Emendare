@@ -12,9 +12,9 @@ interface IEventProviderProps {
 
 interface IEventProviderState {
   error: any
-  events: Array<IEvent>
+  events: IEvent[]
   hasNextPage: boolean
-  newEvents: Array<IEvent>
+  newEvents: IEvent[]
   dispatch: any
 }
 
@@ -23,9 +23,7 @@ const initialState: IEventProviderState = {
   hasNextPage: true,
   error: undefined,
   newEvents: [],
-  dispatch: () => {
-    return
-  }
+  dispatch: null
 }
 
 export const EventsContext = React.createContext(initialState)
@@ -34,28 +32,28 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
   const { user } = useContext(UserContext)
   // Reducer function
   const reducer = (
-    state: IEventProviderState,
+    previousState: IEventProviderState,
     action: { type: string; payload: any }
   ): IEventProviderState => {
     switch (action.type) {
       case 'ADD_NEW_EVENTS':
-        const events = [...state.events]
-        const newEvents = [...state.newEvents]
+        const events = [...previousState.events]
+        const newEvents = [...previousState.newEvents]
         events.unshift(action.payload.events)
         newEvents.push(action.payload.events)
         return {
-          ...state,
+          ...previousState,
           error: action.payload.error,
           events: _.uniqBy(events, '_id'),
           newEvents: _.uniqBy(newEvents, '_id')
         }
       case 'ADD_OLD_EVENTS':
         const listEvents = _.uniqBy(
-          _.concat(state.events, action.payload.events),
+          _.concat(previousState.events, action.payload.events),
           '_id'
         )
         return {
-          ...state,
+          ...previousState,
           error: action.payload.error,
           hasNextPage: action.payload.hasNextPage,
           events: listEvents,
@@ -64,17 +62,20 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
       case 'NEW_EVENTS_READED':
         Socket.emit('updateLastEventDate')
         return {
-          ...state,
+          ...previousState,
           newEvents: []
         }
       case 'NEW_EVENT_READED':
         Socket.emit('updateLastEventDate')
         return {
-          ...state,
-          newEvents: deleteNewEvent(action.payload.eventId, state.newEvents)
+          ...previousState,
+          newEvents: deleteNewEvent(
+            action.payload.eventId,
+            previousState.newEvents
+          )
         }
       default:
-        return state
+        return previousState
     }
   }
 
@@ -95,7 +96,7 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
         dispatch({
           type: 'ADD_OLD_EVENTS',
           payload: {
-            error: error,
+            error,
             events: data.events,
             hasNextPage: data.hasNextPage,
             lastEventDate: user ? user.lastEventDate : null
@@ -109,10 +110,7 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
         ({ error, data }: { error: IError; data: IEvent }) => {
           dispatch({
             type: 'ADD_NEW_EVENTS',
-            payload: {
-              error: error,
-              events: data
-            }
+            payload: { error, events: data }
           })
         }
       )
