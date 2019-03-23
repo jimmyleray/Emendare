@@ -10,8 +10,9 @@ import {
   DataContext,
   I18nContext,
   Link,
-  Spacer,
-  Tag
+  Tag,
+  Tags,
+  StopWatch
 } from '../../../components'
 import { path } from '../../../config'
 import { isUndefined, sortBy } from 'lodash'
@@ -73,12 +74,24 @@ export const Explore = () => {
                   <p className="is-size-4">{text.name}</p>
                   <p>{text.description}</p>
                   <br />
-                  <Tag className="is-medium">
-                    <span>{text.followersCount}</span>
-                    <Icon
-                      type={'fa fa-user' + (text.followersCount > 1 ? 's' : '')}
-                    />
-                  </Tag>
+                  <Tags className="are-medium">
+                    <Tag>
+                      <span>{text.followersCount}</span>
+                      <Icon
+                        type={
+                          'fa fa-user' + (text.followersCount > 1 ? 's' : '')
+                        }
+                      />
+                    </Tag>
+                    <Tag>
+                      <span>{text.amends.length}</span>
+                      <Icon type="fas fa-comments" />
+                    </Tag>
+                    <Tag>
+                      <Icon type="fas fa-history" />
+                      <StopWatch date={text.created} />
+                    </Tag>
+                  </Tags>
                 </Box>
               </Link>
               <Divider className="is-hidden-tablet" style={{ margin: 0 }} />
