@@ -10,7 +10,8 @@ import {
   DataContext,
   I18nContext,
   Link,
-  Spacer
+  Spacer,
+  Tag
 } from '../../../components'
 import { path } from '../../../config'
 import { isUndefined, sortBy } from 'lodash'
@@ -69,22 +70,15 @@ export const Explore = () => {
                 className="has-text-dark"
               >
                 <Box style={{ marginBottom: '0px' }}>
-                  <div
-                    className="is-size-4 is-flex"
-                    style={{ flexWrap: 'wrap' }}
-                  >
-                    <p>{text.name}</p>
-                    <Spacer />
-                    <p>
-                      {text.followersCount}{' '}
-                      <Icon
-                        type={
-                          'fa fa-user' + (text.followersCount > 1 ? 's' : '')
-                        }
-                      />
-                    </p>
-                  </div>
+                  <p className="is-size-4">{text.name}</p>
                   <p>{text.description}</p>
+                  <br />
+                  <Tag className="is-medium">
+                    <span>{text.followersCount}</span>
+                    <Icon
+                      type={'fa fa-user' + (text.followersCount > 1 ? 's' : '')}
+                    />
+                  </Tag>
                 </Box>
               </Link>
               <Divider className="is-hidden-tablet" style={{ margin: 0 }} />
