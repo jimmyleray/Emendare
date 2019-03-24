@@ -14,6 +14,11 @@ class TitleService {
 
   set badgeCount(newBadgeCount: number) {
     this._badgeCount = newBadgeCount
+    this.updateFavicon(
+      this._badgeCount > 0
+        ? '/images/favicon-indicator.png'
+        : '/images/favicon.png'
+    )
     this.updateTitle()
   }
 
@@ -25,6 +30,22 @@ class TitleService {
 
   private updateTitle() {
     document.title = this.documentTitle
+  }
+
+  private updateFavicon(img: string) {
+    let favicon = document.querySelector('link[rel="shortcut icon"]')
+
+    if (!favicon) {
+      favicon = document.createElement('link')
+      favicon.setAttribute('rel', 'shortcut icon')
+      const head = document.querySelector('head')
+      if (head) {
+        head.appendChild(favicon)
+      }
+    }
+
+    favicon.setAttribute('type', 'image/png')
+    favicon.setAttribute('href', img)
   }
 }
 

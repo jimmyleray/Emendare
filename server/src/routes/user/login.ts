@@ -12,14 +12,6 @@ export const login = {
       response = await User.login(undefined, undefined, token)
     } else if (data) {
       response = await User.login(data.email, data.password, token)
-      if (!response) {
-        response = {
-          error: {
-            code: 500,
-            message: 'Problème avec le service de login'
-          }
-        }
-      }
     } else {
       response = {
         error: {

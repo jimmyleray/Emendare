@@ -67,7 +67,7 @@ export const UpdateEmail = () => {
             ariaLabel="email input"
             value={email}
             autoComplete="off"
-            iconLeft="fas fa-envelope"
+            iconLeft="fa-envelope"
           />
         </div>
       </div>

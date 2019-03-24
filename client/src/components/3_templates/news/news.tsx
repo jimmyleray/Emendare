@@ -3,114 +3,49 @@
 import React from 'react'
 import {
   Button,
-  Buttons,
-  Divider,
-  Event,
-  DataContext,
   UserContext,
-  Icon
+  EventsContext,
+  NewsList,
+  I18nContext
 } from '../../../components'
 import { Socket } from '../../../services'
-import { IEvent } from '../../../../../interfaces'
-import { I18nContext } from '../../5_contexts'
 
-interface INewsState {
-  displayTextEvents: boolean
-  displayAmendEvents: boolean
-  displayResultEvents: boolean
-}
+export const News = () => {
+  const { translate } = React.useContext(I18nContext)
+  const { user } = React.useContext(UserContext)
+  const { events, hasNextPage, newEvents, dispatch } = React.useContext(
+    EventsContext
+  )
 
-export class News extends React.Component<{}, INewsState> {
-  private updateLastEventDate: any
-
-  constructor(props: any) {
-    super(props)
-
-    this.updateLastEventDate = () => {
-      Socket.emit('updateLastEventDate')
+  React.useEffect(() => {
+    if (hasNextPage) {
+      Socket.emit('events')
     }
-  }
+  }, [])
 
-  public render() {
+  if (events.length > 0) {
+    const newEventsCount = user ? newEvents.length : 0
     return (
-      <I18nContext.Consumer>
-        {({ translate }) => (
-          <UserContext.Consumer>
-            {({ user }) => {
-              const lastEventDate =
-                user && new Date(user.lastEventDate).getTime()
-              return (
-                <DataContext.Consumer>
-                  {({ get }) => {
-                    const events = get('events')('all')
-
-                    if (events && events.data) {
-                      const newEventsCount = user
-                        ? events.data.filter(
-                            (event: any) =>
-                              new Date(event.created).getTime() >
-                              new Date(user.lastEventDate).getTime()
-                          ).length
-                        : 0
-
-                      return (
-                        <React.Fragment>
-                          <Divider
-                            content={
-                              newEventsCount > 0
-                                ? translate('NEW_EVENTS')
-                                : translate('EVENTS_LIST')
-                            }
-                          />
-
-                          {newEventsCount > 0 && (
-                            <Button
-                              className="is-fullwidth is-dark "
-                              style={{
-                                marginBottom: '1.5rem'
-                              }}
-                              onClick={this.updateLastEventDate}
-                            >
-                              {translate('MARK_AS_READ')}
-                            </Button>
-                          )}
-
-                          <div>
-                            {events.data.map(
-                              (event: IEvent, index: number, array: any[]) => {
-                                return (
-                                  <div
-                                    key={event._id}
-                                    style={{ marginBottom: '4px' }}
-                                  >
-                                    <Event data={event} />
-                                    {lastEventDate &&
-                                      newEventsCount > 0 &&
-                                      (new Date(event.created).getTime() >
-                                        lastEventDate &&
-                                        array[index + 1] &&
-                                        new Date(
-                                          array[index + 1].created
-                                        ).getTime() < lastEventDate && (
-                                          <Divider
-                                            content={translate('OLD_EVENTS')}
-                                          />
-                                        ))}
-                                  </div>
-                                )
-                              }
-                            )}
-                          </div>
-                        </React.Fragment>
-                      )
-                    }
-                  }}
-                </DataContext.Consumer>
-              )
+      <React.Fragment>
+        {newEventsCount > 0 && (
+          <Button
+            className="is-fullwidth is-link"
+            style={{ marginBottom: '1.5rem' }}
+            onClick={() => {
+              dispatch({ type: 'NEW_EVENTS_READED' })
             }}
-          </UserContext.Consumer>
+          >
+            {translate('MARK_AS_READ')}
+          </Button>
         )}
-      </I18nContext.Consumer>
+        <NewsList
+          events={events}
+          newEvents={newEvents}
+          hasNextPage={hasNextPage}
+        />
+      </React.Fragment>
     )
+  } else {
+    return null
   }
 }

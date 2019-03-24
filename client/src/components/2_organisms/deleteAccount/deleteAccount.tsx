@@ -1,9 +1,15 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { ConfirmAlert, Button, Icon, Input } from '../../../components'
+import React, { useEffect, useState, useCallback, useContext } from 'react'
+import {
+  ConfirmAlert,
+  Button,
+  Icon,
+  Input,
+  UserContext
+} from '../../../components'
 import { Socket } from '../../../services'
 import { useAlert } from '../../../hooks'
-import { callAll } from '../../../helpers'
 import { IUser } from '../../../../../interfaces'
+import { callAll } from '../../../helpers'
 
 const DeleteAccountMessage = ({ type, placeholder, ...rest }: any) => (
   <React.Fragment>
@@ -15,7 +21,7 @@ const DeleteAccountMessage = ({ type, placeholder, ...rest }: any) => (
       <Input
         type="email"
         placeholder="Tapez votre email pour confirmer"
-        iconLeft="fas fa-envelope"
+        iconLeft="fa-envelope"
         ariaLabel="Tapez votre email pour confirmer"
         className="is-danger"
         {...rest}
@@ -32,6 +38,7 @@ interface IDeleteAccountProps {
 export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
   const [email, setEmail] = useState('')
   const { showAlert, openAlert, closeAlert } = useAlert()
+  const { logout } = useContext(UserContext)
 
   useEffect(() => {
     return () => {
@@ -43,8 +50,10 @@ export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
     setEmail(event.target.value)
   }, [])
 
-  const deleteAccount = () => {
-    Socket.fetch('deleteAccount').catch(console.error)
+  const deleteAccount = async () => {
+    await Socket.fetch('deleteAccount')
+      .then(logout)
+      .catch(console.error)
   }
 
   return (
@@ -62,7 +71,7 @@ export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
           onClick={openAlert}
           className="is-danger is-outlined is-fullwidth"
         >
-          <Icon type="fas fa-trash-alt" />
+          <Icon type={'solid'} name="fa-trash-alt" />
           <span>Supprimer mon compte</span>
         </Button>
       )}

@@ -44,15 +44,15 @@ export class ActivatePage extends React.Component<
       <Page title="Activation">
         <div className="field has-text-centered">
           <Icon
-            type={
-              'fas ' +
-              (this.state.pending
+            type={'solid'}
+            name={
+              this.state.pending
                 ? 'fa-question-circle'
                 : this.state.activated
                 ? 'fa-check-circle has-text-success'
-                : 'fa-times-circle has-text-danger')
+                : 'fa-times-circle has-text-danger'
             }
-            className="fa-3x is-large"
+            className={'fa-3x is-large'}
             title="Activé"
           />
           <h1 className="is-size-3">Activation de votre compte</h1>

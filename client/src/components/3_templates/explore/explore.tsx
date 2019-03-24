@@ -10,7 +10,9 @@ import {
   DataContext,
   I18nContext,
   Link,
-  Spacer
+  Tag,
+  Tags,
+  StopWatch
 } from '../../../components'
 import { path } from '../../../config'
 import { isUndefined, sortBy } from 'lodash'
@@ -49,7 +51,7 @@ export const Explore = () => {
               setSearch(event.target.value)
             }}
           />
-          <Icon type="fa fa-search" className="is-right" />
+          <Icon name="fa-search" className="is-right" />
         </p>
       </div>
       <Divider content={translate('TEXTS_LIST')} />
@@ -69,22 +71,25 @@ export const Explore = () => {
                 className="has-text-dark"
               >
                 <Box style={{ marginBottom: '0px' }}>
-                  <div
-                    className="is-size-4 is-flex"
-                    style={{ flexWrap: 'wrap' }}
-                  >
-                    <p>{text.name}</p>
-                    <Spacer />
-                    <p>
-                      {text.followersCount}{' '}
-                      <Icon
-                        type={
-                          'fa fa-user' + (text.followersCount > 1 ? 's' : '')
-                        }
-                      />
-                    </p>
-                  </div>
+                  <p className="is-size-4">{text.name}</p>
                   <p>{text.description}</p>
+                  <br />
+                  <Tags className="are-medium">
+                    <Tag>
+                      <span>{text.followersCount}</span>
+                      <Icon
+                        name={'fa-user' + (text.followersCount > 1 ? 's' : '')}
+                      />
+                    </Tag>
+                    <Tag>
+                      <span>{text.amends.length}</span>
+                      <Icon name="fa-comments" />
+                    </Tag>
+                    <Tag>
+                      <Icon name="fa-history" />
+                      <StopWatch date={text.created} />
+                    </Tag>
+                  </Tags>
                 </Box>
               </Link>
               <Divider className="is-hidden-tablet" style={{ margin: 0 }} />
@@ -93,8 +98,8 @@ export const Explore = () => {
       </Grid>
       <div style={{ paddingTop: '2rem' }}>
         <Link to={path.create}>
-          <Button className="is-info is-fullwidth">
-            <Icon type="fa fa-plus" />
+          <Button className="is-link is-fullwidth is-outlined">
+            <Icon name="fa-plus" />
             <span>{translate('ADD_A_TEXT')}</span>
           </Button>
         </Link>

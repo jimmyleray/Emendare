@@ -13,12 +13,12 @@ import {
   Hero,
   Spacer,
   Background,
-  I18nContext
+  I18nContext,
+  Tabs
 } from '../../../components'
 import { Socket, Pagination } from '../../../services'
 import { IText } from '../../../../../interfaces'
 import { path } from '../../../config'
-import { useTabs } from '../../../hooks'
 import { sortBy } from 'lodash'
 import * as JsDiff from 'diff'
 
@@ -33,36 +33,6 @@ export const Text = ({
   const dataContext = React.useContext(DataContext)
   const i18nContext = React.useContext(I18nContext)
   const { translate } = i18nContext
-
-  const {
-    selectedTab,
-    setSelectedTab,
-    selectNextTab,
-    selectPreviousTab
-  } = useTabs(['text', 'votes', 'rules', 'history'])
-
-  React.useEffect(() => {
-    setSelectedTab(
-      location
-        ? new URLSearchParams(location.search).get('tab') || 'text'
-        : 'text'
-    )
-  }, [location])
-
-  React.useEffect(() => {
-    const eventHandler = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowRight') {
-        selectNextTab()
-      } else if (event.key === 'ArrowLeft') {
-        selectPreviousTab()
-      }
-    }
-
-    document.addEventListener('keyup', eventHandler)
-    return () => {
-      document.removeEventListener('keyup', eventHandler)
-    }
-  })
 
   const [historyVersion, setHistoryVersion] = React.useState(
     (data && data.patches.length) || 0
@@ -85,317 +55,284 @@ export const Text = ({
           subtitle={data.description}
           className="has-text-centered"
         />
-
-        <div className="tabs is-boxed is-fullwidth">
-          <ul>
-            <li className={selectedTab === 'text' ? 'is-active' : ''}>
-              <a
-                onClick={() => {
-                  setSelectedTab('text')
-                }}
+        <Tabs tabsName={['text', 'votes', 'historic']} location={location}>
+          <Tabs.Menu className="is-fullwidth">
+            <Tabs.Tab to="text">{translate('TEXT')}</Tabs.Tab>
+            <Tabs.Tab to="votes">
+              <span
+                className={
+                  amends.filter(
+                    (amend: any) => amend && amend.data && !amend.data.closed
+                  ).length > 0
+                    ? 'badge is-badge-danger'
+                    : ''
+                }
+                data-badge={
+                  amends.filter(
+                    (amend: any) => amend && amend.data && !amend.data.closed
+                  ).length
+                }
               >
-                {translate('TEXT')}
-              </a>
-            </li>
-            <li className={selectedTab === 'votes' ? 'is-active' : ''}>
-              <a
-                onClick={() => {
-                  setSelectedTab('votes')
-                }}
-              >
-                <span
-                  className={
-                    amends.filter(
-                      (amend: any) => amend && amend.data && !amend.data.closed
-                    ).length > 0
-                      ? 'badge is-badge-danger'
-                      : ''
-                  }
-                  data-badge={
-                    amends.filter(
-                      (amend: any) => amend && amend.data && !amend.data.closed
-                    ).length
-                  }
-                >
-                  {translate('AMENDS')}
-                </span>
-              </a>
-            </li>
-            <li className={selectedTab === 'rules' ? 'is-active' : ''}>
-              <a
-                onClick={() => {
-                  setSelectedTab('rules')
-                }}
-              >
-                {translate('RULES')}
-              </a>
-            </li>
-            {data.patches.length > 0 && (
-              <li className={selectedTab === 'history' ? 'is-active' : ''}>
-                <a
-                  onClick={() => {
-                    setSelectedTab('history')
-                  }}
-                >
-                  {translate('HISTORY')}
-                </a>
-              </li>
-            )}
-          </ul>
-        </div>
-
-        {selectedTab === 'text' && (
-          <React.Fragment>
-            <Buttons className="is-centered">
-              {userContext.isConnected() && (
-                <Button
-                  to={path.edit(data._id)}
-                  className="is-info"
-                  onClick={() => {
-                    Socket.emit('followText', { id: data._id })
-                  }}
-                >
-                  <Icon type="fas fa-plus" />
-                  <span>Proposer un amendement</span>
-                </Button>
-              )}
-
-              <Spacer className="is-hidden-mobile" />
-
-              {userContext.isConnected() &&
-                (userContext.user &&
-                userContext.user.followedTexts.find(
-                  (text: any) => text === data._id
-                ) ? (
+                {translate('AMENDS')}
+              </span>
+            </Tabs.Tab>
+            {false && <Tabs.Tab to="rules">{translate('RULES')}</Tabs.Tab>}
+            <Tabs.Tab to="historic">{translate('HISTORY')}</Tabs.Tab>
+          </Tabs.Menu>
+          <Tabs.Content for="text">
+            <React.Fragment>
+              <Buttons className="is-centered">
+                {userContext.isConnected() && (
                   <Button
-                    onClick={() => {
-                      Socket.emit('unFollowText', { id: data._id })
-                    }}
-                    className="button is-success is-outlined"
-                  >
-                    Ne plus participer au texte
-                  </Button>
-                ) : (
-                  <Button
+                    to={path.edit(data._id)}
+                    className="is-info"
                     onClick={() => {
                       Socket.emit('followText', { id: data._id })
                     }}
-                    className="button is-success"
                   >
-                    Participer à ce texte
+                    <Icon type={'solid'} name="fa-plus" />
+                    <span>Proposer un amendement</span>
                   </Button>
-                ))}
-            </Buttons>
+                )}
 
-            {data.actual ? (
-              <React.Fragment>
-                <p className="has-text-weight-semibold has-text-centered ">
-                  Version actuelle du texte
+                <Spacer className="is-hidden-mobile" />
+
+                {userContext.isConnected() &&
+                  (userContext.user &&
+                  userContext.user.followedTexts.find(
+                    (text: any) => text === data._id
+                  ) ? (
+                    <Button
+                      onClick={() => {
+                        Socket.emit('unFollowText', { id: data._id })
+                      }}
+                      className="button is-success is-outlined"
+                    >
+                      Ne plus participer au texte
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => {
+                        Socket.emit('followText', { id: data._id })
+                      }}
+                      className="button is-success"
+                    >
+                      Participer à ce texte
+                    </Button>
+                  ))}
+              </Buttons>
+
+              {data.actual ? (
+                <React.Fragment>
+                  <p className="has-text-weight-semibold has-text-centered ">
+                    Version actuelle du texte
+                  </p>
+                  <br />
+                  <Background className="has-background-light">
+                    {data.actual &&
+                      data.actual
+                        .split('\n')
+                        .map((line: string, index: number) =>
+                          line ? <p key={index}>{line}</p> : <br key={index} />
+                        )}
+                  </Background>
+                </React.Fragment>
+              ) : (
+                <p className="has-text-danger has-text-centered">
+                  Texte actuellement vide
                 </p>
-                <br />
-                <Background className="has-background-light">
-                  {data.actual &&
-                    data.actual
+              )}
+            </React.Fragment>
+          </Tabs.Content>
+          <Tabs.Content for="votes">
+            <React.Fragment>
+              {data.amends.length > 0 && (
+                <React.Fragment>
+                  <p className="has-text-weight-semibold">Votes en cours</p>
+                  <br />
+                  {amends.filter(
+                    (amend: any) => amend && amend.data && !amend.data.closed
+                  ).length > 0 ? (
+                    <React.Fragment>
+                      {amends
+                        .filter(
+                          (amend: any) =>
+                            amend && amend.data && !amend.data.closed
+                        )
+                        .map((amend: any) => (
+                          <div key={amend.data._id}>
+                            <ResultsIcon
+                              data={{
+                                up: amend.data.results.upVotesCount,
+                                down: amend.data.results.downVotesCount,
+                                ind: amend.data.results.indVotesCount,
+                                absent:
+                                  (amend.data.results.totalPotentialVotesCount
+                                    ? amend.data.results
+                                        .totalPotentialVotesCount
+                                    : data.followersCount) -
+                                  (amend.data.results.upVotesCount +
+                                    amend.data.results.downVotesCount +
+                                    amend.data.results.indVotesCount)
+                              }}
+                            />
+                            {' > '}
+
+                            <Link
+                              to={path.amend(amend.data._id)}
+                              className="has-text-weight-bold"
+                            >
+                              {amend.data.name}
+                            </Link>
+                          </div>
+                        ))}
+                    </React.Fragment>
+                  ) : (
+                    <p className="has-text-danger">Aucun vote en cours</p>
+                  )}
+
+                  {amends.filter(
+                    (amend: any) => amend && amend.data && amend.data.closed
+                  ).length > 0 && (
+                    <React.Fragment>
+                      <hr />
+                      <p className="has-text-weight-semibold">Votes clos</p>
+                      <br />
+                      {sortBy(
+                        amends
+                          .filter(
+                            (amend: any) =>
+                              amend && amend.data && amend.data.closed
+                          )
+                          .map((amend: any) => amend.data),
+                        ['finished']
+                      )
+                        .reverse()
+                        .map((amend: any) => (
+                          <p key={amend._id}>
+                            {amend.conflicted ? (
+                              <Icon
+                                type={'solid'}
+                                name="fa-minus-circle"
+                                className="has-text-dark"
+                                title="Refusé à cause d'un conflit technique"
+                              />
+                            ) : amend.accepted ? (
+                              <Icon
+                                type={'solid'}
+                                name="fa-check-circle"
+                                className="has-text-success"
+                                title="Accepté par les participants"
+                              />
+                            ) : (
+                              <Icon
+                                type={'solid'}
+                                name="fa-times-circle"
+                                className="has-text-danger"
+                                title="Refusé par les participants"
+                              />
+                            )}
+                            <Link to={path.amend(amend._id)}>{amend.name}</Link>
+                          </p>
+                        ))}
+                    </React.Fragment>
+                  )}
+                </React.Fragment>
+              )}
+
+              {data.amends.length === 0 && (
+                <p className="has-text-danger">Aucun amendement proposé</p>
+              )}
+            </React.Fragment>
+          </Tabs.Content>
+          <Tabs.Content for="rules">
+            <Notification className="is-warning">
+              Cette fonctionnalité sera bientôt disponible et vous permettra de
+              consulter et de proposer des modifications des règles des textes
+            </Notification>
+          </Tabs.Content>
+          <Tabs.Content for="historic">
+            <React.Fragment>
+              <nav
+                className="pagination is-right is-rounded"
+                role="navigation"
+                aria-label="pagination"
+              >
+                <Button
+                  className="pagination-previous"
+                  disabled={historyVersion <= 1}
+                  onClick={() => {
+                    setHistoryVersion(historyVersion - 1)
+                  }}
+                >
+                  Précédent
+                </Button>
+                <Button
+                  className="pagination-next"
+                  disabled={historyVersion >= data.patches.length}
+                  onClick={() => {
+                    setHistoryVersion(historyVersion + 1)
+                  }}
+                >
+                  Suivant
+                </Button>
+                <ul className="pagination-list">
+                  {Pagination.getRange(
+                    1,
+                    data.patches.length,
+                    historyVersion
+                  ).map((version, index) => {
+                    return version === '&' ? (
+                      <li key={index}>
+                        <span className="pagination-ellipsis">&hellip;</span>
+                      </li>
+                    ) : (
+                      <li key={index}>
+                        <a
+                          className={
+                            'pagination-link ' +
+                            (version === historyVersion ? 'is-current' : '')
+                          }
+                          aria-label={'Goto page ' + version}
+                          onClick={() => {
+                            setHistoryVersion(version)
+                          }}
+                        >
+                          {version}
+                        </a>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </nav>
+              <br />
+
+              {data.patches.length > 0 ? (
+                <React.Fragment>
+                  <p className="has-text-weight-semibold has-text-centered">
+                    Version{' '}
+                    {historyVersion === data.patches.length
+                      ? 'actuelle'
+                      : 'n°' + historyVersion}{' '}
+                    du texte
+                  </p>
+                  <br />
+                  <Background className="has-background-light">
+                    {versionedText
                       .split('\n')
                       .map((line: string, index: number) =>
                         line ? <p key={index}>{line}</p> : <br key={index} />
                       )}
-                </Background>
-              </React.Fragment>
-            ) : (
-              <p className="has-text-danger has-text-centered">
-                Texte actuellement vide
-              </p>
-            )}
-          </React.Fragment>
-        )}
-
-        {selectedTab === 'votes' && (
-          <React.Fragment>
-            {data.amends.length > 0 && (
-              <React.Fragment>
-                <p className="has-text-weight-semibold">Votes en cours</p>
-                <br />
-                {amends.filter(
-                  (amend: any) => amend && amend.data && !amend.data.closed
-                ).length > 0 ? (
-                  <React.Fragment>
-                    {amends
-                      .filter(
-                        (amend: any) =>
-                          amend && amend.data && !amend.data.closed
-                      )
-                      .map((amend: any) => (
-                        <div key={amend.data._id}>
-                          <ResultsIcon
-                            data={{
-                              up: amend.data.results.upVotesCount,
-                              down: amend.data.results.downVotesCount,
-                              ind: amend.data.results.indVotesCount,
-                              absent:
-                                (amend.data.results.totalPotentialVotesCount
-                                  ? amend.data.results.totalPotentialVotesCount
-                                  : data.followersCount) -
-                                (amend.data.results.upVotesCount +
-                                  amend.data.results.downVotesCount +
-                                  amend.data.results.indVotesCount)
-                            }}
-                          />
-                          {' > '}
-
-                          <Link
-                            to={path.amend(amend.data._id)}
-                            className="has-text-weight-bold"
-                          >
-                            {amend.data.name}
-                          </Link>
-                        </div>
-                      ))}
-                  </React.Fragment>
-                ) : (
-                  <p className="has-text-danger">Aucun vote en cours</p>
-                )}
-
-                {amends.filter(
-                  (amend: any) => amend && amend.data && amend.data.closed
-                ).length > 0 && (
-                  <React.Fragment>
-                    <hr />
-                    <p className="has-text-weight-semibold">Votes clos</p>
-                    <br />
-                    {sortBy(
-                      amends
-                        .filter(
-                          (amend: any) =>
-                            amend && amend.data && amend.data.closed
-                        )
-                        .map((amend: any) => amend.data),
-                      ['finished']
-                    )
-                      .reverse()
-                      .map((amend: any) => (
-                        <p key={amend._id}>
-                          {amend.conflicted ? (
-                            <Icon
-                              type="fas fa-minus-circle"
-                              className="has-text-dark"
-                              title="Refusé à cause d'un conflit technique"
-                            />
-                          ) : amend.accepted ? (
-                            <Icon
-                              type="fas fa-check-circle"
-                              className="has-text-success"
-                              title="Accepté par les participants"
-                            />
-                          ) : (
-                            <Icon
-                              type="fas fa-times-circle"
-                              className="has-text-danger"
-                              title="Refusé par les participants"
-                            />
-                          )}
-                          <Link to={path.amend(amend._id)}>{amend.name}</Link>
-                        </p>
-                      ))}
-                  </React.Fragment>
-                )}
-              </React.Fragment>
-            )}
-
-            {data.amends.length === 0 && (
-              <p className="has-text-danger">Aucun amendement proposé</p>
-            )}
-          </React.Fragment>
-        )}
-
-        {selectedTab === 'rules' && (
-          <Notification className="is-warning">
-            Cette fonctionnalité sera bientôt disponible et vous permettra de
-            consulter et de proposer des modifications des règles des textes
-          </Notification>
-        )}
-
-        {selectedTab === 'history' && (
-          <React.Fragment>
-            <nav
-              className="pagination is-right is-rounded"
-              role="navigation"
-              aria-label="pagination"
-            >
-              <Button
-                className="pagination-previous"
-                disabled={historyVersion <= 1}
-                onClick={() => {
-                  setHistoryVersion(historyVersion - 1)
-                }}
-              >
-                Précédent
-              </Button>
-              <Button
-                className="pagination-next"
-                disabled={historyVersion >= data.patches.length}
-                onClick={() => {
-                  setHistoryVersion(historyVersion + 1)
-                }}
-              >
-                Suivant
-              </Button>
-              <ul className="pagination-list">
-                {Pagination.getRange(
-                  1,
-                  data.patches.length,
-                  historyVersion
-                ).map((version, index) => {
-                  return version === '&' ? (
-                    <li key={index}>
-                      <span className="pagination-ellipsis">&hellip;</span>
-                    </li>
-                  ) : (
-                    <li key={index}>
-                      <a
-                        className={
-                          'pagination-link ' +
-                          (version === historyVersion ? 'is-current' : '')
-                        }
-                        aria-label={'Goto page ' + version}
-                        onClick={() => {
-                          setHistoryVersion(version)
-                        }}
-                      >
-                        {version}
-                      </a>
-                    </li>
-                  )
-                })}
-              </ul>
-            </nav>
-            <br />
-
-            {data.patches.length > 0 ? (
-              <React.Fragment>
-                <p className="has-text-weight-semibold has-text-centered">
-                  Version{' '}
-                  {historyVersion === data.patches.length
-                    ? 'actuelle'
-                    : 'n°' + historyVersion}{' '}
-                  du texte
+                  </Background>
+                </React.Fragment>
+              ) : (
+                <p className="has-text-danger has-text-centered">
+                  Texte actuellement vide
                 </p>
-                <br />
-                <Background className="has-background-light">
-                  {versionedText
-                    .split('\n')
-                    .map((line: string, index: number) =>
-                      line ? <p key={index}>{line}</p> : <br key={index} />
-                    )}
-                </Background>
-              </React.Fragment>
-            ) : (
-              <p className="has-text-danger has-text-centered">
-                Texte actuellement vide
-              </p>
-            )}
-          </React.Fragment>
-        )}
+              )}
+            </React.Fragment>
+          </Tabs.Content>
+        </Tabs>
       </React.Fragment>
     )
   )

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import socketIO from 'socket.io'
+import { Auth } from '../../services'
 import { Amend, User, Event } from '../../models'
 import { IResponse, IText, IEvent } from '../../../../interfaces'
 
@@ -32,7 +33,17 @@ export class Text {
     token: string,
     io?: socketIO.Server
   ): Promise<IResponse<IText>> {
-    const user = await User.model.findOne({ token })
+    if (!Auth.isTokenValid(token)) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Token expiré' }
+      }
+    }
+    const user = await User.model.findById(Auth.decodeToken(token).id)
     if (user && user.activated) {
       if (user.followedTexts.indexOf(id) === -1) {
         user.followedTexts.push(id)
@@ -64,7 +75,17 @@ export class Text {
     token: string,
     io?: socketIO.Server
   ): Promise<IResponse<IText>> {
-    const user = await User.model.findOne({ token })
+    if (!Auth.isTokenValid(token)) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Token expiré' }
+      }
+    }
+    const user = await User.model.findById(Auth.decodeToken(token).id)
     if (user && user.activated) {
       const id = user.followedTexts.indexOf(idText)
       if (id >= 0) {
@@ -97,25 +118,34 @@ export class Text {
     token: string,
     io?: socketIO.Server
   ): Promise<IResponse<IText>> {
-    const user = await User.model.findOne({ token })
+    if (!Auth.isTokenValid(token)) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Token expiré' }
+      }
+    }
+    const user = await User.model.findById(Auth.decodeToken(token).id)
     if (user && user.activated) {
       const data = await new this.model({
         description,
         name
       }).save()
 
-      await new Event.model({
+      const event: IEvent = await new Event.model({
         target: {
           type: 'text',
           id: data._id
         }
       }).save()
 
-      const events: IEvent[] = await Event.model.find().sort('-created')
       const texts: IText[] = await this.model.find()
 
       if (io) {
-        io.emit('events/all', { data: events })
+        io.emit('events/new', { data: event })
         io.emit('texts/all', { data: texts.map(texte => texte._id) })
       }
 
@@ -174,7 +204,7 @@ export class Text {
 
     othersAmends.forEach(async (otherAmend: any) => {
       const isPatchable = JsDiff.applyPatch(text.actual, otherAmend.patch)
-
+      let event: IEvent
       if (isPatchable) {
         otherAmend.version = text.patches.length
       } else {
@@ -183,7 +213,7 @@ export class Text {
         otherAmend.finished = new Date()
         otherAmend.totalPotentialVotesCount = text.followersCount
 
-        await new Event.model({
+        event = await new Event.model({
           target: {
             type: 'result',
             id: otherAmend._id
@@ -194,6 +224,9 @@ export class Text {
       await otherAmend.save()
 
       if (io) {
+        if (event) {
+          io.emit('events/new', { data: event })
+        }
         io.emit('amend/' + otherAmend._id, { data: otherAmend })
       }
     })

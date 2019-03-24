@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  DataContext,
-  Icon,
-  Link,
-  Notification,
-  StopWatch
-} from '../../../components'
+import { DataContext, Icon, Link, Box, StopWatch } from '../../../components'
 import { path } from '../../../config'
 import { IEvent } from '../../../../../interfaces'
 
@@ -26,8 +20,12 @@ const typeToText = (type: string) => (target: any) => {
     case 'amend':
       return (
         <p>
-          <Icon type="far fa-comment-alt" className="fa-lg has-text-primary" />
-          <Icon type="fas fa-chevron-right" />
+          <Icon
+            name="fa-comment-plus"
+            type={'light'}
+            className="fa-lg has-text-primary"
+          />
+          <Icon name="fa-chevron-right" type={'light'} />
           <span>
             Il y a{' '}
             <StopWatch
@@ -45,24 +43,24 @@ const typeToText = (type: string) => (target: any) => {
       return (
         <p>
           <Icon
-            type={
-              'fas ' +
-              (target.conflicted
-                ? 'fa-minus-circle'
+            type={'light'}
+            name={
+              target.conflicted
+                ? 'fa-comment-exclamation'
                 : target.accepted
-                ? 'fa-check-circle'
-                : 'fa-times-circle')
+                ? 'fa-comment-check'
+                : 'fa-comment-times'
             }
-            className={
-              'fa-lg ' +
-              (target.conflicted
+            className={[
+              'fa-lg',
+              target.conflicted
                 ? 'has-text-dark'
                 : target.accepted
                 ? 'has-text-success'
-                : 'has-text-danger')
-            }
+                : 'has-text-danger'
+            ].join(' ')}
           />
-          <Icon type="fas fa-chevron-right" />
+          <Icon type={'light'} name="fa-chevron-right" />
           <span>
             Il y a{' '}
             <StopWatch
@@ -84,8 +82,12 @@ const typeToText = (type: string) => (target: any) => {
     case 'text':
       return (
         <p>
-          <Icon type="fas fa-align-center" className="fa-lg has-text-info" />
-          <Icon type="fas fa-chevron-right" />
+          <Icon
+            type={'light'}
+            name="fa-comment-lines"
+            className="fa-lg has-text-info"
+          />
+          <Icon type={'light'} name="fa-chevron-right" />
           <span>
             Il y a{' '}
             <StopWatch
@@ -120,10 +122,11 @@ export const Event = ({ data }: IEventProps) => (
 
         return target && target.data ? (
           <React.Fragment>
-            <Link to={typeToUrl(data.target.type)(target.data)}>
-              <Notification className="is-light">
-                {typeToText(data.target.type)(target.data)}
-              </Notification>
+            <Link
+              to={typeToUrl(data.target.type)(target.data)}
+              className="has-text-dark"
+            >
+              {typeToText(data.target.type)(target.data)}
             </Link>
           </React.Fragment>
         ) : null

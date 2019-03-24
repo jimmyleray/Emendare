@@ -3,6 +3,7 @@ import {
   DataProvider,
   NotificationsProvider,
   UserProvider,
+  EventsProvider,
   I18nProvider
 } from '../../../components'
 
@@ -13,6 +14,7 @@ interface IProps {
 const providers = [
   UserProvider,
   DataProvider,
+  EventsProvider,
   NotificationsProvider,
   I18nProvider
 ]

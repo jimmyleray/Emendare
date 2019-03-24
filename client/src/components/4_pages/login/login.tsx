@@ -52,8 +52,8 @@ export class LoginPage extends React.Component<
         password: this.state.password,
         email: this.state.email
       })
-        .then(async (user: any) => {
-          localStorage.setItem('token', user.token)
+        .then(async ({ token }: any) => {
+          localStorage.setItem('token', token)
           await Socket.fetch('user')
           this.setState({ redirectToReferrer: true })
         })
@@ -105,7 +105,7 @@ export class LoginPage extends React.Component<
                 onChange={this.change('email')}
                 className="input is-medium"
                 type="email"
-                iconLeft="fas fa-envelope"
+                iconLeft="fa-envelope"
               />
             </div>
           </div>
@@ -118,7 +118,7 @@ export class LoginPage extends React.Component<
                 onChange={this.change('password')}
                 className="input is-medium"
                 type="password"
-                iconLeft="fas fa-lock"
+                iconLeft="fa-lock"
               />
             </div>
             <div className="has-text-right" style={{ marginTop: 4 }}>
