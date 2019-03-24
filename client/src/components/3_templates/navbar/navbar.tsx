@@ -42,7 +42,16 @@ export const Navbar = () => {
           className={'navbar-item has-text-weight-semibold'}
           style={{ textDecoration: 'none' }}
         >
-          <Logo size={36} style={{ fill: 'white' }} />
+          <Logo
+            size={36}
+            style={{ fill: 'white' }}
+            className="is-hidden-tablet"
+          />
+          <Logo
+            size={42}
+            style={{ fill: 'white' }}
+            className="is-hidden-mobile"
+          />
           <span style={{ marginLeft: 8 }}>Emendare</span>
         </Link>
         <a
