@@ -51,7 +51,7 @@ export const Explore = () => {
               setSearch(event.target.value)
             }}
           />
-          <Icon type="fa fa-search" className="is-right" />
+          <Icon name="fa-search" className="is-right" />
         </p>
       </div>
       <Divider content={translate('TEXTS_LIST')} />
@@ -78,17 +78,15 @@ export const Explore = () => {
                     <Tag>
                       <span>{text.followersCount}</span>
                       <Icon
-                        type={
-                          'fa fa-user' + (text.followersCount > 1 ? 's' : '')
-                        }
+                        name={'fa-user' + (text.followersCount > 1 ? 's' : '')}
                       />
                     </Tag>
                     <Tag>
                       <span>{text.amends.length}</span>
-                      <Icon type="fas fa-comments" />
+                      <Icon name="fa-comments" />
                     </Tag>
                     <Tag>
-                      <Icon type="fas fa-history" />
+                      <Icon name="fa-history" />
                       <StopWatch date={text.created} />
                     </Tag>
                   </Tags>
@@ -101,7 +99,7 @@ export const Explore = () => {
       <div style={{ paddingTop: '2rem' }}>
         <Link to={path.create}>
           <Button className="is-link is-fullwidth is-outlined">
-            <Icon type="fa fa-plus" />
+            <Icon name="fa-plus" />
             <span>{translate('ADD_A_TEXT')}</span>
           </Button>
         </Link>

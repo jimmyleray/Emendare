@@ -21,7 +21,7 @@ const DeleteAccountMessage = ({ type, placeholder, ...rest }: any) => (
       <Input
         type="email"
         placeholder="Tapez votre email pour confirmer"
-        iconLeft="fas fa-envelope"
+        iconLeft="fa-envelope"
         ariaLabel="Tapez votre email pour confirmer"
         className="is-danger"
         {...rest}
@@ -71,7 +71,7 @@ export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
           onClick={openAlert}
           className="is-danger is-outlined is-fullwidth"
         >
-          <Icon type="fas fa-trash-alt" />
+          <Icon type={'solid'} name="fa-trash-alt" />
           <span>Supprimer mon compte</span>
         </Button>
       )}

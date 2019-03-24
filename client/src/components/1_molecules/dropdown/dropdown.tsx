@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button } from '../../../components'
+import { Button, Icon } from '../../../components'
 
 interface IItemProps {
   /** Children node */
@@ -124,24 +124,22 @@ const Trigger = React.memo(({ title, icon }: ITriggerProps) => {
     <div className="dropdown-trigger">
       <Button onClick={drop}>
         <span>{title}</span>
-        <span className="icon">
-          <i
-            className={`fas ${icon ? icon : 'fa-angle-down'}`}
-            aria-hidden="true"
-          />
-        </span>
+        <Icon
+          type={'solid'}
+          name={icon ? icon : 'fa-angle-down'}
+          aria-hidden="true"
+        />
       </Button>
     </div>
   ) : (
     <div className="dropdown-trigger">
       <Button>
         <span>{title}</span>
-        <span className="icon">
-          <i
-            className={`fas ${icon ? icon : 'fa-angle-down'}`}
-            aria-hidden="true"
-          />
-        </span>
+        <Icon
+          type={'solid'}
+          name={icon ? icon : 'fa-angle-down'}
+          aria-hidden="true"
+        />
       </Button>
     </div>
   )

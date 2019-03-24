@@ -59,7 +59,7 @@ export const PwdForm = ({
               `input ${className} ` + UiEffectInput.setColor(pwdValid, password)
             }
             type="password"
-            iconLeft="fas fa-lock"
+            iconLeft="fa-lock"
           />
         </div>
         {displayHelper(pwdValid, password, {
@@ -85,7 +85,7 @@ export const PwdForm = ({
               UiEffectInput.setColor(pwdSame, checkPassword)
             }
             type="password"
-            iconLeft="fas fa-lock"
+            iconLeft="fa-lock"
           />
         </div>
         {displayHelper(pwdSame, checkPassword, {

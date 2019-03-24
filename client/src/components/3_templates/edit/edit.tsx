@@ -126,7 +126,7 @@ export class Edit extends React.Component<IEditProps, IEditState> {
             <Buttons>
               {this.props.data && (
                 <Button to={path.text(this.props.data._id)}>
-                  <Icon type="fas fa-chevron-left" />
+                  <Icon type={'solid'} name="fa-chevron-left" />
                   <span>Retour au texte</span>
                 </Button>
               )}
@@ -188,7 +188,7 @@ export class Edit extends React.Component<IEditProps, IEditState> {
                   onClick={this.restoreInitialValue}
                   className="is-danger is-outlined"
                 >
-                  <Icon type="fas fa-undo" />
+                  <Icon type={'solid'} name="fa-undo" />
                   <span>Restaurer le texte initial</span>
                 </Button>
               </Column>
