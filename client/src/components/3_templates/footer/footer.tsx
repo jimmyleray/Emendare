@@ -34,29 +34,30 @@ export const Footer = ({ className }: any) => {
         <ul>
           <li className={location.pathname === path.home ? 'is-active' : ''}>
             <Link to={path.home}>
-              <Icon type="fas fa-home" />
+              <Icon type={'light'} name="fa-home" />
               <span className="is-hidden-mobile">{translate('HOME')}</span>
+            </Link>
+          </li>
+          <li className={location.pathname === path.explore ? 'is-active' : ''}>
+            <Link to={path.explore}>
+              <Icon type={'light'} name="fa-search" />
+              <span className="is-hidden-mobile">{translate('EXPLORE')}</span>
             </Link>
           </li>
           <li className={location.pathname === path.news ? 'is-active' : ''}>
             <Link to={path.news}>
               <Icon
-                type="fas fa-bell"
+                type={'light'}
+                name="fa-bell"
                 className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}
                 data-badge={newEventsCount}
               />
               <span className="is-hidden-mobile">{translate('NEWS')}</span>
             </Link>
           </li>
-          <li className={location.pathname === path.explore ? 'is-active' : ''}>
-            <Link to={path.explore}>
-              <Icon type="fas fa-search" />
-              <span className="is-hidden-mobile">{translate('EXPLORE')}</span>
-            </Link>
-          </li>
           <li className={location.pathname === path.profile ? 'is-active' : ''}>
             <Link to={path.profile}>
-              <Icon type="fas fa-user" />
+              <Icon type={'light'} name="fa-user" />
               <span className="is-hidden-mobile">{translate('PROFILE')}</span>
             </Link>
           </li>

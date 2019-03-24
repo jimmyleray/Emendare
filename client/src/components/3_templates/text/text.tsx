@@ -90,7 +90,7 @@ export const Text = ({
                       Socket.emit('followText', { id: data._id })
                     }}
                   >
-                    <Icon type="fas fa-plus" />
+                    <Icon type={'solid'} name="fa-plus" />
                     <span>Proposer un amendement</span>
                   </Button>
                 )}
@@ -212,19 +212,22 @@ export const Text = ({
                           <p key={amend._id}>
                             {amend.conflicted ? (
                               <Icon
-                                type="fas fa-minus-circle"
+                                type={'solid'}
+                                name="fa-minus-circle"
                                 className="has-text-dark"
                                 title="Refusé à cause d'un conflit technique"
                               />
                             ) : amend.accepted ? (
                               <Icon
-                                type="fas fa-check-circle"
+                                type={'solid'}
+                                name="fa-check-circle"
                                 className="has-text-success"
                                 title="Accepté par les participants"
                               />
                             ) : (
                               <Icon
-                                type="fas fa-times-circle"
+                                type={'solid'}
+                                name="fa-times-circle"
                                 className="has-text-danger"
                                 title="Refusé par les participants"
                               />

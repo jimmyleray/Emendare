@@ -44,11 +44,9 @@ export const Input = React.memo(
               aria-label={ariaLabel}
               {...rest}
             />
-            {iconLeft && (
-              <Icon type={iconLeft} className="icon is-medium is-left" />
-            )}
+            {iconLeft && <Icon name={iconLeft} className="is-medium is-left" />}
             {iconRight && (
-              <Icon type={iconRight} className="icon is-medium is-right" />
+              <Icon name={iconRight} className="is-medium is-right" />
             )}
           </div>
         ) : (

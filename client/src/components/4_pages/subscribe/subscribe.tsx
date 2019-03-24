@@ -105,10 +105,7 @@ export class SubscribePage extends React.Component<{}, ISubscribePageState> {
                     type="email"
                     aria-label="email input"
                   />
-                  <Icon
-                    type="fas fa-envelope"
-                    className="icon is-medium is-left"
-                  />
+                  <Icon name="fa-envelope" className="is-medium is-left" />
                 </div>
               </div>
               <PwdForm

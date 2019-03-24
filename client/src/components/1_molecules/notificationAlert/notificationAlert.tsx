@@ -19,7 +19,7 @@ export const NotificationAlert = () => {
             style={{ margin: 0, borderRadius: 0 }}
           >
             <div className="container is-fluid">
-              <Icon type="fas fa-exclamation-circle" />
+              <Icon type={'solid'} name="fa-exclamation-circle" />
               Emendare a besoin de savoir si vous souhaitez{' '}
               <button
                 style={{
