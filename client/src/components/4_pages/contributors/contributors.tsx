@@ -45,19 +45,19 @@ export class ContributorsPage extends React.Component<
                 <br />
                 <br />
                 <div
-                  className="columns has-text-centered container"
-                  style={{ flexWrap: 'wrap' }}
+                  className="columns has-text-centered container is-flex"
+                  style={{ flexWrap: 'wrap', justifyContent: 'center' }}
                 >
                   {this.state.contributors
                     .filter(contributor => contributor.type === 'User')
                     .map(contributor => (
-                      <span key={contributor.id} className="column is-2">
+                      <div key={contributor.id} className="column is-2">
                         <Avatar
                           link={contributor.html_url}
                           imgUrl={contributor.avatar_url}
                           name={contributor.login}
                         />
-                      </span>
+                      </div>
                     ))}
                 </div>
                 <br />
@@ -67,19 +67,19 @@ export class ContributorsPage extends React.Component<
                 <br />
                 <br />
                 <div
-                  className="columns has-text-centered container"
-                  style={{ flexWrap: 'wrap' }}
+                  className="columns has-text-centered container is-flex"
+                  style={{ flexWrap: 'wrap', justifyContent: 'center' }}
                 >
                   {this.state.contributors
                     .filter(contributor => contributor.type === 'Bot')
                     .map(contributor => (
-                      <span key={contributor.id} className="column is-2">
+                      <div key={contributor.id} className="column is-2">
                         <Avatar
                           link={contributor.html_url}
                           imgUrl={contributor.avatar_url}
                           name={contributor.login}
                         />
-                      </span>
+                      </div>
                     ))}
                 </div>
               </div>
