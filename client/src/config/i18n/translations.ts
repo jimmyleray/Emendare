@@ -153,9 +153,13 @@ export const translations: ITranslations = {
     FR: "Pour contribuer à la plateforme rendez-vous sur le Github d'Emendare",
     EN: 'To contribute to the platform, visit the Github page of Emendare'
   },
-  THANKS_TO: {
-    FR: 'Merci à',
-    EN: 'Thanks to'
+  THANKS_TO_USERS: {
+    FR: 'Merci à ces contributeurs',
+    EN: 'Thanks to this contributors'
+  },
+  THANKS_TO_TOOLS: {
+    FR: 'Merci à ces outils',
+    EN: 'Thanks to this tools'
   },
   HOST_CONTACT_DETAILS: {
     FR: "Coordonnées de l'hébergeur",

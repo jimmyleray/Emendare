@@ -5,7 +5,7 @@ import { Tabs } from './tabs'
 
 describe('Tabs.Menu', () => {
   test('should render tabs bar with Test item', () => {
-    const { container, getByText } = render(
+    const { getByText } = render(
       <Tabs tabsName={['tabs']}>
         <Tabs.Menu>
           <Tabs.Tab to="tabs">Test</Tabs.Tab>
@@ -13,8 +13,6 @@ describe('Tabs.Menu', () => {
       </Tabs>
     )
     expect(getByText('Test')).toBeTruthy()
-    const li: any = container.querySelector('li')
-    console.log(li.classList.contains('is-active'))
   })
 
   test('should render tabs bar with Test item', () => {
