@@ -35,10 +35,13 @@ export class ContributorsPage extends React.Component<
             <Hero
               title={translate('CONTRIBUTORS_THANKS')}
               subtitle={translate('CONTRIBUTE_GITHUB')}
+              className="has-text-centered"
             />
             {this.state.contributors.length > 1 && (
-              <div className="container">
-                {translate('THANKS_TO_USERS')}
+              <div className="container is-size-5 has-text-centered">
+                <span className="is-size-4">
+                  {translate('THANKS_TO_USERS')}
+                </span>
                 <br />
                 <br />
                 <div
@@ -58,7 +61,9 @@ export class ContributorsPage extends React.Component<
                     ))}
                 </div>
                 <br />
-                {translate('THANKS_TO_TOOLS')}
+                <span className="is-size-4">
+                  {translate('THANKS_TO_TOOLS')}
+                </span>
                 <br />
                 <br />
                 <div

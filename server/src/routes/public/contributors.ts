@@ -10,11 +10,11 @@ export const contributors = {
     try {
       const res = await fetch(config.contributions.apiUrl)
       let data = await res.json()
-      data = data.map((d: any) => {
-        if (config.contributions.listPlugins.includes(d.login)) {
-          d.type = 'Bot'
+      data = data.map((item: any) => {
+        if (config.contributions.listPlugins.includes(item.login)) {
+          item.type = 'Bot'
         }
-        return d
+        return item
       })
       socket.emit('contributors', { data })
     } catch (error) {
