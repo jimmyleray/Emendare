@@ -1,7 +1,6 @@
 import React from 'react'
-import { Hero, Page, I18nContext } from '../../../components'
+import { Avatar, Hero, Page, I18nContext } from '../../../components'
 import { Socket } from '../../../services'
-import { Avatar } from '../../0_atoms/avatar/avatar'
 
 interface IContributorsPageState {
   contributors: any[]
