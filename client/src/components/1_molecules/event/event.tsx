@@ -21,7 +21,7 @@ const typeToText = (type: string) => (target: any) => {
       return (
         <p>
           <Icon
-            name="fa-comment-plus"
+            name="fa-plus"
             type={'light'}
             className="fa-lg has-text-primary"
           />
@@ -46,10 +46,10 @@ const typeToText = (type: string) => (target: any) => {
             type={'light'}
             name={
               target.conflicted
-                ? 'fa-comment-exclamation'
+                ? 'fa-times'
                 : target.accepted
-                ? 'fa-comment-check'
-                : 'fa-comment-times'
+                ? 'fa-check'
+                : 'fa-times'
             }
             className={[
               'fa-lg',
@@ -84,7 +84,7 @@ const typeToText = (type: string) => (target: any) => {
         <p>
           <Icon
             type={'light'}
-            name="fa-comment-lines"
+            name="fa-align-center"
             className="fa-lg has-text-info"
           />
           <Icon type={'light'} name="fa-chevron-right" />
