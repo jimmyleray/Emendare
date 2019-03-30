@@ -11,7 +11,6 @@ export const events = {
         data.limit,
         data.lastEventDate
       )
-      console.log(response)
       socket.emit('events', response)
     } catch (error) {
       console.error(error)
