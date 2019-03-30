@@ -12,7 +12,7 @@ export interface IProps {
   className?: string
   disabled?: boolean
   title?: string
-  type?: string
+  type?: 'button' | 'submit' | 'reset' | undefined
   /** Path */
   to?: string
 }
