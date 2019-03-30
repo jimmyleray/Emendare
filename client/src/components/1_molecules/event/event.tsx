@@ -23,7 +23,8 @@ const typeToText = (type: string) => (target: any) => {
           <Icon
             name="fa-plus"
             type={'light'}
-            className="fa-lg has-text-primary"
+            size="fa-lg"
+            className="has-text-primary"
           />
           <Icon name="fa-chevron-right" type={'light'} />
           <span>
@@ -51,14 +52,14 @@ const typeToText = (type: string) => (target: any) => {
                 ? 'fa-check'
                 : 'fa-times'
             }
-            className={[
-              'fa-lg',
+            size="fa-lg"
+            className={
               target.conflicted
                 ? 'has-text-dark'
                 : target.accepted
                 ? 'has-text-success'
                 : 'has-text-danger'
-            ].join(' ')}
+            }
           />
           <Icon type={'light'} name="fa-chevron-right" />
           <span>
