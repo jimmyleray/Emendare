@@ -47,7 +47,7 @@ export const Vote = ({
         disabled={amend.closed}
       >
         <span>{translate('UP_VOTE')}</span>
-        <Icon type={'solid'} name="fa-smile" className="fa-lg" />
+        <Icon type={'solid'} name="fa-smile" size="fa-lg" />
       </Button>
       <Button
         className={`is-info is-medium ${
@@ -57,7 +57,7 @@ export const Vote = ({
         disabled={amend.closed}
       >
         <span>{translate('IND_VOTE')}</span>
-        <Icon type={'solid'} name="fa-meh" className="fa-lg" />
+        <Icon type={'solid'} name="fa-meh" size="fa-lg" />
       </Button>
       <Button
         className={`is-danger is-medium ${
@@ -67,7 +67,7 @@ export const Vote = ({
         disabled={amend.closed}
       >
         <span>{translate('DOWN_VOTE')}</span>
-        <Icon type={'solid'} name="fa-frown" className="fa-lg" />
+        <Icon type={'solid'} name="fa-frown" size="fa-lg" />
       </Button>
     </Buttons>
   )
