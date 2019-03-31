@@ -15,7 +15,7 @@ export class Register extends BaseEntity {
   description: string
 
   @Column()
-  langage: string
+  language: string
 
   @Column()
   users: number

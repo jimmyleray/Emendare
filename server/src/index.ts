@@ -46,6 +46,9 @@ new Database()
 
     // Start Http Server
     http.listen(config.port, () => {
+      // Register instance
+      tasks.registerInstance()
+
       console.log(
         chalk.green(`Emendare server listening on port ${config.port}`)
       )
