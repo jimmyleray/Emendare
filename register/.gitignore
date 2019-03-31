@@ -10,7 +10,7 @@
 /docs
 
 # Build files
-/build
+/dist
 
 # Debug files
 npm-debug.log*

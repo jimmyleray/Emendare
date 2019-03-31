@@ -1,10 +1,26 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
-import config from './config'
+import * as rateLimit from 'express-rate-limit'
+import * as compression from 'compression'
+import * as helmet from 'helmet'
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
-  await app.listen(config.port)
-}
+NestFactory.create(AppModule).then(app => {
+  // Rate Limit
+  app.use(
+    rateLimit({
+      windowMs: 15 * 60 * 1000, // 15 minutes
+      max: 100 // limit each IP to 100 requests per windowMs
+    })
+  )
 
-bootstrap()
+  // Security
+  app.use(helmet())
+  app.enableCors()
+
+  // Compression
+  app.use(compression())
+
+  // Listening on a specific port
+  const port = Number(process.env.PORT) || 3003
+  app.listen(port)
+})
