@@ -20,13 +20,13 @@ export class RegisterController {
   }
 
   @Post()
-  async create(@Req() request: Request, @Body() data: Partial<Register>) {
+  async create(@Req() request: Request) {
     const url = request.originalUrl
     const register = (await Register.findOne({ url })) || Register.create()
-    Object.entries(data).forEach(([key, value]) => {
+    Object.entries(request.body).forEach(([key, value]) => {
       register[key] = value
     })
-    console.log(data, register)
+    console.log(request.body, register)
 
     return await register.save()
   }
