@@ -20,7 +20,7 @@ export class RegisterController {
 
   @Post()
   async create(@Req() request: Request) {
-    const url = request.host
+    const url = request.url
     const register = (await Register.findOne({ url })) || Register.create()
     Object.entries(request.body).forEach(([key, value]) => {
       register[key] = value
