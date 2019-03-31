@@ -12,8 +12,6 @@ const databaseConfig: ConnectionOptions = {
   useNewUrlParser: true
 }
 
-console.log(databaseConfig)
-
 export const databaseProvider = [
   {
     provide: 'DbConnectionToken',
