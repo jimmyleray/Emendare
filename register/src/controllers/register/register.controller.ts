@@ -15,12 +15,12 @@ export class RegisterController {
   @Get()
   async findAll() {
     const registers = await Register.find()
-    return registers.filter(register => !!register.url)
+    return registers.filter(register => !!register.url && register.url !== '/')
   }
 
   @Post()
   async create(@Req() request: Request) {
-    const url = request.originalUrl
+    const url = request.host
     const register = (await Register.findOne({ url })) || Register.create()
     Object.entries(request.body).forEach(([key, value]) => {
       register[key] = value
