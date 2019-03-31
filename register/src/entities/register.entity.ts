@@ -6,11 +6,5 @@ export class Register extends BaseEntity {
   id: ObjectID
 
   @Column()
-  name: string
-
-  @Column()
-  description: string
-
-  @Column()
   url: string
 }

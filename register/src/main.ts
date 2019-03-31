@@ -3,7 +3,6 @@ import { AppModule } from './app.module'
 import * as rateLimit from 'express-rate-limit'
 import * as compression from 'compression'
 import * as helmet from 'helmet'
-import config from './config'
 
 NestFactory.create(AppModule).then(app => {
   // Rate Limit
@@ -21,6 +20,7 @@ NestFactory.create(AppModule).then(app => {
   // Compression
   app.use(compression())
 
-  // Listening
-  app.listen(config.port)
+  // Listening on a specific port
+  const port = Number(process.env.PORT) || 3003
+  app.listen(port)
 })
