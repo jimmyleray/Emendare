@@ -5,8 +5,7 @@ import {
   Post,
   Req,
   UseInterceptors,
-  CacheInterceptor,
-  ForbiddenException
+  CacheInterceptor
 } from '@nestjs/common'
 import { Request } from 'express'
 import { Register } from '../../entities'
@@ -21,13 +20,13 @@ export class RegisterController {
   }
 
   @Post()
-  async create(@Req() request: Request, @Body('url') url: string) {
-    if (request.originalUrl === url) {
-      const register = (await Register.findOne({ url })) || new Register()
-      register.url = url
-      return await register.save()
-    } else {
-      throw new ForbiddenException()
-    }
+  async create(@Req() request: Request, @Body() data: Partial<Register>) {
+    const url = request.originalUrl
+    const register = (await Register.findOne({ url })) || new Register()
+    Object.entries(data).forEach(([key, value]) => {
+      register[key] = value
+    })
+
+    return await register.save()
   }
 }

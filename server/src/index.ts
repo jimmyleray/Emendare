@@ -46,6 +46,11 @@ new Database()
 
     // Start Http Server
     http.listen(config.port, () => {
+      // Register instance
+      if (process.env.NODE_ENV === 'production') {
+        tasks.registerInstance()
+      }
+
       console.log(
         chalk.green(`Emendare server listening on port ${config.port}`)
       )
