@@ -7,4 +7,22 @@ export class Register extends BaseEntity {
 
   @Column()
   url: string
+
+  @Column()
+  name: string
+
+  @Column()
+  description: string
+
+  @Column()
+  langage: string
+
+  @Column()
+  users: number
+
+  @Column()
+  texts: number
+
+  @Column()
+  created: Date | string
 }
