@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Body,
   Post,
   Req,
   UseInterceptors,
