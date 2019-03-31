@@ -25,8 +25,8 @@ export class RegisterController {
     Object.entries(request.body).forEach(([key, value]) => {
       register[key] = value
     })
-    console.log(request.body, register)
-
+    register.url = url
+    console.log(register)
     return await register.save()
   }
 }
