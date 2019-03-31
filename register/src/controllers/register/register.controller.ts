@@ -5,12 +5,10 @@ import {
   Post,
   Req,
   UseInterceptors,
-  CacheInterceptor,
-  NotAcceptableException
+  CacheInterceptor
 } from '@nestjs/common'
 import { Request } from 'express'
 import { Register } from '../../entities'
-import fetch from 'node-fetch'
 
 @Controller()
 @UseInterceptors(CacheInterceptor)
@@ -22,21 +20,13 @@ export class RegisterController {
   }
 
   @Post()
-  async create(@Req() request: Request) {
+  async create(@Req() request: Request, @Body() data: Partial<Register>) {
     const url = request.originalUrl
-    const res = await fetch(url + '/config')
-    if (res) {
-      const register = (await Register.findOne({ url })) || new Register()
-      register.url = url
+    const register = (await Register.findOne({ url })) || new Register()
+    Object.entries(data).forEach(([key, value]) => {
+      register[key] = value
+    })
 
-      const config: Partial<Register> = await res.json()
-      Object.entries(config).forEach(([key, value]) => {
-        register[key] = value
-      })
-
-      return await register.save()
-    } else {
-      throw new NotAcceptableException()
-    }
+    return await register.save()
   }
 }
