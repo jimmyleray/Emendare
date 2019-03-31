@@ -8,7 +8,7 @@ import {
 } from '../../../components'
 import { Title } from '../../../services'
 import { path } from '../../../config'
-import { useLocation } from 'react-use'
+import useLocation from 'react-use/lib/useLocation'
 import { Socket } from '../../../services'
 
 export const Footer = ({ className }: any) => {

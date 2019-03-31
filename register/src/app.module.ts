@@ -1,16 +1,15 @@
-import { Module } from '@nestjs/common'
-import { ApplicationController } from './controllers'
-import { registerProvider, databaseProvider } from './providers'
-import { HelloService, RegisterService } from './services'
+import { CacheModule, Module } from '@nestjs/common'
+import { RegisterController } from './controllers'
+import { databaseProvider } from './providers'
 
 @Module({
-  imports: [],
-  controllers: [ApplicationController],
-  providers: [
-    HelloService,
-    RegisterService,
-    ...databaseProvider,
-    ...registerProvider
-  ]
+  imports: [
+    CacheModule.register({
+      ttl: 5, // number of seconds in cache
+      max: 10 // maximum number of items in cache
+    })
+  ],
+  controllers: [RegisterController],
+  providers: [...databaseProvider]
 })
 export class AppModule {}
