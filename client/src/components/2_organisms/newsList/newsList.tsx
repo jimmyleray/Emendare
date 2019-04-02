@@ -34,7 +34,6 @@ export const NewsList = ({
 }: INewsListProps) => {
   /** Default cache for cell mesurement */
   const cache = new CellMeasurerCache({
-    defaultHeight: 77,
     fixedWidth: true
   })
 
