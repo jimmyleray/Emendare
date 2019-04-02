@@ -28,7 +28,7 @@ export const Footer = ({ className }: any) => {
   Title.badgeCount = newEventsCount
 
   return (
-    <React.Fragment>
+    <div className="navbar is-fixed-bottom" style={{ minHeight: 0 }}>
       <hr style={{ margin: 0 }} />
       <div className={'tabs is-fullwidth is-medium ' + className}>
         <ul>
@@ -63,6 +63,6 @@ export const Footer = ({ className }: any) => {
           </li>
         </ul>
       </div>
-    </React.Fragment>
+    </div>
   )
 }

@@ -34,3 +34,20 @@ export const loadMoreRows = async (
     })
   }
 }
+
+/**
+ * Tell if the event has not been readed by the user
+ * @param newEvents List of new events
+ * @param events  List of events
+ * @param index  current row index
+ */
+export const isEventNew = (
+  newEvents: IEvent[],
+  events: IEvent[],
+  index: number
+) => {
+  return newEvents.length > 0 && events.length > 0 && events[index + 1]
+    ? newEvents.map((event: IEvent) => event._id).indexOf(events[index]._id) ===
+        0
+    : false
+}

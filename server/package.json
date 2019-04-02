@@ -65,7 +65,7 @@
     "@types/mjml": "^4.0.1",
     "@types/mockingoose": "^2.11.0",
     "@types/mongoose": "5.3.24",
-    "@types/node": "11.12.2",
+    "@types/node": "11.12.3",
     "@types/node-fetch": "2.1.7",
     "@types/nodemailer": "4.6.7",
     "@types/socket.io": "2.1.2",
