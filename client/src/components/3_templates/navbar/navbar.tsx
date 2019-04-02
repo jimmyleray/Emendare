@@ -30,7 +30,7 @@ export const Navbar = () => {
 
   return (
     <nav
-      className="navbar is-dark"
+      className="navbar is-dark is-fixed-top"
       role="navigation"
       aria-label="main navigation"
       style={{ padding: '0 1rem' }}
