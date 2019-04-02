@@ -9,7 +9,7 @@ interface IProps {
 export const Layout = ({ children }: IProps) => (
   <div className="is-flex" style={{ flexDirection: 'column', height: '100vh' }}>
     <Navbar />
-    <div style={{ flex: 1, overflowY: 'scroll' }}>
+    <div style={{ flex: 1 }}>
       <Alerts />
       <section className="section">
         <div className="container">
