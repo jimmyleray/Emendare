@@ -9,6 +9,12 @@ interface IProps {
 // Main Page component that also update document title
 export const Page = ({ children, title }: IProps) => {
   React.useEffect(() => {
+    if (window.scrollY !== undefined) {
+      window.scroll(0, 0)
+    }
+  }, [window.scrollY])
+
+  React.useEffect(() => {
     Title.pageTitle = title
   }, [title])
 
