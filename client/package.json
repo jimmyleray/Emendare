@@ -76,7 +76,7 @@
     "@types/react-json-tree": "^0.6.11",
     "@types/react-router-dom": "4.3.1",
     "@types/socket.io-client": "1.4.32",
-    "@types/react-virtualized": "9.21.0",
+    "@types/react-virtualized": "9.21.1",
     "codecov": "3.3.0",
     "cypress": "3.2.0",
     "enzyme": "^3.8.0",
