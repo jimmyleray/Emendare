@@ -35,7 +35,6 @@ export class UserProvider extends React.Component<{}, IUserProviderState> {
 
     const token = localStorage.getItem('token')
     if (token) {
-      this.setState({ isConnectionPending: true })
       Socket.fetch('login')
         .then(({ user }: any) => {
           this.setState({ user, isConnectionPending: false })
