@@ -90,7 +90,7 @@ export const AmendPage = ({ match }: any) => {
                   amend={amend.data}
                   user={user}
                   match={match}
-                  className="is-centered "
+                  className="is-centered is-medium"
                   style={{ marginTop: '2rem' }}
                 />
               ) : (
