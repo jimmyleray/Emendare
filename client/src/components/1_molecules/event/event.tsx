@@ -1,5 +1,5 @@
 import React from 'react'
-import { DataContext, Icon, Link, Box, StopWatch } from '../../../components'
+import { DataContext, Icon, Link, StopWatch } from '../../../components'
 import { path } from '../../../config'
 import { IEvent } from '../../../../../interfaces'
 
