@@ -1,5 +1,5 @@
 // Dependencies
-import React from 'react'
+import React, { useRef } from 'react'
 import {
   CellMeasurerCache,
   List,
@@ -32,10 +32,16 @@ export const NewsList = ({
   newEvents,
   hasNextPage
 }: INewsListProps) => {
+  const refList: any = useRef()
   /** Default cache for cell mesurement */
   const cache = new CellMeasurerCache({
     fixedWidth: true
   })
+
+  const updateRow = (index: number) => {
+    refList.current.recomputeRowHeights(index)
+    refList.current.forceUpdateGrid()
+  }
 
   // If there are more items to be loaded then add an extra row to hold a loading indicator
   const rowCount = events.length + 1
@@ -45,12 +51,13 @@ export const NewsList = ({
     return (
       <CellMeasurer cache={cache} rowIndex={index} {...{ key, parent }}>
         {({ measure }) => (
-          <div style={style} key={key}>
+          <div style={{ padding: '0.3em', ...style }} key={key}>
             <EventRow
               data={events[index]}
               isNew={isEventNew(newEvents, events, index)}
-              isLast={index === events.length - 1}
               measure={measure}
+              updateRow={updateRow}
+              index={index}
             />
           </div>
         )}
@@ -72,7 +79,7 @@ export const NewsList = ({
                 {({ width }) => (
                   <List
                     scrollTop={scrollTop}
-                    ref={registerChild}
+                    ref={refList}
                     onScroll={onChildScroll}
                     autoHeight
                     width={width}
