@@ -32,7 +32,7 @@ export const NewsList = ({
   newEvents,
   hasNextPage
 }: INewsListProps) => {
-  const refList: any = useRef()
+  const refList = useRef<any>()
   /** Default cache for cell mesurement */
   const cache = new CellMeasurerCache({
     fixedWidth: true
@@ -49,9 +49,9 @@ export const NewsList = ({
   // Render list item
   const rowRenderer = ({ index, parent, style, key }: any) => {
     return (
-      <CellMeasurer cache={cache} rowIndex={index} {...{ key, parent }}>
+      <CellMeasurer cache={cache} rowIndex={index} key={key} parent={parent}>
         {({ measure }) => (
-          <div style={{ padding: '0.3em', ...style }} key={key}>
+          <div style={{ padding: '0.5em', ...style }}>
             <EventRow
               data={events[index]}
               isNew={isEventNew(newEvents, events, index)}
@@ -66,37 +66,35 @@ export const NewsList = ({
   }
 
   return (
-    <div>
-      <InfiniteLoader
-        isRowLoaded={({ index }) => isRowLoaded(events, index, hasNextPage)}
-        loadMoreRows={() => loadMoreRows(events, 15, Socket, hasNextPage)}
-        rowCount={rowCount}
-      >
-        {({ onRowsRendered, registerChild }) => (
-          <WindowScroller>
-            {({ height, isScrolling, scrollTop, onChildScroll }) => (
-              <AutoSizer>
-                {({ width }) => (
-                  <List
-                    scrollTop={scrollTop}
-                    ref={refList}
-                    onScroll={onChildScroll}
-                    autoHeight
-                    width={width}
-                    height={height}
-                    isScrolling={isScrolling}
-                    rowCount={rowCount}
-                    deferredMeasurementCache={cache}
-                    rowHeight={cache.rowHeight}
-                    onRowsRendered={onRowsRendered}
-                    rowRenderer={rowRenderer}
-                  />
-                )}
-              </AutoSizer>
-            )}
-          </WindowScroller>
-        )}
-      </InfiniteLoader>
-    </div>
+    <InfiniteLoader
+      isRowLoaded={({ index }) => isRowLoaded(events, index, hasNextPage)}
+      loadMoreRows={() => loadMoreRows(events, 10, Socket, hasNextPage)}
+      rowCount={rowCount}
+    >
+      {({ onRowsRendered }) => (
+        <WindowScroller>
+          {({ height, isScrolling, scrollTop, onChildScroll }) => (
+            <AutoSizer>
+              {({ width }) => (
+                <List
+                  scrollTop={scrollTop}
+                  ref={refList}
+                  onScroll={onChildScroll}
+                  autoHeight
+                  width={width}
+                  height={height}
+                  isScrolling={isScrolling}
+                  rowCount={rowCount}
+                  deferredMeasurementCache={cache}
+                  rowHeight={cache.rowHeight}
+                  onRowsRendered={onRowsRendered}
+                  rowRenderer={rowRenderer}
+                />
+              )}
+            </AutoSizer>
+          )}
+        </WindowScroller>
+      )}
+    </InfiniteLoader>
   )
 }

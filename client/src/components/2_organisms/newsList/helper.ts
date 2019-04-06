@@ -10,9 +10,7 @@ export const isRowLoaded = (
   data: IEvent[],
   index: number,
   hasNextPage: boolean
-) => {
-  return !hasNextPage || index < data.length
-}
+) => !hasNextPage || index < data.length
 
 /**
  * Fetch data from a API
@@ -45,9 +43,7 @@ export const isEventNew = (
   newEvents: IEvent[],
   events: IEvent[],
   index: number
-) => {
-  return newEvents.length > 0 && events.length > 0 && events[index + 1]
-    ? newEvents.map((event: IEvent) => event._id).indexOf(events[index]._id) ===
-        0
+) =>
+  newEvents.length > 0 && events.length > 0 && events[index + 1]
+    ? newEvents.map(event => event._id).indexOf(events[index]._id) === 0
     : false
-}

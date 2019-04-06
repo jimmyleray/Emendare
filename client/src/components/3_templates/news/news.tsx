@@ -26,7 +26,7 @@ export const News = () => {
   if (events.length > 0) {
     const newEventsCount = user ? newEvents.length : 0
     return (
-      <div>
+      <React.Fragment>
         {newEventsCount > 0 && (
           <Button
             className="is-fullwidth is-link"
@@ -43,7 +43,7 @@ export const News = () => {
           newEvents={newEvents}
           hasNextPage={hasNextPage}
         />
-      </div>
+      </React.Fragment>
     )
   } else {
     return null

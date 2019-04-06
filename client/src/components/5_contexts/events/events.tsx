@@ -1,9 +1,9 @@
-import React, { useEffect, useReducer, useContext } from 'react'
-import { Socket } from '../../../services'
+import React from 'react'
 import { IError, IEvent } from '../../../../../interfaces'
-import _ from 'lodash'
-import { UserContext } from '../user'
 import { getNewEvent, deleteNewEvent } from './helper'
+import { UserContext } from '../../../components'
+import { Socket } from '../../../services'
+import _ from 'lodash'
 
 interface IEventProviderProps {
   /** Children nodes */
@@ -29,7 +29,8 @@ const initialState: IEventProviderState = {
 export const EventsContext = React.createContext(initialState)
 
 export const EventsProvider = ({ children }: IEventProviderProps) => {
-  const { user } = useContext(UserContext)
+  const { user } = React.useContext(UserContext)
+
   // Reducer function
   const reducer = (
     previousState: IEventProviderState,
@@ -49,7 +50,7 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
         }
       case 'ADD_OLD_EVENTS':
         const listEvents = _.uniqBy(
-          _.concat(previousState.events, action.payload.events),
+          [...previousState.events, ...action.payload.events],
           '_id'
         )
         return {
@@ -80,10 +81,10 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
   }
 
   // Initialization of the state
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = React.useReducer(reducer, initialState)
 
   // listen socket events
-  useEffect(() => {
+  React.useEffect(() => {
     Socket.on(
       'events',
       ({

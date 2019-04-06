@@ -22,9 +22,9 @@ interface ITextEventCard {
 
 const displayBtnFollowText = (user: IUser, text: IText) => {
   return user.followedTexts.find(textID => textID === text._id) ? (
-    <FollowText text={text} className="is-small" />
-  ) : (
     <UnFollowText text={text} className="is-small" />
+  ) : (
+    <FollowText text={text} className="is-small" />
   )
 }
 
