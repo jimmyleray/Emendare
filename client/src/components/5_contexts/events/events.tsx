@@ -3,10 +3,9 @@ import { IError, IEvent } from '../../../../../interfaces'
 import { getNewEvent, deleteNewEvent } from './helper'
 import { UserContext } from '../../../components'
 import { Socket } from '../../../services'
-import _ from 'lodash'
+import { uniqBy } from 'lodash'
 
 interface IEventProviderProps {
-  /** Children nodes */
   children: React.ReactChild
 }
 
@@ -31,7 +30,6 @@ export const EventsContext = React.createContext(initialState)
 export const EventsProvider = ({ children }: IEventProviderProps) => {
   const { user } = React.useContext(UserContext)
 
-  // Reducer function
   const reducer = (
     previousState: IEventProviderState,
     action: { type: string; payload: any }
@@ -45,11 +43,11 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
         return {
           ...previousState,
           error: action.payload.error,
-          events: _.uniqBy(events, '_id'),
-          newEvents: _.uniqBy(newEvents, '_id')
+          events: uniqBy(events, '_id'),
+          newEvents: uniqBy(newEvents, '_id')
         }
       case 'ADD_OLD_EVENTS':
-        const listEvents = _.uniqBy(
+        const listEvents = uniqBy(
           [...previousState.events, ...action.payload.events],
           '_id'
         )
