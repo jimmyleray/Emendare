@@ -54,7 +54,7 @@ export const AmendEventCard = ({ event, updateRow }: IAmendEventCardProps) => {
                   size="fa-lg"
                   className="has-text-primary"
                 />{' '}
-                Nouvel Amendement :
+                Nouvel Amendement
               </p>
             </Card.Header.Title>
           </Card.Header>

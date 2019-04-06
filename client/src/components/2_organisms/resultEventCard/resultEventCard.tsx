@@ -47,7 +47,7 @@ export const ResultEventCard = ({ event }: IResultEventCardProps) => {
                   size="fa-lg"
                   className={getColorTextFromResult(target.data)}
                 />{' '}
-                Résultat Amendement :
+                Résultat Amendement
               </p>
             </Card.Header.Title>
           </Card.Header>

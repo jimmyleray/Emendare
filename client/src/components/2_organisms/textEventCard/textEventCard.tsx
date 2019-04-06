@@ -21,7 +21,7 @@ interface ITextEventCard {
 }
 
 const displayBtnFollowText = (user: IUser, text: IText) => {
-  return user.followedTexts.find((text: any) => text === text._id) ? (
+  return user.followedTexts.find(textID => textID === text._id) ? (
     <FollowText text={text} className="is-small" />
   ) : (
     <UnFollowText text={text} className="is-small" />
@@ -55,7 +55,7 @@ export const TextEventCard = ({ event }: ITextEventCard) => {
                   name="fa-align-center"
                   className="fa-lg has-text-info"
                 />{' '}
-                Nouveau texte :
+                Nouveau texte
               </p>
             </Card.Header.Title>
           </Card.Header>

@@ -7,20 +7,20 @@ interface IProps {
 
 // Main Application layout
 export const Layout = ({ children }: IProps) => (
-  <div className="is-flex" style={{ flexDirection: 'column', height: '100vh' }}>
+  <React.Fragment>
     <header>
       <Navbar />
-    </header>
-    <main style={{ flex: 1 }}>
       <Alerts />
+    </header>
+    <main>
       <section className="section">
         <div className="container">
           <main>{children}</main>
         </div>
       </section>
     </main>
-    <footer>
-      <Footer className="is-hidden-tablet" />
+    <footer className="is-hidden-tablet">
+      <Footer />
     </footer>
-  </div>
+  </React.Fragment>
 )
