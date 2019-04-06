@@ -14,9 +14,7 @@ export const Layout = ({ children }: IProps) => (
     </header>
     <main>
       <section className="section">
-        <div className="container">
-          <main>{children}</main>
-        </div>
+        <div className="container">{children}</div>
       </section>
     </main>
     <footer className="is-hidden-tablet">
