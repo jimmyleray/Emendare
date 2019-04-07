@@ -1,11 +1,8 @@
 import { useContext, useMemo } from 'react'
-// models
 import { IEvent } from '../../../../interfaces'
-// Components
 import { DataContext, UserContext } from '../../components'
 
 export const useEventCard = (event: IEvent) => {
-  // Contexts
   const { get } = useContext(DataContext)
   const { user } = useContext(UserContext)
 

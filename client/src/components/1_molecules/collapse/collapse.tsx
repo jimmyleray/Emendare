@@ -1,8 +1,5 @@
 import React, { useMemo } from 'react'
-// hooks
 import { useToggle } from '../../../hooks'
-// Component
-import { Button } from '../../../components'
 import { callAll } from '../../../helpers'
 
 interface ICollapseProps {
@@ -23,6 +20,7 @@ const CollapseContext = React.createContext({
     return
   }
 })
+
 const useCollapseContext = () => {
   const context = React.useContext(CollapseContext)
   if (!context) {
@@ -44,7 +42,7 @@ export const Collapse = ({ children, ...rest }: ICollapseProps) => {
 const Trigger = ({ children, onClick, ...rest }: ICollapseProps) => {
   const { toggler, on } = useCollapseContext()
   return (
-    <div {...rest} onClick={callAll(toggler, onClick)}>
+    <div onClick={callAll(toggler, onClick)} {...rest}>
       {children(on)}
     </div>
   )

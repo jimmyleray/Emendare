@@ -1,9 +1,6 @@
 import React from 'react'
-// Interfaces
 import { IText } from '../../../../../interfaces'
-// Components
-import { Button } from '../..'
-// Services
+import { Button } from '../../../components'
 import { Socket } from '../../../services'
 
 interface IUnFollowTextProps {
@@ -13,7 +10,7 @@ interface IUnFollowTextProps {
   className?: string
 }
 
-export const UnFollowText = ({ text, className }: IUnFollowTextProps) => (
+export const UnFollowText = ({ text, className = '' }: IUnFollowTextProps) => (
   <Button
     onClick={() => {
       Socket.emit('unFollowText', { id: text._id })

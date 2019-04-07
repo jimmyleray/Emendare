@@ -27,8 +27,10 @@ interface IAmendEventCardProps {
 export const AmendEventCard = ({ event, updateRow }: IAmendEventCardProps) => {
   const { user, target } = useEventCard(event)
   const { get } = useContext(DataContext)
+
   const text: IResponse<IText> =
     target && target.data && get('text')(target.data.text)
+
   return target && target.data && text && text.data ? (
     <div className="message card-events-container">
       <div

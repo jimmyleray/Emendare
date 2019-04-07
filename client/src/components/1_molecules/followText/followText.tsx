@@ -1,9 +1,6 @@
 import React from 'react'
-// Interfaces
 import { IText } from '../../../../../interfaces'
-// Components
-import { Button } from '../..'
-// Services
+import { Button } from '../../../components'
 import { Socket } from '../../../services'
 
 interface IFollowTextProps {
@@ -13,7 +10,7 @@ interface IFollowTextProps {
   className?: string
 }
 
-export const FollowText = ({ text, className }: IFollowTextProps) => (
+export const FollowText = ({ text, className = '' }: IFollowTextProps) => (
   <Button
     onClick={() => {
       Socket.emit('followText', { id: text._id })
