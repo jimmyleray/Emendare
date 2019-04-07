@@ -66,35 +66,37 @@ export const NewsList = ({
   }
 
   return (
-    <InfiniteLoader
-      isRowLoaded={({ index }) => isRowLoaded(events, index, hasNextPage)}
-      loadMoreRows={() => loadMoreRows(events, 10, Socket, hasNextPage)}
-      rowCount={rowCount}
-    >
-      {({ onRowsRendered }) => (
-        <WindowScroller>
-          {({ height, isScrolling, scrollTop, onChildScroll }) => (
-            <AutoSizer>
-              {({ width }) => (
-                <List
-                  scrollTop={scrollTop}
-                  ref={refList}
-                  onScroll={onChildScroll}
-                  autoHeight
-                  width={width}
-                  height={height}
-                  isScrolling={isScrolling}
-                  rowCount={rowCount}
-                  deferredMeasurementCache={cache}
-                  rowHeight={cache.rowHeight}
-                  onRowsRendered={onRowsRendered}
-                  rowRenderer={rowRenderer}
-                />
-              )}
-            </AutoSizer>
-          )}
-        </WindowScroller>
-      )}
-    </InfiniteLoader>
+    <div>
+      <InfiniteLoader
+        isRowLoaded={({ index }) => isRowLoaded(events, index, hasNextPage)}
+        loadMoreRows={() => loadMoreRows(events, 10, Socket, hasNextPage)}
+        rowCount={rowCount}
+      >
+        {({ onRowsRendered }) => (
+          <WindowScroller>
+            {({ height, isScrolling, scrollTop, onChildScroll }) => (
+              <AutoSizer>
+                {({ width }) => (
+                  <List
+                    scrollTop={scrollTop}
+                    ref={refList}
+                    onScroll={onChildScroll}
+                    autoHeight
+                    width={width}
+                    height={height}
+                    isScrolling={isScrolling}
+                    rowCount={rowCount}
+                    deferredMeasurementCache={cache}
+                    rowHeight={cache.rowHeight}
+                    onRowsRendered={onRowsRendered}
+                    rowRenderer={rowRenderer}
+                  />
+                )}
+              </AutoSizer>
+            )}
+          </WindowScroller>
+        )}
+      </InfiniteLoader>
+    </div>
   )
 }
