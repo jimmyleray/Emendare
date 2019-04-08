@@ -10,16 +10,24 @@ Emendare is a citizen, non-profit, distributed, and open source initiative to en
 
 ## Technical stack
 
-The current stack of this project is :
+The current technical stack of Emendare is :
 
-- Frontend side :
+[TypeScript](https://www.typescriptlang.org/) as the main language for the entire project
 
-  - [ReactJS](https://reactjs.org/) as a framework for the client interface
+- Client side :
+
+  - [ReactJS](https://reactjs.org/) as a framework for the web user interface
   - [Bulma CSS](https://bulma.io/) as a css framework based on Flexbox
 
-- Backend side :
-  - [Node.js](https://nodejs.org/en/) for the API server and the application server
+- Instance side :
+
+  - [Node.js](https://nodejs.org/en/) for the instance server
   - [Socket.io](https://socket.io/) for the client / server exchanges
+  - [MongoDB](https://www.mongodb.com/en) as database
+
+- Register side :
+  - [NestJS](https://nestjs.com/) as a progressive NodeJS framework
+  - [TypeORM](https://typeorm.io/#/) as an ORM layer between the application and the database
   - [MongoDB](https://www.mongodb.com/en) as database
 
 ## Getting started
