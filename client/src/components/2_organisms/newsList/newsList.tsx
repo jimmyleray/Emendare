@@ -1,5 +1,5 @@
 // Dependencies
-import React from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import {
   CellMeasurerCache,
   List,
@@ -32,10 +32,45 @@ export const NewsList = ({
   newEvents,
   hasNextPage
 }: INewsListProps) => {
+  let refList = useRef<any>()
+  let registerRefChild: any
+  const [mostRecentWidth, setMostRecentWidth] = useState(0)
+
+  useEffect(() => {
+    const index = events.length
+    cache.clear(index, 0)
+    if (refList.current) {
+      refList.current.recomputeRowHeights(index)
+    }
+  }, [events])
+
   /** Default cache for cell mesurement */
   const cache = new CellMeasurerCache({
-    fixedWidth: true
+    fixedWidth: true,
+    defaultHeight: 200
   })
+
+  // Update row height post render
+  const updateRow = (index: number) => {
+    cache.clearAll()
+    if (refList.current) {
+      refList.current.recomputeRowHeights(index)
+    }
+  }
+
+  // resize all the rows
+  const resizeAll = () => {
+    cache.clearAll()
+    if (refList.current) {
+      refList.current.recomputeRowHeights()
+    }
+  }
+
+  // Set ref of the list
+  const setListRef = (ref: any) => {
+    refList.current = ref
+    registerRefChild(ref)
+  }
 
   // If there are more items to be loaded then add an extra row to hold a loading indicator
   const rowCount = events.length + 1
@@ -43,17 +78,21 @@ export const NewsList = ({
   // Render list item
   const rowRenderer = ({ index, parent, style, key }: any) => {
     return (
-      <CellMeasurer cache={cache} rowIndex={index} {...{ key, parent }}>
-        {({ measure }) => (
-          <div style={style} key={key}>
-            <EventRow
-              data={events[index]}
-              isNew={isEventNew(newEvents, events, index)}
-              isLast={index === events.length - 1}
-              measure={measure}
-            />
-          </div>
-        )}
+      <CellMeasurer
+        cache={cache}
+        columnIndex={0}
+        rowIndex={index}
+        key={key}
+        parent={parent}
+      >
+        <div style={{ padding: '0.5em', ...style }}>
+          <EventRow
+            data={events[index]}
+            isNew={isEventNew(newEvents, events, index)}
+            updateRow={updateRow}
+            index={index}
+          />
+        </div>
       </CellMeasurer>
     )
   }
@@ -62,29 +101,36 @@ export const NewsList = ({
     <div>
       <InfiniteLoader
         isRowLoaded={({ index }) => isRowLoaded(events, index, hasNextPage)}
-        loadMoreRows={() => loadMoreRows(events, 15, Socket, hasNextPage)}
+        loadMoreRows={() => loadMoreRows(events, 10, Socket, hasNextPage)}
         rowCount={rowCount}
       >
         {({ onRowsRendered, registerChild }) => (
           <WindowScroller>
             {({ height, isScrolling, scrollTop, onChildScroll }) => (
-              <AutoSizer>
-                {({ width }) => (
-                  <List
-                    scrollTop={scrollTop}
-                    ref={registerChild}
-                    onScroll={onChildScroll}
-                    autoHeight
-                    width={width}
-                    height={height}
-                    isScrolling={isScrolling}
-                    rowCount={rowCount}
-                    deferredMeasurementCache={cache}
-                    rowHeight={cache.rowHeight}
-                    onRowsRendered={onRowsRendered}
-                    rowRenderer={rowRenderer}
-                  />
-                )}
+              <AutoSizer disableHeight>
+                {({ width }) => {
+                  if (mostRecentWidth && mostRecentWidth !== width) {
+                    resizeAll()
+                  }
+                  setMostRecentWidth(width)
+                  registerRefChild = registerChild
+                  return (
+                    <List
+                      scrollTop={scrollTop}
+                      ref={setListRef}
+                      onScroll={onChildScroll}
+                      autoHeight
+                      width={width}
+                      height={height}
+                      isScrolling={isScrolling}
+                      rowCount={rowCount}
+                      deferredMeasurementCache={cache}
+                      rowHeight={cache.rowHeight}
+                      onRowsRendered={onRowsRendered}
+                      rowRenderer={rowRenderer}
+                    />
+                  )
+                }}
               </AutoSizer>
             )}
           </WindowScroller>

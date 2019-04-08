@@ -9,6 +9,8 @@ interface IProps {
   value?: number
   /** Set a maximum */
   max?: number
+  /** Style CSS */
+  style?: React.CSSProperties
 }
 
 export const Progress = React.memo(

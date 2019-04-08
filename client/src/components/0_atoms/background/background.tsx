@@ -7,6 +7,8 @@ interface IBackgroundProps {
   color?: string
   /** Additional CSS UI class */
   className?: string
+  /** CSS style */
+  style?: React.CSSProperties
 }
 
 export const Background = React.memo(

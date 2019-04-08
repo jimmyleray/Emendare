@@ -25,9 +25,11 @@ const datasetDefault = {
 interface IResultProps {
   /** Result object */
   data: IResult
+  /** Rotation */
+  rotation?: number
 }
 
-export const Results = ({ data }: IResultProps) => (
+export const Results = ({ data, rotation = -Math.PI }: IResultProps) => (
   <div style={{ position: 'relative', zIndex: 1 }}>
     {data && (
       <Doughnut
@@ -54,7 +56,7 @@ export const Results = ({ data }: IResultProps) => (
         }}
         options={{
           responsive: true,
-          rotation: -Math.PI,
+          rotation: rotation,
           circumference: Math.PI,
           legend: { display: false },
           animation: { animateRotate: false },

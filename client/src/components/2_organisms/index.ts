@@ -1,3 +1,6 @@
 export * from './deleteAccount'
 export * from './newsList'
 export * from './eventRow'
+export * from './textEventCard'
+export * from './amendEventCard'
+export * from './resultEventCard'

@@ -5,7 +5,7 @@ import { useState, useCallback } from 'react'
 
 export const useToggle = (
   initialValue: boolean = false
-): { on: boolean; toggler: Function } => {
+): { on: boolean; toggler: () => void } => {
   // State
   const [on, setOn] = useState(initialValue)
   // Toggle
