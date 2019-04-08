@@ -64,7 +64,7 @@
     "@types/lodash": "4.14.122",
     "@types/mjml": "^4.0.1",
     "@types/mockingoose": "^2.11.0",
-    "@types/mongoose": "5.3.24",
+    "@types/mongoose": "5.3.25",
     "@types/node": "11.12.3",
     "@types/node-fetch": "2.3.0",
     "@types/nodemailer": "4.6.7",
