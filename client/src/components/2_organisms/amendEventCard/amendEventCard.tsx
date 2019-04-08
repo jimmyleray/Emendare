@@ -62,7 +62,7 @@ export const AmendEventCard = ({ event, updateRow }: IAmendEventCardProps) => {
           </Card.Header>
           <hr style={{ margin: 0 }} className="has-background-grey-lighter" />
           <Card.Content style={{ padding: '1rem 0 1rem 0.75rem' }}>
-            <Collapse>
+            <Collapse isOpen={!target.data.closed}>
               <Collapse.Trigger
                 style={{ marginBottom: '1.5em' }}
                 onClick={updateRow}
