@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import {
   CellMeasurerCache,
   List,
@@ -32,15 +32,44 @@ export const NewsList = ({
   newEvents,
   hasNextPage
 }: INewsListProps) => {
-  const refList = useRef<any>()
+  let refList = useRef<any>()
+  let registerRefChild: any
+  const [mostRecentWidth, setMostRecentWidth] = useState(0)
+
+  useEffect(() => {
+    const index = events.length
+    cache.clear(index, 0)
+    if (refList.current) {
+      refList.current.recomputeRowHeights(index)
+    }
+  }, [events])
+
   /** Default cache for cell mesurement */
   const cache = new CellMeasurerCache({
-    fixedWidth: true
+    fixedWidth: true,
+    defaultHeight: 200
   })
 
+  // Update row height post render
   const updateRow = (index: number) => {
-    refList.current.recomputeRowHeights(index)
-    refList.current.forceUpdateGrid()
+    cache.clearAll()
+    if (refList.current) {
+      refList.current.recomputeRowHeights(index)
+    }
+  }
+
+  // resize all the rows
+  const resizeAll = () => {
+    cache.clearAll()
+    if (refList.current) {
+      refList.current.recomputeRowHeights()
+    }
+  }
+
+  // Set ref of the list
+  const setListRef = (ref: any) => {
+    refList.current = ref
+    registerRefChild(ref)
   }
 
   // If there are more items to be loaded then add an extra row to hold a loading indicator
@@ -49,13 +78,18 @@ export const NewsList = ({
   // Render list item
   const rowRenderer = ({ index, parent, style, key }: any) => {
     return (
-      <CellMeasurer cache={cache} rowIndex={index} key={key} parent={parent}>
+      <CellMeasurer
+        cache={cache}
+        columnIndex={0}
+        rowIndex={index}
+        key={key}
+        parent={parent}
+      >
         {({ measure }) => (
-          <div style={{ padding: '0.5em', ...style }}>
+          <div onLoad={measure} style={{ padding: '0.5em', ...style }}>
             <EventRow
               data={events[index]}
               isNew={isEventNew(newEvents, events, index)}
-              measure={measure}
               updateRow={updateRow}
               index={index}
             />
@@ -72,26 +106,33 @@ export const NewsList = ({
         loadMoreRows={() => loadMoreRows(events, 10, Socket, hasNextPage)}
         rowCount={rowCount}
       >
-        {({ onRowsRendered }) => (
+        {({ onRowsRendered, registerChild }) => (
           <WindowScroller>
             {({ height, isScrolling, scrollTop, onChildScroll }) => (
-              <AutoSizer>
-                {({ width }) => (
-                  <List
-                    scrollTop={scrollTop}
-                    ref={refList}
-                    onScroll={onChildScroll}
-                    autoHeight
-                    width={width}
-                    height={height}
-                    isScrolling={isScrolling}
-                    rowCount={rowCount}
-                    deferredMeasurementCache={cache}
-                    rowHeight={cache.rowHeight}
-                    onRowsRendered={onRowsRendered}
-                    rowRenderer={rowRenderer}
-                  />
-                )}
+              <AutoSizer disableHeight>
+                {({ width }) => {
+                  if (mostRecentWidth && mostRecentWidth !== width) {
+                    resizeAll()
+                  }
+                  setMostRecentWidth(width)
+                  registerRefChild = registerChild
+                  return (
+                    <List
+                      scrollTop={scrollTop}
+                      ref={setListRef}
+                      onScroll={onChildScroll}
+                      autoHeight
+                      width={width}
+                      height={height}
+                      isScrolling={isScrolling}
+                      rowCount={rowCount}
+                      deferredMeasurementCache={cache}
+                      rowHeight={cache.rowHeight}
+                      onRowsRendered={onRowsRendered}
+                      rowRenderer={rowRenderer}
+                    />
+                  )
+                }}
               </AutoSizer>
             )}
           </WindowScroller>
