@@ -12,8 +12,6 @@ import { IEvent } from '../../../../../interfaces'
 interface IEventRowProps {
   /** Following event */
   data: IEvent
-  /** measure tool */
-  measure: () => void
   /** Tell if the event is new */
   isNew: boolean
   /** Force a row to re-render */
@@ -40,22 +38,12 @@ const displayRightEvent = (
   }
 }
 
-export const EventRow = ({
-  data,
-  measure,
-  isNew,
-  updateRow,
-  index
-}: IEventRowProps) => {
+export const EventRow = ({ data, isNew, updateRow, index }: IEventRowProps) => {
   const { translate } = React.useContext(I18nContext)
 
   return (
-    <div onLoad={measure}>
-      {data ? (
-        displayRightEvent(data.target.type, data, updateRow, index)
-      ) : (
-        <Event data={data} />
-      )}
+    <div>
+      {data && displayRightEvent(data.target.type, data, updateRow, index)}
       {isNew ? <Divider content={translate('OLD_EVENTS')} /> : null}
     </div>
   )
