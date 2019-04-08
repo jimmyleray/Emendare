@@ -8,7 +8,10 @@ export const renderWithRouter = (
   { route = '/', ...renderOptions } = {}
 ) => {
   const history = createMemoryHistory({ initialEntries: [route] })
-  const utils = render(<Router history={history}>{children}</Router>, renderOptions)
+  const utils = render(
+    <Router history={history}>{children}</Router>,
+    renderOptions
+  )
   return {
     ...utils
   }
