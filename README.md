@@ -6,7 +6,7 @@
 
 ## Philosophy
 
-Emendare is a citizen, non-profit, distributed, and open source initiative to enable self-organized groups to write common texts. The tool stands out by miming the functioning of a parliament by allowing all participants to propose changes to a text. These proposals are called amendments, and we say that we are amending a text. The platform takes its name from the verb amend which is called Emendare in Latin. The tool is aimed at all groups seeking to organize themselves horizontally, be they companies, associations, political movements or local authorities. Emendare is particularly suitable for writing texts over time, iteratively.
+Emendare is a citizen, non-profit, distributed, and open source initiative to enable self-organized groups to write common texts. The tool stands out by miming the functioning of a parliament by allowing all participants to propose changes to a text. These proposals are called amendments, and we say that we are amending a text. The tool is aimed at all groups seeking to organize themselves horizontally, be they companies, associations, political movements or local authorities. Emendare is particularly suitable for writing texts over time, iteratively.
 
 ## Technical stack
 
