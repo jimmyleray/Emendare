@@ -85,16 +85,14 @@ export const NewsList = ({
         key={key}
         parent={parent}
       >
-        {({ measure }) => (
-          <div onLoad={measure} style={{ padding: '0.5em', ...style }}>
-            <EventRow
-              data={events[index]}
-              isNew={isEventNew(newEvents, events, index)}
-              updateRow={updateRow}
-              index={index}
-            />
-          </div>
-        )}
+        <div style={{ padding: '0.5em', ...style }}>
+          <EventRow
+            data={events[index]}
+            isNew={isEventNew(newEvents, events, index)}
+            updateRow={updateRow}
+            index={index}
+          />
+        </div>
       </CellMeasurer>
     )
   }
