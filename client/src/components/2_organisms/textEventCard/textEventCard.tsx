@@ -20,14 +20,6 @@ interface ITextEventCard {
   event: IEvent
 }
 
-const displayBtnFollowText = (user: IUser, text: IText) => {
-  return user.followedTexts.find(textID => textID === text._id) ? (
-    <UnFollowText text={text} className="is-small" />
-  ) : (
-    <FollowText text={text} className="is-small" />
-  )
-}
-
 export const TextEventCard = ({ event }: ITextEventCard) => {
   const { target, user } = useEventCard(event)
 
@@ -67,8 +59,14 @@ export const TextEventCard = ({ event }: ITextEventCard) => {
           <Buttons className="is-centered">
             {user ? (
               <React.Fragment>
-                <ProposeAmend text={target.data} className="is-small" />
-                {displayBtnFollowText(user, target.data)}
+                <ProposeAmend text={target.data} />
+                {user.followedTexts.find(
+                  textID => textID === target.data._id
+                ) ? (
+                  <UnFollowText text={target.data} />
+                ) : (
+                  <FollowText text={target.data} />
+                )}
               </React.Fragment>
             ) : null}
           </Buttons>
