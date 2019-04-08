@@ -5,6 +5,8 @@ import { callAll } from '../../../helpers'
 interface ICollapseProps {
   /** Children nodes */
   children: any
+  /** set toggle state */
+  isOpen?: boolean
   /** style CSS */
   style?: React.CSSProperties
   /** Additionnal CSS UI class  */
@@ -29,8 +31,12 @@ const useCollapseContext = () => {
   return context
 }
 
-export const Collapse = ({ children, ...rest }: ICollapseProps) => {
-  const { on, toggler } = useToggle()
+export const Collapse = ({
+  children,
+  isOpen = false,
+  ...rest
+}: ICollapseProps) => {
+  const { on, toggler } = useToggle(isOpen)
   const value = useMemo(() => ({ toggler, on }), [toggler, on])
   return (
     <CollapseContext.Provider value={value} {...rest}>
