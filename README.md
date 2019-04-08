@@ -4,7 +4,11 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/jimmyleray/emendare/badge)](https://www.codefactor.io/repository/github/jimmyleray/emendare) [![BCH compliance](https://bettercodehub.com/edge/badge/jimmyleray/Emendare?branch=develop)](https://bettercodehub.com/) [![Codecov](https://img.shields.io/codecov/c/github/jimmyleray/Emendare.svg?style=flat)](https://codecov.io/gh/JimmyLeray/Emendare) ![Code Size](https://img.shields.io/github/languages/code-size/jimmyleray/Emendare.svg?style=flat) ![Last commit](https://img.shields.io/github/last-commit/jimmyleray/Emendare.svg?style=flat) [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jimmyleray/Emendare/issues) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-## Tech / framework used
+## Philosophy
+
+Emendare is a citizen, non-profit, distributed, and open source initiative to enable self-organized groups to write common texts. The tool stands out by miming the functioning of a parliament by allowing all participants to propose changes to a text. These proposals are called amendments, and we say that we are amending a text. The platform takes its name from the verb amend which is called Emendare in Latin. The tool is aimed at all groups seeking to organize themselves horizontally, be they companies, associations, political movements or local authorities. Emendare is particularly suitable for writing texts over time, iteratively.
+
+## Technical stack
 
 The current stack of this project is :
 
@@ -112,7 +116,3 @@ The app.js server will allow http redirection to https as well as Gzip compressi
 ## Contributions
 
 To contribute to this project please refer to [Guide for contributors](https://github.com/jimmyleray/Emendare/blob/master/CONTRIBUTING.md)
-
-## License
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjimmyleray%2FEmendare.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjimmyleray%2FEmendare?ref=badge_large)
