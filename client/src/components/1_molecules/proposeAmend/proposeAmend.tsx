@@ -2,7 +2,7 @@ import React from 'react'
 // Services
 import { Socket } from '../../../services'
 // Components
-import { Buttons, Button, Icon } from '../../../components'
+import { Button, Icon } from '../../../components'
 import { IText } from '../../../../../interfaces'
 import { path } from '../../../config'
 

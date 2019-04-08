@@ -1,7 +1,5 @@
 // Dependencies
 import React from 'react'
-// Interfaces
-import { IResult } from '../../../../../interfaces'
 // Helpers
 import { getPourcentageVote, createLinearGradientFromResult } from './helper'
 // Components

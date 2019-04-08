@@ -1,5 +1,3 @@
-import { IResult } from '../../../../../interfaces'
-
 /**
  * Return the pourcentage of up/down/ind vote
  * @param result Result of the vote
