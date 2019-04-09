@@ -2,9 +2,11 @@ import React from 'react'
 import { CellMeasurerCache } from 'react-virtualized'
 import { IEvent } from '../../../../interfaces'
 
-export const withEventCard = (Component: React.ComponentType<any>) => (
+export const withEventCard = (
   cache: CellMeasurerCache,
   index: number,
   updateRow: (index: number) => void,
   event: IEvent
-) => <Component {...{ cache, index, updateRow, event }} />
+) => (Component: React.ComponentType<any>) => (
+  <Component {...{ cache, index, updateRow, event }} />
+)
