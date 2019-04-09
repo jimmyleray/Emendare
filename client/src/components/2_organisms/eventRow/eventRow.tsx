@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // Components
 import {
   Divider,
@@ -13,6 +13,8 @@ import { IEvent } from '../../../../../interfaces'
 import { CellMeasurerCache } from 'react-virtualized'
 // HoCs
 import { withEventCard } from '../../../hocs'
+// Hooks
+import { useEventCard } from '../../../hooks'
 
 interface IEventRowProps {
   /** Following event */
@@ -20,7 +22,7 @@ interface IEventRowProps {
   /** Tell if the event is new */
   isNew: boolean
   /** Force a row to re-render */
-  updateRow: (index: number) => void
+  resizeRow: (index: number) => void
   /** Index of the row */
   index: number
   /** Cache of heights */
@@ -30,13 +32,18 @@ interface IEventRowProps {
 export const EventRow = ({
   data,
   isNew,
-  updateRow,
+  resizeRow,
   cache,
   index
 }: IEventRowProps) => {
   const { translate } = React.useContext(I18nContext)
+  const { target, user } = useEventCard(data)
 
-  const passDataToCard = withEventCard(cache, index, updateRow, data)
+  useEffect(() => {
+    resizeRow(index)
+  }, [target])
+
+  const passDataToCard = withEventCard(cache, index, resizeRow, target, user)
 
   const displayRightEvent = () => {
     switch (data.target.type) {
@@ -51,7 +58,7 @@ export const EventRow = ({
 
   return (
     <React.Fragment>
-      {data && displayRightEvent()}
+      {target && target.data && displayRightEvent()}
       {isNew ? <Divider content={translate('OLD_EVENTS')} /> : null}
     </React.Fragment>
   )
