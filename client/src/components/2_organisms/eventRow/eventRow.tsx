@@ -1,13 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+// Components
 import {
-  Event,
   Divider,
   I18nContext,
   TextEventCard,
   AmendEventCard,
   ResultEventCard
 } from '../../../components'
+// Interfaces
 import { IEvent } from '../../../../../interfaces'
+// ReactVirtualized
+import { CellMeasurerCache } from 'react-virtualized'
+// HoCs
+import { withEventCard } from '../../../hocs'
+// Hooks
+import { useEventCard } from '../../../hooks'
 
 interface IEventRowProps {
   /** Following event */
@@ -15,36 +22,44 @@ interface IEventRowProps {
   /** Tell if the event is new */
   isNew: boolean
   /** Force a row to re-render */
-  updateRow: (index: number) => void
+  resizeRow: (index: number) => void
   /** Index of the row */
   index: number
+  /** Cache of heights */
+  cache: CellMeasurerCache
 }
 
-const displayRightEvent = (
-  type: string,
-  event: IEvent,
-  updateRow: (index: number) => void,
-  index: number
-) => {
-  switch (type) {
-    case 'text':
-      return <TextEventCard event={event} />
-    case 'amend':
-      return <AmendEventCard event={event} updateRow={() => updateRow(index)} />
-    case 'result':
-      return <ResultEventCard event={event} />
-    default:
-      return <Event data={event} />
-  }
-}
-
-export const EventRow = ({ data, isNew, updateRow, index }: IEventRowProps) => {
+export const EventRow = ({
+  data,
+  isNew,
+  resizeRow,
+  cache,
+  index
+}: IEventRowProps) => {
   const { translate } = React.useContext(I18nContext)
+  const { target, user } = useEventCard(data)
+
+  useEffect(() => {
+    resizeRow(index)
+  }, [target])
+
+  const passDataToCard = withEventCard(cache, index, resizeRow, target, user)
+
+  const displayRightEvent = () => {
+    switch (data.target.type) {
+      case 'text':
+        return passDataToCard(TextEventCard)
+      case 'amend':
+        return passDataToCard(AmendEventCard)
+      case 'result':
+        return passDataToCard(ResultEventCard)
+    }
+  }
 
   return (
-    <div>
-      {data && displayRightEvent(data.target.type, data, updateRow, index)}
+    <React.Fragment>
+      {target && target.data && displayRightEvent()}
       {isNew ? <Divider content={translate('OLD_EVENTS')} /> : null}
-    </div>
+    </React.Fragment>
   )
 }

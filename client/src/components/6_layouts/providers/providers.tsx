@@ -12,11 +12,11 @@ interface IProps {
 }
 
 const providers = [
+  NotificationsProvider,
+  I18nProvider,
   UserProvider,
   DataProvider,
-  EventsProvider,
-  NotificationsProvider,
-  I18nProvider
+  EventsProvider
 ]
 
 // Return all providers encapsulated in order

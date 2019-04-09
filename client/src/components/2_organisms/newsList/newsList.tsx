@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
   CellMeasurerCache,
   List,
@@ -36,23 +36,14 @@ export const NewsList = ({
   let registerRefChild: any
   const [mostRecentWidth, setMostRecentWidth] = useState(0)
 
-  useEffect(() => {
-    const index = events.length
-    cache.clear(index, 0)
-    if (refList.current) {
-      refList.current.recomputeRowHeights(index)
-    }
-  }, [events])
-
   /** Default cache for cell mesurement */
   const cache = new CellMeasurerCache({
-    fixedWidth: true,
-    defaultHeight: 200
+    fixedWidth: true
   })
 
   // Update row height post render
-  const updateRow = (index: number) => {
-    cache.clearAll()
+  const resizeRow = (index: number) => {
+    cache.clear(index, 0)
     if (refList.current) {
       refList.current.recomputeRowHeights(index)
     }
@@ -78,22 +69,25 @@ export const NewsList = ({
   // Render list item
   const rowRenderer = ({ index, parent, style, key }: any) => {
     return (
-      <CellMeasurer
-        cache={cache}
-        columnIndex={0}
-        rowIndex={index}
-        key={key}
-        parent={parent}
-      >
-        <div style={{ padding: '0.5em', ...style }}>
-          <EventRow
-            data={events[index]}
-            isNew={isEventNew(newEvents, events, index)}
-            updateRow={updateRow}
-            index={index}
-          />
-        </div>
-      </CellMeasurer>
+      events[index] && (
+        <CellMeasurer
+          cache={cache}
+          columnIndex={0}
+          rowIndex={index}
+          key={key}
+          parent={parent}
+        >
+          <div style={{ padding: '0.2em', ...style }}>
+            <EventRow
+              data={events[index]}
+              isNew={isEventNew(newEvents, events, index)}
+              resizeRow={resizeRow}
+              index={index}
+              cache={cache}
+            />
+          </div>
+        </CellMeasurer>
+      )
     )
   }
 
@@ -110,7 +104,7 @@ export const NewsList = ({
               <AutoSizer disableHeight>
                 {({ width }) => {
                   if (mostRecentWidth && mostRecentWidth !== width) {
-                    resizeAll()
+                    setTimeout(resizeAll, 0)
                   }
                   setMostRecentWidth(width)
                   registerRefChild = registerChild

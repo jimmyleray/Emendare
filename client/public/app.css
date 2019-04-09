@@ -72,3 +72,7 @@ html {
   background-color: hsl(0, 0%, 96%);
   border-radius: 50%;
 }
+
+.ReactVirtualized__Grid {
+  outline: none;
+}
