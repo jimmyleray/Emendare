@@ -3,7 +3,9 @@
 ## Philosophy
 
 Emendare is a citizen, non-profit, distributed and open-source initiative. It helps groups share and improve texts iteratively.
+
 The tool mimics the parliament process, allowing all participants to suggest alterations to a text, called amendments.
+
 All groups seeking to organize themselves horizontally, be they companies, associations, political movements or local authorities, are welcome to use Emendare.
 
 ## Technical stack
