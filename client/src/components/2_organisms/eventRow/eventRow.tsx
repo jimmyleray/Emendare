@@ -1,13 +1,18 @@
 import React from 'react'
+// Components
 import {
-  Event,
   Divider,
   I18nContext,
   TextEventCard,
   AmendEventCard,
   ResultEventCard
 } from '../../../components'
+// Interfaces
 import { IEvent } from '../../../../../interfaces'
+// ReactVirtualized
+import { CellMeasurerCache } from 'react-virtualized'
+// HoCs
+import { withEventCard } from '../../../hocs'
 
 interface IEventRowProps {
   /** Following event */
@@ -18,33 +23,36 @@ interface IEventRowProps {
   updateRow: (index: number) => void
   /** Index of the row */
   index: number
+  /** Cache of heights */
+  cache: CellMeasurerCache
 }
 
-const displayRightEvent = (
-  type: string,
-  event: IEvent,
-  updateRow: (index: number) => void,
-  index: number
-) => {
-  switch (type) {
-    case 'text':
-      return <TextEventCard event={event} />
-    case 'amend':
-      return <AmendEventCard event={event} updateRow={() => updateRow(index)} />
-    case 'result':
-      return <ResultEventCard event={event} />
-    default:
-      return <Event data={event} />
-  }
-}
-
-export const EventRow = ({ data, isNew, updateRow, index }: IEventRowProps) => {
+export const EventRow = ({
+  data,
+  isNew,
+  updateRow,
+  cache,
+  index
+}: IEventRowProps) => {
   const { translate } = React.useContext(I18nContext)
 
+  const passDataToCard = withEventCard(cache, index, updateRow, data)
+
+  const displayRightEvent = () => {
+    switch (data.target.type) {
+      case 'text':
+        return passDataToCard(TextEventCard)
+      case 'amend':
+        return passDataToCard(AmendEventCard)
+      case 'result':
+        return passDataToCard(ResultEventCard)
+    }
+  }
+
   return (
-    <div>
-      {data && displayRightEvent(data.target.type, data, updateRow, index)}
+    <React.Fragment>
+      {data && displayRightEvent()}
       {isNew ? <Divider content={translate('OLD_EVENTS')} /> : null}
-    </div>
+    </React.Fragment>
   )
 }

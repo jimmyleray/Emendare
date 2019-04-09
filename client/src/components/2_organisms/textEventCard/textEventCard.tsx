@@ -1,4 +1,5 @@
 import React from 'react'
+import { CellMeasurerCache } from 'react-virtualized'
 // Components
 import {
   Card,
@@ -18,6 +19,12 @@ import { useEventCard } from '../../../hooks'
 interface ITextEventCard {
   /** Related event */
   event: IEvent
+  /** Force a row to re-render */
+  updateRow: (index: number) => void
+  /** Cache of row Heights */
+  cache: CellMeasurerCache
+  /** Index of the card */
+  index: number
 }
 
 export const TextEventCard = ({ event }: ITextEventCard) => {

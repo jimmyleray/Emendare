@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 // Components
 import {
   Card,
@@ -14,24 +14,38 @@ import {
 import { IEvent, IResponse, IText } from '../../../../../interfaces'
 // Hooks
 import { useEventCard } from '../../../hooks'
+import { CellMeasurerCache } from 'react-virtualized'
 
 interface IAmendEventCardProps {
   /** Related event */
   event: IEvent
   /** Force a row to re-render */
-  updateRow: () => void
+  updateRow: (index: number) => void
+  /** Cache of row Heights */
+  cache: CellMeasurerCache
   /** Index of the card */
-  index?: number
+  index: number
 }
 
-export const AmendEventCard = ({ event, updateRow }: IAmendEventCardProps) => {
+export const AmendEventCard = ({
+  event,
+  cache,
+  index,
+  updateRow
+}: IAmendEventCardProps) => {
   const { user, target } = useEventCard(event)
   const { get } = useContext(DataContext)
 
-  const text: IResponse<IText> =
-    target && target.data && get('text')(target.data.text)
+  useEffect(() => cache.clear(index, 0), [])
 
-  return target && target.data && text && text.data ? (
+  const isTargetLoaded = (target: any) => {
+    return target && target.data
+  }
+
+  const text: IResponse<IText> =
+    isTargetLoaded(target) && get('text')(target.data.text)
+
+  return isTargetLoaded(target) && text && text.data ? (
     <div className="message card-events-container">
       <div
         className="message-body"
@@ -65,11 +79,14 @@ export const AmendEventCard = ({ event, updateRow }: IAmendEventCardProps) => {
             <Collapse isOpen={!target.data.closed}>
               <Collapse.Trigger
                 style={{ marginBottom: '1.5em' }}
-                onClick={updateRow}
+                onClick={() => updateRow(index)}
               >
                 {(on: boolean) => (
                   <div
-                    style={{ display: 'flex', justifyContent: 'space-between' }}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
                   >
                     <div>
                       <div className="title is-5">"{target.data.name}"</div>

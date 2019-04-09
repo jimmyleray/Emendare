@@ -1,7 +1,15 @@
 // Dependencies
 import React from 'react'
+import { CellMeasurerCache } from 'react-virtualized'
 // Components
-import { Card, Icon, StopWatch, Tag, ResultIcon } from '../../../components'
+import {
+  Card,
+  Icon,
+  StopWatch,
+  Tag,
+  ResultIcon,
+  Button
+} from '../../../components'
 // Interfaces
 import { IEvent } from '../../../../../interfaces'
 // Helpers
@@ -13,10 +21,18 @@ import {
 } from './helper'
 // Hooks
 import { useEventCard } from '../../../hooks'
+// Config
+import { path } from '../../../config'
 
 interface IResultEventCardProps {
   /** Related event */
   event: IEvent
+  /** Force a row to re-render */
+  updateRow: (index: number) => void
+  /** Cache of row Heights */
+  cache: CellMeasurerCache
+  /** Index of the card */
+  index: number
 }
 
 export const ResultEventCard = ({ event }: IResultEventCardProps) => {
@@ -61,12 +77,25 @@ export const ResultEventCard = ({ event }: IResultEventCardProps) => {
               a été {getTextFromResult(target.data)}
             </div>
           </Card.Content>
-          {!target.data.conflicted && (
-            <ResultIcon
-              results={target.data.results}
-              isConfliced={target.data.conflicted}
-            />
-          )}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}
+          >
+            <div style={{ display: 'flex' }}>
+              <Button className="is-text" to={path.amend(target.data._id)}>
+                +Details
+              </Button>
+            </div>
+            {!target.data.conflicted && (
+              <ResultIcon
+                results={target.data.results}
+                isConfliced={target.data.conflicted}
+              />
+            )}
+          </div>
         </Card>
       </div>
     </div>
