@@ -11,16 +11,16 @@ import {
   DataContext
 } from '../../../components'
 // Interfaces
-import { IEvent, IResponse, IText } from '../../../../../interfaces'
-// Hooks
-import { useEventCard } from '../../../hooks'
+import { IUser, IResponse, IText } from '../../../../../interfaces'
 import { CellMeasurerCache } from 'react-virtualized'
 
 interface IAmendEventCardProps {
   /** Related event */
-  event: IEvent
+  target: any
+  /** user data */
+  user: IUser | null
   /** Force a row to re-render */
-  updateRow: (index: number) => void
+  resizeRow: (index: number) => void
   /** Cache of row Heights */
   cache: CellMeasurerCache
   /** Index of the card */
@@ -28,24 +28,21 @@ interface IAmendEventCardProps {
 }
 
 export const AmendEventCard = ({
-  event,
+  target,
+  user,
   cache,
   index,
-  updateRow
+  resizeRow
 }: IAmendEventCardProps) => {
-  const { user, target } = useEventCard(event)
   const { get } = useContext(DataContext)
 
-  useEffect(() => cache.clear(index, 0), [])
+  useEffect(() => {
+    cache.clear(index, 0)
+  }, [])
 
-  const isTargetLoaded = (target: any) => {
-    return target && target.data
-  }
+  const text: IResponse<IText> = get('text')(target.data.text)
 
-  const text: IResponse<IText> =
-    isTargetLoaded(target) && get('text')(target.data.text)
-
-  return isTargetLoaded(target) && text && text.data ? (
+  return (
     <div className="message card-events-container">
       <div
         className="message-body"
@@ -79,7 +76,7 @@ export const AmendEventCard = ({
             <Collapse isOpen={!target.data.closed}>
               <Collapse.Trigger
                 style={{ marginBottom: '1.5em' }}
-                onClick={() => updateRow(index)}
+                onClick={() => resizeRow(index)}
               >
                 {(on: boolean) => (
                   <div
@@ -116,7 +113,9 @@ export const AmendEventCard = ({
                 )}
               </Collapse.Trigger>
               <Collapse.Detail>
-                <DiffPreview amend={target.data} text={text.data} />
+                {text && text.data && (
+                  <DiffPreview amend={target.data} text={text.data} />
+                )}
               </Collapse.Detail>
             </Collapse>
           </Card.Content>
@@ -133,5 +132,5 @@ export const AmendEventCard = ({
         </Card>
       </div>
     </div>
-  ) : null
+  )
 }

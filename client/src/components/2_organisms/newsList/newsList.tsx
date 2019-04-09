@@ -42,8 +42,8 @@ export const NewsList = ({
   })
 
   // Update row height post render
-  const updateRow = (index: number) => {
-    cache.clearAll()
+  const resizeRow = (index: number) => {
+    cache.clear(index, 0)
     if (refList.current) {
       refList.current.recomputeRowHeights(index)
     }
@@ -69,25 +69,25 @@ export const NewsList = ({
   // Render list item
   const rowRenderer = ({ index, parent, style, key }: any) => {
     return (
-      <CellMeasurer
-        cache={cache}
-        columnIndex={0}
-        rowIndex={index}
-        key={key}
-        parent={parent}
-      >
-        {({ measure }) => (
+      events[index] && (
+        <CellMeasurer
+          cache={cache}
+          columnIndex={0}
+          rowIndex={index}
+          key={key}
+          parent={parent}
+        >
           <div style={{ padding: '0.2em', ...style }}>
             <EventRow
               data={events[index]}
               isNew={isEventNew(newEvents, events, index)}
-              updateRow={updateRow}
+              resizeRow={resizeRow}
               index={index}
               cache={cache}
             />
           </div>
-        )}
-      </CellMeasurer>
+        </CellMeasurer>
+      )
     )
   }
 
@@ -104,7 +104,7 @@ export const NewsList = ({
               <AutoSizer disableHeight>
                 {({ width }) => {
                   if (mostRecentWidth && mostRecentWidth !== width) {
-                    resizeAll()
+                    setTimeout(resizeAll, 0)
                   }
                   setMostRecentWidth(width)
                   registerRefChild = registerChild

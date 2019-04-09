@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import { IEvent } from '../../../../interfaces'
 import { DataContext, UserContext } from '../../components'
 
@@ -10,7 +10,5 @@ export const useEventCard = (event: IEvent) => {
     event.target.type === 'result' ? 'amend' : event.target.type
   )(event.target.id)
 
-  const value = useMemo(() => ({ user, target }), [user, target])
-
-  return value
+  return { user, target }
 }
