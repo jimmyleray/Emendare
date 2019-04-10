@@ -13,7 +13,7 @@ export const Layout = ({ children }: IProps) => (
       <Alerts />
     </header>
     <main>
-      <div className="section">
+      <div>
         <div className="container">{children}</div>
       </div>
     </main>
