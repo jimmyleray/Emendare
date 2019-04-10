@@ -2,6 +2,10 @@
   font-family: Montserrat, Helvetica, Arial, sans-serif;
 }
 
+html {
+  background: #e6ecf0;
+}
+
 @keyframes bubble {
   0% {
     transform: scale(1);
@@ -31,11 +35,20 @@
     grid-template-columns: 1fr !important;
   }
 
-  .section {
-    padding: 0;
+  html {
+    padding-bottom: 45px;
+  }
+
+  html.has-navbar-fixed-top {
+    padding-top: 52px;
   }
 }
 
+.container-column {
+  background: #fff;
+  border: 1px solid #e6ecf0;
+  border-radius: 0 0 5px 5px;
+}
 /** Events list card **/
 .card-events {
   border-bottom: 1px solid #e6ecf0;
