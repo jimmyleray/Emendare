@@ -2,27 +2,16 @@
 import React from 'react'
 import { CellMeasurerCache } from 'react-virtualized'
 // Components
-import {
-  Card,
-  Icon,
-  StopWatch,
-  Tag,
-  ResultIcon,
-  Button
-} from '../../../components'
+import { Icon, StopWatch } from '../../../components'
 // Interfaces
 import { IUser } from '../../../../../interfaces'
 // Helpers
 import {
-  getColorFromResult,
   getIconFromResult,
   getColorTextFromResult,
   getTextFromResult
 } from './helper'
-// Hooks
-import { useEventCard } from '../../../hooks'
-// Config
-import { path } from '../../../config'
+import { Footer } from './footer'
 
 interface IResultEventCardProps {
   /** Related event */
@@ -38,36 +27,24 @@ interface IResultEventCardProps {
 }
 
 export const ResultEventCard = ({ target }: IResultEventCardProps) => (
-  <div className="message card-events-container">
-    <div
-      className="message-body card-events-body"
-      style={{ borderColor: getColorFromResult(target.data) }}
-    >
-      <Card className="card-events">
-        <Card.Header className="card-events-header">
-          <div className="card-events-header-icon">
-            <Tag className="is-size-7 has-background-light">
-              <StopWatch
-                date={target.data.created}
-                className="has-text-weight-semibold"
-              />
-              <Icon name="fa-history" className="fa-lg" />
-            </Tag>
-          </div>
-          <Card.Header.Title>
-            <p>
-              <Icon
-                name={getIconFromResult(target.data)}
-                type={'light'}
-                size="fa-lg"
-                className={getColorTextFromResult(target.data)}
-              />{' '}
-              Résultat Amendement
-            </p>
-          </Card.Header.Title>
-        </Card.Header>
-        <hr style={{ margin: 0 }} className="has-background-grey-lighter" />
-        <Card.Content style={{ padding: '1rem 0 1rem 0.75rem' }}>
+  <div className="media card-events">
+    <div className="media-left">
+      <Icon
+        name={getIconFromResult(target.data)}
+        type={'light'}
+        size="fa-2x"
+        className={getColorTextFromResult(target.data) + ' is-large'}
+      />
+    </div>
+    <div className="media-content" style={{ overflowX: 'visible' }}>
+      <div>
+        <p>
+          <strong>Résultat</strong>
+          {' - '}
+          <small style={{ wordSpacing: 'normal' }}>
+            <StopWatch date={target.data.created} />
+          </small>
+          <br />
           <div>
             L'amendement{' '}
             <span className="has-text-weight-semibold">
@@ -75,27 +52,14 @@ export const ResultEventCard = ({ target }: IResultEventCardProps) => (
             </span>{' '}
             a été {getTextFromResult(target.data)}
           </div>
-        </Card.Content>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}
-        >
-          <div style={{ display: 'flex' }}>
-            <Button className="is-text" to={path.amend(target.data._id)}>
-              +Details
-            </Button>
+        </p>
+        {!target.data.conflicted && (
+          <div className="card-events-footer">
+            <Footer amend={target.data} isConfliced={target.data.conflicted} />
           </div>
-          {!target.data.conflicted && (
-            <ResultIcon
-              results={target.data.results}
-              isConfliced={target.data.conflicted}
-            />
-          )}
-        </div>
-      </Card>
+        )}
+      </div>
     </div>
+    <div className="media-right" />
   </div>
 )

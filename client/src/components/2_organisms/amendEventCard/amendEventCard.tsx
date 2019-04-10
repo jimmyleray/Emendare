@@ -1,22 +1,22 @@
 import React, { useContext, useEffect } from 'react'
 // Components
 import {
-  Card,
   Icon,
   StopWatch,
-  Tag,
   Vote,
-  Collapse,
+  CountDown,
   DiffPreview,
   DataContext
 } from '../../../components'
 // Interfaces
-import { IUser, IResponse, IText } from '../../../../../interfaces'
+import { IUser, IResponse, IText, IAmend } from '../../../../../interfaces'
 import { CellMeasurerCache } from 'react-virtualized'
+// Services
+import { Time } from '../../../services'
 
 interface IAmendEventCardProps {
   /** Related event */
-  target: any
+  target: { error: any; data: IAmend }
   /** user data */
   user: IUser | null
   /** Force a row to re-render */
@@ -27,110 +27,78 @@ interface IAmendEventCardProps {
   index: number
 }
 
+const displayPreview = (
+  text: IText,
+  index: number,
+  target: any,
+  cache: CellMeasurerCache
+) => {
+  setTimeout(() => cache.clear(index, 0), 0)
+  return (
+    <div style={{ marginTop: '0.2em' }}>
+      <DiffPreview amend={target.data} text={text} />
+    </div>
+  )
+}
+
 export const AmendEventCard = ({
   target,
   user,
   cache,
-  index,
-  resizeRow
+  index
 }: IAmendEventCardProps) => {
   const { get } = useContext(DataContext)
-
-  useEffect(() => {
-    cache.clear(index, 0)
-  }, [])
 
   const text: IResponse<IText> = get('text')(target.data.text)
 
   return (
-    <div className="message card-events-container">
-      <div
-        className="message-body"
-        style={{ borderColor: 'hsl(171, 100%, 41%)' }}
-      >
-        <Card className="card-events">
-          <Card.Header className="card-events-header">
-            <div className="card-events-header-icon">
-              <Tag className="is-size-7">
-                <StopWatch
-                  date={target.data.created}
-                  className="has-text-weight-semibold"
-                />
-                <Icon name="fa-history" className="fa-lg" />
-              </Tag>
-            </div>
-            <Card.Header.Title>
-              <p>
-                <Icon
-                  name="fa-plus"
-                  type={'light'}
-                  size="fa-lg"
-                  className="has-text-primary"
-                />{' '}
-                Nouvel Amendement
-              </p>
-            </Card.Header.Title>
-          </Card.Header>
-          <hr style={{ margin: 0 }} className="has-background-grey-lighter" />
-          <Card.Content style={{ padding: '1rem 0 1rem 0.75rem' }}>
-            <Collapse isOpen={!target.data.closed}>
-              <Collapse.Trigger
-                style={{ marginBottom: '1.5em' }}
-                onClick={() => resizeRow(index)}
-              >
-                {(on: boolean) => (
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <div>
-                      <div className="title is-5">"{target.data.name}"</div>
-                      <div className="subtitle is-size-6">
-                        {target.data.description}
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center'
-                      }}
-                    >
-                      {!on ? (
-                        <Icon
-                          name="fa-chevron-circle-down"
-                          className="is-size-4 hover-circle is-large"
-                        />
-                      ) : (
-                        <Icon
-                          name="fas fa-chevron-circle-up"
-                          className="is-size-4 hover-circle is-large"
-                        />
-                      )}
-                    </div>
-                  </div>
-                )}
-              </Collapse.Trigger>
-              <Collapse.Detail>
-                {text && text.data && (
-                  <DiffPreview amend={target.data} text={text.data} />
-                )}
-              </Collapse.Detail>
-            </Collapse>
-          </Card.Content>
+    <div className="media card-events">
+      <div className="media-left">
+        <Icon
+          type={'light'}
+          name="fa-plus"
+          className="fa-2x has-text-primary is-large"
+        />
+      </div>
+      <div className="media-content" style={{ overflowX: 'visible' }}>
+        <div>
+          <p style={{ margin: 0 }}>
+            <strong>{target.data.name}</strong>
+            {' - '}
+            <small style={{ wordSpacing: 'normal' }}>
+              <StopWatch date={target.data.created} />
+            </small>
+            <br />
+            {target.data.description}
+          </p>
+          <div style={{ marginTop: '0.5em' }}>
+            <span className="has-text-weight-ligh is-italic">
+              Temps restant :{' '}
+            </span>
+            <CountDown
+              date={Time.addTimeToDate(
+                target.data.created,
+                target.data.rules.delayMax
+              )}
+              className="has-text-weight-semibold"
+            />
+            {text &&
+              text.data &&
+              displayPreview(text.data, index, target, cache)}
+          </div>
+        </div>
+        <div className="card-events-footer">
           {user && (
             <Vote
-              className="is-centered"
-              user={user}
               amend={target.data}
               match={{ params: { id: target.data._id } }}
-              withText={false}
-              withResult={true}
+              user={user}
+              withIcon={true}
             />
           )}
-        </Card>
+        </div>
       </div>
+      <div className="media-right" />
     </div>
   )
 }
