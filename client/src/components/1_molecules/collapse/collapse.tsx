@@ -56,7 +56,7 @@ const Trigger = ({ children, onClick, ...rest }: ICollapseProps) => {
 
 const Detail = ({ children }: any) => {
   const { on } = useCollapseContext()
-  return on ? <React.Fragment>children</React.Fragment> : null
+  return on ? <React.Fragment>{children}</React.Fragment> : null
 }
 
 Collapse.Trigger = Trigger
