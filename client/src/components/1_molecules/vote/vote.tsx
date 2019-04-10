@@ -1,6 +1,13 @@
 import React from 'react'
 import { Socket } from '../../../services'
-import { Icon, Button, Buttons, I18nContext } from '../../../components'
+import {
+  Icon,
+  Button,
+  Buttons,
+  I18nContext,
+  Column,
+  Columns
+} from '../../../components'
 import { IAmend } from '../../../../../interfaces'
 
 interface IVoteProps {
@@ -16,8 +23,8 @@ interface IVoteProps {
   style?: React.CSSProperties
   /** Display the text+Icon or just icon */
   withText?: boolean
-  /** Display the result next to each button */
-  withResult?: boolean
+  /** Display just icons and result */
+  withIcon?: boolean
 }
 
 const vote = (user: any) => (amend: any) => (type: string) => (
@@ -37,22 +44,52 @@ export const Vote = ({
   user,
   amend,
   match,
-  withText = true,
-  withResult = false,
+  withIcon = false,
   ...rest
 }: IVoteProps) => {
   const { translate } = React.useContext(I18nContext)
 
-  return (
-    <Buttons className={className} {...rest}>
-      {withResult && (
-        <span
-          className="has-text-success is-size-5"
-          style={{ marginRight: '0.5em' }}
+  return withIcon ? (
+    <Columns className="is-mobile">
+      <Column className="is-one-third">
+        <Button
+          className="has-text-grey-light"
+          style={{ border: 'none', padding: 'none' }}
+          onClick={vote(user)(amend)('up')(match.params.id)}
+          disabled={amend.closed}
         >
-          {amend.results.upVotesCount}{' '}
-        </span>
-      )}
+          <Icon
+            type={'light'}
+            name={`${
+              user.upVotes.includes(amend._id) ? 'fas' : ''
+            } fa-thumbs-up`}
+            className="fa-lg"
+            style={{ marginRight: '0.5rem' }}
+          />
+          {amend.results.upVotesCount}
+        </Button>
+      </Column>
+      <Column className="is-one-third">
+        <Button
+          className="has-text-grey-light"
+          style={{ border: 'none', padding: 'none' }}
+          onClick={vote(user)(amend)('down')(match.params.id)}
+          disabled={amend.closed}
+        >
+          <Icon
+            type={'light'}
+            name={`${
+              user.downVotes.includes(amend._id) ? 'fas' : ''
+            } fa-thumbs-down`}
+            className="fa-lg"
+            style={{ marginRight: '0.5rem' }}
+          />
+          {amend.results.downVotesCount}
+        </Button>
+      </Column>
+    </Columns>
+  ) : (
+    <Buttons className={className} {...rest}>
       <Button
         className={`is-success ${className} ${
           user.upVotes.includes(amend._id) ? '' : 'is-outlined'
@@ -60,17 +97,10 @@ export const Vote = ({
         onClick={vote(user)(amend)('up')(match.params.id)}
         disabled={amend.closed}
       >
-        {withText && <span>{translate('UP_VOTE')}</span>}
+        <span>{translate('UP_VOTE')}</span>
         <Icon type={'solid'} name="fa-smile" size="fa-lg" />
       </Button>
-      {withResult && (
-        <span
-          className="has-text-info is-size-5"
-          style={{ marginRight: '0.5em' }}
-        >
-          {amend.results.indVotesCount}{' '}
-        </span>
-      )}
+
       <Button
         className={`is-info ${className} ${
           user.indVotes.includes(amend._id) ? '' : 'is-outlined'
@@ -78,17 +108,10 @@ export const Vote = ({
         onClick={vote(user)(amend)('ind')(match.params.id)}
         disabled={amend.closed}
       >
-        {withText && <span>{translate('IND_VOTE')}</span>}
+        <span>{translate('IND_VOTE')}</span>
         <Icon type={'solid'} name="fa-meh" size="fa-lg" />
       </Button>
-      {withResult && (
-        <span
-          className="has-text-danger is-size-5"
-          style={{ marginRight: '0.5em' }}
-        >
-          {amend.results.downVotesCount}{' '}
-        </span>
-      )}
+
       <Button
         className={`is-danger ${className} ${
           user.downVotes.includes(amend._id) ? '' : 'is-outlined'
@@ -96,7 +119,7 @@ export const Vote = ({
         onClick={vote(user)(amend)('down')(match.params.id)}
         disabled={amend.closed}
       >
-        {withText && <span>{translate('DOWN_VOTE')}</span>}
+        <span>{translate('DOWN_VOTE')}</span>
         <Icon type={'solid'} name="fa-frown" size="fa-lg" />
       </Button>
     </Buttons>
