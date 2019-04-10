@@ -1,14 +1,12 @@
 import * as React from 'react'
-import { render } from 'react-testing-library'
 import { amendMock } from '../../../../../interfaces'
 import { ResultEventCardFooter } from './resultEventCardFooter'
+import { renderWithRouter } from '../../../helpers'
 
 it('should render a Collapse without', () => {
-  const { container, getByText } = render(
+  const { container, getByText } = renderWithRouter(
     <ResultEventCardFooter amend={amendMock} />
   )
   expect(container).toBeTruthy()
-  expect(getByText('1')).toBeTruthy()
-  expect(getByText('2')).toBeTruthy()
-  expect(getByText('3')).toBeTruthy()
+  expect(getByText('0')).toBeTruthy()
 })

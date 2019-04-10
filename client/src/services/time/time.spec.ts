@@ -93,19 +93,19 @@ describe('getTimeLeft', () => {
 describe('toTimeString', () => {
   test('should return a formatted date string', () => {
     const time1 = { seconds: 2, minutes: 1, hours: 1, days: 0 }
-    expect(Time.toTimeString(time1)).toBe('1 heure')
+    expect(Time.toTimeString(time1)).toBe('1 h')
 
     const time2 = { seconds: 2, minutes: 1, hours: 1, days: 2 }
-    expect(Time.toTimeString(time2)).toBe('2 jours')
+    expect(Time.toTimeString(time2)).toBe('2 j')
 
     const time3 = { seconds: 53, minutes: 0, hours: 0, days: 0 }
-    expect(Time.toTimeString(time3)).toBe('53 secondes')
+    expect(Time.toTimeString(time3)).toBe('53 sec')
 
     const time4 = { seconds: 53, minutes: 25, hours: 0, days: 0 }
-    expect(Time.toTimeString(time4)).toBe('25 minutes')
+    expect(Time.toTimeString(time4)).toBe('25 min')
 
     const time5 = { seconds: 0, minutes: 0, hours: 0, days: 0 }
-    expect(Time.toTimeString(time5)).toBe('0 seconde')
+    expect(Time.toTimeString(time5)).toBe('0 sec')
   })
 })
 
