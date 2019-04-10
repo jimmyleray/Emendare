@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { render } from 'react-testing-library'
 import { amendMock } from '../../../../../interfaces'
-import { Footer } from './footer'
+import { ResultEventCardFooter } from './resultEventCardFooter'
 
 it('should render a Collapse without', () => {
   const { container, getByText } = render(
-    <Footer amend={amendMock} isConfliced={false} />
+    <ResultEventCardFooter amend={amendMock} />
   )
   expect(container).toBeTruthy()
   expect(getByText('1')).toBeTruthy()

@@ -11,7 +11,7 @@ import {
   getColorTextFromResult,
   getTextFromResult
 } from './helper'
-import { Footer } from './footer'
+import { ResultEventCardFooter } from './resultEventCardFooter'
 
 interface IResultEventCardProps {
   /** Related event */
@@ -55,7 +55,7 @@ export const ResultEventCard = ({ target }: IResultEventCardProps) => (
         </p>
         {!target.data.conflicted && (
           <div className="card-events-footer">
-            <Footer amend={target.data} isConfliced={target.data.conflicted} />
+            <ResultEventCardFooter amend={target.data} />
           </div>
         )}
       </div>
