@@ -77,7 +77,7 @@ export const NewsList = ({
           key={key}
           parent={parent}
         >
-          <div style={{ padding: '0.2em', ...style }}>
+          <div style={style}>
             <EventRow
               data={events[index]}
               isNew={isEventNew(newEvents, events, index)}
