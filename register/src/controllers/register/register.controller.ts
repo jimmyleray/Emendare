@@ -26,7 +26,6 @@ export class RegisterController {
       register[key] = value
     })
     register.url = url
-    console.log(register)
     return await register.save()
   }
 }
