@@ -25,7 +25,7 @@ const computeDiff = (amend: Partial<IAmend>, text: IText) => {
   }
 }
 
-export const DiffPreview = ({ amend, text }: IDiffPreviewProps) => {
+export const DiffPreview = React.memo(({ amend, text }: IDiffPreviewProps) => {
   // State
   const [diffs, setDiffs] = useState([])
   // Effects
@@ -114,4 +114,4 @@ export const DiffPreview = ({ amend, text }: IDiffPreviewProps) => {
         ))}
     </div>
   )
-}
+})
