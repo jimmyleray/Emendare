@@ -2,7 +2,7 @@
   "name": "Emendare",
   "short_name": "Emendare",
   "theme_color": "#363636",
-  "background_color": "#e6ecf0",
+  "background_color": "#363636",
   "display": "standalone",
   "orientation": "portrait",
   "Scope": "/",
