@@ -35,7 +35,7 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
     action: { type: string; payload: any }
   ): IEventProviderState => {
     switch (action.type) {
-      case 'ADD_NEW_EVENTS':
+      case 'ADD_NEW_EVENTS': {
         const events = [...previousState.events]
         const newEvents = [...previousState.newEvents]
         events.unshift(action.payload.events)
@@ -46,8 +46,9 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
           events: uniqBy(events, '_id'),
           newEvents: uniqBy(newEvents, '_id')
         }
-      case 'ADD_OLD_EVENTS':
-        const listEvents = uniqBy(
+      }
+      case 'ADD_OLD_EVENTS': {
+        const events = uniqBy(
           [...previousState.events, ...action.payload.events],
           '_id'
         )
@@ -55,16 +56,18 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
           ...previousState,
           error: action.payload.error,
           hasNextPage: action.payload.hasNextPage,
-          events: listEvents,
-          newEvents: getNewEvent(action.payload.lastEventDate, listEvents)
+          events,
+          newEvents: getNewEvent(action.payload.lastEventDate, events)
         }
-      case 'NEW_EVENTS_READED':
+      }
+      case 'NEW_EVENTS_READED': {
         Socket.emit('updateLastEventDate')
         return {
           ...previousState,
           newEvents: []
         }
-      case 'NEW_EVENT_READED':
+      }
+      case 'NEW_EVENT_READED': {
         Socket.emit('updateLastEventDate')
         return {
           ...previousState,
@@ -73,6 +76,7 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
             previousState.newEvents
           )
         }
+      }
       default:
         return previousState
     }
