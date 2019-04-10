@@ -26,7 +26,7 @@ export const News = () => {
   if (events.length > 0) {
     const newEventsCount = user ? newEvents.length : 0
     return (
-      <div>
+      <div style={{ padding: '0.5rem 0.5rem 1.5rem 0.5rem' }}>
         {newEventsCount > 0 && (
           <Button
             className="is-fullwidth is-link"

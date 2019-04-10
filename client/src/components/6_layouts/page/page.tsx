@@ -11,7 +11,7 @@ interface IProps {
 export const Page = ({
   children,
   title,
-  style = { padding: '2rem 1rem' }
+  style = { padding: '3rem 1rem' }
 }: IProps) => {
   React.useEffect(() => {
     if (window.scrollY !== undefined) {
