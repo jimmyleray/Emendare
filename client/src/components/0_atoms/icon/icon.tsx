@@ -11,6 +11,8 @@ interface IProps {
   className?: string
   /** Title to display when onHover */
   title?: string
+  /** Style CSS */
+  style?: React.CSSProperties
 }
 
 export const Icon = React.memo(
