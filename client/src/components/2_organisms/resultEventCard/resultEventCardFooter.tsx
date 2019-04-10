@@ -1,8 +1,6 @@
 import React from 'react'
 // Components
 import { Icon, Column, Columns, Button } from '../..'
-// Helpers
-import { isMaxVote } from './helper'
 // Configs
 import { path } from '../../../config'
 // Interfaces
@@ -19,9 +17,7 @@ export const ResultEventCardFooter = React.memo(
       <Column className="is-one-third">
         <div
           className={
-            isMaxVote('upVotesCount', amend.results, amend.conflicted)
-              ? 'has-text-success'
-              : 'has-text-grey-light'
+            amend.accepted ? 'has-text-success' : 'has-text-grey-light'
           }
         >
           <Icon
@@ -36,9 +32,7 @@ export const ResultEventCardFooter = React.memo(
       <Column className="is-one-third">
         <div
           className={
-            isMaxVote('downVotesCount', amend.results, amend.conflicted)
-              ? 'has-text-danger'
-              : 'has-text-grey-light'
+            !amend.accepted ? 'has-text-danger' : 'has-text-grey-light'
           }
         >
           <Icon
