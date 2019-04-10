@@ -23,7 +23,12 @@ app.use(compression())
 const serveStatic = require('serve-static')
 const oneWeek = 1000 * 60 * 60 * 24 * 7
 const maxAge = process.env.NODE_ENV === 'production' ? oneWeek : 0
-const unCachedFiles = ['index.html', 'manifest.json', 'service-worker.js']
+const unCachedFiles = [
+  'index.html',
+  'manifest.json',
+  'service-worker.js',
+  'robots.txt'
+]
 
 const setHeaders = (res, url) => {
   if (unCachedFiles.includes(path.basename(url))) {
