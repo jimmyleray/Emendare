@@ -1,8 +1,9 @@
 export default {
   instance: {
-    name: process.env.INSTANCE_NAME || 'Instance sans nom',
-    description: process.env.INSTANCE_DESCRIPTION || 'Pas de description',
-    language: process.env.INSTANCE_LANGUAGE || 'FR'
+    name: process.env.INSTANCE_NAME,
+    description: process.env.INSTANCE_DESCRIPTION,
+    language: process.env.INSTANCE_LANGUAGE || 'FR',
+    instanceUrl: process.env.INSTANCE_URL
   },
   registerUrl:
     process.env.REGISTER_URL || 'https://emendare-register.cleverapps.io/',

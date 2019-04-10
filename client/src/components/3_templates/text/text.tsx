@@ -14,7 +14,8 @@ import {
   Spacer,
   Background,
   I18nContext,
-  Tabs
+  Tabs,
+  ProposeAmend
 } from '../../../components'
 import { Socket, Pagination } from '../../../services'
 import { IText } from '../../../../../interfaces'
@@ -82,18 +83,7 @@ export const Text = ({
           <Tabs.Content for="text">
             <React.Fragment>
               <Buttons className="is-centered">
-                {userContext.isConnected() && (
-                  <Button
-                    to={path.edit(data._id)}
-                    className="is-info"
-                    onClick={() => {
-                      Socket.emit('followText', { id: data._id })
-                    }}
-                  >
-                    <Icon type={'solid'} name="fa-plus" />
-                    <span>Proposer un amendement</span>
-                  </Button>
-                )}
+                {userContext.isConnected() && <ProposeAmend text={data} />}
 
                 <Spacer className="is-hidden-mobile" />
 

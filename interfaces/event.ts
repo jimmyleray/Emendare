@@ -7,6 +7,7 @@ export interface IEvent {
     id: string;
   };
   save?: any;
+  remove?: any;
 }
 
 export const eventMock: IEvent = {

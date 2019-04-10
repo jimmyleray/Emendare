@@ -21,10 +21,17 @@ app.use(compression())
 
 // Middleware for caching
 const serveStatic = require('serve-static')
-const oneWeek = 604800000
+const oneWeek = 1000 * 60 * 60 * 24 * 7
 const maxAge = process.env.NODE_ENV === 'production' ? oneWeek : 0
-const setCustomCacheControl = (res, path) => {
-  if (serveStatic.mime.lookup(path) === 'text/html') {
+const unCachedFiles = [
+  'index.html',
+  'manifest.json',
+  'service-worker.js',
+  'robots.txt'
+]
+
+const setHeaders = (res, url) => {
+  if (unCachedFiles.includes(path.basename(url))) {
     res.setHeader('Cache-Control', 'build, max-age=0')
   }
 }
@@ -33,7 +40,7 @@ const setCustomCacheControl = (res, path) => {
 app.use(
   serveStatic(path.join(__dirname + '/build'), {
     maxAge,
-    setHeaders: setCustomCacheControl
+    setHeaders
   })
 )
 

@@ -7,6 +7,8 @@ interface IProps {
   subtitle?: React.ReactElement | string
   /** Title of the banner */
   title: React.ReactElement | string
+  /** Style css */
+  style?: React.CSSProperties
 }
 
 export const Hero = React.memo(

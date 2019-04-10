@@ -110,7 +110,7 @@ export class Edit extends React.Component<IEditProps, IEditState> {
 
   public render() {
     if (this.state.redirectToAmend) {
-      return <Redirect to={path.amend(this.state.redirectID)} />
+      return <Redirect to={path.news} />
     }
 
     return (

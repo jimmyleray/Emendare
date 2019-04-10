@@ -5,6 +5,8 @@ interface IProps {
   children: React.ReactNode
   /** Additional CSS IU class */
   className?: string
+  /** Style CSS */
+  style?: React.CSSProperties
 }
 
 export const Tag = React.memo(

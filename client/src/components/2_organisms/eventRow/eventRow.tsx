@@ -1,29 +1,65 @@
-import React from 'react'
-import { Event, Divider, I18nContext } from '../../../components'
+import React, { useEffect } from 'react'
+// Components
+import {
+  Divider,
+  I18nContext,
+  TextEventCard,
+  AmendEventCard,
+  ResultEventCard
+} from '../../../components'
+// Interfaces
 import { IEvent } from '../../../../../interfaces'
+// ReactVirtualized
+import { CellMeasurerCache } from 'react-virtualized'
+// HoCs
+import { withEventCard } from '../../../hocs'
+// Hooks
+import { useEventCard } from '../../../hooks'
 
 interface IEventRowProps {
   /** Following event */
   data: IEvent
-  /** measure tool */
-  measure: () => void
   /** Tell if the event is new */
   isNew: boolean
-  /** Tell if the event is last */
-  isLast: boolean
+  /** Force a row to re-render */
+  resizeRow: (index: number) => void
+  /** Index of the row */
+  index: number
+  /** Cache of heights */
+  cache: CellMeasurerCache
 }
 
-export const EventRow = ({ data, measure, isNew, isLast }: IEventRowProps) => {
+export const EventRow = ({
+  data,
+  isNew,
+  resizeRow,
+  cache,
+  index
+}: IEventRowProps) => {
   const { translate } = React.useContext(I18nContext)
+  const { target, user } = useEventCard(data)
+
+  useEffect(() => {
+    resizeRow(index)
+  }, [target])
+
+  const passDataToCard = withEventCard(cache, index, resizeRow, target, user)
+
+  const displayRightEvent = () => {
+    switch (data.target.type) {
+      case 'text':
+        return passDataToCard(TextEventCard)
+      case 'amend':
+        return passDataToCard(AmendEventCard)
+      case 'result':
+        return passDataToCard(ResultEventCard)
+    }
+  }
 
   return (
-    <div onLoad={measure}>
-      <Event data={data} />
-      {isNew ? (
-        <Divider content={translate('OLD_EVENTS')} />
-      ) : !isLast ? (
-        <hr />
-      ) : null}
-    </div>
+    <React.Fragment>
+      {target && target.data && displayRightEvent()}
+      {isNew ? <Divider content={translate('OLD_EVENTS')} /> : null}
+    </React.Fragment>
   )
 }

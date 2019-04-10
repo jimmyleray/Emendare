@@ -1,21 +1,33 @@
-# [Emendare.org](https://emendare.org/) [![CircleCI](https://circleci.com/gh/jimmyleray/Emendare.svg?style=svg)](https://circleci.com/gh/jimmyleray/Emendare)
+# [Emendare](https://emendare.org/) [![CircleCI](https://circleci.com/gh/jimmyleray/Emendare.svg?style=svg)](https://circleci.com/gh/jimmyleray/Emendare) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![CodeFactor](https://www.codefactor.io/repository/github/jimmyleray/emendare/badge)](https://www.codefactor.io/repository/github/jimmyleray/emendare) [![BCH compliance](https://bettercodehub.com/edge/badge/jimmyleray/Emendare?branch=develop)](https://bettercodehub.com/) [![Codecov](https://img.shields.io/codecov/c/github/jimmyleray/Emendare.svg?style=flat)](https://codecov.io/gh/JimmyLeray/Emendare) [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jimmyleray/Emendare/issues)
 
-> Open source platform for drafting modifiable texts
+## Philosophy
 
-[![CodeFactor](https://www.codefactor.io/repository/github/jimmyleray/emendare/badge)](https://www.codefactor.io/repository/github/jimmyleray/emendare) [![BCH compliance](https://bettercodehub.com/edge/badge/jimmyleray/Emendare?branch=develop)](https://bettercodehub.com/) [![Codecov](https://img.shields.io/codecov/c/github/jimmyleray/Emendare.svg?style=flat)](https://codecov.io/gh/JimmyLeray/Emendare) ![Code Size](https://img.shields.io/github/languages/code-size/jimmyleray/Emendare.svg?style=flat) ![Last commit](https://img.shields.io/github/last-commit/jimmyleray/Emendare.svg?style=flat) [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jimmyleray/Emendare/issues) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+Emendare is a citizen, non-profit, distributed and open-source initiative. It helps groups share and improve texts iteratively.
 
-## Tech / framework used
+The tool mimics the parliament process, allowing all participants to suggest alterations to a text, called amendments.
 
-The current stack of this project is :
+All groups seeking to organize themselves horizontally, be they companies, associations, political movements or local authorities, are welcome to use Emendare.
 
-- Frontend side :
+## Technical stack
 
-  - [ReactJS](https://reactjs.org/) as a framework for the client interface
+The current technical stack of Emendare is :
+
+[TypeScript](https://www.typescriptlang.org/) as the main language for the entire project
+
+- Client side :
+
+  - [ReactJS](https://reactjs.org/) as a framework for the web user interface
   - [Bulma CSS](https://bulma.io/) as a css framework based on Flexbox
 
-- Backend side :
-  - [Node.js](https://nodejs.org/en/) for the API server and the application server
+- Instance side :
+
+  - [Node.js](https://nodejs.org/en/) for the instance server
   - [Socket.io](https://socket.io/) for the client / server exchanges
+  - [MongoDB](https://www.mongodb.com/en) as database
+
+- Register side :
+  - [NestJS](https://nestjs.com/) as a progressive NodeJS framework
+  - [TypeORM](https://typeorm.io/#/) as an ORM layer between the application and the database
   - [MongoDB](https://www.mongodb.com/en) as database
 
 ## Getting started
@@ -112,7 +124,3 @@ The app.js server will allow http redirection to https as well as Gzip compressi
 ## Contributions
 
 To contribute to this project please refer to [Guide for contributors](https://github.com/jimmyleray/Emendare/blob/master/CONTRIBUTING.md)
-
-## License
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjimmyleray%2FEmendare.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjimmyleray%2FEmendare?ref=badge_large)

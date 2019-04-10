@@ -1,12 +1,11 @@
-import React, { useEffect, useReducer, useContext } from 'react'
-import { Socket } from '../../../services'
+import React from 'react'
 import { IError, IEvent } from '../../../../../interfaces'
-import _ from 'lodash'
-import { UserContext } from '../user'
 import { getNewEvent, deleteNewEvent } from './helper'
+import { UserContext } from '../../../components'
+import { Socket } from '../../../services'
+import { uniqBy } from 'lodash'
 
 interface IEventProviderProps {
-  /** Children nodes */
   children: React.ReactChild
 }
 
@@ -29,14 +28,14 @@ const initialState: IEventProviderState = {
 export const EventsContext = React.createContext(initialState)
 
 export const EventsProvider = ({ children }: IEventProviderProps) => {
-  const { user } = useContext(UserContext)
-  // Reducer function
+  const { user } = React.useContext(UserContext)
+
   const reducer = (
     previousState: IEventProviderState,
     action: { type: string; payload: any }
   ): IEventProviderState => {
     switch (action.type) {
-      case 'ADD_NEW_EVENTS':
+      case 'ADD_NEW_EVENTS': {
         const events = [...previousState.events]
         const newEvents = [...previousState.newEvents]
         events.unshift(action.payload.events)
@@ -44,28 +43,45 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
         return {
           ...previousState,
           error: action.payload.error,
-          events: _.uniqBy(events, '_id'),
-          newEvents: _.uniqBy(newEvents, '_id')
+          events: uniqBy(events, '_id'),
+          newEvents: uniqBy(newEvents, '_id')
         }
-      case 'ADD_OLD_EVENTS':
-        const listEvents = _.uniqBy(
-          _.concat(previousState.events, action.payload.events),
+      }
+      case 'ADD_OLD_EVENTS': {
+        const events = uniqBy(
+          [...previousState.events, ...action.payload.events],
           '_id'
         )
         return {
           ...previousState,
           error: action.payload.error,
           hasNextPage: action.payload.hasNextPage,
-          events: listEvents,
-          newEvents: getNewEvent(action.payload.lastEventDate, listEvents)
+          events,
+          newEvents: getNewEvent(action.payload.lastEventDate, events)
         }
-      case 'NEW_EVENTS_READED':
+      }
+      case 'DELETE_EVENT': {
+        const notSameID = (event: IEvent) =>
+          event._id !== action.payload.event._id
+
+        const events = previousState.events.filter(notSameID)
+        const newEvents = previousState.newEvents.filter(notSameID)
+
+        return {
+          ...previousState,
+          error: action.payload.error,
+          events: uniqBy(events, '_id'),
+          newEvents: uniqBy(newEvents, '_id')
+        }
+      }
+      case 'NEW_EVENTS_READED': {
         Socket.emit('updateLastEventDate')
         return {
           ...previousState,
           newEvents: []
         }
-      case 'NEW_EVENT_READED':
+      }
+      case 'NEW_EVENT_READED': {
         Socket.emit('updateLastEventDate')
         return {
           ...previousState,
@@ -74,16 +90,17 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
             previousState.newEvents
           )
         }
+      }
       default:
         return previousState
     }
   }
 
   // Initialization of the state
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = React.useReducer(reducer, initialState)
 
   // listen socket events
-  useEffect(() => {
+  React.useEffect(() => {
     Socket.on(
       'events',
       ({
@@ -104,22 +121,32 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
         })
       }
     )
-    if (user) {
-      Socket.on(
-        'events/new',
-        ({ error, data }: { error: IError; data: IEvent }) => {
-          dispatch({
-            type: 'ADD_NEW_EVENTS',
-            payload: { error, events: data }
-          })
-        }
-      )
-      return () => {
-        Socket.off('events')
-        Socket.off('events/new')
+
+    Socket.on(
+      'events/new',
+      ({ error, data }: { error: IError; data: IEvent }) => {
+        dispatch({
+          type: 'ADD_NEW_EVENTS',
+          payload: { error, events: data }
+        })
       }
+    )
+
+    Socket.on(
+      'events/delete',
+      ({ error, data }: { error: IError; data: IEvent }) => {
+        dispatch({
+          type: 'DELETE_EVENT',
+          payload: { error, event: data }
+        })
+      }
+    )
+
+    return () => {
+      Socket.off('events')
+      Socket.off('events/new')
     }
-  }, [user])
+  }, [])
 
   return (
     <EventsContext.Provider

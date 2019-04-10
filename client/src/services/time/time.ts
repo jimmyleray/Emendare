@@ -50,15 +50,15 @@ export class Time {
    */
   public static toTimeString = (time: ITime) => {
     if (time.days > 0) {
-      return `${time.days} jour${time.days > 1 ? 's' : ''}`
+      return `${time.days} j`
     } else if (time.hours > 0) {
-      return `${time.hours} heure${time.hours > 1 ? 's' : ''}`
+      return `${time.hours} h`
     } else if (time.minutes > 0) {
-      return `${time.minutes} minute${time.minutes > 1 ? 's' : ''}`
+      return `${time.minutes} min`
     } else if (time.seconds > 0) {
-      return `${time.seconds} seconde${time.seconds > 1 ? 's' : ''}`
+      return `${time.seconds} sec`
     } else {
-      return '0 seconde'
+      return '0 sec'
     }
   }
 
