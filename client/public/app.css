@@ -30,6 +30,10 @@ html {
   }
 }
 
+html.has-navbar-fixed-top {
+  padding-top: 64px;
+}
+
 @media screen and (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr !important;

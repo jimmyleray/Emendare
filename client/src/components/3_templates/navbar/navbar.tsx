@@ -52,7 +52,13 @@ export const Navbar = () => {
             style={{ fill: 'white' }}
             className="is-hidden-mobile"
           />
-          <span style={{ marginLeft: 8 }}>Emendare</span>
+          <span
+            style={{ marginLeft: 8 }}
+            className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}
+            data-badge={newEventsCount}
+          >
+            Emendare
+          </span>
         </Link>
         <a
           role="button"
@@ -76,14 +82,6 @@ export const Navbar = () => {
         <div className="navbar-start is-hidden-mobile">
           <Link to={path.explore} className="navbar-item">
             {translate('EXPLORE')}
-          </Link>
-          <Link to={path.news} className="navbar-item">
-            <span
-              className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}
-              data-badge={newEventsCount}
-            >
-              {translate('NEWS')}
-            </span>
           </Link>
         </div>
         <div className="navbar-end">
