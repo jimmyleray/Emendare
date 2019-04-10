@@ -2,23 +2,20 @@ import React from 'react'
 import { CellMeasurerCache } from 'react-virtualized'
 // Components
 import {
-  Card,
   ProposeAmend,
   Icon,
   StopWatch,
-  Tag,
   FollowText,
   UnFollowText,
-  Buttons
+  Columns,
+  Column
 } from '../../../components'
 // Interfaces
-import { IEvent, IUser, IText } from '../../../../../interfaces'
-// Hooks
-import { useEventCard } from '../../../hooks'
+import { IUser, IText } from '../../../../../interfaces'
 
 interface ITextEventCard {
   /** Related event */
-  target: any
+  target: { error: any; data: IText }
   /** user data */
   user: IUser | null
   /** Force a row to re-render */
@@ -31,51 +28,74 @@ interface ITextEventCard {
 
 const displayBtnFollowText = (user: IUser, text: IText) => {
   return user.followedTexts.find(textID => textID === text._id) ? (
-    <UnFollowText text={text} className="is-small" />
+    <UnFollowText text={text} withIcon={true} />
   ) : (
-    <FollowText text={text} className="is-small" />
+    <FollowText text={text} withIcon={true} />
   )
 }
 
 export const TextEventCard = ({ target, user }: ITextEventCard) => (
-  <div className="message card-events-container">
-    <div className="message-body" style={{ borderColor: 'hsl(204, 86%, 53%)' }}>
-      <Card className="card-events">
-        <Card.Header className="card-events-header">
-          <div className="card-events-header-icon">
-            <Tag className="is-size-7 has-background-light">
-              <StopWatch
-                date={target.data.created}
-                className="has-text-weight-semibold"
-              />
-              <Icon name="fa-history" className="fa-lg" />
-            </Tag>
-          </div>
-          <Card.Header.Title>
-            <p>
-              <Icon
-                type={'light'}
-                name="fa-align-center"
-                className="fa-lg has-text-info"
-              />{' '}
-              Nouveau texte
-            </p>
-          </Card.Header.Title>
-        </Card.Header>
-        <hr style={{ margin: 0 }} className="has-background-grey-lighter" />
-        <Card.Content style={{ padding: '1rem 0 1rem 0.75rem' }}>
-          <div className="title is-5">"{target.data.name}"</div>
-          <div className="subtitle is-size-6">{target.data.description}</div>
-        </Card.Content>
-        <Buttons className="is-centered">
-          {user ? (
-            <React.Fragment>
-              <ProposeAmend text={target.data} className="is-small" />
-              {displayBtnFollowText(user, target.data)}
-            </React.Fragment>
-          ) : null}
-        </Buttons>
-      </Card>
+  <div className="media card-events">
+    <div className="media-left">
+      <Icon
+        type={'light'}
+        name="fa-align-center"
+        className="fa-2x has-text-info is-large"
+      />
     </div>
+    <div className="media-content" style={{ overflowX: 'visible' }}>
+      <div>
+        <p>
+          <strong>{target.data.name}</strong>
+          {' - '}
+          <small style={{ wordSpacing: 'normal' }}>
+            <StopWatch date={target.data.created} />
+          </small>
+          <br />
+          {target.data.description}
+        </p>
+        <div className="card-events-footer">
+          <Columns className="is-mobile">
+            <Column className="is-one-third">
+              {user ? (
+                <ProposeAmend withIcon={true} text={target.data} />
+              ) : (
+                <div
+                  className="has-text-grey-light"
+                  style={{ border: 'none', padding: 'none' }}
+                >
+                  <Icon
+                    type={'light'}
+                    name="fa-comments"
+                    className="fa-lg"
+                    style={{ marginRight: '0.5rem' }}
+                  />
+                  {target.data.amends.length}
+                </div>
+              )}
+            </Column>
+            <Column className="is-one-third">
+              {user ? (
+                displayBtnFollowText(user, target.data)
+              ) : (
+                <div
+                  className="has-text-grey-light"
+                  style={{ border: 'none', padding: 'none' }}
+                >
+                  <Icon
+                    type={'light'}
+                    name="fa-user"
+                    className="fa-lg"
+                    style={{ marginRight: '0.5rem' }}
+                  />
+                  {target.data.followersCount}
+                </div>
+              )}
+            </Column>
+          </Columns>
+        </div>
+      </div>
+    </div>
+    <div className="media-right" />
   </div>
 )

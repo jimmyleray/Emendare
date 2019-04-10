@@ -4,10 +4,15 @@ import { Title } from '../../../services'
 interface IProps {
   children: React.ReactNode
   title: string
+  style?: React.CSSProperties
 }
 
 // Main Page component that also update document title
-export const Page = ({ children, title }: IProps) => {
+export const Page = ({
+  children,
+  title,
+  style = { padding: '2rem 1rem' }
+}: IProps) => {
   React.useEffect(() => {
     return () => {
       if (window.scrollY) {
@@ -20,5 +25,5 @@ export const Page = ({ children, title }: IProps) => {
     Title.pageTitle = title
   }, [title])
 
-  return <React.Fragment>{children}</React.Fragment>
+  return <div style={style}>{children}</div>
 }
