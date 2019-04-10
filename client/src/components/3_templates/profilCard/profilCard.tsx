@@ -20,7 +20,7 @@ export const ProfilCard = () => {
           <p>{userContext.user.email}</p>
           <Button
             onClick={userContext.logout}
-            className="is-danger is-small"
+            className="is-danger"
             style={{ marginTop: '0.5rem' }}
           >
             {translate('SIGN_OUT')}

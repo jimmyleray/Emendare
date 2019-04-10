@@ -8,7 +8,7 @@ export const NewsPage = () => {
     <Page title={translate('NEWS')} style={{ padding: '0' }}>
       <Grid
         style={{
-          gridTemplateColumns: '1fr 538px 1fr',
+          gridTemplateColumns: '300px 550px 1fr',
           paddingTop: '0.5rem',
           gridGap: '0.5rem'
         }}
