@@ -14,7 +14,7 @@ interface IProps {
 export const Link = React.memo(({ children, title, to, ...rest }: IProps) =>
   to ? (
     startsWith(to, 'http') ? (
-      <a href={to} title={title} target="_blank" {...rest}>
+      <a href={to} title={title} target="_blank" rel="noreferrer" {...rest}>
         {children}
       </a>
     ) : (
