@@ -64,7 +64,7 @@ export const NewsList = ({
   }
 
   // If there are more items to be loaded then add an extra row to hold a loading indicator
-  const rowCount = events.length + 1
+  const rowCount = hasNextPage ? events.length + 1 : events.length
 
   // Render list item
   const rowRenderer = ({ index, parent, style, key }: any) => {
