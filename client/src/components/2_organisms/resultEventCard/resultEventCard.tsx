@@ -38,27 +38,23 @@ export const ResultEventCard = ({ target }: IResultEventCardProps) => (
     </div>
     <div className="media-content" style={{ overflowX: 'visible' }}>
       <div>
+        <strong>Résultat</strong>
+        {' - '}
+        <small style={{ wordSpacing: 'normal' }}>
+          <StopWatch date={target.data.created} />
+        </small>
+        <br />
         <p>
-          <strong>Résultat</strong>
-          {' - '}
-          <small style={{ wordSpacing: 'normal' }}>
-            <StopWatch date={target.data.created} />
-          </small>
-          <br />
-          <div>
-            L'amendement{' '}
-            <span className="has-text-weight-semibold">
-              "{target.data.name}"
-            </span>{' '}
-            a été {getTextFromResult(target.data)}
-          </div>
+          L'amendement{' '}
+          <span className="has-text-weight-semibold">"{target.data.name}"</span>{' '}
+          a été {getTextFromResult(target.data)}
         </p>
-        {!target.data.conflicted && (
-          <div className="card-events-footer">
-            <ResultEventCardFooter amend={target.data} />
-          </div>
-        )}
       </div>
+      {!target.data.conflicted && (
+        <div className="card-events-footer">
+          <ResultEventCardFooter amend={target.data} />
+        </div>
+      )}
     </div>
     <div className="media-right" />
   </div>
