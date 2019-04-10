@@ -29,6 +29,7 @@ export const Footer = ({ className }: any) => {
 
   return (
     <div className="navbar is-fixed-bottom" style={{ minHeight: 0 }}>
+      <hr style={{ margin: 0 }} />
       <div className={'tabs is-fullwidth is-medium ' + className}>
         <ul>
           <li className={location.pathname === path.home ? 'is-active' : ''}>
