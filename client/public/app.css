@@ -42,10 +42,6 @@ html {
   html.has-navbar-fixed-top {
     padding-top: 52px;
   }
-
-  html.has-navbar-fixed-bottom {
-    padding-top: 52px;
-  }
 }
 
 .container-column {
