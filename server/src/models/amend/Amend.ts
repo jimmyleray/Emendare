@@ -40,13 +40,9 @@ const model = mongoose.model(
       indVotesCount: { type: Number, default: 0 }
     },
     rules: {
-      delayMin: {
-        type: Number,
-        default: process.env.NODE_ENV === 'production' ? oneHour : oneMinute
-      },
       delayMax: {
         type: Number,
-        default: process.env.NODE_ENV === 'production' ? oneDay : oneHour
+        default: process.env.NODE_ENV === 'production' ? oneDay : oneMinute
       }
     },
     closed: { type: Boolean, default: false },
@@ -453,39 +449,19 @@ export class Amend {
         const newAmend = await Amend.model.findById(amend._id)
         io.emit('amend/' + amend._id, { data: newAmend })
 
-        const event: IEvent = await new Event.model({
+        const oldEvent: IEvent = await Event.model.findOne({
+          'target.id': newAmend._id
+        })
+        await Event.model.findOneAndDelete({ _id: oldEvent._id })
+        io.emit('events/delete', { data: oldEvent })
+
+        const newEvent: IEvent = await new Event.model({
           target: {
             type: 'result',
             id: newAmend._id
           }
         }).save()
-
-        io.emit('events/new', { data: event })
-      } else if (
-        now > start + amend.rules.delayMin &&
-        Amend.hasAbsoluteMajority(amend)
-      ) {
-        amend.closed = true
-        amend.finished = new Date()
-        amend.results.totalPotentialVotesCount = amend.text.followersCount
-
-        // Si il y'a une majorité absolue
-        if (Amend.hasAbsoluteUpMajority(amend)) {
-          Text.updateTextWithAmend(amend, io)
-        }
-
-        await amend.save()
-        const newAmend = await Amend.model.findById(amend._id)
-        io.emit('amend/' + amend._id, { data: newAmend })
-
-        const event: IEvent = await new Event.model({
-          target: {
-            type: 'result',
-            id: newAmend._id
-          }
-        }).save()
-
-        io.emit('events/new', { data: event })
+        io.emit('events/new', { data: newEvent })
       }
     })
 
