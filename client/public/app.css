@@ -2,10 +2,6 @@
   font-family: Montserrat, Helvetica, Arial, sans-serif;
 }
 
-html {
-  background-color: #e6ecf0;
-}
-
 @keyframes bubble {
   0% {
     transform: scale(1);
@@ -36,35 +32,18 @@ html {
   }
 
   .section {
-    padding: 3em 1em;
+    padding: 0;
   }
 }
 
 /** Events list card **/
 .card-events {
-  background: none;
-  box-shadow: none;
+  border-bottom: 1px solid #e6ecf0;
+  padding: 9px 12px;
 }
 
-.card-events-header {
-  background-color: none;
-  box-shadow: none;
-  flex-direction: column;
-}
-
-.card-events-header-icon {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.card-events-container {
-  background-color: hsl(0, 0%, 100%);
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-}
-
-.card-events-body {
-  padding: 1em 1em;
+.card-events-footer {
+  margin-top: 1rem;
 }
 
 /** Effects **/
