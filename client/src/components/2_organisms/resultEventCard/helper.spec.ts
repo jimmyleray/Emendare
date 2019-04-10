@@ -5,6 +5,7 @@ import {
   getTextFromResult
 } from './helper'
 import { amendMock } from '../../../../../interfaces'
+import { isMaxVote } from './helper'
 
 describe('getColorFromResult', () => {
   it('should return success color', () => {
@@ -73,5 +74,52 @@ describe('getTextFromResult', () => {
     expect(getTextFromResult({ ...amendMock, conflicted: true })).toBe(
       "refusé à cause d'un conflit technique"
     )
+  })
+})
+
+describe('isMaxVote', () => {
+  const mockResult = {
+    upVotesCount: 1,
+    downVotesCount: 1,
+    indVotesCount: 1,
+    totalPotentialVotesCount: 3
+  }
+  it('should return true', () => {
+    expect(
+      isMaxVote(
+        'upVotesCount',
+        {
+          ...mockResult,
+          upVotesCount: 2,
+          totalPotentialVotesCount: 4
+        },
+        false
+      )
+    ).toBeTruthy()
+  })
+  it('should return false', () => {
+    expect(
+      isMaxVote(
+        'upVotesCount',
+        {
+          ...mockResult,
+          upVotesCount: 0,
+          totalPotentialVotesCount: 3
+        },
+        false
+      )
+    ).toBeFalsy()
+
+    expect(
+      isMaxVote(
+        'upVotesCount',
+        {
+          ...mockResult,
+          upVotesCount: 0,
+          totalPotentialVotesCount: 3
+        },
+        true
+      )
+    ).toBeFalsy()
   })
 })
