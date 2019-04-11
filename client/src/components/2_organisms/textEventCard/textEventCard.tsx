@@ -28,7 +28,7 @@ interface ITextEventCard {
 
 const displayBtnFollowText = (user: IUser, text: IText) => {
   return user.followedTexts.find(textID => textID === text._id) ? (
-    <UnFollowText text={text} withIcon={true} />
+    <UnFollowText text={text} withIcon={true} className="has-text-info" />
   ) : (
     <FollowText text={text} withIcon={true} />
   )

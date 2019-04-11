@@ -69,25 +69,23 @@ export const NewsList = ({
   // Render list item
   const rowRenderer = ({ index, parent, style, key }: any) => {
     return (
-      events[index] && (
-        <CellMeasurer
-          cache={cache}
-          columnIndex={0}
-          rowIndex={index}
-          key={key}
-          parent={parent}
-        >
-          <div style={style}>
-            <EventRow
-              data={events[index]}
-              isNew={isEventNew(newEvents, events, index)}
-              resizeRow={resizeRow}
-              index={index}
-              cache={cache}
-            />
-          </div>
-        </CellMeasurer>
-      )
+      <CellMeasurer
+        cache={cache}
+        columnIndex={0}
+        rowIndex={index}
+        key={key}
+        parent={parent}
+      >
+        <div style={style}>
+          <EventRow
+            data={events[index]}
+            isNew={isEventNew(newEvents, events, index)}
+            resizeRow={resizeRow}
+            index={index}
+            cache={cache}
+          />
+        </div>
+      </CellMeasurer>
     )
   }
 
@@ -122,6 +120,7 @@ export const NewsList = ({
                       rowHeight={cache.rowHeight}
                       onRowsRendered={onRowsRendered}
                       rowRenderer={rowRenderer}
+                      overscanRowCount={0}
                     />
                   )
                 }}

@@ -27,20 +27,6 @@ interface IAmendEventCardProps {
   index: number
 }
 
-const displayPreview = (
-  text: IText,
-  index: number,
-  target: any,
-  cache: CellMeasurerCache
-) => {
-  setTimeout(() => cache.clear(index, 0), 0)
-  return (
-    <div style={{ margin: '0.5em 0' }}>
-      <DiffPreview amend={target.data} text={text} />
-    </div>
-  )
-}
-
 export const AmendEventCard = ({
   target,
   user,
@@ -50,6 +36,19 @@ export const AmendEventCard = ({
   const { get } = useContext(DataContext)
 
   const text: IResponse<IText> = get('text')(target.data.text)
+
+  const displayPreview = (
+    text: IText,
+    index: number,
+    target: any,
+    cache: CellMeasurerCache
+  ) => {
+    return (
+      <div style={{ margin: '0.5em 0' }}>
+        <DiffPreview amend={target.data} text={text} />
+      </div>
+    )
+  }
 
   return (
     <div className="media card-events">
@@ -63,25 +62,38 @@ export const AmendEventCard = ({
       <div className="media-content" style={{ overflowX: 'visible' }}>
         <div>
           <p style={{ margin: 0 }}>
-            <strong>{target.data.name}</strong>
+            <strong>Vote en cours</strong>
             {' - '}
             <small style={{ wordSpacing: 'normal' }}>
               <StopWatch date={target.data.created} />
             </small>
+          </p>
+          <p style={{ marginTop: '0.5em' }}>
+            <span className="has-text-weight-semibold is-italic">
+              {target.data.name}
+            </span>
             <br />
             {target.data.description}
           </p>
           <div style={{ marginTop: '0.5em' }}>
-            <span className="has-text-weight-ligh is-italic">
-              Temps restant :{' '}
-            </span>
-            <CountDown
-              date={Time.addTimeToDate(
-                target.data.created,
-                target.data.rules.delayMax
-              )}
-              className="has-text-weight-semibold"
-            />
+            {target.data.closed ? (
+              <span className="has-text-weight-ligh is-italic">
+                Amendement terminé.
+              </span>
+            ) : (
+              <React.Fragment>
+                <span className="has-text-weight-ligh is-italic">
+                  Temps restant :{' '}
+                </span>
+                <CountDown
+                  date={Time.addTimeToDate(
+                    target.data.created,
+                    target.data.rules.delayMax
+                  )}
+                  className="has-text-weight-semibold"
+                />
+              </React.Fragment>
+            )}
             {text &&
               text.data &&
               displayPreview(text.data, index, target, cache)}
@@ -98,7 +110,6 @@ export const AmendEventCard = ({
           )}
         </div>
       </div>
-      <div className="media-right" />
     </div>
   )
 }

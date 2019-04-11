@@ -36,11 +36,11 @@ export const EventRow = ({
   cache,
   index
 }: IEventRowProps) => {
-  const { translate } = React.useContext(I18nContext)
   const { target, user } = useEventCard(data)
+  const { translate } = React.useContext(I18nContext)
 
   useEffect(() => {
-    resizeRow(index)
+    setTimeout(() => resizeRow(index), 0)
   }, [target])
 
   const passDataToCard = withEventCard(cache, index, resizeRow, target, user)

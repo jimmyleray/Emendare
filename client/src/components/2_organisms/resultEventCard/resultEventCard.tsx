@@ -26,20 +26,6 @@ interface IResultEventCardProps {
   index: number
 }
 
-const displayPreview = (
-  text: IText,
-  index: number,
-  target: any,
-  cache: CellMeasurerCache
-) => {
-  setTimeout(() => cache.clear(index, 0), 0)
-  return (
-    <div style={{ margin: '0.5em 0' }}>
-      <DiffPreview amend={target.data} text={text} />
-    </div>
-  )
-}
-
 export const ResultEventCard = ({
   target,
   index,
@@ -47,6 +33,22 @@ export const ResultEventCard = ({
 }: IResultEventCardProps) => {
   const { get } = useContext(DataContext)
   const text: IResponse<IText> = get('text')(target.data.text)
+
+  const displayPreview = React.useMemo(
+    () => (
+      text: IText,
+      index: number,
+      target: any,
+      cache: CellMeasurerCache
+    ) => {
+      return (
+        <div style={{ margin: '0.5em 0' }}>
+          <DiffPreview amend={target.data} text={text} />
+        </div>
+      )
+    },
+    [text]
+  )
 
   return (
     <div className="media card-events">
@@ -81,7 +83,6 @@ export const ResultEventCard = ({
           </div>
         )}
       </div>
-      <div className="media-right" />
     </div>
   )
 }
