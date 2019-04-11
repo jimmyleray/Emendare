@@ -40,7 +40,7 @@ export const EventRow = ({
   const { translate } = React.useContext(I18nContext)
 
   useEffect(() => {
-    resizeRow(index)
+    setTimeout(() => resizeRow(index), 0)
   }, [target])
 
   const passDataToCard = withEventCard(cache, index, resizeRow, target, user)
