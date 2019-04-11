@@ -75,7 +75,6 @@ export const NewsList = ({
         rowIndex={index}
         key={key}
         parent={parent}
-        width={mostRecentWidth}
       >
         <div style={style}>
           <EventRow
@@ -121,6 +120,7 @@ export const NewsList = ({
                       rowHeight={cache.rowHeight}
                       onRowsRendered={onRowsRendered}
                       rowRenderer={rowRenderer}
+                      overscanRowCount={0}
                     />
                   )
                 }}

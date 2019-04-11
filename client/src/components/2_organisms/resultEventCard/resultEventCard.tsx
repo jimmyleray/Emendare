@@ -41,7 +41,6 @@ export const ResultEventCard = ({
       target: any,
       cache: CellMeasurerCache
     ) => {
-      setTimeout(() => cache.clear(index, 0), 0)
       return (
         <div style={{ margin: '0.5em 0' }}>
           <DiffPreview amend={target.data} text={text} />
