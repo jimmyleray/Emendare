@@ -63,11 +63,16 @@ export const AmendEventCard = ({
       <div className="media-content" style={{ overflowX: 'visible' }}>
         <div>
           <p style={{ margin: 0 }}>
-            <strong>{target.data.name}</strong>
+            <strong>Vote en cours</strong>
             {' - '}
             <small style={{ wordSpacing: 'normal' }}>
               <StopWatch date={target.data.created} />
             </small>
+          </p>
+          <p style={{ marginTop: '0.5em' }}>
+            <span className="has-text-weight-semibold is-italic">
+              {target.data.name}
+            </span>
             <br />
             {target.data.description}
           </p>
@@ -106,7 +111,6 @@ export const AmendEventCard = ({
           )}
         </div>
       </div>
-      <div className="media-right" />
     </div>
   )
 }
