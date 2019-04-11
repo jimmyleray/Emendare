@@ -72,16 +72,24 @@ export const AmendEventCard = ({
             {target.data.description}
           </p>
           <div style={{ marginTop: '0.5em' }}>
-            <span className="has-text-weight-ligh is-italic">
-              Temps restant :{' '}
-            </span>
-            <CountDown
-              date={Time.addTimeToDate(
-                target.data.created,
-                target.data.rules.delayMax
-              )}
-              className="has-text-weight-semibold"
-            />
+            {target.data.closed ? (
+              <span className="has-text-weight-ligh is-italic">
+                Amendement terminé.
+              </span>
+            ) : (
+              <React.Fragment>
+                <span className="has-text-weight-ligh is-italic">
+                  Temps restant :{' '}
+                </span>
+                <CountDown
+                  date={Time.addTimeToDate(
+                    target.data.created,
+                    target.data.rules.delayMax
+                  )}
+                  className="has-text-weight-semibold"
+                />
+              </React.Fragment>
+            )}
             {text &&
               text.data &&
               displayPreview(text.data, index, target, cache)}
