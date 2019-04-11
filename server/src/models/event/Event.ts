@@ -16,6 +16,11 @@ export class Event {
     return model
   }
 
+  public static async getEvent(id: string): Promise<IResponse<IEvent>> {
+    const data = await this.model.findById(id)
+    return { data }
+  }
+
   public static async getEvents(): Promise<IResponse<IEvent[]>> {
     const data = await this.model.find().sort('-created')
     return { data }
