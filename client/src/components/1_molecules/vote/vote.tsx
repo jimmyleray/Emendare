@@ -49,6 +49,11 @@ export const Vote = ({
 }: IVoteProps) => {
   const { translate } = React.useContext(I18nContext)
 
+  const isVoteInAmend = React.useMemo(
+    () => (votes: string[], amendId: string) => votes.includes(amendId),
+    [user]
+  )
+
   return withIcon ? (
     <Columns className="is-mobile">
       <Column className="is-one-third">
@@ -61,12 +66,20 @@ export const Vote = ({
           <Icon
             type={'light'}
             name={`${
-              user.upVotes.includes(amend._id) ? 'fas' : ''
+              isVoteInAmend(user.upVotes, amend._id) ? 'fas' : ''
             } fa-thumbs-up`}
-            className="fa-lg"
+            className={`${
+              isVoteInAmend(user.upVotes, amend._id) ? 'has-text-success' : ''
+            } fa-lg`}
             style={{ marginRight: '0.5rem' }}
           />
-          {amend.results.upVotesCount}
+          <span
+            className={`${
+              isVoteInAmend(user.upVotes, amend._id) ? 'has-text-success' : ''
+            }`}
+          >
+            {amend.results.upVotesCount}
+          </span>
         </Button>
       </Column>
       <Column className="is-one-third">
@@ -79,12 +92,20 @@ export const Vote = ({
           <Icon
             type={'light'}
             name={`${
-              user.downVotes.includes(amend._id) ? 'fas' : ''
+              isVoteInAmend(user.downVotes, amend._id) ? 'fas' : ''
             } fa-thumbs-down`}
-            className="fa-lg"
+            className={`${
+              isVoteInAmend(user.downVotes, amend._id) ? 'has-text-danger' : ''
+            } fa-lg`}
             style={{ marginRight: '0.5rem' }}
           />
-          {amend.results.downVotesCount}
+          <span
+            className={`${
+              isVoteInAmend(user.downVotes, amend._id) ? 'has-text-danger' : ''
+            }`}
+          >
+            {amend.results.downVotesCount}
+          </span>
         </Button>
       </Column>
     </Columns>
@@ -92,7 +113,7 @@ export const Vote = ({
     <Buttons className={className} {...rest}>
       <Button
         className={`is-success ${className} ${
-          user.upVotes.includes(amend._id) ? '' : 'is-outlined'
+          isVoteInAmend(user.upVotes, amend._id) ? '' : 'is-outlined'
         }`}
         onClick={vote(user)(amend)('up')(match.params.id)}
         disabled={amend.closed}
@@ -103,7 +124,7 @@ export const Vote = ({
 
       <Button
         className={`is-info ${className} ${
-          user.indVotes.includes(amend._id) ? '' : 'is-outlined'
+          isVoteInAmend(user.indVotes, amend._id) ? '' : 'is-outlined'
         }`}
         onClick={vote(user)(amend)('ind')(match.params.id)}
         disabled={amend.closed}
@@ -114,7 +135,7 @@ export const Vote = ({
 
       <Button
         className={`is-danger ${className} ${
-          user.downVotes.includes(amend._id) ? '' : 'is-outlined'
+          isVoteInAmend(user.downVotes, amend._id) ? '' : 'is-outlined'
         }`}
         onClick={vote(user)(amend)('down')(match.params.id)}
         disabled={amend.closed}
