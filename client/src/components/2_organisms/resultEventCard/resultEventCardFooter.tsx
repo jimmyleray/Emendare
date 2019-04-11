@@ -12,7 +12,7 @@ interface IResultIconProps {
 export const ResultEventCardFooter = React.memo(
   ({ amend }: IResultIconProps) => (
     <Columns className="is-mobile has-text-centered">
-      <Column className="one-third">
+      <Column className="is-one-third">
         <div
           className={
             amend.accepted ? 'has-text-success' : 'has-text-grey-light'
@@ -27,7 +27,7 @@ export const ResultEventCardFooter = React.memo(
           {amend.results.upVotesCount}
         </div>
       </Column>
-      <Column className="one-third">
+      <Column className="is-one-third">
         <div
           className={
             !amend.accepted ? 'has-text-danger' : 'has-text-grey-light'
@@ -43,7 +43,7 @@ export const ResultEventCardFooter = React.memo(
         </div>
       </Column>
       {navigator && (navigator as any).clipboard && (
-        <Column className="one-third">
+        <Column className="is-one-third">
           <Button
             onClick={async () => {
               const url = new URL(`/${amend._id}`, location.origin)

@@ -55,7 +55,7 @@ export const Vote = ({
   )
 
   return withIcon ? (
-    <Columns className="is-mobile">
+    <Columns className="is-mobile has-text-centered">
       <Column className="is-one-third">
         <Button
           className="has-text-grey-light"
