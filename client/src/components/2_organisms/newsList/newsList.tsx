@@ -32,7 +32,7 @@ export const NewsList = ({
   newEvents,
   hasNextPage
 }: INewsListProps) => {
-  let refList = useRef<any>()
+  const refList = useRef<any>()
   let registerRefChild: any
   const [mostRecentWidth, setMostRecentWidth] = useState(0)
 

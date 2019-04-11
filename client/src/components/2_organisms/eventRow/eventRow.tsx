@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 // Components
 import {
-  Divider,
-  I18nContext,
   TextEventCard,
   AmendEventCard,
   ResultEventCard
@@ -36,30 +34,28 @@ export const EventRow = ({
   cache,
   index
 }: IEventRowProps) => {
-  const { translate } = React.useContext(I18nContext)
   const { target, user } = useEventCard(data)
 
   useEffect(() => {
     resizeRow(index)
   }, [target])
 
-  const passDataToCard = withEventCard(cache, index, resizeRow, target, user)
+  const withCard = withEventCard(cache, index, resizeRow, target, user)
 
   const displayRightEvent = () => {
     switch (data.target.type) {
       case 'text':
-        return passDataToCard(TextEventCard)
+        return withCard(TextEventCard)
       case 'amend':
-        return passDataToCard(AmendEventCard)
+        return withCard(AmendEventCard)
       case 'result':
-        return passDataToCard(ResultEventCard)
+        return withCard(ResultEventCard)
     }
   }
 
   return (
     <React.Fragment>
       {target && target.data && displayRightEvent()}
-      {isNew ? <Divider content={translate('OLD_EVENTS')} /> : null}
     </React.Fragment>
   )
 }

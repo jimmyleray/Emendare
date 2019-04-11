@@ -1,8 +1,6 @@
 import React from 'react'
 // Components
-import { Icon, Column, Columns, Button } from '../..'
-// Configs
-import { path } from '../../../config'
+import { Icon, Column, Columns, Button } from '../../../components'
 // Interfaces
 import { IAmend } from '../../../../../interfaces'
 
@@ -13,8 +11,8 @@ interface IResultIconProps {
 
 export const ResultEventCardFooter = React.memo(
   ({ amend }: IResultIconProps) => (
-    <Columns className="is-mobile">
-      <Column className="is-one-third">
+    <Columns className="is-mobile has-text-centered">
+      <Column className="one-third">
         <div
           className={
             amend.accepted ? 'has-text-success' : 'has-text-grey-light'
@@ -22,14 +20,14 @@ export const ResultEventCardFooter = React.memo(
         >
           <Icon
             type={'solid'}
+            size={'fa-lg'}
             name="fa-thumbs-up"
-            size="fa-lg"
-            style={{ marginRight: '0.5rem' }}
+            style={{ marginRight: '0.5em' }}
           />
           {amend.results.upVotesCount}
         </div>
       </Column>
-      <Column className="is-one-third">
+      <Column className="one-third">
         <div
           className={
             !amend.accepted ? 'has-text-danger' : 'has-text-grey-light'
@@ -37,27 +35,31 @@ export const ResultEventCardFooter = React.memo(
         >
           <Icon
             type={'solid'}
-            name="fa-thumbs-down"
-            size="fa-lg"
-            style={{ marginRight: '0.5rem' }}
+            size={'fa-lg'}
+            name={'fa-thumbs-down'}
+            style={{ marginRight: '0.5em' }}
           />
           {amend.results.downVotesCount}
         </div>
       </Column>
-      <Column>
-        <Button
-          style={{ border: 'none', padding: 'none', display: 'inline' }}
-          to={path.amend(amend._id)}
-          className="has-text-grey-light"
-        >
-          <Icon
-            type={'solid'}
-            name="fa-info-circle"
-            size="fa-lg"
-            style={{ marginRight: '0.5rem' }}
-          />
-        </Button>
-      </Column>
+      {navigator && (navigator as any).clipboard && (
+        <Column className="one-third">
+          <Button
+            onClick={async () => {
+              const url = new URL(`/${amend._id}`, location.origin)
+              await (navigator as any)!.clipboard!.writeText(url.href)
+            }}
+            style={{
+              border: 'none',
+              height: '24px',
+              outline: 'none'
+            }}
+            className={'has-text-info'}
+          >
+            <Icon type={'light'} size={'fa-lg'} name="fa-share" />
+          </Button>
+        </Column>
+      )}
     </Columns>
   )
 )
