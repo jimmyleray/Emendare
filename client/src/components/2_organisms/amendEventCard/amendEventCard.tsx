@@ -27,20 +27,6 @@ interface IAmendEventCardProps {
   index: number
 }
 
-const displayPreview = (
-  text: IText,
-  index: number,
-  target: any,
-  cache: CellMeasurerCache
-) => {
-  setTimeout(() => cache.clear(index, 0), 0)
-  return (
-    <div style={{ margin: '0.5em 0' }}>
-      <DiffPreview amend={target.data} text={text} />
-    </div>
-  )
-}
-
 export const AmendEventCard = ({
   target,
   user,
@@ -50,6 +36,23 @@ export const AmendEventCard = ({
   const { get } = useContext(DataContext)
 
   const text: IResponse<IText> = get('text')(target.data.text)
+
+  const displayPreview = React.useMemo(
+    () => (
+      text: IText,
+      index: number,
+      target: any,
+      cache: CellMeasurerCache
+    ) => {
+      setTimeout(() => cache.clear(index, 0), 0)
+      return (
+        <div style={{ margin: '0.5em 0' }}>
+          <DiffPreview amend={target.data} text={text} />
+        </div>
+      )
+    },
+    [text]
+  )
 
   return (
     <div className="media card-events">
