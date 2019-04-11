@@ -55,7 +55,7 @@ export const TextEventCard = ({ target, user }: ITextEventCard) => (
           {target.data.description}
         </p>
         <div className="card-events-footer">
-          <Columns className="is-mobile">
+          <Columns className="is-mobile has-text-centered">
             <Column className="is-one-third">
               {user ? (
                 <ProposeAmend withIcon={true} text={target.data} />
