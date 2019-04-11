@@ -38,11 +38,13 @@ export const News = () => {
             {translate('MARK_AS_READ')}
           </Button>
         )}
-        <NewsList
-          events={events}
-          newEvents={newEvents}
-          hasNextPage={hasNextPage}
-        />
+        {events.length > 0 && (
+          <NewsList
+            events={events}
+            newEvents={newEvents}
+            hasNextPage={hasNextPage}
+          />
+        )}
       </div>
     )
   } else {

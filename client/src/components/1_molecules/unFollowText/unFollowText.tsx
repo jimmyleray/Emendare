@@ -19,7 +19,7 @@ export const UnFollowText = ({
 }: IUnFollowTextProps) =>
   withIcon ? (
     <Button
-      className="has-text-grey-light"
+      className="has-text-grey-light "
       style={{ border: 'none', padding: 'none' }}
       onClick={() => {
         Socket.emit('unFollowText', { id: text._id })
@@ -28,10 +28,10 @@ export const UnFollowText = ({
       <Icon
         type={'light'}
         name="fas fa-user"
-        className="fa-lg"
+        className={'fa-lg ' + className}
         style={{ marginRight: '0.5rem' }}
       />
-      {text.followersCount}
+      <span className={className}>{text.followersCount}</span>
     </Button>
   ) : (
     <Button
