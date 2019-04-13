@@ -14,8 +14,6 @@ import { EventRow } from '../../../components'
 import { IEvent } from '../../../../../interfaces'
 // Helpers
 import { isRowLoaded, loadMoreRows, isEventNew } from './helper'
-// Services
-import { Socket } from '../../../services'
 
 // Interface
 interface INewsListProps {
@@ -33,15 +31,14 @@ export const NewsList = ({
   hasNextPage
 }: INewsListProps) => {
   const refList = useRef<any>()
-  let registerRefChild: any
-  const [mostRecentWidth, setMostRecentWidth] = useState(0)
+  const [prevWidth, setPrevWidth] = useState(0)
 
-  /** Default cache for cell mesurement */
+  // Default cache for cell mesurement
   const cache = new CellMeasurerCache({
     fixedWidth: true
   })
 
-  // Update row height post render
+  // Resize specific row height
   const resizeRow = (index: number) => {
     cache.clear(index, 0)
     if (refList.current) {
@@ -49,22 +46,13 @@ export const NewsList = ({
     }
   }
 
-  // resize all the rows
+  // Resize all the rows
   const resizeAll = () => {
     cache.clearAll()
     if (refList.current) {
       refList.current.recomputeRowHeights()
     }
   }
-
-  // Set ref of the list
-  const setListRef = (ref: any) => {
-    refList.current = ref
-    registerRefChild(ref)
-  }
-
-  // If there are more items to be loaded then add an extra row to hold a loading indicator
-  const rowCount = hasNextPage ? events.length + 1 : events.length
 
   // Render list item
   const rowRenderer = ({ index, parent, style, key }: any) => {
@@ -93,29 +81,28 @@ export const NewsList = ({
     <div>
       <InfiniteLoader
         isRowLoaded={({ index }) => isRowLoaded(events, index, hasNextPage)}
-        loadMoreRows={() => loadMoreRows(events, 10, Socket, hasNextPage)}
-        rowCount={rowCount}
+        loadMoreRows={() => loadMoreRows(events, 10, hasNextPage)}
+        rowCount={events.length}
       >
         {({ onRowsRendered, registerChild }) => (
           <WindowScroller>
             {({ height, isScrolling, scrollTop, onChildScroll }) => (
               <AutoSizer disableHeight>
                 {({ width }) => {
-                  if (mostRecentWidth && mostRecentWidth !== width) {
+                  if (prevWidth && prevWidth !== width) {
                     setTimeout(resizeAll, 0)
                   }
-                  setMostRecentWidth(width)
-                  registerRefChild = registerChild
+                  setPrevWidth(width)
                   return (
                     <List
                       scrollTop={scrollTop}
-                      ref={setListRef}
+                      ref={refList}
                       onScroll={onChildScroll}
                       autoHeight
                       width={width}
                       height={height}
                       isScrolling={isScrolling}
-                      rowCount={rowCount}
+                      rowCount={events.length}
                       deferredMeasurementCache={cache}
                       rowHeight={cache.rowHeight}
                       onRowsRendered={onRowsRendered}

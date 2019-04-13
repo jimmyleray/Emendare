@@ -34,21 +34,7 @@ export const AmendEventCard = ({
   index
 }: IAmendEventCardProps) => {
   const { get } = useContext(DataContext)
-
   const text: IResponse<IText> = get('text')(target.data.text)
-
-  const displayPreview = (
-    text: IText,
-    index: number,
-    target: any,
-    cache: CellMeasurerCache
-  ) => {
-    return (
-      <div style={{ margin: '0.5em 0' }}>
-        <DiffPreview amend={target.data} text={text} />
-      </div>
-    )
-  }
 
   return (
     <div className="media card-events">
@@ -94,9 +80,11 @@ export const AmendEventCard = ({
                 />
               </React.Fragment>
             )}
-            {text &&
-              text.data &&
-              displayPreview(text.data, index, target, cache)}
+            {text && text.data && target && target.data && (
+              <div style={{ margin: '0.5em 0' }}>
+                <DiffPreview amend={target.data} text={text.data} />
+              </div>
+            )}
           </div>
         </div>
         <div className="card-events-footer">

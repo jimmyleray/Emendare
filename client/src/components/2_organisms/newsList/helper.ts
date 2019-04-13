@@ -1,4 +1,6 @@
 import { IEvent } from '../../../../../interfaces'
+import { Socket } from '../../../services'
+import { last } from 'lodash'
 
 /**
  * Tell if the row is loaded
@@ -22,13 +24,12 @@ export const isRowLoaded = (
 export const loadMoreRows = async (
   data: IEvent[],
   limit: number,
-  socket: any,
   hasNextPage: boolean
 ) => {
   if (hasNextPage) {
-    socket.emit('events', {
+    Socket.emit('events', {
       limit,
-      lastEventDate: data[data.length - 1].created
+      lastEventDate: last(data)!.created
     })
   }
 }

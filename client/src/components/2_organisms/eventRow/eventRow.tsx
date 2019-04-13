@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 // Components
 import {
   TextEventCard,
   AmendEventCard,
-  ResultEventCard
+  ResultEventCard,
+  DataContext,
+  UserContext
 } from '../../../components'
 // Interfaces
 import { IEvent } from '../../../../../interfaces'
@@ -11,8 +13,6 @@ import { IEvent } from '../../../../../interfaces'
 import { CellMeasurerCache } from 'react-virtualized'
 // HoCs
 import { withEventCard } from '../../../hocs'
-// Hooks
-import { useEventCard } from '../../../hooks'
 
 interface IEventRowProps {
   /** Following event */
@@ -34,28 +34,37 @@ export const EventRow = ({
   cache,
   index
 }: IEventRowProps) => {
-  const { target, user } = useEventCard(data)
+  const { get } = useContext(DataContext)
+  const { user } = useContext(UserContext)
+
+  const eventType = data.target.type === 'result' ? 'amend' : data.target.type
+  const target = get(eventType)(data.target.id)
 
   useEffect(() => {
-    setTimeout(() => resizeRow(index), 0)
+    if (target) {
+      console.log(index, target)
+      setTimeout(() => resizeRow(index), 0)
+    }
   }, [target])
 
   const withCard = withEventCard(cache, index, resizeRow, target, user)
 
-  const displayRightEvent = () => {
-    switch (data.target.type) {
+  const displayRightEvent = (type: string): React.ComponentType<any> => {
+    switch (type) {
       case 'text':
-        return withCard(TextEventCard)
+        return TextEventCard
       case 'amend':
-        return withCard(AmendEventCard)
+        return AmendEventCard
       case 'result':
-        return withCard(ResultEventCard)
+        return ResultEventCard
+      default:
+        return () => null
     }
   }
 
   return (
     <React.Fragment>
-      {target && target.data && displayRightEvent()}
+      {target && target.data && withCard(displayRightEvent(data.target.type))}
     </React.Fragment>
   )
 }

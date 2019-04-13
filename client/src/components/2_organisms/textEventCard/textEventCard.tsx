@@ -26,14 +26,6 @@ interface ITextEventCard {
   index: number
 }
 
-const displayBtnFollowText = (user: IUser, text: IText) => {
-  return user.followedTexts.find(textID => textID === text._id) ? (
-    <UnFollowText text={text} withIcon={true} className="has-text-info" />
-  ) : (
-    <FollowText text={text} withIcon={true} />
-  )
-}
-
 export const TextEventCard = ({ target, user }: ITextEventCard) => (
   <div className="media card-events">
     <div className="media-left">
@@ -76,7 +68,17 @@ export const TextEventCard = ({ target, user }: ITextEventCard) => (
             </Column>
             <Column className="is-one-third">
               {user ? (
-                displayBtnFollowText(user, target.data)
+                user.followedTexts.find(
+                  textID => textID === target.data._id
+                ) ? (
+                  <UnFollowText
+                    text={target.data}
+                    withIcon={true}
+                    className="has-text-info"
+                  />
+                ) : (
+                  <FollowText text={target.data} withIcon={true} />
+                )
               ) : (
                 <div
                   className="has-text-grey-light"

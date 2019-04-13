@@ -1,17 +1,31 @@
 // Dependencies
-import React, { useContext } from 'react'
+import React from 'react'
 import { CellMeasurerCache } from 'react-virtualized'
 // Components
-import { Icon, StopWatch, DiffPreview, DataContext } from '../../../components'
+import {
+  Icon,
+  StopWatch,
+  DiffPreview,
+  DataContext,
+  Columns,
+  Column,
+  Button
+} from '../../../components'
 // Interfaces
-import { IUser, IText, IResponse } from '../../../../../interfaces'
+import {
+  IAmend,
+  IUser,
+  IText,
+  IResponse,
+  IEvent
+} from '../../../../../interfaces'
 // Helpers
 import {
   getIconFromResult,
   getColorTextFromResult,
   getTextFromResult
 } from './helper'
-import { ResultEventCardFooter } from './resultEventCardFooter'
+import { path } from '../../../config'
 
 interface IResultEventCardProps {
   /** Related event */
@@ -31,24 +45,8 @@ export const ResultEventCard = ({
   index,
   cache
 }: IResultEventCardProps) => {
-  const { get } = useContext(DataContext)
+  const { get } = React.useContext(DataContext)
   const text: IResponse<IText> = get('text')(target.data.text)
-
-  const displayPreview = React.useMemo(
-    () => (
-      text: IText,
-      index: number,
-      target: any,
-      cache: CellMeasurerCache
-    ) => {
-      return (
-        <div style={{ margin: '0.5em 0' }}>
-          <DiffPreview amend={target.data} text={text} />
-        </div>
-      )
-    },
-    [text]
-  )
 
   return (
     <div className="media card-events">
@@ -76,10 +74,72 @@ export const ResultEventCard = ({
             a été {getTextFromResult(target.data)}
           </p>
         </div>
-        {text && text.data && displayPreview(text.data, index, target, cache)}
+
+        {text && text.data && target && target.data && (
+          <div style={{ margin: '0.5em 0' }}>
+            <DiffPreview amend={target.data} text={text.data} />
+          </div>
+        )}
+
         {!target.data.conflicted && (
           <div className="card-events-footer">
-            <ResultEventCardFooter amend={target.data} />
+            <Columns className="is-mobile has-text-centered">
+              <Column className="is-one-third">
+                <div
+                  className={
+                    target.data.accepted
+                      ? 'has-text-success'
+                      : 'has-text-grey-light'
+                  }
+                >
+                  <Icon
+                    type={'solid'}
+                    size={'fa-lg'}
+                    name="fa-thumbs-up"
+                    style={{ marginRight: '0.5em' }}
+                  />
+                  {target.data.results.upVotesCount}
+                </div>
+              </Column>
+              <Column className="is-one-third">
+                <div
+                  className={
+                    !target.data.accepted
+                      ? 'has-text-danger'
+                      : 'has-text-grey-light'
+                  }
+                >
+                  <Icon
+                    type={'solid'}
+                    size={'fa-lg'}
+                    name={'fa-thumbs-down'}
+                    style={{ marginRight: '0.5em' }}
+                  />
+                  {target.data.results.downVotesCount}
+                </div>
+              </Column>
+              {navigator && (navigator as any).clipboard && (
+                <Column className="is-one-third">
+                  <Button
+                    onClick={async () => {
+                      const url = new URL(
+                        path.share(target.data._id),
+                        location.origin
+                      )
+                      await (navigator as any)!.clipboard!.writeText(url.href)
+                    }}
+                    style={{
+                      border: 'none',
+                      height: '24px',
+                      outline: 'none'
+                    }}
+                    className={'has-text-info'}
+                  >
+                    <Icon type={'light'} size={'fa-lg'} name="fa-share" />
+                  </Button>
+                </Column>
+              )}
+            </Columns>
           </div>
         )}
       </div>

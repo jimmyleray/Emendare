@@ -20,7 +20,7 @@ export const routes: IRoute[] = [
   { name: 'edit', path: withID('/edit/'), private: true },
   { name: 'amend', path: withID('/amend/') },
   { name: 'activate', path: withID('/activate/') },
-  { name: 'share', path: withID('/') }
+  { name: 'share', path: withID('/share/') }
 ]
 
 // To be use like that : path.text("42") => /text/42
