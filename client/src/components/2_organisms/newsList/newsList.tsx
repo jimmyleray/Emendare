@@ -80,19 +80,20 @@ export const NewsList = ({
   return (
     <div>
       <InfiniteLoader
-        isRowLoaded={({ index }) => isRowLoaded(events, index, hasNextPage)}
-        loadMoreRows={() => loadMoreRows(events, 10, hasNextPage)}
+        isRowLoaded={isRowLoaded(events)}
+        loadMoreRows={loadMoreRows(events, hasNextPage)}
         rowCount={events.length}
       >
-        {({ onRowsRendered, registerChild }) => (
+        {({ onRowsRendered }) => (
           <WindowScroller>
             {({ height, isScrolling, scrollTop, onChildScroll }) => (
               <AutoSizer disableHeight>
                 {({ width }) => {
                   if (prevWidth && prevWidth !== width) {
+                    setPrevWidth(width)
                     setTimeout(resizeAll, 0)
                   }
-                  setPrevWidth(width)
+
                   return (
                     <List
                       scrollTop={scrollTop}
