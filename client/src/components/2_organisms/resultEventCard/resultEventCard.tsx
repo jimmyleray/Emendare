@@ -32,10 +32,7 @@ interface IResultEventCardProps {
   target: any
   /** user data */
   user: IUser | null
-  /** Force a row to re-render */
-  updateRow: (index: number) => void
-  /** Cache of row Heights */
-  cache: CellMeasurerCache
+  measure: any
   /** Index of the card */
   index: number
 }
@@ -43,7 +40,7 @@ interface IResultEventCardProps {
 export const ResultEventCard = ({
   target,
   index,
-  cache
+  measure
 }: IResultEventCardProps) => {
   const { get } = React.useContext(DataContext)
   const text: IResponse<IText> = get('text')(target.data.text)
@@ -77,7 +74,11 @@ export const ResultEventCard = ({
 
         {text && text.data && target && target.data && (
           <div style={{ margin: '0.5em 0' }}>
-            <DiffPreview amend={target.data} text={text.data} />
+            <DiffPreview
+              amend={target.data}
+              text={text.data}
+              measure={measure}
+            />
           </div>
         )}
 

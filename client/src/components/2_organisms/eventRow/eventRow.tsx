@@ -19,18 +19,18 @@ interface IEventRowProps {
   data: IEvent
   /** Tell if the event is new */
   isNew: boolean
-  /** Force a row to re-render */
-  resizeRow: (index: number) => void
   /** Index of the row */
   index: number
   /** Cache of heights */
   cache: CellMeasurerCache
+  /** Cache of heights */
+  measure: any
 }
 
 export const EventRow = ({
   data,
   isNew,
-  resizeRow,
+  measure,
   cache,
   index
 }: IEventRowProps) => {
@@ -42,12 +42,11 @@ export const EventRow = ({
 
   useEffect(() => {
     if (target) {
-      console.log(index, target)
-      setTimeout(() => resizeRow(index), 0)
+      measure()
     }
   }, [target])
 
-  const withCard = withEventCard(cache, index, resizeRow, target, user)
+  const withCard = withEventCard(measure, index, target, user)
 
   const displayRightEvent = (type: string): React.ComponentType<any> => {
     switch (type) {

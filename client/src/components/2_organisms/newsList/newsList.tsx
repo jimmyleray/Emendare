@@ -25,57 +25,45 @@ interface INewsListProps {
   hasNextPage: boolean
 }
 
+// Default cache for cell mesurement
+const cache = new CellMeasurerCache({
+  fixedWidth: true
+})
+
+// Render list item
+const rowRenderer = (events: IEvent[], newEvents: IEvent[]) => ({
+  index,
+  parent,
+  style,
+  key
+}: any) => (
+  <CellMeasurer
+    key={key}
+    cache={cache}
+    columnIndex={0}
+    rowIndex={index}
+    parent={parent}
+  >
+    {({ measure }: any) => (
+      <div style={style}>
+        <EventRow
+          data={events[index]}
+          isNew={isEventNew(newEvents, events, index)}
+          measure={measure}
+          index={index}
+          cache={cache}
+        />
+      </div>
+    )}
+  </CellMeasurer>
+)
+
 export const NewsList = ({
   events,
   newEvents,
   hasNextPage
 }: INewsListProps) => {
   const refList = useRef<any>()
-  const [prevWidth, setPrevWidth] = useState(0)
-
-  // Default cache for cell mesurement
-  const cache = new CellMeasurerCache({
-    fixedWidth: true
-  })
-
-  // Resize specific row height
-  const resizeRow = (index: number) => {
-    cache.clear(index, 0)
-    if (refList.current) {
-      refList.current.recomputeRowHeights(index)
-    }
-  }
-
-  // Resize all the rows
-  const resizeAll = () => {
-    cache.clearAll()
-    if (refList.current) {
-      refList.current.recomputeRowHeights()
-    }
-  }
-
-  // Render list item
-  const rowRenderer = ({ index, parent, style, key }: any) => {
-    return (
-      <CellMeasurer
-        cache={cache}
-        columnIndex={0}
-        rowIndex={index}
-        key={key}
-        parent={parent}
-      >
-        <div style={style}>
-          <EventRow
-            data={events[index]}
-            isNew={isEventNew(newEvents, events, index)}
-            resizeRow={resizeRow}
-            index={index}
-            cache={cache}
-          />
-        </div>
-      </CellMeasurer>
-    )
-  }
 
   return (
     <div>
@@ -87,32 +75,33 @@ export const NewsList = ({
         {({ onRowsRendered }) => (
           <WindowScroller>
             {({ height, isScrolling, scrollTop, onChildScroll }) => (
-              <AutoSizer disableHeight>
-                {({ width }) => {
-                  if (prevWidth && prevWidth !== width) {
-                    setPrevWidth(width)
-                    setTimeout(resizeAll, 0)
+              <AutoSizer
+                disableHeight
+                onResize={() => {
+                  cache.clearAll()
+                  if (refList && refList.current) {
+                    refList.current.recomputeRowHeights()
                   }
-
-                  return (
-                    <div>
-                      <List
-                        scrollTop={scrollTop}
-                        ref={refList}
-                        onScroll={onChildScroll}
-                        width={width}
-                        height={height}
-                        isScrolling={isScrolling}
-                        rowCount={events.length}
-                        deferredMeasurementCache={cache}
-                        rowHeight={cache.rowHeight}
-                        onRowsRendered={onRowsRendered}
-                        rowRenderer={rowRenderer}
-                        overscanRowCount={0}
-                      />
-                    </div>
-                  )
                 }}
+              >
+                {({ width }) => (
+                  <List
+                    autoHeight
+                    scrollTop={scrollTop}
+                    ref={refList}
+                    onScroll={onChildScroll}
+                    width={width}
+                    height={height}
+                    isScrolling={isScrolling}
+                    rowCount={events.length}
+                    deferredMeasurementCache={cache}
+                    rowHeight={cache.rowHeight}
+                    estimatedRowSize={200}
+                    onRowsRendered={onRowsRendered}
+                    rowRenderer={rowRenderer(events, newEvents)}
+                    overscanRowCount={0}
+                  />
+                )}
               </AutoSizer>
             )}
           </WindowScroller>

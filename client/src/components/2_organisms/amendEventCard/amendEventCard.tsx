@@ -19,10 +19,7 @@ interface IAmendEventCardProps {
   target: { error: any; data: IAmend }
   /** user data */
   user: IUser | null
-  /** Force a row to re-render */
-  resizeRow: (index: number) => void
-  /** Cache of row Heights */
-  cache: CellMeasurerCache
+  measure: any
   /** Index of the card */
   index: number
 }
@@ -30,7 +27,7 @@ interface IAmendEventCardProps {
 export const AmendEventCard = ({
   target,
   user,
-  cache,
+  measure,
   index
 }: IAmendEventCardProps) => {
   const { get } = useContext(DataContext)
@@ -82,7 +79,11 @@ export const AmendEventCard = ({
             )}
             {text && text.data && target && target.data && (
               <div style={{ margin: '0.5em 0' }}>
-                <DiffPreview amend={target.data} text={text.data} />
+                <DiffPreview
+                  amend={target.data}
+                  text={text.data}
+                  measure={measure}
+                />
               </div>
             )}
           </div>
