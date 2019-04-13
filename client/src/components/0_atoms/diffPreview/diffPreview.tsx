@@ -29,10 +29,11 @@ const computeDiff = (amend: Partial<IAmend>, text: IText) => {
 export const DiffPreview = React.memo(
   ({ amend, text, measure }: IDiffPreviewProps) => {
     // State
-    const [diffs, setDiffs] = useState([])
+    const [diffs, setDiffs] = useState<JsDiff.Change[]>([])
+
     // Effects
     useEffect(() => {
-      const currentDiffs: any = computeDiff(amend, text)
+      const currentDiffs = computeDiff(amend, text)
       if (currentDiffs) {
         setDiffs(currentDiffs)
         if (measure) {
@@ -46,7 +47,7 @@ export const DiffPreview = React.memo(
     return (
       <div>
         {diffs &&
-          diffs.map((part: any, i: number) => (
+          diffs.map((part, i) => (
             <div
               key={i}
               className={
