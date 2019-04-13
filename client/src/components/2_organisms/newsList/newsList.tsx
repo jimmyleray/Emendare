@@ -95,21 +95,22 @@ export const NewsList = ({
                   }
 
                   return (
-                    <List
-                      scrollTop={scrollTop}
-                      ref={refList}
-                      onScroll={onChildScroll}
-                      autoHeight
-                      width={width}
-                      height={height}
-                      isScrolling={isScrolling}
-                      rowCount={events.length}
-                      deferredMeasurementCache={cache}
-                      rowHeight={cache.rowHeight}
-                      onRowsRendered={onRowsRendered}
-                      rowRenderer={rowRenderer}
-                      overscanRowCount={0}
-                    />
+                    <div>
+                      <List
+                        scrollTop={scrollTop}
+                        ref={refList}
+                        onScroll={onChildScroll}
+                        width={width}
+                        height={height}
+                        isScrolling={isScrolling}
+                        rowCount={events.length}
+                        deferredMeasurementCache={cache}
+                        rowHeight={cache.rowHeight}
+                        onRowsRendered={onRowsRendered}
+                        rowRenderer={rowRenderer}
+                        overscanRowCount={0}
+                      />
+                    </div>
                   )
                 }}
               </AutoSizer>
