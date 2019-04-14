@@ -27,7 +27,7 @@ export class Event {
   }
 
   public static async getEventsByGroup(
-    limit: number = 15,
+    limit: number = 10,
     lastEventDate?: string
   ): Promise<IResponse<{ events: IEvent[]; hasNextPage: boolean }>> {
     if (!lastEventDate) {
