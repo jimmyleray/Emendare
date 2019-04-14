@@ -9,8 +9,6 @@ import {
   I18nContext
 } from '../../../components'
 
-import { Socket } from '../../../services'
-
 export const News = () => {
   const { translate } = React.useContext(I18nContext)
   const { user } = React.useContext(UserContext)
@@ -19,12 +17,6 @@ export const News = () => {
   )
 
   const newEventsCount = user && newEvents ? newEvents.length : 0
-
-  React.useEffect(() => {
-    if (hasNextPage) {
-      Socket.emit('events')
-    }
-  }, [])
 
   return (
     <React.Fragment>
