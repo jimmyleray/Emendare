@@ -20,11 +20,11 @@ export interface IProps {
 export const Button = React.memo(
   ({ children, className = '', ...rest }: IProps) =>
     rest.to && !rest.disabled ? (
-      <Link to={rest.to} className={'button is-rounded ' + className} {...rest}>
+      <Link to={rest.to} className={'button ' + className} {...rest}>
         {children}
       </Link>
     ) : (
-      <button className={'button is-rounded ' + className} {...rest}>
+      <button className={'button ' + className} {...rest}>
         {children}
       </button>
     )

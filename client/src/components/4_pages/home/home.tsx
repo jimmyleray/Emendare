@@ -9,7 +9,7 @@ export const HomePage = () => {
       <Grid
         style={{
           gridTemplateColumns: '1fr 550px 1fr',
-          gridGap: '0.5rem'
+          gridGap: '0 0.5rem'
         }}
       >
         <div className="is-hidden-mobile">
@@ -18,7 +18,6 @@ export const HomePage = () => {
         <div className="container-column">
           <News />
         </div>
-        <div />
       </Grid>
     </Page>
   )

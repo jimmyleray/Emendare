@@ -1,16 +1,13 @@
 import { IEvent } from '../../../../../interfaces'
+import { Socket } from '../../../services'
+import { last } from 'lodash'
 
 /**
  * Tell if the row is loaded
  * @param data List of events we want to render
  * @param index Index of the row
- * @param hasNextPage Tell if there are more events to be loaded
  */
-export const isRowLoaded = (
-  data: IEvent[],
-  index: number,
-  hasNextPage: boolean
-) => !hasNextPage || index < data.length
+export const isRowLoaded = (data: IEvent[]) => ({ index }: any) => !!data[index]
 
 /**
  * Fetch data from a API
@@ -19,31 +16,34 @@ export const isRowLoaded = (
  * @param limit Number of data we want to fetch
  * @param socket Current socket of the client
  */
-export const loadMoreRows = async (
+export const loadMoreRows = (
   data: IEvent[],
-  limit: number,
-  socket: any,
-  hasNextPage: boolean
-) => {
-  if (hasNextPage) {
-    socket.emit('events', {
-      limit,
-      lastEventDate: data[data.length - 1].created
-    })
-  }
-}
+  hasNextPage: boolean,
+  limit: number = 10
+) => () =>
+  new Promise(resolve => {
+    if (hasNextPage) {
+      Socket.emit('events', {
+        limit,
+        lastEventDate: last(data)!.created
+      })
+      Socket.on('events', resolve)
+    } else {
+      resolve()
+    }
+  })
 
 /**
  * Tell if the event has not been readed by the user
  * @param newEvents List of new events
  * @param events  List of events
- * @param index  current row index
+ * @param index Current row index
  */
 export const isEventNew = (
   newEvents: IEvent[],
   events: IEvent[],
   index: number
 ) =>
-  newEvents.length > 0 && events.length > 0 && events[index + 1]
-    ? newEvents.map(event => event._id).indexOf(events[index]._id) === 0
+  newEvents.length > 0 && events.length > 0
+    ? newEvents.map(event => event._id).includes(events[index]._id)
     : false
