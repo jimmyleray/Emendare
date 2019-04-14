@@ -49,10 +49,7 @@ const rowRenderer = (events: IEvent[], newEvents: IEvent[]) => ({
         <EventRow
           data={events[index]}
           isNew={isEventNew(newEvents, events, index)}
-          updateRow={() => {
-            // cache.clear(index, 0)
-            measure()
-          }}
+          measure={measure}
           index={index}
         />
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
 // Components
 import {
   TextEventCard,
@@ -19,40 +19,36 @@ interface IEventRowProps {
   isNew?: boolean
   /** Index of the row */
   index: number
-  updateRow: any
+  measure: any
 }
 
-export const EventRow = ({ data, updateRow, index }: IEventRowProps) => {
+const displayRightEvent = (type: string): React.ComponentType<any> => {
+  switch (type) {
+    case 'text':
+      return TextEventCard
+    case 'amend':
+      return AmendEventCard
+    case 'result':
+      return ResultEventCard
+    default:
+      return () => null
+  }
+}
+
+export const EventRow = ({ data, measure, index }: IEventRowProps) => {
   const { get } = useContext(DataContext)
   const { user } = useContext(UserContext)
 
   const eventType = data.target.type === 'result' ? 'amend' : data.target.type
   const target = get(eventType)(data.target.id)
 
-  useEffect(() => {
-    if (target && target.data) {
-      updateRow()
-    }
-  }, [target])
-
-  const withCard = withEventCard(updateRow, index, target, user)
-
-  const displayRightEvent = (type: string): React.ComponentType<any> => {
-    switch (type) {
-      case 'text':
-        return TextEventCard
-      case 'amend':
-        return AmendEventCard
-      case 'result':
-        return ResultEventCard
-      default:
-        return () => null
-    }
-  }
-
   return (
     <React.Fragment>
-      {target && target.data && withCard(displayRightEvent(data.target.type))}
+      {target &&
+        target.data &&
+        withEventCard(measure, index, target, user)(
+          displayRightEvent(data.target.type)
+        )}
     </React.Fragment>
   )
 }

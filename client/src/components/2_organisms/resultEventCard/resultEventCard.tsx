@@ -29,7 +29,7 @@ interface IResultEventCardProps {
   target: any
   /** user data */
   user: IUser | null
-  updateRow: any
+  measure: any
   /** Index of the card */
   index: number
 }
@@ -37,7 +37,7 @@ interface IResultEventCardProps {
 export const ResultEventCard = ({
   target,
   index,
-  updateRow
+  measure
 }: IResultEventCardProps) => {
   const { get } = React.useContext(DataContext)
   const text: IResponse<IText> = get('text')(target.data.text)
@@ -74,7 +74,7 @@ export const ResultEventCard = ({
             <DiffPreview
               amend={target.data}
               text={text.data}
-              updateRow={updateRow}
+              measure={measure}
             />
           </div>
         )}

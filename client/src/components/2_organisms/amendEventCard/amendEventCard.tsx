@@ -21,7 +21,7 @@ interface IAmendEventCardProps {
   target: { error: any; data: IAmend }
   /** user data */
   user: IUser | null
-  updateRow: any
+  measure: any
   /** Index of the card */
   index: number
 }
@@ -29,7 +29,7 @@ interface IAmendEventCardProps {
 export const AmendEventCard = ({
   target,
   user,
-  updateRow,
+  measure,
   index
 }: IAmendEventCardProps) => {
   const { get } = useContext(DataContext)
@@ -84,7 +84,7 @@ export const AmendEventCard = ({
                 <DiffPreview
                   amend={target.data}
                   text={text.data}
-                  updateRow={updateRow}
+                  measure={measure}
                 />
               </div>
             )}

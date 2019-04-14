@@ -10,7 +10,7 @@ interface IDiffPreviewProps {
   amend: Partial<IAmend>
   /** Related Text */
   text: IText
-  updateRow?: any
+  measure?: any
 }
 
 const computeDiff = (amend: Partial<IAmend>, text: IText) => {
@@ -28,7 +28,7 @@ const computeDiff = (amend: Partial<IAmend>, text: IText) => {
 }
 
 export const DiffPreview = React.memo(
-  ({ amend, text, updateRow }: IDiffPreviewProps) => {
+  ({ amend, text, measure }: IDiffPreviewProps) => {
     // State
     const [diffs, setDiffs] = useState<JsDiff.Change[]>([])
 
@@ -41,8 +41,8 @@ export const DiffPreview = React.memo(
     }, [amend, text])
 
     useEffect(() => {
-      if (updateRow && diffs && diffs.length) {
-        updateRow()
+      if (measure && diffs && diffs.length) {
+        measure()
       }
     }, [diffs])
 
