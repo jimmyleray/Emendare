@@ -1,6 +1,6 @@
 // Dependencies
 import React from 'react'
-import { CellMeasurerCache } from 'react-virtualized'
+
 // Components
 import {
   Icon,
@@ -11,20 +11,17 @@ import {
   Column,
   Button
 } from '../../../components'
+
 // Interfaces
-import {
-  IAmend,
-  IUser,
-  IText,
-  IResponse,
-  IEvent
-} from '../../../../../interfaces'
+import { IUser, IText, IResponse } from '../../../../../interfaces'
+
 // Helpers
 import {
   getIconFromResult,
   getColorTextFromResult,
   getTextFromResult
 } from './helper'
+
 import { path } from '../../../config'
 
 interface IResultEventCardProps {
@@ -32,7 +29,7 @@ interface IResultEventCardProps {
   target: any
   /** user data */
   user: IUser | null
-  measure: any
+  updateRow: any
   /** Index of the card */
   index: number
 }
@@ -40,7 +37,7 @@ interface IResultEventCardProps {
 export const ResultEventCard = ({
   target,
   index,
-  measure
+  updateRow
 }: IResultEventCardProps) => {
   const { get } = React.useContext(DataContext)
   const text: IResponse<IText> = get('text')(target.data.text)
@@ -77,7 +74,7 @@ export const ResultEventCard = ({
             <DiffPreview
               amend={target.data}
               text={text.data}
-              measure={measure}
+              updateRow={updateRow}
             />
           </div>
         )}

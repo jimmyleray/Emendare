@@ -1,5 +1,6 @@
 import React from 'react'
 import { CellMeasurerCache } from 'react-virtualized'
+
 // Components
 import {
   ProposeAmend,
@@ -10,6 +11,7 @@ import {
   Columns,
   Column
 } from '../../../components'
+
 // Interfaces
 import { IUser, IText } from '../../../../../interfaces'
 
@@ -18,10 +20,6 @@ interface ITextEventCard {
   target: { error: any; data: IText }
   /** user data */
   user: IUser | null
-  /** Force a row to re-render */
-  updateRow: (index: number) => void
-  /** Cache of row Heights */
-  cache: CellMeasurerCache
   /** Index of the card */
   index: number
 }

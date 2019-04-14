@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import {
   CellMeasurerCache,
   List,
@@ -49,9 +49,11 @@ const rowRenderer = (events: IEvent[], newEvents: IEvent[]) => ({
         <EventRow
           data={events[index]}
           isNew={isEventNew(newEvents, events, index)}
-          measure={measure}
+          updateRow={() => {
+            // cache.clear(index, 0)
+            measure()
+          }}
           index={index}
-          cache={cache}
         />
       </div>
     )}

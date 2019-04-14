@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+
 // Components
 import {
   Icon,
@@ -8,9 +9,10 @@ import {
   DiffPreview,
   DataContext
 } from '../../../components'
+
 // Interfaces
 import { IUser, IResponse, IText, IAmend } from '../../../../../interfaces'
-import { CellMeasurerCache } from 'react-virtualized'
+
 // Services
 import { Time } from '../../../services'
 
@@ -19,7 +21,7 @@ interface IAmendEventCardProps {
   target: { error: any; data: IAmend }
   /** user data */
   user: IUser | null
-  measure: any
+  updateRow: any
   /** Index of the card */
   index: number
 }
@@ -27,7 +29,7 @@ interface IAmendEventCardProps {
 export const AmendEventCard = ({
   target,
   user,
-  measure,
+  updateRow,
   index
 }: IAmendEventCardProps) => {
   const { get } = useContext(DataContext)
@@ -82,7 +84,7 @@ export const AmendEventCard = ({
                 <DiffPreview
                   amend={target.data}
                   text={text.data}
-                  measure={measure}
+                  updateRow={updateRow}
                 />
               </div>
             )}

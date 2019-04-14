@@ -3,13 +3,14 @@ import * as JsDiff from 'diff'
 import React, { useState, useEffect } from 'react'
 // Interfaces
 import { IAmend, IText } from '../../../../../interfaces'
+import { CellMeasurerCache } from 'react-virtualized'
 
 interface IDiffPreviewProps {
   /** Current Amend */
   amend: Partial<IAmend>
   /** Related Text */
   text: IText
-  measure?: any
+  updateRow?: any
 }
 
 const computeDiff = (amend: Partial<IAmend>, text: IText) => {
@@ -27,7 +28,7 @@ const computeDiff = (amend: Partial<IAmend>, text: IText) => {
 }
 
 export const DiffPreview = React.memo(
-  ({ amend, text, measure }: IDiffPreviewProps) => {
+  ({ amend, text, updateRow }: IDiffPreviewProps) => {
     // State
     const [diffs, setDiffs] = useState<JsDiff.Change[]>([])
 
@@ -36,11 +37,14 @@ export const DiffPreview = React.memo(
       const currentDiffs = computeDiff(amend, text)
       if (currentDiffs) {
         setDiffs(currentDiffs)
-        if (measure) {
-          setTimeout(measure, 0)
-        }
       }
-    }, [amend])
+    }, [amend, text])
+
+    useEffect(() => {
+      if (updateRow && diffs && diffs.length) {
+        updateRow()
+      }
+    }, [diffs])
 
     // Render
     let lineCounter = 0

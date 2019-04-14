@@ -9,8 +9,6 @@ import {
 } from '../../../components'
 // Interfaces
 import { IEvent } from '../../../../../interfaces'
-// ReactVirtualized
-import { CellMeasurerCache } from 'react-virtualized'
 // HoCs
 import { withEventCard } from '../../../hocs'
 
@@ -18,22 +16,13 @@ interface IEventRowProps {
   /** Following event */
   data: IEvent
   /** Tell if the event is new */
-  isNew: boolean
+  isNew?: boolean
   /** Index of the row */
   index: number
-  /** Cache of heights */
-  cache: CellMeasurerCache
-  /** Cache of heights */
-  measure: any
+  updateRow: any
 }
 
-export const EventRow = ({
-  data,
-  isNew,
-  measure,
-  cache,
-  index
-}: IEventRowProps) => {
+export const EventRow = ({ data, updateRow, index }: IEventRowProps) => {
   const { get } = useContext(DataContext)
   const { user } = useContext(UserContext)
 
@@ -41,12 +30,12 @@ export const EventRow = ({
   const target = get(eventType)(data.target.id)
 
   useEffect(() => {
-    if (target) {
-      measure()
+    if (target && target.data) {
+      updateRow()
     }
   }, [target])
 
-  const withCard = withEventCard(measure, index, target, user)
+  const withCard = withEventCard(updateRow, index, target, user)
 
   const displayRightEvent = (type: string): React.ComponentType<any> => {
     switch (type) {
