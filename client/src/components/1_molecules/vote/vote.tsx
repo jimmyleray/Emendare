@@ -1,13 +1,6 @@
 import React from 'react'
 import { Socket } from '../../../services'
-import {
-  Icon,
-  Button,
-  Buttons,
-  I18nContext,
-  Column,
-  Columns
-} from '../../../components'
+import { Icon, Button, Buttons, I18nContext, Column } from '../../../components'
 import { IAmend } from '../../../../../interfaces'
 
 interface IVoteProps {
@@ -55,7 +48,7 @@ export const Vote = ({
   )
 
   return withIcon ? (
-    <Columns className="is-mobile has-text-centered">
+    <React.Fragment>
       <Column className="is-one-third">
         <Button
           className="has-text-grey-light"
@@ -108,7 +101,7 @@ export const Vote = ({
           </span>
         </Button>
       </Column>
-    </Columns>
+    </React.Fragment>
   ) : (
     <Buttons className={className} {...rest}>
       <Button

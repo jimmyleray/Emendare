@@ -5,6 +5,7 @@ import {
   Icon,
   StopWatch,
   Vote,
+  Columns,
   CountDown,
   DiffPreview,
   DataContext
@@ -91,14 +92,16 @@ export const AmendEventCard = ({
           </div>
         </div>
         <div className="card-events-footer">
-          {user && (
-            <Vote
-              amend={target.data}
-              match={{ params: { id: target.data._id } }}
-              user={user}
-              withIcon={true}
-            />
-          )}
+          <Columns className="is-mobile has-text-centered">
+            {user && (
+              <Vote
+                amend={target.data}
+                match={{ params: { id: target.data._id } }}
+                user={user}
+                withIcon={true}
+              />
+            )}
+          </Columns>
         </div>
       </div>
     </div>

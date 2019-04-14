@@ -44,11 +44,16 @@ export const EventRow = ({ data, measure, index }: IEventRowProps) => {
 
   return (
     <React.Fragment>
-      {target &&
-        target.data &&
-        withEventCard(measure, index, target, user)(
-          displayRightEvent(data.target.type)
-        )}
+      {target && target.data && (
+        <React.Fragment>
+          <div style={{ padding: '0.5rem' }}>
+            {withEventCard(measure, index, target, user)(
+              displayRightEvent(data.target.type)
+            )}
+          </div>
+          <hr style={{ margin: 0 }} />
+        </React.Fragment>
+      )}
     </React.Fragment>
   )
 }

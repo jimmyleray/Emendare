@@ -6,87 +6,62 @@ interface IContributorsPageState {
   contributors: any[]
 }
 
-export class ContributorsPage extends React.Component<
-  {},
-  IContributorsPageState
-> {
-  constructor(props: {}) {
-    super(props)
+const isHuman = (contributor: any) => contributor.type === 'User'
+const isBot = (contributor: any) => contributor.type === 'Bot'
 
-    this.state = {
-      contributors: []
+const AvatarCell = (contributor: any) => (
+  <div key={contributor.id} className="column is-2">
+    <Avatar
+      link={contributor.html_url}
+      imgUrl={contributor.avatar_url}
+      name={contributor.login}
+    />
+  </div>
+)
+
+const AvatarsRow = (contributors: any[], isType: any) => (
+  <React.Fragment>
+    <br />
+    <br />
+    <div
+      className="columns has-text-centered container is-flex"
+      style={{ flexWrap: 'wrap', justifyContent: 'center' }}
+    >
+      {contributors.filter(isType).map(AvatarCell)}
+    </div>
+  </React.Fragment>
+)
+
+export const ContributorsPage = () => {
+  const [contributors, setContributors] = React.useState<any>([])
+
+  React.useEffect(() => {
+    Socket.fetch('contributors').then(setContributors)
+    return () => {
+      Socket.off('contributors')
     }
-  }
+  }, [])
 
-  public async componentDidMount() {
-    const contributors = (await Socket.fetch('contributors')) as any[]
-    this.setState({ contributors })
-  }
-
-  public componentWillUnmount() {
-    Socket.off('contributors')
-  }
-
-  public render() {
-    return (
-      <I18nContext.Consumer>
-        {({ translate }) => (
-          <Page title="Contributeurs">
-            <Hero
-              title={translate('CONTRIBUTORS_THANKS')}
-              subtitle={translate('CONTRIBUTE_GITHUB')}
-              className="has-text-centered"
-            />
-            {this.state.contributors.length > 1 && (
-              <div className="container is-size-5 has-text-centered">
-                <span className="is-size-4">
-                  {translate('THANKS_TO_USERS')}
-                </span>
-                <br />
-                <br />
-                <div
-                  className="columns has-text-centered container is-flex"
-                  style={{ flexWrap: 'wrap', justifyContent: 'center' }}
-                >
-                  {this.state.contributors
-                    .filter(contributor => contributor.type === 'User')
-                    .map(contributor => (
-                      <div key={contributor.id} className="column is-2">
-                        <Avatar
-                          link={contributor.html_url}
-                          imgUrl={contributor.avatar_url}
-                          name={contributor.login}
-                        />
-                      </div>
-                    ))}
-                </div>
-                <br />
-                <span className="is-size-4">
-                  {translate('THANKS_TO_TOOLS')}
-                </span>
-                <br />
-                <br />
-                <div
-                  className="columns has-text-centered container is-flex"
-                  style={{ flexWrap: 'wrap', justifyContent: 'center' }}
-                >
-                  {this.state.contributors
-                    .filter(contributor => contributor.type === 'Bot')
-                    .map(contributor => (
-                      <div key={contributor.id} className="column is-2">
-                        <Avatar
-                          link={contributor.html_url}
-                          imgUrl={contributor.avatar_url}
-                          name={contributor.login}
-                        />
-                      </div>
-                    ))}
-                </div>
-              </div>
-            )}
-          </Page>
-        )}
-      </I18nContext.Consumer>
-    )
-  }
+  return (
+    <I18nContext.Consumer>
+      {({ translate }) => (
+        <Page title="Contributeurs">
+          <Hero
+            title={translate('CONTRIBUTORS_THANKS')}
+            subtitle={translate('CONTRIBUTE_GITHUB')}
+            className="has-text-centered"
+          />
+          {contributors.length > 1 && (
+            <div className="container is-size-5 has-text-centered">
+              <span className="is-size-4">{translate('THANKS_TO_USERS')}</span>
+              {AvatarsRow(contributors, isHuman)}
+              <br />
+              <span className="is-size-4">{translate('THANKS_TO_TOOLS')}</span>
+              {AvatarsRow(contributors, isBot)}
+            </div>
+          )}
+        </Page>
+      )}
+    </I18nContext.Consumer>
+  )
 }

@@ -16,7 +16,7 @@ interface IProps {
 }
 
 export const Icon = React.memo(
-  ({ type, size, name, className = '', ...rest }: IProps) => {
+  ({ type, size = '', name, className = '', ...rest }: IProps) => {
     let nameWithType = name
     switch (type) {
       case 'solid':

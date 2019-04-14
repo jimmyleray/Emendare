@@ -10,7 +10,7 @@ interface IProps {
 }
 
 export const Grid = React.memo(
-  ({ children, className, style = {}, ...rest }: IProps) => (
+  ({ children, className = '', style = {}, ...rest }: IProps) => (
     <div
       className={`grid ${className}`}
       style={{ ...style, display: 'grid' }}
