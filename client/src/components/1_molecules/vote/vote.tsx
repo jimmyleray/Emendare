@@ -52,7 +52,11 @@ export const Vote = ({
       <Column className="is-one-third">
         <Button
           className="has-text-grey-light"
-          style={{ border: 'none', padding: 'none' }}
+          style={{
+            border: 'none',
+            padding: 'none',
+            backgroundColor: 'transparent'
+          }}
           onClick={vote(user)(amend)('up')(match.params.id)}
           disabled={amend.closed}
         >
@@ -78,7 +82,11 @@ export const Vote = ({
       <Column className="is-one-third">
         <Button
           className="has-text-grey-light"
-          style={{ border: 'none', padding: 'none' }}
+          style={{
+            border: 'none',
+            padding: 'none',
+            backgroundColor: 'transparent'
+          }}
           onClick={vote(user)(amend)('down')(match.params.id)}
           disabled={amend.closed}
         >

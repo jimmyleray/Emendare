@@ -26,7 +26,11 @@ export const ProposeAmend = ({
       onClick={() => {
         Socket.emit('followText', { id: text._id })
       }}
-      style={{ border: 'none', padding: 'none' }}
+      style={{
+        border: 'none',
+        padding: 'none',
+        backgroundColor: 'transparent'
+      }}
       to={path.edit(text._id)}
     >
       <Icon

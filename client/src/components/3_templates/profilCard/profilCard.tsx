@@ -14,7 +14,7 @@ export const ProfilCard = () => {
 
   return (
     userContext.user && (
-      <div className="container-column" style={{ padding: '12px 12px' }}>
+      <div style={{ padding: '12px 12px' }}>
         <div className="has-text-centered">
           <Icon name="fa-user-circle" className="fa-3x is-large" />
           <p>{userContext.user.email}</p>

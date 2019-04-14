@@ -19,12 +19,16 @@ export const HomePage = () => {
           gridGap: '0 0.5rem'
         }}
       >
-        <Card className="is-hidden-mobile">
-          <ProfilCard />
-        </Card>
-        <Card>
-          <News />
-        </Card>
+        <div>
+          <Card className="is-hidden-mobile">
+            <ProfilCard />
+          </Card>
+        </div>
+        <div>
+          <Card>
+            <News />
+          </Card>
+        </div>
       </Grid>
     </Page>
   )

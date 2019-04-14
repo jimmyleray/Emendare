@@ -16,7 +16,7 @@ interface IEventRowProps {
   /** Following event */
   data: IEvent
   /** Tell if the event is new */
-  isNew?: boolean
+  isNew: boolean
   /** Index of the row */
   index: number
   measure: any
@@ -35,7 +35,7 @@ const displayRightEvent = (type: string): React.ComponentType<any> => {
   }
 }
 
-export const EventRow = ({ data, measure, index }: IEventRowProps) => {
+export const EventRow = ({ data, measure, isNew, index }: IEventRowProps) => {
   const { get } = useContext(DataContext)
   const { user } = useContext(UserContext)
 
@@ -46,7 +46,12 @@ export const EventRow = ({ data, measure, index }: IEventRowProps) => {
     <React.Fragment>
       {target && target.data && (
         <React.Fragment>
-          <div style={{ padding: '0.5rem' }}>
+          <div
+            style={{
+              padding: '0.5rem',
+              backgroundColor: isNew ? 'rgba(255, 221, 87, 0.1)' : 'initial'
+            }}
+          >
             {withEventCard(measure, index, target, user)(
               displayRightEvent(data.target.type)
             )}

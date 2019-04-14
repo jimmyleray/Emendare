@@ -20,7 +20,11 @@ export const UnFollowText = ({
   withIcon ? (
     <Button
       className="has-text-grey-light "
-      style={{ border: 'none', padding: 'none' }}
+      style={{
+        border: 'none',
+        padding: 'none',
+        backgroundColor: 'transparent'
+      }}
       onClick={() => {
         Socket.emit('unFollowText', { id: text._id })
       }}

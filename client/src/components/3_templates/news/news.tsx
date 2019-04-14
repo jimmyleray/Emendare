@@ -30,8 +30,8 @@ export const News = () => {
     <React.Fragment>
       {newEventsCount > 0 && (
         <Button
-          className="is-fullwidth is-link"
-          style={{ marginBottom: '1.5rem' }}
+          className="is-fullwidth is-info"
+          style={{ borderRadius: 0 }}
           onClick={() => {
             dispatch({ type: 'NEW_EVENTS_READED' })
           }}
