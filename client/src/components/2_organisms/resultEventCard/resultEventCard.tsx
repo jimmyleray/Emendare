@@ -129,7 +129,8 @@ export const ResultEventCard = ({
                     style={{
                       border: 'none',
                       height: '24px',
-                      outline: 'none'
+                      outline: 'none',
+                      backgroundColor: 'transparent'
                     }}
                     className={'has-text-info'}
                   >
