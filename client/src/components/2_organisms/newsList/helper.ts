@@ -12,26 +12,17 @@ export const isRowLoaded = (data: IEvent[]) => ({ index }: any) => !!data[index]
 /**
  * Fetch data from a API
  * @param data List of events we want to render
- * @param stopIndex Index of the last rendered row
- * @param limit Number of data we want to fetch
- * @param socket Current socket of the client
  */
 export const loadMoreRows = (
   data: IEvent[],
-  hasNextPage: boolean,
-  limit: number = 10
-) => () =>
-  new Promise(resolve => {
-    if (hasNextPage) {
-      Socket.emit('events', {
-        limit,
-        lastEventDate: last(data)!.created
-      })
-      Socket.on('events', resolve)
-    } else {
-      resolve()
-    }
-  })
+  hasNextPage: boolean
+) => async () => {
+  if (hasNextPage) {
+    Socket.emit('events', {
+      lastEventDate: last(data)!.created
+    })
+  }
+}
 
 /**
  * Tell if the event has not been readed by the user

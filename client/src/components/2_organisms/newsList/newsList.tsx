@@ -46,12 +46,14 @@ const rowRenderer = (events: IEvent[], newEvents: IEvent[]) => ({
   >
     {({ measure }: any) => (
       <div style={style}>
-        <EventRow
-          data={events[index]}
-          isNew={isEventNew(newEvents, events, index)}
-          measure={measure}
-          index={index}
-        />
+        {events[index] ? (
+          <EventRow
+            data={events[index]}
+            isNew={isEventNew(newEvents, events, index)}
+            measure={measure}
+            index={index}
+          />
+        ) : null}
       </div>
     )}
   </CellMeasurer>
@@ -63,13 +65,14 @@ export const NewsList = ({
   hasNextPage
 }: INewsListProps) => {
   const refList = useRef<any>()
+  const rowCount = hasNextPage ? events.length + 1 : events.length
 
   return (
     <div>
       <InfiniteLoader
         isRowLoaded={isRowLoaded(events)}
         loadMoreRows={loadMoreRows(events, hasNextPage)}
-        rowCount={events.length}
+        rowCount={rowCount}
       >
         {({ onRowsRendered }) => (
           <WindowScroller>
@@ -92,7 +95,7 @@ export const NewsList = ({
                     width={width}
                     height={height}
                     isScrolling={isScrolling}
-                    rowCount={events.length}
+                    rowCount={rowCount}
                     deferredMeasurementCache={cache}
                     rowHeight={cache.rowHeight}
                     estimatedRowSize={200}

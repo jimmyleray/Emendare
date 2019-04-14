@@ -71,9 +71,9 @@ export const DiffPreview = React.memo(
                       key={j}
                       style={{
                         backgroundColor: part.added
-                          ? 'rgba(35, 209, 96, 0.22)'
+                          ? 'rgba(35, 209, 96, 0.15)'
                           : part.removed
-                          ? 'rgba(255, 56, 96, 0.22)'
+                          ? 'rgba(255, 56, 96, 0.15)'
                           : '',
                         paddingRight: '1rem',
                         paddingLeft: '1rem'
