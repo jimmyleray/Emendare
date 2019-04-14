@@ -18,7 +18,7 @@ interface IEventProviderState {
 }
 
 const initialState: IEventProviderState = {
-  events: new Array<IEvent>(),
+  events: [],
   hasNextPage: true,
   error: undefined,
   newEvents: [],
@@ -38,8 +38,10 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
       case 'ADD_NEW_EVENTS': {
         const events = [...previousState.events]
         const newEvents = [...previousState.newEvents]
+
         events.unshift(action.payload.events)
         newEvents.push(action.payload.events)
+
         return {
           ...previousState,
           error: action.payload.error,
@@ -52,6 +54,7 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
           [...previousState.events, ...action.payload.events],
           '_id'
         )
+
         return {
           ...previousState,
           error: action.payload.error,
@@ -91,8 +94,9 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
           )
         }
       }
-      default:
+      default: {
         return previousState
+      }
     }
   }
 
