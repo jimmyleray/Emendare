@@ -1,5 +1,5 @@
-import React from 'react'
-import { CellMeasurerCache } from 'react-virtualized'
+import React, { useEffect } from 'react'
+
 // Components
 import {
   ProposeAmend,
@@ -11,6 +11,7 @@ import {
   Column,
   Media
 } from '../../../components'
+
 // Interfaces
 import { IUser, IText } from '../../../../../interfaces'
 
@@ -19,21 +20,17 @@ interface ITextEventCard {
   target: { error: any; data: IText }
   /** user data */
   user: IUser | null
-  /** Force a row to re-render */
-  updateRow: (index: number) => void
-  /** Cache of row Heights */
-  cache: CellMeasurerCache
   /** Index of the card */
   index: number
+  measure: any
 }
 
-const displayBtnFollowText = (user: IUser, text: IText) => {
-  return user.followedTexts.find(textID => textID === text._id) ? (
-    <UnFollowText text={text} withIcon={true} className="has-text-info" />
-  ) : (
-    <FollowText text={text} withIcon={true} />
-  )
-}
+export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
+  useEffect(() => {
+    if (target && target.data) {
+      measure()
+    }
+  }, [target])
 
 export const TextEventCard = ({ target, user }: ITextEventCard) => (
   <Media className="card-events">
@@ -98,4 +95,5 @@ export const TextEventCard = ({ target, user }: ITextEventCard) => (
       </div>
     </Media.Content>
   </Media>
-)
+  )
+}

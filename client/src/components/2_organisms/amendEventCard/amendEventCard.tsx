@@ -1,17 +1,20 @@
 import React, { useContext } from 'react'
+
 // Components
 import {
   Icon,
   StopWatch,
   Vote,
+  Columns,
   CountDown,
   DiffPreview,
   DataContext,
   Media
 } from '../../../components'
+
 // Interfaces
 import { IUser, IResponse, IText, IAmend } from '../../../../../interfaces'
-import { CellMeasurerCache } from 'react-virtualized'
+
 // Services
 import { Time } from '../../../services'
 
@@ -20,10 +23,7 @@ interface IAmendEventCardProps {
   target: { error: any; data: IAmend }
   /** user data */
   user: IUser | null
-  /** Force a row to re-render */
-  resizeRow: (index: number) => void
-  /** Cache of row Heights */
-  cache: CellMeasurerCache
+  measure: any
   /** Index of the card */
   index: number
 }
@@ -31,29 +31,12 @@ interface IAmendEventCardProps {
 export const AmendEventCard = ({
   target,
   user,
-  cache,
+  measure,
   index
 }: IAmendEventCardProps) => {
   const { get } = useContext(DataContext)
-
   const text: IResponse<IText> = get('text')(target.data.text)
-
-  const displayPreview = React.useMemo(
-    () => (
-      text: IText,
-      index: number,
-      target: any,
-      cache: CellMeasurerCache
-    ) => {
-      return (
-        <div style={{ margin: '0.5em 0' }}>
-          <DiffPreview amend={target.data} text={text} />
-        </div>
-      )
-    },
-    [text]
-  )
-
+  
   return (
     <Media className="card-events">
       <Media.Left>
@@ -98,20 +81,28 @@ export const AmendEventCard = ({
                 />
               </React.Fragment>
             )}
-            {/* {text &&
-              text.data &&
-              displayPreview(text.data, index, target, cache)} */}
+            {text && text.data && target && target.data && (
+              <div style={{ margin: '0.5em 0' }}>
+                <DiffPreview
+                  amend={target.data}
+                  text={text.data}
+                  measure={measure}
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="card-events-footer">
-          {user && (
-            <Vote
-              amend={target.data}
-              match={{ params: { id: target.data._id } }}
-              user={user}
-              withIcon={true}
-            />
-          )}
+          <Columns className="is-mobile has-text-centered">
+            {user && (
+              <Vote
+                amend={target.data}
+                match={{ params: { id: target.data._id } }}
+                user={user}
+                withIcon={true}
+              />
+            )}
+          </Columns>
         </div>
       </Media.Content>
     </Media>

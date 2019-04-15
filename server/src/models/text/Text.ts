@@ -205,6 +205,7 @@ export class Text {
     othersAmends.forEach(async (otherAmend: any) => {
       const isPatchable = JsDiff.applyPatch(text.actual, otherAmend.patch)
       let event: IEvent
+      let oldEvent: IEvent
       if (isPatchable) {
         otherAmend.version = text.patches.length
       } else {
@@ -212,6 +213,10 @@ export class Text {
         otherAmend.closed = true
         otherAmend.finished = new Date()
         otherAmend.totalPotentialVotesCount = text.followersCount
+
+        oldEvent = await Event.model.findOne({
+          'target.id': otherAmend._id
+        })
 
         event = await new Event.model({
           target: {
@@ -222,10 +227,14 @@ export class Text {
       }
 
       await otherAmend.save()
+      await Event.model.findOneAndDelete({ _id: oldEvent._id })
 
       if (io) {
         if (event) {
           io.emit('events/new', { data: event })
+        }
+        if (oldEvent) {
+          io.emit('events/delete', { data: oldEvent })
         }
         io.emit('amend/' + otherAmend._id, { data: otherAmend })
       }

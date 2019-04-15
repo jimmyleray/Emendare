@@ -42,6 +42,24 @@ export const Clock = (getTime: any) => {
     }
 
     private start = (intervalDelay: number = 1000) => {
+      const timeToDisplay: ITime = getTime(this.props.date)
+
+      const second = 1000
+      const minute = 60 * second
+      const hour = 60 * minute
+      const day = 24 * hour
+
+      intervalDelay =
+        timeToDisplay.days > 0
+          ? day
+          : timeToDisplay.hours > 0
+          ? hour
+          : timeToDisplay.minutes > 0
+          ? minute
+          : timeToDisplay.seconds > 0
+          ? second
+          : intervalDelay
+
       this.clock = window.setInterval(() => {
         const time: ITime = getTime(this.props.date)
         if (Time.isNegative(time)) {

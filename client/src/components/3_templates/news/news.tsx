@@ -8,6 +8,7 @@ import {
   NewsList,
   I18nContext
 } from '../../../components'
+
 import { Socket } from '../../../services'
 
 export const News = () => {
@@ -17,37 +18,35 @@ export const News = () => {
     EventsContext
   )
 
+  const newEventsCount = user && newEvents ? newEvents.length : 0
+
   React.useEffect(() => {
     if (hasNextPage) {
       Socket.emit('events')
     }
   }, [])
 
-  if (events.length > 0) {
-    const newEventsCount = user ? newEvents.length : 0
-    return (
-      <div style={{ padding: '0.5rem 0.5rem 1.5rem 0.5rem' }}>
-        {newEventsCount > 0 && (
-          <Button
-            className="is-fullwidth is-link"
-            style={{ marginBottom: '1.5rem' }}
-            onClick={() => {
-              dispatch({ type: 'NEW_EVENTS_READED' })
-            }}
-          >
-            {translate('MARK_AS_READ')}
-          </Button>
-        )}
-        {events.length > 0 && (
-          <NewsList
-            events={events}
-            newEvents={newEvents}
-            hasNextPage={hasNextPage}
-          />
-        )}
-      </div>
-    )
-  } else {
-    return null
-  }
+  return (
+    <React.Fragment>
+      {newEventsCount > 0 && (
+        <Button
+          className="is-fullwidth is-info"
+          style={{ borderRadius: 0 }}
+          onClick={() => {
+            dispatch({ type: 'NEW_EVENTS_READED' })
+          }}
+        >
+          {translate('MARK_AS_READ')}
+        </Button>
+      )}
+
+      {events && events.length > 0 && (
+        <NewsList
+          events={events}
+          newEvents={newEvents}
+          hasNextPage={hasNextPage}
+        />
+      )}
+    </React.Fragment>
+  )
 }
