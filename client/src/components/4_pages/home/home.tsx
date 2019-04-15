@@ -4,12 +4,14 @@ import {
   News,
   Page,
   I18nContext,
+  UserContext,
   Grid,
   ProfilCard
 } from '../../../components'
 
 export const HomePage = () => {
   const { translate } = React.useContext(I18nContext)
+  const { user } = React.useContext(UserContext)
 
   return (
     <Page title={translate('HOME')} style={{ padding: '0' }}>
@@ -20,9 +22,11 @@ export const HomePage = () => {
         }}
       >
         <div>
-          <Card className="is-hidden-mobile">
-            <ProfilCard />
-          </Card>
+          {user && (
+            <Card className="is-hidden-mobile">
+              <ProfilCard />
+            </Card>
+          )}
         </div>
         <div>
           <Card>
