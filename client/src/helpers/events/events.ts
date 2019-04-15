@@ -39,7 +39,7 @@ export const isUserFollowText = (
   textId: string
 ): boolean => {
   if (user) {
-    return user.followedTexts.find((text: string) => text === textId) === textId
+    return user.followedTexts.includes(textId)
   }
   return false
 }
@@ -74,6 +74,13 @@ export const getListTargets = (
   })
 }
 
+export const isTargetLoaded = (value: {
+  event: IEvent
+  target: IResponse<any> | undefined
+}) => {
+  return value.target && value.target.data
+}
+
 /**
  * Return true if all the target are loaded
  * @param events list of events and target
@@ -82,12 +89,7 @@ export const areTargetLoaded = (
   events: Array<{ event: IEvent; target: IResponse<any> | undefined }>
 ): boolean => {
   if (events.length > 0) {
-    return (
-      events.filter(
-        (val: { event: IEvent; target: IResponse<any> | undefined }) =>
-          val.target && val.target.data
-      ).length === events.length
-    )
+    return events.every(isTargetLoaded)
   }
   return false
 }
@@ -96,13 +98,10 @@ export const filterEventsByUserTextFollowed = (
   events: Array<{ event: IEvent; target: IResponse<any> | undefined }>,
   user: IUser | null
 ) => {
-  if (areTargetLoaded(events) && user) {
-    return events.filter((val: { event: IEvent; target: any }) => {
-      if (
-        val.event.target.type === 'amend' ||
-        val.event.target.type === 'result'
-      ) {
-        return isUserFollowText(user, val.target.data.text)
+  if (user && areTargetLoaded(events)) {
+    return events.filter(({ event, target }: any) => {
+      if (event.target.type === 'amend' || event.target.type === 'result') {
+        return isUserFollowText(user, target.data.text)
       }
       return true
     })
