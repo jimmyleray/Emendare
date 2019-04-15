@@ -11,14 +11,14 @@ import {
 // Components
 import { EventRow } from '../../../components'
 // Interfaces
-import { IEvent } from '../../../../../interfaces'
+import { IEvent, IResponse } from '../../../../../interfaces'
 // Helpers
 import { isRowLoaded, loadMoreRows, isEventNew } from './helper'
 
 // Interface
 interface INewsListProps {
   /** List of events */
-  events: IEvent[]
+  events: Array<{ event: IEvent; target: any }>
   /** All the new events which havn't been readed yet */
   newEvents: IEvent[]
   /** Tell if there are more events to be loaded */
@@ -31,12 +31,10 @@ const cache = new CellMeasurerCache({
 })
 
 // Render list item
-const rowRenderer = (events: IEvent[], newEvents: IEvent[]) => ({
-  index,
-  parent,
-  style,
-  key
-}: any) => (
+const rowRenderer = (
+  events: Array<{ event: IEvent; target: IResponse<any> }>,
+  newEvents: IEvent[]
+) => ({ index, parent, style, key }: any) => (
   <CellMeasurer
     key={key}
     cache={cache}

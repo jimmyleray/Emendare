@@ -17,7 +17,7 @@ import { IUser, IText } from '../../../../../interfaces'
 
 interface ITextEventCard {
   /** Related event */
-  target: { error: any; data: IText }
+  target: IText
   /** user data */
   user: IUser | null
   /** Index of the card */
@@ -27,7 +27,7 @@ interface ITextEventCard {
 
 export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
   useEffect(() => {
-    if (target && target.data) {
+    if (target) {
       measure()
     }
   }, [target])
@@ -44,19 +44,19 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
       <Media.Content style={{ overflowX: 'visible' }}>
         <div>
           <p>
-            <strong>{target.data.name}</strong>
+            <strong>{target.name}</strong>
             {' - '}
             <small style={{ wordSpacing: 'normal' }}>
-              <StopWatch date={target.data.created} />
+              <StopWatch date={target.created} />
             </small>
             <br />
-            {target.data.description}
+            {target.description}
           </p>
           <div className="card-events-footer">
             <Columns className="is-mobile">
               <Column className="is-one-third">
                 {user ? (
-                  <ProposeAmend withIcon={true} text={target.data} />
+                  <ProposeAmend withIcon={true} text={target} />
                 ) : (
                   <div
                     className="has-text-grey-light"
@@ -68,13 +68,21 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
                       className="fa-lg"
                       style={{ marginRight: '0.5rem' }}
                     />
-                    {target.data.amends.length}
+                    {target.amends.length}
                   </div>
                 )}
               </Column>
               <Column className="is-one-third">
                 {user ? (
-                  displayBtnFollowText(user, target.data)
+                  user.followedTexts.find(textID => textID === target._id) ? (
+                    <UnFollowText
+                      text={target}
+                      withIcon={true}
+                      className="has-text-info"
+                    />
+                  ) : (
+                    <FollowText text={target} withIcon={true} />
+                  )
                 ) : (
                   <div
                     className="has-text-grey-light"
@@ -86,7 +94,7 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
                       className="fa-lg"
                       style={{ marginRight: '0.5rem' }}
                     />
-                    {target.data.followersCount}
+                    {target.followersCount}
                   </div>
                 )}
               </Column>
