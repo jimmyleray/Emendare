@@ -1,6 +1,6 @@
 import React from 'react'
 import { IError, IEvent } from '../../../../../interfaces'
-import { getNewEvent, deleteNewEvent } from './helper'
+import { getNewEvent, deleteNewEvent } from '../../../helpers'
 import { UserContext } from '../../../components'
 import { Socket } from '../../../services'
 import { uniqBy } from 'lodash'

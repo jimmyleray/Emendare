@@ -7,13 +7,14 @@ import {
   StopWatch,
   DiffPreview,
   DataContext,
+  Media,
   Columns,
   Column,
   Button
 } from '../../../components'
 
 // Interfaces
-import { IUser, IText, IResponse } from '../../../../../interfaces'
+import { IUser, IText, IResponse, IAmend } from '../../../../../interfaces'
 
 // Helpers
 import {
@@ -26,7 +27,7 @@ import { path } from '../../../config'
 
 interface IResultEventCardProps {
   /** Related event */
-  target: any
+  target: IAmend
   /** user data */
   user: IUser | null
   measure: any
@@ -40,54 +41,46 @@ export const ResultEventCard = ({
   measure
 }: IResultEventCardProps) => {
   const { get } = React.useContext(DataContext)
-  const text: IResponse<IText> = get('text')(target.data.text)
+  const text: IResponse<IText> = get('text')(target.text)
 
   return (
-    <div className="media card-events">
-      <div className="media-left">
+    <Media className="card-events">
+      <Media.Left>
         <Icon
-          name={getIconFromResult(target.data)}
+          name={getIconFromResult(target)}
           type={'light'}
           size="fa-2x"
-          className={getColorTextFromResult(target.data) + ' is-large'}
+          className={getColorTextFromResult(target) + ' is-large'}
         />
-      </div>
-      <div className="media-content" style={{ overflowX: 'visible' }}>
+      </Media.Left>
+      <Media.Content style={{ overflowX: 'visible' }}>
         <div>
           <strong>Résultat</strong>
           {' - '}
           <small style={{ wordSpacing: 'normal' }}>
-            <StopWatch date={target.data.created} />
+            <StopWatch date={target.created} />
           </small>
           <br />
           <p>
             L'amendement{' '}
-            <span className="has-text-weight-semibold">
-              "{target.data.name}"
-            </span>{' '}
-            a été {getTextFromResult(target.data)}
+            <span className="has-text-weight-semibold">"{target.name}"</span> a
+            été {getTextFromResult(target)}
           </p>
         </div>
 
-        {text && text.data && target && target.data && (
+        {text && text.data && target && (
           <div style={{ margin: '0.5em 0' }}>
-            <DiffPreview
-              amend={target.data}
-              text={text.data}
-              measure={measure}
-            />
+            <DiffPreview amend={target} text={text.data} measure={measure} />
           </div>
         )}
 
-        {!target.data.conflicted && (
+        {!target.conflicted && (
           <div className="card-events-footer">
             <Columns className="is-mobile has-text-centered">
               <Column className="is-one-third">
                 <div
                   className={
-                    target.data.accepted
-                      ? 'has-text-success'
-                      : 'has-text-grey-light'
+                    target.accepted ? 'has-text-success' : 'has-text-grey-light'
                   }
                 >
                   <Icon
@@ -96,15 +89,13 @@ export const ResultEventCard = ({
                     name="fa-thumbs-up"
                     style={{ marginRight: '0.5em' }}
                   />
-                  {target.data.results.upVotesCount}
+                  {target.results.upVotesCount}
                 </div>
               </Column>
               <Column className="is-one-third">
                 <div
                   className={
-                    !target.data.accepted
-                      ? 'has-text-danger'
-                      : 'has-text-grey-light'
+                    !target.accepted ? 'has-text-danger' : 'has-text-grey-light'
                   }
                 >
                   <Icon
@@ -113,7 +104,7 @@ export const ResultEventCard = ({
                     name={'fa-thumbs-down'}
                     style={{ marginRight: '0.5em' }}
                   />
-                  {target.data.results.downVotesCount}
+                  {target.results.downVotesCount}
                 </div>
               </Column>
               {navigator && (navigator as any).clipboard && (
@@ -121,7 +112,7 @@ export const ResultEventCard = ({
                   <Button
                     onClick={async () => {
                       const url = new URL(
-                        path.share(target.data._id),
+                        path.share(target._id),
                         location.origin
                       )
                       await (navigator as any)!.clipboard!.writeText(url.href)
@@ -141,7 +132,7 @@ export const ResultEventCard = ({
             </Columns>
           </div>
         )}
-      </div>
-    </div>
+      </Media.Content>
+    </Media>
   )
 }

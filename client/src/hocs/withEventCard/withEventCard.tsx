@@ -1,6 +1,5 @@
 import React from 'react'
 import { IUser } from '../../../../interfaces'
-import { CellMeasurerCache } from 'react-virtualized'
 
 export const withEventCard = (
   measure: any,

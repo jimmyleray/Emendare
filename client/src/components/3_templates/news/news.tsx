@@ -6,17 +6,27 @@ import {
   UserContext,
   EventsContext,
   NewsList,
-  I18nContext
+  I18nContext,
+  DataContext
 } from '../../../components'
-
+// Services
 import { Socket } from '../../../services'
+// Helpers
+import {
+  getListTargets,
+  filterEventsByUserTextFollowed,
+  areTargetLoaded
+} from '../../../helpers'
 
 export const News = () => {
   const { translate } = React.useContext(I18nContext)
   const { user } = React.useContext(UserContext)
+  const { get } = React.useContext(DataContext)
   const { events, hasNextPage, newEvents, dispatch } = React.useContext(
     EventsContext
   )
+
+  const eventsTargets: any = getListTargets(events, get)
 
   const newEventsCount = user && newEvents ? newEvents.length : 0
 
@@ -40,13 +50,15 @@ export const News = () => {
         </Button>
       )}
 
-      {events && events.length > 0 && (
-        <NewsList
-          events={events}
-          newEvents={newEvents}
-          hasNextPage={hasNextPage}
-        />
-      )}
+      {eventsTargets &&
+        eventsTargets.length > 0 &&
+        areTargetLoaded(eventsTargets) && (
+          <NewsList
+            events={filterEventsByUserTextFollowed(eventsTargets, user)}
+            newEvents={newEvents}
+            hasNextPage={hasNextPage}
+          />
+        )}
     </React.Fragment>
   )
 }
