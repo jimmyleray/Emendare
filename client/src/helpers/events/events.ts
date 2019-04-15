@@ -102,8 +102,6 @@ export const filterEventsByUserTextFollowed = (
         val.event.target.type === 'amend' ||
         val.event.target.type === 'result'
       ) {
-        console.log('text', val.target.data.text)
-        console.log(isUserFollowText(user, val.target.data.text))
         return isUserFollowText(user, val.target.data.text)
       }
       return true
