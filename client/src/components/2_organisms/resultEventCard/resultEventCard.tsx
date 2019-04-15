@@ -2,7 +2,14 @@
 import React, { useContext } from 'react'
 import { CellMeasurerCache } from 'react-virtualized'
 // Components
-import { Icon, StopWatch, DiffPreview, DataContext } from '../../../components'
+import {
+  Icon,
+  StopWatch,
+  DiffPreview,
+  DataContext,
+  Media
+} from '../../../components'
+
 // Interfaces
 import { IUser, IText, IResponse } from '../../../../../interfaces'
 // Helpers
@@ -51,16 +58,16 @@ export const ResultEventCard = ({
   )
 
   return (
-    <div className="media card-events">
-      <div className="media-left">
+    <Media className="card-events">
+      <Media.Left>
         <Icon
           name={getIconFromResult(target.data)}
           type={'light'}
           size="fa-2x"
           className={getColorTextFromResult(target.data) + ' is-large'}
         />
-      </div>
-      <div className="media-content" style={{ overflowX: 'visible' }}>
+      </Media.Left>
+      <Media.Content style={{ overflowX: 'visible' }}>
         <div>
           <strong>Résultat</strong>
           {' - '}
@@ -82,7 +89,7 @@ export const ResultEventCard = ({
             <ResultEventCardFooter amend={target.data} />
           </div>
         )}
-      </div>
-    </div>
+      </Media.Content>
+    </Media>
   )
 }

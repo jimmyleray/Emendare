@@ -8,7 +8,8 @@ import {
   FollowText,
   UnFollowText,
   Columns,
-  Column
+  Column,
+  Media
 } from '../../../components'
 // Interfaces
 import { IUser, IText } from '../../../../../interfaces'
@@ -35,15 +36,15 @@ const displayBtnFollowText = (user: IUser, text: IText) => {
 }
 
 export const TextEventCard = ({ target, user }: ITextEventCard) => (
-  <div className="media card-events">
-    <div className="media-left">
+  <Media className="card-events">
+    <Media.Left>
       <Icon
         type={'light'}
         name="fa-align-center"
         className="fa-2x has-text-info is-large"
       />
-    </div>
-    <div className="media-content" style={{ overflowX: 'visible' }}>
+    </Media.Left>
+    <Media.Content style={{ overflowX: 'visible' }}>
       <div>
         <p>
           <strong>{target.data.name}</strong>
@@ -95,7 +96,6 @@ export const TextEventCard = ({ target, user }: ITextEventCard) => (
           </Columns>
         </div>
       </div>
-    </div>
-    <div className="media-right" />
-  </div>
+    </Media.Content>
+  </Media>
 )
