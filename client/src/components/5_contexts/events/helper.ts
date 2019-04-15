@@ -1,4 +1,4 @@
-import { IEvent } from '../../../../../interfaces'
+import { IEvent, IText, IUser } from '../../../../../interfaces'
 import _ from 'lodash'
 
 /**

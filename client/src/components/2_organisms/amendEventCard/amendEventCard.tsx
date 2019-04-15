@@ -36,7 +36,7 @@ export const AmendEventCard = ({
 }: IAmendEventCardProps) => {
   const { get } = useContext(DataContext)
   const text: IResponse<IText> = get('text')(target.data.text)
-  
+
   return (
     <Media className="card-events">
       <Media.Left>
