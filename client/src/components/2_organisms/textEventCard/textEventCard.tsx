@@ -32,7 +32,7 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
     }
   }, [target])
 
-  export const TextEventCard = ({ target, user }: ITextEventCard) => (
+  return (
     <Media className="card-events">
       <Media.Left>
         <Icon
