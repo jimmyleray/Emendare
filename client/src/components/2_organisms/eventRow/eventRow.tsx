@@ -4,7 +4,6 @@ import {
   TextEventCard,
   AmendEventCard,
   ResultEventCard,
-  DataContext,
   UserContext
 } from '../../../components'
 // Interfaces
