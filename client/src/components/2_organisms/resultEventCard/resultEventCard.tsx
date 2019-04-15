@@ -7,6 +7,7 @@ import {
   StopWatch,
   DiffPreview,
   DataContext,
+  Media,
   Columns,
   Column,
   Button
@@ -43,16 +44,16 @@ export const ResultEventCard = ({
   const text: IResponse<IText> = get('text')(target.data.text)
 
   return (
-    <div className="media card-events">
-      <div className="media-left">
+    <Media className="card-events">
+      <Media.Left>
         <Icon
           name={getIconFromResult(target.data)}
           type={'light'}
           size="fa-2x"
           className={getColorTextFromResult(target.data) + ' is-large'}
         />
-      </div>
-      <div className="media-content" style={{ overflowX: 'visible' }}>
+      </Media.Left>
+      <Media.Content style={{ overflowX: 'visible' }}>
         <div>
           <strong>Résultat</strong>
           {' - '}
@@ -141,7 +142,7 @@ export const ResultEventCard = ({
             </Columns>
           </div>
         )}
-      </div>
-    </div>
+      </Media.Content>
+    </Media>
   )
 }

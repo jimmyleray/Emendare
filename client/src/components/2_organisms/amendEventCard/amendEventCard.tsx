@@ -8,7 +8,8 @@ import {
   Columns,
   CountDown,
   DiffPreview,
-  DataContext
+  DataContext,
+  Media
 } from '../../../components'
 
 // Interfaces
@@ -37,15 +38,15 @@ export const AmendEventCard = ({
   const text: IResponse<IText> = get('text')(target.data.text)
 
   return (
-    <div className="media card-events">
-      <div className="media-left">
+    <Media className="card-events">
+      <Media.Left>
         <Icon
           type={'light'}
           name="fa-plus"
           className="fa-2x has-text-primary is-large"
         />
-      </div>
-      <div className="media-content" style={{ overflowX: 'visible' }}>
+      </Media.Left>
+      <Media.Content style={{ overflowX: 'visible' }}>
         <div>
           <p style={{ margin: 0 }}>
             <strong>Vote en cours</strong>
@@ -103,7 +104,7 @@ export const AmendEventCard = ({
             )}
           </Columns>
         </div>
-      </div>
-    </div>
+      </Media.Content>
+    </Media>
   )
 }

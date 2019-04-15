@@ -8,7 +8,8 @@ import {
   FollowText,
   UnFollowText,
   Columns,
-  Column
+  Column,
+  Media
 } from '../../../components'
 
 // Interfaces
@@ -32,15 +33,15 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
   }, [target])
 
   return (
-    <div className="media card-events">
-      <div className="media-left">
+    <Media className="card-events">
+      <Media.Left>
         <Icon
           type={'light'}
           name="fa-align-center"
           className="fa-2x has-text-info is-large"
         />
-      </div>
-      <div className="media-content" style={{ overflowX: 'visible' }}>
+      </Media.Left>
+      <Media.Content style={{ overflowX: 'visible' }}>
         <div>
           <p>
             <strong>{target.data.name}</strong>
@@ -52,7 +53,7 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
             {target.data.description}
           </p>
           <div className="card-events-footer">
-            <Columns className="is-mobile has-text-centered">
+            <Columns className="is-mobile">
               <Column className="is-one-third">
                 {user ? (
                   <ProposeAmend withIcon={true} text={target.data} />
@@ -73,17 +74,7 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
               </Column>
               <Column className="is-one-third">
                 {user ? (
-                  user.followedTexts.find(
-                    textID => textID === target.data._id
-                  ) ? (
-                    <UnFollowText
-                      text={target.data}
-                      withIcon={true}
-                      className="has-text-info"
-                    />
-                  ) : (
-                    <FollowText text={target.data} withIcon={true} />
-                  )
+                  displayBtnFollowText(user, target.data)
                 ) : (
                   <div
                     className="has-text-grey-light"
@@ -102,8 +93,7 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
             </Columns>
           </div>
         </div>
-      </div>
-      <div className="media-right" />
-    </div>
+      </Media.Content>
+    </Media>
   )
 }
