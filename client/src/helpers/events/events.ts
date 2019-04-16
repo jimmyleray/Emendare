@@ -94,17 +94,39 @@ export const areTargetLoaded = (
   return false
 }
 
+/**
+ * Return true if the event is related to the texts followed by the user
+ * @param event Event object
+ * @param target Target of the related event
+ * @param user User object
+ */
+export const isRelatedToUserFollowedText = (
+  event: IEvent,
+  target: IResponse<any>,
+  user: IUser | null
+) => {
+  if (
+    (user && event.target.type === 'amend') ||
+    event.target.type === 'result'
+  ) {
+    return isUserFollowText(user, target.data.text)
+  }
+  return true
+}
+
+/**
+ * Filter the list of events depending on the texts followed by the user
+ * @param events list of events and related target
+ * @param user  User object
+ */
 export const filterEventsByUserTextFollowed = (
   events: Array<{ event: IEvent; target: IResponse<any> | undefined }>,
   user: IUser | null
 ) => {
   if (user && areTargetLoaded(events)) {
-    return events.filter(({ event, target }: any) => {
-      if (event.target.type === 'amend' || event.target.type === 'result') {
-        return isUserFollowText(user, target.data.text)
-      }
-      return true
-    })
+    return events.filter(({ event, target }: any) =>
+      isRelatedToUserFollowedText(event, target, user)
+    )
   }
   return events
 }
