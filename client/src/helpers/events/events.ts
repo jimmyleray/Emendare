@@ -1,4 +1,4 @@
-import { IEvent, IUser, IResponse } from '../../../../interfaces'
+import { IUser, INews, IEvent, IResponse } from '../../../../interfaces'
 import _ from 'lodash'
 
 /**
@@ -65,7 +65,7 @@ export const getEventTarget = (
 export const getListTargets = (
   events: IEvent[],
   get: (type: string) => any
-): Array<{ event: IEvent; target: IResponse<any> | undefined }> => {
+): INews[] => {
   return events.map((event: IEvent) => {
     return {
       event,
@@ -74,10 +74,7 @@ export const getListTargets = (
   })
 }
 
-export const isTargetLoaded = (value: {
-  event: IEvent
-  target: IResponse<any> | undefined
-}) => {
+export const isTargetLoaded = (value: INews) => {
   return value.target && value.target.data
 }
 
@@ -85,9 +82,7 @@ export const isTargetLoaded = (value: {
  * Return true if all the target are loaded
  * @param events list of events and target
  */
-export const areTargetLoaded = (
-  events: Array<{ event: IEvent; target: IResponse<any> | undefined }>
-): boolean => {
+export const areTargetLoaded = (events: INews[]): boolean => {
   if (events.length > 0) {
     return events.every(isTargetLoaded)
   }
@@ -100,16 +95,16 @@ export const areTargetLoaded = (
  * @param target Target of the related event
  * @param user User object
  */
-export const isRelatedToUserFollowedText = (
-  event: IEvent,
-  target: IResponse<any>,
-  user: IUser | null
+export const isRelatedToUserFollowedText = (user: IUser | null) => (
+  value: INews
 ) => {
   if (
-    (user && event.target.type === 'amend') ||
-    event.target.type === 'result'
+    user &&
+    value.target &&
+    (value.event.target.type === 'amend' ||
+      value.event.target.type === 'result')
   ) {
-    return isUserFollowText(user, target.data.text)
+    return isUserFollowText(user, value.target.data.text)
   }
   return true
 }
@@ -120,13 +115,11 @@ export const isRelatedToUserFollowedText = (
  * @param user  User object
  */
 export const filterEventsByUserTextFollowed = (
-  events: Array<{ event: IEvent; target: IResponse<any> | undefined }>,
+  events: INews[],
   user: IUser | null
 ) => {
   if (user && areTargetLoaded(events)) {
-    return events.filter(({ event, target }: any) =>
-      isRelatedToUserFollowedText(event, target, user)
-    )
+    return events.filter(isRelatedToUserFollowedText(user))
   }
   return events
 }
