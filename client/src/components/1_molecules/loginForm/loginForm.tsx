@@ -61,7 +61,7 @@ export const LoginForm = ({ location, render }: ILoginPageProps) => {
   }
 
   return (
-    <form onSubmit={submit} style={{ maxWidth: '350px', margin: 'auto' }}>
+    <form onSubmit={submit} style={{ width: '100%' }}>
       <div className="field">
         <div className="control has-icons-left has-icons-right">
           <Input
@@ -70,7 +70,7 @@ export const LoginForm = ({ location, render }: ILoginPageProps) => {
             placeholder="Email"
             value={email}
             onChange={change('email')}
-            className="input is-medium"
+            className="input"
             type="email"
             iconLeft="fa-envelope"
           />
@@ -83,7 +83,7 @@ export const LoginForm = ({ location, render }: ILoginPageProps) => {
             ariaLabel="Mot de passe"
             value={password}
             onChange={change('password')}
-            className="input is-medium"
+            className="input"
             type="password"
             iconLeft="fa-lock"
           />
@@ -95,11 +95,13 @@ export const LoginForm = ({ location, render }: ILoginPageProps) => {
         </div>
       </div>
       <div className="has-text-centered">{render(email, password, submit)}</div>
-      <br />
       {error && (
-        <Notification className="is-danger has-text-centered">
-          {error.message}
-        </Notification>
+        <React.Fragment>
+          <br />
+          <Notification className="is-danger has-text-centered">
+            {error.message}
+          </Notification>
+        </React.Fragment>
       )}
     </form>
   )

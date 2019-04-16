@@ -19,10 +19,12 @@ export const ProfilCard = () => {
         <React.Fragment>
           <div className="has-text-centered">
             <Icon name="fa-user-circle" className="fa-3x is-large" />
+            <br />
+            <br />
             <p>{userContext.user.email}</p>
             <Button
               onClick={userContext.logout}
-              className="is-danger"
+              className="is-danger is-fullwidth"
               style={{ marginTop: '0.5rem' }}
             >
               {translate('SIGN_OUT')}

@@ -35,9 +35,7 @@ export const SubscribeForm = ({ render }: ISubscribeFormProps) => {
         setSend(true)
         setError(null)
       })
-      .catch(error => {
-        setError(error)
-      })
+      .catch(setError)
   }
 
   const change = useCallback(
@@ -59,7 +57,7 @@ export const SubscribeForm = ({ render }: ISubscribeFormProps) => {
   )
 
   return (
-    <form onSubmit={submit} style={{ maxWidth: '350px', margin: 'auto' }}>
+    <form onSubmit={submit} style={{ width: '100%' }}>
       {!send && (
         <React.Fragment>
           <div className="field">
@@ -69,7 +67,7 @@ export const SubscribeForm = ({ render }: ISubscribeFormProps) => {
                 placeholder="Email"
                 value={email}
                 onChange={change('email')}
-                className="input is-medium"
+                className="input"
                 type="email"
                 aria-label="email input"
               />
@@ -82,16 +80,18 @@ export const SubscribeForm = ({ render }: ISubscribeFormProps) => {
             checkPassword={checkPassword}
             pwdSame={pwdSame}
             pwdValid={pwdValid}
-            className="is-medium"
           />
           <div className="has-text-centered">
             {render(email, password, checkPassword, pwdValid, pwdSame)}
           </div>
-          <br />
+
           {error && (
-            <Notification className="is-danger has-text-centered">
-              {error.message}
-            </Notification>
+            <React.Fragment>
+              <br />
+              <Notification className="is-danger has-text-centered">
+                {error.message}
+              </Notification>
+            </React.Fragment>
           )}
         </React.Fragment>
       )}

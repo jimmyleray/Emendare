@@ -30,7 +30,7 @@ export const Navbar = () => {
 
   return (
     <nav
-      className="navbar is-fixed-top"
+      className="navbar is-dark is-fixed-top"
       role="navigation"
       aria-label="main navigation"
       style={{
@@ -45,8 +45,16 @@ export const Navbar = () => {
           className={'navbar-item has-text-weight-semibold'}
           style={{ textDecoration: 'none' }}
         >
-          <Logo size={36} className="is-hidden-tablet" />
-          <Logo size={42} className="is-hidden-mobile" />
+          <Logo
+            size={36}
+            className="is-hidden-tablet"
+            style={{ fill: 'white' }}
+          />
+          <Logo
+            size={42}
+            className="is-hidden-mobile"
+            style={{ fill: 'white' }}
+          />
           <span
             style={{ marginLeft: 8 }}
             className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}
@@ -80,35 +88,6 @@ export const Navbar = () => {
           </Link>
         </div>
         <div className="navbar-end">
-          {!userContext.isConnectionPending ? (
-            userContext.isConnected() ? (
-              <Link
-                to={path.profile}
-                onClick={() => setBurgerActive(false)}
-                className="navbar-item"
-              >
-                {translate('MY_PROFILE')}
-              </Link>
-            ) : (
-              <React.Fragment>
-                <Link
-                  to={path.login}
-                  onClick={() => setBurgerActive(false)}
-                  className="navbar-item has-text-weight-semibold"
-                >
-                  {translate('LOGIN')}
-                </Link>
-                <Link
-                  to={path.subscribe}
-                  onClick={() => setBurgerActive(false)}
-                  className="navbar-item"
-                >
-                  {translate('REGISTER')}
-                </Link>
-              </React.Fragment>
-            )
-          ) : null}
-
           <DropDown className="navbar-item" isHoverable={true} navbar={true}>
             <DropDown.Trigger title={translate('ABOUT')} />
             <DropDown.Menu>

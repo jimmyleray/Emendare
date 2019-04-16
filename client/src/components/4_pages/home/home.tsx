@@ -4,29 +4,25 @@ import {
   News,
   Page,
   I18nContext,
-  UserContext,
   Grid,
   ProfilCard
 } from '../../../components'
 
 export const HomePage = () => {
   const { translate } = React.useContext(I18nContext)
-  const { user } = React.useContext(UserContext)
 
   return (
     <Page title={translate('HOME')} style={{ padding: '0' }}>
       <Grid
         style={{
-          gridTemplateColumns: '1fr 550px 1fr',
+          gridTemplateColumns: '350px 600px auto',
           gridGap: '0 0.5rem'
         }}
       >
         <div>
-          {user && (
-            <Card className="is-hidden-mobile">
-              <ProfilCard />
-            </Card>
-          )}
+          <Card className="is-hidden-mobile">
+            <ProfilCard />
+          </Card>
         </div>
         <div>
           <Card>
