@@ -1,4 +1,4 @@
-import { IEvent, IUser, IResponse } from '../../../../interfaces'
+import { IUser, INews, IEvent, IResponse } from '../../../../interfaces'
 import _ from 'lodash'
 
 /**
@@ -6,14 +6,13 @@ import _ from 'lodash'
  * @param lastEventDate Last event readed by the user
  * @param events List of aall the events
  */
-export const getNewEvent = (lastEventDate: any, events: IEvent[]) => {
-  return lastEventDate && events.length > 0
+export const getNewEvent = (lastEventDate: any, events: IEvent[]) =>
+  lastEventDate && events.length > 0
     ? events.filter(
         (event: any) =>
           new Date(event.created).getTime() > new Date(lastEventDate).getTime()
       )
     : []
-}
 
 /**
  * Delete the event which have been readed by the user from the list
@@ -22,9 +21,7 @@ export const getNewEvent = (lastEventDate: any, events: IEvent[]) => {
  */
 export const deleteNewEvent = (eventId: string, newEvents: IEvent[]) => {
   if (eventId && newEvents.length > 0) {
-    return _.remove(newEvents, (event: IEvent) => {
-      return event._id !== eventId
-    })
+    return _.remove(newEvents, event => event._id !== eventId)
   }
   return newEvents
 }
@@ -34,15 +31,8 @@ export const deleteNewEvent = (eventId: string, newEvents: IEvent[]) => {
  * @param user User object
  * @param text Text object
  */
-export const isUserFollowText = (
-  user: IUser | null,
-  textId: string
-): boolean => {
-  if (user) {
-    return user.followedTexts.includes(textId)
-  }
-  return false
-}
+export const isUserFollowText = (user: IUser | null, textId: string): boolean =>
+  user ? user.followedTexts.includes(textId) : false
 
 /**
  * Get the target related of the event
@@ -65,7 +55,7 @@ export const getEventTarget = (
 export const getListTargets = (
   events: IEvent[],
   get: (type: string) => any
-): Array<{ event: IEvent; target: IResponse<any> | undefined }> => {
+): INews[] => {
   return events.map((event: IEvent) => {
     return {
       event,
@@ -74,37 +64,44 @@ export const getListTargets = (
   })
 }
 
-export const isTargetLoaded = (value: {
-  event: IEvent
-  target: IResponse<any> | undefined
-}) => {
+export const isTargetLoaded = (value: INews) => {
   return value.target && value.target.data
 }
 
 /**
- * Return true if all the target are loaded
- * @param events list of events and target
+ * Return true if the event is related to the texts followed by the user
+ * @param event Event object
+ * @param target Target of the related event
+ * @param user User object
  */
-export const areTargetLoaded = (
-  events: Array<{ event: IEvent; target: IResponse<any> | undefined }>
-): boolean => {
-  if (events.length > 0) {
-    return events.every(isTargetLoaded)
+
+export const isRelatedToUserFollowedText = (user: IUser | null) => (
+  value: INews
+) => {
+  if (
+    user &&
+    value.target &&
+    (value.event.target.type === 'amend' ||
+      value.event.target.type === 'result')
+  ) {
+    return isUserFollowText(user, value.target.data.text)
   }
-  return false
+  return true
 }
 
+/**
+ * Filter the list of events depending on the texts followed by the user
+ * @param events list of events and related target
+ * @param user  User object
+ */
 export const filterEventsByUserTextFollowed = (
-  events: Array<{ event: IEvent; target: IResponse<any> | undefined }>,
+  events: INews[],
   user: IUser | null
 ) => {
-  if (user && areTargetLoaded(events)) {
-    return events.filter(({ event, target }: any) => {
-      if (event.target.type === 'amend' || event.target.type === 'result') {
-        return isUserFollowText(user, target.data.text)
-      }
-      return true
-    })
+  if (user) {
+    return events
+      .filter(isTargetLoaded)
+      .filter(isRelatedToUserFollowedText(user))
   }
   return events
 }

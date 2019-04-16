@@ -15,7 +15,7 @@ export const HomePage = () => {
     <Page title={translate('HOME')} style={{ padding: '0' }}>
       <Grid
         style={{
-          gridTemplateColumns: '1fr 550px 1fr',
+          gridTemplateColumns: '350px 600px auto',
           gridGap: '0 0.5rem'
         }}
       >

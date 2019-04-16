@@ -1,7 +1,6 @@
 import {
   getNewEvent,
   deleteNewEvent,
-  areTargetLoaded,
   filterEventsByUserTextFollowed,
   isUserFollowText
 } from './events'
@@ -48,31 +47,6 @@ describe('isUserFollowText', () => {
   it('should return true', () => {
     const user = { ...userMock, followedTexts: ['text1'] }
     expect(isUserFollowText(user, 'text1')).toBeTruthy()
-  })
-})
-
-describe('areTargetLoaded', () => {
-  it('should return false', () => {
-    let events: Array<{ event: IEvent; target: IResponse<any> | undefined }> = [
-      { event: eventMock, target: { data: undefined } },
-      { event: eventMock, target: { data: 'test' } }
-    ]
-    expect(areTargetLoaded(events)).toBeFalsy()
-    events = [
-      { event: eventMock, target: undefined },
-      { event: eventMock, target: { data: 'test' } }
-    ]
-    expect(areTargetLoaded(events)).toBeFalsy()
-    events = []
-    expect(areTargetLoaded(events)).toBeFalsy()
-  })
-
-  it('should return true', () => {
-    let events: Array<{ event: IEvent; target: IResponse<any> | undefined }> = [
-      { event: eventMock, target: { data: 'test' } },
-      { event: eventMock, target: { data: 'test' } }
-    ]
-    expect(areTargetLoaded(events)).toBeTruthy()
   })
 })
 

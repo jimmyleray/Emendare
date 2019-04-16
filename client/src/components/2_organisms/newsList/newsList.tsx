@@ -11,14 +11,14 @@ import {
 // Components
 import { EventRow } from '../../../components'
 // Interfaces
-import { IEvent, IResponse } from '../../../../../interfaces'
+import { IEvent, INews } from '../../../../../interfaces'
 // Helpers
 import { isRowLoaded, loadMoreRows, isEventNew } from './helper'
 
 // Interface
 interface INewsListProps {
   /** List of events */
-  events: Array<{ event: IEvent; target: any }>
+  events: INews[]
   /** All the new events which havn't been readed yet */
   newEvents: IEvent[]
   /** Tell if there are more events to be loaded */
@@ -31,10 +31,12 @@ const cache = new CellMeasurerCache({
 })
 
 // Render list item
-const rowRenderer = (
-  events: Array<{ event: IEvent; target: IResponse<any> }>,
-  newEvents: IEvent[]
-) => ({ index, parent, style, key }: any) => (
+const rowRenderer = (events: INews[], newEvents: IEvent[]) => ({
+  index,
+  parent,
+  style,
+  key
+}: any) => (
   <CellMeasurer
     key={key}
     cache={cache}
@@ -65,7 +67,7 @@ export const NewsList = ({
   const refList = useRef<any>()
   const rowCount = hasNextPage ? events.length + 1 : events.length
 
-  return (
+  return events.length > 0 ? (
     <div>
       <InfiniteLoader
         isRowLoaded={isRowLoaded(events)}
@@ -108,5 +110,5 @@ export const NewsList = ({
         )}
       </InfiniteLoader>
     </div>
-  )
+  ) : null
 }
