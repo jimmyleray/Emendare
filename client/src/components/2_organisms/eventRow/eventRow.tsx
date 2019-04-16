@@ -7,13 +7,13 @@ import {
   UserContext
 } from '../../../components'
 // Interfaces
-import { IEvent, IResponse } from '../../../../../interfaces'
+import { INews } from '../../../../../interfaces'
 // HoCs
 import { withEventCard } from '../../../hocs'
 
 interface IEventRowProps {
   /** Following event */
-  data: { event: IEvent; target: IResponse<any> }
+  data: INews
   /** Tell if the event is new */
   isNew: boolean
   /** Index of the row */
@@ -44,9 +44,11 @@ export const EventRow = ({ data, measure, isNew, index }: IEventRowProps) => {
           backgroundColor: isNew ? 'rgba(255, 221, 87, 0.1)' : 'initial'
         }}
       >
-        {withEventCard(measure, index, data.target.data, user)(
-          displayRightEvent(data.event.target.type)
-        )}
+        {data.target &&
+          data.target.data &&
+          withEventCard(measure, index, data.target.data, user)(
+            displayRightEvent(data.event.target.type)
+          )}
       </div>
       <hr style={{ margin: 0 }} />
     </React.Fragment>

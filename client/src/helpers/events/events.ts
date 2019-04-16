@@ -1,4 +1,4 @@
-import { IEvent, IUser, IResponse } from '../../../../interfaces'
+import { IUser, INews, IEvent, IResponse } from '../../../../interfaces'
 import _ from 'lodash'
 
 /**
@@ -55,37 +55,53 @@ export const getEventTarget = (
 export const getListTargets = (
   events: IEvent[],
   get: (type: string) => any
-): Array<{ event: IEvent; target: IResponse<any> | undefined }> => {
-  return events.map(event => ({
-    event,
-    target: getEventTarget(event, get)
-  }))
+): INews[] => {
+  return events.map((event: IEvent) => {
+    return {
+      event,
+      target: getEventTarget(event, get)
+    }
+  })
 }
 
-export const isTargetLoaded = (value: {
-  event: IEvent
-  target: IResponse<any> | undefined
-}) => Boolean(value.target && value.target.data)
+export const isTargetLoaded = (value: INews) => {
+  return value.target && value.target.data
+}
 
 /**
- * Return true if all the target are loaded
- * @param events list of events and target
+ * Return true if the event is related to the texts followed by the user
+ * @param event Event object
+ * @param target Target of the related event
+ * @param user User object
  */
-export const areTargetLoaded = (
-  events: Array<{ event: IEvent; target: IResponse<any> | undefined }>
-): boolean => (events.length > 0 ? events.every(isTargetLoaded) : false)
 
+export const isRelatedToUserFollowedText = (user: IUser | null) => (
+  value: INews
+) => {
+  if (
+    user &&
+    value.target &&
+    (value.event.target.type === 'amend' ||
+      value.event.target.type === 'result')
+  ) {
+    return isUserFollowText(user, value.target.data.text)
+  }
+  return true
+}
+
+/**
+ * Filter the list of events depending on the texts followed by the user
+ * @param events list of events and related target
+ * @param user  User object
+ */
 export const filterEventsByUserTextFollowed = (
-  events: Array<{ event: IEvent; target: IResponse<any> | undefined }>,
+  events: INews[],
   user: IUser | null
 ) => {
-  if (user && areTargetLoaded(events)) {
-    return events.filter(({ event, target }) => {
-      if (event.target.type === 'amend' || event.target.type === 'result') {
-        return isUserFollowText(user, target!.data!.text)
-      }
-      return true
-    })
+  if (user) {
+    return events
+      .filter(isTargetLoaded)
+      .filter(isRelatedToUserFollowedText(user))
   }
   return events
 }

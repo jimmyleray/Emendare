@@ -1,4 +1,4 @@
-import { IEvent, IResponse } from '../../../../../interfaces'
+import { IEvent, INews } from '../../../../../interfaces'
 import { Socket } from '../../../services'
 import { last } from 'lodash'
 
@@ -7,16 +7,14 @@ import { last } from 'lodash'
  * @param data List of events we want to render
  * @param index Index of the row
  */
-export const isRowLoaded = (
-  data: Array<{ event: IEvent; target: IResponse<any> }>
-) => ({ index }: any) => !!data[index]
+export const isRowLoaded = (data: INews[]) => ({ index }: any) => !!data[index]
 
 /**
  * Fetch data from a API
  * @param data List of events we want to render
  */
 export const loadMoreRows = (
-  data: Array<{ event: IEvent; target: IResponse<any> }>,
+  data: INews[],
   hasNextPage: boolean
 ) => async () => {
   if (hasNextPage) {
@@ -34,7 +32,7 @@ export const loadMoreRows = (
  */
 export const isEventNew = (
   newEvents: IEvent[],
-  events: Array<{ event: IEvent; target: IResponse<any> }>,
+  events: INews[],
   index: number
 ) =>
   newEvents.length > 0 && events.length > 0
