@@ -1,4 +1,4 @@
-import { IEvent, IResponse } from './index';
+import { IEvent, IResponse } from '../interfaces';
 
 export interface INews {
   event: IEvent;
