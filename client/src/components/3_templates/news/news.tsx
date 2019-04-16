@@ -15,7 +15,6 @@ import { Socket } from '../../../services'
 import {
   getListTargets,
   filterEventsByUserTextFollowed,
-  areTargetLoaded,
   isTargetLoaded
 } from '../../../helpers'
 
