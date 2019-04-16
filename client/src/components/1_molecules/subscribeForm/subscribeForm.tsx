@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 // Components
-import {
-  Button,
-  Buttons,
-  Icon,
-  Notification,
-  PwdForm
-} from '../../../components'
+import { Icon, Notification, PwdForm } from '../../../components'
 // Services
 import { Socket } from '../../../services'
 

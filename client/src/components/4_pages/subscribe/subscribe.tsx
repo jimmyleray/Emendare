@@ -7,7 +7,6 @@
 
 import React from 'react'
 import { SubscribeForm, Page, Hero, Buttons, Button } from '../../../components'
-import { Socket } from '../../../services'
 // Config
 import { path } from '../../../config'
 
