@@ -6,14 +6,13 @@ import _ from 'lodash'
  * @param lastEventDate Last event readed by the user
  * @param events List of aall the events
  */
-export const getNewEvent = (lastEventDate: any, events: IEvent[]) => {
-  return lastEventDate && events.length > 0
+export const getNewEvent = (lastEventDate: any, events: IEvent[]) =>
+  lastEventDate && events.length > 0
     ? events.filter(
         (event: any) =>
           new Date(event.created).getTime() > new Date(lastEventDate).getTime()
       )
     : []
-}
 
 /**
  * Delete the event which have been readed by the user from the list
@@ -22,9 +21,7 @@ export const getNewEvent = (lastEventDate: any, events: IEvent[]) => {
  */
 export const deleteNewEvent = (eventId: string, newEvents: IEvent[]) => {
   if (eventId && newEvents.length > 0) {
-    return _.remove(newEvents, (event: IEvent) => {
-      return event._id !== eventId
-    })
+    return _.remove(newEvents, event => event._id !== eventId)
   }
   return newEvents
 }
@@ -34,15 +31,8 @@ export const deleteNewEvent = (eventId: string, newEvents: IEvent[]) => {
  * @param user User object
  * @param text Text object
  */
-export const isUserFollowText = (
-  user: IUser | null,
-  textId: string
-): boolean => {
-  if (user) {
-    return user.followedTexts.includes(textId)
-  }
-  return false
-}
+export const isUserFollowText = (user: IUser | null, textId: string): boolean =>
+  user ? user.followedTexts.includes(textId) : false
 
 /**
  * Get the target related of the event
@@ -84,6 +74,7 @@ export const isTargetLoaded = (value: INews) => {
  * @param target Target of the related event
  * @param user User object
  */
+
 export const isRelatedToUserFollowedText = (user: IUser | null) => (
   value: INews
 ) => {

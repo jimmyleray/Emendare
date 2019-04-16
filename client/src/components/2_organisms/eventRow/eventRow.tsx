@@ -40,7 +40,7 @@ export const EventRow = ({ data, measure, isNew, index }: IEventRowProps) => {
     <React.Fragment>
       <div
         style={{
-          padding: '0.5rem',
+          padding: '1rem',
           backgroundColor: isNew ? 'rgba(255, 221, 87, 0.1)' : 'initial'
         }}
       >

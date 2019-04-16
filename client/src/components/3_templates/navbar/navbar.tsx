@@ -30,10 +30,13 @@ export const Navbar = () => {
 
   return (
     <nav
-      className="navbar is-dark is-fixed-top"
+      className="navbar is-fixed-top"
       role="navigation"
       aria-label="main navigation"
-      style={{ padding: '0 1rem' }}
+      style={{
+        padding: '0 1rem',
+        boxShadow: '0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1)'
+      }}
     >
       <div className="navbar-brand">
         <Link
@@ -42,16 +45,8 @@ export const Navbar = () => {
           className={'navbar-item has-text-weight-semibold'}
           style={{ textDecoration: 'none' }}
         >
-          <Logo
-            size={36}
-            style={{ fill: 'white' }}
-            className="is-hidden-tablet"
-          />
-          <Logo
-            size={42}
-            style={{ fill: 'white' }}
-            className="is-hidden-mobile"
-          />
+          <Logo size={36} className="is-hidden-tablet" />
+          <Logo size={42} className="is-hidden-mobile" />
           <span
             style={{ marginLeft: 8 }}
             className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}
