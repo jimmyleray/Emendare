@@ -15,7 +15,8 @@ import { Socket } from '../../../services'
 import {
   getListTargets,
   filterEventsByUserTextFollowed,
-  areTargetLoaded
+  areTargetLoaded,
+  isTargetLoaded
 } from '../../../helpers'
 
 export const News = () => {
@@ -50,15 +51,16 @@ export const News = () => {
         </Button>
       )}
 
-      {eventsTargets &&
-        eventsTargets.length > 0 &&
-        areTargetLoaded(eventsTargets) && (
-          <NewsList
-            events={filterEventsByUserTextFollowed(eventsTargets, user)}
-            newEvents={newEvents}
-            hasNextPage={hasNextPage}
-          />
-        )}
+      {eventsTargets && eventsTargets.length > 0 && (
+        <NewsList
+          events={filterEventsByUserTextFollowed(
+            eventsTargets.filter(isTargetLoaded),
+            user
+          )}
+          newEvents={newEvents}
+          hasNextPage={hasNextPage}
+        />
+      )}
     </React.Fragment>
   )
 }

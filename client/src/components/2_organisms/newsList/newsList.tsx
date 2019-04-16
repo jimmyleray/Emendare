@@ -65,7 +65,7 @@ export const NewsList = ({
   const refList = useRef<any>()
   const rowCount = hasNextPage ? events.length + 1 : events.length
 
-  return (
+  return events.length > 0 ? (
     <div>
       <InfiniteLoader
         isRowLoaded={isRowLoaded(events)}
@@ -108,5 +108,5 @@ export const NewsList = ({
         )}
       </InfiniteLoader>
     </div>
-  )
+  ) : null
 }
