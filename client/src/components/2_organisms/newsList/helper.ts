@@ -8,7 +8,7 @@ import { last } from 'lodash'
  * @param index Index of the row
  */
 export const isRowLoaded = (
-  data: Array<{ event: IEvent; target: IResponse<any> }>
+  data: Array<{ event: IEvent; target: IResponse<any> | undefined }>
 ) => ({ index }: any) => !!data[index]
 
 /**
@@ -16,7 +16,7 @@ export const isRowLoaded = (
  * @param data List of events we want to render
  */
 export const loadMoreRows = (
-  data: Array<{ event: IEvent; target: IResponse<any> }>,
+  data: Array<{ event: IEvent; target: IResponse<any> | undefined }>,
   hasNextPage: boolean
 ) => async () => {
   if (hasNextPage) {
@@ -34,7 +34,7 @@ export const loadMoreRows = (
  */
 export const isEventNew = (
   newEvents: IEvent[],
-  events: Array<{ event: IEvent; target: IResponse<any> }>,
+  events: Array<{ event: IEvent; target: IResponse<any> | undefined }>,
   index: number
 ) =>
   newEvents.length > 0 && events.length > 0
