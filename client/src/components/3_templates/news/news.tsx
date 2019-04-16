@@ -52,10 +52,7 @@ export const News = () => {
 
       {eventsTargets && eventsTargets.length > 0 && (
         <NewsList
-          events={filterEventsByUserTextFollowed(
-            eventsTargets.filter(isTargetLoaded),
-            user
-          )}
+          events={filterEventsByUserTextFollowed(eventsTargets, user)}
           newEvents={newEvents}
           hasNextPage={hasNextPage}
         />

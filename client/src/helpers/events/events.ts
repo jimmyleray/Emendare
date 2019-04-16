@@ -79,17 +79,6 @@ export const isTargetLoaded = (value: INews) => {
 }
 
 /**
- * Return true if all the target are loaded
- * @param events list of events and target
- */
-export const areTargetLoaded = (events: INews[]): boolean => {
-  if (events.length > 0) {
-    return events.every(isTargetLoaded)
-  }
-  return false
-}
-
-/**
  * Return true if the event is related to the texts followed by the user
  * @param event Event object
  * @param target Target of the related event
@@ -118,8 +107,10 @@ export const filterEventsByUserTextFollowed = (
   events: INews[],
   user: IUser | null
 ) => {
-  if (user && areTargetLoaded(events)) {
-    return events.filter(isRelatedToUserFollowedText(user))
+  if (user) {
+    return events
+      .filter(isTargetLoaded)
+      .filter(isRelatedToUserFollowedText(user))
   }
   return events
 }
