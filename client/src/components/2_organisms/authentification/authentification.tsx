@@ -14,9 +14,8 @@ import { useToggle } from '../../../hooks'
 import { callAll } from '../../../helpers'
 
 export const Authentification = () => {
-  const loginToggle = useToggle(false)
+  const loginToggle = useToggle(true)
   const subscribeToggle = useToggle(false)
-  const { translate } = React.useContext(I18nContext)
 
   return (
     <React.Fragment>
@@ -24,41 +23,17 @@ export const Authentification = () => {
         <Icon name="fa-user-circle" className="fa-3x is-large" />
       </div>
       <br />
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-          flexDirection: 'column'
-        }}
-      >
+      <div>
         {displayLogin(
           loginToggle.on,
           loginToggle.toggler,
           subscribeToggle.toggler
-        ) ||
-          (!subscribeToggle.on && !loginToggle.on && (
-            <Button
-              className="is-info is-fullwidth"
-              onClick={loginToggle.toggler}
-            >
-              {translate('LOGIN')}
-            </Button>
-          ))}
+        )}
         {displaySubscribe(
           subscribeToggle.on,
           subscribeToggle.toggler,
           loginToggle.toggler
-        ) ||
-          (!subscribeToggle.on && !loginToggle.on && (
-            <Button
-              style={{ marginTop: '10px' }}
-              className="is-outlined is-fullwidth"
-              onClick={subscribeToggle.toggler}
-            >
-              {translate('REGISTER')}
-            </Button>
-          ))}
+        )}
       </div>
     </React.Fragment>
   )
