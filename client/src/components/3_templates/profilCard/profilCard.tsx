@@ -6,7 +6,7 @@ import {
   I18nContext,
   Grid,
   Button,
-  Authentification
+  AuthentificationForm
 } from '../../../components'
 
 export const ProfilCard = () => {
@@ -48,7 +48,7 @@ export const ProfilCard = () => {
           </Grid>
         </React.Fragment>
       ) : (
-        <Authentification />
+        <AuthentificationForm />
       )}
     </div>
   )

@@ -5,22 +5,40 @@ import { Icon, Button, LoginForm, SubscribeForm, Buttons } from '../..'
 import { useToggle } from '../../../hooks'
 // Helpers
 import { callAll } from '../../../helpers'
+import { Hero } from '../../0_atoms'
 
-export const Authentification = () => {
+interface IAuthentificationFormProps {
+  location?: any
+  withText?: boolean
+  withLogo?: boolean
+}
+
+export const AuthentificationForm = ({
+  location,
+  withText = false,
+  withLogo = true
+}: IAuthentificationFormProps) => {
   const loginToggle = useToggle(true)
   const subscribeToggle = useToggle(false)
 
   return (
     <React.Fragment>
       <div className="has-text-centered">
-        <Icon name="fa-user-circle" className="fa-3x is-large" />
+        {withLogo && <Icon name="fa-user-circle" className="fa-3x is-large" />}
+        {withText && (
+          <Hero
+            title={loginToggle.on ? 'Se connecter' : "S'inscrire"}
+            className="has-text-centered"
+          />
+        )}
       </div>
       <br />
       <div>
         {displayLogin(
           loginToggle.on,
           loginToggle.toggler,
-          subscribeToggle.toggler
+          subscribeToggle.toggler,
+          location
         )}
         {displaySubscribe(
           subscribeToggle.on,
@@ -35,10 +53,12 @@ export const Authentification = () => {
 const displayLogin = (
   loginToggleState: boolean,
   loginToggler: () => void,
-  subscribeToggler: () => void
+  subscribeToggler: () => void,
+  location?: any
 ) => {
   return loginToggleState ? (
     <LoginForm
+      location={location}
       render={(email: string, password: string) => (
         <Buttons>
           <Button

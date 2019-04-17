@@ -71,7 +71,7 @@ export class ActivatePage extends React.Component<
           <div className="field is-grouped is-grouped-centered">
             <p className="control">
               <Button
-                to={path.login}
+                to={path.authentification}
                 className="is-success has-text-weight-semibold"
               >
                 Se connecter à mon compte
