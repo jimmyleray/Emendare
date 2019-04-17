@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { render, fireEvent } from 'react-testing-library'
-import { I18nProvider } from '../../../components'
+import { I18nProvider } from '../..'
 import { renderWithRouter } from '../../../helpers'
-import { Authentification } from './authentification'
+import { AuthentificationForm } from './authentificationForm'
 
-it('should render a Authentification and login form', async () => {
-  const { container, getByText, getByPlaceholderText } = renderWithRouter(
+it('should render a AuthentificationForm and login form', async () => {
+  const { container, getByPlaceholderText } = renderWithRouter(
     <I18nProvider>
-      <Authentification />
+      <AuthentificationForm />
     </I18nProvider>
   )
   expect(container).toBeTruthy()
@@ -16,10 +16,10 @@ it('should render a Authentification and login form', async () => {
   expect(getByPlaceholderText('Mot de passe')).toBeTruthy()
 })
 
-it('should render a Authentification pass to login/register and register/login', async () => {
+it('should render a AuthentificationForm pass to login/register and register/login', async () => {
   const { container, getByText, getByPlaceholderText } = renderWithRouter(
     <I18nProvider>
-      <Authentification />
+      <AuthentificationForm />
     </I18nProvider>
   )
   expect(container).toBeTruthy()
