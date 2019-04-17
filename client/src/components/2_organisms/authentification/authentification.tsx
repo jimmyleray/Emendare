@@ -1,13 +1,6 @@
 import React from 'react'
 // Components
-import {
-  Icon,
-  I18nContext,
-  Button,
-  LoginForm,
-  SubscribeForm,
-  Buttons
-} from '../..'
+import { Icon, Button, LoginForm, SubscribeForm, Buttons } from '../..'
 // Hooks
 import { useToggle } from '../../../hooks'
 // Helpers
