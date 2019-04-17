@@ -11,16 +11,15 @@ export const routes: IRoute[] = [
   { name: 'news', path: '/news' },
   { name: 'legal', path: '/legal-notice' },
   { name: 'contributors', path: '/contributors' },
-  { name: 'login', path: '/login' },
   { name: 'reset', path: '/reset-password' },
-  { name: 'subscribe', path: '/register' },
   { name: 'profile', path: '/profile', private: true },
   { name: 'create', path: '/create', private: true },
   { name: 'text', path: withID('/text/') },
   { name: 'edit', path: withID('/edit/'), private: true },
   { name: 'amend', path: withID('/amend/') },
   { name: 'activate', path: withID('/activate/') },
-  { name: 'share', path: withID('/share/') }
+  { name: 'share', path: withID('/share/') },
+  { name: 'authentification', path: '/authentification' }
 ]
 
 // To be use like that : path.text("42") => /text/42
