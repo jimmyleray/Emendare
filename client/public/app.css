@@ -1,9 +1,13 @@
-* {
-  font-family: Montserrat, Helvetica, Arial, sans-serif;
-}
-
 html {
   background: #e6ecf0;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: Montserrat, Helvetica, Arial, sans-serif;
 }
 
 @keyframes bubble {
@@ -34,6 +38,10 @@ html.has-navbar-fixed-top {
   padding-top: 64px;
 }
 
+main {
+  margin-top: 1rem;
+}
+
 @media screen and (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr !important;
@@ -45,6 +53,10 @@ html.has-navbar-fixed-top {
 
   html.has-navbar-fixed-top {
     padding-top: 52px;
+  }
+
+  main {
+    margin-top: 0;
   }
 }
 

@@ -125,7 +125,7 @@ export const ResultEventCard = ({
                     }}
                     className={'has-text-info'}
                   >
-                    <Icon type={'light'} size={'fa-lg'} name="fa-share" />
+                    <Icon type={'light'} size={'fa-lg'} name="fa-link" />
                   </Button>
                 </Column>
               )}

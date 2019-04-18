@@ -1,65 +1,34 @@
 import React from 'react'
 // Components
-import {
-  Icon,
-  I18nContext,
-  Button,
-  LoginForm,
-  SubscribeForm,
-  Buttons
-} from '../..'
+import { Button, LoginForm, SubscribeForm, Buttons } from '../../../components'
 // Hooks
 import { useToggle } from '../../../hooks'
 // Helpers
 import { callAll } from '../../../helpers'
 
-export const Authentification = () => {
-  const loginToggle = useToggle(false)
+interface IAuthentificationFormProps {
+  location?: any
+}
+
+export const AuthentificationForm = ({
+  location
+}: IAuthentificationFormProps) => {
+  const loginToggle = useToggle(true)
   const subscribeToggle = useToggle(false)
-  const { translate } = React.useContext(I18nContext)
 
   return (
     <React.Fragment>
-      <div className="has-text-centered">
-        <Icon name="fa-user-circle" className="fa-3x is-large" />
-      </div>
-      <br />
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-          flexDirection: 'column'
-        }}
-      >
-        {displayLogin(
-          loginToggle.on,
-          loginToggle.toggler,
-          subscribeToggle.toggler
-        ) ||
-          (!subscribeToggle.on && !loginToggle.on && (
-            <Button
-              className="is-info is-fullwidth"
-              onClick={loginToggle.toggler}
-            >
-              {translate('LOGIN')}
-            </Button>
-          ))}
-        {displaySubscribe(
-          subscribeToggle.on,
-          subscribeToggle.toggler,
-          loginToggle.toggler
-        ) ||
-          (!subscribeToggle.on && !loginToggle.on && (
-            <Button
-              style={{ marginTop: '10px' }}
-              className="is-outlined is-fullwidth"
-              onClick={subscribeToggle.toggler}
-            >
-              {translate('REGISTER')}
-            </Button>
-          ))}
-      </div>
+      {displayLogin(
+        loginToggle.on,
+        loginToggle.toggler,
+        subscribeToggle.toggler,
+        location
+      )}
+      {displaySubscribe(
+        subscribeToggle.on,
+        subscribeToggle.toggler,
+        loginToggle.toggler
+      )}
     </React.Fragment>
   )
 }
@@ -67,10 +36,12 @@ export const Authentification = () => {
 const displayLogin = (
   loginToggleState: boolean,
   loginToggler: () => void,
-  subscribeToggler: () => void
+  subscribeToggler: () => void,
+  location?: any
 ) => {
   return loginToggleState ? (
     <LoginForm
+      location={location}
       render={(email: string, password: string) => (
         <Buttons>
           <Button

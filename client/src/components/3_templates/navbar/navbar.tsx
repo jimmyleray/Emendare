@@ -30,7 +30,7 @@ export const Navbar = () => {
 
   return (
     <nav
-      className="navbar is-dark is-fixed-top"
+      className="navbar is-fixed-top"
       role="navigation"
       aria-label="main navigation"
       style={{
@@ -45,16 +45,8 @@ export const Navbar = () => {
           className={'navbar-item has-text-weight-semibold'}
           style={{ textDecoration: 'none' }}
         >
-          <Logo
-            size={36}
-            className="is-hidden-tablet"
-            style={{ fill: 'white' }}
-          />
-          <Logo
-            size={42}
-            className="is-hidden-mobile"
-            style={{ fill: 'white' }}
-          />
+          <Logo size={36} className="is-hidden-tablet" />
+          <Logo size={42} className="is-hidden-mobile" />
           <span
             style={{ marginLeft: 8 }}
             className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}

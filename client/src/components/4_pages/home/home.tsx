@@ -12,17 +12,15 @@ export const HomePage = () => {
   const { translate } = React.useContext(I18nContext)
 
   return (
-    <Page title={translate('HOME')} style={{ padding: '0' }}>
+    <Page title={translate('HOME')} style={{ padding: 0 }}>
       <Grid
         style={{
           gridTemplateColumns: '350px 600px auto',
-          gridGap: '0 0.5rem'
+          gridGap: '0 1rem'
         }}
       >
-        <div>
-          <Card className="is-hidden-mobile">
-            <ProfilCard />
-          </Card>
+        <div className="is-hidden-mobile">
+          <ProfilCard />
         </div>
         <div>
           <Card>
