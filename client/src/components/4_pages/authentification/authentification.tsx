@@ -1,5 +1,5 @@
 import React from 'react'
-import { Page, AuthentificationForm } from '../../../components'
+import { Page, ProfilCard } from '../../../components'
 
 interface IAuthentificationPageProps {
   location?: any
@@ -8,11 +8,7 @@ interface IAuthentificationPageProps {
 export const AuthentificationPage = ({
   location
 }: IAuthentificationPageProps) => (
-  <Page title="Authentification">
-    <AuthentificationForm
-      location={location}
-      withText={true}
-      withLogo={false}
-    />
+  <Page title="Authentification" style={{ padding: 0 }}>
+    <ProfilCard location={location} />
   </Page>
 )

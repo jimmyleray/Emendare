@@ -31,7 +31,7 @@ export const FollowText = ({
     >
       <Icon
         type={'light'}
-        name="fa-user"
+        name="fa-user-plus"
         className="fa-lg"
         style={{ marginRight: '0.5rem' }}
       />

@@ -35,7 +35,7 @@ export const ProposeAmend = ({
     >
       <Icon
         type={'light'}
-        name="fa-comments"
+        name="fa-pencil-alt"
         className="fa-lg"
         style={{ marginRight: '0.5rem' }}
       />

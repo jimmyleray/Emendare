@@ -2,28 +2,28 @@ import React, { useContext } from 'react'
 // Components
 import {
   UserContext,
-  Icon,
+  Card,
   I18nContext,
   Grid,
   Button,
-  AuthentificationForm
+  AuthentificationForm,
+  Gravatar
 } from '../../../components'
 
-export const ProfilCard = () => {
-  const userContext = useContext(UserContext)
+export const ProfilCard = ({ location }: any) => {
+  const { user, logout } = useContext(UserContext)
   const { translate } = React.useContext(I18nContext)
 
   return (
-    <div style={{ padding: '20px 20px' }}>
-      {userContext.user ? (
+    <Card style={{ padding: '1rem' }}>
+      {user ? (
         <React.Fragment>
           <div className="has-text-centered">
-            <Icon name="fa-user-circle" className="fa-3x is-large" />
+            <Gravatar email={user.email} />
             <br />
-            <br />
-            <p>{userContext.user.email}</p>
+            <p>{user.email}</p>
             <Button
-              onClick={userContext.logout}
+              onClick={logout}
               className="is-danger is-fullwidth"
               style={{ marginTop: '0.5rem' }}
             >
@@ -35,21 +35,20 @@ export const ProfilCard = () => {
             <Grid style={{ gridTemplateRows: '1fr 1fr' }}>
               <div className="has-text-weight-semibold">Votes</div>
               <div className="has-text-info has-text-weight-bold">
-                {userContext.user.downVotes.length +
-                  userContext.user.upVotes.length}
+                {user.downVotes.length + user.upVotes.length}
               </div>
             </Grid>
             <Grid style={{ gridTemplateRows: '1fr 1fr' }}>
               <div className="has-text-weight-semibold">Textes suivis</div>
               <div className="has-text-info has-text-weight-bold">
-                {userContext.user.followedTexts.length}
+                {user.followedTexts.length}
               </div>
             </Grid>
           </Grid>
         </React.Fragment>
       ) : (
-        <AuthentificationForm />
+        <AuthentificationForm location={location} />
       )}
-    </div>
+    </Card>
   )
 }

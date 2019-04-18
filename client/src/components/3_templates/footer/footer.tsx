@@ -35,7 +35,7 @@ export const Footer = ({ className }: any) => {
           <li className={location.pathname === path.home ? 'is-active' : ''}>
             <Link to={path.home}>
               <Icon
-                type={'regular'}
+                type={'light'}
                 name="fa-home"
                 className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}
                 data-badge={newEventsCount}
@@ -49,8 +49,12 @@ export const Footer = ({ className }: any) => {
               <span className="is-hidden-mobile">{translate('EXPLORE')}</span>
             </Link>
           </li>
-          <li className={location.pathname === path.profile ? 'is-active' : ''}>
-            <Link to={path.profile}>
+          <li
+            className={
+              location.pathname === path.authentification ? 'is-active' : ''
+            }
+          >
+            <Link to={path.authentification}>
               <Icon type={'light'} name="fa-user" />
               <span className="is-hidden-mobile">{translate('PROFILE')}</span>
             </Link>
