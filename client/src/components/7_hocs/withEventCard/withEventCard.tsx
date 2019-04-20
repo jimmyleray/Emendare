@@ -1,5 +1,5 @@
 import React from 'react'
-import { IUser } from '../../../../interfaces'
+import { IUser } from '../../../../../interfaces'
 
 export const withEventCard = (
   measure: any,

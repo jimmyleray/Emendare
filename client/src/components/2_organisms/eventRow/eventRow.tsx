@@ -4,12 +4,11 @@ import {
   TextEventCard,
   AmendEventCard,
   ResultEventCard,
-  UserContext
+  UserContext,
+  withEventCard
 } from '../../../components'
 // Interfaces
 import { INews } from '../../../../../interfaces'
-// HoCs
-import { withEventCard } from '../../../hocs'
 
 interface IEventRowProps {
   /** Following event */
