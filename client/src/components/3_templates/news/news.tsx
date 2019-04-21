@@ -2,6 +2,7 @@
 
 import React from 'react'
 import {
+  Card,
   Button,
   UserContext,
   EventsContext,
@@ -14,8 +15,7 @@ import { Socket } from '../../../services'
 // Helpers
 import {
   getListTargets,
-  filterEventsByUserTextFollowed,
-  isTargetLoaded
+  filterEventsByUserTextFollowed
 } from '../../../helpers'
 
 export const News = () => {
@@ -26,7 +26,10 @@ export const News = () => {
     EventsContext
   )
 
-  const eventsTargets: any = getListTargets(events, get)
+  const eventsTargets = getListTargets(events, get)
+  const filteredEvents = user
+    ? filterEventsByUserTextFollowed(eventsTargets, user)
+    : []
 
   const newEventsCount = user && newEvents ? newEvents.length : 0
 
@@ -50,12 +53,14 @@ export const News = () => {
         </Button>
       )}
 
-      {eventsTargets && eventsTargets.length > 0 && (
-        <NewsList
-          events={filterEventsByUserTextFollowed(eventsTargets, user)}
-          newEvents={newEvents}
-          hasNextPage={hasNextPage}
-        />
+      {filteredEvents && filteredEvents.length > 0 && (
+        <Card>
+          <NewsList
+            events={filteredEvents}
+            newEvents={newEvents}
+            hasNextPage={hasNextPage}
+          />
+        </Card>
       )}
     </React.Fragment>
   )
