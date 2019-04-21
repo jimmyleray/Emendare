@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Card,
-  News,
-  Page,
-  I18nContext,
-  Grid,
-  ProfilCard
-} from '../../../components'
+import { News, Page, I18nContext, Grid, ProfilCard } from '../../../components'
 
 export const HomePage = () => {
   const { translate } = React.useContext(I18nContext)
@@ -15,7 +8,7 @@ export const HomePage = () => {
     <Page title={translate('HOME')} style={{ padding: 0 }}>
       <Grid
         style={{
-          gridTemplateColumns: '350px 600px auto',
+          gridTemplateColumns: '350px auto 350px',
           gridGap: '0 1rem'
         }}
       >
@@ -23,9 +16,7 @@ export const HomePage = () => {
           <ProfilCard />
         </div>
         <div>
-          <Card>
-            <News />
-          </Card>
+          <News />
         </div>
       </Grid>
     </Page>
