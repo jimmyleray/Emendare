@@ -15,12 +15,10 @@ export const Page = ({
   style = { padding: '2rem' }
 }: IProps) => {
   React.useEffect(() => {
-    return () => {
-      if (window.scrollY) {
-        window.scroll(0, 0)
-      }
+    if (window.scrollY) {
+      window.scroll(0, 0)
     }
-  }, [window.scrollY])
+  }, [])
 
   React.useEffect(() => {
     Title.pageTitle = title
