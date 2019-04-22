@@ -1,23 +1,20 @@
 import React from 'react'
 import {
   Logo,
-  Divider,
   Link,
   UserContext,
   EventsContext,
-  I18nContext,
-  DropDown
+  I18nContext
 } from '../../../components'
 import { path } from '../../../config'
-import { Socket, Title } from '../../../services'
+import { Socket } from '../../../services'
 
 export const Navbar = () => {
   const userContext = React.useContext(UserContext)
   const i18nContext = React.useContext(I18nContext)
-  const { translate } = i18nContext
 
   const [burgerIsActive, setBurgerActive] = React.useState(false)
-  const { newEvents, hasNextPage } = React.useContext(EventsContext)
+  const { hasNextPage } = React.useContext(EventsContext)
 
   React.useEffect(() => {
     if (userContext.user && hasNextPage) {
@@ -25,17 +22,11 @@ export const Navbar = () => {
     }
   }, [userContext.user])
 
-  const newEventsCount = userContext.user ? newEvents.length : 0
-  Title.badgeCount = newEventsCount
-
   return (
     <nav
-      className="navbar is-fixed-top"
+      className="navbar is-fixed-top is-dark"
       role="navigation"
       aria-label="main navigation"
-      style={{
-        boxShadow: '0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1)'
-      }}
     >
       <div className="container">
         <div className="navbar-brand">
@@ -45,15 +36,17 @@ export const Navbar = () => {
             className={'navbar-item has-text-weight-semibold'}
             style={{ textDecoration: 'none' }}
           >
-            <Logo size={36} className="is-hidden-tablet" />
-            <Logo size={42} className="is-hidden-mobile" />
-            <span
-              style={{ marginLeft: 8 }}
-              className={newEventsCount > 0 ? 'badge is-badge-danger' : ''}
-              data-badge={newEventsCount}
-            >
-              Emendare
-            </span>
+            <Logo
+              size={36}
+              className="is-hidden-tablet"
+              style={{ fill: 'white' }}
+            />
+            <Logo
+              size={42}
+              className="is-hidden-mobile"
+              style={{ fill: 'white' }}
+            />
+            <span style={{ marginLeft: 8 }}>Emendare</span>
           </Link>
           <a
             role="button"
@@ -74,57 +67,7 @@ export const Navbar = () => {
           id="navbar-menu"
           className={'navbar-menu ' + (burgerIsActive ? 'is-active' : '')}
         >
-          <div className="navbar-start is-hidden-mobile">
-            <Link to={path.explore} className="navbar-item">
-              {translate('EXPLORE')}
-            </Link>
-          </div>
           <div className="navbar-end">
-            <DropDown className="navbar-item" isHoverable={true} navbar={true}>
-              <DropDown.Trigger title={translate('ABOUT')} />
-              <DropDown.Menu>
-                <DropDown.Item>
-                  <Link
-                    to={path.code}
-                    onClick={() => setBurgerActive(false)}
-                    className="navbar-item"
-                  >
-                    {translate('ETHIC_CODE')}
-                  </Link>
-                </DropDown.Item>
-                <DropDown.Item>
-                  <Link
-                    to={path.contributors}
-                    onClick={() => setBurgerActive(false)}
-                    className="navbar-item"
-                  >
-                    {translate('CONTRIBUTORS')}
-                  </Link>
-                </DropDown.Item>
-                <DropDown.Item>
-                  <Link
-                    to={path.legal}
-                    onClick={() => setBurgerActive(false)}
-                    className="navbar-item"
-                  >
-                    {translate('LEGAL_MENTIONS')}
-                  </Link>
-                </DropDown.Item>
-                <DropDown.Item>
-                  <Link
-                    to="https://github.com/jimmyleray/Emendare"
-                    onClick={() => setBurgerActive(false)}
-                    className="navbar-item"
-                  >
-                    {translate('SOURCES')}
-                  </Link>
-                </DropDown.Item>
-              </DropDown.Menu>
-            </DropDown>
-            <Divider
-              vertical={true}
-              className={'navbar-item is-hidden-mobile'}
-            />
             <a
               href="#"
               role="button"

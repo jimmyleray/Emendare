@@ -4,13 +4,13 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { News } from './news'
+import { Navtabs } from './navtabs'
 import { Providers } from '../../../components'
 
-it('should render News', () => {
+it('should render a Navtabs', () => {
   const component = shallow(
     <Providers>
-      <News />
+      <Navtabs />
     </Providers>
   )
   expect(component).toBeTruthy()

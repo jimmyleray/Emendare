@@ -35,11 +35,19 @@ textarea {
 }
 
 html.has-navbar-fixed-top {
-  padding-top: 64px;
+  padding-top: 109px;
 }
 
 main {
   margin-top: 1rem;
+}
+
+#navtabs {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 58px;
 }
 
 @media screen and (max-width: 768px) {
@@ -47,12 +55,16 @@ main {
     grid-template-columns: 1fr !important;
   }
 
-  html {
-    padding-bottom: 47px;
+  html.has-navbar-fixed-top {
+    padding-top: 97px;
   }
 
-  html.has-navbar-fixed-top {
-    padding-top: 52px;
+  #navtabs {
+    top: 52px;
+  }
+
+  #navtabs .tabs .icon {
+    margin: 0;
   }
 
   main {

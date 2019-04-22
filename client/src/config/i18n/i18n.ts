@@ -64,3 +64,5 @@ export type translateKey =
   | 'RES_TOTAL_VOTE'
   | 'EXPLORE'
   | 'PROFILE'
+  | 'RESULTS'
+  | 'VOTES'

@@ -13,11 +13,7 @@ interface IProps {
 
 export const Hero = React.memo(
   ({ className = '', title, subtitle, ...rest }: IProps) => (
-    <section
-      className={'hero ' + className}
-      style={{ paddingBottom: '2rem' }}
-      {...rest}
-    >
+    <section className={'hero ' + className} {...rest}>
       <div className="hero-body">
         <h1 className="title">{title}</h1>
         {subtitle && <h2 className="subtitle">{subtitle}</h2>}

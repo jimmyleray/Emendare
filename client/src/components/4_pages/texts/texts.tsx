@@ -16,15 +16,17 @@ import {
   filterEventsByUserTextFollowed
 } from '../../../helpers'
 
-export const HomePage = () => {
+export const TextsPage = () => {
   const { translate } = React.useContext(I18nContext)
   const { user } = React.useContext(UserContext)
   const { get } = React.useContext(DataContext)
-  const { events, hasNextPage, newEvents, dispatch } = React.useContext(
-    EventsContext
+  const { events, hasNextPage, newEvents } = React.useContext(EventsContext)
+
+  const eventsTargets = getListTargets(
+    events.filter(event => event.target.type === 'text'),
+    get
   )
 
-  const eventsTargets = getListTargets(events, get)
   const filteredEvents = user
     ? filterEventsByUserTextFollowed(eventsTargets, user)
     : []
