@@ -15,7 +15,7 @@ export const Page = ({
   style = { padding: '2rem' }
 }: IProps) => {
   React.useEffect(() => {
-    if (window.scrollY) {
+    if (window && window.scroll) {
       window.scroll(0, 0)
     }
   }, [])
