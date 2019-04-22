@@ -2,15 +2,11 @@ import React from 'react'
 import { Avatar, Hero, Page, I18nContext } from '../../../components'
 import { Socket } from '../../../services'
 
-interface IContributorsPageState {
-  contributors: any[]
-}
-
 const isHuman = (contributor: any) => contributor.type === 'User'
 const isBot = (contributor: any) => contributor.type === 'Bot'
 
 const AvatarCell = (contributor: any) => (
-  <div key={contributor.id} className="column is-2">
+  <div key={contributor.id} className="column is-4">
     <Avatar
       link={contributor.html_url}
       imgUrl={contributor.avatar_url}
@@ -24,7 +20,7 @@ const AvatarsRow = (contributors: any[], isType: any) => (
     <br />
     <br />
     <div
-      className="columns has-text-centered container is-flex"
+      className="columns has-text-centered is-flex"
       style={{ flexWrap: 'wrap', justifyContent: 'center' }}
     >
       {contributors.filter(isType).map(AvatarCell)}
@@ -52,7 +48,7 @@ export const ContributorsPage = () => {
             className="has-text-centered"
           />
           {contributors.length > 1 && (
-            <div className="container is-size-5 has-text-centered">
+            <div className="is-size-5 has-text-centered">
               <span className="is-size-4">{translate('THANKS_TO_USERS')}</span>
               {AvatarsRow(contributors, isHuman)}
               <br />

@@ -110,6 +110,7 @@ export const ResultEventCard = ({
               {navigator && (navigator as any).clipboard && (
                 <Column className="is-one-third">
                   <Button
+                    disabled
                     onClick={async () => {
                       const url = new URL(
                         path.share(target._id),

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Card } from '../../../components'
 import { Title } from '../../../services'
 
 interface IProps {
@@ -11,7 +12,7 @@ interface IProps {
 export const Page = ({
   children,
   title,
-  style = { padding: '3rem 1rem' }
+  style = { padding: '2rem' }
 }: IProps) => {
   React.useEffect(() => {
     return () => {
@@ -25,5 +26,5 @@ export const Page = ({
     Title.pageTitle = title
   }, [title])
 
-  return <div style={style}>{children}</div>
+  return <Card style={style}>{children}</Card>
 }

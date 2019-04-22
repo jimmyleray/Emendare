@@ -7,7 +7,9 @@ export const withID = (pathname: string) => (id = ':id') => pathname + id
 export const routes: IRoute[] = [
   { name: 'home', path: '/', exact: true },
   { name: 'code', path: '/ethics-code' },
-  { name: 'explore', path: '/explore' },
+  { name: 'texts', path: '/texts' },
+  { name: 'votes', path: '/votes' },
+  { name: 'results', path: '/results' },
   { name: 'news', path: '/news' },
   { name: 'legal', path: '/legal-notice' },
   { name: 'contributors', path: '/contributors' },

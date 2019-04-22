@@ -25,7 +25,7 @@ class TitleService {
   get documentTitle(): string {
     return `${this._badgeCount > 0 ? `(${this._badgeCount}) ` : ''}${
       this.applicationTitle
-    }${this._pageTitle ? ` | ${this._pageTitle}` : ''}`
+    }${this._pageTitle ? ` / ${this._pageTitle}` : ''}`
   }
 
   private updateTitle() {

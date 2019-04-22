@@ -123,15 +123,6 @@ export class Edit extends React.Component<IEditProps, IEditState> {
               className="has-text-centered"
             />
 
-            <Buttons>
-              {this.props.data && (
-                <Button to={path.text(this.props.data._id)}>
-                  <Icon type={'solid'} name="fa-chevron-left" />
-                  <span>Retour au texte</span>
-                </Button>
-              )}
-            </Buttons>
-
             <Columns>
               <Column>
                 <div className="field">
@@ -174,7 +165,7 @@ export class Edit extends React.Component<IEditProps, IEditState> {
                     Editeur du texte
                     <div className="control">
                       <textarea
-                        rows={12}
+                        rows={8}
                         name="editor"
                         className="textarea"
                         value={this.state.amendValue}
@@ -186,14 +177,15 @@ export class Edit extends React.Component<IEditProps, IEditState> {
 
                 <Button
                   onClick={this.restoreInitialValue}
-                  className="is-danger is-outlined"
+                  className="is-danger is-outlined is-fullwidth"
                 >
                   <Icon type={'solid'} name="fa-undo" />
                   <span>Restaurer le texte initial</span>
                 </Button>
-              </Column>
 
-              <Column>
+                <br />
+                <br />
+
                 <p className="has-text-centered is-size-4">
                   Pré-visualisation de votre amendement
                 </p>

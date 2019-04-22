@@ -264,5 +264,13 @@ export const translations: ITranslations = {
   PROFILE: {
     FR: 'Profil',
     EN: 'Profile'
+  },
+  RESULTS: {
+    FR: 'Résultats',
+    EN: 'Results'
+  },
+  VOTES: {
+    FR: 'Votes',
+    EN: 'Votes'
   }
 }
