@@ -57,7 +57,7 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
       </CardLayout.Description>
       <CardLayout.Detail>
         {target.actual.length > 0 && (
-          <Collapse>
+          <Collapse isOpen={target.actual.length < 1500}>
             <Collapse.Trigger style={{ marginLeft: '60px' }} onClick={measure}>
               {(on: boolean) =>
                 on ? (
