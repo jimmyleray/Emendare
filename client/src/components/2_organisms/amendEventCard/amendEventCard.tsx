@@ -85,6 +85,9 @@ export const AmendEventCard = ({
       </CardLayout.Description>
       {text && text.data && target && (
         <CardLayout.Detail>
+          <p className="has-text-centered has-text-weight-light is-italic is-size-6">
+            Modifications proposées
+          </p>
           <DiffPreview amend={target} text={text.data} measure={measure} />
         </CardLayout.Detail>
       )}
