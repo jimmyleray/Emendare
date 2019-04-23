@@ -72,6 +72,18 @@ main {
   }
 }
 
+.card__container {
+  grid-template-columns: 60px auto;
+  grid-template-areas:
+    'icon description'
+    'detail detail'
+    '. footer';
+}
+
 .card-events-footer {
   margin-top: 1rem;
+}
+
+.no-focus-outlined:focus:not(:active) {
+  box-shadow: none;
 }
