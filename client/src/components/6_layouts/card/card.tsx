@@ -18,16 +18,13 @@ export const CardLayout = ({ children, ...rest }: ICardLayoutProps) => (
 )
 
 const Icon = ({ children, ...rest }: ICardLayoutProps) => (
-  <div style={{ gridArea: 'icon', padding: ' 1rem 0 1rem 1rem' }} {...rest}>
+  <div style={{ gridArea: 'icon' }} {...rest}>
     {children}
   </div>
 )
 
 const Description = ({ children, ...rest }: ICardLayoutProps) => (
-  <div
-    style={{ gridArea: 'description', padding: ' 1rem 0 1rem 1rem' }}
-    {...rest}
-  >
+  <div style={{ gridArea: 'description' }} {...rest}>
     {children}
   </div>
 )
@@ -39,7 +36,7 @@ const Detail = ({ children, ...rest }: ICardLayoutProps) => (
 )
 
 const Footer = ({ children, ...rest }: ICardLayoutProps) => (
-  <div style={{ gridArea: 'footer', padding: '0 1rem 1rem 1rem' }} {...rest}>
+  <div style={{ gridArea: 'footer' }} {...rest}>
     {children}
   </div>
 )
