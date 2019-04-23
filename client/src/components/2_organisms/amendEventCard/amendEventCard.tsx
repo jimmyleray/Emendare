@@ -9,7 +9,7 @@ import {
   CountDown,
   DiffPreview,
   DataContext,
-  Media
+  CardLayout
 } from '../../../components'
 
 // Interfaces
@@ -37,15 +37,15 @@ export const AmendEventCard = ({
   const text: IResponse<IText> = get('text')(target.text)
 
   return (
-    <Media className="card-events">
-      <Media.Left>
+    <CardLayout>
+      <CardLayout.Icon>
         <Icon
           type={'light'}
           name="fa-plus"
           className="fa-2x has-text-primary is-large"
         />
-      </Media.Left>
-      <Media.Content style={{ overflowX: 'visible' }}>
+      </CardLayout.Icon>
+      <CardLayout.Description>
         <div>
           <p style={{ margin: 0 }}>
             <strong>Vote en cours</strong>
@@ -80,19 +80,17 @@ export const AmendEventCard = ({
                 />
               </React.Fragment>
             )}
-            {text && text.data && target && (
-              <div style={{ margin: '0.5em 0' }}>
-                <DiffPreview
-                  amend={target}
-                  text={text.data}
-                  measure={measure}
-                />
-              </div>
-            )}
           </div>
         </div>
+      </CardLayout.Description>
+      {text && text.data && target && (
+        <CardLayout.Detail>
+          <DiffPreview amend={target} text={text.data} measure={measure} />
+        </CardLayout.Detail>
+      )}
+      <CardLayout.Footer>
         <div className="card-events-footer">
-          <Columns className="is-mobile has-text-centered">
+          <Columns className="is-mobile">
             {user && (
               <Vote
                 amend={target}
@@ -103,7 +101,7 @@ export const AmendEventCard = ({
             )}
           </Columns>
         </div>
-      </Media.Content>
-    </Media>
+      </CardLayout.Footer>
+    </CardLayout>
   )
 }

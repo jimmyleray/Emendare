@@ -9,7 +9,10 @@ import {
   UnFollowText,
   Columns,
   Column,
-  Media
+  Collapse,
+  Button,
+  Background,
+  CardLayout
 } from '../../../components'
 
 // Interfaces
@@ -33,75 +36,118 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
   }, [target])
 
   return (
-    <Media className="card-events">
-      <Media.Left>
+    <CardLayout>
+      <CardLayout.Icon>
         <Icon
           type={'light'}
           name="fa-align-center"
           className="fa-2x has-text-info is-large"
         />
-      </Media.Left>
-      <Media.Content style={{ overflowX: 'visible' }}>
-        <div>
-          <p>
-            <strong>{target.name}</strong>
-            {' - '}
-            <small style={{ wordSpacing: 'normal' }}>
-              <StopWatch date={target.created} />
-            </small>
-            <br />
-            {target.description}
-          </p>
-          <div className="card-events-footer">
-            <Columns className="is-mobile">
-              <Column className="is-one-third">
-                {user ? (
-                  <ProposeAmend withIcon={true} text={target} />
-                ) : (
-                  <div
-                    className="has-text-grey-light"
-                    style={{ border: 'none', padding: 'none' }}
+      </CardLayout.Icon>
+      <CardLayout.Description>
+        <p>
+          <strong>{target.name}</strong>
+          {' - '}
+          <small style={{ wordSpacing: 'normal' }}>
+            <StopWatch date={target.created} />
+          </small>
+          <br />
+          {target.description}
+        </p>
+      </CardLayout.Description>
+      <CardLayout.Detail>
+        {target.actual.length > 0 && (
+          <Collapse>
+            <Collapse.Trigger style={{ marginLeft: '60px' }} onClick={measure}>
+              {(on: boolean) =>
+                on ? (
+                  <Button
+                    style={{
+                      background: 'none',
+                      margin: '0.5rem 0 0.5rem 0',
+                      padding: 0
+                    }}
+                    className="no-focus-outlined is-text"
                   >
-                    <Icon
-                      type={'light'}
-                      name="fa-comments"
-                      className="fa-lg"
-                      style={{ marginRight: '0.5rem' }}
-                    />
-                    {target.amends.length}
-                  </div>
-                )}
-              </Column>
-              <Column className="is-one-third">
-                {user ? (
-                  user.followedTexts.find(textID => textID === target._id) ? (
-                    <UnFollowText
-                      text={target}
-                      withIcon={true}
-                      className="has-text-info"
-                    />
-                  ) : (
-                    <FollowText text={target} withIcon={true} />
-                  )
+                    Réduire le texte
+                  </Button>
                 ) : (
-                  <div
-                    className="has-text-grey-light"
-                    style={{ border: 'none', padding: 'none' }}
+                  <Button
+                    style={{
+                      background: 'none',
+                      margin: '0.5rem 0 0.5rem 0',
+                      padding: 0
+                    }}
+                    className="no-focus-outlined has-text-info is-text"
                   >
-                    <Icon
-                      type={'light'}
-                      name="fa-user"
-                      className="fa-lg"
-                      style={{ marginRight: '0.5rem' }}
-                    />
-                    {target.followersCount}
-                  </div>
-                )}
-              </Column>
-            </Columns>
-          </div>
+                    Afficher le texte
+                  </Button>
+                )
+              }
+            </Collapse.Trigger>
+            <Collapse.Detail style={{ marginTop: '0.5rem', padding: '1rem' }}>
+              <Background className="has-background-light">
+                {target.actual &&
+                  target.actual
+                    .split('\n')
+                    .map((line: string, index: number) =>
+                      line ? <p key={index}>{line}</p> : <br key={index} />
+                    )}
+              </Background>
+            </Collapse.Detail>
+          </Collapse>
+        )}
+      </CardLayout.Detail>
+      <CardLayout.Footer>
+        <div className="card-events-footer">
+          <Columns className="is-mobile">
+            <Column className="is-one-third">
+              {user ? (
+                <ProposeAmend withIcon={true} text={target} />
+              ) : (
+                <div
+                  className="has-text-grey-light"
+                  style={{ border: 'none', padding: 'none' }}
+                >
+                  <Icon
+                    type={'light'}
+                    name="fa-comments"
+                    className="fa-lg"
+                    style={{ marginRight: '0.5rem' }}
+                  />
+                  {target.amends.length}
+                </div>
+              )}
+            </Column>
+            <Column className="is-one-third">
+              {user ? (
+                user.followedTexts.find(textID => textID === target._id) ? (
+                  <UnFollowText
+                    text={target}
+                    withIcon={true}
+                    className="has-text-info"
+                  />
+                ) : (
+                  <FollowText text={target} withIcon={true} />
+                )
+              ) : (
+                <div
+                  className="has-text-grey-light"
+                  style={{ border: 'none', padding: 'none' }}
+                >
+                  <Icon
+                    type={'light'}
+                    name="fa-user"
+                    className="fa-lg"
+                    style={{ marginRight: '0.5rem' }}
+                  />
+                  {target.followersCount}
+                </div>
+              )}
+            </Column>
+          </Columns>
         </div>
-      </Media.Content>
-    </Media>
+      </CardLayout.Footer>
+    </CardLayout>
   )
 }

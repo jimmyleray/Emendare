@@ -24,6 +24,7 @@ export const Layout = ({ children }: IProps) => (
     <main>
       <div className="container">
         <Grid
+          className="grid"
           style={{
             gridTemplateColumns: '300px auto 300px',
             gridGap: '0 1rem'
