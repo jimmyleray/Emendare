@@ -7,13 +7,21 @@ interface IProps {
   style?: React.CSSProperties
   /** Additional CSS UI class */
   className?: string
+  /* Set inline-grid*/
+  isInline?: boolean
 }
 
 export const Grid = React.memo(
-  ({ children, className = '', style = {}, ...rest }: IProps) => (
+  ({
+    children,
+    className = '',
+    style = {},
+    isInline = false,
+    ...rest
+  }: IProps) => (
     <div
-      className={`grid ${className}`}
-      style={{ ...style, display: 'grid' }}
+      className={`${className}`}
+      style={{ ...style, display: isInline ? 'inline-grid' : 'grid' }}
       {...rest}
     >
       {children}

@@ -39,8 +39,8 @@ export const EventRow = ({ data, measure, isNew, index }: IEventRowProps) => {
     <React.Fragment>
       <div
         style={{
-          padding: '1rem',
-          backgroundColor: isNew ? 'rgba(255, 221, 87, 0.1)' : 'initial'
+          backgroundColor: isNew ? 'rgba(255, 221, 87, 0.1)' : 'initial',
+          padding: '1rem'
         }}
       >
         {data.target &&

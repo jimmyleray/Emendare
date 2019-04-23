@@ -48,7 +48,7 @@ export const Collapse = ({
 const Trigger = ({ children, onClick, ...rest }: ICollapseProps) => {
   const { toggler, on } = useCollapseContext()
   return (
-    <div onClick={callAll(toggler, onClick)} {...rest}>
+    <div onClick={onClick ? callAll(toggler, onClick) : toggler} {...rest}>
       {children(on)}
     </div>
   )

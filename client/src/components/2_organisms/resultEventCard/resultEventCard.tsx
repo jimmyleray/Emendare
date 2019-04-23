@@ -7,10 +7,10 @@ import {
   StopWatch,
   DiffPreview,
   DataContext,
-  Media,
   Columns,
   Column,
-  Button
+  Button,
+  CardLayout
 } from '../../../components'
 
 // Interfaces
@@ -44,16 +44,16 @@ export const ResultEventCard = ({
   const text: IResponse<IText> = get('text')(target.text)
 
   return (
-    <Media className="card-events">
-      <Media.Left>
+    <CardLayout>
+      <CardLayout.Icon>
         <Icon
           name={getIconFromResult(target)}
           type={'light'}
           size="fa-2x"
           className={getColorTextFromResult(target) + ' is-large'}
         />
-      </Media.Left>
-      <Media.Content style={{ overflowX: 'visible' }}>
+      </CardLayout.Icon>
+      <CardLayout.Description>
         <div>
           <strong>Résultat</strong>
           {' - '}
@@ -67,16 +67,21 @@ export const ResultEventCard = ({
             été {getTextFromResult(target)}
           </p>
         </div>
-
+      </CardLayout.Description>
+      <CardLayout.Detail>
         {text && text.data && target && (
           <div style={{ margin: '0.5em 0' }}>
+            <p className="has-text-centered has-text-weight-light is-italic is-size-6">
+              Modifications proposées
+            </p>
             <DiffPreview amend={target} text={text.data} measure={measure} />
           </div>
         )}
-
+      </CardLayout.Detail>
+      <CardLayout.Footer>
         {!target.conflicted && (
           <div className="card-events-footer">
-            <Columns className="is-mobile has-text-centered">
+            <Columns className="is-mobile">
               <Column className="is-one-third">
                 <div
                   className={
@@ -133,7 +138,7 @@ export const ResultEventCard = ({
             </Columns>
           </div>
         )}
-      </Media.Content>
-    </Media>
+      </CardLayout.Footer>
+    </CardLayout>
   )
 }
