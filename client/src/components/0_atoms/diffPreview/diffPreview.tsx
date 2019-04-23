@@ -110,7 +110,7 @@ export const DiffPreview = React.memo(
                       i !== diffs.length - 1 &&
                       arr[arr.length - 1] === '') ? (
                     <React.Fragment key={j}>
-                      <p>
+                      <p style={{ padding: '0 0.5rem 0 0.5rem' }}>
                         <span>{lineCounter}&nbsp;|&nbsp;</span>
                         {line || <React.Fragment>&nbsp;</React.Fragment>}
                       </p>
