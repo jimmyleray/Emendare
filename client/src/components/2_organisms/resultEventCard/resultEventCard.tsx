@@ -9,7 +9,7 @@ import {
   DataContext,
   Columns,
   Column,
-  Button,
+  ResultBar,
   CardLayout
 } from '../../../components'
 
@@ -20,10 +20,10 @@ import { IUser, IText, IResponse, IAmend } from '../../../../../interfaces'
 import {
   getIconFromResult,
   getColorTextFromResult,
-  getTextFromResult
+  getTextFromResult,
+  getStyleAmendAccepted,
+  getStyleAmendDecline
 } from './helper'
-
-import { path } from '../../../config'
 
 interface IResultEventCardProps {
   /** Related event */
@@ -80,39 +80,46 @@ export const ResultEventCard = ({
       </CardLayout.Detail>
       <CardLayout.Footer>
         {!target.conflicted && (
-          <div className="card-events-footer">
-            <Columns className="is-mobile">
-              <Column className="is-one-third">
+          <div className="card-event__footer">
+            <div
+              className="is-mobile"
+              style={{
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              <div style={{ display: 'flex' }}>
                 <div
                   className={
-                    target.accepted ? 'has-text-success' : 'has-text-grey-light'
+                    target.accepted ? 'has-text-link' : 'has-text-grey-light'
                   }
                 >
                   <Icon
                     type={'solid'}
                     size={'fa-lg'}
                     name="fa-thumbs-up"
-                    style={{ marginRight: '0.5em' }}
+                    style={getStyleAmendAccepted(target)}
                   />
                   {target.results.upVotesCount}
                 </div>
-              </Column>
-              <Column className="is-one-third">
+
                 <div
                   className={
                     !target.accepted ? 'has-text-danger' : 'has-text-grey-light'
                   }
+                  style={{ marginLeft: '1.5rem' }}
                 >
                   <Icon
+                    className="is-medium"
                     type={'solid'}
                     size={'fa-lg'}
                     name={'fa-thumbs-down'}
-                    style={{ marginRight: '0.5em' }}
+                    style={getStyleAmendDecline(target)}
                   />
                   {target.results.downVotesCount}
                 </div>
-              </Column>
-              {navigator && (navigator as any).clipboard && (
+              </div>
+              {/* {navigator && (navigator as any).clipboard && (
                 <Column className="is-one-third">
                   <Button
                     disabled
@@ -134,8 +141,18 @@ export const ResultEventCard = ({
                     <Icon type={'light'} size={'fa-lg'} name="fa-link" />
                   </Button>
                 </Column>
-              )}
-            </Columns>
+              )} */}
+
+              <div className="card-event__resultbar--size">
+                <ResultBar
+                  results={{
+                    up: target.results.upVotesCount,
+                    down: target.results.downVotesCount,
+                    ind: target.results.indVotesCount
+                  }}
+                />
+              </div>
+            </div>
           </div>
         )}
       </CardLayout.Footer>

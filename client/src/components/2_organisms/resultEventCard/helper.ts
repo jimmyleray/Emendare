@@ -38,3 +38,41 @@ export const getTextFromResult = (amend: IAmend) =>
     : amend.accepted
     ? 'accepté par les participants'
     : 'refusé par les participants'
+
+/**
+ * Return the right style depending on the result
+ * @param amend current Amend
+ */
+export const getStyleAmendAccepted = (amend: IAmend) =>
+  !amend.conflicted && amend.accepted
+    ? {
+        marginRight: '0.4em',
+        background: 'hsl(217, 71%, 53%, 20%)',
+        borderRadius: '50%',
+        height: '2.3rem',
+        width: '2.3rem'
+      }
+    : {
+        marginRight: '0.1em',
+        height: '2.3rem',
+        width: '2.3rem'
+      }
+
+/**
+ * Return the right style depending on the result
+ * @param amend current Amend
+ */
+export const getStyleAmendDecline = (amend: IAmend) =>
+  !amend.conflicted && !amend.accepted
+    ? {
+        marginRight: '0.3em',
+        background: 'hsl(348, 100%, 61%, 20%)',
+        borderRadius: '50%',
+        height: '2.3rem',
+        width: '2.3rem'
+      }
+    : {
+        marginRight: '0.1em',
+        height: '2.3rem',
+        width: '2.3rem'
+      }

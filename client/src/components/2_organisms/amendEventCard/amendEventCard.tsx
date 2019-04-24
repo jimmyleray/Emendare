@@ -5,7 +5,7 @@ import {
   Icon,
   StopWatch,
   Vote,
-  Columns,
+  ResultBar,
   CountDown,
   DiffPreview,
   DataContext,
@@ -92,8 +92,14 @@ export const AmendEventCard = ({
         </CardLayout.Detail>
       )}
       <CardLayout.Footer>
-        <div className="card-events-footer">
-          <Columns className="is-mobile">
+        <div className="card-event__footer">
+          <div
+            className="is-mobile"
+            style={{
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
             {user && (
               <Vote
                 amend={target}
@@ -102,7 +108,16 @@ export const AmendEventCard = ({
                 withIcon={true}
               />
             )}
-          </Columns>
+            <div className="card-event__resultbar--size">
+              <ResultBar
+                results={{
+                  up: target.results.upVotesCount,
+                  down: target.results.downVotesCount,
+                  ind: target.results.indVotesCount
+                }}
+              />
+            </div>
+          </div>
         </div>
       </CardLayout.Footer>
     </CardLayout>

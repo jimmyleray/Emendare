@@ -99,9 +99,9 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
         )}
       </CardLayout.Detail>
       <CardLayout.Footer>
-        <div className="card-events-footer">
-          <Columns className="is-mobile">
-            <Column className="is-one-third">
+        <div className="card-event__footer">
+          <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+            <div>
               {user ? (
                 <ProposeAmend withIcon={true} text={target} />
               ) : (
@@ -118,8 +118,8 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
                   {target.amends.length}
                 </div>
               )}
-            </Column>
-            <Column className="is-one-third">
+            </div>
+            <div style={{ marginLeft: '1.5rem' }}>
               {user ? (
                 user.followedTexts.find(textID => textID === target._id) ? (
                   <UnFollowText
@@ -144,8 +144,8 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
                   {target.followersCount}
                 </div>
               )}
-            </Column>
-          </Columns>
+            </div>
+          </div>
         </div>
       </CardLayout.Footer>
     </CardLayout>
