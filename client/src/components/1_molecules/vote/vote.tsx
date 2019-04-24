@@ -49,9 +49,9 @@ export const Vote = ({
 
   return withIcon ? (
     <React.Fragment>
-      <Column className="is-one-third">
+      <div>
         <Button
-          className="has-text-grey-light"
+          className="has-text-link no-focus-outlined"
           style={{
             border: 'none',
             padding: 'none',
@@ -61,27 +61,34 @@ export const Vote = ({
           disabled={amend.closed}
         >
           <Icon
-            type={'light'}
-            name={`${
-              isVoteInAmend(user.upVotes, amend._id) ? 'fas' : ''
-            } fa-thumbs-up`}
+            type={'solid'}
+            name={`fa-thumbs-up`}
             className={`${
-              isVoteInAmend(user.upVotes, amend._id) ? 'has-text-success' : ''
+              isVoteInAmend(user.upVotes, amend._id) ? 'has-text-link' : ''
             } fa-lg`}
-            style={{ marginRight: '0.5rem' }}
+            style={{
+              marginRight: '0.5rem',
+              background: 'hsl(217, 71%, 53%, 20%)',
+              borderRadius: '50%',
+              height: '2.3rem',
+              width: '2.3rem',
+              border: isVoteInAmend(user.upVotes, amend._id)
+                ? '1px solid hsl(217, 71%, 53%)'
+                : 'none'
+            }}
           />
           <span
             className={`${
-              isVoteInAmend(user.upVotes, amend._id) ? 'has-text-success' : ''
+              isVoteInAmend(user.upVotes, amend._id) ? 'has-text-link' : ''
             }`}
           >
             {amend.results.upVotesCount}
           </span>
         </Button>
-      </Column>
-      <Column className="is-one-third">
+      </div>
+      <div style={{ marginLeft: '1.5rem' }}>
         <Button
-          className="has-text-grey-light"
+          className="has-text-danger no-focus-outlined"
           style={{
             border: 'none',
             padding: 'none',
@@ -91,14 +98,21 @@ export const Vote = ({
           disabled={amend.closed}
         >
           <Icon
-            type={'light'}
-            name={`${
-              isVoteInAmend(user.downVotes, amend._id) ? 'fas' : ''
-            } fa-thumbs-down`}
-            className={`${
+            type={'solid'}
+            name="fa-thumbs-down"
+            className={`is-medium ${
               isVoteInAmend(user.downVotes, amend._id) ? 'has-text-danger' : ''
             } fa-lg`}
-            style={{ marginRight: '0.5rem' }}
+            style={{
+              marginRight: '0.5rem',
+              background: 'hsl(348, 100%, 61%, 20%)',
+              borderRadius: '50%',
+              height: '2.3rem',
+              width: '2.3rem',
+              border: isVoteInAmend(user.downVotes, amend._id)
+                ? '1px solid hsl(348, 100%, 61%)'
+                : 'none'
+            }}
           />
           <span
             className={`${
@@ -108,7 +122,7 @@ export const Vote = ({
             {amend.results.downVotesCount}
           </span>
         </Button>
-      </Column>
+      </div>
     </React.Fragment>
   ) : (
     <Buttons className={className} {...rest}>
