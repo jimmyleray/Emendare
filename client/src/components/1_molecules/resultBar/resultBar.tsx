@@ -12,18 +12,43 @@ interface IResultBarProps {
 
 export const ResultBar = ({ results }: IResultBarProps) => {
   const pourcentageVote = getPourcentageVote(results)
+  console.log(results)
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flex: 1,
+        justifyContent: 'space-around',
+        alignItems: 'baseline',
+        fontSize: '0.9rem'
+      }}
+    >
+      <span
+        className={`${
+          results.down < results.up ? 'has-text-info' : 'has-text-grey-light'
+        } `}
+      >
+        {pourcentageVote.up}%
+      </span>
       <Progress
         style={{
           WebkitAppearance: 'progress-bar-value',
-          backgroundImage: createLinearGradientFromResult(pourcentageVote)
+          backgroundImage: createLinearGradientFromResult(pourcentageVote),
+          height: '0.4rem',
+          margin: '0 0.5rem'
         }}
         value={100}
         max={100}
       >
         100%
       </Progress>
+      <span
+        className={`${
+          results.down > results.up ? 'has-text-danger' : 'has-text-grey-light'
+        }`}
+      >
+        {pourcentageVote.down}%
+      </span>
     </div>
   )
 }

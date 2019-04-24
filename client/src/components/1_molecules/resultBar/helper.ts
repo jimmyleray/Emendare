@@ -6,13 +6,13 @@ export const getPourcentageVote = (result: {
   up: number
   ind: number
   down: number
-}) => {
+}): { up: number; down: number; ind: number } => {
   const { up, down, ind } = result
   const totalVote = up + down + ind
   return {
-    up: (up / totalVote) * 100,
-    down: (down / totalVote) * 100,
-    ind: (ind / totalVote) * 100
+    up: up === 0 ? 0 : (up / totalVote) * 100,
+    down: down === 0 ? 0 : (down / totalVote) * 100,
+    ind: ind === 0 ? 0 : (ind / totalVote) * 100
   }
 }
 
@@ -26,8 +26,10 @@ export const createLinearGradientFromResult = (pourcentageVote: {
   down: number
 }) => {
   const { up, down, ind } = pourcentageVote
-  return `linear-gradient(to right,hsl(141, 71%, 48%) ${up}%, hsl(204, 86%, 53%) ${up}%, hsl(204, 86%, 53%) ${up +
-    ind}%, hsl(348, 100%, 61%) ${up + ind}%,hsl(348, 100%, 61%) ${up +
-    ind +
-    down}%  )`
+  return up === 0 && down === 0 && ind === 0
+    ? `linear-gradient(to right, hsl(0, 0%, 71%) 0%, hsl(0, 0%, 71%) 100%)`
+    : `linear-gradient(to right,hsl(217, 71%, 53%) ${up}%, hsl(217, 71%, 53%) ${up}%, hsl(204, 86%, 53%) ${up +
+        ind}%, hsl(348, 100%, 61%) ${up + ind}%,hsl(348, 100%, 61%) ${up +
+        ind +
+        down}%  )`
 }
