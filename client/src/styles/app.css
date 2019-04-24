@@ -10,6 +10,80 @@ textarea {
   font-family: Montserrat, Helvetica, Arial, sans-serif;
 }
 
+html.has-navbar-fixed-top {
+  padding-top: 109px;
+}
+
+main {
+  margin-top: 1rem;
+}
+
+#navtabs {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 58px;
+}
+
+/** CARD EVENT **/
+.card-event__container {
+  grid-template-columns: 60px auto;
+  grid-template-areas:
+    'icon description'
+    'detail detail'
+    'footer footer';
+}
+
+.card-event__footer {
+  margin: 1rem 2rem 0 2rem;
+}
+
+.card-event__resultbar--size {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  flex-basis: auto;
+  margin-left: 30%;
+}
+
+/** MOBILE **/
+@media screen and (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  html.has-navbar-fixed-top {
+    padding-top: 97px;
+  }
+
+  #navtabs {
+    top: 52px;
+  }
+
+  #navtabs .tabs .icon {
+    margin: 0;
+  }
+
+  main {
+    margin-top: 0;
+  }
+
+  /** CARD EVENT **/
+  .card-event__resultbar--size {
+    margin-left: 2rem;
+  }
+}
+
+/** TABLET **/
+@media screen and (max-width: 1024px) {
+}
+
+.no-focus-outlined:focus:not(:active) {
+  box-shadow: none;
+}
+
+/** ANIMATION **/
 @keyframes bubble {
   0% {
     transform: scale(1);
@@ -32,58 +106,4 @@ textarea {
   100% {
     transform: rotate(360deg);
   }
-}
-
-html.has-navbar-fixed-top {
-  padding-top: 109px;
-}
-
-main {
-  margin-top: 1rem;
-}
-
-#navtabs {
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  right: 0;
-  top: 58px;
-}
-
-@media screen and (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  html.has-navbar-fixed-top {
-    padding-top: 97px;
-  }
-
-  #navtabs {
-    top: 52px;
-  }
-
-  #navtabs .tabs .icon {
-    margin: 0;
-  }
-
-  main {
-    margin-top: 0;
-  }
-}
-
-.card__container {
-  grid-template-columns: 60px auto;
-  grid-template-areas:
-    'icon description'
-    'detail detail'
-    '. footer';
-}
-
-.card-events-footer {
-  margin-top: 1rem;
-}
-
-.no-focus-outlined:focus:not(:active) {
-  box-shadow: none;
 }
