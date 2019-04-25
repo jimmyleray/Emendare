@@ -133,7 +133,7 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
               ) : (
                 <div
                   className="has-text-grey-light"
-                  style={{ border: 'none', padding: 'none' }}
+                  style={{ border: 'none', padding: '0px 1.5rem 0px 0px' }}
                 >
                   <Icon
                     type={'light'}

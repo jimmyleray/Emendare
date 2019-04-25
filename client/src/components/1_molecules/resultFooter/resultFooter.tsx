@@ -21,7 +21,7 @@ export const ResultFooterCard = ({ target, user }: IResultFooterProps) => {
   const propsDecline = getPropsAmendDecline(target)
 
   return (
-    <Grid style={{ gridTemplateColumns: '3fr 2fr', gridColumnGap: '15%' }}>
+    <Grid style={{ gridTemplateColumns: '1fr 1fr', gridColumnGap: '10%' }}>
       <div className="card-event__resultbar--size">
         <ResultBar
           results={{
