@@ -4,8 +4,6 @@ import React, { useContext } from 'react'
 import {
   Icon,
   StopWatch,
-  Vote,
-  ResultBar,
   CountDown,
   DiffPreview,
   DataContext,

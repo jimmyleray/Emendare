@@ -8,7 +8,6 @@ import {
   DiffPreview,
   DataContext,
   ResultFooterCard,
-  ResultBar,
   CardLayout
 } from '../../../components'
 
@@ -19,9 +18,7 @@ import { IUser, IText, IResponse, IAmend } from '../../../../../interfaces'
 import {
   getIconFromResult,
   getColorTextFromResult,
-  getTextFromResult,
-  getStyleAmendAccepted,
-  getStyleAmendDecline
+  getTextFromResult
 } from './helper'
 
 interface IResultEventCardProps {
@@ -34,11 +31,7 @@ interface IResultEventCardProps {
   index: number
 }
 
-export const ResultEventCard = ({
-  target,
-  index,
-  measure
-}: IResultEventCardProps) => {
+export const ResultEventCard = ({ target, measure }: IResultEventCardProps) => {
   const { get } = React.useContext(DataContext)
   const text: IResponse<IText> = get('text')(target.text)
 
