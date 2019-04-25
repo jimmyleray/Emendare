@@ -88,7 +88,7 @@
     "prettier": "1.17.0",
     "react-docgen-typescript": "^1.12.3",
     "react-styleguidist": "^9.0.1",
-    "react-testing-library": "6.1.2",
+    "react-testing-library": "7.0.0",
     "tslint": "5.12.1",
     "tslint-react-hooks": "^2.0.0",
     "typedoc": "0.14.2",
