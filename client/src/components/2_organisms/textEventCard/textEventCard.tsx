@@ -100,7 +100,7 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
       </CardLayout.Detail>
       <CardLayout.Footer>
         <div className="card-event__footer">
-          <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <div>
               {user ? (
                 <ProposeAmend withIcon={true} text={target} />

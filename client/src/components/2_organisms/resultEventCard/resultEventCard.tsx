@@ -7,8 +7,7 @@ import {
   StopWatch,
   DiffPreview,
   DataContext,
-  Columns,
-  Column,
+  ResultFooterCard,
   ResultBar,
   CardLayout
 } from '../../../components'
@@ -81,45 +80,8 @@ export const ResultEventCard = ({
       <CardLayout.Footer>
         {!target.conflicted && (
           <div className="card-event__footer">
-            <div
-              className="is-mobile"
-              style={{
-                display: 'flex',
-                alignItems: 'center'
-              }}
-            >
-              <div style={{ display: 'flex' }}>
-                <div
-                  className={
-                    target.accepted ? 'has-text-link' : 'has-text-grey-light'
-                  }
-                >
-                  <Icon
-                    type={'solid'}
-                    size={'fa-lg'}
-                    name="fa-thumbs-up"
-                    style={getStyleAmendAccepted(target)}
-                  />
-                  {target.results.upVotesCount}
-                </div>
-
-                <div
-                  className={
-                    !target.accepted ? 'has-text-danger' : 'has-text-grey-light'
-                  }
-                  style={{ marginLeft: '1.5rem' }}
-                >
-                  <Icon
-                    className="is-medium"
-                    type={'solid'}
-                    size={'fa-lg'}
-                    name={'fa-thumbs-down'}
-                    style={getStyleAmendDecline(target)}
-                  />
-                  {target.results.downVotesCount}
-                </div>
-              </div>
-              {/* {navigator && (navigator as any).clipboard && (
+            <ResultFooterCard target={target} user={null} />
+            {/* {navigator && (navigator as any).clipboard && (
                 <Column className="is-one-third">
                   <Button
                     disabled
@@ -142,17 +104,6 @@ export const ResultEventCard = ({
                   </Button>
                 </Column>
               )} */}
-
-              <div className="card-event__resultbar--size">
-                <ResultBar
-                  results={{
-                    up: target.results.upVotesCount,
-                    down: target.results.downVotesCount,
-                    ind: target.results.indVotesCount
-                  }}
-                />
-              </div>
-            </div>
           </div>
         )}
       </CardLayout.Footer>

@@ -9,7 +9,8 @@ import {
   CountDown,
   DiffPreview,
   DataContext,
-  CardLayout
+  CardLayout,
+  ResultFooterCard
 } from '../../../components'
 
 // Interfaces
@@ -93,31 +94,7 @@ export const AmendEventCard = ({
       )}
       <CardLayout.Footer>
         <div className="card-event__footer">
-          <div
-            className="is-mobile"
-            style={{
-              display: 'flex',
-              alignItems: 'center'
-            }}
-          >
-            {user && (
-              <Vote
-                amend={target}
-                match={{ params: { id: target._id } }}
-                user={user}
-                withIcon={true}
-              />
-            )}
-            <div className="card-event__resultbar--size">
-              <ResultBar
-                results={{
-                  up: target.results.upVotesCount,
-                  down: target.results.downVotesCount,
-                  ind: target.results.indVotesCount
-                }}
-              />
-            </div>
-          </div>
+          <ResultFooterCard target={target} user={user} />
         </div>
       </CardLayout.Footer>
     </CardLayout>
