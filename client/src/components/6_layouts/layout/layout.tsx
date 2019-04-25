@@ -3,7 +3,6 @@ import {
   Navbar,
   Navtabs,
   Alerts,
-  Card,
   Grid,
   ProfilCard,
   OtherLinksCard

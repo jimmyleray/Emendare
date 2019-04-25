@@ -5,7 +5,6 @@ import {
   getTextFromResult
 } from './helper'
 import { amendMock } from '../../../../../interfaces'
-import { isMaxVote } from './helper'
 
 describe('getColorFromResult', () => {
   it('should return success color', () => {

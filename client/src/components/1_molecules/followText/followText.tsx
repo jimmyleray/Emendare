@@ -19,10 +19,10 @@ export const FollowText = ({
 }: IFollowTextProps) =>
   withIcon ? (
     <Button
-      className="has-text-grey-light"
+      className="has-text-grey-light no-focus-outlined"
       style={{
         border: 'none',
-        padding: 'none',
+        padding: '0',
         backgroundColor: 'transparent'
       }}
       onClick={() => {
@@ -33,7 +33,7 @@ export const FollowText = ({
         type={'light'}
         name="fa-user"
         className="fa-lg"
-        style={{ marginRight: '0.5rem' }}
+        style={{ marginRight: '0.5rem', height: '2.3rem', width: '2.3rem' }}
       />
       {text.followersCount}
     </Button>

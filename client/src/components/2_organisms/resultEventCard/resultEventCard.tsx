@@ -7,9 +7,7 @@ import {
   StopWatch,
   DiffPreview,
   DataContext,
-  Columns,
-  Column,
-  Button,
+  ResultFooterCard,
   CardLayout
 } from '../../../components'
 
@@ -23,8 +21,6 @@ import {
   getTextFromResult
 } from './helper'
 
-import { path } from '../../../config'
-
 interface IResultEventCardProps {
   /** Related event */
   target: IAmend
@@ -35,11 +31,7 @@ interface IResultEventCardProps {
   index: number
 }
 
-export const ResultEventCard = ({
-  target,
-  index,
-  measure
-}: IResultEventCardProps) => {
+export const ResultEventCard = ({ target, measure }: IResultEventCardProps) => {
   const { get } = React.useContext(DataContext)
   const text: IResponse<IText> = get('text')(target.text)
 
@@ -80,62 +72,8 @@ export const ResultEventCard = ({
       </CardLayout.Detail>
       <CardLayout.Footer>
         {!target.conflicted && (
-          <div className="card-events-footer">
-            <Columns className="is-mobile">
-              <Column className="is-one-third">
-                <div
-                  className={
-                    target.accepted ? 'has-text-success' : 'has-text-grey-light'
-                  }
-                >
-                  <Icon
-                    type={'solid'}
-                    size={'fa-lg'}
-                    name="fa-thumbs-up"
-                    style={{ marginRight: '0.5em' }}
-                  />
-                  {target.results.upVotesCount}
-                </div>
-              </Column>
-              <Column className="is-one-third">
-                <div
-                  className={
-                    !target.accepted ? 'has-text-danger' : 'has-text-grey-light'
-                  }
-                >
-                  <Icon
-                    type={'solid'}
-                    size={'fa-lg'}
-                    name={'fa-thumbs-down'}
-                    style={{ marginRight: '0.5em' }}
-                  />
-                  {target.results.downVotesCount}
-                </div>
-              </Column>
-              {navigator && (navigator as any).clipboard && (
-                <Column className="is-one-third">
-                  <Button
-                    disabled
-                    onClick={async () => {
-                      const url = new URL(
-                        path.share(target._id),
-                        location.origin
-                      )
-                      await (navigator as any)!.clipboard!.writeText(url.href)
-                    }}
-                    style={{
-                      border: 'none',
-                      height: '24px',
-                      outline: 'none',
-                      backgroundColor: 'transparent'
-                    }}
-                    className={'has-text-info'}
-                  >
-                    <Icon type={'light'} size={'fa-lg'} name="fa-link" />
-                  </Button>
-                </Column>
-              )}
-            </Columns>
+          <div className="card-event__footer">
+            <ResultFooterCard target={target} user={null} />
           </div>
         )}
       </CardLayout.Footer>

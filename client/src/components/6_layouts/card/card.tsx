@@ -12,7 +12,7 @@ interface ICardLayoutProps {
 }
 
 export const CardLayout = ({ children, ...rest }: ICardLayoutProps) => (
-  <Grid className={'card__container'} {...rest}>
+  <Grid className={'card-event__container'} {...rest}>
     {children}
   </Grid>
 )
