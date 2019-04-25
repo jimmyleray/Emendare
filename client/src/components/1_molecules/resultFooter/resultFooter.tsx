@@ -1,49 +1,62 @@
 import React from 'react'
 
 // Components
-import { Vote, ResultBar } from '../../../components'
+import { Vote, ResultBar, Grid, Icon } from '../../../components'
 
 // Interfaces
 import { IUser, IAmend } from '../../../../../interfaces'
+
+// Helpers
+import { getPropsAmendAccepted, getPropsAmendDecline } from './helper'
 
 interface IResultFooterProps {
   /** Related event */
   target: IAmend
   /** user data */
   user: IUser | null
-  measure: any
-  /** Index of the card */
-  index: number
 }
 
 export const ResultFooterCard = ({ target, user }: IResultFooterProps) => {
+  const propsAccepted = getPropsAmendAccepted(target)
+  const propsDecline = getPropsAmendDecline(target)
+
   return (
-    <div className="card-event__footer">
-      <div
-        className="is-mobile"
-        style={{
-          display: 'flex',
-          alignItems: 'center'
-        }}
-      >
-        {user && (
+    <Grid style={{ gridTemplateColumns: '3fr 2fr', gridColumnGap: '15%' }}>
+      <div className="card-event__resultbar--size">
+        <ResultBar
+          results={{
+            up: target.results.upVotesCount,
+            down: target.results.downVotesCount,
+            ind: target.results.indVotesCount
+          }}
+        />
+      </div>
+      <div>
+        {user ? (
           <Vote
             amend={target}
             match={{ params: { id: target._id } }}
             user={user}
             withIcon={true}
+            style={{ justifyContent: 'flex-end' }}
           />
+        ) : (
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <div>
+              <div {...propsAccepted.div}>
+                <Icon {...propsAccepted.icon} />
+                <span>{target.results.upVotesCount}</span>
+              </div>
+            </div>
+            <div>
+              <div {...propsDecline.div}>
+                <Icon {...propsDecline.icon} />
+                <span>{target.results.downVotesCount}</span>
+              </div>
+            </div>
+          </div>
         )}
-        <div className="card-event__resultbar--size">
-          <ResultBar
-            results={{
-              up: target.results.upVotesCount,
-              down: target.results.downVotesCount,
-              ind: target.results.indVotesCount
-            }}
-          />
-        </div>
       </div>
-    </div>
+    </Grid>
   )
 }
