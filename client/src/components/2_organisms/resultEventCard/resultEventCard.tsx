@@ -74,29 +74,6 @@ export const ResultEventCard = ({ target, measure }: IResultEventCardProps) => {
         {!target.conflicted && (
           <div className="card-event__footer">
             <ResultFooterCard target={target} user={null} />
-            {/* {navigator && (navigator as any).clipboard && (
-                <Column className="is-one-third">
-                  <Button
-                    disabled
-                    onClick={async () => {
-                      const url = new URL(
-                        path.share(target._id),
-                        location.origin
-                      )
-                      await (navigator as any)!.clipboard!.writeText(url.href)
-                    }}
-                    style={{
-                      border: 'none',
-                      height: '24px',
-                      outline: 'none',
-                      backgroundColor: 'transparent'
-                    }}
-                    className={'has-text-info'}
-                  >
-                    <Icon type={'light'} size={'fa-lg'} name="fa-link" />
-                  </Button>
-                </Column>
-              )} */}
           </div>
         )}
       </CardLayout.Footer>
