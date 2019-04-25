@@ -4,12 +4,11 @@ import React, { useContext } from 'react'
 import {
   Icon,
   StopWatch,
-  Vote,
-  Columns,
   CountDown,
   DiffPreview,
   DataContext,
-  CardLayout
+  CardLayout,
+  ResultFooterCard
 } from '../../../components'
 
 // Interfaces
@@ -92,17 +91,8 @@ export const AmendEventCard = ({
         </CardLayout.Detail>
       )}
       <CardLayout.Footer>
-        <div className="card-events-footer">
-          <Columns className="is-mobile">
-            {user && (
-              <Vote
-                amend={target}
-                match={{ params: { id: target._id } }}
-                user={user}
-                withIcon={true}
-              />
-            )}
-          </Columns>
+        <div className="card-event__footer">
+          <ResultFooterCard target={target} user={user} />
         </div>
       </CardLayout.Footer>
     </CardLayout>

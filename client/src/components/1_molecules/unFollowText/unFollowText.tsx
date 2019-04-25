@@ -19,10 +19,10 @@ export const UnFollowText = ({
 }: IUnFollowTextProps) =>
   withIcon ? (
     <Button
-      className="has-text-grey-light "
+      className="has-text-grey-light no-focus-outlined"
       style={{
         border: 'none',
-        padding: 'none',
+        padding: '0',
         backgroundColor: 'transparent'
       }}
       onClick={() => {
@@ -33,7 +33,13 @@ export const UnFollowText = ({
         type={'light'}
         name="fas fa-user"
         className={'fa-lg ' + className}
-        style={{ marginRight: '0.5rem' }}
+        style={{
+          marginRight: '0.5rem',
+          backgroundColor: 'hsl(204, 86%, 53%, 20%)',
+          borderRadius: '50%',
+          height: '2.3rem',
+          width: '2.3rem'
+        }}
       />
       <span className={className}>{text.followersCount}</span>
     </Button>

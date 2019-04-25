@@ -1,7 +1,11 @@
 import React from 'react'
 import { Socket } from '../../../services'
-import { Icon, Button, Buttons, I18nContext, Column } from '../../../components'
+// Components
+import { Icon, Button, Buttons, I18nContext } from '../../../components'
+// Interfaces
 import { IAmend } from '../../../../../interfaces'
+// Helper
+import { getPropsAmendDown, getPropsAmendUp } from '../../../helpers'
 
 interface IVoteProps {
   /** User data */
@@ -36,6 +40,7 @@ export const Vote = ({
   className,
   user,
   amend,
+  style,
   match,
   withIcon = false,
   ...rest
@@ -47,69 +52,37 @@ export const Vote = ({
     [user]
   )
 
+  const propsVoteUp = React.useMemo(
+    () => getPropsAmendUp(isVoteInAmend(user.upVotes, amend._id)),
+    [user.upVotes, amend._id]
+  )
+
+  const propsVoteDown = React.useMemo(
+    () => getPropsAmendDown(isVoteInAmend(user.downVotes, amend._id)),
+    [user.downVotes, amend._id]
+  )
+
   return withIcon ? (
-    <React.Fragment>
-      <Column className="is-one-third">
+    <div style={{ display: 'flex', ...style }}>
+      <div>
         <Button
-          className="has-text-grey-light"
-          style={{
-            border: 'none',
-            padding: 'none',
-            backgroundColor: 'transparent'
-          }}
+          {...propsVoteUp.container}
           onClick={vote(user)(amend)('up')(match.params.id)}
-          disabled={amend.closed}
         >
-          <Icon
-            type={'light'}
-            name={`${
-              isVoteInAmend(user.upVotes, amend._id) ? 'fas' : ''
-            } fa-thumbs-up`}
-            className={`${
-              isVoteInAmend(user.upVotes, amend._id) ? 'has-text-success' : ''
-            } fa-lg`}
-            style={{ marginRight: '0.5rem' }}
-          />
-          <span
-            className={`${
-              isVoteInAmend(user.upVotes, amend._id) ? 'has-text-success' : ''
-            }`}
-          >
-            {amend.results.upVotesCount}
-          </span>
+          <Icon {...propsVoteUp.icon} />
+          <span>{amend.results.upVotesCount}</span>
         </Button>
-      </Column>
-      <Column className="is-one-third">
+      </div>
+      <div>
         <Button
-          className="has-text-grey-light"
-          style={{
-            border: 'none',
-            padding: 'none',
-            backgroundColor: 'transparent'
-          }}
+          {...propsVoteDown.container}
           onClick={vote(user)(amend)('down')(match.params.id)}
-          disabled={amend.closed}
         >
-          <Icon
-            type={'light'}
-            name={`${
-              isVoteInAmend(user.downVotes, amend._id) ? 'fas' : ''
-            } fa-thumbs-down`}
-            className={`${
-              isVoteInAmend(user.downVotes, amend._id) ? 'has-text-danger' : ''
-            } fa-lg`}
-            style={{ marginRight: '0.5rem' }}
-          />
-          <span
-            className={`${
-              isVoteInAmend(user.downVotes, amend._id) ? 'has-text-danger' : ''
-            }`}
-          >
-            {amend.results.downVotesCount}
-          </span>
+          <Icon {...propsVoteDown.icon} />
+          <span>{amend.results.downVotesCount}</span>
         </Button>
-      </Column>
-    </React.Fragment>
+      </div>
+    </div>
   ) : (
     <Buttons className={className} {...rest}>
       <Button
