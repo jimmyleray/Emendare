@@ -9,11 +9,13 @@ export const getPourcentageVote = (result: {
 }): { up: number; down: number; ind: number } => {
   const { up, down, ind } = result
   const totalVote = up + down + ind
-  return {
-    up: up === 0 ? 0 : (up / totalVote) * 100,
-    down: down === 0 ? 0 : (down / totalVote) * 100,
-    ind: ind === 0 ? 0 : (ind / totalVote) * 100
-  }
+  return totalVote === 0
+    ? { up: 0, down: 0, ind: 0 }
+    : {
+        up: (up / totalVote) * 100,
+        down: (down / totalVote) * 100,
+        ind: (ind / totalVote) * 100
+      }
 }
 
 /**
