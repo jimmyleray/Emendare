@@ -7,7 +7,7 @@ import { Vote, ResultBar, Grid, Icon } from '../../../components'
 import { IUser, IAmend } from '../../../../../interfaces'
 
 // Helpers
-import { getPropsAmendAccepted, getPropsAmendDecline } from './helper'
+import { getPropsAmendDown, getPropsAmendUp } from '../../../helpers'
 
 interface IResultFooterProps {
   /** Related event */
@@ -17,8 +17,12 @@ interface IResultFooterProps {
 }
 
 export const ResultFooterCard = ({ target, user }: IResultFooterProps) => {
-  const propsAccepted = getPropsAmendAccepted(target)
-  const propsDecline = getPropsAmendDecline(target)
+  const propsAccepted = getPropsAmendUp(
+    target.results.upVotesCount > target.results.downVotesCount
+  )
+  const propsDecline = getPropsAmendDown(
+    target.results.upVotesCount <= target.results.downVotesCount
+  )
 
   return (
     <Grid style={{ gridTemplateColumns: '1fr 1fr', gridColumnGap: '10%' }}>
@@ -43,13 +47,13 @@ export const ResultFooterCard = ({ target, user }: IResultFooterProps) => {
         ) : (
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <div>
-              <div {...propsAccepted.div}>
+              <div {...propsAccepted.container}>
                 <Icon {...propsAccepted.icon} />
                 <span>{target.results.upVotesCount}</span>
               </div>
             </div>
             <div>
-              <div {...propsDecline.div}>
+              <div {...propsDecline.container}>
                 <Icon {...propsDecline.icon} />
                 <span>{target.results.downVotesCount}</span>
               </div>

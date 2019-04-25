@@ -5,7 +5,7 @@ import { Icon, Button, Buttons, I18nContext } from '../../../components'
 // Interfaces
 import { IAmend } from '../../../../../interfaces'
 // Helper
-import { getPropsVoteDown, getPropsVoteUp } from './helper'
+import { getPropsAmendDown, getPropsAmendUp } from '../../../helpers'
 
 interface IVoteProps {
   /** User data */
@@ -53,20 +53,20 @@ export const Vote = ({
   )
 
   const propsVoteUp = React.useMemo(
-    () => getPropsVoteUp(isVoteInAmend(user.upVotes, amend._id), amend),
+    () => getPropsAmendUp(isVoteInAmend(user.upVotes, amend._id)),
     [user.upVotes, amend._id]
   )
 
   const propsVoteDown = React.useMemo(
-    () => getPropsVoteDown(isVoteInAmend(user.downVotes, amend._id), amend),
-    [user.upVotes, amend._id]
+    () => getPropsAmendDown(isVoteInAmend(user.downVotes, amend._id)),
+    [user.downVotes, amend._id]
   )
 
   return withIcon ? (
     <div style={{ display: 'flex', ...style }}>
       <div>
         <Button
-          {...propsVoteUp.button}
+          {...propsVoteUp.container}
           onClick={vote(user)(amend)('up')(match.params.id)}
         >
           <Icon {...propsVoteUp.icon} />
@@ -75,7 +75,7 @@ export const Vote = ({
       </div>
       <div>
         <Button
-          {...propsVoteDown.button}
+          {...propsVoteDown.container}
           onClick={vote(user)(amend)('down')(match.params.id)}
         >
           <Icon {...propsVoteDown.icon} />

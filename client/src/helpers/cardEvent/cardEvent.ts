@@ -1,13 +1,11 @@
-import { IAmend } from '../../../../../interfaces'
-
 /**
- * Return props for the div and icon depending on the result of the vote
+ * Return props for the div and icon depending on the result of the vote or the user vote
  * @param amend Current Amend
  */
-export const getPropsAmendAccepted = (
-  amend: IAmend
+export const getPropsAmendUp = (
+  isUp: boolean
 ): {
-  div: { className: string; style: any }
+  container: { className: string; style: any }
   icon: {
     type: 'solid' | 'regular' | 'light' | 'brands'
     name: string
@@ -15,11 +13,9 @@ export const getPropsAmendAccepted = (
     style: any
   }
 } => ({
-  div: {
+  container: {
     className: `${
-      amend.results.upVotesCount > amend.results.downVotesCount
-        ? 'has-text-link'
-        : 'has-text-grey-light'
+      isUp ? 'has-text-link' : 'has-text-grey-light'
     } no-focus-outlined`,
     style: {
       border: 'none',
@@ -32,10 +28,7 @@ export const getPropsAmendAccepted = (
     name: `fa-check`,
     className: 'fa-lg',
     style: {
-      background:
-        amend.results.upVotesCount > amend.results.downVotesCount
-          ? 'hsl(217, 71%, 53%, 20%)'
-          : 'none',
+      background: isUp ? 'hsl(217, 71%, 53%, 20%)' : 'none',
       borderRadius: '50%',
       height: '2.3rem',
       width: '2.3rem',
@@ -46,13 +39,13 @@ export const getPropsAmendAccepted = (
 })
 
 /**
- * Return props for the div and icon depending on the result of the vote
+ * Return props for the div and icon depending on the result of the vote or the user vote
  * @param amend Current Amend
  */
-export const getPropsAmendDecline = (
-  amend: IAmend
+export const getPropsAmendDown = (
+  isDown: boolean
 ): {
-  div: { className: string; style: any }
+  container: { className: string; style: any }
   icon: {
     type: 'solid' | 'regular' | 'light' | 'brands'
     name: string
@@ -60,11 +53,9 @@ export const getPropsAmendDecline = (
     style: any
   }
 } => ({
-  div: {
+  container: {
     className: `${
-      amend.results.downVotesCount >= amend.results.upVotesCount
-        ? 'has-text-danger'
-        : 'has-text-grey-light'
+      isDown ? 'has-text-danger' : 'has-text-grey-light'
     } no-focus-outlined`,
     style: {
       border: 'none',
@@ -77,10 +68,7 @@ export const getPropsAmendDecline = (
     name: `fa-times`,
     className: 'fa-lg',
     style: {
-      background:
-        amend.results.downVotesCount >= amend.results.upVotesCount
-          ? 'hsl(348, 100%, 61%, 20%)'
-          : 'none',
+      background: isDown ? 'hsl(348, 100%, 61%, 20%)' : 'none',
       borderRadius: '50%',
       height: '2.3rem',
       width: '2.3rem',
