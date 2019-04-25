@@ -12,7 +12,6 @@ interface IResultBarProps {
 
 export const ResultBar = ({ results }: IResultBarProps) => {
   const pourcentageVote = getPourcentageVote(results)
-  console.log(results)
   return (
     <div
       style={{
@@ -25,7 +24,9 @@ export const ResultBar = ({ results }: IResultBarProps) => {
     >
       <span
         className={`${
-          results.down < results.up ? 'has-text-info' : 'has-text-grey-light'
+          results.down < results.up
+            ? 'has-text-info has-text-weight-semibold'
+            : 'has-text-grey-light'
         } `}
       >
         {pourcentageVote.up}%
@@ -44,7 +45,9 @@ export const ResultBar = ({ results }: IResultBarProps) => {
       </Progress>
       <span
         className={`${
-          results.down > results.up ? 'has-text-danger' : 'has-text-grey-light'
+          results.down >= results.up
+            ? 'has-text-danger has-text-weight-semibold'
+            : 'has-text-grey-light'
         }`}
       >
         {pourcentageVote.down}%
