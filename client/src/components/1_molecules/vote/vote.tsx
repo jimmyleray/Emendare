@@ -1,7 +1,11 @@
 import React from 'react'
 import { Socket } from '../../../services'
-import { Icon, Button, Buttons, I18nContext, Column } from '../../../components'
+// Components
+import { Icon, Button, Buttons, I18nContext } from '../../../components'
+// Interfaces
 import { IAmend } from '../../../../../interfaces'
+// Helper
+import { getPropsVoteDown, getPropsVoteUp } from './helper'
 
 interface IVoteProps {
   /** User data */
@@ -36,6 +40,7 @@ export const Vote = ({
   className,
   user,
   amend,
+  style,
   match,
   withIcon = false,
   ...rest
@@ -47,83 +52,37 @@ export const Vote = ({
     [user]
   )
 
+  const propsVoteUp = React.useMemo(
+    () => getPropsVoteUp(isVoteInAmend(user.upVotes, amend._id), amend),
+    [user.upVotes, amend._id]
+  )
+
+  const propsVoteDown = React.useMemo(
+    () => getPropsVoteDown(isVoteInAmend(user.downVotes, amend._id), amend),
+    [user.upVotes, amend._id]
+  )
+
   return withIcon ? (
-    <React.Fragment>
+    <div style={{ display: 'flex', ...style }}>
       <div>
         <Button
-          className="has-text-link no-focus-outlined"
-          style={{
-            border: 'none',
-            padding: 'none',
-            backgroundColor: 'transparent'
-          }}
+          {...propsVoteUp.button}
           onClick={vote(user)(amend)('up')(match.params.id)}
-          disabled={amend.closed}
         >
-          <Icon
-            type={'solid'}
-            name={`fa-thumbs-up`}
-            className={`${
-              isVoteInAmend(user.upVotes, amend._id) ? 'has-text-link' : ''
-            } fa-lg`}
-            style={{
-              marginRight: '0.5rem',
-              background: 'hsl(217, 71%, 53%, 20%)',
-              borderRadius: '50%',
-              height: '2.3rem',
-              width: '2.3rem',
-              border: isVoteInAmend(user.upVotes, amend._id)
-                ? '1px solid hsl(217, 71%, 53%)'
-                : 'none'
-            }}
-          />
-          <span
-            className={`${
-              isVoteInAmend(user.upVotes, amend._id) ? 'has-text-link' : ''
-            }`}
-          >
-            {amend.results.upVotesCount}
-          </span>
+          <Icon {...propsVoteUp.icon} />
+          <span>{amend.results.upVotesCount}</span>
         </Button>
       </div>
-      <div style={{ marginLeft: '1.5rem' }}>
+      <div>
         <Button
-          className="has-text-danger no-focus-outlined"
-          style={{
-            border: 'none',
-            padding: 'none',
-            backgroundColor: 'transparent'
-          }}
+          {...propsVoteDown.button}
           onClick={vote(user)(amend)('down')(match.params.id)}
-          disabled={amend.closed}
         >
-          <Icon
-            type={'solid'}
-            name="fa-thumbs-down"
-            className={`is-medium ${
-              isVoteInAmend(user.downVotes, amend._id) ? 'has-text-danger' : ''
-            } fa-lg`}
-            style={{
-              marginRight: '0.5rem',
-              background: 'hsl(348, 100%, 61%, 20%)',
-              borderRadius: '50%',
-              height: '2.3rem',
-              width: '2.3rem',
-              border: isVoteInAmend(user.downVotes, amend._id)
-                ? '1px solid hsl(348, 100%, 61%)'
-                : 'none'
-            }}
-          />
-          <span
-            className={`${
-              isVoteInAmend(user.downVotes, amend._id) ? 'has-text-danger' : ''
-            }`}
-          >
-            {amend.results.downVotesCount}
-          </span>
+          <Icon {...propsVoteDown.icon} />
+          <span>{amend.results.downVotesCount}</span>
         </Button>
       </div>
-    </React.Fragment>
+    </div>
   ) : (
     <Buttons className={className} {...rest}>
       <Button
