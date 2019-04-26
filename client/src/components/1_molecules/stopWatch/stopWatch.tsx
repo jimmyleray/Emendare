@@ -1,7 +1,8 @@
 import { Time } from '../../../services'
 import { Clock } from '../../../components'
+import { ITime } from '../../../../../interfaces'
 
-const getStopWatchTime = (date: Date | string) =>
+const getStopWatchTime = (date: Date | string): ITime =>
   Time.convertMsToTime(Time.getTimeSpent(date))
 
 interface IStopWatchProps {

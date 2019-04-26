@@ -139,3 +139,16 @@ describe('isNegative', () => {
     expect(Time.isNegative(time)).toBe(false)
   })
 })
+
+describe('toDateString', () => {
+  let date = '2019-04-26T07:03:27.972Z'
+  test('should return the date in French or English', () => {
+    expect(Time.toDateString(date, 'FR')).toBe('26 Avril')
+    expect(Time.toDateString(date, 'EN')).toBe('26 April')
+  })
+  test('should return the date in a year', () => {
+    date = '2018-04-26T07:03:27.972Z'
+    expect(Time.toDateString(date, 'FR')).toBe('26 Avril 2018')
+    expect(Time.toDateString(date, 'EN')).toBe('26 April 2018')
+  })
+})

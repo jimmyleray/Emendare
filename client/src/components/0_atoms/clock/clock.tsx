@@ -1,14 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Time } from '../../../services'
 import { ITime } from '../../../../../interfaces'
+import { I18nContext } from '../../../components'
 
 interface IClockProps {
   date: Date | string
   className?: string
-}
-
-interface IClockState {
-  time: ITime
 }
 
 /**
@@ -17,63 +14,57 @@ interface IClockState {
  *
  *  @param {function} getTime  provides a time object
  */
-export const Clock = (getTime: any) => {
-  return class extends React.Component<IClockProps, IClockState> {
-    private clock: number = 0
+export const Clock = (getTime: any) => ({ date, ...rest }: IClockProps) => {
+  const [clock, setClock] = useState(0)
+  const [time, setTime] = useState(getTime(date))
+  const { actualLanguage } = useContext(I18nContext)
+  const start = (intervalDelay: number = 1000) => {
+    const timeToDisplay: ITime = getTime(date)
 
-    constructor(props: IClockProps) {
-      super(props)
+    const second = 1000
+    const minute = 60 * second
+    const hour = 60 * minute
+    const day = 24 * hour
 
-      this.state = {
-        time: getTime(this.props.date)
-      }
-    }
+    intervalDelay =
+      timeToDisplay.days > 0
+        ? day
+        : timeToDisplay.hours > 0
+        ? hour
+        : timeToDisplay.minutes > 0
+        ? minute
+        : timeToDisplay.seconds > 0
+        ? second
+        : intervalDelay
 
-    public componentDidMount() {
-      this.start()
-    }
-
-    public componentWillUnmount() {
-      this.stop()
-    }
-
-    public render() {
-      return <span {...this.props}>{Time.toTimeString(this.state.time)}</span>
-    }
-
-    private start = (intervalDelay: number = 1000) => {
-      const timeToDisplay: ITime = getTime(this.props.date)
-
-      const second = 1000
-      const minute = 60 * second
-      const hour = 60 * minute
-      const day = 24 * hour
-
-      intervalDelay =
-        timeToDisplay.days > 0
-          ? day
-          : timeToDisplay.hours > 0
-          ? hour
-          : timeToDisplay.minutes > 0
-          ? minute
-          : timeToDisplay.seconds > 0
-          ? second
-          : intervalDelay
-
-      this.clock = window.setInterval(() => {
-        const time: ITime = getTime(this.props.date)
-        if (Time.isNegative(time)) {
-          this.stop()
+    setClock(
+      window.setInterval(() => {
+        const time: ITime = getTime(date)
+        if (Time.isNegative(time) || time.days > 7) {
+          stop()
         } else {
-          this.setState({ time })
+          setTime(time)
         }
       }, intervalDelay)
-    }
+    )
+  }
 
-    private stop = () => {
-      if (this.clock) {
-        clearInterval(this.clock)
-      }
+  const stop = () => {
+    if (clock) {
+      clearInterval(clock)
     }
   }
+
+  useEffect(() => {
+    if (time.days <= 7) {
+      start()
+    }
+    return () => stop()
+  }, [])
+
+  return time.hours <= 7 ? (
+    <span {...rest}>{Time.toTimeString(time)}</span>
+  ) : (
+    <span {...rest}>{Time.toDateString(date, actualLanguage)}</span>
+  )
 }
