@@ -1,4 +1,4 @@
-import { Entity, Column, ObjectID, ObjectIdColumn } from 'typeorm'
+import { Entity, Column, ObjectID, ObjectIdColumn, BaseEntity } from 'typeorm'
 import { Text } from '../entities'
 
 const oneSecond = 1000
@@ -7,7 +7,7 @@ const oneHour = oneMinute * 60
 const oneDay = oneHour * 24
 
 @Entity()
-export class Amend {
+export class Amend extends BaseEntity {
   @ObjectIdColumn()
   id: ObjectID
 
@@ -75,6 +75,7 @@ export class Amend {
     textId: string,
     version: number
   ) {
+    super()
     this.name = name
     this.description = description
     this.patch = patch

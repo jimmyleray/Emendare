@@ -2,7 +2,7 @@ import { Entity, Column, ObjectID, ObjectIdColumn, BaseEntity } from 'typeorm'
 import { Amend } from '../entities'
 
 @Entity()
-export class Text {
+export class Text extends BaseEntity {
   @ObjectIdColumn()
   id: ObjectID
 
@@ -28,6 +28,7 @@ export class Text {
   amends: Array<Amend['id']>
 
   constructor(name: string, description: string) {
+    super()
     this.name = name
     this.description = description
   }

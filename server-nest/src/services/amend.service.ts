@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
 // Interfaces
 import { IResponse } from '../../../interfaces'
 // Services
@@ -13,20 +11,10 @@ import { Server } from 'socket.io'
 
 @Injectable()
 export class AmendService {
-  constructor(
-    @InjectRepository(Text)
-    private readonly textRepository: Repository<Text>,
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-    @InjectRepository(Event)
-    private readonly eventRepository: Repository<Event>,
-    @InjectRepository(Amend)
-    private readonly amendRepository: Repository<Amend>,
-    private textService: TextService
-  ) {}
+  constructor(private readonly textService: TextService) {}
 
   async getAmend(id: string): Promise<IResponse<Amend>> {
-    const data: Amend = await this.amendRepository.findOne(id)
+    const data: Amend = await Amend.findOne(id)
     return data
       ? { data }
       : {
@@ -78,11 +66,11 @@ export class AmendService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await this.userRepository.findOne({
+    const user: User = await User.findOne({
       id: Auth.decodeToken(token).id
     })
     if (user && user.activated) {
-      const amend: Amend = await this.amendRepository.findOne(id)
+      const amend: Amend = await Amend.findOne(id)
       if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
         if (!amend.closed) {
           if (user.downVotes.indexOf(id) === -1) {
@@ -101,8 +89,8 @@ export class AmendService {
             amend.results.downVotesCount++
             user.downVotes.push(id)
 
-            await this.userRepository.save(user)
-            await this.amendRepository.save(user)
+            await user.save()
+            await amend.save()
 
             if (io) {
               io.emit('amend/' + id, { data: amend })
@@ -149,11 +137,11 @@ export class AmendService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await this.userRepository.findOne({
+    const user: User = await User.findOne({
       id: Auth.decodeToken(token).id
     })
     if (user && user.activated) {
-      const amend: Amend = await this.amendRepository.findOne(id)
+      const amend: Amend = await Amend.findOne(id)
       if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
         if (!amend.closed) {
           if (user.indVotes.indexOf(id) === -1) {
@@ -172,8 +160,8 @@ export class AmendService {
             amend.results.indVotesCount++
             user.indVotes.push(id)
 
-            await this.userRepository.save(user)
-            await this.amendRepository.save(amend)
+            await user.save()
+            await amend.save()
 
             if (io) {
               io.emit('amend/' + id, { data: amend })
@@ -220,11 +208,11 @@ export class AmendService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await this.userRepository.findOne({
+    const user: User = await User.findOne({
       id: Auth.decodeToken(token).id
     })
     if (user && user.activated) {
-      const amend: Amend = await this.amendRepository.findOne(id)
+      const amend: Amend = await Amend.findOne(id)
       if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
         if (!amend.closed) {
           if (user.upVotes.indexOf(id) === -1) {
@@ -243,8 +231,8 @@ export class AmendService {
             amend.results.upVotesCount++
             user.upVotes.push(id)
 
-            await this.userRepository.save(user)
-            await this.amendRepository.save(amend)
+            await user.save()
+            await amend.save()
 
             if (io) {
               io.emit('amend/' + id, { data: amend })
@@ -291,11 +279,11 @@ export class AmendService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await this.userRepository.findOne({
+    const user: User = await User.findOne({
       id: Auth.decodeToken(token).id
     })
     if (user && user.activated) {
-      const amend = await this.amendRepository.findOne(id)
+      const amend = await Amend.findOne(id)
       if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
         if (!amend.closed) {
           const id1 = user.upVotes.indexOf(id)
@@ -317,8 +305,8 @@ export class AmendService {
             user.indVotes.splice(id3, 1)
           }
 
-          await this.userRepository.save(user)
-          await this.amendRepository.save(amend)
+          await user.save()
+          await amend.save()
 
           if (io) {
             io.emit('amend/' + id, { data: amend })
@@ -367,16 +355,16 @@ export class AmendService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await this.userRepository.findOne({
+    const user: User = await User.findOne({
       id: Auth.decodeToken(token).id
     })
     if (user && user.activated) {
       const amend: Amend = new Amend(name, description, patch, textID, version)
-      await this.amendRepository.save(amend)
+      await amend.save()
 
-      const text: Text = await this.textRepository.findOne({ id: textID })
+      const text: Text = await Text.findOne({ id: textID })
       text.amends.push(amend.id)
-      await this.textRepository.save(text)
+      await text.save()
 
       const event: Event = new Event('amend', amend.id.toString())
 
@@ -395,7 +383,7 @@ export class AmendService {
 
   async checkAmendVotes(io?: Server) {
     // On récupère tous les scrutins en cours
-    const amends = await this.amendRepository.find({ closed: false })
+    const amends = await Amend.find({ closed: false })
     //.populate('text')
 
     const date = new Date()
@@ -415,18 +403,18 @@ export class AmendService {
           this.textService.updateTextWithAmend(amend, io)
         }
 
-        await this.amendRepository.save(amend)
-        const newAmend = await this.amendRepository.findOne({ id: amend.id })
+        await amend.save()
+        const newAmend = await Amend.findOne({ id: amend.id })
         io.emit('amend/' + amend._id, { data: newAmend })
 
-        const oldEvent: Event = await this.eventRepository.findOne({
+        const oldEvent: Event = await Event.findOne({
           target: { id: newAmend.id.toString() }
         })
-        await this.eventRepository.delete({ id: oldEvent.id })
+        await Event.delete({ id: oldEvent.id })
         io.emit('events/delete', { data: oldEvent })
 
         const newEvent: Event = new Event('result', newAmend.id.toString())
-        await this.eventRepository.save(newEvent)
+        await newEvent.save()
         io.emit('events/new', { data: newEvent })
       }
     })

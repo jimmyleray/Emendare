@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
 import bcrypt from 'bcrypt'
 import { isUndefined } from 'lodash'
 import { Server } from 'socket.io'
@@ -16,17 +14,13 @@ import { activation, reset } from '../emails'
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-    @InjectRepository(Amend)
-    private readonly amendRepository: Repository<Amend>,
-    private textService: TextService,
-    private amendService: AmendService
+    private readonly textService: TextService,
+    private readonly amendService: AmendService
   ) {}
 
   async getUser(id: string): Promise<User> {
     if (id) {
-      return await this.userRepository.findOne({ id })
+      return await User.findOne({ id })
     }
   }
 
@@ -36,7 +30,7 @@ export class UserService {
     token?: string
   ): Promise<IResponse<any>> {
     if (email && password) {
-      const user = await this.userRepository.findOne({ email })
+      const user = await User.findOne({ email })
       if (!user) {
         return { error: { code: 405, message: "L'email est invalide" } }
       }
@@ -55,7 +49,7 @@ export class UserService {
     } else if (token) {
       if (Auth.isTokenValid(token)) {
         const { id } = Auth.decodeToken(token)
-        const user = await this.userRepository.findOne({ id })
+        const user = await User.findOne({ id })
         if (!user) {
           return { error: { code: 405, message: 'Ce compte a été supprimé' } }
         }
@@ -89,7 +83,7 @@ export class UserService {
         error: { code: 405, message: 'Le mot de passe est requis' }
       }
     }
-    if (await this.userRepository.findOne({ email })) {
+    if (await User.findOne({ email })) {
       return {
         error: {
           code: 405,
@@ -101,7 +95,7 @@ export class UserService {
     const hash = bcrypt.hashSync(password, 10)
     const activationToken = Crypto.getToken()
     const user = new User(email, hash, activationToken)
-    await this.userRepository.save(user)
+    await user.save()
 
     if (Mail) {
       Mail.send({
@@ -128,7 +122,7 @@ export class UserService {
   }
 
   async activateUser(activationToken: string): Promise<IResponse<User>> {
-    const user = await this.userRepository.findOne({ activationToken })
+    const user = await User.findOne({ activationToken })
     if (!user) {
       return {
         error: { code: 405, message: 'Votre token est invalide' }
@@ -141,7 +135,7 @@ export class UserService {
     }
     user.activated = true
     user.activationToken = null
-    await this.userRepository.save(user)
+    await user.save()
     return { data: user }
   }
 
@@ -151,7 +145,7 @@ export class UserService {
         error: { code: 405, message: "L'email est requis." }
       }
     }
-    const user = await this.userRepository.findOne({ email })
+    const user = await User.findOne({ email })
     if (!user) {
       return {
         error: { code: 405, message: "Cet email n'existe pas." }
@@ -162,7 +156,7 @@ export class UserService {
     // Update the user password
     const hash = bcrypt.hashSync(newPassword, 10)
     user.password = hash
-    await this.userRepository.save(user)
+    await user.save()
 
     if (!Mail) {
       return {
@@ -212,10 +206,10 @@ export class UserService {
       }
     }
     const { id } = Auth.decodeToken(token)
-    const user = await this.userRepository.findOne({ id })
+    const user = await User.findOne({ id })
     const hash = bcrypt.hashSync(password, 10)
     user.password = hash
-    await this.userRepository.save(user)
+    await user.save()
     // send the user updated
     return { data: user }
   }
@@ -239,13 +233,13 @@ export class UserService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    if (await this.userRepository.findOne({ email })) {
+    if (await User.findOne({ email })) {
       return {
         error: { code: 405, message: 'Cet email est déjà utilisée' }
       }
     }
     const { id } = Auth.decodeToken(token)
-    const user = await this.userRepository.findOne({ id })
+    const user = await User.findOne({ id })
     if (!user) {
       return {
         error: { code: 405, message: 'Token invalide' }
@@ -257,7 +251,7 @@ export class UserService {
     user.activationToken = activationToken
     user.email = email
     user.activated = false
-    await this.userRepository.save(user)
+    await user.save()
 
     if (!Mail) {
       return {
@@ -294,14 +288,14 @@ export class UserService {
       }
     }
     const { id } = Auth.decodeToken(token)
-    const user = await this.userRepository.findOne({ id })
+    const user = await User.findOne({ id })
     if (!user) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
     user.lastEventDate = new Date()
-    await this.userRepository.save(user)
+    await user.save()
     return { data: user }
   }
 
@@ -320,7 +314,7 @@ export class UserService {
       }
     }
     const { id } = Auth.decodeToken(token)
-    const user = await this.userRepository.findOne({ id })
+    const user = await User.findOne({ id })
     if (!user) {
       return {
         error: { code: 405, message: 'Token invalide' }
@@ -332,7 +326,7 @@ export class UserService {
       }
     }
     user.notifications[key] = !user.notifications[key]
-    await this.userRepository.save(user)
+    await user.save()
     return { data: user }
   }
 
@@ -348,7 +342,7 @@ export class UserService {
       }
     }
     const { id } = Auth.decodeToken(token)
-    const user = await this.userRepository.findOne(id)
+    const user = await User.findOne(id)
     if (!user) {
       return {
         error: { code: 405, message: 'Token invalide' }
@@ -365,7 +359,7 @@ export class UserService {
     }
 
     try {
-      await this.userRepository.delete({ id })
+      await User.delete({ id })
       return { data: {} }
     } catch (error) {
       console.error(error)
@@ -377,7 +371,7 @@ export class UserService {
     const votes = [...user.upVotes, ...user.downVotes]
 
     for (const id of votes) {
-      const amend = await this.amendRepository.findOne({ id })
+      const amend = await Amend.findOne({ id })
       amends.push(amend)
     }
 

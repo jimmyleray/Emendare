@@ -1,8 +1,8 @@
-import { Entity, Column, ObjectID, ObjectIdColumn } from 'typeorm'
+import { Entity, Column, ObjectID, ObjectIdColumn, BaseEntity } from 'typeorm'
 import { Amend } from '../entities'
 
 @Entity()
-export class Event {
+export class Event extends BaseEntity {
   @ObjectIdColumn()
   id: ObjectID
 
@@ -16,6 +16,7 @@ export class Event {
   }
 
   constructor(type: string, targetId: string) {
+    super()
     this.target.type = type
     this.target.id = targetId
   }
