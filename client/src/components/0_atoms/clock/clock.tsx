@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react'
+// Services
 import { Time } from '../../../services'
+// Interfaces
 import { ITime } from '../../../../../interfaces'
+// Components
 import { I18nContext } from '../../../components'
 
 interface IClockProps {
