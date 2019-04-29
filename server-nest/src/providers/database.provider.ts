@@ -6,7 +6,7 @@ const databaseConfig: ConnectionOptions = {
   port: Number(process.env.MONGODB_ADDON_PORT) || 27017,
   username: process.env.MONGODB_ADDON_USER || '',
   password: process.env.MONGODB_ADDON_PASSWORD || '',
-  database: process.env.MONGODB_ADDON_DB || 'register',
+  database: process.env.MONGODB_ADDON_DB || 'emendare',
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   synchronize: true,
   useNewUrlParser: true

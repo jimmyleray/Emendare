@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
 import { Server } from 'socket.io'
 // Interfaces
 import { IResponse } from '../../../interfaces'
@@ -13,19 +11,10 @@ import * as JsDiff from 'diff'
 
 @Injectable()
 export class TextService {
-  constructor(
-    @InjectRepository(Text)
-    private readonly textRepository: Repository<Text>,
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-    @InjectRepository(Event)
-    private readonly eventRepository: Repository<Event>,
-    @InjectRepository(Amend)
-    private readonly amendRepository: Repository<Amend>
-  ) {}
+  constructor() {}
 
   async getText(id: string): Promise<IResponse<Text>> {
-    const data = await this.textRepository.findOne(id)
+    const data = await Text.findOne(id)
     return data
       ? { data }
       : {
@@ -34,7 +23,7 @@ export class TextService {
   }
 
   async getTexts(): Promise<IResponse<string[]>> {
-    const data: Text[] = await this.textRepository.find()
+    const data: Text[] = await Text.find()
     return data
       ? {
           data: data.map(text => text.id.toString())
@@ -59,17 +48,17 @@ export class TextService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user = await this.userRepository.findOne({
+    const user = await User.findOne({
       id: Auth.decodeToken(token).id
     })
     if (user && user.activated) {
       if (user.followedTexts.indexOf(id) === -1) {
         user.followedTexts.push(id)
-        await this.userRepository.save(user)
+        await user.save()
 
-        const text = await this.textRepository.findOne(id)
+        const text = await Text.findOne(id)
         text.followersCount++
-        await this.textRepository.save(text)
+        await text.save()
 
         if (io) {
           io.emit('text/' + text.id, { data: text })
@@ -103,18 +92,18 @@ export class TextService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user = await this.userRepository.findOne({
+    const user = await User.findOne({
       id: Auth.decodeToken(token).id
     })
     if (user && user.activated) {
       const id = user.followedTexts.indexOf(idText)
       if (id >= 0) {
         user.followedTexts.splice(id, 1)
-        await this.userRepository.save(user)
+        await user.save()
 
-        const text = await this.textRepository.findOne({ id: idText })
+        const text = await Text.findOne({ id: idText })
         text.followersCount--
-        await this.textRepository.save(text)
+        await text.save()
 
         if (io) {
           io.emit('text/' + text.id, { data: text })
@@ -149,17 +138,17 @@ export class TextService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user = await this.userRepository.findOne({
+    const user = await User.findOne({
       id: Auth.decodeToken(token).id
     })
     if (user && user.activated) {
       const data = new Text(name, description)
-      await this.textRepository.save(data)
+      await data.save()
 
       const event: Event = await new Event('text', data.id.toString())
-      await this.eventRepository.save(event)
+      await event.save()
 
-      const texts: Text[] = await this.textRepository.find()
+      const texts: Text[] = await Text.find()
 
       if (io) {
         io.emit('events/new', { data: event })
@@ -194,7 +183,7 @@ export class TextService {
       io.emit('text/' + text.id, { data: text })
     }
 
-    const othersAmends = await this.amendRepository.find({
+    const othersAmends = await Amend.find({
       text: text.id.toString(),
       closed: false
     })
@@ -211,15 +200,15 @@ export class TextService {
         otherAmend.finished = new Date()
         otherAmend.totalPotentialVotesCount = text.followersCount
 
-        oldEvent = await this.eventRepository.findOne({
+        oldEvent = await Event.findOne({
           target: { id: otherAmend.id.toString() }
         })
         event = new Event('result', otherAmend.id.toString())
-        await this.eventRepository.save(event)
+        await event.save()
       }
 
-      await this.amendRepository.save(otherAmend)
-      await this.eventRepository.delete({ id: oldEvent.id })
+      await otherAmend.save()
+      await Event.delete({ id: oldEvent.id })
 
       if (io) {
         if (event) {
