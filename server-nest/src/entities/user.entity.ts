@@ -1,8 +1,8 @@
-import { Entity, Column, ObjectID, ObjectIdColumn } from 'typeorm'
+import { Entity, Column, ObjectID, ObjectIdColumn, BaseEntity } from 'typeorm'
 import { Amend } from '../entities'
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
   @ObjectIdColumn()
   id: ObjectID
 
@@ -52,6 +52,7 @@ export class User {
   }
 
   constructor(email: string, password: string, activationToken: string) {
+    super()
     this.email = email
     this.password = password
     this.activationToken = activationToken
