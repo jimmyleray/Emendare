@@ -22,12 +22,6 @@ import {
 } from './services'
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([User]),
-    TypeOrmModule.forFeature([Amend]),
-    TypeOrmModule.forFeature([Text]),
-    TypeOrmModule.forFeature([Event])
-  ],
   providers: [
     ...databaseProvider,
     EventService,
