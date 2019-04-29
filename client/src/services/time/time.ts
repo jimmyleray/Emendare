@@ -63,32 +63,24 @@ export class Time {
   }
 
   public static toDateString = (data: Date | string, language: string) => {
-    const months: any = [
-      { FR: 'Janvier', EN: 'January' },
-      { FR: 'Février', EN: 'February' },
-      { FR: 'Mars', EN: 'March' },
-      { FR: 'Avril', EN: 'April' },
-      { FR: 'Mai', EN: 'May' },
-      { FR: 'Juin', EN: 'June' },
-      { FR: 'Juillet', EN: 'July' },
-      { FR: 'Août', EN: 'August' },
-      { FR: 'Septembre', EN: 'September' },
-      { FR: 'Octobre', EN: 'October' },
-      { FR: 'Novembre', EN: 'November' },
-      { FR: 'Décembre', EN: 'December' }
-    ]
     const date = new Date(data)
-    console.log(data)
-    const day = date
-      .toLocaleString()
-      .split(',')[0]
-      .split('/')[1]
-    const month = months[date.getMonth()][language]
     const year = date.getFullYear()
-
-    return `${day} ${month}${
-      year !== new Date(Date.now()).getFullYear() ? ` ${year}` : ''
-    }`
+    const options =
+      year !== new Date(Date.now()).getFullYear()
+        ? {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+          }
+        : {
+            month: 'long',
+            day: 'numeric'
+          }
+    const dateString = date.toLocaleDateString(
+      language === 'FR' ? 'fr-FR' : 'en-EN',
+      options
+    )
+    return dateString
   }
 
   /**

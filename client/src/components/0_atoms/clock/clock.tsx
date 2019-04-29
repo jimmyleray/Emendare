@@ -62,7 +62,7 @@ export const Clock = (getTime: any) => ({ date, ...rest }: IClockProps) => {
     return () => stop()
   }, [])
 
-  return time.hours <= 7 ? (
+  return time.days <= 7 ? (
     <span {...rest}>{Time.toTimeString(time)}</span>
   ) : (
     <span {...rest}>{Time.toDateString(date, actualLanguage)}</span>
