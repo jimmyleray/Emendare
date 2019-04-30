@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common'
-import bcrypt from 'bcrypt'
+import { Injectable, Inject } from '@nestjs/common'
+import { hashSync, compareSync } from 'bcrypt'
 import { isUndefined } from 'lodash'
 import { Server } from 'socket.io'
 // Interfaces
@@ -14,7 +14,9 @@ import { activation, reset } from '../emails'
 @Injectable()
 export class UserService {
   constructor(
+    @Inject('TextService')
     private readonly textService: TextService,
+    @Inject('AmendService')
     private readonly amendService: AmendService
   ) {}
 
@@ -39,7 +41,7 @@ export class UserService {
           error: { code: 405, message: "Votre compte n'est pas activé" }
         }
       }
-      if (!bcrypt.compareSync(password, user.password)) {
+      if (!compareSync(password, user.password)) {
         return {
           error: { code: 405, message: 'Le mot de passe est invalide' }
         }
@@ -83,6 +85,7 @@ export class UserService {
         error: { code: 405, message: 'Le mot de passe est requis' }
       }
     }
+
     if (await User.findOne({ email })) {
       return {
         error: {
@@ -92,7 +95,7 @@ export class UserService {
         }
       }
     }
-    const hash = bcrypt.hashSync(password, 10)
+    const hash = hashSync(password, 10)
     const activationToken = Crypto.getToken()
     const user = new User(email, hash, activationToken)
     await user.save()
@@ -154,7 +157,7 @@ export class UserService {
     // Generate a new Password
     const newPassword = Crypto.getToken(16)
     // Update the user password
-    const hash = bcrypt.hashSync(newPassword, 10)
+    const hash = hashSync(newPassword, 10)
     user.password = hash
     await user.save()
 
@@ -207,7 +210,7 @@ export class UserService {
     }
     const { id } = Auth.decodeToken(token)
     const user = await User.findOne({ id })
-    const hash = bcrypt.hashSync(password, 10)
+    const hash = hashSync(password, 10)
     user.password = hash
     await user.save()
     // send the user updated

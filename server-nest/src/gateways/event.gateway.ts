@@ -16,7 +16,8 @@ export class EventGateway {
   @SubscribeMessage('event')
   async handleEvent(client: Socket, data: { data: { id: string } }) {
     try {
-      return this.eventService.getEvent(data.data.id)
+      const response = await this.eventService.getEvent(data.data.id)
+      client.emit('event', response)
     } catch (error) {
       console.error(error)
     }
@@ -25,13 +26,14 @@ export class EventGateway {
   @SubscribeMessage('events')
   async handleEvents(
     client: Socket,
-    data: { data: { limit: number; lastEventDate: any } }
+    data: { token: any; data: { limit: number; lastEventDate: any } }
   ) {
     try {
-      return this.eventService.getEventsByGroup(
+      const response = await this.eventService.getEventsByGroup(
         data.data.limit,
         data.data.lastEventDate
       )
+      client.emit('events', response)
     } catch (error) {
       console.error(error)
     }

@@ -22,68 +22,77 @@ export class UserGateway {
           const { id } = Auth.decodeToken(token)
           const data = await this.userService.getUser(id)
           if (data) {
-            return { data }
+            client.emit('user', data)
           } else {
-            return {
+            client.emit('user', {
               error: {
                 code: 401,
                 message: "Cet utilisateur n'est pas connecté"
               }
-            }
+            })
           }
         } catch (error) {
           console.error(error)
         }
       } else {
-        return {
+        client.emit('user', {
           error: { code: 405, message: 'Le token est expiré' }
-        }
+        })
       }
     } else {
-      return {
+      client.emit('user', {
         error: { code: 405, message: 'Le token est invalide' }
-      }
+      })
     }
   }
 
   @SubscribeMessage('activation')
   async handleActication(client: Socket, data: { activationToken: string }) {
-    return await this.userService.activateUser(data.activationToken)
+    const response = await this.userService.activateUser(data.activationToken)
+    client.emit('activation', response)
   }
 
   @SubscribeMessage('login')
   async handleLogin(client: Socket, data: { token: string; data: any }) {
     const { token } = data
     const { email, password } = data.data
-
+    let response
     if (!data && token) {
-      return await this.userService.login(undefined, undefined, token)
+      response = await this.userService.login(undefined, undefined, token)
     } else if (data) {
-      return await this.userService.login(email, password, token)
+      response = await this.userService.login(email, password, token)
     } else {
-      return {
+      response = {
         error: {
           code: 405,
           message: 'La requête est invalide'
         }
       }
     }
+    client.emit('login', response)
   }
 
   @SubscribeMessage('subscribe')
   async handleSubscribe(
     client: Socket,
-    data: { email: string; password: string }
+    data: { token: any; data: { email: string; password: string } }
   ) {
-    if (data.email && data.password) {
-      return await this.userService.subscribe(data.email, data.password)
+    try {
+      const response = await this.userService.subscribe(
+        data.data.email,
+        data.data.password
+      )
+      client.emit('subscribe', response)
+    } catch (error) {
+      console.error(error)
     }
   }
 
   @SubscribeMessage('resetPassword')
   async handleResetPassword(client: Socket, data: { data: { email: string } }) {
     try {
-      return await this.userService.resetPassword(data.data.email)
+      const response = await this.userService.resetPassword(data.data.email)
+      client.emit('resetPassword', response)
     } catch (error) {
       console.error(error)
     }
@@ -91,7 +100,8 @@ export class UserGateway {
 
   @SubscribeMessage('deleteAccount')
   async handleDeleteAccount(client: Socket, data: { token: string }) {
-    return await this.userService.delete(data.token, this.io)
+    const response = await this.userService.delete(data.token, this.io)
+    client.emit('deleteAccount', response)
   }
 
   @SubscribeMessage('updateEmail')
@@ -100,7 +110,11 @@ export class UserGateway {
     data: { token: string; data: { email: string } }
   ) {
     if (data.data.email) {
-      return await this.userService.updateEmail(data.data.email, data.token)
+      const response = await this.userService.updateEmail(
+        data.data.email,
+        data.token
+      )
+      client.emit('updateEmail', response)
     }
   }
 
@@ -110,10 +124,11 @@ export class UserGateway {
     data: { token: string; data: { password: string } }
   ) {
     try {
-      return await this.userService.updatePassword(
+      const response = await this.userService.updatePassword(
         data.data.password,
         data.token
       )
+      client.emit('updatePassword', response)
     } catch (error) {
       console.error(error)
     }

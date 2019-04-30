@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import {Inject, Injectable} from '@nestjs/common'
 // Interfaces
 import { IResponse } from '../../../interfaces'
 // Services
@@ -11,7 +11,9 @@ import { Server } from 'socket.io'
 
 @Injectable()
 export class AmendService {
-  constructor(private readonly textService: TextService) {}
+  constructor(
+      @Inject('TextService') private readonly textService: TextService)
+  {}
 
   async getAmend(id: string): Promise<IResponse<Amend>> {
     const data: Amend = await Amend.findOne(id)
