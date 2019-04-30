@@ -17,12 +17,16 @@ export class UserService {
     @Inject('TextService')
     private readonly textService: TextService,
     @Inject('AmendService')
-    private readonly amendService: AmendService
+    private readonly amendService: AmendService,
+    @Inject('Auth')
+    private readonly auth: Auth,
+    @Inject('Crypto')
+    private readonly crypto: Crypto
   ) {}
 
   async getUser(id: string): Promise<User> {
     if (id) {
-      return await User.findOne({ id })
+      return await User.findOne(id)
     }
   }
 
@@ -46,12 +50,12 @@ export class UserService {
           error: { code: 405, message: 'Le mot de passe est invalide' }
         }
       }
-      const newToken = await Auth.createToken({ id: user.id })
+      const newToken = this.auth.createToken({ id: user.id })
       return { data: { user, token: newToken } }
     } else if (token) {
-      if (Auth.isTokenValid(token)) {
-        const { id } = Auth.decodeToken(token)
-        const user = await User.findOne({ id })
+      if (this.auth.isTokenValid(token)) {
+        const { id } = this.auth.decodeToken(token)
+        const user = await User.findOne(id)
         if (!user) {
           return { error: { code: 405, message: 'Ce compte a été supprimé' } }
         }
@@ -96,7 +100,7 @@ export class UserService {
       }
     }
     const hash = hashSync(password, 10)
-    const activationToken = Crypto.getToken()
+    const activationToken = this.crypto.getToken()
     const user = new User(email, hash, activationToken)
     await user.save()
 
@@ -155,7 +159,7 @@ export class UserService {
       }
     }
     // Generate a new Password
-    const newPassword = Crypto.getToken(16)
+    const newPassword = this.crypto.getToken(16)
     // Update the user password
     const hash = hashSync(newPassword, 10)
     user.password = hash
@@ -198,18 +202,18 @@ export class UserService {
         error: { code: 405, message: 'Requête invalide' }
       }
     }
-    if (!Auth.isTokenValid(token)) {
+    if (!this.auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (Auth.isTokenExpired(token)) {
+    if (this.auth.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const { id } = Auth.decodeToken(token)
-    const user = await User.findOne({ id })
+    const { id } = this.auth.decodeToken(token)
+    const user = await User.findOne(id)
     const hash = hashSync(password, 10)
     user.password = hash
     await user.save()
@@ -226,12 +230,12 @@ export class UserService {
         error: { code: 405, message: 'Requête invalide' }
       }
     }
-    if (!Auth.isTokenValid(token)) {
+    if (!this.auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (Auth.isTokenExpired(token)) {
+    if (this.auth.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
@@ -241,8 +245,8 @@ export class UserService {
         error: { code: 405, message: 'Cet email est déjà utilisée' }
       }
     }
-    const { id } = Auth.decodeToken(token)
-    const user = await User.findOne({ id })
+    const { id } = this.auth.decodeToken(token)
+    const user = await User.findOne(id)
     if (!user) {
       return {
         error: { code: 405, message: 'Token invalide' }
@@ -250,7 +254,7 @@ export class UserService {
     }
 
     // Set the new email and the token for the activation
-    const activationToken = Crypto.getToken()
+    const activationToken = this.crypto.getToken()
     user.activationToken = activationToken
     user.email = email
     user.activated = false
@@ -280,18 +284,18 @@ export class UserService {
   }
 
   async updateLastEventDate(token: string): Promise<IResponse<User>> {
-    if (!token || !Auth.isTokenValid(token)) {
+    if (!token || !this.auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Le token est invalide' }
       }
     }
-    if (Auth.isTokenExpired(token)) {
+    if (this.auth.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Le token est expiré' }
       }
     }
-    const { id } = Auth.decodeToken(token)
-    const user = await User.findOne({ id })
+    const { id } = this.auth.decodeToken(token)
+    const user = await User.findOne(id)
     if (!user) {
       return {
         error: { code: 405, message: 'Token invalide' }
@@ -306,18 +310,18 @@ export class UserService {
     key: any,
     token: string
   ): Promise<IResponse<User>> {
-    if (!token || !Auth.isTokenValid(token)) {
+    if (!token || !this.auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Le token est invalide' }
       }
     }
-    if (Auth.isTokenExpired(token)) {
+    if (this.auth.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Le token est expiré' }
       }
     }
-    const { id } = Auth.decodeToken(token)
-    const user = await User.findOne({ id })
+    const { id } = this.auth.decodeToken(token)
+    const user = await User.findOne(id)
     if (!user) {
       return {
         error: { code: 405, message: 'Token invalide' }
@@ -334,17 +338,17 @@ export class UserService {
   }
 
   async delete(token: string, io: Server): Promise<IResponse<any>> {
-    if (!token || !Auth.isTokenValid(token)) {
+    if (!token || !this.auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Le token est invalide' }
       }
     }
-    if (Auth.isTokenExpired(token)) {
+    if (this.auth.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Le token est expiré' }
       }
     }
-    const { id } = Auth.decodeToken(token)
+    const { id } = this.auth.decodeToken(token)
     const user = await User.findOne(id)
     if (!user) {
       return {
@@ -362,7 +366,7 @@ export class UserService {
     }
 
     try {
-      await User.delete({ id })
+      await User.delete(id)
       return { data: {} }
     } catch (error) {
       console.error(error)
@@ -374,7 +378,7 @@ export class UserService {
     const votes = [...user.upVotes, ...user.downVotes]
 
     for (const id of votes) {
-      const amend = await Amend.findOne({ id })
+      const amend = await Amend.findOne(id)
       amends.push(amend)
     }
 

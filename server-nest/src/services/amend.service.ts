@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 // Interfaces
 import { IResponse } from '../../../interfaces'
 // Services
@@ -12,8 +12,10 @@ import { Server } from 'socket.io'
 @Injectable()
 export class AmendService {
   constructor(
-      @Inject('TextService') private readonly textService: TextService)
-  {}
+    @Inject('TextService') private readonly textService: TextService,
+    @Inject('Auth')
+    private readonly auth: Auth
+  ) {}
 
   async getAmend(id: string): Promise<IResponse<Amend>> {
     const data: Amend = await Amend.findOne(id)
@@ -58,18 +60,20 @@ export class AmendService {
     token: string,
     io?: Server
   ): Promise<IResponse<Amend>> {
-    if (!Auth.isTokenValid(token)) {
+    if (!this.auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (Auth.isTokenExpired(token)) {
+    if (this.auth.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
     const user: User = await User.findOne({
-      id: Auth.decodeToken(token).id
+      where: {
+        id: this.auth.decodeToken(token).id
+      }
     })
     if (user && user.activated) {
       const amend: Amend = await Amend.findOne(id)
@@ -129,18 +133,20 @@ export class AmendService {
     token: string,
     io?: Server
   ): Promise<IResponse<Amend>> {
-    if (!Auth.isTokenValid(token)) {
+    if (!this.auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (Auth.isTokenExpired(token)) {
+    if (this.auth.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
     const user: User = await User.findOne({
-      id: Auth.decodeToken(token).id
+      where: {
+        id: this.auth.decodeToken(token).id
+      }
     })
     if (user && user.activated) {
       const amend: Amend = await Amend.findOne(id)
@@ -200,18 +206,20 @@ export class AmendService {
     token: string,
     io?: Server
   ): Promise<IResponse<Amend>> {
-    if (!Auth.isTokenValid(token)) {
+    if (!this.auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (Auth.isTokenExpired(token)) {
+    if (this.auth.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
     const user: User = await User.findOne({
-      id: Auth.decodeToken(token).id
+      where: {
+        id: this.auth.decodeToken(token).id
+      }
     })
     if (user && user.activated) {
       const amend: Amend = await Amend.findOne(id)
@@ -271,18 +279,20 @@ export class AmendService {
     token: string,
     io?: Server
   ): Promise<IResponse<Amend>> {
-    if (!Auth.isTokenValid(token)) {
+    if (!this.auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (Auth.isTokenExpired(token)) {
+    if (this.auth.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
     const user: User = await User.findOne({
-      id: Auth.decodeToken(token).id
+      where: {
+        id: this.auth.decodeToken(token).id
+      }
     })
     if (user && user.activated) {
       const amend = await Amend.findOne(id)
@@ -347,25 +357,27 @@ export class AmendService {
     io?: Server
   ): Promise<IResponse<Amend>> {
     const { name, description, patch, version, textID } = data
-    if (!Auth.isTokenValid(token)) {
+    if (!this.auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (Auth.isTokenExpired(token)) {
+    if (this.auth.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
     const user: User = await User.findOne({
-      id: Auth.decodeToken(token).id
+      where: {
+        id: this.auth.decodeToken(token).id
+      }
     })
     if (user && user.activated) {
       const amend: Amend = new Amend(name, description, patch, textID, version)
       await amend.save()
 
-      const text: Text = await Text.findOne({ id: textID })
-      text.amends.push(amend.id)
+      const text: Text = await Text.findOne({ where: { id: textID } })
+      text.amends.push(amend.id.toString())
       await text.save()
 
       const event: Event = new Event('amend', amend.id.toString())
@@ -406,7 +418,7 @@ export class AmendService {
         }
 
         await amend.save()
-        const newAmend = await Amend.findOne({ id: amend.id })
+        const newAmend = await Amend.findOne({ where: { id: amend.id } })
         io.emit('amend/' + amend._id, { data: newAmend })
 
         const oldEvent: Event = await Event.findOne({

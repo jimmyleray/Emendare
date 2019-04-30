@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Inject } from '@nestjs/common'
 import { Server } from 'socket.io'
 // Interfaces
 import { IResponse } from '../../../interfaces'
 // Services
-import { Auth } from '.'
+import { Auth } from '../services'
 // Entities
 import { Text, User, Event, Amend } from '../entities'
 // Diff Patch Library
@@ -11,7 +11,10 @@ import * as JsDiff from 'diff'
 
 @Injectable()
 export class TextService {
-  constructor() {}
+  constructor(
+    @Inject('Auth')
+    private readonly auth: Auth
+  ) {}
 
   async getText(id: string): Promise<IResponse<Text>> {
     const data = await Text.findOne(id)
@@ -38,18 +41,20 @@ export class TextService {
     token: string,
     io?: Server
   ): Promise<IResponse<Text>> {
-    if (!Auth.isTokenValid(token)) {
+    if (!this.auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (Auth.isTokenExpired(token)) {
+    if (this.auth.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
     const user = await User.findOne({
-      id: Auth.decodeToken(token).id
+      where: {
+        id: this.auth.decodeToken(token)
+      }
     })
     if (user && user.activated) {
       if (user.followedTexts.indexOf(id) === -1) {
@@ -82,18 +87,20 @@ export class TextService {
     token: string,
     io?: Server
   ): Promise<IResponse<Text>> {
-    if (!Auth.isTokenValid(token)) {
+    if (!this.auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (Auth.isTokenExpired(token)) {
+    if (this.auth.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
     const user = await User.findOne({
-      id: Auth.decodeToken(token).id
+      where: {
+        id: this.auth.decodeToken(token).id
+      }
     })
     if (user && user.activated) {
       const id = user.followedTexts.indexOf(idText)
@@ -128,18 +135,20 @@ export class TextService {
     token: string,
     io?: Server
   ): Promise<IResponse<Text>> {
-    if (!Auth.isTokenValid(token)) {
+    if (!this.auth.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (Auth.isTokenExpired(token)) {
+    if (this.auth.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
     const user = await User.findOne({
-      id: Auth.decodeToken(token).id
+      where: {
+        id: this.auth.decodeToken(token).id
+      }
     })
     if (user && user.activated) {
       const data = new Text(name, description)
@@ -201,7 +210,9 @@ export class TextService {
         otherAmend.totalPotentialVotesCount = text.followersCount
 
         oldEvent = await Event.findOne({
-          target: { id: otherAmend.id.toString() }
+          where: {
+            target: { id: otherAmend.id.toString() }
+          }
         })
         event = new Event('result', otherAmend.id.toString())
         await event.save()
