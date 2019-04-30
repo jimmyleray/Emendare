@@ -56,5 +56,18 @@ export class User extends BaseEntity {
     this.email = email
     this.password = password
     this.activationToken = activationToken
+    this.activated = process.env.NODE_ENV !== 'production'
+    this.created = new Date(Date.now())
+    this.lastEventDate = new Date(Date.now())
+    this.followedTexts = []
+    this.notifications = {
+      newText: true,
+      newAmend: true,
+      amendAccepted: true,
+      amendRefused: true
+    }
+    this.indVotes = []
+    this.upVotes = []
+    this.downVotes = []
   }
 }

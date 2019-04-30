@@ -81,5 +81,15 @@ export class Amend extends BaseEntity {
     this.patch = patch
     this.text = textId
     this.version = version
+    this.created = new Date(Date.now())
+    this.closed = false
+    this.accepted = false
+    this.conflicted = false
+    this.results = {
+      totalPotentialVotesCount: 0,
+      upVotesCount: 0,
+      downVotesCount: 0,
+      indVotesCount: 0
+    }
   }
 }
