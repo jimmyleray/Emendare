@@ -10,7 +10,7 @@ export const UpdatePassword = () => {
 
   useEffect(() => {
     return () => {
-      Socket.off('update-password')
+      Socket.off('updatePassword')
     }
   })
 
@@ -32,7 +32,7 @@ export const UpdatePassword = () => {
 
   const submitPassword = (event: any) => {
     event.preventDefault()
-    Socket.fetch('update-password', { password })
+    Socket.fetch('updatePassword', { password })
       .then(() => {
         setPassword('')
         setCheckPassword('')
