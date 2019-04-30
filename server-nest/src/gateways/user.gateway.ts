@@ -9,20 +9,20 @@ import { UserService, Auth } from '../services'
 
 @WebSocketGateway()
 export class UserGateway {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private auth: Auth) {}
   @WebSocketServer()
   io: Server
 
   @SubscribeMessage('user')
   async handlerUser(client: Socket, data: { token: string }) {
     const { token } = data
-    if (token && Auth.isTokenValid(token)) {
-      if (!Auth.isTokenExpired(token)) {
+    if (token && this.auth.isTokenValid(token)) {
+      if (!this.auth.isTokenExpired(token)) {
         try {
-          const { id } = Auth.decodeToken(token)
-          const data = await this.userService.getUser(id)
-          if (data) {
-            client.emit('user', data)
+          const { id } = this.auth.decodeToken(token)
+          const response = await this.userService.getUser(id)
+          if (response) {
+            client.emit('user', response)
           } else {
             client.emit('user', {
               error: {
@@ -56,7 +56,7 @@ export class UserGateway {
   async handleLogin(client: Socket, data: { token: string; data: any }) {
     const { token } = data
     const { email, password } = data.data
-    let response
+    let response: any
     if (!data && token) {
       response = await this.userService.login(undefined, undefined, token)
     } else if (data) {
