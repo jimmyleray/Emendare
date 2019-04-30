@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer'
 
 // Chalk for colored logs
 import chalk from 'chalk'
+import { Injectable } from '@nestjs/common'
 
 export class Mailer {
   private transporter: any
