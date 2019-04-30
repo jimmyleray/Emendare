@@ -10,6 +10,7 @@ import { AmendService } from '../services'
 @WebSocketGateway()
 export class AmendGateway {
   constructor(private amendService: AmendService) {}
+
   @WebSocketServer()
   io: Server
 
@@ -40,7 +41,12 @@ export class AmendGateway {
     }
   ) {
     try {
-      return await this.amendService.postAmend(data.data, data.token, this.io)
+      const response = await this.amendService.postAmend(
+        data.data,
+        data.token,
+        this.io
+      )
+      client.emit('postAmend', response)
     } catch (error) {
       console.error(error)
     }
@@ -52,11 +58,12 @@ export class AmendGateway {
     data: { token: string; data: { id: string } }
   ) {
     try {
-      return await this.amendService.upVoteAmend(
+      const response = await this.amendService.upVoteAmend(
         data.data.id,
         data.token,
         this.io
       )
+      client.emit('upVoteAmend', response)
     } catch (error) {
       console.error(error)
     }
@@ -68,11 +75,12 @@ export class AmendGateway {
     data: { token: string; data: { id: string } }
   ) {
     try {
-      return await this.amendService.downVoteAmend(
+      const response = await this.amendService.downVoteAmend(
         data.data.id,
         data.token,
         this.io
       )
+      client.emit('downVoteAmend', response)
     } catch (error) {
       console.error(error)
     }
@@ -84,27 +92,29 @@ export class AmendGateway {
     data: { token: string; data: { id: string } }
   ) {
     try {
-      return await this.amendService.upVoteAmend(
+      const response = await this.amendService.upVoteAmend(
         data.data.id,
         data.token,
         this.io
       )
+      client.emit('indVoteAmend', response)
     } catch (error) {
       console.error(error)
     }
   }
 
-  @SubscribeMessage('UnVoteAmend')
+  @SubscribeMessage('unVoteAmend')
   async handleUnVoteAmend(
     client: Socket,
     data: { token: string; data: { id: string } }
   ) {
     try {
-      return await this.amendService.unVoteAmend(
+      const response = await this.amendService.unVoteAmend(
         data.data.id,
         data.token,
         this.io
       )
+      client.emit('unVoteAmend', response)
     } catch (error) {
       console.error(error)
     }

@@ -16,16 +16,18 @@ export class TextGateway {
   @SubscribeMessage('text')
   async handleText(client: Socket, data: { data: { id: string } }) {
     try {
-      return await this.textService.getText(data.data.id)
+      const response = await this.textService.getText(data.data.id)
+      client.emit('text', response)
     } catch (error) {
       console.error(error)
     }
   }
 
   @SubscribeMessage('texts')
-  async handleTexts() {
+  async handleTexts(client: Socket) {
     try {
-      return await this.textService.getTexts()
+      const response = await this.textService.getTexts()
+      client.emit('texts', response)
     } catch (error) {
       console.error(error)
     }
@@ -37,11 +39,12 @@ export class TextGateway {
     data: { token: string; data: { id: string } }
   ) {
     try {
-      return await this.textService.followText(
+      const response = await this.textService.followText(
         data.data.id,
         data.token,
         this.io
       )
+      client.emit('followText', response)
     } catch (error) {
       console.error(error)
     }
@@ -53,11 +56,12 @@ export class TextGateway {
     data: { token: string; data: { id: string } }
   ) {
     try {
-      return await this.textService.unFollowText(
+      const response = await this.textService.unFollowText(
         data.data.id,
         data.token,
         this.io
       )
+      client.emit('unFollowText', response)
     } catch (error) {
       console.error(error)
     }
@@ -69,12 +73,13 @@ export class TextGateway {
     data: { token: string; data: { name: string; description: string } }
   ) {
     try {
-      return await this.textService.postText(
+      const response = await this.textService.postText(
         data.data.name,
         data.data.description,
         data.token,
         this.io
       )
+      client.emit('postText', response)
     } catch (error) {
       console.error(error)
     }

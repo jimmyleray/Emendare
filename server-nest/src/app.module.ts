@@ -16,20 +16,20 @@ import {
   EventService,
   UserService,
   TextService,
-  AmendService,
+  AmendService
 } from './services'
 
 @Module({
   providers: [
     ...databaseProvider,
-    EventService,
-    UserService,
-    TextService,
-    AmendService,
     EventGateway,
     AmendGateway,
     UserGateway,
-    TextGateway
+    TextGateway,
+    EventService,
+    UserService,
+    TextService,
+    AmendService
   ]
 })
 export class AppModule {}
