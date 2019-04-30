@@ -24,12 +24,17 @@ export class Text extends BaseEntity {
   @Column({ default: [] })
   patches: string[]
 
-  @Column(type => Amend)
-  amends: Array<Amend['id']>
+  @Column({ default: [] })
+  amends: string[]
 
   constructor(name: string, description: string) {
     super()
     this.name = name
     this.description = description
+    this.created = new Date(Date.now())
+    this.followersCount = 0
+    this.actual = ''
+    this.patches = []
+    this.amends = []
   }
 }
