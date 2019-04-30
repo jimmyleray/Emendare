@@ -18,12 +18,12 @@ export const UpdateEmail = () => {
 
   useEffect(() => {
     return () => {
-      Socket.off('update-email')
+      Socket.off('updateEmail')
     }
   }, [])
 
   const submitEmail = () => {
-    Socket.fetch('update-email', { email }).catch((err: any) => {
+    Socket.fetch('updateEmail', { email }).catch((err: any) => {
       console.error(err)
       setError(err)
     })
