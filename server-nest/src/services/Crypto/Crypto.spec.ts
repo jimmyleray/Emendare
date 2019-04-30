@@ -1,9 +1,14 @@
 import { Crypto } from './Crypto'
 
+let crypto: Crypto
+beforeEach(() => {
+  crypto = new Crypto()
+})
+
 test('returned token is a string', () => {
-  expect(typeof Crypto.getToken()).toBe('string')
+  expect(typeof crypto.getToken()).toBe('string')
 })
 
 test('returned different tokens', () => {
-  expect(Crypto.getToken()).not.toBe(Crypto.getToken())
+  expect(crypto.getToken()).not.toBe(crypto.getToken())
 })
