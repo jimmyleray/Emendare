@@ -1,31 +1,36 @@
 import njwt from 'njwt'
+import { sign, verify, decode } from 'jsonwebtoken'
 import config from '../../config'
 import { IJWT } from '../../../../interfaces'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class Auth {
-  public static createToken(claims = {}, expire = config.jwt.expire): string {
-    const jwt = njwt.create(claims, config.jwt.secret)
-    jwt.setExpiration(Date.now() + expire)
-    return jwt.compact()
+  public createToken(claims = {}, expire = config.jwt.expire): string {
+    const token = sign(
+      { ...claims, exp: Math.floor(Date.now() / 1000) + expire },
+      config.jwt.secret
+    )
+    return token.toString()
   }
 
-  public static decodeToken(token: string): IJWT {
+  public decodeToken(token: string): IJWT {
     try {
-      return njwt.verify(token, config.jwt.secret).body
+      return verify(token, config.jwt.secret)
     } catch (err) {
       return null
     }
   }
 
-  public static isTokenExpired(token: string): boolean {
-    const decoded = Auth.decodeToken(token)
+  public isTokenExpired(token: string): boolean {
+    const decoded = this.decodeToken(token)
     if (!decoded) {
       return true
     }
     return Math.floor(Date.now() / 1000) >= decoded.exp
   }
 
-  public static isTokenValid(token: string): boolean {
-    return !!Auth.decodeToken(token)
+  public isTokenValid(token: string): boolean {
+    return !!this.decodeToken(token)
   }
 }
