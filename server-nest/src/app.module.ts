@@ -8,15 +8,15 @@ import {
   UserGateway,
   TextGateway
 } from './gateways'
-// Entities
-import { User, Amend, Text, Event } from './entities'
 
 // services
 import {
   EventService,
   UserService,
   TextService,
-  AmendService
+  AmendService,
+  Auth,
+  Crypto
 } from './services'
 
 @Module({
@@ -29,7 +29,9 @@ import {
     EventService,
     UserService,
     TextService,
-    AmendService
+    AmendService,
+    Auth,
+    Crypto
   ]
 })
 export class AppModule {}
