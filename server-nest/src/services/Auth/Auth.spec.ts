@@ -1,29 +1,38 @@
 import { Auth } from './Auth'
 
-test('should not validate JWT token', () => {
-  expect(Auth.isTokenValid('abcd')).toBe(false)
-})
+describe('AuthService', () => {
+  let auth: Auth
+  beforeEach(() => {
+    auth = new Auth()
+  })
 
-test('returned JWT token is a string', () => {
-  expect(typeof Auth.createToken({ id: 'abcd' })).toBe('string')
-})
+  test('should not validate JWT token', () => {
+    expect(auth.isTokenValid('abcd')).toBe(false)
+  })
 
-test('returned JWT token is valid', () => {
-  expect(Auth.isTokenValid(Auth.createToken({ id: 'abcd' }))).toBe(true)
-})
+  test('returned JWT token is a string', () => {
+    expect(typeof auth.createToken({ id: 'abcd' })).toBe('string')
+  })
 
-test('returned JWT token is expired', () => {
-  const token = Auth.createToken({ id: 'abcd' }, 0)
-  expect(Auth.isTokenExpired(token)).toBe(true)
-})
+  test('returned JWT token is valid', () => {
+    expect(auth.isTokenValid(auth.createToken({ id: 'abcd' }))).toBe(true)
+  })
 
-test('returned different JWT tokens', () => {
-  expect(Auth.createToken({ id: 'abcd' })).not.toBe(Auth.createToken({ id: 'abcd' }))
-})
+  test('returned JWT token is expired', () => {
+    const token = auth.createToken({ id: 'abcd' }, 0)
+    expect(auth.isTokenExpired(token)).toBe(true)
+  })
 
-test('can retreive info from token', () => {
-  const data = { id: 'abcd', test: 'test' }
-  const token = Auth.createToken(data);
-  const jwtData = Auth.decodeToken(token)
-  expect(jwtData).toMatchObject(data)
+  test('returned different JWT tokens', () => {
+    expect(auth.createToken({ id: 'abcd' })).not.toBe(
+      auth.createToken({ id: 'abcd' })
+    )
+  })
+
+  test('can retreive info from token', () => {
+    const data = { id: 'abcd', test: 'test' }
+    const token = auth.createToken(data)
+    const jwtData = auth.decodeToken(token)
+    expect(jwtData).toMatchObject(data)
+  })
 })
