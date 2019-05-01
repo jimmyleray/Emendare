@@ -21,6 +21,12 @@ export const Clock = (getTime: any) => ({ date, ...rest }: IClockProps) => {
   const [clock, setClock] = useState(0)
   const [time, setTime] = useState(getTime(date))
   const { actualLanguage } = useContext(I18nContext)
+
+  useEffect(() => {
+    start()
+    return stop
+  }, [])
+
   const start = (intervalDelay: number = 1000) => {
     const timeToDisplay: ITime = getTime(date)
 
@@ -42,11 +48,11 @@ export const Clock = (getTime: any) => ({ date, ...rest }: IClockProps) => {
 
     setClock(
       window.setInterval(() => {
-        const time: ITime = getTime(date)
-        if (Time.isNegative(time) || time.days > 7) {
+        const newTime: ITime = getTime(date)
+        if (Time.isNegative(newTime) || time.days > 7) {
           stop()
         } else {
-          setTime(time)
+          setTime(newTime)
         }
       }, intervalDelay)
     )
@@ -58,16 +64,11 @@ export const Clock = (getTime: any) => ({ date, ...rest }: IClockProps) => {
     }
   }
 
-  useEffect(() => {
-    if (time.days <= 7) {
-      start()
-    }
-    return () => stop()
-  }, [])
-
-  return time.days <= 7 ? (
-    <span {...rest}>{Time.toTimeString(time)}</span>
-  ) : (
-    <span {...rest}>{Time.toDateString(date, actualLanguage)}</span>
+  return (
+    <span {...rest}>
+      {time.days <= 7
+        ? Time.toTimeString(time)
+        : Time.toDateString(date, actualLanguage)}
+    </span>
   )
 }
