@@ -13,7 +13,7 @@ it('should render a Clock', done => {
     Time.convertMsToTime(Time.getTimeLeft(date))
   const HOC = Clock(getTime)
   const component = shallow<any>(
-    <HOC date={Time.addTimeToDate(new Date(), 2000)} />
+    <HOC date={Time.addTimeToDate(new Date(), 700)} />
   )
   expect(component).toBeTruthy()
 

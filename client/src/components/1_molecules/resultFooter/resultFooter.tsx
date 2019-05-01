@@ -17,15 +17,11 @@ interface IResultFooterProps {
 }
 
 export const ResultFooterCard = ({ target, user }: IResultFooterProps) => {
-  const propsAccepted = getPropsAmendUp(
-    target.results.upVotesCount > target.results.downVotesCount
-  )
-  const propsDecline = getPropsAmendDown(
-    target.results.upVotesCount <= target.results.downVotesCount
-  )
+  const propsAccepted = getPropsAmendUp(target.accepted)
+  const propsDecline = getPropsAmendDown(!target.accepted)
 
   return (
-    <Grid style={{ gridTemplateColumns: '1fr 1fr', gridColumnGap: '10%' }}>
+    <Grid style={{ gridTemplateColumns: '1fr 1fr', gridColumnGap: '8%' }}>
       <div className="card-event__resultbar--size">
         <ResultBar
           results={{

@@ -12,9 +12,9 @@ export const getPourcentageVote = (result: {
   return totalVote === 0
     ? { up: 0, down: 0, ind: 0 }
     : {
-        up: (up / totalVote) * 100,
-        down: (down / totalVote) * 100,
-        ind: (ind / totalVote) * 100
+        up: +((up / totalVote) * 100).toFixed(1),
+        down: +((down / totalVote) * 100).toFixed(1),
+        ind: +((ind / totalVote) * 100).toFixed(1)
       }
 }
 
