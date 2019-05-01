@@ -39,17 +39,15 @@ export const LoginForm = ({ location, render }: ILoginPageProps) => {
   const submit = (event: any) => {
     event.preventDefault()
     Socket.fetch('login', {
-      password: password,
-      email: email
+      password,
+      email
     })
       .then(async ({ token }: any) => {
         localStorage.setItem('token', token)
         await Socket.fetch('user')
         setRedirectToRefferer(true)
       })
-      .catch((error: any) => {
-        setError(error)
-      })
+      .catch(setError)
   }
 
   if (redirectToRefferer) {
