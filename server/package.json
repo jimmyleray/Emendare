@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "index.js",
   "engines": {
-    "node": "8.15.0"
+    "node": "10.15.3"
   },
   "license": "GPL-3.0",
   "scripts": {
@@ -38,7 +38,7 @@
     ]
   },
   "dependencies": {
-    "bcrypt": "^3.0.4",
+    "bcrypt": "^3.0.6",
     "chalk": "^2.4.2",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
