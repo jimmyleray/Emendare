@@ -62,6 +62,27 @@ export class Time {
     }
   }
 
+  public static toDateString = (data: Date | string, language: string) => {
+    const date = new Date(data)
+    const year = date.getFullYear()
+    const options =
+      year !== new Date(Date.now()).getFullYear()
+        ? {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+          }
+        : {
+            month: 'long',
+            day: 'numeric'
+          }
+    const dateString = date.toLocaleDateString(
+      language === 'FR' ? 'fr-FR' : 'en-EN',
+      options
+    )
+    return dateString
+  }
+
   /**
    * Add time to a Date
    * @param {Date || string} date
