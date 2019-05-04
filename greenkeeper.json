@@ -3,7 +3,8 @@
     "default": {
       "packages": [
         "client/package.json",
-        "server/package.json"
+        "server/package.json",
+        "register/package.json"
       ]
     }
   }
