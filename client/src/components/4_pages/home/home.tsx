@@ -25,7 +25,7 @@ export const HomePage = () => {
   const eventsTargets = getListTargets(events, get)
   const filteredEvents = user
     ? filterEventsByUserTextFollowed(eventsTargets, user)
-    : []
+    : eventsTargets
 
   React.useEffect(() => {
     if (hasNextPage) {

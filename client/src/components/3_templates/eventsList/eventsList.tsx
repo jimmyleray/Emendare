@@ -50,9 +50,7 @@ export const EventsList = ({
       ) : (
         <Card style={{ padding: '2rem' }}>
           <p className="is-size-5 has-text-centered">
-            {user
-              ? 'Aucun évènement en cours dans cette catégorie'
-              : 'Connexion requise pour afficher les évènements'}
+            Aucun évènement en cours dans cette catégorie
           </p>
         </Card>
       )}

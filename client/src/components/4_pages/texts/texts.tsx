@@ -33,7 +33,7 @@ export const TextsPage = () => {
 
   const filteredEvents = user
     ? filterEventsByUserTextFollowed(eventsTargets, user)
-    : []
+    : eventsTargets
 
   React.useEffect(() => {
     if (hasNextPage) {
@@ -42,16 +42,18 @@ export const TextsPage = () => {
   }, [])
 
   return (
-    <>
-      <Link to={path.create}>
-        <Button
-          className="is-info is-fullwidth"
-          style={{ marginBottom: '1rem' }}
-        >
-          <Icon name="fa-plus" />
-          <span>{translate('ADD_A_TEXT')}</span>
-        </Button>
-      </Link>
+    <React.Fragment>
+      {user && (
+        <Link to={path.create}>
+          <Button
+            className="is-info is-fullwidth"
+            style={{ marginBottom: '1rem' }}
+          >
+            <Icon name="fa-plus" />
+            <span>{translate('ADD_A_TEXT')}</span>
+          </Button>
+        </Link>
+      )}
       <Page title={translate('HOME')} style={{ padding: 0 }}>
         <EventsList
           events={filteredEvents}
@@ -59,6 +61,6 @@ export const TextsPage = () => {
           hasNextPage={hasNextPage}
         />
       </Page>
-    </>
+    </React.Fragment>
   )
 }
