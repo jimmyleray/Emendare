@@ -42,21 +42,23 @@ export const TextsPage = () => {
   }, [])
 
   return (
-    <Page title={translate('HOME')} style={{ padding: 0 }}>
+    <>
       <Link to={path.create}>
         <Button
-          className="is-link is-fullwidth is-outlined"
-          style={{ borderRadius: 0 }}
+          className="is-info is-fullwidth"
+          style={{ marginBottom: '1rem' }}
         >
           <Icon name="fa-plus" />
           <span>{translate('ADD_A_TEXT')}</span>
         </Button>
       </Link>
-      <EventsList
-        events={filteredEvents}
-        newEvents={newEvents}
-        hasNextPage={hasNextPage}
-      />
-    </Page>
+      <Page title={translate('HOME')} style={{ padding: 0 }}>
+        <EventsList
+          events={filteredEvents}
+          newEvents={newEvents}
+          hasNextPage={hasNextPage}
+        />
+      </Page>
+    </>
   )
 }

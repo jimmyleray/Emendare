@@ -31,7 +31,7 @@ export const EventsList = ({
     <React.Fragment>
       {newEventsCount > 0 && (
         <Button
-          className="is-fullwidth is-info"
+          className="is-fullwidth is-dark"
           style={{ borderRadius: 0 }}
           onClick={() => {
             dispatch({ type: 'NEW_EVENTS_READED' })
