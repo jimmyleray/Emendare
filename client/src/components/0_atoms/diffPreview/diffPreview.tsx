@@ -1,9 +1,7 @@
 // Dependencies
 import * as JsDiff from 'diff'
 import React, { useState, useEffect } from 'react'
-// Interfaces
 import { IAmend, IText } from '../../../../../interfaces'
-import { CellMeasurerCache } from 'react-virtualized'
 
 interface IDiffPreviewProps {
   /** Current Amend */
