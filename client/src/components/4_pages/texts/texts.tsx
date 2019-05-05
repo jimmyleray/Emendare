@@ -6,7 +6,10 @@ import {
   I18nContext,
   UserContext,
   DataContext,
-  EventsContext
+  EventsContext,
+  Link,
+  Button,
+  Icon
 } from '../../../components'
 // Services
 import { Socket } from '../../../services'
@@ -15,6 +18,7 @@ import {
   getListTargets,
   filterEventsByUserTextFollowed
 } from '../../../helpers'
+import { path } from '../../../config'
 
 export const TextsPage = () => {
   const { translate } = React.useContext(I18nContext)
@@ -29,7 +33,7 @@ export const TextsPage = () => {
 
   const filteredEvents = user
     ? filterEventsByUserTextFollowed(eventsTargets, user)
-    : []
+    : eventsTargets
 
   React.useEffect(() => {
     if (hasNextPage) {
@@ -38,12 +42,25 @@ export const TextsPage = () => {
   }, [])
 
   return (
-    <Page title={translate('HOME')} style={{ padding: 0 }}>
-      <EventsList
-        events={filteredEvents}
-        newEvents={newEvents}
-        hasNextPage={hasNextPage}
-      />
-    </Page>
+    <React.Fragment>
+      {user && (
+        <Link to={path.create}>
+          <Button
+            className="is-info is-fullwidth"
+            style={{ marginBottom: '1rem' }}
+          >
+            <Icon name="fa-plus" />
+            <span>{translate('ADD_A_TEXT')}</span>
+          </Button>
+        </Link>
+      )}
+      <Page title={translate('HOME')} style={{ padding: 0 }}>
+        <EventsList
+          events={filteredEvents}
+          newEvents={newEvents}
+          hasNextPage={hasNextPage}
+        />
+      </Page>
+    </React.Fragment>
   )
 }

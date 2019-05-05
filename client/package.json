@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=8.3.0"
+    "node": "10.15.3"
   },
   "license": "GPL-3.0",
   "scripts": {
@@ -72,7 +72,7 @@
     "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/jest": "24.0.12",
     "@types/lodash": "^4.14.122",
-    "@types/node": "11.13.8",
+    "@types/node": "12.0.0",
     "@types/react": "^16.8.13",
     "@types/react-dom": "16.8.4",
     "@types/react-json-tree": "^0.6.11",
@@ -83,8 +83,8 @@
     "cypress": "3.2.0",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.9.1",
-    "husky": "2.1.0",
-    "lint-staged": "8.1.5",
+    "husky": "2.2.0",
+    "lint-staged": "8.1.6",
     "prettier": "1.17.0",
     "react-docgen-typescript": "^1.12.3",
     "react-styleguidist": "^9.0.1",

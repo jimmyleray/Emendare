@@ -1,6 +1,12 @@
+<p align="center">
+  <a href="https://emendare.org/">
+	<img alt="Emendare" src="https://github.com/jimmyleray/Emendare/blob/develop/client/public/images/repository.png?raw=true">
+  </a>
+</p>
+
 # [Emendare](https://emendare.org/) [![CircleCI](https://circleci.com/gh/jimmyleray/Emendare.svg?style=svg)](https://circleci.com/gh/jimmyleray/Emendare) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![CodeFactor](https://www.codefactor.io/repository/github/jimmyleray/emendare/badge)](https://www.codefactor.io/repository/github/jimmyleray/emendare) [![BCH compliance](https://bettercodehub.com/edge/badge/jimmyleray/Emendare?branch=develop)](https://bettercodehub.com/results/jimmyleray/Emendare) [![Codecov](https://img.shields.io/codecov/c/github/jimmyleray/Emendare.svg?style=flat)](https://codecov.io/gh/JimmyLeray/Emendare) [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jimmyleray/Emendare/issues)
 
-## Philosophy
+## What is Emendare ?
 
 Emendare is a citizen, non-profit, distributed and open-source initiative. It helps groups share and improve texts iteratively.
 

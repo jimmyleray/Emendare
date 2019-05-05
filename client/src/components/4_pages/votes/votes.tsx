@@ -28,7 +28,7 @@ export const VotesPage = () => {
   )
   const filteredEvents = user
     ? filterEventsByUserTextFollowed(eventsTargets, user)
-    : []
+    : eventsTargets
 
   React.useEffect(() => {
     if (hasNextPage) {

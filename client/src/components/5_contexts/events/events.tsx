@@ -149,6 +149,7 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
     return () => {
       Socket.off('events')
       Socket.off('events/new')
+      Socket.off('events/delete')
     }
   }, [])
 

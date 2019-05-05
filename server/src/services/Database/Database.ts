@@ -33,34 +33,6 @@ export class Database {
   private async initData() {
     if (process.env.NODE_ENV !== 'production') {
       await this.connection.dropDatabase()
-      this.initDevData()
     }
-  }
-
-  private async initDevData() {
-    bcrypt.hash('admin', 10, async (err, hash) => {
-      await new User.model({
-        password: hash,
-        email: 'jimmy.leray@zenika.com'
-      }).save()
-
-      const globalText = await new Text.model({
-        name: "Roadmap d'Emendare",
-        description: 'Participez à définir les futures fonctionnalités'
-      }).save()
-
-      await new Event.model({
-        target: { type: 'text', id: globalText._id }
-      }).save()
-
-      const secondText = await new Text.model({
-        name: 'Texte de test',
-        description: 'Juste un texte pour tester'
-      }).save()
-
-      await new Event.model({
-        target: { type: 'text', id: secondText._id }
-      }).save()
-    })
   }
 }
