@@ -31,16 +31,10 @@ export const CreatePage = () => {
 
   return (
     <Page title="Création de texte">
-      <Hero
-        title="Création de texte"
-        subtitle="Formulaire d'ajout d'un nouveau texte"
-        className="has-text-centered"
-      />
-
-      <form onSubmit={confirm} style={{ maxWidth: '350px', margin: 'auto' }}>
+      <form onSubmit={confirm}>
         <div className="field">
           <label htmlFor="name" className="label">
-            Nom du texte
+            Nom du nouveau texte
             <div className="control">
               <input
                 required
@@ -59,7 +53,7 @@ export const CreatePage = () => {
 
         <div className="field">
           <label htmlFor="description" className="label">
-            Description du texte
+            Description du nouveau texte
             <div className="control">
               <input
                 required
@@ -75,20 +69,23 @@ export const CreatePage = () => {
             </div>
           </label>
         </div>
-        <div className="has-text-centered">
+        <div className="has-text-centered" style={{ marginTop: '1rem' }}>
           <Button
-            className="is-fullwidth is-success"
+            className="is-fullwidth is-info"
             disabled={!name || !description}
             type="submit"
           >
-            Confirmer la création du texte
+            Confirmer la création de ce texte
           </Button>
         </div>
-        <br />
+
         {error && (
-          <Notification className="is-danger has-text-centered">
-            {error.message}
-          </Notification>
+          <React.Fragment>
+            <br />
+            <Notification className="is-danger has-text-centered">
+              {error.message}
+            </Notification>
+          </React.Fragment>
         )}
       </form>
     </Page>

@@ -6,7 +6,10 @@ import {
   I18nContext,
   UserContext,
   DataContext,
-  EventsContext
+  EventsContext,
+  Link,
+  Button,
+  Icon
 } from '../../../components'
 // Services
 import { Socket } from '../../../services'
@@ -15,6 +18,7 @@ import {
   getListTargets,
   filterEventsByUserTextFollowed
 } from '../../../helpers'
+import { path } from '../../../config'
 
 export const TextsPage = () => {
   const { translate } = React.useContext(I18nContext)
@@ -39,6 +43,15 @@ export const TextsPage = () => {
 
   return (
     <Page title={translate('HOME')} style={{ padding: 0 }}>
+      <Link to={path.create}>
+        <Button
+          className="is-link is-fullwidth is-outlined"
+          style={{ borderRadius: 0 }}
+        >
+          <Icon name="fa-plus" />
+          <span>{translate('ADD_A_TEXT')}</span>
+        </Button>
+      </Link>
       <EventsList
         events={filteredEvents}
         newEvents={newEvents}
