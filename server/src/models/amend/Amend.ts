@@ -469,4 +469,120 @@ export class Amend {
       this.checkAmendVotes(io)
     }, 5000)
   }
+
+  public static async postArgument(
+    text: string,
+    type: string,
+    amendID: string,
+    token: string
+  ) {
+    if (!Auth.isTokenValid(token)) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Token expiré' }
+      }
+    }
+    const user = await User.model.findById(Auth.decodeToken(token).id)
+
+    if (user && user.activated) {
+      const amend = await this.model.findById(amendID)
+      if (amend) {
+        const argument = {
+          type,
+          text,
+          created: Date.now(),
+          upVotesCount: 0
+        }
+        amend.arguments.push(argument)
+        await amend.save()
+
+        return { data: amend }
+      } else {
+        return {
+          error: {
+            code: 404,
+            message: "Cet amendement n'existe pas."
+          }
+        }
+      }
+    } else {
+      return {
+        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
+      }
+    }
+  }
+
+  /**
+   * Add a vote to an argument
+   * @param amendID Id of the amend
+   * @param indexArgument Index of the argument (used like an unique id)
+   * @param token user token
+   */
+  public static async upVoteArgument(
+    amendID: string,
+    indexArgument: number,
+    token: string
+  ) {
+    if (!Auth.isTokenValid(token)) {
+      return {
+        error: { code: 405, message: 'Token invalide' }
+      }
+    }
+    if (Auth.isTokenExpired(token)) {
+      return {
+        error: { code: 401, message: 'Token expiré' }
+      }
+    }
+    const user: IUser = await User.model.findById(Auth.decodeToken(token).id)
+    if (user && user.activated) {
+      // Check if the user has already voted
+      const userVote = user.argumentVotes.find(
+        (argument: { amendID: string; index: number }) =>
+          argument.amendID === amendID && argument.index === indexArgument
+      )
+      if (userVote) {
+        return {
+          error: { code: 405, message: 'Vous avez déjà voté pour cet argument' }
+        }
+      } else {
+        // Get the amend
+        const amend: IAmend = await this.model.findById(amendID)
+        if (amend) {
+          // Check if the argument exist
+          if (amend.arguments[indexArgument]) {
+            amend.arguments[indexArgument].upVotesCount++
+            user.argumentVotes.push({ amendID, index: indexArgument })
+            await amend.save()
+            await user.save()
+            return { data: amend }
+          } else {
+            return {
+              error: {
+                code: 404,
+                message: "Cet argument n'exite pas"
+              }
+            }
+          }
+        } else {
+          return {
+            error: {
+              code: 404,
+              message: "Cet amendement n'existe pas."
+            }
+          }
+        }
+      }
+    } else {
+      return {
+        error: {
+          code: 405,
+          message: "Cet utilisateur n'est pas activé"
+        }
+      }
+    }
+  }
 }
