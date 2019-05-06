@@ -495,7 +495,7 @@ export class Amend {
           type,
           text,
           created: Date.now(),
-          upVotes: 0
+          upVotesCount: 0
         }
         amend.arguments.push(argument)
         await amend.save()
