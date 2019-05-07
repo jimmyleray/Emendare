@@ -40,7 +40,8 @@ const model = mongoose.model(
       newAmend: { type: Boolean, default: true },
       amendAccepted: { type: Boolean, default: true },
       amendRefused: { type: Boolean, default: true }
-    }
+    },
+    argumentVotes: { type: [], default: [] }
   })
 )
 

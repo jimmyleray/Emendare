@@ -22,9 +22,9 @@ interface IAmendEventCardProps {
   target: IAmend
   /** user data */
   user: IUser | null
-  measure: any
+  measure?: any
   /** Index of the card */
-  index: number
+  index?: number
 }
 
 export const AmendEventCard = ({

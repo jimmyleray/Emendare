@@ -1,20 +1,58 @@
 /* eslint-disable sonarjs/cognitive-complexity */
-
 import React from 'react'
+import { CellMeasurerCache, CellMeasurer } from 'react-virtualized'
 import {
   Card,
   Button,
   UserContext,
   EventsContext,
-  NewsList,
+  EventRow,
+  InfiniteList,
   I18nContext
 } from '../../../components'
 import { INews, IEvent } from '../../../../../interfaces'
+// Helpers
+import { isRowLoaded, loadMoreRows, isEventNew } from './helper'
 
 interface IEventsListProps {
   events: INews[]
   newEvents: IEvent[]
   hasNextPage: boolean
+}
+
+// Default cache for cell mesurement
+const cache = new CellMeasurerCache({
+  fixedWidth: true
+})
+
+const rowRenderer = (events: INews[], newEvents: IEvent[]) => ({
+  index,
+  parent,
+  style,
+  key
+}: any) => {
+  return (
+    <CellMeasurer
+      key={key}
+      cache={cache}
+      columnIndex={0}
+      rowIndex={index}
+      parent={parent}
+    >
+      {({ measure }: any) => (
+        <div style={style}>
+          {events[index] ? (
+            <EventRow
+              data={events[index]}
+              isNew={isEventNew(newEvents, events, index)}
+              measure={measure}
+              index={index}
+            />
+          ) : null}
+        </div>
+      )}
+    </CellMeasurer>
+  )
 }
 
 export const EventsList = ({
@@ -42,10 +80,13 @@ export const EventsList = ({
       )}
 
       {events && events.length > 0 ? (
-        <NewsList
-          events={events}
-          newEvents={newEvents}
+        <InfiniteList
+          data={events}
           hasNextPage={hasNextPage}
+          isRowLoaded={isRowLoaded}
+          loadMoreRows={loadMoreRows}
+          rowRenderer={rowRenderer(events, newEvents)}
+          cache={cache}
         />
       ) : (
         <Card style={{ padding: '2rem' }}>

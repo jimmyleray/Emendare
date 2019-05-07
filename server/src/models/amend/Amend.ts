@@ -2,8 +2,15 @@ import mongoose from 'mongoose'
 import socketIO from 'socket.io'
 import { Auth } from '../../services'
 import { User, Text, Event } from '../../models'
-import { IAmend, IResponse, IUser, IText, IEvent } from '../../../../interfaces'
-import { delay } from 'lodash'
+import {
+  IAmend,
+  IResponse,
+  IUser,
+  IText,
+  IEvent,
+  IArgument
+} from '../../../../interfaces'
+import { delay, findIndex } from 'lodash'
 
 const oneSecond = 1000
 const oneMinute = oneSecond * 60
@@ -42,7 +49,7 @@ const model = mongoose.model(
     rules: {
       delayMax: {
         type: Number,
-        default: process.env.NODE_ENV === 'production' ? oneDay : oneMinute
+        default: oneDay
       }
     },
     closed: { type: Boolean, default: false },
@@ -519,12 +526,12 @@ export class Amend {
   /**
    * Add a vote to an argument
    * @param amendID Id of the amend
-   * @param indexArgument Index of the argument (used like an unique id)
+   * @param argumentID Id of the argument
    * @param token user token
    */
   public static async upVoteArgument(
     amendID: string,
-    indexArgument: number,
+    argumentID: string,
     token: string
   ) {
     if (!Auth.isTokenValid(token)) {
@@ -541,8 +548,8 @@ export class Amend {
     if (user && user.activated) {
       // Check if the user has already voted
       const userVote = user.argumentVotes.find(
-        (argument: { amendID: string; index: number }) =>
-          argument.amendID === amendID && argument.index === indexArgument
+        (argument: { amendID: string; argumentID: string }) =>
+          argument.amendID === amendID && argument.argumentID === argumentID
       )
       if (userVote) {
         return {
@@ -553,9 +560,13 @@ export class Amend {
         const amend: IAmend = await this.model.findById(amendID)
         if (amend) {
           // Check if the argument exist
+          const indexArgument = findIndex(
+            amend.arguments,
+            (argument: IArgument) => argument._id.toString() === argumentID
+          )
           if (amend.arguments[indexArgument]) {
             amend.arguments[indexArgument].upVotesCount++
-            user.argumentVotes.push({ amendID, index: indexArgument })
+            user.argumentVotes.push({ amendID, argumentID })
             await amend.save()
             await user.save()
             return { data: amend }

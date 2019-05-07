@@ -5,7 +5,11 @@ import {
   AmendEventCard,
   ResultEventCard,
   UserContext,
-  withEventCard
+  withEventCard,
+  ModalContainer,
+  ArgumentModal,
+  Button,
+  Icon
 } from '../../../components'
 // Interfaces
 import { INews } from '../../../../../interfaces'
@@ -49,7 +53,29 @@ export const EventRow = ({ data, measure, isNew, index }: IEventRowProps) => {
             displayRightEvent(data.event.target.type)
           )}
       </div>
-      <hr style={{ margin: 0 }} />
+      <ModalContainer>
+        {data.event.target.type === 'amend' && (
+          <ModalContainer.Modal.Trigger>
+            <Button
+              style={{
+                borderRadius: 0,
+                border: 'none',
+                backgroundColor: 'hsl(0, 0%, 96%)'
+              }}
+              className="is-fullwidth is-outlined"
+            >
+              <Icon name="fa-comments" />
+              <span>Arguments</span>
+            </Button>
+          </ModalContainer.Modal.Trigger>
+        )}
+        {data.target &&
+          data.target.data &&
+          data.event.target.type === 'amend' && (
+            <ArgumentModal amend={data.target.data} user={user} />
+          )}
+      </ModalContainer>
+      <hr style={{ margin: 0, backgroundColor: '#e8e8e8' }} />
     </React.Fragment>
   )
 }

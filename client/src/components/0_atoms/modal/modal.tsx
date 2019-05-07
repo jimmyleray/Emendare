@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
+import { Button } from '../../../components'
 // Hooks
 import { useToggle } from '../../../hooks'
 
 interface IModalProps {
   /** Children nodes */
-  children: React.ReactNode
+  children: any
   /** Additional css ui class */
   className?: string
   /** Style CSS */
@@ -41,8 +42,8 @@ const Modal = ({ children, className, ...rest }: IModalProps) => {
   const { on } = useModalContext()
   return (
     <div className={`modal ${className} ${on ? 'is-active' : ''}`} {...rest}>
-      {children}
       <div className="modal-background" {...rest} />
+      {children}
     </div>
   )
 }
@@ -64,11 +65,7 @@ const Trigger = ({ children, ...rest }: IModalProps) => {
 
 const Close = ({ children, ...rest }: IModalProps) => {
   const { toggler } = useModalContext()
-  return (
-    <div className="modal-close" onClick={toggler} {...rest}>
-      {children}
-    </div>
-  )
+  return <div onClick={toggler}>{children}</div>
 }
 
 ModalContainer.Modal = Modal

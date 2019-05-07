@@ -4,14 +4,18 @@ import { Amend } from '../../models'
 export const upVoteArgument = {
   name: 'upVoteArgument',
   callback: ({
-    io,
-    socket
+    socket,
+    io
   }: {
-    io: socketIO.Server
     socket: socketIO.Socket
-  }) => async ({ token, data }: any) => {
+    io: socketIO.Server
+  }) => async ({ data, token }: any) => {
     try {
-      const response = await Amend.postAmend(data, token)
+      const response: any = await Amend.upVoteArgument(
+        data.amendID,
+        data.argumentID,
+        token
+      )
       if (response.data) {
         io.emit(`amend/${data.amendID}`, response)
       } else {
