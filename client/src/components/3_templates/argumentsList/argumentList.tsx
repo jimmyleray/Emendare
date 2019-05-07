@@ -53,7 +53,7 @@ export const ArgumentsList = ({
   hasNextPage
 }: IEventsListProps) => {
   return (
-    <React.Fragment>
+    <div style={{ height: '100%' }}>
       {args && args.length > 0 ? (
         <InfiniteList
           data={args}
@@ -62,6 +62,7 @@ export const ArgumentsList = ({
           loadMoreRows={loadMoreRows}
           rowRenderer={rowRenderer(args, amendID)}
           cache={cache}
+          isWindowScroller={false}
         />
       ) : (
         <Card style={{ padding: '2rem' }}>
@@ -70,6 +71,6 @@ export const ArgumentsList = ({
           </p>
         </Card>
       )}
-    </React.Fragment>
+    </div>
   )
 }
