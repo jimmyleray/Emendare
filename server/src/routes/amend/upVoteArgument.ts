@@ -19,7 +19,7 @@ export const upVoteArgument = {
       if (response.data) {
         io.emit(`amend/${data.amendID}`, response)
       } else {
-        socket.emit('updVoteArgument', response)
+        socket.emit('upVoteArgument', response)
       }
     } catch (error) {
       console.error(error)
