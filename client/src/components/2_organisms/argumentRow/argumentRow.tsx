@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 // Components
-import { Media, StopWatch } from '../../../components'
+import { Media, StopWatch, Icon } from '../../../components'
 // Interfaces
 import { IArgument } from '../../../../../interfaces'
 // Services
@@ -29,7 +29,9 @@ export const ArgumentRow = ({
   return (
     <div style={{ marginTop: index !== 0 ? '1rem' : 0 }}>
       <Media>
-        <Media.Left>{data.upVotesCount}</Media.Left>
+        <Media.Left>
+          <div className="is-size-5">{data.upVotesCount}</div>
+        </Media.Left>
         <Media.Content>
           <div className="content">
             <p>
