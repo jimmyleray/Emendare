@@ -22,6 +22,8 @@ interface INewsListProps {
   rowRenderer: any
   /** Cache for cell height and width */
   cache: CellMeasurerCache
+  /** Enable windowScroller */
+  isWindowScroller?: boolean
 }
 
 export const InfiniteList = ({
@@ -30,39 +32,69 @@ export const InfiniteList = ({
   isRowLoaded,
   loadMoreRows,
   rowRenderer,
-  cache
+  cache,
+  isWindowScroller = true
 }: INewsListProps) => {
   const refList = useRef<any>()
   const rowCount = hasNextPage ? data.length + 1 : data.length
 
   return data.length > 0 ? (
-    <div>
+    <div style={{ height: '100%' }}>
       <InfiniteLoader
         isRowLoaded={isRowLoaded(data)}
         loadMoreRows={loadMoreRows(data, hasNextPage)}
         rowCount={rowCount}
       >
-        {({ onRowsRendered }) => (
-          <WindowScroller>
-            {({ height, isScrolling, scrollTop, onChildScroll }) => (
-              <AutoSizer
-                disableHeight
-                onResize={() => {
-                  cache.clearAll()
-                  if (refList && refList.current) {
-                    refList.current.recomputeRowHeights()
-                  }
-                }}
-              >
-                {({ width }) => (
+        {({ onRowsRendered }) =>
+          isWindowScroller ? (
+            <WindowScroller>
+              {({ height, isScrolling, scrollTop, onChildScroll }) => (
+                <AutoSizer
+                  disableHeight
+                  onResize={() => {
+                    cache.clearAll()
+                    if (refList && refList.current) {
+                      refList.current.recomputeRowHeights()
+                    }
+                  }}
+                >
+                  {({ width }) => (
+                    <List
+                      autoHeight
+                      scrollTop={scrollTop}
+                      ref={refList}
+                      onScroll={onChildScroll}
+                      width={width}
+                      height={height}
+                      isScrolling={isScrolling}
+                      rowCount={rowCount}
+                      deferredMeasurementCache={cache}
+                      rowHeight={cache.rowHeight}
+                      estimatedRowSize={200}
+                      onRowsRendered={onRowsRendered}
+                      rowRenderer={rowRenderer}
+                      overscanRowCount={0}
+                    />
+                  )}
+                </AutoSizer>
+              )}
+            </WindowScroller>
+          ) : (
+            <AutoSizer
+              onResize={() => {
+                cache.clearAll()
+                if (refList && refList.current) {
+                  refList.current.recomputeRowHeights()
+                }
+              }}
+            >
+              {({ width, height }) => {
+                return (
                   <List
                     autoHeight
-                    scrollTop={scrollTop}
                     ref={refList}
-                    onScroll={onChildScroll}
                     width={width}
                     height={height}
-                    isScrolling={isScrolling}
                     rowCount={rowCount}
                     deferredMeasurementCache={cache}
                     rowHeight={cache.rowHeight}
@@ -71,11 +103,11 @@ export const InfiniteList = ({
                     rowRenderer={rowRenderer}
                     overscanRowCount={0}
                   />
-                )}
-              </AutoSizer>
-            )}
-          </WindowScroller>
-        )}
+                )
+              }}
+            </AutoSizer>
+          )
+        }
       </InfiniteLoader>
     </div>
   ) : null
