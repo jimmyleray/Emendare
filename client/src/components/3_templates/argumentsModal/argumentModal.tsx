@@ -7,7 +7,10 @@ import {
   Divider,
   AmendEventCard
 } from '../../../components'
+// Interfaces
 import { IAmend, IUser } from '../../../../../interfaces'
+// Helpers
+import { getListArgumentsWithPopularSorting } from './helpers'
 
 interface IArgumentModalProps {
   /** Related amend */
@@ -18,25 +21,25 @@ interface IArgumentModalProps {
 export const ArgumentModal = ({ amend, user }: IArgumentModalProps) => {
   return (
     <ModalContainer.Modal>
-      <div className="modal-card">
-        <header className="modal-card-head">
-          <p className="modal-card-title">Arguments</p>
+      <div className="modal-card" style={{ flex: 1 }}>
+        <div className="modal-card-head">
+          <p className="modal-card-title is-size-5">Arguments</p>
           <ModalContainer.Modal.Close>
             <Button className="modal-close is-large" />
           </ModalContainer.Modal.Close>
-        </header>
-        <section className="modal-card-body">
+        </div>
+        <div className="modal-card-body">
           <AmendEventCard user={user} target={amend} />
           <Divider content="Liste des arguments" />
           <ArgumentsList
             amendID={amend._id}
-            args={amend.arguments}
+            args={getListArgumentsWithPopularSorting(amend.arguments)}
             hasNextPage={false}
           />
-        </section>
-        <footer className="modal-card-foot">
+        </div>
+        <div className="modal-card-foot">
           <EditArgument amendID={amend._id} />
-        </footer>
+        </div>
       </div>
     </ModalContainer.Modal>
   )
