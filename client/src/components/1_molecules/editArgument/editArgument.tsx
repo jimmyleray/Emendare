@@ -10,6 +10,7 @@ interface IEditArgumentProps {
 }
 
 export const EditArgument = ({ amendID }: IEditArgumentProps) => {
+  const [isFocus, setIsFocus] = React.useState(false)
   const [type, setType] = React.useState('up')
   const [text, setText] = React.useState('')
 
@@ -24,23 +25,26 @@ export const EditArgument = ({ amendID }: IEditArgumentProps) => {
   const submit = (event: any) => {
     event.preventDefault()
     Socket.emit('postArgument', { type, text, amendID })
+    setIsFocus(false)
   }
 
   return (
-    <form onSubmit={submit}>
-      <div className="field">
-        <label>Opinion</label>
-        <div className="control">
-          <Select
-            onChange={changeType}
-            options={[
-              { label: 'Pour', value: 'up' },
-              { label: 'Contre', value: 'down' }
-            ]}
-            selectedValue={type}
-          />
+    <form onSubmit={submit} style={{ width: '100%' }}>
+      {isFocus && (
+        <div className="field">
+          <label>Opinion</label>
+          <div className="control">
+            <Select
+              onChange={changeType}
+              options={[
+                { label: 'Pour', value: 'up' },
+                { label: 'Contre', value: 'down' }
+              ]}
+              selectedValue={type}
+            />
+          </div>
         </div>
-      </div>
+      )}
       <div className="field">
         <div className="control">
           <textarea
@@ -48,11 +52,19 @@ export const EditArgument = ({ amendID }: IEditArgumentProps) => {
             onChange={changeText}
             placeholder="Votre argument ici"
             value={text}
+            rows={!isFocus ? 1 : 3}
+            onFocus={() => setIsFocus(true)}
           />
         </div>
       </div>
-      <div className="control">
-        <Button type="submit">Validez</Button>
+      <div className="control is-right">
+        <Button
+          disabled={text === ''}
+          className="is-right is-primary"
+          type="submit"
+        >
+          Validez
+        </Button>
       </div>
     </form>
   )
