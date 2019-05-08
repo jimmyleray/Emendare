@@ -30,21 +30,20 @@ export const EditArgument = ({ amendID }: IEditArgumentProps) => {
 
   return (
     <form onSubmit={submit} style={{ width: '100%' }}>
-      {isFocus && (
-        <div className="field">
-          <label>Opinion</label>
-          <div className="control">
-            <Select
-              onChange={changeType}
-              options={[
-                { label: 'Pour', value: 'up' },
-                { label: 'Contre', value: 'down' }
-              ]}
-              selectedValue={type}
-            />
-          </div>
+      <div className="field">
+        <label>Opinion</label>
+        <div className="control">
+          <Select
+            onChange={changeType}
+            options={[
+              { label: 'Pour', value: 'up' },
+              { label: 'Contre', value: 'down' }
+            ]}
+            selectedValue={type}
+            className=""
+          />
         </div>
-      )}
+      </div>
       <div className="field">
         <div className="control">
           <textarea

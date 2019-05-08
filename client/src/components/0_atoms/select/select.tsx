@@ -20,7 +20,7 @@ interface ISelectProps {
 export const Select = ({
   options,
   selectedValue,
-  className,
+  className = '',
   onChange,
   ...rest
 }: ISelectProps) => {
@@ -28,12 +28,16 @@ export const Select = ({
     throw new Error('Options props are not containing the selectedValue')
   }
   return (
-    <select value={selectedValue} onChange={onChange} {...rest}>
-      {options.map((option: { label: string; value: string }, key: number) => (
-        <option key={key.toString()} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
+    <div className={`select ${className}`}>
+      <select value={selectedValue} onChange={onChange} {...rest}>
+        {options.map(
+          (option: { label: string; value: string }, key: number) => (
+            <option key={key.toString()} value={option.value}>
+              {option.label}
+            </option>
+          )
+        )}
+      </select>
+    </div>
   )
 }

@@ -38,11 +38,11 @@ export const ModalContainer = ({ children }: IModalProps) => {
   )
 }
 
-const Modal = ({ children, className, ...rest }: IModalProps) => {
-  const { on } = useModalContext()
+const Modal = ({ children, className = '', ...rest }: IModalProps) => {
+  const { on, toggler } = useModalContext()
   return (
     <div className={`modal ${className} ${on ? 'is-active' : ''}`} {...rest}>
-      <div className="modal-background" {...rest} />
+      <div className="modal-background" onClick={toggler} {...rest} />
       {children}
     </div>
   )
@@ -65,7 +65,11 @@ const Trigger = ({ children, ...rest }: IModalProps) => {
 
 const Close = ({ children, ...rest }: IModalProps) => {
   const { toggler } = useModalContext()
-  return <div onClick={toggler}>{children}</div>
+  return (
+    <div onClick={toggler} {...rest}>
+      {children}
+    </div>
+  )
 }
 
 ModalContainer.Modal = Modal

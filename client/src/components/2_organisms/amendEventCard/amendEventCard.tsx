@@ -53,22 +53,15 @@ export const AmendEventCard = ({
               <StopWatch date={target.created} />
             </small>
           </p>
-          <p style={{ marginTop: '0.5em' }}>
-            <span className="has-text-weight-semibold is-italic">
-              {target.name}
-            </span>
-            <br />
-            {target.description}
-          </p>
           <div style={{ marginTop: '0.5em' }}>
             {target.closed ? (
-              <span className="has-text-weight-ligh is-italic">
+              <span className="has-text-weight-light is-italic">
                 Amendement terminé.
               </span>
             ) : (
               <React.Fragment>
-                <span className="has-text-weight-ligh is-italic">
-                  Temps restant :{' '}
+                <span className="has-text-weight-light">
+                  Temps restant pour voter :{' '}
                 </span>
                 <CountDown
                   date={Time.addTimeToDate(
@@ -80,10 +73,18 @@ export const AmendEventCard = ({
               </React.Fragment>
             )}
           </div>
+          <p style={{ marginTop: '0.5em' }}>
+            <span className="has-text-weight-semibold">
+              Titre : {target.name}
+            </span>
+            <br />
+            Description : {target.description}
+          </p>
         </div>
       </CardLayout.Description>
       {text && text.data && target && (
         <CardLayout.Detail>
+          <br />
           <p className="has-text-centered has-text-weight-light is-italic is-size-6">
             Modifications proposées
           </p>
