@@ -117,12 +117,6 @@ export class Edit extends React.Component<IEditProps, IEditState> {
       <UserContext.Consumer>
         {({ isConnected }: any) => (
           <React.Fragment>
-            <Hero
-              title="Proposition d'amendement"
-              subtitle={this.props.data.name}
-              className="has-text-centered"
-            />
-
             <Columns>
               <Column>
                 <div className="field">
@@ -183,33 +177,26 @@ export class Edit extends React.Component<IEditProps, IEditState> {
                   <span>Restaurer le texte initial</span>
                 </Button>
 
-                <br />
-                <br />
-
-                <p className="has-text-centered is-size-4">
-                  Pré-visualisation de votre amendement
-                </p>
-                <br />
-
                 {this.hasDiffs() ? (
-                  <Box>
-                    <Amend
-                      amend={{
-                        name: this.state.amendName,
-                        description: this.state.amendDescription,
-                        patch: this.state.patch,
-                        version: this.state.text.patches.length
-                      }}
-                      text={this.state.text}
-                    />
-                  </Box>
+                  <Amend
+                    amend={{
+                      name: this.state.amendName,
+                      description: this.state.amendDescription,
+                      patch: this.state.patch,
+                      version: this.state.text.patches.length
+                    }}
+                    text={this.state.text}
+                  />
                 ) : (
-                  <Box>
+                  <React.Fragment>
+                    <br />
                     <p className="has-text-centered has-text-danger">
                       Aucune modification à afficher
                     </p>
-                  </Box>
+                  </React.Fragment>
                 )}
+
+                <br />
 
                 <Button
                   onClick={this.addAmend}
