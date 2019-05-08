@@ -60,7 +60,7 @@
     "react-router-dom": "4.4.0",
     "react-scripts": "^2.1.8",
     "react-use": "^8.0.0",
-    "react-virtualized": "9.21.0",
+    "react-virtualized": "9.21.1",
     "serve-static": "1.13.2",
     "socket.io-client": "2.2.0"
   },
