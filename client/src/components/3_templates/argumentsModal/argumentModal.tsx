@@ -24,6 +24,9 @@ export const ArgumentModal = ({ amend, user }: IArgumentModalProps) => {
       <div className="modal-card" style={{ flex: 1 }}>
         <div className="modal-card-head">
           <p className="modal-card-title is-size-5">Détails de l'amendement</p>
+          <ModalContainer.Modal.Close>
+            <button className="delete" aria-label="close" />
+          </ModalContainer.Modal.Close>
         </div>
         <div className="modal-card-body">
           <AmendEventCard user={user} target={amend} />
