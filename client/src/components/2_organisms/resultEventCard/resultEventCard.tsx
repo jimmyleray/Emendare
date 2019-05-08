@@ -62,12 +62,15 @@ export const ResultEventCard = ({ target, measure }: IResultEventCardProps) => {
       </CardLayout.Description>
       <CardLayout.Detail>
         {text && text.data && target && (
-          <div style={{ margin: '0.5em 0' }}>
-            <p className="has-text-centered has-text-weight-light is-italic is-size-6">
-              Modifications proposées
-            </p>
-            <DiffPreview amend={target} text={text.data} measure={measure} />
-          </div>
+          <React.Fragment>
+            <br />
+            <div style={{ margin: '0.5em 0' }}>
+              <p className="has-text-centered has-text-weight-light is-italic is-size-6">
+                Modifications proposées
+              </p>
+              <DiffPreview amend={target} text={text.data} measure={measure} />
+            </div>
+          </React.Fragment>
         )}
       </CardLayout.Detail>
       <CardLayout.Footer>

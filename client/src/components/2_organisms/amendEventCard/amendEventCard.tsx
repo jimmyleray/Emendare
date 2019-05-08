@@ -40,7 +40,7 @@ export const AmendEventCard = ({
       <CardLayout.Icon>
         <Icon
           type={'light'}
-          name="fa-plus"
+          name="fa-box-ballot"
           className="fa-2x has-text-primary is-large"
         />
       </CardLayout.Icon>
