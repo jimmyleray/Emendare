@@ -2,7 +2,6 @@ import React from 'react'
 import {
   ModalContainer,
   EditArgument,
-  Button,
   ArgumentsList,
   Divider,
   AmendEventCard
@@ -21,7 +20,7 @@ interface IArgumentModalProps {
 export const ArgumentModal = ({ amend, user }: IArgumentModalProps) => {
   return (
     <ModalContainer.Modal>
-      <div className="modal-card" style={{ flex: 1 }}>
+      <div className="modal-card" style={{ flex: 1, height: '100%' }}>
         <div className="modal-card-head">
           <p className="modal-card-title is-size-5">Détails de l'amendement</p>
           <ModalContainer.Modal.Close>
