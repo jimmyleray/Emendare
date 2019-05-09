@@ -1,6 +1,6 @@
 import React from 'react'
 // Components
-import { Select, Button } from '../../../components'
+import { Buttons, Button, Icon } from '../../../components'
 // Services
 import { Socket } from '../../../services'
 
@@ -10,12 +10,13 @@ interface IEditArgumentProps {
 }
 
 export const EditArgument = ({ amendID }: IEditArgumentProps) => {
-  const [isFocus, setIsFocus] = React.useState(false)
+  const [firstStep, setFirstStep] = React.useState(false)
   const [type, setType] = React.useState('up')
   const [text, setText] = React.useState('')
 
-  const changeType = (event: any) => {
-    setType(event.target.value)
+  const changeType = (type: string) => {
+    setType(type)
+    setFirstStep(true)
   }
 
   const changeText = (event: any) => {
@@ -25,46 +26,68 @@ export const EditArgument = ({ amendID }: IEditArgumentProps) => {
   const submit = (event: any) => {
     event.preventDefault()
     Socket.emit('postArgument', { type, text, amendID })
-    setIsFocus(false)
+    setFirstStep(false)
+    setText('')
   }
 
   return (
     <form onSubmit={submit} style={{ width: '100%' }}>
-      <div className="field">
-        <label>Opinion</label>
-        <div className="control">
-          <Select
-            onChange={changeType}
-            options={[
-              { label: 'Pour', value: 'up' },
-              { label: 'Contre', value: 'down' }
-            ]}
-            selectedValue={type}
-            className=""
-          />
+      {!firstStep && (
+        <div className="field">
+          <div className="control">
+            <p
+              className="is-italic has-text-centered"
+              style={{ marginBottom: '0.5rem' }}
+            >
+              Ecrire un argument:
+            </p>
+            <Buttons className="is-centered ">
+              <Button
+                className="is-info is-medium"
+                onClick={() => changeType('up')}
+                style={{ flex: 1 }}
+              >
+                Pour
+              </Button>
+              <Button
+                className="is-danger is-medium"
+                onClick={() => changeType('down')}
+                style={{ flex: 1 }}
+              >
+                Contre
+              </Button>
+            </Buttons>
+          </div>
         </div>
-      </div>
-      <div className="field">
-        <div className="control">
-          <textarea
-            className="textarea is-fullwidth"
-            onChange={changeText}
-            placeholder="Votre argument ici"
-            value={text}
-            rows={!isFocus ? 1 : 3}
-            onFocus={() => setIsFocus(true)}
-          />
-        </div>
-      </div>
-      <div className="control is-right">
-        <Button
-          disabled={text === ''}
-          className="is-right is-primary"
-          type="submit"
-        >
-          Validez
-        </Button>
-      </div>
+      )}
+      {firstStep && (
+        <React.Fragment>
+          <div className="field">
+            <div className="control">
+              <textarea
+                className="textarea is-fullwidth"
+                onChange={changeText}
+                placeholder="Votre argument ici"
+                value={text}
+                rows={2}
+              />
+            </div>
+          </div>
+          <div className="control">
+            <Buttons>
+              <Button
+                disabled={text === ''}
+                className="is-primary"
+                type="submit"
+                style={{ flex: 1 }}
+              >
+                Validez
+              </Button>
+              <Button onClick={() => setFirstStep(false)}>Annuler</Button>
+            </Buttons>
+          </div>
+        </React.Fragment>
+      )}
     </form>
   )
 }

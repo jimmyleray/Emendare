@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 // Components
-import { Media, StopWatch, Icon } from '../../../components'
+import { UserContext, Argument } from '../../../components'
 // Interfaces
 import { IArgument } from '../../../../../interfaces'
 // Services
@@ -22,35 +22,25 @@ export const ArgumentRow = ({
   measure,
   index
 }: IEventRowProps) => {
-  const voteArgument = (argumentID: string, amendID: string) => {
+  const { user } = React.useContext(UserContext)
+
+  const upVoteArgument = (argumentID: string, amendID: string) => {
     Socket.emit('upVoteArgument', { amendID, argumentID })
+  }
+
+  const unVoteArgument = (argumentID: string, amendID: string) => {
+    Socket.emit('unVoteArgument', { amendID, argumentID })
   }
 
   return (
     <div style={{ marginTop: index !== 0 ? '1rem' : 0 }}>
-      <Media>
-        <Media.Left>
-          <div className="is-size-5">{data.upVotesCount}</div>
-        </Media.Left>
-        <Media.Content>
-          <div className="content">
-            <p>
-              <strong>
-                {data.type === 'up' ? 'Argument pour' : 'Argument contre'}
-              </strong>
-              <br />
-              {data.text}
-              <br />
-              <small>
-                <a onClick={() => voteArgument(data._id, amendID)}>
-                  Argument utile
-                </a>{' '}
-                . <StopWatch date={data.created} />
-              </small>
-            </p>
-          </div>
-        </Media.Content>
-      </Media>
+      <Argument
+        data={data}
+        amendID={amendID}
+        upVoteArgument={upVoteArgument}
+        unVoteArgument={unVoteArgument}
+        user={user}
+      />
       <hr style={{ margin: 0 }} />
     </div>
   )
