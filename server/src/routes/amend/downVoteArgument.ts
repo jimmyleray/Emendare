@@ -1,8 +1,8 @@
 import socketIO from 'socket.io'
 import { Amend } from '../../models'
 
-export const unVoteArgument = {
-  name: 'unVoteArgument',
+export const downVoteArgument = {
+  name: 'downVoteArgument',
   callback: ({
     socket,
     io
@@ -11,7 +11,7 @@ export const unVoteArgument = {
     io: socketIO.Server
   }) => async ({ data, token }: any) => {
     try {
-      const response: any = await Amend.unVoteArgument(
+      const response: any = await Amend.downVoteArgument(
         data.amendID,
         data.argumentID,
         token

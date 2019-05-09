@@ -29,7 +29,7 @@ export const ArgumentRow = ({
   }
 
   const unVoteArgument = (argumentID: string, amendID: string) => {
-    Socket.emit('unVoteArgument', { amendID, argumentID })
+    Socket.emit('downVoteArgument', { amendID, argumentID })
   }
 
   return (

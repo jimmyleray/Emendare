@@ -529,7 +529,7 @@ export class Amend {
    * @param argumentID Id of the argument
    * @param token user token
    */
-  public static async unVoteArgument(
+  public static async downVoteArgument(
     amendID: string,
     argumentID: string,
     token: string
