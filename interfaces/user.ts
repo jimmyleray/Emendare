@@ -19,7 +19,8 @@ export interface IUser {
   password: string;
   upVotes: string[];
   save?: any;
-  argumentVotes: Array<{ amendID: string; argumentID: string }>;
+  argumentUpVotes: Array<{ amendID: string; argumentID: string }>;
+  argumentDownVotes: Array<{ amendID: string; argumentID: string }>;
 }
 
 export const userMock: IUser = {
@@ -42,5 +43,6 @@ export const userMock: IUser = {
   },
   password: '$2b$10$l94oFgHbt8wv4woE7JfdmOPOrZuLMSMrc6tVBDP3m0mg5U/uCi5VC',
   upVotes: [],
-  argumentVotes: [{ amendID: '5c64389cae3ae3695c711e44', argumentID: '0' }],
+  argumentUpVotes: [{ amendID: '5c64389cae3ae3695c711e44', argumentID: '0' }],
+  argumentDownVotes: [{ amendID: '5c64389cae3ae3695c744', argumentID: '0' }],
 };
