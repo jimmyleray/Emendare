@@ -17,7 +17,7 @@ const ModalContext = React.createContext<any>({})
 const useModalContext = () => {
   const context = useContext(ModalContext)
   if (!context) {
-    throw new Error('Should be inside the Modal comoponent')
+    throw new Error('Should be inside the Modal component')
   }
   return context
 }
