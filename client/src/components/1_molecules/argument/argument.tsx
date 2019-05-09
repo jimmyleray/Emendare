@@ -73,20 +73,24 @@ export const Argument = ({
     <Media.Content>
       <div className="content">
         <p>
-          <strong>
-            Argument{' '}
-            {data.type === 'up' ? (
-              <Icon name="fa-check" className="has-text-info" size="fa-lg" />
-            ) : (
-              <Icon name="fa-times" className="has-text-danger" size="fa-lg" />
-            )}
-          </strong>
-          <br />
-          {data.text}
-          <br />
+          {data.type === 'up' ? (
+            <strong>
+              <Icon name="fa-check" className="has-text-info" size="fa-lg" />{' '}
+              Pour
+            </strong>
+          ) : (
+            <strong>
+              <Icon name="fa-times" className="has-text-danger" size="fa-lg" />{' '}
+              Contre
+            </strong>
+          )}
+          {' - '}
           <small className="is-italic">
             <StopWatch date={data.created} />
           </small>
+          <br />
+          <br />
+          {data.text}
         </p>
       </div>
     </Media.Content>
