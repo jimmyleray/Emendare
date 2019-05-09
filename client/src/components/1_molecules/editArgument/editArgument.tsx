@@ -1,6 +1,6 @@
 import React from 'react'
 // Components
-import { Buttons, Button, Icon } from '../../../components'
+import { Buttons, Button } from '../../../components'
 // Services
 import { Socket } from '../../../services'
 
@@ -35,22 +35,18 @@ export const EditArgument = ({ amendID }: IEditArgumentProps) => {
       {!firstStep && (
         <div className="field">
           <div className="control">
-            <p
-              className="is-italic has-text-centered"
-              style={{ marginBottom: '0.5rem' }}
-            >
-              Ecrire un argument:
-            </p>
+            <p className="has-text-centered">Ecrire un nouvel argument ?</p>
+            <br />
             <Buttons className="is-centered ">
               <Button
-                className="is-info is-medium"
+                className="is-info"
                 onClick={() => changeType('up')}
                 style={{ flex: 1 }}
               >
                 Pour
               </Button>
               <Button
-                className="is-danger is-medium"
+                className="is-danger"
                 onClick={() => changeType('down')}
                 style={{ flex: 1 }}
               >
@@ -81,7 +77,7 @@ export const EditArgument = ({ amendID }: IEditArgumentProps) => {
                 type="submit"
                 style={{ flex: 1 }}
               >
-                Validez
+                Valider
               </Button>
               <Button onClick={() => setFirstStep(false)}>Annuler</Button>
             </Buttons>
