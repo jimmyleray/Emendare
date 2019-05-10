@@ -35,30 +35,13 @@ export const ResultFooterCard = ({ target, user }: IResultFooterProps) => {
         />
       </div>
       <div>
-        {user ? (
-          <Vote
-            amend={target}
-            match={{ params: { id: target._id } }}
-            user={user}
-            withIcon={true}
-            style={{ justifyContent: 'flex-end' }}
-          />
-        ) : (
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <div>
-              <div {...propsAccepted.container}>
-                <Icon {...propsAccepted.icon} />
-                <span>{target.results.upVotesCount}</span>
-              </div>
-            </div>
-            <div>
-              <div {...propsDecline.container}>
-                <Icon {...propsDecline.icon} />
-                <span>{target.results.downVotesCount}</span>
-              </div>
-            </div>
-          </div>
-        )}
+        <Vote
+          amend={target}
+          match={{ params: { id: target._id } }}
+          user={user}
+          withIcon={true}
+          style={{ justifyContent: 'flex-end' }}
+        />
       </div>
     </div>
   )
