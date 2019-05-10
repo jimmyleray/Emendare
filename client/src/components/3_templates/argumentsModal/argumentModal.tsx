@@ -32,7 +32,10 @@ export const ArgumentModal = ({ amend, user }: IArgumentModalProps) => {
           <Divider content="Liste des arguments" />
           <ArgumentsList
             amendID={amend._id}
-            args={getListArgumentsWithPopularSorting(amend.arguments)}
+            args={React.useMemo(
+              () => getListArgumentsWithPopularSorting(amend.arguments),
+              [amend.arguments]
+            )}
             hasNextPage={false}
           />
         </div>
