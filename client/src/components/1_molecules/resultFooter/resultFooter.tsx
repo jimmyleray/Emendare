@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Components
-import { Vote, ResultBar, Grid, Icon } from '../../../components'
+import { Vote, ResultBar, Icon } from '../../../components'
 
 // Interfaces
 import { IUser, IAmend } from '../../../../../interfaces'
@@ -21,8 +21,11 @@ export const ResultFooterCard = ({ target, user }: IResultFooterProps) => {
   const propsDecline = getPropsAmendDown(!target.accepted)
 
   return (
-    <Grid style={{ gridTemplateColumns: '1fr 1fr', gridColumnGap: '8%' }}>
-      <div className="card-event__resultbar--size">
+    <div className="is-flex">
+      <div
+        className="card-event__resultbar--size"
+        style={{ flex: 1, marginRight: '20px' }}
+      >
         <ResultBar
           results={{
             up: target.results.upVotesCount,
@@ -57,6 +60,6 @@ export const ResultFooterCard = ({ target, user }: IResultFooterProps) => {
           </div>
         )}
       </div>
-    </Grid>
+    </div>
   )
 }

@@ -38,14 +38,14 @@ export const EditArgument = ({ amendID }: IEditArgumentProps) => {
             <br />
             <Buttons className="is-centered ">
               <Button
-                className="is-info"
+                className="is-info has-text-weight-semibold"
                 onClick={() => changeType('up')}
                 style={{ flex: 1 }}
               >
                 Pour
               </Button>
               <Button
-                className="is-danger"
+                className="is-danger has-text-weight-semibold"
                 onClick={() => changeType('down')}
                 style={{ flex: 1 }}
               >
@@ -72,7 +72,7 @@ export const EditArgument = ({ amendID }: IEditArgumentProps) => {
             <Buttons>
               <Button
                 disabled={text === ''}
-                className="is-primary"
+                className="is-primary has-text-weight-semibold"
                 type="submit"
                 style={{ flex: 1 }}
               >

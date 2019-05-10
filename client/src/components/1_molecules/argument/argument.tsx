@@ -48,10 +48,10 @@ export const Argument = ({
           />
         </a>
         <p
+          className="has-text-weight-semibold is-size-5"
           style={{
             display: 'flex',
-            justifyContent: 'center',
-            fontSize: '16px'
+            justifyContent: 'center'
           }}
         >
           {data.upVotesCount}

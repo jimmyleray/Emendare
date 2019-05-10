@@ -20,7 +20,7 @@ export const FollowText = ({
 
   return withIcon ? (
     <Button
-      className="has-text-grey-light no-focus-outlined"
+      className="has-text-grey-light has-text-weight-semibold no-focus-outlined"
       style={{
         border: 'none',
         padding: '0',

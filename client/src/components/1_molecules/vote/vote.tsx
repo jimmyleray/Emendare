@@ -76,8 +76,13 @@ export const Vote = ({
           {...propsVoteUp.container}
           onClick={vote(user)(amend)('up')(match.params.id)}
         >
-          <Icon {...propsVoteUp.icon} />
-          <span>{amend.results.upVotesCount}</span>
+          <Icon
+            {...propsVoteUp.icon}
+            styleIcon={{ top: '-5%', position: 'relative' }}
+          />
+          <span className="has-text-weight-semibold">
+            {amend.results.upVotesCount}
+          </span>
         </Button>
       </div>
       <div>
@@ -89,7 +94,9 @@ export const Vote = ({
             {...propsVoteDown.icon}
             styleIcon={{ top: '5%', position: 'relative' }}
           />
-          <span>{amend.results.downVotesCount}</span>
+          <span className="has-text-weight-semibold">
+            {amend.results.downVotesCount}
+          </span>
         </Button>
       </div>
     </div>
