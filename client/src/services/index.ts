@@ -1,5 +1,4 @@
 export * from './amend'
-export * from './socket'
 export * from './text'
 export * from './title'
 export * from './time'

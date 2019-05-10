@@ -4,7 +4,8 @@ import {
   NotificationsProvider,
   UserProvider,
   EventsProvider,
-  I18nProvider
+  I18nProvider,
+  ApiProvider
 } from '../../../components'
 
 interface IProps {
@@ -14,6 +15,7 @@ interface IProps {
 const providers = [
   NotificationsProvider,
   I18nProvider,
+  ApiProvider,
   UserProvider,
   DataProvider,
   EventsProvider

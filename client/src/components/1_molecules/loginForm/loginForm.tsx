@@ -1,9 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 // Components
-import { Link, Notification, Input } from '../../../components'
-// Services
-import { Socket } from '../../../services'
+import { Link, Notification, Input, ApiContext } from '../../../components'
 // Config
 import { path } from '../../../config'
 
@@ -18,12 +16,13 @@ export const LoginForm = ({ location, render }: ILoginPageProps) => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<any>(null)
   const [redirectToRefferer, setRedirectToRefferer] = useState(false)
+  const { Socket } = React.useContext(ApiContext)
 
   useEffect(() => {
     return () => {
       Socket.off('login')
     }
-  })
+  }, [])
 
   const change = useCallback(
     (name: string) => (event: any) => {

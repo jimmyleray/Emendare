@@ -1,7 +1,6 @@
 import React from 'react'
 import { IText } from '../../../../../interfaces'
-import { Button, Icon } from '../../../components'
-import { Socket } from '../../../services'
+import { Button, Icon, ApiContext } from '../../../components'
 
 interface IUnFollowTextProps {
   /** Related Text */
@@ -16,8 +15,10 @@ export const UnFollowText = ({
   text,
   className = '',
   withIcon = false
-}: IUnFollowTextProps) =>
-  withIcon ? (
+}: IUnFollowTextProps) => {
+  const { Socket } = React.useContext(ApiContext)
+
+  return withIcon ? (
     <Button
       className="has-text-grey-light no-focus-outlined"
       style={{
@@ -53,3 +54,4 @@ export const UnFollowText = ({
       Ne plus participer au texte
     </Button>
   )
+}

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import { Hero, Page, Button, Notification } from '../../../components'
-import { Socket } from '../../../services'
+import { ApiContext, Page, Button, Notification } from '../../../components'
 import { path } from '../../../config'
 
 export const CreatePage = () => {
@@ -9,6 +8,7 @@ export const CreatePage = () => {
   const [description, setDescription] = React.useState('')
   const [redirect, setRedirect] = React.useState(false)
   const [error, setError] = React.useState<any>(null)
+  const { Socket } = React.useContext(ApiContext)
 
   const confirm = async (event: any) => {
     event.preventDefault()

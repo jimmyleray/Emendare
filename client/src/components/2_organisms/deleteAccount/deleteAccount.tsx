@@ -4,9 +4,9 @@ import {
   Button,
   Icon,
   Input,
-  UserContext
+  UserContext,
+  ApiContext
 } from '../../../components'
-import { Socket } from '../../../services'
 import { useAlert } from '../../../hooks'
 import { IUser } from '../../../../../interfaces'
 import { callAll } from '../../../helpers'
@@ -39,12 +39,13 @@ export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
   const [email, setEmail] = useState('')
   const { showAlert, openAlert, closeAlert } = useAlert()
   const { logout } = useContext(UserContext)
+  const { Socket } = React.useContext(ApiContext)
 
   useEffect(() => {
     return () => {
       Socket.off('deleteAccount')
     }
-  })
+  }, [])
 
   const change = useCallback((event: any) => {
     setEmail(event.target.value)

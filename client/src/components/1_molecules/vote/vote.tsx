@@ -1,7 +1,12 @@
 import React from 'react'
-import { Socket } from '../../../services'
 // Components
-import { Icon, Button, Buttons, I18nContext } from '../../../components'
+import {
+  Icon,
+  Button,
+  Buttons,
+  I18nContext,
+  ApiContext
+} from '../../../components'
 // Interfaces
 import { IAmend } from '../../../../../interfaces'
 // Helper
@@ -24,19 +29,6 @@ interface IVoteProps {
   withIcon?: boolean
 }
 
-const vote = (user: any) => (amend: any) => (type: string) => (
-  id: string
-) => async (event: any) => {
-  event.stopPropagation()
-  const textID = amend.text
-  if (user.followedTexts.indexOf(textID) === -1) {
-    await Socket.fetch('followText', { id: textID })
-  }
-
-  await Socket.fetch(type + 'VoteAmend', { id })
-  Socket.emit('user')
-}
-
 export const Vote = ({
   className,
   user,
@@ -47,6 +39,20 @@ export const Vote = ({
   ...rest
 }: IVoteProps) => {
   const { translate } = React.useContext(I18nContext)
+  const { Socket } = React.useContext(ApiContext)
+
+  const vote = (user: any) => (amend: any) => (type: string) => (
+    id: string
+  ) => async (event: any) => {
+    event.stopPropagation()
+    const textID = amend.text
+    if (user.followedTexts.indexOf(textID) === -1) {
+      await Socket.fetch('followText', { id: textID })
+    }
+
+    await Socket.fetch(type + 'VoteAmend', { id })
+    Socket.emit('user')
+  }
 
   const isVoteInAmend = React.useMemo(
     () => (votes: string[], amendId: string) => votes.includes(amendId),

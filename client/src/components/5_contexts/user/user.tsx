@@ -1,8 +1,6 @@
 import React from 'react'
-import { Socket } from '../../../services'
+import { ApiContext } from '../../../components'
 import { IError, IUser } from '../../../../../interfaces'
-
-export const UserContext = React.createContext({} as IUserProviderState)
 
 interface IUserProviderState {
   user: IUser | null
@@ -11,25 +9,23 @@ interface IUserProviderState {
   logout: any
 }
 
-export class UserProvider extends React.Component<{}, IUserProviderState> {
-  constructor(props: {}) {
-    super(props)
+export const UserContext = React.createContext({} as IUserProviderState)
 
-    this.state = {
-      user: null,
-      isConnectionPending: true,
-      isConnected: () => this.state.user !== null,
-      logout: () => {
-        localStorage.removeItem('token')
-        this.setState(() => ({ user: null }))
-      }
-    }
+export const UserProvider = ({ children }: any) => {
+  const { Socket } = React.useContext(ApiContext)
+  const [user, setUser] = React.useState<IUser | null>(null)
+  const [isConnectionPending, setIsConnectionPending] = React.useState(true)
+
+  const isConnected = () => user !== null
+  const logout = () => {
+    localStorage.removeItem('token')
+    setUser(null)
   }
 
-  public componentDidMount() {
+  React.useEffect(() => {
     Socket.on('user', ({ error, data }: { error: IError; data: IUser }) => {
       if (!error) {
-        this.setState({ user: data })
+        setUser(data)
       }
     })
 
@@ -37,27 +33,28 @@ export class UserProvider extends React.Component<{}, IUserProviderState> {
     if (token) {
       Socket.fetch('login')
         .then(({ user }: any) => {
-          this.setState({ user, isConnectionPending: false })
+          setUser(user)
+          setIsConnectionPending(false)
         })
         .catch(() => {
           localStorage.removeItem('token')
-          this.setState({ isConnectionPending: false })
+          setIsConnectionPending(false)
         })
     } else {
-      this.setState({ isConnectionPending: false })
+      setIsConnectionPending(false)
     }
-  }
 
-  public componentWillUnmount() {
-    Socket.off('user')
-    Socket.off('login')
-  }
+    return () => {
+      Socket.off('user')
+      Socket.off('login')
+    }
+  }, [])
 
-  public render() {
-    return (
-      <UserContext.Provider value={this.state}>
-        {this.props.children}
-      </UserContext.Provider>
-    )
-  }
+  return (
+    <UserContext.Provider
+      value={{ user, isConnected, isConnectionPending, logout }}
+    >
+      {children}
+    </UserContext.Provider>
+  )
 }

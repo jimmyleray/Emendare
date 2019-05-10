@@ -1,7 +1,6 @@
 import React from 'react'
 import { IText } from '../../../../../interfaces'
-import { Button, Icon } from '../../../components'
-import { Socket } from '../../../services'
+import { Button, Icon, ApiContext } from '../../../components'
 
 interface IFollowTextProps {
   /** Related Text */
@@ -16,8 +15,10 @@ export const FollowText = ({
   text,
   className = '',
   withIcon = false
-}: IFollowTextProps) =>
-  withIcon ? (
+}: IFollowTextProps) => {
+  const { Socket } = React.useContext(ApiContext)
+
+  return withIcon ? (
     <Button
       className="has-text-grey-light no-focus-outlined"
       style={{
@@ -47,3 +48,4 @@ export const FollowText = ({
       Participer à ce texte
     </Button>
   )
+}

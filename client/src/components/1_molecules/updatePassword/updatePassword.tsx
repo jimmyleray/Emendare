@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { PwdForm, Button } from '../../../components'
-import { Socket } from '../../../services'
+import { PwdForm, Button, ApiContext } from '../../../components'
 
 export const UpdatePassword = () => {
   const [password, setPassword] = useState('')
   const [checkPassword, setCheckPassword] = useState('')
   const [pwdSame, setPwdSame] = useState(false)
   const [pwdValid, setPwdValid] = useState(false)
+  const { Socket } = React.useContext(ApiContext)
 
   useEffect(() => {
     return () => {
       Socket.off('update-password')
     }
-  })
+  }, [])
 
   const change = useCallback(
     (field: string, validInput: boolean) => (event: any) => {

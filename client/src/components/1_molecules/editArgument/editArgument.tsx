@@ -1,8 +1,6 @@
 import React from 'react'
 // Components
-import { Buttons, Button } from '../../../components'
-// Services
-import { Socket } from '../../../services'
+import { Buttons, Button, ApiContext } from '../../../components'
 
 interface IEditArgumentProps {
   /** Amend ID */
@@ -13,6 +11,7 @@ export const EditArgument = ({ amendID }: IEditArgumentProps) => {
   const [firstStep, setFirstStep] = React.useState(false)
   const [type, setType] = React.useState('up')
   const [text, setText] = React.useState('')
+  const { Socket } = React.useContext(ApiContext)
 
   const changeType = (type: string) => {
     setType(type)

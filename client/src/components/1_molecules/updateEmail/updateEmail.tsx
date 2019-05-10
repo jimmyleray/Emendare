@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { ConfirmAlert, WarningAlert, Button, Input } from '../../../components'
+import {
+  ConfirmAlert,
+  WarningAlert,
+  Button,
+  Input,
+  ApiContext
+} from '../../../components'
 import { IError } from '../../../../../interfaces'
-import { Socket } from '../../../services'
 import { useAlert } from '../../../hooks'
 import { callAll } from '../../../helpers'
 
@@ -9,12 +14,13 @@ export const UpdateEmail = () => {
   const { showAlert, openAlert, closeAlert } = useAlert()
   const [email, setEmail] = useState('')
   const [error, setError] = useState<IError | null>(null)
+  const { Socket } = React.useContext(ApiContext)
 
   useEffect(() => {
     return () => {
       Socket.off('update-email')
     }
-  })
+  }, [])
 
   const submitEmail = () => {
     Socket.fetch('update-email', { email }).catch((err: any) => {

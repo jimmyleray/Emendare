@@ -1,6 +1,11 @@
 import React from 'react'
-import { Avatar, Hero, Page, I18nContext } from '../../../components'
-import { Socket } from '../../../services'
+import {
+  Avatar,
+  Hero,
+  Page,
+  I18nContext,
+  ApiContext
+} from '../../../components'
 
 const isHuman = (contributor: any) => contributor.type === 'User'
 const isBot = (contributor: any) => contributor.type === 'Bot'
@@ -30,6 +35,7 @@ const AvatarsRow = (contributors: any[], isType: any) => (
 
 export const ContributorsPage = () => {
   const [contributors, setContributors] = React.useState<any>([])
+  const { Socket } = React.useContext(ApiContext)
 
   React.useEffect(() => {
     Socket.fetch('contributors').then(setContributors)

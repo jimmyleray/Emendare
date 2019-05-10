@@ -1,8 +1,6 @@
 import React from 'react'
-// Services
-import { Socket } from '../../../services'
 // Components
-import { Button, Icon } from '../../../components'
+import { Button, Icon, ApiContext } from '../../../components'
 import { IText } from '../../../../../interfaces'
 import { path } from '../../../config'
 
@@ -20,6 +18,8 @@ export const ProposeAmend = ({
   className,
   withIcon = false
 }: IProposeAmendProps) => {
+  const { Socket } = React.useContext(ApiContext)
+
   return withIcon ? (
     <Button
       className="has-text-grey-light"
