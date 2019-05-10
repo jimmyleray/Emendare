@@ -15,9 +15,10 @@ import {
   Background,
   I18nContext,
   Tabs,
-  ProposeAmend
+  ProposeAmend,
+  ApiContext
 } from '../../../components'
-import { Socket, Pagination } from '../../../services'
+import { Pagination } from '../../../services'
 import { IText } from '../../../../../interfaces'
 import { path } from '../../../config'
 import { sortBy } from 'lodash'
@@ -34,6 +35,7 @@ export const Text = ({
   const dataContext = React.useContext(DataContext)
   const i18nContext = React.useContext(I18nContext)
   const { translate } = i18nContext
+  const { Socket } = React.useContext(ApiContext)
 
   const [historyVersion, setHistoryVersion] = React.useState(
     (data && data.patches.length) || 0

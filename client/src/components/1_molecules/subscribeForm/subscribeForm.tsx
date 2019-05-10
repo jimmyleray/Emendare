@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 // Components
-import { Icon, Notification, PwdForm } from '../../../components'
-// Services
-import { Socket } from '../../../services'
+import { Icon, Notification, PwdForm, ApiContext } from '../../../components'
 
 interface ISubscribeFormProps {
   /** render props of the submit buttons */
@@ -17,12 +15,13 @@ export const SubscribeForm = ({ render }: ISubscribeFormProps) => {
   const [pwdValid, setPwdValid] = useState(false)
   const [error, setError] = useState<any>(null)
   const [send, setSend] = useState(false)
+  const { Socket } = React.useContext(ApiContext)
 
   useEffect(() => {
     return () => {
       Socket.off('register')
     }
-  })
+  }, [])
 
   const submit = (event: any) => {
     event.preventDefault()

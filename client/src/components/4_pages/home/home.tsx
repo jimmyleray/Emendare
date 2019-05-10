@@ -6,10 +6,9 @@ import {
   I18nContext,
   UserContext,
   DataContext,
-  EventsContext
+  EventsContext,
+  ApiContext
 } from '../../../components'
-// Services
-import { Socket } from '../../../services'
 // Helpers
 import {
   getListTargets,
@@ -21,6 +20,7 @@ export const HomePage = () => {
   const { user } = React.useContext(UserContext)
   const { get } = React.useContext(DataContext)
   const { events, hasNextPage, newEvents } = React.useContext(EventsContext)
+  const { Socket } = React.useContext(ApiContext)
 
   const eventsTargets = getListTargets(events, get)
   const filteredEvents = user

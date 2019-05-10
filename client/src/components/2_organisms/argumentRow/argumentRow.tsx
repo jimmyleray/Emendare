@@ -1,10 +1,8 @@
 import React from 'react'
 // Components
-import { UserContext, Argument } from '../../../components'
+import { UserContext, Argument, ApiContext } from '../../../components'
 // Interfaces
 import { IArgument } from '../../../../../interfaces'
-// Services
-import { Socket } from '../../../services'
 // Helpers
 import { hasUserDownVote, hasUserUpVote } from '../../../helpers'
 
@@ -25,6 +23,7 @@ export const ArgumentRow = ({
   index
 }: IEventRowProps) => {
   const { user } = React.useContext(UserContext)
+  const { Socket } = React.useContext(ApiContext)
 
   const upVoteArgument = (argumentID: string, amendID: string) => {
     if (user) {

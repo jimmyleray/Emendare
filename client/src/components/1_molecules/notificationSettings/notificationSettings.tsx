@@ -1,34 +1,39 @@
 /* eslint-disable jsx-a11y/label-has-for */
 
 import React from 'react'
-import { Button, NotificationsContext, UserContext } from '../../../components'
-import { Socket } from '../../../services'
-
-const keys = ['newText', 'newAmend', 'amendAccepted', 'amendRefused']
-
-const change = (key: string) => async () => {
-  await Socket.fetch('toggleNotificationSetting', { key })
-  Socket.emit('user')
-}
-
-const mapKeyToTitle = (key: string) => {
-  switch (key) {
-    case 'newText':
-      return 'Nouveau texte'
-    case 'newAmend':
-      return 'Nouvel amendement'
-    case 'amendAccepted':
-      return 'Amendement accepté'
-    case 'amendRefused':
-      return 'Amendement refusé'
-    default:
-      return 'Clé invalide'
-  }
-}
+import {
+  Button,
+  NotificationsContext,
+  UserContext,
+  ApiContext
+} from '../../../components'
 
 export const NotificationSettings = () => {
   const notificationsContext = React.useContext(NotificationsContext)
   const { user } = React.useContext(UserContext)
+  const { Socket } = React.useContext(ApiContext)
+
+  const keys = ['newText', 'newAmend', 'amendAccepted', 'amendRefused']
+
+  const change = (key: string) => async () => {
+    await Socket.fetch('toggleNotificationSetting', { key })
+    Socket.emit('user')
+  }
+
+  const mapKeyToTitle = (key: string) => {
+    switch (key) {
+      case 'newText':
+        return 'Nouveau texte'
+      case 'newAmend':
+        return 'Nouvel amendement'
+      case 'amendAccepted':
+        return 'Amendement accepté'
+      case 'amendRefused':
+        return 'Amendement refusé'
+      default:
+        return 'Clé invalide'
+    }
+  }
 
   return (
     <React.Fragment>

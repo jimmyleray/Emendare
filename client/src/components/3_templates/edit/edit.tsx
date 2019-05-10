@@ -9,9 +9,9 @@ import {
   Columns,
   Icon,
   UserContext,
-  Hero
+  Hero,
+  ApiContext
 } from '../../../components'
-import { Socket } from '../../../services'
 import { path } from '../../../config'
 import { debounce } from 'lodash'
 import * as JsDiff from 'diff'
@@ -20,213 +20,167 @@ interface IEditProps {
   data: any
 }
 
-interface IEditState {
-  amendName: string
-  amendDescription: string
-  redirectToAmend: boolean
-  redirectID: string | null
-  initialValue: string
-  amendValue: string
-  text: any
-  patch: string | null
-}
+export const Edit = ({ data }: IEditProps) => {
+  const { isConnected } = React.useContext(UserContext)
+  const { Socket } = React.useContext(ApiContext)
 
-export class Edit extends React.Component<IEditProps, IEditState> {
-  private onChange: any
-  private restoreInitialValue: any
-  private hasDiffs: any
-  private addAmend: any
+  const [amendName, setAmendName] = React.useState('')
+  const [amendDescription, setAmendDescription] = React.useState('')
+  const [redirectToAmend, setRedirectToAmend] = React.useState(false)
+  const [initialValue] = React.useState(data ? data.actual : '')
+  const [amendValue, setAmendValue] = React.useState(data ? data.actual : '')
+  const [text] = React.useState(data)
+  const [patch, setPatch] = React.useState<any>(null)
 
-  private computeDiff = debounce(() => {
-    const patch = JsDiff.createPatch(
-      '',
-      this.state.initialValue,
-      this.state.amendValue,
-      '',
-      '',
-      { context: 1 }
+  const computeDiff = debounce(() => {
+    setPatch(
+      JsDiff.createPatch('', initialValue, amendValue, '', '', {
+        context: 1
+      })
     )
-    this.setState({ patch })
   }, 100)
 
-  constructor(props: IEditProps) {
-    super(props)
+  React.useEffect(() => {
+    computeDiff()
+  }, [amendValue])
 
-    this.onChange = (name: string) => (event: any) => {
-      this.setState({ [name]: event.target.value } as any, () => {
-        this.computeDiff()
-      })
-    }
+  const restoreInitialValue = () => {
+    setAmendValue(initialValue)
+  }
 
-    this.restoreInitialValue = () => {
-      this.setState(
-        prevState => ({ ...prevState, amendValue: prevState.initialValue }),
-        () => {
-          this.computeDiff()
-        }
-      )
-    }
+  const hasDiffs = () => initialValue !== amendValue
 
-    this.hasDiffs = () => this.state.initialValue !== this.state.amendValue
-
-    this.addAmend = () => {
-      // Add a newline at the amendValue end
-      // by default to avoid some conflicts
-      if (!this.state.amendValue.endsWith('\n')) {
-        this.setState(
-          prevState => ({
-            ...prevState,
-            amendValue: prevState.initialValue + '\n'
-          }),
-          () => {
-            this.computeDiff()
-            this.postAmend()
-          }
-        )
-      } else {
-        this.postAmend()
-      }
-    }
-
-    this.state = {
-      amendName: '',
-      amendDescription: '',
-      redirectToAmend: false,
-      redirectID: null,
-      initialValue: this.props.data ? this.props.data.actual : '',
-      amendValue: this.props.data ? this.props.data.actual : '',
-      text: this.props.data,
-      patch: null
+  const addAmend = () => {
+    // Add a newline at the amendValue end
+    // by default to avoid some conflicts
+    if (!amendValue.endsWith('\n')) {
+      setAmendValue(initialValue + '\n')
+      postAmend()
+    } else {
+      postAmend()
     }
   }
 
-  public componentDidMount() {
-    this.computeDiff()
-  }
-
-  public componentWillUnmount() {
-    Socket.off('postAmend')
-  }
-
-  public render() {
-    if (this.state.redirectToAmend) {
-      return <Redirect to={path.home} />
-    }
-
-    return (
-      <UserContext.Consumer>
-        {({ isConnected }: any) => (
-          <React.Fragment>
-            <Columns>
-              <Column>
-                <div className="field">
-                  <label htmlFor="title" className="label">
-                    Titre de l'amendement
-                    <div className="control">
-                      <input
-                        required
-                        name="title"
-                        className="input"
-                        type="text"
-                        autoFocus={true}
-                        value={this.state.amendName}
-                        onChange={this.onChange('amendName')}
-                        placeholder="Nommez votre amendement en quelques mots"
-                      />
-                    </div>
-                  </label>
-                </div>
-
-                <div className="field">
-                  <label htmlFor="description" className="label">
-                    Description / Argumentaire
-                    <div className="control">
-                      <textarea
-                        required
-                        rows={4}
-                        name="description"
-                        value={this.state.amendDescription}
-                        onChange={this.onChange('amendDescription')}
-                        className="textarea"
-                        placeholder="Défendez votre amendement en quelques phrases"
-                      />
-                    </div>
-                  </label>
-                </div>
-
-                <div className="field">
-                  <label htmlFor="editor" className="label">
-                    Editeur du texte
-                    <div className="control">
-                      <textarea
-                        rows={8}
-                        name="editor"
-                        className="textarea"
-                        value={this.state.amendValue}
-                        onChange={this.onChange('amendValue')}
-                      />
-                    </div>
-                  </label>
-                </div>
-
-                <Button
-                  onClick={this.restoreInitialValue}
-                  className="is-danger is-outlined is-fullwidth"
-                >
-                  <Icon type={'solid'} name="fa-undo" />
-                  <span>Restaurer le texte initial</span>
-                </Button>
-
-                {this.hasDiffs() ? (
-                  <Amend
-                    amend={{
-                      name: this.state.amendName,
-                      description: this.state.amendDescription,
-                      patch: this.state.patch,
-                      version: this.state.text.patches.length
-                    }}
-                    text={this.state.text}
-                  />
-                ) : (
-                  <React.Fragment>
-                    <br />
-                    <p className="has-text-centered has-text-danger">
-                      Aucune modification à afficher
-                    </p>
-                  </React.Fragment>
-                )}
-
-                <br />
-
-                <Button
-                  onClick={this.addAmend}
-                  disabled={
-                    !this.hasDiffs() ||
-                    !this.state.amendName ||
-                    !this.state.amendDescription ||
-                    !isConnected()
-                  }
-                  className="is-success is-fullwidth"
-                >
-                  Proposer cet amendement
-                </Button>
-              </Column>
-            </Columns>
-          </React.Fragment>
-        )}
-      </UserContext.Consumer>
-    )
-  }
-
-  private postAmend = () => {
+  const postAmend = () => {
     Socket.fetch('postAmend', {
-      name: this.state.amendName,
-      description: this.state.amendDescription,
-      version: this.state.text.patches.length,
-      patch: this.state.patch,
-      textID: this.state.text._id
+      name: amendName,
+      description: amendDescription,
+      version: text.patches.length,
+      textID: text._id,
+      patch
     }).then((amend: any) => {
-      this.setState({ redirectID: amend._id, redirectToAmend: true })
+      setRedirectToAmend(true)
     })
   }
+
+  React.useEffect(() => {
+    return () => {
+      Socket.off('postAmend')
+    }
+  }, [])
+
+  if (redirectToAmend) {
+    return <Redirect to={path.home} />
+  }
+
+  return (
+    <Columns>
+      <Column>
+        <div className="field">
+          <label htmlFor="title" className="label">
+            Titre de l'amendement
+            <div className="control">
+              <input
+                required
+                name="title"
+                className="input"
+                type="text"
+                autoFocus={true}
+                value={amendName}
+                onChange={event => {
+                  setAmendName(event.target.value)
+                }}
+                placeholder="Nommez votre amendement en quelques mots"
+              />
+            </div>
+          </label>
+        </div>
+
+        <div className="field">
+          <label htmlFor="description" className="label">
+            Description / Argumentaire
+            <div className="control">
+              <textarea
+                required
+                rows={4}
+                name="description"
+                value={amendDescription}
+                onChange={event => {
+                  setAmendDescription(event.target.value)
+                }}
+                className="textarea"
+                placeholder="Défendez votre amendement en quelques phrases"
+              />
+            </div>
+          </label>
+        </div>
+
+        <div className="field">
+          <label htmlFor="editor" className="label">
+            Editeur du texte
+            <div className="control">
+              <textarea
+                rows={8}
+                name="editor"
+                className="textarea"
+                value={amendValue}
+                onChange={event => {
+                  setAmendValue(event.target.value)
+                }}
+              />
+            </div>
+          </label>
+        </div>
+
+        <Button
+          onClick={restoreInitialValue}
+          className="is-danger is-outlined is-fullwidth"
+        >
+          <Icon type={'solid'} name="fa-undo" />
+          <span>Restaurer le texte initial</span>
+        </Button>
+
+        {hasDiffs() ? (
+          <Amend
+            amend={{
+              name: amendName,
+              description: amendDescription,
+              version: text.patches.length,
+              patch
+            }}
+            text={text}
+          />
+        ) : (
+          <React.Fragment>
+            <br />
+            <p className="has-text-centered has-text-danger">
+              Aucune modification à afficher
+            </p>
+          </React.Fragment>
+        )}
+
+        <br />
+
+        <Button
+          onClick={addAmend}
+          disabled={
+            !hasDiffs() || !amendName || !amendDescription || !isConnected()
+          }
+          className="is-success is-fullwidth"
+        >
+          Proposer cet amendement
+        </Button>
+      </Column>
+    </Columns>
+  )
 }

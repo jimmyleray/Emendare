@@ -8,7 +8,8 @@ import {
   EventsContext,
   EventRow,
   InfiniteList,
-  I18nContext
+  I18nContext,
+  ApiContext
 } from '../../../components'
 import { INews, IEvent } from '../../../../../interfaces'
 // Helpers
@@ -64,6 +65,7 @@ export const EventsList = ({
   const { user } = React.useContext(UserContext)
   const { dispatch } = React.useContext(EventsContext)
   const newEventsCount = user && newEvents ? newEvents.length : 0
+  const { Socket } = React.useContext(ApiContext)
 
   return (
     <React.Fragment>
@@ -84,7 +86,7 @@ export const EventsList = ({
           data={events}
           hasNextPage={hasNextPage}
           isRowLoaded={isRowLoaded}
-          loadMoreRows={loadMoreRows}
+          loadMoreRows={loadMoreRows(Socket)}
           rowRenderer={rowRenderer(events, newEvents)}
           cache={cache}
         />
