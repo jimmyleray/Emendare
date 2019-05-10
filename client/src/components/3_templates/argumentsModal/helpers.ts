@@ -7,14 +7,6 @@ import { orderBy, findIndex } from 'lodash'
  */
 export const sortArgumentsByUpVote = (args: IArgument[]) =>
   orderBy(args, ['upVotesCount'], ['desc'])
-
-/**
- * Sort the list of arguments depending on the number of up votes
- * @param args list of arguments
- */
-export const sortArgumentsByUpCreated = (args: IArgument[]) =>
-  orderBy(args, ['created'])
-
 /**
  * Return the index of the most popular up argument
  * @param sortedArgumments List of arguments sorted by number of up vote
@@ -56,5 +48,5 @@ export const getListArgumentsWithPopularSorting = (args: IArgument[]) => {
     popularArguments.push(sortedArgs[indexDownArgument])
     sortedArgs.splice(indexDownArgument, 1)
   }
-  return popularArguments.concat(sortArgumentsByUpCreated(sortedArgs))
+  return popularArguments.concat(sortedArgs)
 }
