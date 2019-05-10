@@ -5,11 +5,24 @@ import { findIndex } from 'lodash'
  * Sort the list of arguments depending on the number of up votes
  * @param args list of arguments
  */
-export const sortArgumentsByUpVote = (args: IArgument[]) =>
-  args.sort(
-    (argument1: IArgument, argument2: IArgument) =>
-      argument2.upVotesCount - argument1.upVotesCount
-  )
+export const sortArgumentsByUpVote = (args: IArgument[]) => args.sort(compare)
+
+const compare = (a: IArgument, b: IArgument) => {
+  if (a.upVotesCount > b.upVotesCount) {
+    return -1
+  }
+  if (a.upVotesCount < b.upVotesCount) {
+    return 1
+  } else {
+    if (new Date(a.created).getTime() > new Date(b.created).getTime()) {
+      return -1
+    }
+    if (new Date(a.created).getTime() < new Date(b.created).getTime()) {
+      return 1
+    }
+    return 0
+  }
+}
 /**
  * Return the index of the most popular up argument
  * @param sortedArgumments List of arguments sorted by number of up vote

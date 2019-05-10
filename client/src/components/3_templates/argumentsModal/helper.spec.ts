@@ -126,4 +126,52 @@ describe('getListArgumentsWithPopularSorting', () => {
       { ...argument, type: 'up', upVotesCount: -1 }
     ])
   })
+  it('should sort the list with created prop', () => {
+    const date1 = new Date(Date.now() + 2)
+    const date2 = new Date(Date.now() + 3)
+    const date3 = new Date(Date.now() + 10)
+
+    listArguments = [
+      {
+        ...argument,
+        type: 'down',
+        upVotesCount: 0,
+        created: date3
+      },
+      {
+        ...argument,
+        type: 'down',
+        upVotesCount: 0,
+        created: date1
+      },
+      {
+        ...argument,
+        type: 'down',
+        upVotesCount: 0,
+        created: date2
+      },
+      { ...argument, type: 'up', upVotesCount: 1 }
+    ]
+    expect(getListArgumentsWithPopularSorting(listArguments)).toEqual([
+      { ...argument, type: 'up', upVotesCount: 1 },
+      {
+        ...argument,
+        type: 'down',
+        upVotesCount: 0,
+        created: date3
+      },
+      {
+        ...argument,
+        type: 'down',
+        upVotesCount: 0,
+        created: date2
+      },
+      {
+        ...argument,
+        type: 'down',
+        upVotesCount: 0,
+        created: date1
+      }
+    ])
+  })
 })
