@@ -41,7 +41,7 @@ export const Argument = ({
             }}
             className={
               user && hasUserUpVote(user.argumentUpVotes, amendID, data._id)
-                ? 'has-text-grey'
+                ? 'has-text-info'
                 : 'has-text-grey-light'
             }
           />
@@ -63,7 +63,7 @@ export const Argument = ({
             }}
             className={
               user && hasUserDownVote(user.argumentDownVotes, amendID, data._id)
-                ? 'has-text-grey'
+                ? 'has-text-danger'
                 : 'has-text-grey-light'
             }
           />
