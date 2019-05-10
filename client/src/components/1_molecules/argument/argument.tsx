@@ -98,7 +98,7 @@ export const Argument = ({
           </small>
           <br />
         </p>
-        <p>{data.text}</p>
+        <p style={{ wordBreak: 'break-word' }}>{data.text}</p>
       </div>
     </Media.Content>
   </Media>
