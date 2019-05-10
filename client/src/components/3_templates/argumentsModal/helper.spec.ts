@@ -112,4 +112,18 @@ describe('getListArgumentsWithPopularSorting', () => {
       { ...argument, type: 'up', upVotesCount: 0 }
     ])
   })
+  it('should sort the list with negative', () => {
+    listArguments = [
+      { ...argument, type: 'down', upVotesCount: 0 },
+      { ...argument, type: 'down', upVotesCount: 0 },
+      { ...argument, type: 'down', upVotesCount: 0 },
+      { ...argument, type: 'up', upVotesCount: -1 }
+    ]
+    expect(getListArgumentsWithPopularSorting(listArguments)).toEqual([
+      { ...argument, type: 'down', upVotesCount: 0 },
+      { ...argument, type: 'down', upVotesCount: 0 },
+      { ...argument, type: 'down', upVotesCount: 0 },
+      { ...argument, type: 'up', upVotesCount: -1 }
+    ])
+  })
 })

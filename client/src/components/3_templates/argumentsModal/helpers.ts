@@ -1,12 +1,15 @@
 import { IArgument } from '../../../../../interfaces'
-import { orderBy, findIndex } from 'lodash'
+import { findIndex } from 'lodash'
 
 /**
  * Sort the list of arguments depending on the number of up votes
  * @param args list of arguments
  */
 export const sortArgumentsByUpVote = (args: IArgument[]) =>
-  orderBy(args, ['upVotesCount'], ['desc'])
+  args.sort(
+    (argument1: IArgument, argument2: IArgument) =>
+      argument2.upVotesCount - argument1.upVotesCount
+  )
 /**
  * Return the index of the most popular up argument
  * @param sortedArgumments List of arguments sorted by number of up vote
@@ -36,14 +39,14 @@ export const getListArgumentsWithPopularSorting = (args: IArgument[]) => {
   const popularArguments: IArgument[] = []
 
   // Check if there are some up or down arguments and if they have more than 1 upVotesCount
-  if (indexUpArgument > -1 && sortedArgs[indexUpArgument].upVotesCount !== 0) {
+  if (indexUpArgument > -1 && sortedArgs[indexUpArgument].upVotesCount > 0) {
     popularArguments.push(sortedArgs[indexUpArgument])
     sortedArgs.splice(indexUpArgument, 1)
     indexDownArgument--
   }
   if (
     indexDownArgument > -1 &&
-    sortedArgs[indexDownArgument].upVotesCount !== 0
+    sortedArgs[indexDownArgument].upVotesCount > 0
   ) {
     popularArguments.push(sortedArgs[indexDownArgument])
     sortedArgs.splice(indexDownArgument, 1)
