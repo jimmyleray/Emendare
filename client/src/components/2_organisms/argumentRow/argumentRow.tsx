@@ -28,7 +28,7 @@ export const ArgumentRow = ({
     Socket.emit('upVoteArgument', { amendID, argumentID })
   }
 
-  const unVoteArgument = (argumentID: string, amendID: string) => {
+  const downVoteArgument = (argumentID: string, amendID: string) => {
     Socket.emit('downVoteArgument', { amendID, argumentID })
   }
 
@@ -38,7 +38,7 @@ export const ArgumentRow = ({
         data={data}
         amendID={amendID}
         upVoteArgument={upVoteArgument}
-        unVoteArgument={unVoteArgument}
+        downVoteArgument={downVoteArgument}
         user={user}
       />
       <hr style={{ margin: 0 }} />
