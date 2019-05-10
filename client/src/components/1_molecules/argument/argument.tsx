@@ -35,15 +35,16 @@ export const Argument = ({
           <Icon
             name="fas fa-sort-up"
             style={{
-              fontSize: '2rem',
+              fontSize: '2.5rem',
               display: 'flex',
               alignItems: 'flex-end'
             }}
             className={
               user && hasUserUpVote(user.argumentUpVotes, amendID, data._id)
-                ? 'has-text-info'
+                ? 'has-text-link'
                 : 'has-text-grey-light'
             }
+            styleIcon={{ position: 'relative', top: '5%' }}
           />
         </a>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -57,7 +58,7 @@ export const Argument = ({
           <Icon
             name="fas fa-sort-down"
             style={{
-              fontSize: '2rem',
+              fontSize: '2.5rem',
               display: 'flex',
               alignItems: 'flex-start'
             }}
@@ -66,6 +67,7 @@ export const Argument = ({
                 ? 'has-text-danger'
                 : 'has-text-grey-light'
             }
+            styleIcon={{ position: 'relative', bottom: '5%' }}
           />
         </a>
       </div>

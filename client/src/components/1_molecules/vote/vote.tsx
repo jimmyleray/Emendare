@@ -79,7 +79,10 @@ export const Vote = ({
           {...propsVoteDown.container}
           onClick={vote(user)(amend)('down')(match.params.id)}
         >
-          <Icon {...propsVoteDown.icon} />
+          <Icon
+            {...propsVoteDown.icon}
+            styleIcon={{ top: '5%', position: 'relative' }}
+          />
           <span>{amend.results.downVotesCount}</span>
         </Button>
       </div>

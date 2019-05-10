@@ -19,16 +19,17 @@ export const getPropsAmendUp = (
     } no-focus-outlined`,
     style: {
       border: 'none',
-      padding: '0 1.5rem 0 0',
-      backgroundColor: 'transparent'
+      margin: '0',
+      backgroundColor: 'transparent',
+      marginRight: '0.5rem'
     }
   },
   icon: {
     type: 'solid',
-    name: `fa-check`,
+    name: `fa-thumbs-up`,
     className: 'fa-lg',
     style: {
-      background: isUp ? 'hsl(217, 71%, 53%, 20%)' : 'none',
+      background: isUp ? 'hsl(217, 71%, 53%, 20%)' : 'hsl(0, 0%, 96%)',
       borderRadius: '50%',
       height: '2.3rem',
       width: '2.3rem',
@@ -59,16 +60,17 @@ export const getPropsAmendDown = (
     } no-focus-outlined`,
     style: {
       border: 'none',
-      padding: '0',
-      backgroundColor: 'transparent'
+      margin: '0',
+      backgroundColor: 'transparent',
+      paddingRight: '0'
     }
   },
   icon: {
     type: 'solid',
-    name: `fa-times`,
+    name: `fa-thumbs-down`,
     className: 'fa-lg',
     style: {
-      background: isDown ? 'hsl(348, 100%, 61%, 20%)' : 'none',
+      background: isDown ? 'hsl(348, 100%, 61%, 20%)' : 'hsl(0, 0%, 96%)',
       borderRadius: '50%',
       height: '2.3rem',
       width: '2.3rem',
