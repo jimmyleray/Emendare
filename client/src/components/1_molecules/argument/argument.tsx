@@ -35,20 +35,27 @@ export const Argument = ({
           <Icon
             name="fas fa-sort-up"
             style={{
-              fontSize: '2rem',
+              fontSize: '2.5rem',
               display: 'flex',
               alignItems: 'flex-end'
             }}
             className={
               user && hasUserUpVote(user.argumentUpVotes, amendID, data._id)
-                ? 'has-text-info'
+                ? 'has-text-link'
                 : 'has-text-grey-light'
             }
+            styleIcon={{ position: 'relative', top: '5%' }}
           />
         </a>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <p
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            fontSize: '16px'
+          }}
+        >
           {data.upVotesCount}
-        </div>
+        </p>
         <a
           className="button is-medium"
           onClick={() => downVoteArgument(data._id, amendID)}
@@ -57,7 +64,7 @@ export const Argument = ({
           <Icon
             name="fas fa-sort-down"
             style={{
-              fontSize: '2rem',
+              fontSize: '2.5rem',
               display: 'flex',
               alignItems: 'flex-start'
             }}
@@ -66,6 +73,7 @@ export const Argument = ({
                 ? 'has-text-danger'
                 : 'has-text-grey-light'
             }
+            styleIcon={{ position: 'relative', bottom: '5%' }}
           />
         </a>
       </div>
@@ -89,9 +97,8 @@ export const Argument = ({
             <StopWatch date={data.created} />
           </small>
           <br />
-          <br />
-          {data.text}
         </p>
+        <p style={{ wordBreak: 'break-word' }}>{data.text}</p>
       </div>
     </Media.Content>
   </Media>
