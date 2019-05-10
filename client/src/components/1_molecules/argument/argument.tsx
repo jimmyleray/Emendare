@@ -10,7 +10,7 @@ interface IArgumentProps {
   data: IArgument
   amendID: string
   upVoteArgument: any
-  unVoteArgument: any
+  downVoteArgument: any
   user: IUser | null
 }
 
@@ -18,7 +18,7 @@ export const Argument = ({
   data,
   amendID,
   upVoteArgument,
-  unVoteArgument,
+  downVoteArgument,
   user
 }: IArgumentProps) => (
   <Media>
@@ -51,7 +51,7 @@ export const Argument = ({
         </div>
         <a
           className="button is-medium"
-          onClick={() => unVoteArgument(data._id, amendID)}
+          onClick={() => downVoteArgument(data._id, amendID)}
           style={{ border: 'none', background: 'none' }}
         >
           <Icon
