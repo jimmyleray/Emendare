@@ -10,7 +10,7 @@ interface IArgumentProps {
   data: IArgument
   amendID: string
   upVoteArgument: any
-  unVoteArgument: any
+  downVoteArgument: any
   user: IUser | null
 }
 
@@ -18,7 +18,7 @@ export const Argument = ({
   data,
   amendID,
   upVoteArgument,
-  unVoteArgument,
+  downVoteArgument,
   user
 }: IArgumentProps) => (
   <Media>
@@ -35,37 +35,45 @@ export const Argument = ({
           <Icon
             name="fas fa-sort-up"
             style={{
-              fontSize: '2rem',
+              fontSize: '2.5rem',
               display: 'flex',
               alignItems: 'flex-end'
             }}
             className={
               user && hasUserUpVote(user.argumentUpVotes, amendID, data._id)
-                ? 'has-text-grey'
+                ? 'has-text-link'
                 : 'has-text-grey-light'
             }
+            styleIcon={{ position: 'relative', top: '5%' }}
           />
         </a>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <p
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            fontSize: '16px'
+          }}
+        >
           {data.upVotesCount}
-        </div>
+        </p>
         <a
           className="button is-medium"
-          onClick={() => unVoteArgument(data._id, amendID)}
+          onClick={() => downVoteArgument(data._id, amendID)}
           style={{ border: 'none', background: 'none' }}
         >
           <Icon
             name="fas fa-sort-down"
             style={{
-              fontSize: '2rem',
+              fontSize: '2.5rem',
               display: 'flex',
               alignItems: 'flex-start'
             }}
             className={
               user && hasUserDownVote(user.argumentDownVotes, amendID, data._id)
-                ? 'has-text-grey'
+                ? 'has-text-danger'
                 : 'has-text-grey-light'
             }
+            styleIcon={{ position: 'relative', bottom: '5%' }}
           />
         </a>
       </div>
@@ -89,9 +97,8 @@ export const Argument = ({
             <StopWatch date={data.created} />
           </small>
           <br />
-          <br />
-          {data.text}
         </p>
+        <p style={{ wordBreak: 'break-word' }}>{data.text}</p>
       </div>
     </Media.Content>
   </Media>

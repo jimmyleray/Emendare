@@ -11,12 +11,22 @@ interface IProps {
   className?: string
   /** Title to display when onHover */
   title?: string
+  /** Style CSS Icon */
+  styleIcon?: React.CSSProperties
   /** Style CSS */
   style?: React.CSSProperties
 }
 
 export const Icon = React.memo(
-  ({ type, size = '', name, className = '', ...rest }: IProps) => {
+  ({
+    type,
+    size = '',
+    name,
+    style,
+    styleIcon,
+    className = '',
+    ...rest
+  }: IProps) => {
     let nameWithType = name
     switch (type) {
       case 'solid':
@@ -37,8 +47,8 @@ export const Icon = React.memo(
     }
 
     return (
-      <span className={'icon ' + className} {...rest}>
-        <i className={nameWithType + ' ' + size} />
+      <span className={'icon ' + className} style={style} {...rest}>
+        <i className={nameWithType + ' ' + size} style={styleIcon} />
       </span>
     )
   }
