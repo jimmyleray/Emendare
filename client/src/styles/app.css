@@ -46,6 +46,10 @@ main {
   align-items: center;
 }
 
+.ReactVirtualized__Grid.ReactVirtualized__List {
+  will-change: contents !important;
+}
+
 /** MOBILE **/
 @media screen and (max-width: 768px) {
   .grid {
@@ -66,6 +70,20 @@ main {
 
   main {
     margin-top: 0;
+  }
+
+  .modal-card {
+    max-height: 100vh;
+  }
+
+  .modal-card-head {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .modal-card-foot {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 }
 

@@ -8,7 +8,8 @@ import {
   DiffPreview,
   DataContext,
   ResultFooterCard,
-  CardLayout
+  CardLayout,
+  Divider
 } from '../../../components'
 
 // Interfaces
@@ -62,12 +63,10 @@ export const ResultEventCard = ({ target, measure }: IResultEventCardProps) => {
       </CardLayout.Description>
       <CardLayout.Detail>
         {text && text.data && target && (
-          <div style={{ margin: '0.5em 0' }}>
-            <p className="has-text-centered has-text-weight-light is-italic is-size-6">
-              Modifications proposées
-            </p>
+          <React.Fragment>
+            <Divider content="Modifications proposées" />
             <DiffPreview amend={target} text={text.data} measure={measure} />
-          </div>
+          </React.Fragment>
         )}
       </CardLayout.Detail>
       <CardLayout.Footer>

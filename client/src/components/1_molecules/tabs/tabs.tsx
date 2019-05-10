@@ -80,7 +80,7 @@ export const Tabs = ({
     return () => {
       document.removeEventListener('keyup', eventHandler)
     }
-  })
+  }, [])
 
   return (
     <TabsContext.Provider value={{ selectedTab, setSelectedTab } as any}>

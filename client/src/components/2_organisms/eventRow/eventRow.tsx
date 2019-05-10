@@ -5,7 +5,11 @@ import {
   AmendEventCard,
   ResultEventCard,
   UserContext,
-  withEventCard
+  withEventCard,
+  ModalContainer,
+  ArgumentModal,
+  Button,
+  Icon
 } from '../../../components'
 // Interfaces
 import { INews } from '../../../../../interfaces'
@@ -37,19 +41,34 @@ export const EventRow = ({ data, measure, isNew, index }: IEventRowProps) => {
   const { user } = useContext(UserContext)
   return (
     <React.Fragment>
-      <div
-        style={{
-          backgroundColor: isNew ? 'rgba(255, 221, 87, 0.1)' : 'initial',
-          padding: '1rem'
-        }}
-      >
-        {data.target &&
-          data.target.data &&
-          withEventCard(measure, index, data.target.data, user)(
-            displayRightEvent(data.event.target.type)
-          )}
-      </div>
-      <hr style={{ margin: 0 }} />
+      <ModalContainer>
+        <ModalContainer.Modal.Trigger
+          active={data.event.target.type === 'amend'}
+        >
+          <div
+            style={{
+              backgroundColor: isNew ? 'rgba(255, 221, 87, 0.1)' : 'initial',
+              padding: '1rem'
+            }}
+          >
+            {data.target &&
+              data.target.data &&
+              withEventCard(measure, index, data.target.data, user)(
+                displayRightEvent(data.event.target.type)
+              )}
+          </div>
+
+          {data.target &&
+            data.target.data &&
+            data.event.target.type === 'amend' && (
+              <ModalContainer.Modal.Content>
+                <ArgumentModal amend={data.target.data} user={user} />
+              </ModalContainer.Modal.Content>
+            )}
+
+          <hr style={{ margin: 0, backgroundColor: '#e8e8e8' }} />
+        </ModalContainer.Modal.Trigger>
+      </ModalContainer>
     </React.Fragment>
   )
 }

@@ -4,14 +4,15 @@ import {
   Link,
   UserContext,
   EventsContext,
-  I18nContext
+  I18nContext,
+  ApiContext
 } from '../../../components'
 import { path } from '../../../config'
-import { Socket } from '../../../services'
 
 export const Navbar = () => {
   const userContext = React.useContext(UserContext)
   const i18nContext = React.useContext(I18nContext)
+  const { Socket } = React.useContext(ApiContext)
 
   const [burgerIsActive, setBurgerActive] = React.useState(false)
   const { hasNextPage } = React.useContext(EventsContext)

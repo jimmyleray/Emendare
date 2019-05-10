@@ -11,7 +11,6 @@ interface IAmendProps {
 
 export const Amend = ({ amend, text }: IAmendProps) => (
   <React.Fragment>
-    <p>{amend && amend.description}</p>
     <Divider content="Modifications proposées" />
     {amend && text && <DiffPreview amend={amend} text={text} />}
   </React.Fragment>

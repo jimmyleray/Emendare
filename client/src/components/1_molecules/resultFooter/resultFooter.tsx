@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Components
-import { Vote, ResultBar, Grid, Icon } from '../../../components'
+import { Vote, ResultBar, Icon } from '../../../components'
 
 // Interfaces
 import { IUser, IAmend } from '../../../../../interfaces'
@@ -21,8 +21,11 @@ export const ResultFooterCard = ({ target, user }: IResultFooterProps) => {
   const propsDecline = getPropsAmendDown(!target.accepted)
 
   return (
-    <Grid style={{ gridTemplateColumns: '1fr 1fr', gridColumnGap: '8%' }}>
-      <div className="card-event__resultbar--size">
+    <div className="is-flex">
+      <div
+        className="card-event__resultbar--size"
+        style={{ flex: 1, marginRight: '20px' }}
+      >
         <ResultBar
           results={{
             up: target.results.upVotesCount,
@@ -32,31 +35,14 @@ export const ResultFooterCard = ({ target, user }: IResultFooterProps) => {
         />
       </div>
       <div>
-        {user ? (
-          <Vote
-            amend={target}
-            match={{ params: { id: target._id } }}
-            user={user}
-            withIcon={true}
-            style={{ justifyContent: 'flex-end' }}
-          />
-        ) : (
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <div>
-              <div {...propsAccepted.container}>
-                <Icon {...propsAccepted.icon} />
-                <span>{target.results.upVotesCount}</span>
-              </div>
-            </div>
-            <div>
-              <div {...propsDecline.container}>
-                <Icon {...propsDecline.icon} />
-                <span>{target.results.downVotesCount}</span>
-              </div>
-            </div>
-          </div>
-        )}
+        <Vote
+          amend={target}
+          match={{ params: { id: target._id } }}
+          user={user}
+          withIcon={true}
+          style={{ justifyContent: 'flex-end' }}
+        />
       </div>
-    </Grid>
+    </div>
   )
 }

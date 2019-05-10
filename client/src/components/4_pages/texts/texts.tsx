@@ -9,10 +9,9 @@ import {
   EventsContext,
   Link,
   Button,
-  Icon
+  Icon,
+  ApiContext
 } from '../../../components'
-// Services
-import { Socket } from '../../../services'
 // Helpers
 import {
   getListTargets,
@@ -25,6 +24,7 @@ export const TextsPage = () => {
   const { user } = React.useContext(UserContext)
   const { get } = React.useContext(DataContext)
   const { events, hasNextPage, newEvents } = React.useContext(EventsContext)
+  const { Socket } = React.useContext(ApiContext)
 
   const eventsTargets = getListTargets(
     events.filter(event => event.target.type === 'text'),

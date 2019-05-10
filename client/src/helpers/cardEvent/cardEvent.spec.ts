@@ -7,13 +7,14 @@ describe('getPropsAmendDown', () => {
         className: `${'has-text-danger'} no-focus-outlined`,
         style: {
           border: 'none',
-          padding: '0',
-          backgroundColor: 'transparent'
+          margin: '0',
+          backgroundColor: 'transparent',
+          paddingRight: '0'
         }
       },
       icon: {
         type: 'solid',
-        name: `fa-times`,
+        name: `fa-thumbs-down`,
         className: 'fa-lg',
         style: {
           background: 'hsl(348, 100%, 61%, 20%)',
@@ -31,16 +32,17 @@ describe('getPropsAmendDown', () => {
         className: `${'has-text-grey-light'} no-focus-outlined`,
         style: {
           border: 'none',
-          padding: '0',
-          backgroundColor: 'transparent'
+          margin: '0',
+          backgroundColor: 'transparent',
+          paddingRight: '0'
         }
       },
       icon: {
         type: 'solid',
-        name: `fa-times`,
+        name: `fa-thumbs-down`,
         className: 'fa-lg',
         style: {
-          background: 'none',
+          background: 'hsl(0, 0%, 96%)',
           borderRadius: '50%',
           height: '2.3rem',
           width: '2.3rem',
@@ -59,13 +61,14 @@ describe('getPropsAmendUp', () => {
         className: `${'has-text-link'} no-focus-outlined`,
         style: {
           border: 'none',
-          padding: '0 1.5rem 0 0',
-          backgroundColor: 'transparent'
+          margin: '0',
+          backgroundColor: 'transparent',
+          marginRight: '0.5rem'
         }
       },
       icon: {
         type: 'solid',
-        name: `fa-check`,
+        name: `fa-thumbs-up`,
         className: 'fa-lg',
         style: {
           background: 'hsl(217, 71%, 53%, 20%)',
@@ -83,16 +86,17 @@ describe('getPropsAmendUp', () => {
         className: `${'has-text-grey-light'} no-focus-outlined`,
         style: {
           border: 'none',
-          padding: '0 1.5rem 0 0',
-          backgroundColor: 'transparent'
+          margin: '0',
+          backgroundColor: 'transparent',
+          marginRight: '0.5rem'
         }
       },
       icon: {
         type: 'solid',
-        name: `fa-check`,
+        name: `fa-thumbs-up`,
         className: 'fa-lg',
         style: {
-          background: 'none',
+          background: 'hsl(0, 0%, 96%)',
           borderRadius: '50%',
           height: '2.3rem',
           width: '2.3rem',

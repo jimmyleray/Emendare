@@ -4,16 +4,17 @@ import {
   Icon,
   I18nContext,
   UserContext,
-  EventsContext
+  EventsContext,
+  ApiContext
 } from '../../../components'
 import { Title } from '../../../services'
 import { path } from '../../../config'
 import useLocation from 'react-use/lib/useLocation'
-import { Socket } from '../../../services'
 
 export const Footer = ({ className }: any) => {
   const { translate } = React.useContext(I18nContext)
   const location = useLocation()
+  const { Socket } = React.useContext(ApiContext)
 
   const userContext = React.useContext(UserContext)
   const { newEvents, hasNextPage } = React.useContext(EventsContext)

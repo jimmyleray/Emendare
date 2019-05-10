@@ -1,7 +1,12 @@
 import React from 'react'
-import { Socket } from '../../../services'
 // Components
-import { Icon, Button, Buttons, I18nContext } from '../../../components'
+import {
+  Icon,
+  Button,
+  Buttons,
+  I18nContext,
+  ApiContext
+} from '../../../components'
 // Interfaces
 import { IAmend } from '../../../../../interfaces'
 // Helper
@@ -24,18 +29,6 @@ interface IVoteProps {
   withIcon?: boolean
 }
 
-const vote = (user: any) => (amend: any) => (type: string) => (
-  id: string
-) => async () => {
-  const textID = amend.text
-  if (user.followedTexts.indexOf(textID) === -1) {
-    await Socket.fetch('followText', { id: textID })
-  }
-
-  await Socket.fetch(type + 'VoteAmend', { id })
-  Socket.emit('user')
-}
-
 export const Vote = ({
   className,
   user,
@@ -46,20 +39,30 @@ export const Vote = ({
   ...rest
 }: IVoteProps) => {
   const { translate } = React.useContext(I18nContext)
+  const { Socket } = React.useContext(ApiContext)
 
-  const isVoteInAmend = React.useMemo(
-    () => (votes: string[], amendId: string) => votes.includes(amendId),
-    [user]
+  const vote = (user: any) => (amend: any) => (type: string) => (
+    id: string
+  ) => async (event: any) => {
+    event.stopPropagation()
+    const textID = amend.text
+    if (user.followedTexts.indexOf(textID) === -1) {
+      await Socket.fetch('followText', { id: textID })
+    }
+
+    await Socket.fetch(type + 'VoteAmend', { id })
+    Socket.emit('user')
+  }
+
+  const isVoteInAmend = (votes: string[], amendId: string) =>
+    votes.includes(amendId)
+
+  const propsVoteUp = getPropsAmendUp(
+    user ? isVoteInAmend(user.upVotes, amend._id) : false
   )
 
-  const propsVoteUp = React.useMemo(
-    () => getPropsAmendUp(isVoteInAmend(user.upVotes, amend._id)),
-    [user.upVotes, amend._id]
-  )
-
-  const propsVoteDown = React.useMemo(
-    () => getPropsAmendDown(isVoteInAmend(user.downVotes, amend._id)),
-    [user.downVotes, amend._id]
+  const propsVoteDown = getPropsAmendDown(
+    user ? isVoteInAmend(user.downVotes, amend._id) : false
   )
 
   return withIcon ? (
@@ -67,19 +70,31 @@ export const Vote = ({
       <div>
         <Button
           {...propsVoteUp.container}
-          onClick={vote(user)(amend)('up')(match.params.id)}
+          disabled={!user}
+          onClick={user && vote(user)(amend)('up')(match.params.id)}
         >
-          <Icon {...propsVoteUp.icon} />
-          <span>{amend.results.upVotesCount}</span>
+          <Icon
+            {...propsVoteUp.icon}
+            styleIcon={{ top: '-5%', position: 'relative' }}
+          />
+          <span className="has-text-weight-semibold">
+            {amend.results.upVotesCount}
+          </span>
         </Button>
       </div>
       <div>
         <Button
           {...propsVoteDown.container}
-          onClick={vote(user)(amend)('down')(match.params.id)}
+          disabled={!user}
+          onClick={user && vote(user)(amend)('down')(match.params.id)}
         >
-          <Icon {...propsVoteDown.icon} />
-          <span>{amend.results.downVotesCount}</span>
+          <Icon
+            {...propsVoteDown.icon}
+            styleIcon={{ top: '5%', position: 'relative' }}
+          />
+          <span className="has-text-weight-semibold">
+            {amend.results.downVotesCount}
+          </span>
         </Button>
       </div>
     </div>
@@ -89,8 +104,8 @@ export const Vote = ({
         className={`is-success ${className} ${
           isVoteInAmend(user.upVotes, amend._id) ? '' : 'is-outlined'
         }`}
-        onClick={vote(user)(amend)('up')(match.params.id)}
-        disabled={amend.closed}
+        onClick={user && vote(user)(amend)('up')(match.params.id)}
+        disabled={!user || amend.closed}
       >
         <span>{translate('UP_VOTE')}</span>
         <Icon type={'solid'} name="fa-smile" size="fa-lg" />
@@ -100,8 +115,8 @@ export const Vote = ({
         className={`is-info ${className} ${
           isVoteInAmend(user.indVotes, amend._id) ? '' : 'is-outlined'
         }`}
-        onClick={vote(user)(amend)('ind')(match.params.id)}
-        disabled={amend.closed}
+        onClick={user && vote(user)(amend)('ind')(match.params.id)}
+        disabled={!user || amend.closed}
       >
         <span>{translate('IND_VOTE')}</span>
         <Icon type={'solid'} name="fa-meh" size="fa-lg" />
@@ -111,8 +126,8 @@ export const Vote = ({
         className={`is-danger ${className} ${
           isVoteInAmend(user.downVotes, amend._id) ? '' : 'is-outlined'
         }`}
-        onClick={vote(user)(amend)('down')(match.params.id)}
-        disabled={amend.closed}
+        onClick={user && vote(user)(amend)('down')(match.params.id)}
+        disabled={!user || amend.closed}
       >
         <span>{translate('DOWN_VOTE')}</span>
         <Icon type={'solid'} name="fa-frown" size="fa-lg" />

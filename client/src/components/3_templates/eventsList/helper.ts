@@ -1,5 +1,4 @@
 import { IEvent, INews } from '../../../../../interfaces'
-import { Socket } from '../../../services'
 import { last } from 'lodash'
 
 /**
@@ -13,7 +12,7 @@ export const isRowLoaded = (data: INews[]) => ({ index }: any) => !!data[index]
  * Fetch data from a API
  * @param data List of events we want to render
  */
-export const loadMoreRows = (
+export const loadMoreRows = (Socket: any) => (
   data: INews[],
   hasNextPage: boolean
 ) => async () => {

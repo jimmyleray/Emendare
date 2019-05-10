@@ -1,71 +1,94 @@
-import React, { useContext } from 'react'
-// Hooks
-import { useToggle } from '../../../hooks'
+import React, { useContext, useState } from 'react'
 
 interface IModalProps {
   /** Children nodes */
-  children: React.ReactNode
+  children: any
   /** Additional css ui class */
   className?: string
   /** Style CSS */
   style?: React.CSSProperties
   /** Open the modal */
   isOpen?: boolean
+  active?: boolean
 }
 
-const modalContext = React.createContext({
-  on: false,
-  toggler: () => {
-    return
-  }
-})
+const ModalContext = React.createContext<any>({})
 
 const useModalContext = () => {
-  const context = useContext(modalContext)
+  const context = useContext(ModalContext)
   if (!context) {
-    throw new Error('Should be inside the Modal comoponent')
+    throw new Error('Should be inside the Modal component')
   }
   return context
 }
 
 export const ModalContainer = ({ children }: IModalProps) => {
-  const { on, toggler } = useToggle(false)
+  const [on, set] = useState(false)
+  const toggler = () => set(!on)
+
   return (
-    <modalContext.Provider value={{ on, toggler }}>
+    <ModalContext.Provider value={{ on, set, toggler }}>
       {children}
-    </modalContext.Provider>
+    </ModalContext.Provider>
   )
 }
 
-const Modal = ({ children, className, ...rest }: IModalProps) => {
+const Modal = ({ children, className = '', ...rest }: IModalProps) => {
   const { on } = useModalContext()
   return (
     <div className={`modal ${className} ${on ? 'is-active' : ''}`} {...rest}>
+      <Close>
+        <div className="modal-background" />
+      </Close>
       {children}
-      <div className="modal-background" {...rest} />
     </div>
   )
 }
 
 const Content = ({ children, ...rest }: IModalProps) => (
-  <div className="modal-content" {...rest}>
+  <div
+    className="modal-content"
+    onClick={event => {
+      event.stopPropagation()
+    }}
+    style={{ cursor: 'auto' }}
+    {...rest}
+  >
     {children}
   </div>
 )
 
-const Trigger = ({ children, ...rest }: IModalProps) => {
+const Trigger = ({ children, active = true, ...rest }: IModalProps) => {
   const { toggler } = useModalContext()
   return (
-    <div {...rest} onClick={toggler}>
+    <div
+      {...rest}
+      onClick={event => {
+        event.stopPropagation()
+        if (active) {
+          toggler()
+        }
+      }}
+      style={{ cursor: active ? 'pointer' : 'auto' }}
+    >
       {children}
     </div>
   )
 }
 
-const Close = ({ children, ...rest }: IModalProps) => {
-  const { toggler } = useModalContext()
+const Close = ({ children, active = true, ...rest }: IModalProps) => {
+  const { set } = useModalContext()
   return (
-    <div className="modal-close" onClick={toggler} {...rest}>
+    <div
+      onClick={event => {
+        event.stopPropagation()
+        if (active) {
+          set(false)
+        }
+      }}
+      style={{ cursor: active ? 'pointer' : 'auto' }}
+      {...rest}
+    >
       {children}
     </div>
   )

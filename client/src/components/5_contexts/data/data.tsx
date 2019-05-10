@@ -1,5 +1,5 @@
 import React from 'react'
-import { Socket } from '../../../services'
+import { ApiContext } from '../../../components'
 
 export const DataContext = React.createContext({} as IDataProviderState)
 
@@ -9,9 +9,24 @@ interface IDataProviderState {
   get: (type: string) => (id: string) => any
 }
 
-export class DataProvider extends React.Component<{}, IDataProviderState> {
-  constructor(props: {}) {
+interface IDataProviderProps {
+  Socket: any
+}
+
+export const DataProvider = ({ children }: any) => {
+  const { Socket } = React.useContext(ApiContext)
+  return <DataProviderCore Socket={Socket}>{children}</DataProviderCore>
+}
+
+class DataProviderCore extends React.Component<
+  IDataProviderProps,
+  IDataProviderState
+> {
+  private Socket: any
+
+  constructor(props: IDataProviderProps) {
     super(props)
+    this.Socket = props.Socket
 
     this.state = {
       memo: {},
@@ -21,7 +36,7 @@ export class DataProvider extends React.Component<{}, IDataProviderState> {
         if (this.state.memo[type] && this.state.memo[type][id]) {
           return this.state.memo[type][id]
         } else if (!this.state.listeners.includes(listener)) {
-          Socket.on(listener, ({ error, data }: any) => {
+          this.Socket.on(listener, ({ error, data }: any) => {
             this.setState(
               prevState => {
                 const newState = { ...prevState }
@@ -32,7 +47,7 @@ export class DataProvider extends React.Component<{}, IDataProviderState> {
                 return newState
               },
               () => {
-                Socket.emit('user')
+                this.Socket.emit('user')
               }
             )
           })
@@ -44,7 +59,7 @@ export class DataProvider extends React.Component<{}, IDataProviderState> {
               ]
             }),
             () => {
-              Socket.emit(type, { id })
+              this.Socket.emit(type, { id })
             }
           )
         }
@@ -53,7 +68,7 @@ export class DataProvider extends React.Component<{}, IDataProviderState> {
   }
 
   public componentWillUnmount() {
-    this.state.listeners.forEach(Socket.off)
+    this.state.listeners.forEach(this.Socket.off)
   }
 
   public render() {

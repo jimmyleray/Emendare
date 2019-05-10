@@ -7,7 +7,7 @@ export interface IProps {
   /** CSS style */
   style?: React.CSSProperties
   /** onClick event */
-  onClick?: () => void
+  onClick?: any
   /** Additional CSS UI class */
   className?: string
   disabled?: boolean
