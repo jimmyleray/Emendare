@@ -748,7 +748,7 @@ export class Amend {
               user.argumentUpVotes.splice(indexUserUpVote, 1)
               amend.arguments[indexArgument].upVotesCount--
             }
-            console.log(indexUserDownVote)
+
             if (indexUserDownVote > -1) {
               user.argumentDownVotes.splice(indexUserDownVote, 1)
               amend.arguments[indexArgument].upVotesCount++
