@@ -5,6 +5,8 @@ import { UserContext, Argument } from '../../../components'
 import { IArgument } from '../../../../../interfaces'
 // Services
 import { Socket } from '../../../services'
+// Helpers
+import { hasUserDownVote, hasUserUpVote } from '../../../helpers'
 
 interface IEventRowProps {
   /** Following event */
@@ -25,11 +27,19 @@ export const ArgumentRow = ({
   const { user } = React.useContext(UserContext)
 
   const upVoteArgument = (argumentID: string, amendID: string) => {
-    Socket.emit('upVoteArgument', { amendID, argumentID })
+    if (user) {
+      hasUserUpVote(user.argumentUpVotes, amendID, data._id)
+        ? Socket.emit('unVoteArgument', { amendID, argumentID })
+        : Socket.emit('upVoteArgument', { amendID, argumentID })
+    }
   }
 
   const downVoteArgument = (argumentID: string, amendID: string) => {
-    Socket.emit('downVoteArgument', { amendID, argumentID })
+    if (user) {
+      hasUserDownVote(user.argumentDownVotes, amendID, data._id)
+        ? Socket.emit('unVoteArgument', { amendID, argumentID })
+        : Socket.emit('downVoteArgument', { amendID, argumentID })
+    }
   }
 
   return (

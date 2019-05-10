@@ -726,7 +726,6 @@ export class Amend {
         (argument: { amendID: string; argumentID: string }) =>
           argument.amendID === amendID && argument.argumentID === argumentID
       )
-
       if (indexUserUpVote === -1 && indexUserDownVote === -1) {
         return {
           error: {
@@ -745,13 +744,15 @@ export class Amend {
           )
           if (amend.arguments[indexArgument]) {
             // Remove the user's vote
-            if (indexUserUpVote > 0) {
+            if (indexUserUpVote > -1) {
               user.argumentUpVotes.splice(indexUserUpVote, 1)
+              amend.arguments[indexArgument].upVotesCount--
             }
-            if (indexUserDownVote > 0) {
+            console.log(indexUserDownVote)
+            if (indexUserDownVote > -1) {
               user.argumentDownVotes.splice(indexUserDownVote, 1)
+              amend.arguments[indexArgument].upVotesCount++
             }
-            amend.arguments[indexArgument].upVotesCount--
             await amend.save()
             await user.save()
             return { data: amend }
