@@ -65,11 +65,11 @@ export const ArgumentsList = ({
           isWindowScroller={false}
         />
       ) : (
-        <Card style={{ padding: '2rem' }}>
-          <p className="is-size-5 has-text-centered">
-            Aucun arguments postés pour ce vote
-          </p>
-        </Card>
+        <p className="is-size-5 has-text-centered">
+          Aucun argument pour ce vote.
+          <br />
+          Soyez le premier à présenter votre avis ?
+        </p>
       )}
     </div>
   )
