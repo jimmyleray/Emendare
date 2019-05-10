@@ -47,9 +47,15 @@ export const Argument = ({
             styleIcon={{ position: 'relative', top: '5%' }}
           />
         </a>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <p
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            fontSize: '16px'
+          }}
+        >
           {data.upVotesCount}
-        </div>
+        </p>
         <a
           className="button is-medium"
           onClick={() => downVoteArgument(data._id, amendID)}
@@ -91,9 +97,8 @@ export const Argument = ({
             <StopWatch date={data.created} />
           </small>
           <br />
-          <br />
-          {data.text}
         </p>
+        <p>{data.text}</p>
       </div>
     </Media.Content>
   </Media>
