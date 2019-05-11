@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^5.4.0",
-    "@nestjs/core": "^5.4.0",
+    "@nestjs/core": "^6.2.0",
     "body-parser": "^1.18.3",
     "cache-manager": "^2.9.0",
     "compression": "^1.7.4",
