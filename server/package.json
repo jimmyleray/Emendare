@@ -73,7 +73,7 @@
     "jest": "24.1.0",
     "lint-staged": "8.1.6",
     "nodemon": "1.19.0",
-    "prettier": "1.17.0",
+    "prettier": "1.17.1",
     "ts-jest": "24.0.2",
     "tslint": "5.12.1",
     "typedoc": "0.14.2",
