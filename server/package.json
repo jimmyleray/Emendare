@@ -61,7 +61,7 @@
     "@types/diff": "4.0.2",
     "@types/express": "4.16.1",
     "@types/jest": "24.0.13",
-    "@types/lodash": "4.14.130",
+    "@types/lodash": "4.14.131",
     "@types/mjml": "^4.0.2",
     "@types/mockingoose": "^2.11.0",
     "@types/mongoose": "5.5.2",
