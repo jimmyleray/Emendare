@@ -38,12 +38,6 @@ export const AmendEventCard = ({
   const { get } = useContext(DataContext)
   const text: IResponse<IText> = get('text')(target.text)
 
-  React.useEffect(() => {
-    if (measure) {
-      measure()
-    }
-  }, [])
-
   return (
     <CardLayout>
       <CardLayout.Icon>
@@ -93,9 +87,7 @@ export const AmendEventCard = ({
       </CardLayout.Description>
       {text && text.data && target && (
         <CardLayout.Detail>
-          <Collapse
-            isOpen={target.patch !== null && target.patch.length < 1500}
-          >
+          <Collapse isOpen={true}>
             <Collapse.Trigger style={{ marginLeft: '60px' }} onClick={measure}>
               {(on: boolean) =>
                 on ? (
