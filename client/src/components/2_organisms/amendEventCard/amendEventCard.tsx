@@ -39,10 +39,10 @@ export const AmendEventCard = ({
   const text: IResponse<IText> = get('text')(target.text)
 
   React.useEffect(() => {
-    if (measure && text) {
+    if (measure) {
       measure()
     }
-  }, [text])
+  }, [])
 
   return (
     <CardLayout>
