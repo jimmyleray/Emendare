@@ -3,6 +3,8 @@ import React, { useContext } from 'react'
 // Components
 import {
   Icon,
+  Collapse,
+  Button,
   StopWatch,
   CountDown,
   DiffPreview,
@@ -35,6 +37,12 @@ export const AmendEventCard = ({
 }: IAmendEventCardProps) => {
   const { get } = useContext(DataContext)
   const text: IResponse<IText> = get('text')(target.text)
+
+  React.useEffect(() => {
+    if (measure && text) {
+      measure()
+    }
+  }, [text])
 
   return (
     <CardLayout>
@@ -85,8 +93,41 @@ export const AmendEventCard = ({
       </CardLayout.Description>
       {text && text.data && target && (
         <CardLayout.Detail>
-          <Divider content="Modifications proposées" />
-          <DiffPreview amend={target} text={text.data} measure={measure} />
+          <Collapse
+            isOpen={target.patch !== null && target.patch.length < 1500}
+          >
+            <Collapse.Trigger style={{ marginLeft: '60px' }} onClick={measure}>
+              {(on: boolean) =>
+                on ? (
+                  <Button
+                    style={{
+                      background: 'none',
+                      margin: '0.5rem 0 0.5rem 0',
+                      padding: 0
+                    }}
+                    className="no-focus-outlined is-text"
+                  >
+                    Réduire les modifications proposées
+                  </Button>
+                ) : (
+                  <Button
+                    style={{
+                      background: 'none',
+                      margin: '0.5rem 0 0.5rem 0',
+                      padding: 0
+                    }}
+                    className="no-focus-outlined has-text-info is-text"
+                  >
+                    Afficher les modifications proposées
+                  </Button>
+                )
+              }
+            </Collapse.Trigger>
+            <Collapse.Detail style={{ marginTop: '0.5rem', padding: '1rem' }}>
+              <Divider content="Modifications proposées" />
+              <DiffPreview amend={target} text={text.data} measure={measure} />
+            </Collapse.Detail>
+          </Collapse>
         </CardLayout.Detail>
       )}
       <CardLayout.Footer>
