@@ -48,7 +48,13 @@ export const Collapse = ({
 const Trigger = ({ children, onClick, ...rest }: ICollapseProps) => {
   const { toggler, on } = useCollapseContext()
   return (
-    <div onClick={onClick ? callAll(toggler, onClick) : toggler} {...rest}>
+    <div
+      onClick={(event: React.MouseEvent) => {
+        event.stopPropagation()
+        onClick ? callAll(toggler, onClick)() : toggler()
+      }}
+      {...rest}
+    >
       {children(on)}
     </div>
   )
