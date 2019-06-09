@@ -6,7 +6,6 @@ import {
   Buttons,
   Icon,
   Link,
-  ResultsIcon,
   DataContext,
   UserContext,
   Notification,
@@ -21,8 +20,8 @@ import {
 import { Pagination } from '../../../services'
 import { IText } from '../../../../../interfaces'
 import { path } from '../../../config'
-import { sortBy } from 'lodash'
-import * as JsDiff from 'diff'
+import sortBy from 'lodash/sortBy'
+import { applyPatch } from 'diff'
 
 export const Text = ({
   data,
@@ -46,7 +45,7 @@ export const Text = ({
   let versionedText = ''
   if (data && data.patches.length > 0) {
     for (let index = 0; index < historyVersion; index++) {
-      versionedText = JsDiff.applyPatch(versionedText, data.patches[index])
+      versionedText = applyPatch(versionedText, data.patches[index])
     }
   }
 
@@ -153,23 +152,7 @@ export const Text = ({
                         )
                         .map((amend: any) => (
                           <div key={amend.data._id}>
-                            <ResultsIcon
-                              data={{
-                                up: amend.data.results.upVotesCount,
-                                down: amend.data.results.downVotesCount,
-                                ind: amend.data.results.indVotesCount,
-                                absent:
-                                  (amend.data.results.totalPotentialVotesCount
-                                    ? amend.data.results
-                                        .totalPotentialVotesCount
-                                    : data.followersCount) -
-                                  (amend.data.results.upVotesCount +
-                                    amend.data.results.downVotesCount +
-                                    amend.data.results.indVotesCount)
-                              }}
-                            />
                             {' > '}
-
                             <Link
                               to={path.amend(amend.data._id)}
                               className="has-text-weight-bold"

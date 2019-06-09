@@ -13,8 +13,8 @@ import {
   ApiContext
 } from '../../../components'
 import { path } from '../../../config'
-import { debounce } from 'lodash'
-import * as JsDiff from 'diff'
+import debounce from 'lodash/debounce'
+import { createPatch } from 'diff'
 
 interface IEditProps {
   data: any
@@ -34,7 +34,7 @@ export const Edit = ({ data }: IEditProps) => {
 
   const computeDiff = debounce(() => {
     setPatch(
-      JsDiff.createPatch('', initialValue, amendValue, '', '', {
+      createPatch('', initialValue, amendValue, '', '', {
         context: 1
       })
     )

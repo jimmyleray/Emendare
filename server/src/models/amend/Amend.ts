@@ -10,7 +10,8 @@ import {
   IEvent,
   IArgument
 } from '../../../../interfaces'
-import { delay, findIndex } from 'lodash'
+import findIndex from 'lodash/findIndex'
+import delay from 'lodash/delay'
 
 const oneSecond = 1000
 const oneMinute = oneSecond * 60

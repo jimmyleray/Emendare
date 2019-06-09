@@ -1,5 +1,5 @@
 import { ITime } from '../../../../interfaces'
-import { isString } from 'lodash'
+import isString from 'lodash/isString'
 
 /**
  * This service will help to manage Time

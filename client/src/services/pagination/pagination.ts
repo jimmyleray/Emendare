@@ -1,4 +1,6 @@
-import { range, inRange, pullAll } from 'lodash'
+import pullAll from 'lodash/pullAll'
+import inRange from 'lodash/inRange'
+import range from 'lodash/range'
 
 /**
  * This service will help to manage Pagination

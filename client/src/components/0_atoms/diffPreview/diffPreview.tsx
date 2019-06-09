@@ -1,5 +1,5 @@
 // Dependencies
-import * as JsDiff from 'diff'
+import { applyPatch, diffLines, Change } from 'diff'
 import React, { useState, useEffect } from 'react'
 import { IAmend, IText } from '../../../../../interfaces'
 
@@ -16,11 +16,11 @@ const computeDiff = (amend: Partial<IAmend>, text: IText) => {
     let previousText = ''
 
     for (let index = 0; index < (amend.version || 0); index++) {
-      previousText = JsDiff.applyPatch(previousText, text.patches[index])
+      previousText = applyPatch(previousText, text.patches[index])
     }
 
-    const newText = JsDiff.applyPatch(previousText, amend.patch || '')
-    const diffs = JsDiff.diffLines(previousText, newText)
+    const newText = applyPatch(previousText, amend.patch || '')
+    const diffs = diffLines(previousText, newText)
     return diffs
   }
 }
@@ -28,7 +28,7 @@ const computeDiff = (amend: Partial<IAmend>, text: IText) => {
 export const DiffPreview = React.memo(
   ({ amend, text, measure }: IDiffPreviewProps) => {
     // State
-    const [diffs, setDiffs] = useState<JsDiff.Change[]>([])
+    const [diffs, setDiffs] = useState<Change[]>([])
 
     // Effects
     useEffect(() => {

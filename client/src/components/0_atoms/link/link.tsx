@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { startsWith } from 'lodash'
+import startsWith from 'lodash/startsWith'
 
 interface IProps {
   children: React.ReactNode

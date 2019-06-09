@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 import React from 'react'
 import { CellMeasurerCache, CellMeasurer } from 'react-virtualized'
-import { Card, ArgumentRow, InfiniteList } from '../../../components'
+import { ArgumentRow, InfiniteList } from '../../../components'
 import { IArgument } from '../../../../../interfaces'
 // Helpers
 import { isRowLoaded, loadMoreRows } from './helper'

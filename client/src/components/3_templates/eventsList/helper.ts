@@ -1,5 +1,5 @@
 import { IEvent, INews } from '../../../../../interfaces'
-import { last } from 'lodash'
+import last from 'lodash/last'
 
 /**
  * Tell if the row is loaded
