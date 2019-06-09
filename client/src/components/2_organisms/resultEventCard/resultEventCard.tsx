@@ -34,9 +34,18 @@ interface IResultEventCardProps {
   index: number
 }
 
+const isTooLongPatch = (patch: string | null) =>
+  patch !== null && patch.length > 1500
+
 export const ResultEventCard = ({ target, measure }: IResultEventCardProps) => {
   const { get } = React.useContext(DataContext)
   const text: IResponse<IText> = get('text')(target.text)
+
+  React.useEffect(() => {
+    if (measure && target && isTooLongPatch(target.patch)) {
+      measure()
+    }
+  }, [measure, target])
 
   return (
     <CardLayout>
@@ -65,7 +74,7 @@ export const ResultEventCard = ({ target, measure }: IResultEventCardProps) => {
       </CardLayout.Description>
       <CardLayout.Detail>
         {text && text.data && target && (
-          <Collapse isOpen={true}>
+          <Collapse isOpen={!isTooLongPatch(target.patch)}>
             <Collapse.Trigger style={{ marginLeft: '60px' }} onClick={measure}>
               {(on: boolean) =>
                 on ? (
