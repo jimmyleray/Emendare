@@ -30,6 +30,9 @@ interface IAmendEventCardProps {
   index?: number
 }
 
+const isTooLongPatch = (patch: string | null) =>
+  patch !== null && patch.length > 1500
+
 export const AmendEventCard = ({
   target,
   user,
@@ -37,6 +40,12 @@ export const AmendEventCard = ({
 }: IAmendEventCardProps) => {
   const { get } = useContext(DataContext)
   const text: IResponse<IText> = get('text')(target.text)
+
+  React.useEffect(() => {
+    if (measure && target && isTooLongPatch(target.patch)) {
+      measure()
+    }
+  }, [measure, target, user])
 
   return (
     <CardLayout>
@@ -87,7 +96,7 @@ export const AmendEventCard = ({
       </CardLayout.Description>
       {text && text.data && target && (
         <CardLayout.Detail>
-          <Collapse isOpen={true}>
+          <Collapse isOpen={!isTooLongPatch(target.patch)}>
             <Collapse.Trigger style={{ marginLeft: '60px' }} onClick={measure}>
               {(on: boolean) =>
                 on ? (

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 // Components
 import {
@@ -7,8 +7,6 @@ import {
   StopWatch,
   FollowText,
   UnFollowText,
-  Columns,
-  Column,
   Collapse,
   Button,
   Background,
@@ -29,11 +27,11 @@ interface ITextEventCard {
 }
 
 export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
-  useEffect(() => {
-    if (target) {
+  React.useEffect(() => {
+    if (measure && target) {
       measure()
     }
-  }, [target])
+  }, [measure, target])
 
   return (
     <CardLayout>
