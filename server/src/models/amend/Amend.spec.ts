@@ -299,7 +299,6 @@ describe('getAmend', () => {
           version: 1,
           textID: '5c64389cae3ae3695c711e44'
         },
-
         'wrongId'
       )
     ).toMatchObject({
