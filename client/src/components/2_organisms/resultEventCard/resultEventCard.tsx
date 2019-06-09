@@ -37,7 +37,11 @@ interface IResultEventCardProps {
 const isTooLongPatch = (patch: string | null) =>
   patch !== null && patch.length > 1500
 
-export const ResultEventCard = ({ target, measure }: IResultEventCardProps) => {
+export const ResultEventCard = ({
+  target,
+  user,
+  measure
+}: IResultEventCardProps) => {
   const { get } = React.useContext(DataContext)
   const text: IResponse<IText> = get('text')(target.text)
 
@@ -45,7 +49,7 @@ export const ResultEventCard = ({ target, measure }: IResultEventCardProps) => {
     if (measure && target && isTooLongPatch(target.patch)) {
       measure()
     }
-  }, [measure, target])
+  }, [measure, target, user])
 
   return (
     <CardLayout>
