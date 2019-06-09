@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Layout, PrivateRoute, Providers } from '../../../components'
 import * as Pages from '../../4_pages'
 import { routes } from '../../../config'
-import { capitalize, isString } from 'lodash'
+import capitalize from 'lodash/capitalize'
+import isString from 'lodash/isString'
 
 export const Router = () => (
   <BrowserRouter>

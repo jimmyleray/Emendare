@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import socketIO from 'socket.io'
 import bcrypt from 'bcrypt'
-import { isUndefined } from 'lodash'
+import isUndefined from 'lodash/isUndefined'
 import { Auth, Crypto, Mail } from '../../services'
 import { activation, reset } from '../../emails'
 import { Amend, Text } from '../../models'

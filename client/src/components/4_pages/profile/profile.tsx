@@ -9,7 +9,6 @@
  */
 
 import React from 'react'
-import JSONTree from 'react-json-tree'
 import {
   Button,
   Page,
@@ -42,7 +41,6 @@ export const ProfilePage = () => {
         <Tabs.Menu className="is-fullwidth">
           <Tabs.Tab to="notifications">{translate('NOTIFICATIONS')}</Tabs.Tab>
           <Tabs.Tab to="settings">{translate('PARAMETERS')}</Tabs.Tab>
-          <Tabs.Tab to="data"> {translate('MY_DATA')}</Tabs.Tab>
         </Tabs.Menu>
         {userContext.user && (
           <React.Fragment>
@@ -51,16 +49,6 @@ export const ProfilePage = () => {
             </Tabs.Content>
             <Tabs.Content for="settings">
               <UserCredentials user={userContext.user} />
-            </Tabs.Content>
-            <Tabs.Content for="data">
-              <React.Fragment>
-                <p>{translate('MY_DATA_PROFILE_TEXT')}</p>
-                <JSONTree
-                  data={userContext.user}
-                  theme="default"
-                  hideRoot={true}
-                />
-              </React.Fragment>
             </Tabs.Content>
           </React.Fragment>
         )}

@@ -15,7 +15,8 @@ import {
   StopWatch
 } from '../../../components'
 import { path } from '../../../config'
-import { isUndefined, sortBy } from 'lodash'
+import sortBy from 'lodash/sortBy'
+import isUndefined from 'lodash/isUndefined'
 import { IText } from '../../../../../interfaces'
 
 export const Explore = () => {

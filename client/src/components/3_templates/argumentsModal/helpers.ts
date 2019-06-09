@@ -1,5 +1,5 @@
 import { IArgument } from '../../../../../interfaces'
-import { findIndex } from 'lodash'
+import findIndex from 'lodash/findIndex'
 
 /**
  * Sort the list of arguments depending on the number of up votes

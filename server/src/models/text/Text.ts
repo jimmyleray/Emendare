@@ -5,7 +5,7 @@ import { Amend, User, Event } from '../../models'
 import { IResponse, IText, IEvent } from '../../../../interfaces'
 
 // Diff Patch Library
-import * as JsDiff from 'diff'
+import { applyPatch } from 'diff'
 
 const model = mongoose.model(
   'Text',
@@ -179,7 +179,7 @@ export class Text {
 
   public static async updateTextWithAmend(amend: any, io?: SocketIO.Server) {
     amend.accepted = true
-    const newText = JsDiff.applyPatch(amend.text.actual, amend.patch)
+    const newText = applyPatch(amend.text.actual, amend.patch)
 
     if (newText) {
       amend.version = amend.text.patches.length
@@ -203,7 +203,7 @@ export class Text {
     })
 
     othersAmends.forEach(async (otherAmend: any) => {
-      const isPatchable = JsDiff.applyPatch(text.actual, otherAmend.patch)
+      const isPatchable = applyPatch(text.actual, otherAmend.patch)
       let event: IEvent
       let oldEvent: IEvent
       if (isPatchable) {

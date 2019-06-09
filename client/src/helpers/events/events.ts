@@ -1,5 +1,5 @@
 import { IUser, INews, IEvent, IResponse } from '../../../../interfaces'
-import _ from 'lodash'
+import remove from 'lodash/remove'
 
 /**
  * Return an array of events which have not been readed by the user
@@ -21,7 +21,7 @@ export const getNewEvent = (lastEventDate: any, events: IEvent[]) =>
  */
 export const deleteNewEvent = (eventId: string, newEvents: IEvent[]) => {
   if (eventId && newEvents.length > 0) {
-    return _.remove(newEvents, event => event._id !== eventId)
+    return remove(newEvents, event => event._id !== eventId)
   }
   return newEvents
 }

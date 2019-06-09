@@ -2,7 +2,7 @@ import React from 'react'
 import { IError, IEvent } from '../../../../../interfaces'
 import { getNewEvent, deleteNewEvent } from '../../../helpers'
 import { UserContext, ApiContext } from '../../../components'
-import { uniqBy } from 'lodash'
+import uniqBy from 'lodash/uniqBy'
 
 interface IEventProviderProps {
   children: React.ReactChild

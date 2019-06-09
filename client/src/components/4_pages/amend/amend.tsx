@@ -19,7 +19,6 @@ import {
   Link,
   Notification,
   Page,
-  Results,
   DataContext,
   UserContext,
   CountDown,
@@ -168,22 +167,6 @@ export const AmendPage = ({ match }: any) => {
                     </React.Fragment>
                   )}
                 </div>
-                <br />
-
-                <Results
-                  data={{
-                    up: amend.data.results.upVotesCount,
-                    down: amend.data.results.downVotesCount,
-                    ind: amend.data.results.indVotesCount,
-                    absent:
-                      (amend.data.results.totalPotentialVotesCount
-                        ? amend.data.results.totalPotentialVotesCount
-                        : text.data.followersCount) -
-                      (amend.data.results.upVotesCount +
-                        amend.data.results.downVotesCount +
-                        amend.data.results.indVotesCount)
-                  }}
-                />
 
                 <br />
                 <p className="is-size-5 has-text-centered">
