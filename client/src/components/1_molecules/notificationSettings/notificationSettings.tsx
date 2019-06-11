@@ -4,13 +4,13 @@ import React from 'react'
 import {
   Button,
   NotificationsContext,
-  UserContext,
+  useUser,
   ApiContext
 } from '../../../components'
 
 export const NotificationSettings = () => {
   const notificationsContext = React.useContext(NotificationsContext)
-  const { user } = React.useContext(UserContext)
+  const { user } = useUser()
   const { Socket } = React.useContext(ApiContext)
 
   const keys = ['newText', 'newAmend', 'amendAccepted', 'amendRefused']

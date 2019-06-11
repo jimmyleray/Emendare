@@ -1,6 +1,6 @@
 import React from 'react'
 // Components
-import { UserContext, Argument, ApiContext } from '../../../components'
+import { useUser, Argument, ApiContext } from '../../../components'
 // Interfaces
 import { IArgument } from '../../../../../interfaces'
 // Helpers
@@ -22,7 +22,7 @@ export const ArgumentRow = ({
   measure,
   index
 }: IEventRowProps) => {
-  const { user } = React.useContext(UserContext)
+  const { user } = useUser()
   const { Socket } = React.useContext(ApiContext)
 
   const upVoteArgument = (argumentID: string, amendID: string) => {

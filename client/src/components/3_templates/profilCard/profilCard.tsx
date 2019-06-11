@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 // Components
 import {
-  UserContext,
+  useUser,
   Card,
   I18nContext,
   Grid,
@@ -11,7 +11,7 @@ import {
 } from '../../../components'
 
 export const ProfilCard = ({ location }: any) => {
-  const { user, logout, isConnectionPending } = useContext(UserContext)
+  const { user, logout, isConnectionPending } = useUser()
   const { translate } = React.useContext(I18nContext)
 
   return (

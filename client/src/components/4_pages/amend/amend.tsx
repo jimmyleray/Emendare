@@ -20,7 +20,7 @@ import {
   Notification,
   Page,
   DataContext,
-  UserContext,
+  useUser,
   CountDown,
   I18nContext,
   Vote,
@@ -33,7 +33,7 @@ import { IText, IAmend, IResponse } from '../../../../../interfaces'
 export const AmendPage = ({ match }: any) => {
   const { translate } = React.useContext(I18nContext)
   const { get } = React.useContext(DataContext)
-  const { user } = React.useContext(UserContext)
+  const { user } = useUser()
 
   const amend: IResponse<IAmend> = get('amend')(match.params.id)
   const text: IResponse<IText> =

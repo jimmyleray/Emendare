@@ -2,7 +2,7 @@ import React from 'react'
 import {
   Logo,
   Link,
-  UserContext,
+  useUser,
   EventsContext,
   I18nContext,
   ApiContext
@@ -10,7 +10,7 @@ import {
 import { path } from '../../../config'
 
 export const Navbar = () => {
-  const userContext = React.useContext(UserContext)
+  const userContext = useUser()
   const i18nContext = React.useContext(I18nContext)
   const { Socket } = React.useContext(ApiContext)
 

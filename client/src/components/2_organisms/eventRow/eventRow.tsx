@@ -4,7 +4,7 @@ import {
   TextEventCard,
   AmendEventCard,
   ResultEventCard,
-  UserContext,
+  useUser,
   withEventCard,
   ModalContainer,
   ArgumentModal,
@@ -38,7 +38,7 @@ const displayRightEvent = (type: string): React.ComponentType<any> => {
 }
 
 export const EventRow = ({ data, measure, isNew, index }: IEventRowProps) => {
-  const { user } = useContext(UserContext)
+  const { user } = useUser()
   return (
     <React.Fragment>
       <ModalContainer>
