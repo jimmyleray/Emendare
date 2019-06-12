@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Redirect } from 'react-router-dom'
 // Components
 import { Link, Notification, Input, useUser } from '../../../components'
@@ -14,7 +14,7 @@ interface ILoginPageProps {
 export const LoginForm = ({ location, render }: ILoginPageProps) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [redirectToRefferer, setRedirectToRefferer] = useState(false)
+  const [redirectToRefferer] = useState(false)
   const { login, errorAuth } = useUser()
 
   const change = useCallback(

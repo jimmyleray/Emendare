@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 // Components
 import {
   TextEventCard,
@@ -7,9 +7,7 @@ import {
   useUser,
   withEventCard,
   ModalContainer,
-  ArgumentModal,
-  Button,
-  Icon
+  ArgumentModal
 } from '../../../components'
 // Interfaces
 import { INews } from '../../../../../interfaces'
