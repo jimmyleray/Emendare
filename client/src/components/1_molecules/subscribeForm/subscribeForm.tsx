@@ -13,7 +13,7 @@ export const SubscribeForm = ({ render }: ISubscribeFormProps) => {
   const [checkPassword, setCheckPassword] = useState('')
   const [pwdSame, setPwdSame] = useState(false)
   const [pwdValid, setPwdValid] = useState(false)
-  const [send, setSend] = useState(false)
+  const [send] = useState(false)
   const { register, errorAuth } = useUser()
 
   const submit = (event: any) => {
