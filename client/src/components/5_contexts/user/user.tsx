@@ -32,7 +32,6 @@ export const UserProvider = ({ children }: any) => {
     dispatch(setUserAction(null))
   }
   const register = (email: string, password: string) => {
-    dispatch(setIsConnectionPendingAction(true))
     Socket.fetch('subscribe', { email, password })
       .then(() => {
         dispatch(setErrorAuthAction(null))
@@ -44,7 +43,6 @@ export const UserProvider = ({ children }: any) => {
       })
   }
   const login = (email?: string, password?: string) => {
-    dispatch(setIsConnectionPendingAction(true))
     Socket.fetch('login', { email, password })
       .then(({ user, token }: any) => {
         dispatch(setUserAction(user))
