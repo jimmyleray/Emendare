@@ -4,14 +4,18 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { UserContext, UserProvider } from './user'
+import { useUser, UserProvider } from './user'
 
 it('should render a UserContext', () => {
-  const component = shallow(
-    <UserProvider>
-      <UserContext.Consumer>{() => <p>Test</p>}</UserContext.Consumer>
-    </UserProvider>
-  )
+  const Component = () => {
+    const value = useUser()
+    return (
+      <UserProvider>
+        <p>Test</p>
+      </UserProvider>
+    )
+  }
+  const component = shallow(<Component />)
   expect(component).toBeTruthy()
   expect(component.html()).toContain('Test')
 })

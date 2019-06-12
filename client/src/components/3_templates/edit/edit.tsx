@@ -8,7 +8,7 @@ import {
   Column,
   Columns,
   Icon,
-  UserContext,
+  useUser,
   Hero,
   ApiContext
 } from '../../../components'
@@ -21,7 +21,7 @@ interface IEditProps {
 }
 
 export const Edit = ({ data }: IEditProps) => {
-  const { isConnected } = React.useContext(UserContext)
+  const { isConnected } = useUser()
   const { Socket } = React.useContext(ApiContext)
 
   const [amendName, setAmendName] = React.useState('')

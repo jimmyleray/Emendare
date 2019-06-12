@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Redirect } from 'react-router-dom'
 // Components
-import { Link, Notification, Input, ApiContext } from '../../../components'
+import { Link, Notification, Input, useUser } from '../../../components'
 // Config
 import { path } from '../../../config'
 
@@ -14,15 +14,8 @@ interface ILoginPageProps {
 export const LoginForm = ({ location, render }: ILoginPageProps) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState<any>(null)
-  const [redirectToRefferer, setRedirectToRefferer] = useState(false)
-  const { Socket } = React.useContext(ApiContext)
-
-  useEffect(() => {
-    return () => {
-      Socket.off('login')
-    }
-  }, [])
+  const [redirectToRefferer] = useState(false)
+  const { login, errorAuth } = useUser()
 
   const change = useCallback(
     (name: string) => (event: any) => {
@@ -37,16 +30,7 @@ export const LoginForm = ({ location, render }: ILoginPageProps) => {
 
   const submit = (event: any) => {
     event.preventDefault()
-    Socket.fetch('login', {
-      password,
-      email
-    })
-      .then(async ({ token }: any) => {
-        localStorage.setItem('token', token)
-        await Socket.fetch('user')
-        setRedirectToRefferer(true)
-      })
-      .catch(setError)
+    login(email, password)
   }
 
   if (redirectToRefferer) {
@@ -92,11 +76,11 @@ export const LoginForm = ({ location, render }: ILoginPageProps) => {
         </div>
       </div>
       <div className="has-text-centered">{render(email, password, submit)}</div>
-      {error && (
+      {errorAuth && (
         <React.Fragment>
           <br />
           <Notification className="is-danger has-text-centered">
-            {error.message}
+            {errorAuth.message}
           </Notification>
         </React.Fragment>
       )}

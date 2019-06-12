@@ -15,13 +15,13 @@ import {
   NotificationSettings,
   UserCredentials,
   I18nContext,
-  UserContext,
+  useUser,
   Hero,
   Tabs
 } from '../../../components'
 
 export const ProfilePage = () => {
-  const userContext = React.useContext(UserContext)
+  const userContext = useUser()
   const { translate } = React.useContext(I18nContext)
 
   return (

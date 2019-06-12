@@ -4,7 +4,7 @@ import {
   EventsList,
   Page,
   I18nContext,
-  UserContext,
+  useUser,
   DataContext,
   EventsContext,
   ApiContext
@@ -17,7 +17,7 @@ import {
 
 export const HomePage = () => {
   const { translate } = React.useContext(I18nContext)
-  const { user } = React.useContext(UserContext)
+  const { user } = useUser()
   const { get } = React.useContext(DataContext)
   const { events, hasNextPage, newEvents } = React.useContext(EventsContext)
   const { Socket } = React.useContext(ApiContext)

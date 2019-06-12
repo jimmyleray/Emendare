@@ -1,7 +1,7 @@
 import React from 'react'
 import { IError, IEvent } from '../../../../../interfaces'
 import { getNewEvent, deleteNewEvent } from '../../../helpers'
-import { UserContext, ApiContext } from '../../../components'
+import { useUser, ApiContext } from '../../../components'
 import uniqBy from 'lodash/uniqBy'
 
 interface IEventProviderProps {
@@ -27,7 +27,7 @@ const initialState: IEventProviderState = {
 export const EventsContext = React.createContext(initialState)
 
 export const EventsProvider = ({ children }: IEventProviderProps) => {
-  const { user } = React.useContext(UserContext)
+  const { user } = useUser()
   const { Socket } = React.useContext(ApiContext)
 
   const reducer = (

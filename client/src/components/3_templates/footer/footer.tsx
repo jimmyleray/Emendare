@@ -3,7 +3,7 @@ import {
   Link,
   Icon,
   I18nContext,
-  UserContext,
+  useUser,
   EventsContext,
   ApiContext
 } from '../../../components'
@@ -16,7 +16,7 @@ export const Footer = ({ className }: any) => {
   const location = useLocation()
   const { Socket } = React.useContext(ApiContext)
 
-  const userContext = React.useContext(UserContext)
+  const userContext = useUser()
   const { newEvents, hasNextPage } = React.useContext(EventsContext)
 
   useEffect(() => {

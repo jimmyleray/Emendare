@@ -1,15 +1,13 @@
-import React, { useContext } from 'react'
+import React from 'react'
 // Components
 import {
   TextEventCard,
   AmendEventCard,
   ResultEventCard,
-  UserContext,
+  useUser,
   withEventCard,
   ModalContainer,
-  ArgumentModal,
-  Button,
-  Icon
+  ArgumentModal
 } from '../../../components'
 // Interfaces
 import { INews } from '../../../../../interfaces'
@@ -38,7 +36,7 @@ const displayRightEvent = (type: string): React.ComponentType<any> => {
 }
 
 export const EventRow = ({ data, measure, isNew, index }: IEventRowProps) => {
-  const { user } = useContext(UserContext)
+  const { user } = useUser()
   return (
     <React.Fragment>
       <ModalContainer>

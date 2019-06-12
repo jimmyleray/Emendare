@@ -7,7 +7,7 @@ import {
   Icon,
   Link,
   DataContext,
-  UserContext,
+  useUser,
   Notification,
   Hero,
   Spacer,
@@ -30,7 +30,7 @@ export const Text = ({
   data: IText
   location?: Location
 }) => {
-  const userContext = React.useContext(UserContext)
+  const userContext = useUser()
   const dataContext = React.useContext(DataContext)
   const i18nContext = React.useContext(I18nContext)
   const { translate } = i18nContext

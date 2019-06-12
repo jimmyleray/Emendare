@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 // Components
-import { Icon, Notification, PwdForm, ApiContext } from '../../../components'
+import { Icon, Notification, PwdForm, useUser } from '../../../components'
 
 interface ISubscribeFormProps {
   /** render props of the submit buttons */
@@ -13,28 +13,12 @@ export const SubscribeForm = ({ render }: ISubscribeFormProps) => {
   const [checkPassword, setCheckPassword] = useState('')
   const [pwdSame, setPwdSame] = useState(false)
   const [pwdValid, setPwdValid] = useState(false)
-  const [error, setError] = useState<any>(null)
-  const [send, setSend] = useState(false)
-  const { Socket } = React.useContext(ApiContext)
-
-  useEffect(() => {
-    return () => {
-      Socket.off('register')
-    }
-  }, [])
+  const [send] = useState(false)
+  const { register, errorAuth } = useUser()
 
   const submit = (event: any) => {
     event.preventDefault()
-
-    Socket.fetch('subscribe', {
-      password,
-      email
-    })
-      .then(() => {
-        setSend(true)
-        setError(null)
-      })
-      .catch(setError)
+    register(email, password)
   }
 
   const change = useCallback(
@@ -84,11 +68,11 @@ export const SubscribeForm = ({ render }: ISubscribeFormProps) => {
             {render(email, password, checkPassword, pwdValid, pwdSame)}
           </div>
 
-          {error && (
+          {errorAuth && (
             <React.Fragment>
               <br />
               <Notification className="is-danger has-text-centered">
-                {error.message}
+                {errorAuth.message}
               </Notification>
             </React.Fragment>
           )}

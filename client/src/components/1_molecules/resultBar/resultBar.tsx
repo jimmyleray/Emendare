@@ -10,7 +10,7 @@ interface IResultBarProps {
   results: { up: number; down: number; ind: number }
 }
 
-export const ResultBar = ({ results }: IResultBarProps) => {
+export const ResultBar = React.memo(({ results }: IResultBarProps) => {
   const pourcentageVote = getPourcentageVote(results)
   return (
     <div
@@ -54,4 +54,4 @@ export const ResultBar = ({ results }: IResultBarProps) => {
       </span>
     </div>
   )
-}
+})
