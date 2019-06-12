@@ -27,7 +27,6 @@ export const userReducer = (
         user: action.payload
       }
     case 'SET_ERROR': {
-      console.log(action)
       return {
         ...state,
         errorAuth: action.payload
