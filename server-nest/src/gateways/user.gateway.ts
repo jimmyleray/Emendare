@@ -22,7 +22,7 @@ export class UserGateway {
           const { id } = this.auth.decodeToken(token)
           const response = await this.userService.getUser(id)
           if (response) {
-            client.emit('user', response)
+            client.emit('user', { data: response, error: null })
           } else {
             client.emit('user', {
               error: {

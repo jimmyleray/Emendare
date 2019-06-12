@@ -17,7 +17,7 @@ export class TextGateway {
   async handleText(client: Socket, data: { data: { id: string } }) {
     try {
       const response = await this.textService.getText(data.data.id)
-      client.emit('text', response)
+      client.emit('text/' + data.data.id, response)
     } catch (error) {
       console.error(error)
     }

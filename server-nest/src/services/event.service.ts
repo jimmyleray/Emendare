@@ -14,7 +14,7 @@ export class EventService {
   }
 
   async getEvents(): Promise<IResponse<Event[]>> {
-    const data = await Event.find({ order: { created: 'ASC' } })
+    const data = await Event.find({ order: { created: 'DESC' } })
     return { data }
   }
 
@@ -25,9 +25,8 @@ export class EventService {
     if (!lastEventDate) {
       const data = await Event.find({
         take: limit,
-        order: { created: 'ASC' }
+        order: { created: 'DESC' }
       })
-
       return {
         data: {
           events: data,
@@ -38,9 +37,8 @@ export class EventService {
       const data = await Event.find({
         where: { created: { $lt: new Date(lastEventDate) } },
         take: limit,
-        order: { created: 'ASC' }
+        order: { created: 'DESC' }
       })
-
       return {
         data: {
           events: data,
@@ -59,7 +57,7 @@ export class EventService {
     // Check if there are more events to load after
     return (
       (await Event.find({
-        where: { created: { $lt: new Date(lastEventDate) } },
+        where: { created: { $gt: new Date(lastEventDate) } },
         take: 1
       })).length !== 0
     )
