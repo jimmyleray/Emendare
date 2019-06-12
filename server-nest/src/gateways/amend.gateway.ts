@@ -119,4 +119,91 @@ export class AmendGateway {
       console.error(error)
     }
   }
+
+  @SubscribeMessage('postArgument')
+  async handlePostArgument(
+    client: Socket,
+    data: {
+      token: string
+      data: { amendID: string; text: string; type: string }
+    }
+  ) {
+    try {
+      const response: any = await this.amendService.postArgument(
+        data.data.text,
+        data.data.type,
+        data.data.amendID,
+        data.token
+      )
+      if (response.data) {
+        this.io.emit(`amend/${data.data.amendID}`, response)
+      } else {
+        client.emit('postArgument', response)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  @SubscribeMessage('upVoteArgument')
+  async handleUpVoteArgument(
+    client: Socket,
+    data: { token: string; data: { amendID: string; argumentID: string } }
+  ) {
+    try {
+      const response: any = await this.amendService.upVoteArgument(
+        data.data.amendID,
+        data.data.argumentID,
+        data.token
+      )
+      if (response.data) {
+        this.io.emit(`amend/${data.data.amendID}`, response)
+      } else {
+        client.emit('upVoteArgument', { data: response })
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  @SubscribeMessage('downVoteArgument')
+  async handleDownVoteArgument(
+    client: Socket,
+    data: { token: string; data: { amendID: string; argumentID: string } }
+  ) {
+    try {
+      const response: any = await this.amendService.downVoteArgument(
+        data.data.amendID,
+        data.data.argumentID,
+        data.token
+      )
+      if (response.data) {
+        this.io.emit(`amend/${data.data.amendID}`, response)
+      } else {
+        client.emit('unVoteArgument', response)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  @SubscribeMessage('unVoteArgument')
+  async handleUnVoteArgument(
+    client: Socket,
+    data: { token: string; data: { amendID: string; argumentID: string } }
+  ) {
+    try {
+      const response: any = await this.amendService.unVoteArgument(
+        data.data.amendID,
+        data.data.argumentID,
+        data.token
+      )
+      if (response.data) {
+        this.io.emit(`amend/${data.data.amendID}`, response)
+      } else {
+        client.emit('unVoteArgument', response)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
