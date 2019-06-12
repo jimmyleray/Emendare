@@ -1,6 +1,6 @@
 export interface IUser {
   __v: number;
-  _id: string;
+  id: string;
   activated: boolean;
   activationToken: string | null;
   amends: string[];
@@ -25,7 +25,7 @@ export interface IUser {
 
 export const userMock: IUser = {
   __v: 0,
-  _id: '5c64389cae3ae3695c711e44',
+  id: '5c64389cae3ae3695c711e44',
   activated: true,
   activationToken: '4d55a560ea0be764c55dc01a872c8fc8205cf262994c8',
   amends: [],

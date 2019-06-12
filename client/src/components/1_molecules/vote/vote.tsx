@@ -58,11 +58,11 @@ export const Vote = ({
     votes.includes(amendId)
 
   const propsVoteUp = getPropsAmendUp(
-    user ? isVoteInAmend(user.upVotes, amend._id) : false
+    user ? isVoteInAmend(user.upVotes, amend.id) : false
   )
 
   const propsVoteDown = getPropsAmendDown(
-    user ? isVoteInAmend(user.downVotes, amend._id) : false
+    user ? isVoteInAmend(user.downVotes, amend.id) : false
   )
 
   return withIcon ? (
@@ -102,7 +102,7 @@ export const Vote = ({
     <Buttons className={className} {...rest}>
       <Button
         className={`is-success ${className} ${
-          isVoteInAmend(user.upVotes, amend._id) ? '' : 'is-outlined'
+          isVoteInAmend(user.upVotes, amend.id) ? '' : 'is-outlined'
         }`}
         onClick={user && vote(user)(amend)('up')(match.params.id)}
         disabled={!user || amend.closed}
@@ -113,7 +113,7 @@ export const Vote = ({
 
       <Button
         className={`is-info ${className} ${
-          isVoteInAmend(user.indVotes, amend._id) ? '' : 'is-outlined'
+          isVoteInAmend(user.indVotes, amend.id) ? '' : 'is-outlined'
         }`}
         onClick={user && vote(user)(amend)('ind')(match.params.id)}
         disabled={!user || amend.closed}
@@ -124,7 +124,7 @@ export const Vote = ({
 
       <Button
         className={`is-danger ${className} ${
-          isVoteInAmend(user.downVotes, amend._id) ? '' : 'is-outlined'
+          isVoteInAmend(user.downVotes, amend.id) ? '' : 'is-outlined'
         }`}
         onClick={user && vote(user)(amend)('down')(match.params.id)}
         disabled={!user || amend.closed}

@@ -29,7 +29,7 @@ export const Argument = ({
       >
         <a
           className="button is-medium"
-          onClick={() => upVoteArgument(data._id, amendID)}
+          onClick={() => upVoteArgument(data.id, amendID)}
           style={{ border: 'none', background: 'none' }}
         >
           <Icon
@@ -40,7 +40,7 @@ export const Argument = ({
               alignItems: 'flex-end'
             }}
             className={
-              user && hasUserUpVote(user.argumentUpVotes, amendID, data._id)
+              user && hasUserUpVote(user.argumentUpVotes, amendID, data.id)
                 ? 'has-text-link'
                 : 'has-text-grey-light'
             }
@@ -58,7 +58,7 @@ export const Argument = ({
         </p>
         <a
           className="button is-medium"
-          onClick={() => downVoteArgument(data._id, amendID)}
+          onClick={() => downVoteArgument(data.id, amendID)}
           style={{ border: 'none', background: 'none' }}
         >
           <Icon
@@ -69,7 +69,7 @@ export const Argument = ({
               alignItems: 'flex-start'
             }}
             className={
-              user && hasUserDownVote(user.argumentDownVotes, amendID, data._id)
+              user && hasUserDownVote(user.argumentDownVotes, amendID, data.id)
                 ? 'has-text-danger'
                 : 'has-text-grey-light'
             }

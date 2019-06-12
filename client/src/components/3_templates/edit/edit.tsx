@@ -2,14 +2,11 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import {
   Amend,
-  Box,
   Button,
-  Buttons,
   Column,
   Columns,
   Icon,
   useUser,
-  Hero,
   ApiContext
 } from '../../../components'
 import { path } from '../../../config'
@@ -66,7 +63,7 @@ export const Edit = ({ data }: IEditProps) => {
       name: amendName,
       description: amendDescription,
       version: text.patches.length,
-      textID: text._id,
+      textID: text.id,
       patch
     }).then((amend: any) => {
       setRedirectToAmend(true)

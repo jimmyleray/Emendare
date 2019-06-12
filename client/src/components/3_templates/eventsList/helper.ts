@@ -35,5 +35,5 @@ export const isEventNew = (
   index: number
 ) =>
   newEvents.length > 0 && events.length > 0
-    ? newEvents.map(event => event._id).includes(events[index].event._id)
+    ? newEvents.map(event => event.id).includes(events[index].event.id)
     : false

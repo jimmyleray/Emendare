@@ -65,9 +65,9 @@ export const Explore = () => {
         {sortBy(texts, ['followersCount'])
           .reverse()
           .map(text => (
-            <React.Fragment key={text._id}>
+            <React.Fragment key={text.id}>
               <Link
-                to={path.text(text._id)}
+                to={path.text(text.id)}
                 style={{ display: 'inline-grid' }}
                 className="has-text-dark"
               >

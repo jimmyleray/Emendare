@@ -27,7 +27,7 @@ export const UnFollowText = ({
         backgroundColor: 'transparent'
       }}
       onClick={() => {
-        Socket.emit('unFollowText', { id: text._id })
+        Socket.emit('unFollowText', { id: text.id })
       }}
     >
       <Icon
@@ -47,7 +47,7 @@ export const UnFollowText = ({
   ) : (
     <Button
       onClick={() => {
-        Socket.emit('unFollowText', { id: text._id })
+        Socket.emit('unFollowText', { id: text.id })
       }}
       className={`button is-success is-outlined ${className}`}
     >
