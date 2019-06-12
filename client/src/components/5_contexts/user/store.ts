@@ -11,7 +11,7 @@ export interface IUserProviderState {
 export const initialState: any = {
   user: null,
   isConnectionPending: false,
-  isConnected: false,
+  isConnected: true,
   errorAuth: null
 }
 
