@@ -58,6 +58,14 @@ export class Amend extends BaseEntity {
     downVotesCount: number
     indVotesCount: number
   }
+  @Column({ default: [] })
+  arguments: Array<{
+    id: string
+    created: Date
+    text: string
+    type: string
+    upVotesCount: number
+  }>
 
   @Column({
     default: {
@@ -90,6 +98,10 @@ export class Amend extends BaseEntity {
       upVotesCount: 0,
       downVotesCount: 0,
       indVotesCount: 0
+    }
+    this.arguments = []
+    this.rules = {
+      delayMax: process.env.NODE_ENV === 'production' ? oneDay : oneMinute
     }
   }
 }

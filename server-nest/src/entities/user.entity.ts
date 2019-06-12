@@ -51,6 +51,12 @@ export class User extends BaseEntity {
     amendRefused: boolean
   }
 
+  @Column({ default: [] })
+  argumentUpVotes: Array<{ amendID: string; argumentID: string }>
+
+  @Column({ default: [] })
+  argumentDownVotes: Array<{ amendID: string; argumentID: string }>
+
   constructor(email: string, password: string, activationToken: string) {
     super()
     this.email = email
@@ -69,5 +75,7 @@ export class User extends BaseEntity {
     this.indVotes = []
     this.upVotes = []
     this.downVotes = []
+    this.argumentDownVotes = []
+    this.argumentUpVotes = []
   }
 }
