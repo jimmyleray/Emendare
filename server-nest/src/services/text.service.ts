@@ -51,11 +51,7 @@ export class TextService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user = await User.findOne({
-      where: {
-        id: this.auth.decodeToken(token)
-      }
-    })
+    const user = await User.findOne(this.auth.decodeToken(token).id)
     if (user && user.activated) {
       if (user.followedTexts.indexOf(id) === -1) {
         user.followedTexts.push(id)
@@ -97,11 +93,7 @@ export class TextService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user = await User.findOne({
-      where: {
-        id: this.auth.decodeToken(token).id
-      }
-    })
+    const user = await User.findOne(this.auth.decodeToken(token).id)
     if (user && user.activated) {
       const id = user.followedTexts.indexOf(idText)
       if (id >= 0) {
@@ -145,11 +137,7 @@ export class TextService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user = await User.findOne({
-      where: {
-        id: this.auth.decodeToken(token).id
-      }
-    })
+    const user = await User.findOne(this.auth.decodeToken(token).id)
     if (user && user.activated) {
       const data = new Text(name, description)
       await data.save()
