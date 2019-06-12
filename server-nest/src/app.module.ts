@@ -8,8 +8,6 @@ import {
   UserGateway,
   TextGateway
 } from './gateways'
-// Entities
-import { User, Amend, Text, Event } from './entities'
 
 // services
 import {
@@ -24,10 +22,6 @@ import {
 @Module({
   providers: [
     ...databaseProvider,
-    EventService,
-    UserService,
-    TextService,
-    AmendService,
     EventGateway,
     AmendGateway,
     UserGateway,
