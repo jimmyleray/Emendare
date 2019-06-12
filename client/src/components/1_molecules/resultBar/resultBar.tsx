@@ -12,7 +12,6 @@ interface IResultBarProps {
 
 export const ResultBar = React.memo(({ results }: IResultBarProps) => {
   const pourcentageVote = getPourcentageVote(results)
-  console.log(createLinearGradientFromResult(pourcentageVote))
   return (
     <div
       style={{
