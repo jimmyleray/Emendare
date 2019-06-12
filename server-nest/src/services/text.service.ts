@@ -100,7 +100,7 @@ export class TextService {
         user.followedTexts.splice(id, 1)
         await user.save()
 
-        const text = await Text.findOne({ id: idText })
+        const text = await Text.findOne(idText)
         text.followersCount--
         await text.save()
 
@@ -174,7 +174,7 @@ export class TextService {
 
     await amend.text.save()
 
-    const text = (await this.getText(amend.text._id)).data
+    const text = (await this.getText(amend.text.id)).data
 
     if (io) {
       io.emit('text/' + text.id, { data: text })
