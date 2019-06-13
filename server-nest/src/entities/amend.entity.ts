@@ -60,7 +60,7 @@ export class Amend extends BaseEntity {
   }
   @Column({ default: [] })
   arguments: Array<{
-    id: string
+    id: ObjectID
     created: Date
     text: string
     type: string
