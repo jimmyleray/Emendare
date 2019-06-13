@@ -8,6 +8,7 @@ import { Text, User, Event, Amend } from '../entities'
 // Diff Patch Library
 import { delay, findIndex } from 'lodash'
 import { Server } from 'socket.io'
+import { ObjectID } from 'mongodb'
 
 @Injectable()
 export class AmendService {
@@ -442,12 +443,13 @@ export class AmendService {
     if (user && user.activated) {
       const amend = await Amend.findOne(amendID)
       if (amend) {
+        const argumentDate = new Date(Date.now())
         const argument = {
           type,
           text,
-          created: new Date(Date.now()),
+          created: argumentDate,
           upVotesCount: 0,
-          id: this.crypto.objectId((new Date(Date.now()).getTime() / 1000) | 0)
+          id: new ObjectID(argumentDate.getTime())
         }
         amend.arguments.push(argument)
         await amend.save()
