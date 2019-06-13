@@ -7,13 +7,4 @@ export class Crypto {
     const buffer = randomBytes(size)
     return buffer.toString('hex')
   }
-
-  public objectId(timestamp: number) {
-    return (
-      timestamp.toString(16) +
-      'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () =>
-        ((Math.random() * 16) | 0).toString(16)
-      )
-    )
-  }
 }
