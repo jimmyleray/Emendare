@@ -25,7 +25,6 @@ export const UserProvider = ({ children }: any) => {
   const { Socket } = React.useContext(ApiContext)
 
   const [state, dispatch] = React.useReducer(userReducer, initialState)
-
   const isConnected = () => state.user !== null
   const logout = () => {
     localStorage.removeItem('token')
@@ -58,9 +57,9 @@ export const UserProvider = ({ children }: any) => {
         return false
       })
   }
-
   React.useEffect(() => {
     Socket.on('user', ({ error, data }: { error: IError; data: IUser }) => {
+      console.log(data)
       if (!error) {
         dispatch(setUserAction(data))
       }

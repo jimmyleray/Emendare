@@ -27,7 +27,7 @@ export const FollowText = ({
         backgroundColor: 'transparent'
       }}
       onClick={() => {
-        Socket.emit('followText', { id: text._id })
+        Socket.emit('followText', { id: text.id })
       }}
     >
       <Icon
@@ -41,7 +41,7 @@ export const FollowText = ({
   ) : (
     <Button
       onClick={() => {
-        Socket.emit('followText', { id: text._id })
+        Socket.emit('followText', { id: text.id })
       }}
       className={`button is-success ${className}`}
     >

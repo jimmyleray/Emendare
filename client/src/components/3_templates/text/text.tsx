@@ -91,11 +91,11 @@ export const Text = ({
                 {userContext.isConnected() &&
                   (userContext.user &&
                   userContext.user.followedTexts.find(
-                    (text: any) => text === data._id
+                    (text: any) => text === data.id
                   ) ? (
                     <Button
                       onClick={() => {
-                        Socket.emit('unFollowText', { id: data._id })
+                        Socket.emit('unFollowText', { id: data.id })
                       }}
                       className="button is-success is-outlined"
                     >
@@ -104,7 +104,7 @@ export const Text = ({
                   ) : (
                     <Button
                       onClick={() => {
-                        Socket.emit('followText', { id: data._id })
+                        Socket.emit('followText', { id: data.id })
                       }}
                       className="button is-success"
                     >
@@ -151,10 +151,10 @@ export const Text = ({
                             amend && amend.data && !amend.data.closed
                         )
                         .map((amend: any) => (
-                          <div key={amend.data._id}>
+                          <div key={amend.data.id}>
                             {' > '}
                             <Link
-                              to={path.amend(amend.data._id)}
+                              to={path.amend(amend.data.id)}
                               className="has-text-weight-bold"
                             >
                               {amend.data.name}
@@ -184,7 +184,7 @@ export const Text = ({
                       )
                         .reverse()
                         .map((amend: any) => (
-                          <p key={amend._id}>
+                          <p key={amend.id}>
                             {amend.conflicted ? (
                               <Icon
                                 type={'solid'}
@@ -207,7 +207,7 @@ export const Text = ({
                                 title="Refusé par les participants"
                               />
                             )}
-                            <Link to={path.amend(amend._id)}>{amend.name}</Link>
+                            <Link to={path.amend(amend.id)}>{amend.name}</Link>
                           </p>
                         ))}
                     </React.Fragment>

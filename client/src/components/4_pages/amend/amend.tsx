@@ -48,7 +48,7 @@ export const AmendPage = ({ match }: any) => {
   }
 
   if (amend && amend.data && text && text.data) {
-    const amendIndex = text.data.amends.indexOf(amend.data._id)
+    const amendIndex = text.data.amends.indexOf(amend.data.id)
 
     return (
       <Page

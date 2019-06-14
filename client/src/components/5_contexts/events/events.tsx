@@ -45,14 +45,14 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
         return {
           ...previousState,
           error: action.payload.error,
-          events: uniqBy(events, '_id'),
-          newEvents: uniqBy(newEvents, '_id')
+          events: uniqBy(events, 'id'),
+          newEvents: uniqBy(newEvents, 'id')
         }
       }
       case 'ADD_OLD_EVENTS': {
         const events = uniqBy(
           [...previousState.events, ...action.payload.events],
-          '_id'
+          'id'
         )
 
         return {
@@ -65,7 +65,7 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
       }
       case 'DELETE_EVENT': {
         const notSameID = (event: IEvent) =>
-          event._id !== action.payload.event._id
+          event.id !== action.payload.event.id
 
         const events = previousState.events.filter(notSameID)
         const newEvents = previousState.newEvents.filter(notSameID)
@@ -73,8 +73,8 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
         return {
           ...previousState,
           error: action.payload.error,
-          events: uniqBy(events, '_id'),
-          newEvents: uniqBy(newEvents, '_id')
+          events: uniqBy(events, 'id'),
+          newEvents: uniqBy(newEvents, 'id')
         }
       }
       case 'NEW_EVENTS_READED': {
@@ -102,7 +102,6 @@ export const EventsProvider = ({ children }: IEventProviderProps) => {
 
   // Initialization of the state
   const [state, dispatch] = React.useReducer(reducer, initialState)
-
   // listen socket events
   React.useEffect(() => {
     Socket.on(

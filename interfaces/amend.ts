@@ -1,5 +1,5 @@
 export interface IArgument {
-  _id: string;
+  id: string;
   created: Date | string;
   text: string;
   type: string;
@@ -8,7 +8,7 @@ export interface IArgument {
 
 export interface IAmend {
   __v: number;
-  _id: string;
+  id: string;
   created: Date | string;
   finised: Date | string;
   name: string;
@@ -35,7 +35,7 @@ export interface IAmend {
 
 export const amendMock: IAmend = {
   __v: 0,
-  _id: '5c64389cae3ae3695c711e44',
+  id: '5c64389cae3ae3695c711e44',
   created: '2019-02-13T15:32:44.344Z',
   finised: '2019-02-13T15:42:44.344Z',
   name: 'test',
@@ -46,7 +46,7 @@ export const amendMock: IAmend = {
   text: '5c64389cae3ae3695c711e44',
   arguments: [
     {
-      _id: '981nijbi890803nn9',
+      id: '981nijbi890803nn9',
       created: '2019-02-13T15:42:44.344Z',
       text: 'Test',
       type: 'UP',

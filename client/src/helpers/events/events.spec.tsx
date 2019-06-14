@@ -31,7 +31,7 @@ describe('deleteNewEvent', () => {
   })
   it('should delete the event from the list of new events', () => {
     const newEvents = [eventMock]
-    expect(deleteNewEvent(eventMock._id, newEvents).length).toBe(0)
+    expect(deleteNewEvent(eventMock.id, newEvents).length).toBe(0)
   })
   it('should return the same list of event', () => {
     expect(deleteNewEvent('1', [eventMock])).toContain(eventMock)

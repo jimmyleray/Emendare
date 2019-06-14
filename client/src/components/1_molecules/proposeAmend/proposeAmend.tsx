@@ -24,14 +24,14 @@ export const ProposeAmend = ({
     <Button
       className="has-text-grey-light"
       onClick={() => {
-        Socket.emit('followText', { id: text._id })
+        Socket.emit('followText', { id: text.id })
       }}
       style={{
         border: 'none',
         padding: 'none',
         backgroundColor: 'transparent'
       }}
-      to={path.edit(text._id)}
+      to={path.edit(text.id)}
     >
       <Icon
         type={'light'}
@@ -43,10 +43,10 @@ export const ProposeAmend = ({
     </Button>
   ) : (
     <Button
-      to={path.edit(text._id)}
+      to={path.edit(text.id)}
       className={`is-info ${className}`}
       onClick={() => {
-        Socket.emit('followText', { id: text._id })
+        Socket.emit('followText', { id: text.id })
       }}
     >
       <Icon type={'solid'} name="fa-plus" />
