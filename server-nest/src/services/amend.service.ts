@@ -387,14 +387,15 @@ export class AmendService {
     const date = new Date()
     const now = date.getTime()
 
-    amends.forEach(async (amend: any) => {
+    amends.forEach(async (amend: Amend) => {
       const start = amend.created.getTime()
+      const text: Text = await Text.findOne(amend.text)
 
       // Si le scrutin est terminé
       if (now > start + amend.rules.delayMax) {
         amend.closed = true
         amend.finished = new Date()
-        amend.results.totalPotentialVotesCount = amend.text.followersCount
+        amend.results.totalPotentialVotesCount = text.followersCount
 
         // Si il y'a une majorité relative
         if (AmendService.hasRelativeUpMajority(amend)) {
@@ -402,12 +403,13 @@ export class AmendService {
         }
 
         await amend.save()
-        const newAmend = await Amend.findOne({ where: { id: amend.id } })
+        const newAmend = await Amend.findOne(amend.id)
         io.emit('amend/' + amend.id, { data: newAmend })
-
         const oldEvent: Event = await Event.findOne({
-          target: { id: newAmend.id.toString() }
+          where: { target: { type: 'amend', id: newAmend.id.toString() } }
         })
+
+        console.log(oldEvent)
         await Event.delete({ id: oldEvent.id })
         io.emit('events/delete', { data: oldEvent })
 
@@ -416,10 +418,6 @@ export class AmendService {
         io.emit('events/new', { data: newEvent })
       }
     })
-
-    delay(() => {
-      this.checkAmendVotes(io)
-    }, 5000)
   }
 
   async postArgument(

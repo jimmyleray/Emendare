@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { databaseProvider } from './providers'
-import { TypeOrmModule } from '@nestjs/typeorm'
+import { ScheduleModule } from 'nest-schedule'
+
 // Gateway
 import {
   EventGateway,
@@ -18,6 +19,7 @@ import {
   Auth,
   Crypto
 } from './services'
+import { CheckAmendVoteTask } from './tasks'
 
 @Module({
   providers: [
@@ -31,7 +33,9 @@ import {
     TextService,
     AmendService,
     Auth,
-    Crypto
-  ]
+    Crypto,
+    CheckAmendVoteTask
+  ],
+  imports: [ScheduleModule.register()]
 })
 export class AppModule {}
