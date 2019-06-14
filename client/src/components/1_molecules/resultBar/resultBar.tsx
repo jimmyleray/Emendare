@@ -33,7 +33,7 @@ export const ResultBar = React.memo(({ results }: IResultBarProps) => {
       </span>
       <Progress
         style={{
-          WebkitAppearance: 'listbox',
+          WebkitAppearance: 'progress-bar-value',
           backgroundImage: createLinearGradientFromResult(pourcentageVote),
           height: '0.4rem',
           margin: '0 0.5rem'

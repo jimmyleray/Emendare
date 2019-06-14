@@ -7,9 +7,7 @@ import {
   useUser,
   withEventCard,
   ModalContainer,
-  ArgumentModal,
-  Button,
-  Icon
+  ArgumentModal
 } from '../../../components'
 // Interfaces
 import { INews } from '../../../../../interfaces'
