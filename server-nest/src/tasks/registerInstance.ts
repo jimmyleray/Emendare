@@ -1,11 +1,10 @@
-import { Text, User } from '../models'
-import { IText, IUser } from '../../../interfaces'
+import { Text, User } from '../entities'
 import fetch from 'node-fetch'
 import config from '../config'
 
 export const registerInstance = async () => {
-  const texts: IText[] = await Text.model.find()
-  const users: IUser[] = await User.model.find()
+  const texts: Text[] = await Text.find()
+  const users: User[] = await User.find()
 
   const res = await fetch(config.registerUrl, {
     method: 'POST',
