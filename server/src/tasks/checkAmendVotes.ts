@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@nestjs/common'
 import { Interval, NestSchedule } from 'nest-schedule'
 import { WebSocketServer, WebSocketGateway } from '@nestjs/websockets'
 // Services
-import { AmendService } from '../services'
+import { AmendService } from 'src/services'
 import { Server } from 'socket.io'
 
 @Injectable()

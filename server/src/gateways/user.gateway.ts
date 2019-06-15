@@ -4,39 +4,39 @@ import {
   WebSocketServer
 } from '@nestjs/websockets'
 import { Socket, Server } from 'socket.io'
-// Service
-import { UserService, AuthService } from '../services'
+import { UserService, AuthService } from 'src/services'
 import { Inject } from '@nestjs/common'
+import { tryCatch } from 'src/decorators'
 
 @WebSocketGateway()
 export class UserGateway {
   constructor(
-    @Inject('UserService') private readonly userService: UserService,
-    @Inject('AuthService') private readonly authService: AuthService
+    @Inject('UserService')
+    private readonly userService: UserService,
+    @Inject('AuthService')
+    private readonly authService: AuthService
   ) {}
+
   @WebSocketServer()
   io: Server
 
   @SubscribeMessage('user')
+  @tryCatch
   async handlerUser(client: Socket, data: { token: string }) {
     const { token } = data
     if (token && this.authService.isTokenValid(token)) {
       if (!this.authService.isTokenExpired(token)) {
-        try {
-          const { id } = this.authService.decodeToken(token)
-          const response = await this.userService.getUser(id)
-          if (response) {
-            client.emit('user', { data: response, error: null })
-          } else {
-            client.emit('user', {
-              error: {
-                code: 401,
-                message: "Cet utilisateur n'est pas connecté"
-              }
-            })
-          }
-        } catch (error) {
-          console.error(error)
+        const { id } = this.authService.decodeToken(token)
+        const response = await this.userService.getUser(id)
+        if (response) {
+          client.emit('user', { data: response, error: null })
+        } else {
+          client.emit('user', {
+            error: {
+              code: 401,
+              message: "Cet utilisateur n'est pas connecté"
+            }
+          })
         }
       } else {
         client.emit('user', {
@@ -51,16 +51,19 @@ export class UserGateway {
   }
 
   @SubscribeMessage('activation')
+  @tryCatch
   async handleActication(client: Socket, data: { activationToken: string }) {
     const response = await this.userService.activateUser(data.activationToken)
     client.emit('activation', response)
   }
 
   @SubscribeMessage('login')
+  @tryCatch
   async handleLogin(client: Socket, data: { token: string; data: any }) {
     const { token } = data
     const { email, password } = data.data
     let response: any
+
     if (!data && token) {
       response = await this.userService.login(undefined, undefined, token)
     } else if (data) {
@@ -73,42 +76,40 @@ export class UserGateway {
         }
       }
     }
+
     client.emit('login', response)
   }
 
   @SubscribeMessage('subscribe')
+  @tryCatch
   async handleSubscribe(
     client: Socket,
     data: { token: any; data: { email: string; password: string } }
   ) {
-    try {
-      const response = await this.userService.subscribe(
-        data.data.email,
-        data.data.password
-      )
-      client.emit('subscribe', response)
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.userService.subscribe(
+      data.data.email,
+      data.data.password
+    )
+
+    client.emit('subscribe', response)
   }
 
   @SubscribeMessage('resetPassword')
+  @tryCatch
   async handleResetPassword(client: Socket, data: { data: { email: string } }) {
-    try {
-      const response = await this.userService.resetPassword(data.data.email)
-      client.emit('resetPassword', response)
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.userService.resetPassword(data.data.email)
+    client.emit('resetPassword', response)
   }
 
   @SubscribeMessage('deleteAccount')
+  @tryCatch
   async handleDeleteAccount(client: Socket, data: { token: string }) {
     const response = await this.userService.delete(data.token, this.io)
     client.emit('deleteAccount', response)
   }
 
   @SubscribeMessage('updateEmail')
+  @tryCatch
   async handleUpdateEmail(
     client: Socket,
     data: { token: string; data: { email: string } }
@@ -118,51 +119,45 @@ export class UserGateway {
         data.data.email,
         data.token
       )
+
       client.emit('updateEmail', response)
     }
   }
 
   @SubscribeMessage('updatePassword')
+  @tryCatch
   async handleUpdatePassword(
     client: Socket,
     data: { token: string; data: { password: string } }
   ) {
-    try {
-      const response = await this.userService.updatePassword(
-        data.data.password,
-        data.token
-      )
-      client.emit('updatePassword', response)
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.userService.updatePassword(
+      data.data.password,
+      data.token
+    )
+
+    client.emit('updatePassword', response)
   }
 
   @SubscribeMessage('updateLastEvent')
+  @tryCatch
   async handleUpdateLastEvent(client: Socket, data: { token: string }) {
-    try {
-      const response = await this.userService.updateLastEventDate(data.token)
-      client.emit('user', response)
-      return response
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.userService.updateLastEventDate(data.token)
+    client.emit('user', response)
+    return response
   }
 
   @SubscribeMessage('toggleNotificationSetting')
+  @tryCatch
   async handleToggleNotificationSetting(
     client: Socket,
     data: { token: string; data: { key: any } }
   ) {
-    try {
-      const response = await this.userService.toggleNotificationSetting(
-        data.data.key,
-        data.token
-      )
-      client.emit('user', response)
-      return response
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.userService.toggleNotificationSetting(
+      data.data.key,
+      data.token
+    )
+
+    client.emit('user', response)
+    return response
   }
 }

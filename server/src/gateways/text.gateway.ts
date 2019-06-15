@@ -4,87 +4,77 @@ import {
   WebSocketServer
 } from '@nestjs/websockets'
 import { Socket, Server } from 'socket.io'
-// Service
-import { TextService } from '../services'
+import { TextService } from 'src/services'
 import { Inject } from '@nestjs/common'
+import { tryCatch } from 'src/decorators'
 
 @WebSocketGateway()
 export class TextGateway {
   constructor(
-    @Inject('TextService') private readonly textService: TextService
+    @Inject('TextService')
+    private readonly textService: TextService
   ) {}
+
   @WebSocketServer()
   io: Server
 
   @SubscribeMessage('text')
+  @tryCatch
   async handleText(client: Socket, data: { data: { id: string } }) {
-    try {
-      const response = await this.textService.getText(data.data.id)
-      client.emit('text/' + data.data.id, response)
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.textService.getText(data.data.id)
+    client.emit('text/' + data.data.id, response)
   }
 
   @SubscribeMessage('texts')
+  @tryCatch
   async handleTexts(client: Socket) {
-    try {
-      const response = await this.textService.getTexts()
-      client.emit('texts', response)
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.textService.getTexts()
+    client.emit('texts', response)
   }
 
   @SubscribeMessage('followText')
+  @tryCatch
   async handleFollowText(
     client: Socket,
     data: { token: string; data: { id: string } }
   ) {
-    try {
-      const response = await this.textService.followText(
-        data.data.id,
-        data.token,
-        this.io
-      )
-      client.emit('followText', response)
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.textService.followText(
+      data.data.id,
+      data.token,
+      this.io
+    )
+
+    client.emit('followText', response)
   }
 
   @SubscribeMessage('unFollowText')
+  @tryCatch
   async handleUnFollowText(
     client: Socket,
     data: { token: string; data: { id: string } }
   ) {
-    try {
-      const response = await this.textService.unFollowText(
-        data.data.id,
-        data.token,
-        this.io
-      )
-      client.emit('unFollowText', response)
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.textService.unFollowText(
+      data.data.id,
+      data.token,
+      this.io
+    )
+
+    client.emit('unFollowText', response)
   }
 
   @SubscribeMessage('postText')
+  @tryCatch
   async handlePostText(
     client: Socket,
     data: { token: string; data: { name: string; description: string } }
   ) {
-    try {
-      const response = await this.textService.postText(
-        data.data.name,
-        data.data.description,
-        data.token,
-        this.io
-      )
-      client.emit('postText', response)
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.textService.postText(
+      data.data.name,
+      data.data.description,
+      data.token,
+      this.io
+    )
+
+    client.emit('postText', response)
   }
 }

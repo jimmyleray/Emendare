@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
-import * as helmet from 'helmet'
 import * as compression from 'compression'
 import * as bodyParser from 'body-parser'
+import * as helmet from 'helmet'
 
 // Chalk for colored logs
 import chalk from 'chalk'

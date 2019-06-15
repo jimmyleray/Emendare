@@ -4,33 +4,32 @@ import {
   WebSocketServer
 } from '@nestjs/websockets'
 import { Socket, Server } from 'socket.io'
-// Service
-import { AmendService } from '../services'
+import { AmendService } from 'src/services'
 import { Inject } from '@nestjs/common'
+import { tryCatch } from 'src/decorators'
 
 @WebSocketGateway()
 export class AmendGateway {
   constructor(
-    @Inject('AmendService') private readonly amendService: AmendService
+    @Inject('AmendService')
+    private readonly amendService: AmendService
   ) {}
 
   @WebSocketServer()
   io: Server
 
   @SubscribeMessage('amend')
-  async handleAmend(client: Socket, data: { data: { id: string } }) {
-    try {
-      const response = await this.amendService.getAmend(data.data.id)
-      client.emit('amend/' + data.data.id, response)
-    } catch (error) {
-      console.error(error)
-    }
+  @tryCatch
+  async handleAmend(client: Socket, message: { data: { id: string } }) {
+    const response = await this.amendService.getAmend(message.data.id)
+    client.emit('amend/' + message.data.id, response)
   }
 
   @SubscribeMessage('postAmend')
+  @tryCatch
   async handlePostAmend(
     client: Socket,
-    data: {
+    message: {
       token: string
       data: {
         name: string
@@ -41,170 +40,152 @@ export class AmendGateway {
       }
     }
   ) {
-    try {
-      const response = await this.amendService.postAmend(
-        data.data,
-        data.token,
-        this.io
-      )
-      client.emit('postAmend', response)
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.amendService.postAmend(
+      message.data,
+      message.token,
+      this.io
+    )
+
+    client.emit('postAmend', response)
   }
 
   @SubscribeMessage('upVoteAmend')
+  @tryCatch
   async handleUpVoteAmend(
     client: Socket,
-    data: { token: string; data: { id: string } }
+    message: { token: string; data: { id: string } }
   ) {
-    try {
-      const response = await this.amendService.upVoteAmend(
-        data.data.id,
-        data.token,
-        this.io
-      )
-      client.emit('upVoteAmend', response)
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.amendService.upVoteAmend(
+      message.data.id,
+      message.token,
+      this.io
+    )
+
+    client.emit('upVoteAmend', response)
   }
 
   @SubscribeMessage('downVoteAmend')
+  @tryCatch
   async handleDownVoteAmend(
     client: Socket,
-    data: { token: string; data: { id: string } }
+    message: { token: string; data: { id: string } }
   ) {
-    try {
-      const response = await this.amendService.downVoteAmend(
-        data.data.id,
-        data.token,
-        this.io
-      )
-      client.emit('downVoteAmend', response)
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.amendService.downVoteAmend(
+      message.data.id,
+      message.token,
+      this.io
+    )
+
+    client.emit('downVoteAmend', response)
   }
 
   @SubscribeMessage('indVoteAmend')
+  @tryCatch
   async handleIndVoteAmend(
     client: Socket,
-    data: { token: string; data: { id: string } }
+    message: { token: string; data: { id: string } }
   ) {
-    try {
-      const response = await this.amendService.upVoteAmend(
-        data.data.id,
-        data.token,
-        this.io
-      )
-      client.emit('indVoteAmend', response)
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.amendService.upVoteAmend(
+      message.data.id,
+      message.token,
+      this.io
+    )
+
+    client.emit('indVoteAmend', response)
   }
 
   @SubscribeMessage('unVoteAmend')
+  @tryCatch
   async handleUnVoteAmend(
     client: Socket,
-    data: { token: string; data: { id: string } }
+    message: { token: string; data: { id: string } }
   ) {
-    try {
-      const response = await this.amendService.unVoteAmend(
-        data.data.id,
-        data.token,
-        this.io
-      )
-      client.emit('unVoteAmend', response)
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.amendService.unVoteAmend(
+      message.data.id,
+      message.token,
+      this.io
+    )
+
+    client.emit('unVoteAmend', response)
   }
 
   @SubscribeMessage('postArgument')
+  @tryCatch
   async handlePostArgument(
     client: Socket,
-    data: {
+    message: {
       token: string
       data: { amendID: string; text: string; type: string }
     }
   ) {
-    try {
-      const response: any = await this.amendService.postArgument(
-        data.data.text,
-        data.data.type,
-        data.data.amendID,
-        data.token
-      )
-      if (response.data) {
-        this.io.emit(`amend/${data.data.amendID}`, response)
-      } else {
-        client.emit('postArgument', response)
-      }
-    } catch (error) {
-      console.error(error)
+    const response: any = await this.amendService.postArgument(
+      message.data.text,
+      message.data.type,
+      message.data.amendID,
+      message.token
+    )
+
+    if (response.data) {
+      this.io.emit('amend/' + message.data.amendID, response)
+    } else {
+      client.emit('postArgument', response)
     }
   }
 
   @SubscribeMessage('upVoteArgument')
+  @tryCatch
   async handleUpVoteArgument(
     client: Socket,
-    data: { token: string; data: { amendID: string; argumentID: string } }
+    message: { token: string; data: { amendID: string; argumentID: string } }
   ) {
-    try {
-      const response: any = await this.amendService.upVoteArgument(
-        data.data.amendID,
-        data.data.argumentID,
-        data.token
-      )
-      if (response.data) {
-        this.io.emit(`amend/${data.data.amendID}`, response)
-      } else {
-        client.emit('upVoteArgument', response)
-      }
-    } catch (error) {
-      console.error(error)
+    const response: any = await this.amendService.upVoteArgument(
+      message.data.amendID,
+      message.data.argumentID,
+      message.token
+    )
+
+    if (response.data) {
+      this.io.emit('amend/' + message.data.amendID, response)
+    } else {
+      client.emit('upVoteArgument', response)
     }
   }
 
   @SubscribeMessage('downVoteArgument')
+  @tryCatch
   async handleDownVoteArgument(
     client: Socket,
-    data: { token: string; data: { amendID: string; argumentID: string } }
+    message: { token: string; data: { amendID: string; argumentID: string } }
   ) {
-    try {
-      const response: any = await this.amendService.downVoteArgument(
-        data.data.amendID,
-        data.data.argumentID,
-        data.token
-      )
-      if (response.data) {
-        this.io.emit(`amend/${data.data.amendID}`, response)
-      } else {
-        client.emit('unVoteArgument', response)
-      }
-    } catch (error) {
-      console.error(error)
+    const response: any = await this.amendService.downVoteArgument(
+      message.data.amendID,
+      message.data.argumentID,
+      message.token
+    )
+
+    if (response.data) {
+      this.io.emit('amend/' + message.data.amendID, response)
+    } else {
+      client.emit('unVoteArgument', response)
     }
   }
+
   @SubscribeMessage('unVoteArgument')
+  @tryCatch
   async handleUnVoteArgument(
     client: Socket,
-    data: { token: string; data: { amendID: string; argumentID: string } }
+    message: { token: string; data: { amendID: string; argumentID: string } }
   ) {
-    try {
-      const response: any = await this.amendService.unVoteArgument(
-        data.data.amendID,
-        data.data.argumentID,
-        data.token
-      )
-      if (response.data) {
-        this.io.emit(`amend/${data.data.amendID}`, response)
-      } else {
-        client.emit('unVoteArgument', response)
-      }
-    } catch (error) {
-      console.error(error)
+    const response: any = await this.amendService.unVoteArgument(
+      message.data.amendID,
+      message.data.argumentID,
+      message.token
+    )
+
+    if (response.data) {
+      this.io.emit('amend/' + message.data.amendID, response)
+    } else {
+      client.emit('unVoteArgument', response)
     }
   }
 }
