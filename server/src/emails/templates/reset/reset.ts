@@ -1,6 +1,6 @@
 import mjml2html from 'mjml'
-import { header, footer } from './components'
-import { IEmail } from '../../../interfaces'
+import { header, footer } from '../../components'
+import { IEmail } from '../../../../../interfaces'
 
 export const reset: IEmail = {
   subject: 'Réinitialisation de votre mot de passe',

@@ -1,4 +1,4 @@
-import { activation } from '../activation'
+import { activation } from './activation'
 
 describe('Activation Email template', () => {
   test('should have the right proprety', () => {

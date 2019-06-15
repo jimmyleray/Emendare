@@ -1,4 +1,4 @@
-import { reset } from '../reset'
+import { reset } from './reset'
 
 describe('Reset Email template', () => {
   test('should have the right proprety', () => {

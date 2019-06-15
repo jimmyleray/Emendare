@@ -1,2 +1,1 @@
-export * from './activation'
-export * from './reset'
+export * from './templates'
