@@ -6,7 +6,7 @@ import {
 import { Socket, Server } from 'socket.io'
 import { AmendService } from 'src/services'
 import { Inject } from '@nestjs/common'
-import { tryCatch } from 'src/decorators'
+import { withTryCatch } from 'src/decorators'
 
 @WebSocketGateway()
 export class AmendGateway {
@@ -19,14 +19,14 @@ export class AmendGateway {
   io: Server
 
   @SubscribeMessage('amend')
-  @tryCatch
+  @withTryCatch
   async handleAmend(client: Socket, message: { data: { id: string } }) {
     const response = await this.amendService.getAmend(message.data.id)
     client.emit('amend/' + message.data.id, response)
   }
 
   @SubscribeMessage('postAmend')
-  @tryCatch
+  @withTryCatch
   async handlePostAmend(
     client: Socket,
     message: {
@@ -50,7 +50,7 @@ export class AmendGateway {
   }
 
   @SubscribeMessage('upVoteAmend')
-  @tryCatch
+  @withTryCatch
   async handleUpVoteAmend(
     client: Socket,
     message: { token: string; data: { id: string } }
@@ -65,7 +65,7 @@ export class AmendGateway {
   }
 
   @SubscribeMessage('downVoteAmend')
-  @tryCatch
+  @withTryCatch
   async handleDownVoteAmend(
     client: Socket,
     message: { token: string; data: { id: string } }
@@ -80,7 +80,7 @@ export class AmendGateway {
   }
 
   @SubscribeMessage('indVoteAmend')
-  @tryCatch
+  @withTryCatch
   async handleIndVoteAmend(
     client: Socket,
     message: { token: string; data: { id: string } }
@@ -95,7 +95,7 @@ export class AmendGateway {
   }
 
   @SubscribeMessage('unVoteAmend')
-  @tryCatch
+  @withTryCatch
   async handleUnVoteAmend(
     client: Socket,
     message: { token: string; data: { id: string } }
@@ -110,7 +110,7 @@ export class AmendGateway {
   }
 
   @SubscribeMessage('postArgument')
-  @tryCatch
+  @withTryCatch
   async handlePostArgument(
     client: Socket,
     message: {
@@ -133,7 +133,7 @@ export class AmendGateway {
   }
 
   @SubscribeMessage('upVoteArgument')
-  @tryCatch
+  @withTryCatch
   async handleUpVoteArgument(
     client: Socket,
     message: { token: string; data: { amendID: string; argumentID: string } }
@@ -152,7 +152,7 @@ export class AmendGateway {
   }
 
   @SubscribeMessage('downVoteArgument')
-  @tryCatch
+  @withTryCatch
   async handleDownVoteArgument(
     client: Socket,
     message: { token: string; data: { amendID: string; argumentID: string } }
@@ -171,7 +171,7 @@ export class AmendGateway {
   }
 
   @SubscribeMessage('unVoteArgument')
-  @tryCatch
+  @withTryCatch
   async handleUnVoteArgument(
     client: Socket,
     message: { token: string; data: { amendID: string; argumentID: string } }

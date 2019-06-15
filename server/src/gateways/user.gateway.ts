@@ -6,7 +6,7 @@ import {
 import { Socket, Server } from 'socket.io'
 import { UserService, AuthService } from 'src/services'
 import { Inject } from '@nestjs/common'
-import { tryCatch } from 'src/decorators'
+import { withTryCatch } from 'src/decorators'
 
 @WebSocketGateway()
 export class UserGateway {
@@ -21,7 +21,7 @@ export class UserGateway {
   io: Server
 
   @SubscribeMessage('user')
-  @tryCatch
+  @withTryCatch
   async handlerUser(client: Socket, data: { token: string }) {
     const { token } = data
     if (token && this.authService.isTokenValid(token)) {
@@ -51,14 +51,14 @@ export class UserGateway {
   }
 
   @SubscribeMessage('activation')
-  @tryCatch
+  @withTryCatch
   async handleActication(client: Socket, data: { activationToken: string }) {
     const response = await this.userService.activateUser(data.activationToken)
     client.emit('activation', response)
   }
 
   @SubscribeMessage('login')
-  @tryCatch
+  @withTryCatch
   async handleLogin(client: Socket, data: { token: string; data: any }) {
     const { token } = data
     const { email, password } = data.data
@@ -81,7 +81,7 @@ export class UserGateway {
   }
 
   @SubscribeMessage('subscribe')
-  @tryCatch
+  @withTryCatch
   async handleSubscribe(
     client: Socket,
     data: { token: any; data: { email: string; password: string } }
@@ -95,21 +95,21 @@ export class UserGateway {
   }
 
   @SubscribeMessage('resetPassword')
-  @tryCatch
+  @withTryCatch
   async handleResetPassword(client: Socket, data: { data: { email: string } }) {
     const response = await this.userService.resetPassword(data.data.email)
     client.emit('resetPassword', response)
   }
 
   @SubscribeMessage('deleteAccount')
-  @tryCatch
+  @withTryCatch
   async handleDeleteAccount(client: Socket, data: { token: string }) {
     const response = await this.userService.delete(data.token, this.io)
     client.emit('deleteAccount', response)
   }
 
   @SubscribeMessage('updateEmail')
-  @tryCatch
+  @withTryCatch
   async handleUpdateEmail(
     client: Socket,
     data: { token: string; data: { email: string } }
@@ -125,7 +125,7 @@ export class UserGateway {
   }
 
   @SubscribeMessage('updatePassword')
-  @tryCatch
+  @withTryCatch
   async handleUpdatePassword(
     client: Socket,
     data: { token: string; data: { password: string } }
@@ -139,7 +139,7 @@ export class UserGateway {
   }
 
   @SubscribeMessage('updateLastEvent')
-  @tryCatch
+  @withTryCatch
   async handleUpdateLastEvent(client: Socket, data: { token: string }) {
     const response = await this.userService.updateLastEventDate(data.token)
     client.emit('user', response)
@@ -147,7 +147,7 @@ export class UserGateway {
   }
 
   @SubscribeMessage('toggleNotificationSetting')
-  @tryCatch
+  @withTryCatch
   async handleToggleNotificationSetting(
     client: Socket,
     data: { token: string; data: { key: any } }

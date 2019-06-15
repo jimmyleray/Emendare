@@ -1,4 +1,4 @@
-export function tryCatch(
+export function withTryCatch(
   target: object,
   propertyKey: string,
   descriptor: TypedPropertyDescriptor<any>

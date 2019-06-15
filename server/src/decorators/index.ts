@@ -1,1 +1,1 @@
-export * from './tryCatch'
+export * from './withTryCatch'

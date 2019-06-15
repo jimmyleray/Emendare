@@ -6,7 +6,7 @@ import {
 import { Socket, Server } from 'socket.io'
 import { TextService } from 'src/services'
 import { Inject } from '@nestjs/common'
-import { tryCatch } from 'src/decorators'
+import { withTryCatch } from 'src/decorators'
 
 @WebSocketGateway()
 export class TextGateway {
@@ -19,21 +19,21 @@ export class TextGateway {
   io: Server
 
   @SubscribeMessage('text')
-  @tryCatch
+  @withTryCatch
   async handleText(client: Socket, data: { data: { id: string } }) {
     const response = await this.textService.getText(data.data.id)
     client.emit('text/' + data.data.id, response)
   }
 
   @SubscribeMessage('texts')
-  @tryCatch
+  @withTryCatch
   async handleTexts(client: Socket) {
     const response = await this.textService.getTexts()
     client.emit('texts', response)
   }
 
   @SubscribeMessage('followText')
-  @tryCatch
+  @withTryCatch
   async handleFollowText(
     client: Socket,
     data: { token: string; data: { id: string } }
@@ -48,7 +48,7 @@ export class TextGateway {
   }
 
   @SubscribeMessage('unFollowText')
-  @tryCatch
+  @withTryCatch
   async handleUnFollowText(
     client: Socket,
     data: { token: string; data: { id: string } }
@@ -63,7 +63,7 @@ export class TextGateway {
   }
 
   @SubscribeMessage('postText')
-  @tryCatch
+  @withTryCatch
   async handlePostText(
     client: Socket,
     data: { token: string; data: { name: string; description: string } }
