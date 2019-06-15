@@ -143,7 +143,6 @@ export class UserGateway {
   async handleUpdateLastEvent(client: Socket, data: { token: string }) {
     const response = await this.userService.updateLastEventDate(data.token)
     client.emit('user', response)
-    return response
   }
 
   @SubscribeMessage('toggleNotificationSetting')
@@ -158,6 +157,5 @@ export class UserGateway {
     )
 
     client.emit('user', response)
-    return response
   }
 }
