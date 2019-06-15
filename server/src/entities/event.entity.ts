@@ -17,7 +17,7 @@ export class Event extends BaseEntity {
 
   constructor(type: string, targetId: string) {
     super()
-    this.target = { type: type, id: targetId }
+    this.target = { type, id: targetId }
     this.created = new Date(Date.now())
   }
 }

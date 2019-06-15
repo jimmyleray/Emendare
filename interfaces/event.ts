@@ -1,12 +1,12 @@
 export interface IEvent {
-  __v: number;
-  id: string;
-  created: Date | string;
+  __v: number
+  id: string
+  created: Date | string
   target: {
-    type: string;
-    id: string;
-  };
-  save?: any;
+    type: string
+    id: string
+  }
+  save?: any
 }
 
 export const eventMock: IEvent = {
@@ -15,6 +15,6 @@ export const eventMock: IEvent = {
   created: '2019-02-13T15:32:44.344Z',
   target: {
     id: '5c64389cae3ae3695c711e44',
-    type: 'amend',
-  },
-};
+    type: 'amend'
+  }
+}

@@ -6,8 +6,6 @@ import { Event } from '../entities'
 
 @Injectable()
 export class EventService {
-  constructor() {}
-
   async getEvent(id: string): Promise<IResponse<Event>> {
     const data = await Event.findOne(id)
     return { data }

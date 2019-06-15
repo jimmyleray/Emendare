@@ -17,10 +17,8 @@ export class AmendGateway {
   @SubscribeMessage('amend')
   async handleAmend(client: Socket, data: { data: { id: string } }) {
     try {
-      client.emit(
-        'amend/' + data.data.id,
-        await this.amendService.getAmend(data.data.id)
-      )
+      const response = await this.amendService.getAmend(data.data.id)
+      client.emit('amend/' + data.data.id, response)
     } catch (error) {
       console.error(error)
     }
@@ -159,7 +157,7 @@ export class AmendGateway {
       if (response.data) {
         this.io.emit(`amend/${data.data.amendID}`, response)
       } else {
-        client.emit('upVoteArgument', { data: response })
+        client.emit('upVoteArgument', response)
       }
     } catch (error) {
       console.error(error)
