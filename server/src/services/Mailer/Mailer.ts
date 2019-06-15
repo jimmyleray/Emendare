@@ -4,6 +4,7 @@ import nodemailer from 'nodemailer'
 import chalk from 'chalk'
 import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class Mailer {
   private transporter: any
 
