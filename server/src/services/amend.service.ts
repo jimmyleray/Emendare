@@ -378,17 +378,16 @@ export class AmendService {
     }
   }
 
-  async checkAmendVotes(io?: Server) {
+  async checkAmendVotes(io: Server) {
     // On récupère tous les scrutins en cours
     const amends = await Amend.find({ closed: false })
-    //.populate('text')
 
     const date = new Date()
     const now = date.getTime()
 
     amends.forEach(async (amend: Amend) => {
       const start = amend.created.getTime()
-      const text: Text = await Text.findOne(amend.text)
+      const text = await Text.findOne(amend.text)
 
       // Si le scrutin est terminé
       if (now > start + amend.rules.delayMax) {
@@ -398,7 +397,7 @@ export class AmendService {
 
         // Si il y'a une majorité relative
         if (AmendService.hasRelativeUpMajority(amend)) {
-          this.textService.updateTextWithAmend(amend, io)
+          this.textService.updateTextWithAmend(text, amend, io)
         }
 
         await amend.save()

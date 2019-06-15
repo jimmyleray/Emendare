@@ -160,21 +160,19 @@ export class TextService {
     }
   }
 
-  async updateTextWithAmend(amend: any, io?: Server) {
+  async updateTextWithAmend(text: Text, amend: Amend, io: Server) {
     amend.accepted = true
-    const newText = JsDiff.applyPatch(amend.text.actual, amend.patch)
+    const newText = JsDiff.applyPatch(text.actual, amend.patch)
 
     if (newText) {
-      amend.version = amend.text.patches.length
-      amend.text.patches.push(amend.patch)
-      amend.text.actual = newText
+      amend.version = text.patches.length
+      text.patches.push(amend.patch)
+      text.actual = newText
     } else {
       amend.conflicted = true
     }
 
-    await amend.text.save()
-
-    const text = (await this.getText(amend.text.id)).data
+    await text.save()
 
     if (io) {
       io.emit('text/' + text.id, { data: text })
