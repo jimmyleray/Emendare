@@ -370,7 +370,6 @@ export class AmendService {
         io.emit('events/new', { data: event })
         io.emit('text/' + textID, { data: text })
       }
-      console.log(data)
       return { data: amend }
     } else {
       return {
@@ -409,7 +408,6 @@ export class AmendService {
           where: { target: { type: 'amend', id: newAmend.id.toString() } }
         })
 
-        console.log(oldEvent)
         await Event.delete({ id: oldEvent.id })
         io.emit('events/delete', { data: oldEvent })
 
