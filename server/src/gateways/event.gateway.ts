@@ -5,11 +5,14 @@ import {
 } from '@nestjs/websockets'
 import { Socket, Server } from 'socket.io'
 // Service
-import { EventService, Auth } from '../services'
+import { EventService } from '../services'
+import { Inject } from '@nestjs/common'
 
 @WebSocketGateway()
 export class EventGateway {
-  constructor(private eventService: EventService) {}
+  constructor(
+    @Inject('EventService') private readonly eventService: EventService
+  ) {}
   @WebSocketServer()
   io: Server
 

@@ -1,5 +1,4 @@
 import { Entity, Column, ObjectID, ObjectIdColumn, BaseEntity } from 'typeorm'
-import { Text } from '../entities'
 
 const oneSecond = 1000
 const oneMinute = oneSecond * 60

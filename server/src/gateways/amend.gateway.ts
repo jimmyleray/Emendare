@@ -6,10 +6,13 @@ import {
 import { Socket, Server } from 'socket.io'
 // Service
 import { AmendService } from '../services'
+import { Inject } from '@nestjs/common'
 
 @WebSocketGateway()
 export class AmendGateway {
-  constructor(private amendService: AmendService) {}
+  constructor(
+    @Inject('AmendService') private readonly amendService: AmendService
+  ) {}
 
   @WebSocketServer()
   io: Server

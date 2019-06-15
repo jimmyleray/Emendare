@@ -1,5 +1,4 @@
 import { Entity, Column, ObjectID, ObjectIdColumn, BaseEntity } from 'typeorm'
-import { Amend } from '../entities'
 
 @Entity()
 export class Text extends BaseEntity {

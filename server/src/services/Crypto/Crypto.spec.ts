@@ -1,8 +1,8 @@
-import { Crypto } from './Crypto'
+import { CryptoService } from './crypto.service'
 
-let crypto: Crypto
+let crypto: CryptoService
 beforeEach(() => {
-  crypto = new Crypto()
+  crypto = new CryptoService()
 })
 
 test('returned token is a string', () => {

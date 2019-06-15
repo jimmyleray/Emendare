@@ -5,21 +5,25 @@ import {
 } from '@nestjs/websockets'
 import { Socket, Server } from 'socket.io'
 // Service
-import { UserService, Auth } from '../services'
+import { UserService, AuthService } from '../services'
+import { Inject } from '@nestjs/common'
 
 @WebSocketGateway()
 export class UserGateway {
-  constructor(private userService: UserService, private auth: Auth) {}
+  constructor(
+    @Inject('UserService') private readonly userService: UserService,
+    @Inject('AuthService') private readonly authService: AuthService
+  ) {}
   @WebSocketServer()
   io: Server
 
   @SubscribeMessage('user')
   async handlerUser(client: Socket, data: { token: string }) {
     const { token } = data
-    if (token && this.auth.isTokenValid(token)) {
-      if (!this.auth.isTokenExpired(token)) {
+    if (token && this.authService.isTokenValid(token)) {
+      if (!this.authService.isTokenExpired(token)) {
         try {
-          const { id } = this.auth.decodeToken(token)
+          const { id } = this.authService.decodeToken(token)
           const response = await this.userService.getUser(id)
           if (response) {
             client.emit('user', { data: response, error: null })

@@ -6,10 +6,13 @@ import {
 import { Socket, Server } from 'socket.io'
 // Service
 import { TextService } from '../services'
+import { Inject } from '@nestjs/common'
 
 @WebSocketGateway()
 export class TextGateway {
-  constructor(private textService: TextService) {}
+  constructor(
+    @Inject('TextService') private readonly textService: TextService
+  ) {}
   @WebSocketServer()
   io: Server
 

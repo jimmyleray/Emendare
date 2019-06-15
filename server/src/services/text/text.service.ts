@@ -1,19 +1,15 @@
 import { Injectable, Inject } from '@nestjs/common'
 import { Server } from 'socket.io'
-// Interfaces
-import { IResponse } from '../../../interfaces'
-// Services
-import { Auth } from '../services'
-// Entities
-import { Text, User, Event, Amend } from '../entities'
-// Diff Patch Library
 import * as JsDiff from 'diff'
+
+import { IResponse } from '../../../../interfaces'
+import { AuthService } from '..'
+import { Text, User, Event, Amend } from '../../entities'
 
 @Injectable()
 export class TextService {
   constructor(
-    @Inject('Auth')
-    private readonly auth: Auth
+    @Inject('AuthService') private readonly authService: AuthService
   ) {}
 
   async getText(id: string): Promise<IResponse<Text>> {
@@ -41,17 +37,17 @@ export class TextService {
     token: string,
     io?: Server
   ): Promise<IResponse<Text>> {
-    if (!this.auth.isTokenValid(token)) {
+    if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (this.auth.isTokenExpired(token)) {
+    if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user = await User.findOne(this.auth.decodeToken(token).id)
+    const user = await User.findOne(this.authService.decodeToken(token).id)
     if (user && user.activated) {
       if (user.followedTexts.indexOf(id) === -1) {
         user.followedTexts.push(id)
@@ -83,17 +79,17 @@ export class TextService {
     token: string,
     io?: Server
   ): Promise<IResponse<Text>> {
-    if (!this.auth.isTokenValid(token)) {
+    if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (this.auth.isTokenExpired(token)) {
+    if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user = await User.findOne(this.auth.decodeToken(token).id)
+    const user = await User.findOne(this.authService.decodeToken(token).id)
     if (user && user.activated) {
       const id = user.followedTexts.indexOf(idText)
       if (id >= 0) {
@@ -127,17 +123,17 @@ export class TextService {
     token: string,
     io?: Server
   ): Promise<IResponse<Text>> {
-    if (!this.auth.isTokenValid(token)) {
+    if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (this.auth.isTokenExpired(token)) {
+    if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user = await User.findOne(this.auth.decodeToken(token).id)
+    const user = await User.findOne(this.authService.decodeToken(token).id)
     if (user && user.activated) {
       const data = new Text(name, description)
       await data.save()

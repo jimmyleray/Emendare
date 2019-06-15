@@ -1,23 +1,17 @@
 import { Inject, Injectable } from '@nestjs/common'
-// Interfaces
-import { IResponse } from '../../../interfaces'
-// Services
-import { Auth, TextService, Crypto } from '../services'
-// Entities
-import { Text, User, Event, Amend } from '../entities'
-// Diff Patch Library
-import { delay, findIndex } from 'lodash'
+import { findIndex } from 'lodash'
 import { Server } from 'socket.io'
 import { ObjectID } from 'mongodb'
+
+import { IResponse } from '../../../../interfaces'
+import { AuthService, TextService } from '../../services'
+import { Text, User, Event, Amend } from '../../entities'
 
 @Injectable()
 export class AmendService {
   constructor(
     @Inject('TextService') private readonly textService: TextService,
-    @Inject('Auth')
-    private readonly auth: Auth,
-    @Inject('Crypto')
-    private readonly crypto: Crypto
+    @Inject('AuthService') private readonly authService: AuthService
   ) {}
 
   async getAmend(id: string): Promise<IResponse<Amend>> {
@@ -63,17 +57,17 @@ export class AmendService {
     token: string,
     io?: Server
   ): Promise<IResponse<Amend>> {
-    if (!this.auth.isTokenValid(token)) {
+    if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (this.auth.isTokenExpired(token)) {
+    if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await User.findOne(this.auth.decodeToken(token).id)
+    const user: User = await User.findOne(this.authService.decodeToken(token).id)
     if (user && user.activated) {
       const amend: Amend = await Amend.findOne(id)
       if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
@@ -132,17 +126,17 @@ export class AmendService {
     token: string,
     io?: Server
   ): Promise<IResponse<Amend>> {
-    if (!this.auth.isTokenValid(token)) {
+    if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (this.auth.isTokenExpired(token)) {
+    if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await User.findOne(this.auth.decodeToken(token).id)
+    const user: User = await User.findOne(this.authService.decodeToken(token).id)
     if (user && user.activated) {
       const amend: Amend = await Amend.findOne(id)
       if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
@@ -201,17 +195,17 @@ export class AmendService {
     token: string,
     io?: Server
   ): Promise<IResponse<Amend>> {
-    if (!this.auth.isTokenValid(token)) {
+    if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (this.auth.isTokenExpired(token)) {
+    if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await User.findOne(this.auth.decodeToken(token).id)
+    const user: User = await User.findOne(this.authService.decodeToken(token).id)
     if (user && user.activated) {
       const amend: Amend = await Amend.findOne(id)
       if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
@@ -270,17 +264,17 @@ export class AmendService {
     token: string,
     io?: Server
   ): Promise<IResponse<Amend>> {
-    if (!this.auth.isTokenValid(token)) {
+    if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (this.auth.isTokenExpired(token)) {
+    if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await User.findOne(this.auth.decodeToken(token).id)
+    const user: User = await User.findOne(this.authService.decodeToken(token).id)
     if (user && user.activated) {
       const amend = await Amend.findOne(id)
       if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
@@ -344,17 +338,17 @@ export class AmendService {
     io?: Server
   ): Promise<IResponse<Amend>> {
     const { name, description, patch, version, textID } = data
-    if (!this.auth.isTokenValid(token)) {
+    if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (this.auth.isTokenExpired(token)) {
+    if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await User.findOne(this.auth.decodeToken(token).id)
+    const user: User = await User.findOne(this.authService.decodeToken(token).id)
     if (user && user.activated) {
       const amend: Amend = new Amend(name, description, patch, textID, version)
       await amend.save()
@@ -423,17 +417,17 @@ export class AmendService {
     amendID: string,
     token: string
   ) {
-    if (!this.auth.isTokenValid(token)) {
+    if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (this.auth.isTokenExpired(token)) {
+    if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user = await User.findOne(this.auth.decodeToken(token).id)
+    const user = await User.findOne(this.authService.decodeToken(token).id)
 
     if (user && user.activated) {
       const amend = await Amend.findOne(amendID)
@@ -466,17 +460,17 @@ export class AmendService {
   }
 
   async downVoteArgument(amendID: string, argumentID: string, token: string) {
-    if (!this.auth.isTokenValid(token)) {
+    if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (this.auth.isTokenExpired(token)) {
+    if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await User.findOne(this.auth.decodeToken(token).id)
+    const user: User = await User.findOne(this.authService.decodeToken(token).id)
     if (user && user.activated) {
       // Check if the user has already voted
       const userDownVote = user.argumentDownVotes.find(
@@ -542,17 +536,17 @@ export class AmendService {
   }
 
   async upVoteArgument(amendID: string, argumentID: string, token: string) {
-    if (!this.auth.isTokenValid(token)) {
+    if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (this.auth.isTokenExpired(token)) {
+    if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await User.findOne(this.auth.decodeToken(token).id)
+    const user: User = await User.findOne(this.authService.decodeToken(token).id)
     if (user && user.activated) {
       // Check if the user has already voted
       const userUpVote = user.argumentUpVotes.find(
@@ -615,17 +609,17 @@ export class AmendService {
   }
 
   async unVoteArgument(amendID: string, argumentID: string, token: string) {
-    if (!this.auth.isTokenValid(token)) {
+    if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
-    if (this.auth.isTokenExpired(token)) {
+    if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await User.findOne(this.auth.decodeToken(token).id)
+    const user: User = await User.findOne(this.authService.decodeToken(token).id)
     if (user && user.activated) {
       // Check if the user has already voted
       const indexUserUpVote = findIndex(

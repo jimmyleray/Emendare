@@ -1,9 +1,9 @@
-import { Auth } from './Auth'
+import { AuthService } from './auth.service'
 
 describe('AuthService', () => {
-  let auth: Auth
+  let auth: AuthService
   beforeEach(() => {
-    auth = new Auth()
+    auth = new AuthService()
   })
 
   test('should not validate JWT token', () => {
