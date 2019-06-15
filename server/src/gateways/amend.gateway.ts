@@ -176,7 +176,7 @@ export class AmendGateway {
     client: Socket,
     message: { token: string; data: { amendID: string; argumentID: string } }
   ) {
-    const response: any = await this.amendService.unVoteArgument(
+    const response = await this.amendService.unVoteArgument(
       message.data.amendID,
       message.data.argumentID,
       message.token

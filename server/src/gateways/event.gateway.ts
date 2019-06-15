@@ -29,7 +29,7 @@ export class EventGateway {
   @withTryCatch
   async handleEvents(
     client: Socket,
-    message: { token: any; data: { limit: number; lastEventDate: any } }
+    message: { token: string; data: { limit: number; lastEventDate: any } }
   ) {
     const response = await this.eventService.getEventsByGroup(
       message.data.limit,

@@ -88,7 +88,7 @@ export class UserGateway {
   @withTryCatch
   async handleSubscribe(
     client: Socket,
-    data: { token: any; message: { email: string; password: string } }
+    data: { token: string; message: { email: string; password: string } }
   ) {
     const response = await this.userService.subscribe(
       data.message.email,
@@ -156,7 +156,7 @@ export class UserGateway {
   @withTryCatch
   async handleToggleNotificationSetting(
     client: Socket,
-    message: { token: string; data: { key: any } }
+    message: { token: string; data: { key: string } }
   ) {
     const response = await this.userService.toggleNotificationSetting(
       message.data.key,
