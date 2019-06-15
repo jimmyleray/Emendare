@@ -20,9 +20,9 @@ export class TextGateway {
 
   @SubscribeMessage('text')
   @withTryCatch
-  async handleText(client: Socket, data: { data: { id: string } }) {
-    const response = await this.textService.getText(data.data.id)
-    client.emit('text/' + data.data.id, response)
+  async handleText(client: Socket, message: { data: { id: string } }) {
+    const response = await this.textService.getText(message.data.id)
+    client.emit('text/' + message.data.id, response)
   }
 
   @SubscribeMessage('texts')
@@ -36,11 +36,11 @@ export class TextGateway {
   @withTryCatch
   async handleFollowText(
     client: Socket,
-    data: { token: string; data: { id: string } }
+    message: { token: string; data: { id: string } }
   ) {
     const response = await this.textService.followText(
-      data.data.id,
-      data.token,
+      message.data.id,
+      message.token,
       this.io
     )
 
@@ -51,11 +51,11 @@ export class TextGateway {
   @withTryCatch
   async handleUnFollowText(
     client: Socket,
-    data: { token: string; data: { id: string } }
+    message: { token: string; data: { id: string } }
   ) {
     const response = await this.textService.unFollowText(
-      data.data.id,
-      data.token,
+      message.data.id,
+      message.token,
       this.io
     )
 
@@ -66,12 +66,12 @@ export class TextGateway {
   @withTryCatch
   async handlePostText(
     client: Socket,
-    data: { token: string; data: { name: string; description: string } }
+    message: { token: string; data: { name: string; description: string } }
   ) {
     const response = await this.textService.postText(
-      data.data.name,
-      data.data.description,
-      data.token,
+      message.data.name,
+      message.data.description,
+      message.token,
       this.io
     )
 

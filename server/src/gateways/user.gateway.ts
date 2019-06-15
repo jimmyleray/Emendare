@@ -22,12 +22,14 @@ export class UserGateway {
 
   @SubscribeMessage('user')
   @withTryCatch
-  async handlerUser(client: Socket, data: { token: string }) {
-    const { token } = data
+  async handlerUser(client: Socket, message: { token: string }) {
+    const { token } = message
+
     if (token && this.authService.isTokenValid(token)) {
       if (!this.authService.isTokenExpired(token)) {
         const { id } = this.authService.decodeToken(token)
         const response = await this.userService.getUser(id)
+
         if (response) {
           client.emit('user', { data: response, error: null })
         } else {
@@ -52,21 +54,23 @@ export class UserGateway {
 
   @SubscribeMessage('activation')
   @withTryCatch
-  async handleActication(client: Socket, data: { activationToken: string }) {
-    const response = await this.userService.activateUser(data.activationToken)
+  async handleActication(client: Socket, message: { activationToken: string }) {
+    const response = await this.userService.activateUser(
+      message.activationToken
+    )
     client.emit('activation', response)
   }
 
   @SubscribeMessage('login')
   @withTryCatch
-  async handleLogin(client: Socket, data: { token: string; data: any }) {
-    const { token } = data
-    const { email, password } = data.data
+  async handleLogin(client: Socket, message: { token: string; data: any }) {
+    const { token } = message
+    const { email, password } = message.data
     let response: any
 
-    if (!data && token) {
+    if (!message && token) {
       response = await this.userService.login(undefined, undefined, token)
-    } else if (data) {
+    } else if (message) {
       response = await this.userService.login(email, password, token)
     } else {
       response = {
@@ -84,11 +88,11 @@ export class UserGateway {
   @withTryCatch
   async handleSubscribe(
     client: Socket,
-    data: { token: any; data: { email: string; password: string } }
+    data: { token: any; message: { email: string; password: string } }
   ) {
     const response = await this.userService.subscribe(
-      data.data.email,
-      data.data.password
+      data.message.email,
+      data.message.password
     )
 
     client.emit('subscribe', response)
@@ -96,15 +100,18 @@ export class UserGateway {
 
   @SubscribeMessage('resetPassword')
   @withTryCatch
-  async handleResetPassword(client: Socket, data: { data: { email: string } }) {
-    const response = await this.userService.resetPassword(data.data.email)
+  async handleResetPassword(
+    client: Socket,
+    message: { data: { email: string } }
+  ) {
+    const response = await this.userService.resetPassword(message.data.email)
     client.emit('resetPassword', response)
   }
 
   @SubscribeMessage('deleteAccount')
   @withTryCatch
-  async handleDeleteAccount(client: Socket, data: { token: string }) {
-    const response = await this.userService.delete(data.token, this.io)
+  async handleDeleteAccount(client: Socket, message: { token: string }) {
+    const response = await this.userService.delete(message.token, this.io)
     client.emit('deleteAccount', response)
   }
 
@@ -112,12 +119,12 @@ export class UserGateway {
   @withTryCatch
   async handleUpdateEmail(
     client: Socket,
-    data: { token: string; data: { email: string } }
+    message: { token: string; data: { email: string } }
   ) {
-    if (data.data.email) {
+    if (message.data.email) {
       const response = await this.userService.updateEmail(
-        data.data.email,
-        data.token
+        message.data.email,
+        message.token
       )
 
       client.emit('updateEmail', response)
@@ -128,11 +135,11 @@ export class UserGateway {
   @withTryCatch
   async handleUpdatePassword(
     client: Socket,
-    data: { token: string; data: { password: string } }
+    message: { token: string; data: { password: string } }
   ) {
     const response = await this.userService.updatePassword(
-      data.data.password,
-      data.token
+      message.data.password,
+      message.token
     )
 
     client.emit('updatePassword', response)
@@ -140,8 +147,8 @@ export class UserGateway {
 
   @SubscribeMessage('updateLastEvent')
   @withTryCatch
-  async handleUpdateLastEvent(client: Socket, data: { token: string }) {
-    const response = await this.userService.updateLastEventDate(data.token)
+  async handleUpdateLastEvent(client: Socket, message: { token: string }) {
+    const response = await this.userService.updateLastEventDate(message.token)
     client.emit('user', response)
   }
 
@@ -149,11 +156,11 @@ export class UserGateway {
   @withTryCatch
   async handleToggleNotificationSetting(
     client: Socket,
-    data: { token: string; data: { key: any } }
+    message: { token: string; data: { key: any } }
   ) {
     const response = await this.userService.toggleNotificationSetting(
-      data.data.key,
-      data.token
+      message.data.key,
+      message.token
     )
 
     client.emit('user', response)
