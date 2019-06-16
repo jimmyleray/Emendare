@@ -29,11 +29,9 @@ export class UserService {
     return await User.findOne(id)
   }
 
-  async login(
-    email?: string,
-    password?: string,
-    token?: string
-  ): Promise<IResponse<any>> {
+  async login(data: any, token?: string): Promise<IResponse<any>> {
+    const { email, password } = data
+
     if (email && password) {
       const user = await User.findOne({ email })
 
@@ -80,10 +78,9 @@ export class UserService {
     }
   }
 
-  async subscribe(
-    email: string | undefined,
-    password: string | undefined
-  ): Promise<IResponse<User>> {
+  async subscribe(data: any): Promise<IResponse<User>> {
+    const { email, password } = data
+
     if (!email) {
       return {
         error: { code: 405, message: "L'email est requis" }
@@ -179,18 +176,12 @@ export class UserService {
     return { data: user }
   }
 
-  async resetPassword(email: string | undefined): Promise<IResponse<User>> {
+  async resetPassword(data: any): Promise<IResponse<User>> {
+    const { user, email } = data
+
     if (!email) {
       return {
         error: { code: 405, message: "L'email est requis." }
-      }
-    }
-
-    const user = await User.findOne({ email })
-
-    if (!user) {
-      return {
-        error: { code: 405, message: "Cet email n'existe pas." }
       }
     }
 
@@ -205,30 +196,8 @@ export class UserService {
     return this.sendResetMail(user, email, newPassword)
   }
 
-  async updatePassword(
-    password: string,
-    token: string
-  ): Promise<IResponse<User>> {
-    if (!password || !token) {
-      return {
-        error: { code: 405, message: 'Requête invalide' }
-      }
-    }
-
-    if (!this.authService.isTokenValid(token)) {
-      return {
-        error: { code: 405, message: 'Token invalide' }
-      }
-    }
-
-    if (this.authService.isTokenExpired(token)) {
-      return {
-        error: { code: 401, message: 'Token expiré' }
-      }
-    }
-
-    const { id } = this.authService.decodeToken(token)
-    const user = await User.findOne(id)
+  async updatePassword(data: any): Promise<IResponse<User>> {
+    const { user, password } = data
     const hash = hashSync(password, 10)
     user.password = hash
     await user.save()
@@ -237,40 +206,13 @@ export class UserService {
     return { data: user }
   }
 
-  async updateEmail(
-    email: string | undefined,
-    token: string
-  ): Promise<IResponse<User>> {
-    if (!email || !token) {
-      return {
-        error: { code: 405, message: 'Requête invalide' }
-      }
-    }
+  async updateEmail(data: any): Promise<IResponse<User>> {
+    const { user, email } = data
+    const alreadyUser = await User.findOne({ email })
 
-    if (!this.authService.isTokenValid(token)) {
-      return {
-        error: { code: 405, message: 'Token invalide' }
-      }
-    }
-
-    if (this.authService.isTokenExpired(token)) {
-      return {
-        error: { code: 401, message: 'Token expiré' }
-      }
-    }
-
-    if (await User.findOne({ email })) {
+    if (alreadyUser) {
       return {
         error: { code: 405, message: 'Cet email est déjà utilisée' }
-      }
-    }
-
-    const { id } = this.authService.decodeToken(token)
-    const user = await User.findOne(id)
-
-    if (!user) {
-      return {
-        error: { code: 405, message: 'Token invalide' }
       }
     }
 
@@ -284,21 +226,8 @@ export class UserService {
     return this.sendActivationMail(user, email, activationToken)
   }
 
-  async updateLastEventDate(token: string): Promise<IResponse<User>> {
-    if (!token || !this.authService.isTokenValid(token)) {
-      return {
-        error: { code: 405, message: 'Le token est invalide' }
-      }
-    }
-
-    if (this.authService.isTokenExpired(token)) {
-      return {
-        error: { code: 401, message: 'Le token est expiré' }
-      }
-    }
-
-    const { id } = this.authService.decodeToken(token)
-    const user = await User.findOne(id)
+  async updateLastEventDate(data: any): Promise<IResponse<User>> {
+    const { user } = data
 
     if (!user) {
       return {
@@ -311,30 +240,8 @@ export class UserService {
     return { data: user }
   }
 
-  async toggleNotificationSetting(
-    key: any,
-    token: string
-  ): Promise<IResponse<User>> {
-    if (!token || !this.authService.isTokenValid(token)) {
-      return {
-        error: { code: 405, message: 'Le token est invalide' }
-      }
-    }
-
-    if (this.authService.isTokenExpired(token)) {
-      return {
-        error: { code: 401, message: 'Le token est expiré' }
-      }
-    }
-
-    const { id } = this.authService.decodeToken(token)
-    const user = await User.findOne(id)
-
-    if (!user) {
-      return {
-        error: { code: 405, message: 'Token invalide' }
-      }
-    }
+  async toggleNotificationSetting(data: any): Promise<IResponse<User>> {
+    const { user, key } = data
 
     if (isUndefined(user.notifications[key])) {
       return {
@@ -347,27 +254,8 @@ export class UserService {
     return { data: user }
   }
 
-  async delete(token: string, io: Server): Promise<IResponse<any>> {
-    if (!token || !this.authService.isTokenValid(token)) {
-      return {
-        error: { code: 405, message: 'Le token est invalide' }
-      }
-    }
-
-    if (this.authService.isTokenExpired(token)) {
-      return {
-        error: { code: 401, message: 'Le token est expiré' }
-      }
-    }
-
-    const { id } = this.authService.decodeToken(token)
-    const user = await User.findOne(id)
-
-    if (!user) {
-      return {
-        error: { code: 405, message: 'Token invalide' }
-      }
-    }
+  async delete(data: any, io: Server): Promise<IResponse<any>> {
+    const { user } = data
 
     const openAmends = await this.getOpenAmends(user)
 
@@ -380,7 +268,7 @@ export class UserService {
     }
 
     try {
-      await User.delete(id)
+      await User.delete(user.id)
       return { data: {} }
     } catch (error) {
       console.error(error)
