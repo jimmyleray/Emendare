@@ -113,6 +113,14 @@ export class UserService {
     const user = new User(email, hash, activationToken)
     await user.save()
 
+    return this.sendActivationMail(user, email, activationToken)
+  }
+
+  sendActivationMail(
+    user: User,
+    email: string,
+    activationToken: string
+  ): Promise<IResponse<User>> {
     return this.mailerService
       .send({
         to: email,
@@ -125,6 +133,27 @@ export class UserService {
       .catch(error => {
         return {
           error: { code: 500, message: "Erreur dans l'envoi du mail" }
+        }
+      })
+  }
+
+  sendResetMail(
+    user: User,
+    email: string,
+    newPassword: string
+  ): Promise<IResponse<User>> {
+    return this.mailerService
+      .send({
+        to: email,
+        subject: reset.subject,
+        html: reset.html(newPassword)
+      })
+      .then(() => {
+        return { data: user }
+      })
+      .catch((error: any) => {
+        return {
+          error: { code: 500, message: "Erreur lors de l'envoi du mail" }
         }
       })
   }
@@ -173,23 +202,7 @@ export class UserService {
     user.password = hash
     await user.save()
 
-    return this.mailerService
-      .send({
-        to: email,
-        subject: reset.subject,
-        html: reset.html(newPassword)
-      })
-      .then(() => {
-        return { data: user }
-      })
-      .catch((error: any) => {
-        return {
-          error: {
-            code: 500,
-            message: "Erreur lors de l'envoi du mail"
-          }
-        }
-      })
+    return this.sendResetMail(user, email, newPassword)
   }
 
   async updatePassword(
@@ -268,24 +281,7 @@ export class UserService {
     user.activated = false
     await user.save()
 
-    return this.mailerService
-      .send({
-        to: email,
-        subject: activation.subject,
-        html: activation.html(activationToken)
-      })
-      .then(() => {
-        // disconnect the user
-        return { data: user }
-      })
-      .catch(error => {
-        return {
-          error: {
-            code: 500,
-            message: "Les mails ne sont activés qu'en production"
-          }
-        }
-      })
+    return this.sendActivationMail(user, email, activationToken)
   }
 
   async updateLastEventDate(token: string): Promise<IResponse<User>> {
