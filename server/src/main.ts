@@ -3,6 +3,7 @@ import { AppModule } from './app.module'
 import * as compression from 'compression'
 import * as bodyParser from 'body-parser'
 import * as helmet from 'helmet'
+import config from './config'
 
 // Chalk for colored logs
 import chalk from 'chalk'
@@ -16,7 +17,7 @@ async function bootstrap() {
 
   // Security
   app.use(helmet())
-  app.enableCors()
+  app.enableCors({ origin: config.clientUrl })
 
   // Body Parsing
   app.use(bodyParser.json()) // for parsing json
