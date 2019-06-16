@@ -1,7 +1,3 @@
-const path = require('path')
-const glob = require('glob')
-const fs = require('fs')
-
 module.exports = {
   title: 'Emendare UI',
   require: ['bulma/css/bulma.min.css'],
@@ -43,10 +39,10 @@ module.exports = {
   getExampleFilename(componentPath) {
     return componentPath.replace(/\.tsx?$/, '.md')
   },
-  dangerouslyUpdateWebpackConfig(webpackConfig, env) {
+  dangerouslyUpdateWebpackConfig(webpackConfig) {
     webpackConfig.output = {
       ...webpackConfig.output,
-      publicPath: process.env.PUBLIC_URL || ''
+      publicPath: process.env.PUBLIC_URL
     }
     return webpackConfig
   },

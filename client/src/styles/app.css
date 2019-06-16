@@ -46,7 +46,8 @@ main {
   align-items: center;
 }
 
-.ReactVirtualized__Grid.ReactVirtualized__List {
+.ReactVirtualized__Grid,
+.ReactVirtualized__List {
   will-change: contents !important;
 }
 
