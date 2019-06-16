@@ -9,7 +9,8 @@ import { Server } from 'socket.io'
 @WebSocketGateway()
 export class CheckAmendVoteTask extends NestSchedule {
   constructor(
-    @Inject('AmendService') private readonly amendService: AmendService
+    @Inject('AmendService')
+    private readonly amendService: AmendService
   ) {
     super()
   }
@@ -19,8 +20,6 @@ export class CheckAmendVoteTask extends NestSchedule {
 
   @Interval(5000)
   CheckAmendVoteTask() {
-    if (this.io) {
-      this.amendService.checkAmendVotes(this.io)
-    }
+    this.amendService.checkAmendVotes(this.io)
   }
 }

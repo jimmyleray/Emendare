@@ -70,79 +70,46 @@ export class AmendGateway {
   }
 
   @SubscribeMessage('postArgument')
+  @withResponse('postArgument')
   @withTryCatch
+  @withAuthentication
   async handlePostArgument(
     client: Socket,
     message: IMessage<{ amendID: string; text: string; type: string }>
   ) {
-    const response: any = await this.amendService.postArgument(
-      message.data.text,
-      message.data.type,
-      message.data.amendID,
-      message.token
-    )
-
-    if (response.data) {
-      this.io.emit('amend/' + message.data.amendID, response)
-    } else {
-      client.emit('postArgument', response)
-    }
+    return this.amendService.postArgument(message.data, this.io)
   }
 
   @SubscribeMessage('upVoteArgument')
+  @withResponse('upVoteArgument')
   @withTryCatch
+  @withAuthentication
   async handleUpVoteArgument(
     client: Socket,
     message: IMessage<{ amendID: string; argumentID: string }>
   ) {
-    const response: any = await this.amendService.upVoteArgument(
-      message.data.amendID,
-      message.data.argumentID,
-      message.token
-    )
-
-    if (response.data) {
-      this.io.emit('amend/' + message.data.amendID, response)
-    } else {
-      client.emit('upVoteArgument', response)
-    }
+    return this.amendService.upVoteArgument(message.data, this.io)
   }
 
   @SubscribeMessage('downVoteArgument')
+  @withResponse('downVoteArgument')
   @withTryCatch
+  @withAuthentication
   async handleDownVoteArgument(
     client: Socket,
     message: IMessage<{ amendID: string; argumentID: string }>
   ) {
-    const response: any = await this.amendService.downVoteArgument(
-      message.data.amendID,
-      message.data.argumentID,
-      message.token
-    )
-
-    if (response.data) {
-      this.io.emit('amend/' + message.data.amendID, response)
-    } else {
-      client.emit('unVoteArgument', response)
-    }
+    return this.amendService.downVoteArgument(message.data, this.io)
   }
 
   @SubscribeMessage('unVoteArgument')
+  @withResponse('unVoteArgument')
   @withTryCatch
+  @withAuthentication
   async handleUnVoteArgument(
     client: Socket,
     message: IMessage<{ amendID: string; argumentID: string }>
   ) {
-    const response = await this.amendService.unVoteArgument(
-      message.data.amendID,
-      message.data.argumentID,
-      message.token
-    )
-
-    if (response.data) {
-      this.io.emit('amend/' + message.data.amendID, response)
-    } else {
-      client.emit('unVoteArgument', response)
-    }
+    return this.amendService.unVoteArgument(message.data, this.io)
   }
 }

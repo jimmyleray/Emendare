@@ -3,9 +3,9 @@ import { hashSync, compareSync } from 'bcrypt'
 import { isUndefined } from 'lodash'
 import { Server } from 'socket.io'
 
-import { IResponse } from '../../../../interfaces'
-import { User, Amend } from '../../entities'
-import { activation, reset } from '../../emails'
+import { IResponse } from 'src/../../interfaces'
+import { User, Amend } from 'src/entities'
+import { activation, reset } from 'src/emails'
 
 import {
   AuthService,
@@ -13,7 +13,7 @@ import {
   CryptoService,
   TextService,
   AmendService
-} from '..'
+} from 'src/services'
 
 @Injectable()
 export class UserService {
@@ -26,9 +26,7 @@ export class UserService {
   ) {}
 
   async getUser(id: string): Promise<User> {
-    if (id) {
-      return await User.findOne(id)
-    }
+    return await User.findOne(id)
   }
 
   async login(
@@ -38,28 +36,34 @@ export class UserService {
   ): Promise<IResponse<any>> {
     if (email && password) {
       const user = await User.findOne({ email })
+
       if (!user) {
         return { error: { code: 405, message: "L'email est invalide" } }
       }
+
       if (!user.activated) {
         return {
           error: { code: 405, message: "Votre compte n'est pas activé" }
         }
       }
+
       if (!compareSync(password, user.password)) {
         return {
           error: { code: 405, message: 'Le mot de passe est invalide' }
         }
       }
+
       const newToken = this.authService.createToken({ id: user.id })
       return { data: { user, token: newToken } }
     } else if (token) {
       if (this.authService.isTokenValid(token)) {
         const { id } = this.authService.decodeToken(token)
         const user = await User.findOne(id)
+
         if (!user) {
           return { error: { code: 405, message: 'Ce compte a été supprimé' } }
         }
+
         return { data: { user, token } }
       } else {
         return {
@@ -85,13 +89,16 @@ export class UserService {
         error: { code: 405, message: "L'email est requis" }
       }
     }
+
     if (!password) {
       return {
         error: { code: 405, message: 'Le mot de passe est requis' }
       }
     }
 
-    if (await User.findOne({ email })) {
+    const alreadyUser = await User.findOne({ email })
+
+    if (alreadyUser) {
       return {
         error: {
           code: 405,
@@ -100,12 +107,13 @@ export class UserService {
         }
       }
     }
+
     const hash = hashSync(password, 10)
     const activationToken = this.cryptoService.getToken()
     const user = new User(email, hash, activationToken)
     await user.save()
 
-    this.mailerService
+    return this.mailerService
       .send({
         to: email,
         subject: activation.subject,
@@ -123,16 +131,19 @@ export class UserService {
 
   async activateUser(activationToken: string): Promise<IResponse<User>> {
     const user = await User.findOne({ activationToken })
+
     if (!user) {
       return {
         error: { code: 405, message: 'Votre token est invalide' }
       }
     }
+
     if (user.activated) {
       return {
         error: { code: 405, message: 'Ce compte est déjà activé' }
       }
     }
+
     user.activated = true
     user.activationToken = null
     await user.save()
@@ -145,20 +156,24 @@ export class UserService {
         error: { code: 405, message: "L'email est requis." }
       }
     }
+
     const user = await User.findOne({ email })
+
     if (!user) {
       return {
         error: { code: 405, message: "Cet email n'existe pas." }
       }
     }
+
     // Generate a new Password
     const newPassword = this.cryptoService.getToken(16)
+
     // Update the user password
     const hash = hashSync(newPassword, 10)
     user.password = hash
     await user.save()
 
-    this.mailerService
+    return this.mailerService
       .send({
         to: email,
         subject: reset.subject,
@@ -186,21 +201,25 @@ export class UserService {
         error: { code: 405, message: 'Requête invalide' }
       }
     }
+
     if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
+
     if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
+
     const { id } = this.authService.decodeToken(token)
     const user = await User.findOne(id)
     const hash = hashSync(password, 10)
     user.password = hash
     await user.save()
+
     // send the user updated
     return { data: user }
   }
@@ -214,23 +233,28 @@ export class UserService {
         error: { code: 405, message: 'Requête invalide' }
       }
     }
+
     if (!this.authService.isTokenValid(token)) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
+
     if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Token expiré' }
       }
     }
+
     if (await User.findOne({ email })) {
       return {
         error: { code: 405, message: 'Cet email est déjà utilisée' }
       }
     }
+
     const { id } = this.authService.decodeToken(token)
     const user = await User.findOne(id)
+
     if (!user) {
       return {
         error: { code: 405, message: 'Token invalide' }
@@ -244,14 +268,14 @@ export class UserService {
     user.activated = false
     await user.save()
 
-    this.mailerService
+    return this.mailerService
       .send({
         to: email,
         subject: activation.subject,
         html: activation.html(activationToken)
       })
       .then(() => {
-        // deconnect the user
+        // disconnect the user
         return { data: user }
       })
       .catch(error => {
@@ -270,18 +294,22 @@ export class UserService {
         error: { code: 405, message: 'Le token est invalide' }
       }
     }
+
     if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Le token est expiré' }
       }
     }
+
     const { id } = this.authService.decodeToken(token)
     const user = await User.findOne(id)
+
     if (!user) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
+
     user.lastEventDate = new Date()
     await user.save()
     return { data: user }
@@ -296,23 +324,28 @@ export class UserService {
         error: { code: 405, message: 'Le token est invalide' }
       }
     }
+
     if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Le token est expiré' }
       }
     }
+
     const { id } = this.authService.decodeToken(token)
     const user = await User.findOne(id)
+
     if (!user) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
+
     if (isUndefined(user.notifications[key])) {
       return {
         error: { code: 405, message: 'Cette clé de requête est invalide' }
       }
     }
+
     user.notifications[key] = !user.notifications[key]
     await user.save()
     return { data: user }
@@ -324,18 +357,22 @@ export class UserService {
         error: { code: 405, message: 'Le token est invalide' }
       }
     }
+
     if (this.authService.isTokenExpired(token)) {
       return {
         error: { code: 401, message: 'Le token est expiré' }
       }
     }
+
     const { id } = this.authService.decodeToken(token)
     const user = await User.findOne(id)
+
     if (!user) {
       return {
         error: { code: 405, message: 'Token invalide' }
       }
     }
+
     const openAmends = await this.getOpenAmends(user)
 
     for (const amendID of openAmends) {
@@ -351,6 +388,9 @@ export class UserService {
       return { data: {} }
     } catch (error) {
       console.error(error)
+      return {
+        error: { code: 500, message: 'Servor error' }
+      }
     }
   }
 

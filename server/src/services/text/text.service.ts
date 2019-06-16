@@ -1,35 +1,36 @@
-import { Injectable, Inject } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { Server } from 'socket.io'
 import * as JsDiff from 'diff'
 
-import { IResponse } from '../../../../interfaces'
-import { AuthService } from '..'
-import { Text, User, Event, Amend } from '../../entities'
+import { IResponse } from 'src/../../interfaces'
+import { Text, Event, Amend } from 'src/entities'
 
 @Injectable()
 export class TextService {
-  constructor(
-    @Inject('AuthService') private readonly authService: AuthService
-  ) {}
-
   async getText(id: string): Promise<IResponse<Text>> {
     const data = await Text.findOne(id)
-    return data
-      ? { data }
-      : {
-          error: { code: 404, message: "Oups, ce texte n'existe pas ou plus" }
-        }
+
+    if (data) {
+      return { data }
+    } else {
+      return {
+        error: { code: 404, message: "Oups, ce texte n'existe pas ou plus" }
+      }
+    }
   }
 
   async getTexts(): Promise<IResponse<string[]>> {
     const data: Text[] = await Text.find()
-    return data
-      ? {
-          data: data.map(text => text.id.toString())
-        }
-      : {
-          error: { code: 405, message: "Oups, il y'a eu une erreur" }
-        }
+
+    if (data) {
+      return {
+        data: data.map(text => text.id.toString())
+      }
+    } else {
+      return {
+        error: { code: 405, message: "Oups, il y'a eu une erreur" }
+      }
+    }
   }
 
   async followText(data: any, io?: Server): Promise<IResponse<Text>> {

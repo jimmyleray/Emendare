@@ -1,16 +1,12 @@
 import { sign, verify } from 'jsonwebtoken'
-import { IJWT } from '../../../../interfaces'
+import { IJWT } from 'src/../../interfaces'
 import { Injectable } from '@nestjs/common'
-import config from '../../config'
+import config from 'src/config'
 
 @Injectable()
 export class AuthService {
-  public createToken(claims = {}, expire = config.jwt.expire): string {
-    const token = sign(
-      { ...claims, exp: Math.floor(Date.now() / 1000) + expire },
-      config.jwt.secret
-    )
-
+  public createToken(claims = {}, expiresIn = config.jwt.expire): string {
+    const token = sign(claims, config.jwt.secret, { expiresIn })
     return token.toString()
   }
 
