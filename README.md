@@ -4,7 +4,9 @@
   </a>
 </p>
 
-# [Emendare](https://emendare.org/) [![CircleCI](https://circleci.com/gh/jimmyleray/Emendare.svg?style=svg)](https://circleci.com/gh/jimmyleray/Emendare) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![CodeFactor](https://www.codefactor.io/repository/github/jimmyleray/emendare/badge)](https://www.codefactor.io/repository/github/jimmyleray/emendare) [![BCH compliance](https://bettercodehub.com/edge/badge/jimmyleray/Emendare?branch=develop)](https://bettercodehub.com/results/jimmyleray/Emendare) [![Codecov](https://img.shields.io/codecov/c/github/jimmyleray/Emendare.svg?style=flat)](https://codecov.io/gh/JimmyLeray/Emendare) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/jimmyleray/Emendare.svg) [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jimmyleray/Emendare/issues)
+# [Emendare](https://emendare.org/)
+
+[![CircleCI](https://circleci.com/gh/jimmyleray/Emendare.svg?style=svg)](https://circleci.com/gh/jimmyleray/Emendare) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![CodeFactor](https://www.codefactor.io/repository/github/jimmyleray/emendare/badge)](https://www.codefactor.io/repository/github/jimmyleray/emendare) [![BCH compliance](https://bettercodehub.com/edge/badge/jimmyleray/Emendare?branch=develop)](https://bettercodehub.com/results/jimmyleray/Emendare) [![Codecov](https://img.shields.io/codecov/c/github/jimmyleray/Emendare.svg?style=flat)](https://codecov.io/gh/JimmyLeray/Emendare) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/jimmyleray/Emendare.svg) [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jimmyleray/Emendare/issues)
 
 ## What is Emendare ?
 
