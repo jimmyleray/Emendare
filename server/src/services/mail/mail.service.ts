@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import nodemailer from 'nodemailer'
+import { createTransport } from 'nodemailer'
 import chalk from 'chalk'
 
 @Injectable()
@@ -8,7 +8,7 @@ export class MailService {
 
   constructor() {
     if (process.env.NODE_ENV === 'production') {
-      this.transporter = nodemailer.createTransport(
+      this.transporter = createTransport(
         {
           service: 'Gmail',
           auth: {
@@ -16,9 +16,7 @@ export class MailService {
             pass: process.env.MAIL_AUTH_PASS
           }
         },
-        {
-          from: process.env.MAIL_AUTH_USER
-        }
+        { from: process.env.MAIL_AUTH_USER }
       )
       console.log(chalk.cyan('Mailer service is activate'))
     } else {
