@@ -8,12 +8,8 @@ import { AuthService, AmendService } from '../services'
 import { Inject } from '@nestjs/common'
 import { withTryCatch, withAuthentication, withResponse } from '../decorators'
 import { IMessage } from '../../../interfaces'
-import config from '../config'
 
-@WebSocketGateway(config.port, {
-  origins: config.clientUrl,
-  serveClient: false
-})
+@WebSocketGateway()
 export class AmendGateway {
   constructor(
     @Inject('AuthService')

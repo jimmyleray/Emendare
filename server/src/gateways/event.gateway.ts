@@ -7,12 +7,8 @@ import { Socket, Server } from 'socket.io'
 import { EventService } from '../services'
 import { Inject } from '@nestjs/common'
 import { withTryCatch, withResponse } from '../decorators'
-import config from '../config'
 
-@WebSocketGateway(config.port, {
-  origins: config.clientUrl,
-  serveClient: false
-})
+@WebSocketGateway()
 export class EventGateway {
   constructor(
     @Inject('EventService')

@@ -26,10 +26,9 @@ async function bootstrap() {
   // Compression
   app.use(compression())
 
-  // Start and listening on a specific port
-  const port = Number(process.env.PORT) || 3030
-  app.listen(port)
-  console.log(chalk.green(`Emendare server listening on port ${port}`))
+  // Start and listening
+  app.listen(config.port)
+  console.log(chalk.green(`Emendare server listening on port ${config.port}`))
 }
 
 bootstrap()

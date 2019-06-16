@@ -8,12 +8,8 @@ import { UserService, AuthService } from '../services'
 import { Inject } from '@nestjs/common'
 import { withTryCatch, withResponse, withAuthentication } from '../decorators'
 import { IMessage } from '../../../interfaces'
-import config from '../config'
 
-@WebSocketGateway(config.port, {
-  origins: config.clientUrl,
-  serveClient: false
-})
+@WebSocketGateway()
 export class UserGateway {
   constructor(
     @Inject('UserService')
