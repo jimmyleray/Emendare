@@ -16,6 +16,7 @@ async function bootstrap() {
 
   // Security
   app.use(helmet())
+  app.enableCors()
 
   // Body Parsing
   app.use(bodyParser.json()) // for parsing json
