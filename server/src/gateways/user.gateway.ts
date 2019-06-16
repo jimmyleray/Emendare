@@ -6,7 +6,8 @@ import {
 import { Socket, Server } from 'socket.io'
 import { UserService, AuthService } from 'src/services'
 import { Inject } from '@nestjs/common'
-import { withTryCatch } from 'src/decorators'
+import { withTryCatch, withResponse, withAuthentication } from 'src/decorators'
+import { IMessage } from 'src/../../interfaces'
 
 @WebSocketGateway()
 export class UserGateway {
@@ -21,148 +22,94 @@ export class UserGateway {
   io: Server
 
   @SubscribeMessage('user')
+  @withResponse('user')
   @withTryCatch
-  async handlerUser(client: Socket, message: { token: string }) {
-    const { token } = message
-
-    if (token && this.authService.isTokenValid(token)) {
-      if (!this.authService.isTokenExpired(token)) {
-        const { id } = this.authService.decodeToken(token)
-        const response = await this.userService.getUser(id)
-
-        if (response) {
-          client.emit('user', { data: response, error: null })
-        } else {
-          client.emit('user', {
-            error: {
-              code: 401,
-              message: "Cet utilisateur n'est pas connecté"
-            }
-          })
-        }
-      } else {
-        client.emit('user', {
-          error: { code: 405, message: 'Le token est expiré' }
-        })
-      }
-    } else {
-      client.emit('user', {
-        error: { code: 405, message: 'Le token est invalide' }
-      })
-    }
+  @withAuthentication
+  async handlerUser(client: Socket, message: IMessage<{}>) {
+    const { id } = this.authService.decodeToken(message.token)
+    const user = await this.userService.getUser(id)
+    return { data: user }
   }
 
   @SubscribeMessage('activation')
+  @withResponse('activation')
   @withTryCatch
   async handleActication(client: Socket, message: { activationToken: string }) {
-    const response = await this.userService.activateUser(
-      message.activationToken
-    )
-    client.emit('activation', response)
+    return this.userService.activateUser(message.activationToken)
   }
 
   @SubscribeMessage('login')
+  @withResponse('login')
   @withTryCatch
-  async handleLogin(client: Socket, message: { token: string; data: any }) {
-    const { token } = message
+  async handleLogin(client: Socket, message: IMessage<any>) {
     const { email, password } = message.data
-    let response: any
-
-    if (!message && token) {
-      response = await this.userService.login(undefined, undefined, token)
-    } else if (message) {
-      response = await this.userService.login(email, password, token)
-    } else {
-      response = {
-        error: {
-          code: 405,
-          message: 'La requête est invalide'
-        }
-      }
-    }
-
-    client.emit('login', response)
+    return this.userService.login(email, password, message.token)
   }
 
   @SubscribeMessage('subscribe')
+  @withResponse('subscribe')
   @withTryCatch
   async handleSubscribe(
     client: Socket,
-    data: { token: string; message: { email: string; password: string } }
+    message: IMessage<{ email: string; password: string }>
   ) {
-    const response = await this.userService.subscribe(
-      data.message.email,
-      data.message.password
-    )
-
-    client.emit('subscribe', response)
+    return this.userService.subscribe(message.data.email, message.data.password)
   }
 
   @SubscribeMessage('resetPassword')
+  @withResponse('resetPassword')
   @withTryCatch
   async handleResetPassword(
     client: Socket,
-    message: { data: { email: string } }
+    message: IMessage<{ email: string }>
   ) {
-    const response = await this.userService.resetPassword(message.data.email)
-    client.emit('resetPassword', response)
+    return this.userService.resetPassword(message.data.email)
   }
 
   @SubscribeMessage('deleteAccount')
+  @withResponse('deleteAccount')
   @withTryCatch
-  async handleDeleteAccount(client: Socket, message: { token: string }) {
-    const response = await this.userService.delete(message.token, this.io)
-    client.emit('deleteAccount', response)
+  async handleDeleteAccount(client: Socket, message: IMessage<{}>) {
+    return this.userService.delete(message.token, this.io)
   }
 
   @SubscribeMessage('updateEmail')
+  @withResponse('updateEmail')
   @withTryCatch
   async handleUpdateEmail(
     client: Socket,
-    message: { token: string; data: { email: string } }
+    message: IMessage<{ email: string }>
   ) {
-    if (message.data.email) {
-      const response = await this.userService.updateEmail(
-        message.data.email,
-        message.token
-      )
-
-      client.emit('updateEmail', response)
-    }
+    return this.userService.updateEmail(message.data.email, message.token)
   }
 
   @SubscribeMessage('updatePassword')
+  @withResponse('updatePassword')
   @withTryCatch
   async handleUpdatePassword(
     client: Socket,
-    message: { token: string; data: { password: string } }
+    message: IMessage<{ password: string }>
   ) {
-    const response = await this.userService.updatePassword(
-      message.data.password,
-      message.token
-    )
-
-    client.emit('updatePassword', response)
+    return this.userService.updatePassword(message.data.password, message.token)
   }
 
   @SubscribeMessage('updateLastEvent')
+  @withResponse('user')
   @withTryCatch
-  async handleUpdateLastEvent(client: Socket, message: { token: string }) {
-    const response = await this.userService.updateLastEventDate(message.token)
-    client.emit('user', response)
+  async handleUpdateLastEvent(client: Socket, message: IMessage<{}>) {
+    return this.userService.updateLastEventDate(message.token)
   }
 
   @SubscribeMessage('toggleNotificationSetting')
+  @withResponse('user')
   @withTryCatch
   async handleToggleNotificationSetting(
     client: Socket,
-    message: { token: string; data: { key: string } }
+    message: IMessage<{ key: string }>
   ) {
-    const response = await this.userService.toggleNotificationSetting(
+    return this.userService.toggleNotificationSetting(
       message.data.key,
       message.token
     )
-
-    client.emit('user', response)
   }
 }

@@ -53,250 +53,29 @@ export class AmendService {
   }
 
   async downVoteAmend(
-    id: string,
-    token: string,
+    data: { user?: User; id: string },
     io?: Server
   ): Promise<IResponse<Amend>> {
-    if (!this.authService.isTokenValid(token)) {
-      return {
-        error: { code: 405, message: 'Token invalide' }
-      }
-    }
-    if (this.authService.isTokenExpired(token)) {
-      return {
-        error: { code: 401, message: 'Token expiré' }
-      }
-    }
-    const user: User = await User.findOne(this.authService.decodeToken(token).id)
-    if (user && user.activated) {
-      const amend: Amend = await Amend.findOne(id)
-      if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
-        if (!amend.closed) {
-          if (user.downVotes.indexOf(id) === -1) {
-            const id1 = user.upVotes.indexOf(id)
-            if (id1 > -1) {
-              amend.results.upVotesCount--
-              user.upVotes.splice(id1, 1)
-            }
+    const { user, id } = data
 
-            const id2 = user.indVotes.indexOf(id)
-            if (id2 > -1) {
-              amend.results.indVotesCount--
-              user.indVotes.splice(id2, 1)
-            }
-
-            amend.results.downVotesCount++
-            user.downVotes.push(id)
-
-            await user.save()
-            await amend.save()
-
-            if (io) {
-              io.emit('amend/' + id, { data: amend })
-            }
-
-            return { data: amend }
-          } else {
-            return {
-              error: { code: 405, message: 'Vous avez déjà voté contre' }
-            }
-          }
-        } else {
-          return {
-            error: { code: 405, message: 'Ce scrutin est terminé' }
-          }
-        }
-      } else {
-        return {
-          error: {
-            code: 405,
-            message: 'Cet utilisateur ne participe pas au texte'
-          }
-        }
-      }
-    } else {
-      return {
-        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
-      }
-    }
-  }
-
-  async indVoteAmend(
-    id: string,
-    token: string,
-    io?: Server
-  ): Promise<IResponse<Amend>> {
-    if (!this.authService.isTokenValid(token)) {
-      return {
-        error: { code: 405, message: 'Token invalide' }
-      }
-    }
-    if (this.authService.isTokenExpired(token)) {
-      return {
-        error: { code: 401, message: 'Token expiré' }
-      }
-    }
-    const user: User = await User.findOne(this.authService.decodeToken(token).id)
-    if (user && user.activated) {
-      const amend: Amend = await Amend.findOne(id)
-      if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
-        if (!amend.closed) {
-          if (user.indVotes.indexOf(id) === -1) {
-            const id1 = user.upVotes.indexOf(id)
-            if (id1 > -1) {
-              amend.results.upVotesCount--
-              user.upVotes.splice(id1, 1)
-            }
-
-            const id2 = user.downVotes.indexOf(id)
-            if (id2 > -1) {
-              amend.results.downVotesCount--
-              user.downVotes.splice(id2, 1)
-            }
-
-            amend.results.indVotesCount++
-            user.indVotes.push(id)
-
-            await user.save()
-            await amend.save()
-
-            if (io) {
-              io.emit('amend/' + id, { data: amend })
-            }
-
-            return { data: amend }
-          } else {
-            return {
-              error: { code: 405, message: 'Vous avez déjà voté indifférent' }
-            }
-          }
-        } else {
-          return {
-            error: { code: 405, message: 'Ce scrutin est terminé' }
-          }
-        }
-      } else {
-        return {
-          error: {
-            code: 405,
-            message: 'Cet utilisateur ne participe pas au texte'
-          }
-        }
-      }
-    } else {
-      return {
-        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
-      }
-    }
-  }
-
-  async upVoteAmend(
-    id: string,
-    token: string,
-    io?: Server
-  ): Promise<IResponse<Amend>> {
-    if (!this.authService.isTokenValid(token)) {
-      return {
-        error: { code: 405, message: 'Token invalide' }
-      }
-    }
-    if (this.authService.isTokenExpired(token)) {
-      return {
-        error: { code: 401, message: 'Token expiré' }
-      }
-    }
-    const user: User = await User.findOne(this.authService.decodeToken(token).id)
-    if (user && user.activated) {
-      const amend: Amend = await Amend.findOne(id)
-      if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
-        if (!amend.closed) {
-          if (user.upVotes.indexOf(id) === -1) {
-            const id1 = user.downVotes.indexOf(id)
-            if (id1 > -1) {
-              amend.results.downVotesCount--
-              user.downVotes.splice(id1, 1)
-            }
-
-            const id2 = user.indVotes.indexOf(id)
-            if (id2 > -1) {
-              amend.results.indVotesCount--
-              user.indVotes.splice(id2, 1)
-            }
-
-            amend.results.upVotesCount++
-            user.upVotes.push(id)
-
-            await user.save()
-            await amend.save()
-
-            if (io) {
-              io.emit('amend/' + id, { data: amend })
-            }
-
-            return { data: amend }
-          } else {
-            return {
-              error: { code: 405, message: 'Vous avez déjà voté pour' }
-            }
-          }
-        } else {
-          return {
-            error: { code: 405, message: 'Ce scrutin est terminé' }
-          }
-        }
-      } else {
-        return {
-          error: {
-            code: 405,
-            message: 'Cet utilisateur ne participe pas au texte'
-          }
-        }
-      }
-    } else {
-      return {
-        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
-      }
-    }
-  }
-
-  async unVoteAmend(
-    id: string,
-    token: string,
-    io?: Server
-  ): Promise<IResponse<Amend>> {
-    if (!this.authService.isTokenValid(token)) {
-      return {
-        error: { code: 405, message: 'Token invalide' }
-      }
-    }
-    if (this.authService.isTokenExpired(token)) {
-      return {
-        error: { code: 401, message: 'Token expiré' }
-      }
-    }
-    const user: User = await User.findOne(this.authService.decodeToken(token).id)
-    if (user && user.activated) {
-      const amend = await Amend.findOne(id)
-      if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
-        if (!amend.closed) {
+    const amend: Amend = await Amend.findOne(id)
+    if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
+      if (!amend.closed) {
+        if (user.downVotes.indexOf(id) === -1) {
           const id1 = user.upVotes.indexOf(id)
-          const id2 = user.downVotes.indexOf(id)
-          const id3 = user.indVotes.indexOf(id)
-
           if (id1 > -1) {
             amend.results.upVotesCount--
             user.upVotes.splice(id1, 1)
           }
 
+          const id2 = user.indVotes.indexOf(id)
           if (id2 > -1) {
-            amend.results.downVotesCount--
-            user.downVotes.splice(id2, 1)
+            amend.results.indVotesCount--
+            user.indVotes.splice(id2, 1)
           }
 
-          if (id3 > -1) {
-            amend.results.indVotesCount--
-            user.indVotes.splice(id3, 1)
-          }
+          amend.results.downVotesCount++
+          user.downVotes.push(id)
 
           await user.save()
           await amend.save()
@@ -308,20 +87,124 @@ export class AmendService {
           return { data: amend }
         } else {
           return {
-            error: { code: 405, message: 'Ce scrutin est terminé' }
+            error: { code: 405, message: 'Vous avez déjà voté contre' }
           }
         }
       } else {
         return {
-          error: {
-            code: 405,
-            message: 'Cet utilisateur ne participe pas à ce texte'
-          }
+          error: { code: 405, message: 'Ce scrutin est terminé' }
         }
       }
     } else {
       return {
-        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
+        error: {
+          code: 405,
+          message: 'Cet utilisateur ne participe pas au texte'
+        }
+      }
+    }
+  }
+
+  async upVoteAmend(
+    data: { user?: User; id: string },
+    io?: Server
+  ): Promise<IResponse<Amend>> {
+    const { user, id } = data
+
+    const amend: Amend = await Amend.findOne(id)
+    if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
+      if (!amend.closed) {
+        if (user.upVotes.indexOf(id) === -1) {
+          const id1 = user.downVotes.indexOf(id)
+          if (id1 > -1) {
+            amend.results.downVotesCount--
+            user.downVotes.splice(id1, 1)
+          }
+
+          const id2 = user.indVotes.indexOf(id)
+          if (id2 > -1) {
+            amend.results.indVotesCount--
+            user.indVotes.splice(id2, 1)
+          }
+
+          amend.results.upVotesCount++
+          user.upVotes.push(id)
+
+          await user.save()
+          await amend.save()
+
+          if (io) {
+            io.emit('amend/' + id, { data: amend })
+          }
+
+          return { data: amend }
+        } else {
+          return {
+            error: { code: 405, message: 'Vous avez déjà voté pour' }
+          }
+        }
+      } else {
+        return {
+          error: { code: 405, message: 'Ce scrutin est terminé' }
+        }
+      }
+    } else {
+      return {
+        error: {
+          code: 405,
+          message: 'Cet utilisateur ne participe pas au texte'
+        }
+      }
+    }
+  }
+
+  async unVoteAmend(
+    data: { user?: User; id: string },
+    io?: Server
+  ): Promise<IResponse<Amend>> {
+    const { user, id } = data
+
+    const amend = await Amend.findOne(id)
+    if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
+      if (!amend.closed) {
+        const id1 = user.upVotes.indexOf(id)
+        const id2 = user.downVotes.indexOf(id)
+        const id3 = user.indVotes.indexOf(id)
+
+        if (id1 > -1) {
+          amend.results.upVotesCount--
+          user.upVotes.splice(id1, 1)
+        }
+
+        if (id2 > -1) {
+          amend.results.downVotesCount--
+          user.downVotes.splice(id2, 1)
+        }
+
+        if (id3 > -1) {
+          amend.results.indVotesCount--
+          user.indVotes.splice(id3, 1)
+        }
+
+        await user.save()
+        await amend.save()
+
+        if (io) {
+          io.emit('amend/' + id, { data: amend })
+        }
+
+        return { data: amend }
+      } else {
+        return {
+          error: { code: 405, message: 'Ce scrutin est terminé' }
+        }
+      }
+    } else {
+      return {
+        error: {
+          code: 405,
+          message: 'Cet utilisateur ne participe pas à ce texte'
+        }
       }
     }
   }
@@ -334,42 +217,26 @@ export class AmendService {
       version: number
       textID: string
     },
-    token: string,
     io?: Server
   ): Promise<IResponse<Amend>> {
     const { name, description, patch, version, textID } = data
-    if (!this.authService.isTokenValid(token)) {
-      return {
-        error: { code: 405, message: 'Token invalide' }
-      }
-    }
-    if (this.authService.isTokenExpired(token)) {
-      return {
-        error: { code: 401, message: 'Token expiré' }
-      }
-    }
-    const user: User = await User.findOne(this.authService.decodeToken(token).id)
-    if (user && user.activated) {
-      const amend: Amend = new Amend(name, description, patch, textID, version)
-      await amend.save()
 
-      const text: Text = await Text.findOne(textID)
-      text.amends.push(amend.id.toString())
-      await text.save()
+    const amend: Amend = new Amend(name, description, patch, textID, version)
+    await amend.save()
 
-      const event: Event = new Event('amend', amend.id.toString())
-      await event.save()
+    const text: Text = await Text.findOne(textID)
+    text.amends.push(amend.id.toString())
+    await text.save()
 
-      if (io) {
-        io.emit('events/new', { data: event })
-        io.emit('text/' + textID, { data: text })
-      }
-      return { data: amend }
-    } else {
-      return {
-        error: { code: 401, message: "Cet utilisateur n'est pas connecté" }
-      }
+    const event: Event = new Event('amend', amend.id.toString())
+    await event.save()
+
+    if (io) {
+      io.emit('events/new', { data: event })
+      io.emit('text/' + textID, { data: text })
     }
+
+    return { data: amend }
   }
 
   async checkAmendVotes(io: Server) {
@@ -470,7 +337,9 @@ export class AmendService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await User.findOne(this.authService.decodeToken(token).id)
+    const user: User = await User.findOne(
+      this.authService.decodeToken(token).id
+    )
     if (user && user.activated) {
       // Check if the user has already voted
       const userDownVote = user.argumentDownVotes.find(
@@ -546,7 +415,9 @@ export class AmendService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await User.findOne(this.authService.decodeToken(token).id)
+    const user: User = await User.findOne(
+      this.authService.decodeToken(token).id
+    )
     if (user && user.activated) {
       // Check if the user has already voted
       const userUpVote = user.argumentUpVotes.find(
@@ -619,7 +490,9 @@ export class AmendService {
         error: { code: 401, message: 'Token expiré' }
       }
     }
-    const user: User = await User.findOne(this.authService.decodeToken(token).id)
+    const user: User = await User.findOne(
+      this.authService.decodeToken(token).id
+    )
     if (user && user.activated) {
       // Check if the user has already voted
       const indexUserUpVote = findIndex(

@@ -4,13 +4,16 @@ import {
   WebSocketServer
 } from '@nestjs/websockets'
 import { Socket, Server } from 'socket.io'
-import { TextService } from 'src/services'
+import { TextService, AuthService } from 'src/services'
 import { Inject } from '@nestjs/common'
-import { withTryCatch } from 'src/decorators'
+import { withTryCatch, withResponse, withAuthentication } from 'src/decorators'
+import { IMessage } from 'src/../../interfaces'
 
 @WebSocketGateway()
 export class TextGateway {
   constructor(
+    @Inject('AuthService')
+    private readonly authService: AuthService,
     @Inject('TextService')
     private readonly textService: TextService
   ) {}
@@ -20,61 +23,42 @@ export class TextGateway {
 
   @SubscribeMessage('text')
   @withTryCatch
-  async handleText(client: Socket, message: { data: { id: string } }) {
+  async handleText(client: Socket, message: IMessage<{ id: string }>) {
     const response = await this.textService.getText(message.data.id)
     client.emit('text/' + message.data.id, response)
   }
 
   @SubscribeMessage('texts')
+  @withResponse('texts')
   @withTryCatch
   async handleTexts(client: Socket) {
-    const response = await this.textService.getTexts()
-    client.emit('texts', response)
+    return this.textService.getTexts()
   }
 
   @SubscribeMessage('followText')
+  @withResponse('followText')
   @withTryCatch
-  async handleFollowText(
-    client: Socket,
-    message: { token: string; data: { id: string } }
-  ) {
-    const response = await this.textService.followText(
-      message.data.id,
-      message.token,
-      this.io
-    )
-
-    client.emit('followText', response)
+  @withAuthentication
+  async handleFollowText(client: Socket, message: IMessage<{ id: string }>) {
+    return this.textService.followText(message.data, this.io)
   }
 
   @SubscribeMessage('unFollowText')
+  @withResponse('unFollowText')
   @withTryCatch
-  async handleUnFollowText(
-    client: Socket,
-    message: { token: string; data: { id: string } }
-  ) {
-    const response = await this.textService.unFollowText(
-      message.data.id,
-      message.token,
-      this.io
-    )
-
-    client.emit('unFollowText', response)
+  @withAuthentication
+  async handleUnFollowText(client: Socket, message: IMessage<{ id: string }>) {
+    return this.textService.unFollowText(message.data, this.io)
   }
 
   @SubscribeMessage('postText')
+  @withResponse('postText')
   @withTryCatch
+  @withAuthentication
   async handlePostText(
     client: Socket,
-    message: { token: string; data: { name: string; description: string } }
+    message: IMessage<{ name: string; description: string }>
   ) {
-    const response = await this.textService.postText(
-      message.data.name,
-      message.data.description,
-      message.token,
-      this.io
-    )
-
-    client.emit('postText', response)
+    return this.textService.postText(message.data, this.io)
   }
 }

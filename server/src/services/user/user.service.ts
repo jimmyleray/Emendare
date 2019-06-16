@@ -338,12 +338,12 @@ export class UserService {
     }
     const openAmends = await this.getOpenAmends(user)
 
-    for (const aId of openAmends) {
-      await this.amendService.unVoteAmend(aId, token, io)
+    for (const amendID of openAmends) {
+      await this.amendService.unVoteAmend({ user, id: amendID }, io)
     }
 
-    for (const fId of user.followedTexts) {
-      await this.textService.unFollowText(fId, token, io)
+    for (const textID of user.followedTexts) {
+      await this.textService.unFollowText({ user, id: textID }, io)
     }
 
     try {

@@ -4,13 +4,16 @@ import {
   WebSocketServer
 } from '@nestjs/websockets'
 import { Socket, Server } from 'socket.io'
-import { AmendService } from 'src/services'
+import { AuthService, AmendService } from 'src/services'
 import { Inject } from '@nestjs/common'
-import { withTryCatch } from 'src/decorators'
+import { withTryCatch, withAuthentication, withResponse } from 'src/decorators'
+import { IMessage } from 'src/../../interfaces'
 
 @WebSocketGateway()
 export class AmendGateway {
   constructor(
+    @Inject('AuthService')
+    private readonly authService: AuthService,
     @Inject('AmendService')
     private readonly amendService: AmendService
   ) {}
@@ -20,103 +23,57 @@ export class AmendGateway {
 
   @SubscribeMessage('amend')
   @withTryCatch
-  async handleAmend(client: Socket, message: { data: { id: string } }) {
+  async handleAmend(client: Socket, message: IMessage<{ id: string }>) {
     const response = await this.amendService.getAmend(message.data.id)
     client.emit('amend/' + message.data.id, response)
   }
 
   @SubscribeMessage('postAmend')
+  @withResponse('postAmend')
   @withTryCatch
-  async handlePostAmend(
+  @withAuthentication
+  handlePostAmend(
     client: Socket,
-    message: {
-      token: string
-      data: {
-        name: string
-        description: string
-        patch: string
-        version: number
-        textID: string
-      }
-    }
+    message: IMessage<{
+      name: string
+      description: string
+      patch: string
+      version: number
+      textID: string
+    }>
   ) {
-    const response = await this.amendService.postAmend(
-      message.data,
-      message.token,
-      this.io
-    )
-
-    client.emit('postAmend', response)
+    return this.amendService.postAmend(message.data, this.io)
   }
 
   @SubscribeMessage('upVoteAmend')
+  @withResponse('upVoteAmend')
   @withTryCatch
-  async handleUpVoteAmend(
-    client: Socket,
-    message: { token: string; data: { id: string } }
-  ) {
-    const response = await this.amendService.upVoteAmend(
-      message.data.id,
-      message.token,
-      this.io
-    )
-
-    client.emit('upVoteAmend', response)
+  @withAuthentication
+  async handleUpVoteAmend(client: Socket, message: IMessage<{ id: string }>) {
+    return this.amendService.upVoteAmend(message.data, this.io)
   }
 
   @SubscribeMessage('downVoteAmend')
+  @withResponse('downVoteAmend')
   @withTryCatch
-  async handleDownVoteAmend(
-    client: Socket,
-    message: { token: string; data: { id: string } }
-  ) {
-    const response = await this.amendService.downVoteAmend(
-      message.data.id,
-      message.token,
-      this.io
-    )
-
-    client.emit('downVoteAmend', response)
-  }
-
-  @SubscribeMessage('indVoteAmend')
-  @withTryCatch
-  async handleIndVoteAmend(
-    client: Socket,
-    message: { token: string; data: { id: string } }
-  ) {
-    const response = await this.amendService.upVoteAmend(
-      message.data.id,
-      message.token,
-      this.io
-    )
-
-    client.emit('indVoteAmend', response)
+  @withAuthentication
+  async handleDownVoteAmend(client: Socket, message: IMessage<{ id: string }>) {
+    return this.amendService.downVoteAmend(message.data, this.io)
   }
 
   @SubscribeMessage('unVoteAmend')
+  @withResponse('unVoteAmend')
   @withTryCatch
-  async handleUnVoteAmend(
-    client: Socket,
-    message: { token: string; data: { id: string } }
-  ) {
-    const response = await this.amendService.unVoteAmend(
-      message.data.id,
-      message.token,
-      this.io
-    )
-
-    client.emit('unVoteAmend', response)
+  @withAuthentication
+  async handleUnVoteAmend(client: Socket, message: IMessage<{ id: string }>) {
+    return this.amendService.unVoteAmend(message.data, this.io)
   }
 
   @SubscribeMessage('postArgument')
   @withTryCatch
   async handlePostArgument(
     client: Socket,
-    message: {
-      token: string
-      data: { amendID: string; text: string; type: string }
-    }
+    message: IMessage<{ amendID: string; text: string; type: string }>
   ) {
     const response: any = await this.amendService.postArgument(
       message.data.text,
@@ -136,7 +93,7 @@ export class AmendGateway {
   @withTryCatch
   async handleUpVoteArgument(
     client: Socket,
-    message: { token: string; data: { amendID: string; argumentID: string } }
+    message: IMessage<{ amendID: string; argumentID: string }>
   ) {
     const response: any = await this.amendService.upVoteArgument(
       message.data.amendID,
@@ -155,7 +112,7 @@ export class AmendGateway {
   @withTryCatch
   async handleDownVoteArgument(
     client: Socket,
-    message: { token: string; data: { amendID: string; argumentID: string } }
+    message: IMessage<{ amendID: string; argumentID: string }>
   ) {
     const response: any = await this.amendService.downVoteArgument(
       message.data.amendID,
@@ -174,7 +131,7 @@ export class AmendGateway {
   @withTryCatch
   async handleUnVoteArgument(
     client: Socket,
-    message: { token: string; data: { amendID: string; argumentID: string } }
+    message: IMessage<{ amendID: string; argumentID: string }>
   ) {
     const response = await this.amendService.unVoteArgument(
       message.data.amendID,

@@ -11,8 +11,11 @@ export function withTryCatch(
     try {
       // return the result of the original method
       return originalMethod.apply(this, args)
-    } catch (error) {
-      console.error(error)
+    } catch (message) {
+      console.error(message)
+      return {
+        error: { code: 500, message }
+      }
     }
   }
 
