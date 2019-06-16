@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { IResponse } from 'src/../../interfaces'
-import { Event } from 'src/entities'
+import { IResponse } from '../../../../interfaces'
+import { Event } from '../../entities'
 
 @Injectable()
 export class EventService {

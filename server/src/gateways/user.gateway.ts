@@ -4,10 +4,10 @@ import {
   WebSocketServer
 } from '@nestjs/websockets'
 import { Socket, Server } from 'socket.io'
-import { UserService, AuthService } from 'src/services'
+import { UserService, AuthService } from '../services'
 import { Inject } from '@nestjs/common'
-import { withTryCatch, withResponse, withAuthentication } from 'src/decorators'
-import { IMessage } from 'src/../../interfaces'
+import { withTryCatch, withResponse, withAuthentication } from '../decorators'
+import { IMessage } from '../../../interfaces'
 
 @WebSocketGateway()
 export class UserGateway {

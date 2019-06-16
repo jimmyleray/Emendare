@@ -3,9 +3,9 @@ import { findIndex } from 'lodash'
 import { Server } from 'socket.io'
 import { ObjectID } from 'mongodb'
 
-import { IResponse } from 'src/../../interfaces'
-import { AuthService, TextService } from 'src/services'
-import { Text, User, Event, Amend } from 'src/entities'
+import { IResponse } from '../../../../interfaces'
+import { AuthService, TextService } from '../../services'
+import { Text, User, Event, Amend } from '../../entities'
 
 @Injectable()
 export class AmendService {

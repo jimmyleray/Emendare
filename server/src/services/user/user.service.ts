@@ -3,9 +3,9 @@ import { hashSync, compareSync } from 'bcrypt'
 import { isUndefined } from 'lodash'
 import { Server } from 'socket.io'
 
-import { IResponse } from 'src/../../interfaces'
-import { User, Amend } from 'src/entities'
-import { activation, reset } from 'src/emails'
+import { IResponse } from '../../../../interfaces'
+import { User, Amend } from '../../entities'
+import { activation, reset } from '../../emails'
 
 import {
   AuthService,
@@ -13,7 +13,7 @@ import {
   CryptoService,
   TextService,
   AmendService
-} from 'src/services'
+} from '../../services'
 
 @Injectable()
 export class UserService {

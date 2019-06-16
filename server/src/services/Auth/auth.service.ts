@@ -1,7 +1,7 @@
 import { sign, verify } from 'jsonwebtoken'
-import { IJWT } from 'src/../../interfaces'
+import { IJWT } from '../../../../interfaces'
 import { Injectable } from '@nestjs/common'
-import config from 'src/config'
+import config from '../../config'
 
 @Injectable()
 export class AuthService {
