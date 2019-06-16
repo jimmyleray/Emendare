@@ -12,7 +12,7 @@ async function bootstrap() {
   console.log(chalk.green('> Emendare Server launch\n'))
 
   // Create NestJS application
-  const app = await NestFactory.create(AppModule, { cors: true })
+  const app = await NestFactory.create(AppModule)
 
   // Security
   app.use(helmet())
