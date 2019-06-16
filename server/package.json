@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "",
   "author": "",
-  "license": "MIT",
+  "license": "GPL-3.0",
+  "engines": {
+    "node": "10.15.3"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
