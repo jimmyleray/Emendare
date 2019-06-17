@@ -3,8 +3,8 @@
 window.addEventListener('DOMContentLoaded', () => {
   const platforms = ['chrome', 'electron', 'node']
 
-  for (const versionType of platforms) {
-    document.getElementById(`${versionType}-version`).innerText =
-      process.versions[versionType]
-  }
+  platforms.forEach(platform => {
+    document.getElementById(`${platform}-version`).innerText =
+      process.versions[platform]
+  })
 })
