@@ -158,7 +158,6 @@ export class UserService {
   }
 
   async activateUser(activationToken: string): Promise<IResponse<User>> {
-    console.log('inActiveUser', activationToken)
     const user = await User.findOne({ activationToken })
 
     if (!user) {

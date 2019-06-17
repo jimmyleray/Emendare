@@ -34,9 +34,11 @@ export class UserGateway {
   @SubscribeMessage('activation')
   @withResponse('activation')
   @withTryCatch
-  async handleActication(client: Socket, message: { activationToken: string }) {
-    console.log('inHandler', message)
-    return await this.userService.activateUser(message.activationToken)
+  async handleActication(
+    client: Socket,
+    message: IMessage<{ activationToken: string }>
+  ) {
+    return await this.userService.activateUser(message.data.activationToken)
   }
 
   @SubscribeMessage('login')
