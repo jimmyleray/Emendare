@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { databaseProvider } from './providers'
 import { ScheduleModule } from 'nest-schedule'
 import { CheckAmendVoteTask } from './tasks'
+import { AppController } from './controllers'
 
 import {
   EventGateway,
@@ -30,11 +31,13 @@ const SERVICES = [
   MailService
 ]
 
+const CONTROLLERS = [AppController]
 const TASKS = [CheckAmendVoteTask]
 const GATEWAYS = [EventGateway, AmendGateway, UserGateway, TextGateway]
 const PROVIDERS = [...databaseProvider]
 
 @Module({
+  controllers: CONTROLLERS,
   providers: [...PROVIDERS, ...GATEWAYS, ...SERVICES, ...TASKS],
   imports: [ScheduleModule.register()]
 })
