@@ -35,6 +35,7 @@ export class UserGateway {
   @withResponse('activation')
   @withTryCatch
   async handleActication(client: Socket, message: { activationToken: string }) {
+    console.log('inHandler', message)
     return await this.userService.activateUser(message.activationToken)
   }
 
