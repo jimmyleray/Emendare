@@ -21,7 +21,7 @@ export class UserService {
     @Inject('TextService') private readonly textService: TextService,
     @Inject('AmendService') private readonly amendService: AmendService,
     @Inject('AuthService') private readonly authService: AuthService,
-    @Inject('MailService') private readonly mailerService: MailService,
+    @Inject('MailService') private readonly mailService: MailService,
     @Inject('CryptoService') private readonly cryptoService: CryptoService
   ) {}
 
@@ -118,7 +118,7 @@ export class UserService {
     email: string,
     activationToken: string
   ): Promise<IResponse<User>> {
-    return this.mailerService
+    return this.mailService
       .send({
         to: email,
         subject: activation.subject,
@@ -140,7 +140,7 @@ export class UserService {
     email: string,
     newPassword: string
   ): Promise<IResponse<User>> {
-    return this.mailerService
+    return this.mailService
       .send({
         to: email,
         subject: reset.subject,
