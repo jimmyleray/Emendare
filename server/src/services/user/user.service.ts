@@ -128,6 +128,7 @@ export class UserService {
         return { data: user }
       })
       .catch(error => {
+        console.error(error)
         return {
           error: { code: 500, message: "Erreur dans l'envoi du mail" }
         }
@@ -149,6 +150,7 @@ export class UserService {
         return { data: user }
       })
       .catch((error: any) => {
+        console.error(error)
         return {
           error: { code: 500, message: "Erreur lors de l'envoi du mail" }
         }
