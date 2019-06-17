@@ -7,10 +7,11 @@ export function withTryCatch(
   const originalMethod = descriptor.value
 
   // NOTE: Do not use arrow syntax here
-  descriptor.value = function(...args: any[]) {
+  descriptor.value = async function(...args: any[]) {
     try {
       // return the result of the original method
-      return originalMethod.apply(this, args)
+      const response = await originalMethod.apply(this, args)
+      return response
     } catch (message) {
       console.error(message)
       return {

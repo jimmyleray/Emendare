@@ -32,7 +32,7 @@ export class AmendGateway {
   @withResponse('postAmend')
   @withTryCatch
   @withAuthentication
-  handlePostAmend(
+  async handlePostAmend(
     client: Socket,
     message: IMessage<{
       name: string
@@ -42,7 +42,7 @@ export class AmendGateway {
       textID: string
     }>
   ) {
-    return this.amendService.postAmend(message.data, this.io)
+    return await this.amendService.postAmend(message.data, this.io)
   }
 
   @SubscribeMessage('upVoteAmend')
@@ -50,7 +50,7 @@ export class AmendGateway {
   @withTryCatch
   @withAuthentication
   async handleUpVoteAmend(client: Socket, message: IMessage<{ id: string }>) {
-    return this.amendService.upVoteAmend(message.data, this.io)
+    return await this.amendService.upVoteAmend(message.data, this.io)
   }
 
   @SubscribeMessage('downVoteAmend')
@@ -58,7 +58,7 @@ export class AmendGateway {
   @withTryCatch
   @withAuthentication
   async handleDownVoteAmend(client: Socket, message: IMessage<{ id: string }>) {
-    return this.amendService.downVoteAmend(message.data, this.io)
+    return await this.amendService.downVoteAmend(message.data, this.io)
   }
 
   @SubscribeMessage('unVoteAmend')
@@ -66,7 +66,7 @@ export class AmendGateway {
   @withTryCatch
   @withAuthentication
   async handleUnVoteAmend(client: Socket, message: IMessage<{ id: string }>) {
-    return this.amendService.unVoteAmend(message.data, this.io)
+    return await this.amendService.unVoteAmend(message.data, this.io)
   }
 
   @SubscribeMessage('postArgument')
@@ -77,7 +77,7 @@ export class AmendGateway {
     client: Socket,
     message: IMessage<{ amendID: string; text: string; type: string }>
   ) {
-    return this.amendService.postArgument(message.data, this.io)
+    return await this.amendService.postArgument(message.data, this.io)
   }
 
   @SubscribeMessage('upVoteArgument')
@@ -88,7 +88,7 @@ export class AmendGateway {
     client: Socket,
     message: IMessage<{ amendID: string; argumentID: string }>
   ) {
-    return this.amendService.upVoteArgument(message.data, this.io)
+    return await this.amendService.upVoteArgument(message.data, this.io)
   }
 
   @SubscribeMessage('downVoteArgument')
@@ -99,7 +99,7 @@ export class AmendGateway {
     client: Socket,
     message: IMessage<{ amendID: string; argumentID: string }>
   ) {
-    return this.amendService.downVoteArgument(message.data, this.io)
+    return await this.amendService.downVoteArgument(message.data, this.io)
   }
 
   @SubscribeMessage('unVoteArgument')
@@ -110,6 +110,6 @@ export class AmendGateway {
     client: Socket,
     message: IMessage<{ amendID: string; argumentID: string }>
   ) {
-    return this.amendService.unVoteArgument(message.data, this.io)
+    return await this.amendService.unVoteArgument(message.data, this.io)
   }
 }

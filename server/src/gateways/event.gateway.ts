@@ -22,7 +22,7 @@ export class EventGateway {
   @withResponse('event')
   @withTryCatch
   async handleEvent(client: Socket, message: { data: { id: string } }) {
-    return this.eventService.getEvent(message.data.id)
+    return await this.eventService.getEvent(message.data.id)
   }
 
   @SubscribeMessage('events')
@@ -32,7 +32,7 @@ export class EventGateway {
     client: Socket,
     message: { token: string; data: { limit: number; lastEventDate: any } }
   ) {
-    return this.eventService.getEventsByGroup(
+    return await this.eventService.getEventsByGroup(
       message.data.limit,
       message.data.lastEventDate
     )

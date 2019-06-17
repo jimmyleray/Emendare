@@ -113,48 +113,48 @@ export class UserService {
     return this.sendActivationMail(user, email, activationToken)
   }
 
-  sendActivationMail(
+  async sendActivationMail(
     user: User,
     email: string,
     activationToken: string
   ): Promise<IResponse<User>> {
-    return this.mailService
-      .send({
+    try {
+      await this.mailService.send({
         to: email,
         subject: activation.subject,
         html: activation.html(activationToken)
       })
-      .then(() => {
-        return { data: user }
-      })
-      .catch(error => {
-        console.error(error)
-        return {
-          error: { code: 500, message: "Erreur dans l'envoi du mail" }
-        }
-      })
+
+      return { data: user }
+    } catch (error) {
+      console.error(error)
+
+      return {
+        error: { code: 500, message: "Erreur dans l'envoi du mail" }
+      }
+    }
   }
 
-  sendResetMail(
+  async sendResetMail(
     user: User,
     email: string,
     newPassword: string
   ): Promise<IResponse<User>> {
-    return this.mailService
-      .send({
+    try {
+      await this.mailService.send({
         to: email,
         subject: reset.subject,
         html: reset.html(newPassword)
       })
-      .then(() => {
-        return { data: user }
-      })
-      .catch((error: any) => {
-        console.error(error)
-        return {
-          error: { code: 500, message: "Erreur lors de l'envoi du mail" }
-        }
-      })
+
+      return { data: user }
+    } catch (error) {
+      console.error(error)
+
+      return {
+        error: { code: 500, message: "Erreur dans l'envoi du mail" }
+      }
+    }
   }
 
   async activateUser(activationToken: string): Promise<IResponse<User>> {

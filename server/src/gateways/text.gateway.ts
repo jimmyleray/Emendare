@@ -32,7 +32,7 @@ export class TextGateway {
   @withResponse('texts')
   @withTryCatch
   async handleTexts(client: Socket) {
-    return this.textService.getTexts()
+    return await this.textService.getTexts()
   }
 
   @SubscribeMessage('followText')
@@ -40,7 +40,7 @@ export class TextGateway {
   @withTryCatch
   @withAuthentication
   async handleFollowText(client: Socket, message: IMessage<{ id: string }>) {
-    return this.textService.followText(message.data, this.io)
+    return await this.textService.followText(message.data, this.io)
   }
 
   @SubscribeMessage('unFollowText')
@@ -48,7 +48,7 @@ export class TextGateway {
   @withTryCatch
   @withAuthentication
   async handleUnFollowText(client: Socket, message: IMessage<{ id: string }>) {
-    return this.textService.unFollowText(message.data, this.io)
+    return await this.textService.unFollowText(message.data, this.io)
   }
 
   @SubscribeMessage('postText')
@@ -59,6 +59,6 @@ export class TextGateway {
     client: Socket,
     message: IMessage<{ name: string; description: string }>
   ) {
-    return this.textService.postText(message.data, this.io)
+    return await this.textService.postText(message.data, this.io)
   }
 }

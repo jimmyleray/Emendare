@@ -52,7 +52,8 @@ export function withAuthentication(
     }
 
     // return the result of the original method
-    return originalMethod.apply(this, args)
+    const response = await originalMethod.apply(this, args)
+    return response
   }
 
   return descriptor
