@@ -2,7 +2,6 @@ import { createConnection, ConnectionOptions } from 'typeorm'
 
 const databaseConfig: ConnectionOptions = {
   type: 'mongodb',
-  synchronize: true,
   useNewUrlParser: true,
   host: process.env.MONGODB_ADDON_HOST || 'localhost',
   port: Number(process.env.MONGODB_ADDON_PORT) || 27017,
