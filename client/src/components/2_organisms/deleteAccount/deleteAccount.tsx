@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useCallback, useContext } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import {
   ConfirmAlert,
   Button,
   Icon,
   Input,
-  UserContext,
+  useUser,
   ApiContext
 } from '../../../components'
 import { useAlert } from '../../../hooks'
@@ -38,7 +38,7 @@ interface IDeleteAccountProps {
 export const DeleteAccount = ({ user }: IDeleteAccountProps) => {
   const [email, setEmail] = useState('')
   const { showAlert, openAlert, closeAlert } = useAlert()
-  const { logout } = useContext(UserContext)
+  const { logout } = useUser()
   const { Socket } = React.useContext(ApiContext)
 
   useEffect(() => {

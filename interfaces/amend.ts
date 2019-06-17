@@ -1,41 +1,41 @@
 export interface IArgument {
-  _id: string;
-  created: Date | string;
-  text: string;
-  type: string;
-  upVotesCount: number;
+  id: string
+  created: Date | string
+  text: string
+  type: string
+  upVotesCount: number
 }
 
 export interface IAmend {
-  __v: number;
-  _id: string;
-  created: Date | string;
-  finised: Date | string;
-  name: string;
-  description: string;
-  patch: string | null;
-  version: number;
-  text: string;
-  arguments: IArgument[];
+  __v: number
+  id: string
+  created: Date | string
+  finised: Date | string
+  name: string
+  description: string
+  patch: string | null
+  version: number
+  text: string
+  arguments: IArgument[]
   results: {
-    upVotesCount: number;
-    downVotesCount: number;
-    indVotesCount: number;
-    totalPotentialVotesCount: number | undefined;
-  };
+    upVotesCount: number
+    downVotesCount: number
+    indVotesCount: number
+    totalPotentialVotesCount: number | undefined
+  }
   rules: {
-    delayMin: number;
-    delayMax: number;
-  };
-  closed: boolean;
-  accepted: boolean;
-  conflicted: boolean;
-  save?: any;
+    delayMin: number
+    delayMax: number
+  }
+  closed: boolean
+  accepted: boolean
+  conflicted: boolean
+  save?: any
 }
 
 export const amendMock: IAmend = {
   __v: 0,
-  _id: '5c64389cae3ae3695c711e44',
+  id: '5c64389cae3ae3695c711e44',
   created: '2019-02-13T15:32:44.344Z',
   finised: '2019-02-13T15:42:44.344Z',
   name: 'test',
@@ -46,24 +46,24 @@ export const amendMock: IAmend = {
   text: '5c64389cae3ae3695c711e44',
   arguments: [
     {
-      _id: '981nijbi890803nn9',
+      id: '981nijbi890803nn9',
       created: '2019-02-13T15:42:44.344Z',
       text: 'Test',
       type: 'UP',
-      upVotesCount: 5,
-    },
+      upVotesCount: 5
+    }
   ],
   results: {
     upVotesCount: 0,
     downVotesCount: 0,
     indVotesCount: 0,
-    totalPotentialVotesCount: 0,
+    totalPotentialVotesCount: 0
   },
   rules: {
     delayMin: 1000,
-    delayMax: 10000,
+    delayMax: 10000
   },
   closed: true,
   accepted: false,
-  conflicted: false,
-};
+  conflicted: false
+}

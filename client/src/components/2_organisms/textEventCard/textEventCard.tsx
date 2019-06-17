@@ -119,7 +119,7 @@ export const TextEventCard = ({ target, user, measure }: ITextEventCard) => {
             </div>
             <div style={{ marginLeft: '1.5rem' }}>
               {user ? (
-                user.followedTexts.find(textID => textID === target._id) ? (
+                user.followedTexts.find(textID => textID === target.id) ? (
                   <UnFollowText
                     text={target}
                     withIcon={true}

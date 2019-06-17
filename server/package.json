@@ -1,82 +1,83 @@
 {
-  "name": "emendare-server",
-  "version": "0.0.0",
-  "main": "index.js",
+  "name": "server-nest",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "license": "GPL-3.0",
   "engines": {
     "node": "10.15.3"
   },
-  "license": "GPL-3.0",
   "scripts": {
-    "build": "tsc",
-    "build:watch": "tsc -w",
-    "start": "node build/server/src/index.js",
-    "dev": "nodemon build/server/src/index.js",
+    "build": "tsc -p tsconfig.build.json",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "start": "npm run start:prod",
+    "start:ex": "ts-node -r tsconfig-paths/register src/main.ts",
+    "dev": "npm run start:dev",
+    "start:dev": "nodemon",
+    "start:debug": "nodemon --config nodemon-debug.json",
+    "prestart:prod": "rimraf dist && npm run build",
+    "start:prod": "node dist/server/src/main.js",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "format": "prettier --write src/**/*.{js,ts,json,md}",
-    "format:ci": "prettier --list-different --write src/**/*.{js,ts,json,md}",
-    "doc": "typedoc --out ./docs --name Emendare --readme ../README.md --target ES6 --downlevelIteration ./src"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{ts}": [
-      "npm run format",
-      "npm run lint",
-      "git add"
-    ]
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}",
-      "!src/**/index.ts"
-    ]
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/common": "^6.0.0",
+    "@nestjs/core": "^6.0.0",
+    "@nestjs/platform-express": "^6.0.0",
+    "@nestjs/platform-socket.io": "^6.1.1",
+    "@nestjs/typeorm": "^6.0.0",
+    "@nestjs/websockets": "^6.1.1",
+    "@types/compression": "0.0.36",
+    "@types/helmet": "0.0.43",
     "bcrypt": "^3.0.6",
-    "chalk": "^2.4.2",
-    "cors": "^2.8.5",
-    "crypto": "^1.0.1",
-    "diff": "^4.0.1",
-    "express": "^4.17.1",
-    "is-match": "^1.0.0",
+    "compression": "^1.7.4",
+    "helmet": "^3.16.0",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
-    "mjml": "^4.3.1",
-    "mockingoose": "^2.13.0",
-    "mongoose": "^5.5.7",
-    "njwt": "^1.0.0",
-    "node-fetch": "^2.5.0",
-    "nodemailer": "^6.1.1",
-    "socket.io": "^2.2.0"
+    "mjml": "^4.4.0-beta.1",
+    "mongodb": "^3.2.3",
+    "nest-schedule": "^0.6.0",
+    "nodemailer": "^6.1.0",
+    "reflect-metadata": "^0.1.12",
+    "rimraf": "^2.6.2",
+    "rxjs": "^6.3.3",
+    "typeorm": "^0.2.15",
+    "typescript": "^3.0.1"
   },
   "devDependencies": {
-    "@types/bcrypt": "3.0.0",
-    "@types/chalk": "^2.2.0",
-    "@types/cors": "^2.8.5",
-    "@types/diff": "4.0.2",
-    "@types/express": "4.17.0",
-    "@types/jest": "24.0.13",
-    "@types/lodash": "4.14.134",
-    "@types/mjml": "^4.0.2",
-    "@types/mockingoose": "^2.11.0",
-    "@types/mongoose": "5.5.4",
-    "@types/node": "12.0.7",
-    "@types/node-fetch": "2.3.5",
-    "@types/nodemailer": "6.2.0",
-    "@types/socket.io": "2.1.2",
-    "husky": "2.4.0",
-    "jest": "24.1.0",
-    "lint-staged": "8.1.7",
-    "nodemon": "1.19.1",
-    "prettier": "1.18.2",
-    "ts-jest": "24.0.2",
+    "@nestjs/testing": "^6.0.0",
+    "@types/bcrypt": "^3.0.0",
+    "@types/express": "^4.16.0",
+    "@types/jest": "^24.0.15",
+    "@types/node": "^10.12.18",
+    "@types/socket.io": "^2.1.2",
+    "@types/supertest": "^2.0.7",
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.9",
+    "prettier": "^1.15.3",
+    "supertest": "^3.4.1",
+    "ts-jest": "^23.10.5",
+    "ts-node": "^7.0.1",
+    "tsconfig-paths": "^3.7.0",
     "tslint": "5.12.1",
-    "typedoc": "0.14.2",
-    "typescript": "3.3.3"
+    "typescript": "^3.2.4"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
   }
 }

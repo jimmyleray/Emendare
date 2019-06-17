@@ -2,14 +2,11 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import {
   Amend,
-  Box,
   Button,
-  Buttons,
   Column,
   Columns,
   Icon,
-  UserContext,
-  Hero,
+  useUser,
   ApiContext
 } from '../../../components'
 import { path } from '../../../config'
@@ -21,7 +18,7 @@ interface IEditProps {
 }
 
 export const Edit = ({ data }: IEditProps) => {
-  const { isConnected } = React.useContext(UserContext)
+  const { isConnected } = useUser()
   const { Socket } = React.useContext(ApiContext)
 
   const [amendName, setAmendName] = React.useState('')
@@ -66,7 +63,7 @@ export const Edit = ({ data }: IEditProps) => {
       name: amendName,
       description: amendDescription,
       version: text.patches.length,
-      textID: text._id,
+      textID: text.id,
       patch
     }).then((amend: any) => {
       setRedirectToAmend(true)

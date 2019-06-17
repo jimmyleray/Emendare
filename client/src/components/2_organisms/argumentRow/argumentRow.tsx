@@ -1,6 +1,6 @@
 import React from 'react'
 // Components
-import { UserContext, Argument, ApiContext } from '../../../components'
+import { useUser, Argument, ApiContext } from '../../../components'
 // Interfaces
 import { IArgument } from '../../../../../interfaces'
 // Helpers
@@ -22,12 +22,12 @@ export const ArgumentRow = ({
   measure,
   index
 }: IEventRowProps) => {
-  const { user } = React.useContext(UserContext)
+  const { user } = useUser()
   const { Socket } = React.useContext(ApiContext)
 
   const upVoteArgument = (argumentID: string, amendID: string) => {
     if (user) {
-      hasUserUpVote(user.argumentUpVotes, amendID, data._id)
+      hasUserUpVote(user.argumentUpVotes, amendID, data.id)
         ? Socket.emit('unVoteArgument', { amendID, argumentID })
         : Socket.emit('upVoteArgument', { amendID, argumentID })
     }
@@ -35,7 +35,7 @@ export const ArgumentRow = ({
 
   const downVoteArgument = (argumentID: string, amendID: string) => {
     if (user) {
-      hasUserDownVote(user.argumentDownVotes, amendID, data._id)
+      hasUserDownVote(user.argumentDownVotes, amendID, data.id)
         ? Socket.emit('unVoteArgument', { amendID, argumentID })
         : Socket.emit('downVoteArgument', { amendID, argumentID })
     }

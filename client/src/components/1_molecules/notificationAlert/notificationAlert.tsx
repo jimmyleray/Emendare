@@ -3,12 +3,12 @@ import {
   Icon,
   Notification,
   NotificationsContext,
-  UserContext
+  useUser
 } from '../../../components'
 
 export const NotificationAlert = () => {
   const notificationsContext = React.useContext(NotificationsContext)
-  const userContext = React.useContext(UserContext)
+  const userContext = useUser()
 
   return (
     <React.Fragment>

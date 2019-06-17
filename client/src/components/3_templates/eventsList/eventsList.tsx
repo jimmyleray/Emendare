@@ -4,7 +4,7 @@ import { CellMeasurerCache, CellMeasurer } from 'react-virtualized'
 import {
   Card,
   Button,
-  UserContext,
+  useUser,
   EventsContext,
   EventRow,
   InfiniteList,
@@ -62,7 +62,7 @@ export const EventsList = ({
   hasNextPage
 }: IEventsListProps) => {
   const { translate } = React.useContext(I18nContext)
-  const { user } = React.useContext(UserContext)
+  const { user } = useUser()
   const { dispatch } = React.useContext(EventsContext)
   const newEventsCount = user && newEvents ? newEvents.length : 0
   const { Socket } = React.useContext(ApiContext)

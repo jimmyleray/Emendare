@@ -10,7 +10,7 @@ interface IResultBarProps {
   results: { up: number; down: number; ind: number }
 }
 
-export const ResultBar = ({ results }: IResultBarProps) => {
+export const ResultBar = React.memo(({ results }: IResultBarProps) => {
   const pourcentageVote = getPourcentageVote(results)
   return (
     <div
@@ -33,7 +33,7 @@ export const ResultBar = ({ results }: IResultBarProps) => {
       </span>
       <Progress
         style={{
-          WebkitAppearance: 'progress-bar-value',
+          WebkitAppearance: 'meter',
           backgroundImage: createLinearGradientFromResult(pourcentageVote),
           height: '0.4rem',
           margin: '0 0.5rem'
@@ -54,4 +54,4 @@ export const ResultBar = ({ results }: IResultBarProps) => {
       </span>
     </div>
   )
-}
+})

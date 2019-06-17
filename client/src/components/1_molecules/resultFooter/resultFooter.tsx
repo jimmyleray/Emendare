@@ -30,7 +30,7 @@ export const ResultFooterCard = ({ target, user }: IResultFooterProps) => (
     <div>
       <Vote
         amend={target}
-        match={{ params: { id: target._id } }}
+        match={{ params: { id: target.id } }}
         user={user}
         withIcon={true}
         style={{ justifyContent: 'flex-end' }}

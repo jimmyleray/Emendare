@@ -1,4 +1,4 @@
 export interface IJWT {
-  exp: number;
-  id: string;
+  exp: number
+  id: string
 }

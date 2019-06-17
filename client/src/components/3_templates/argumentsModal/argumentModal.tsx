@@ -31,7 +31,7 @@ export const ArgumentModal = ({ amend, user }: IArgumentModalProps) => {
           <AmendEventCard user={user} target={amend} />
           <Divider content="Liste des arguments" />
           <ArgumentsList
-            amendID={amend._id}
+            amendID={amend.id}
             args={React.useMemo(
               () => getListArgumentsWithPopularSorting(amend.arguments),
               [amend.arguments]
@@ -40,7 +40,7 @@ export const ArgumentModal = ({ amend, user }: IArgumentModalProps) => {
           />
         </div>
         <div className="modal-card-foot">
-          <EditArgument amendID={amend._id} />
+          <EditArgument amendID={amend.id} />
         </div>
       </div>
     </ModalContainer.Modal>
