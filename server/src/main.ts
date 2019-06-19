@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import * as compression from 'compression'
 import * as bodyParser from 'body-parser'
+import { registerInstance } from './tasks'
 import * as helmet from 'helmet'
 import config from './config'
 
@@ -29,6 +30,9 @@ async function bootstrap() {
   // Start and listening
   app.listen(config.port)
   console.log(chalk.green(`Emendare server listening on port ${config.port}`))
+
+  // Call for register
+  registerInstance()
 }
 
 bootstrap()

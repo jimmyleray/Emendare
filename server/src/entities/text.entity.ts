@@ -5,7 +5,7 @@ export class Text extends BaseEntity {
   @ObjectIdColumn()
   id: ObjectID
 
-  @Column({ default: Date.now })
+  @Column({ default: new Date(Date.now()) })
   created: Date
 
   @Column()
@@ -28,6 +28,7 @@ export class Text extends BaseEntity {
 
   constructor(name: string, description: string) {
     super()
+
     this.name = name
     this.description = description
     this.created = new Date(Date.now())
