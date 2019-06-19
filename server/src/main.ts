@@ -31,7 +31,7 @@ async function bootstrap() {
   app.listen(config.port)
   console.log(chalk.green(`Emendare server listening on port ${config.port}`))
 
-  // Call for register
+  // Call for register this instance
   registerInstance()
 }
 
