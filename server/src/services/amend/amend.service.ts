@@ -63,7 +63,9 @@ export class AmendService {
     const { user, id } = data
 
     const amend: Amend = await Amend.findOne(id)
-    if (user.followedTexts.indexOf(amend.text.toString()) > -1) {
+    console.log(amend, user)
+
+    if (amend && user.followedTexts.indexOf(amend.text.toString()) > -1) {
       if (!amend.closed) {
         if (user.downVotes.indexOf(id) === -1) {
           const id1 = user.upVotes.indexOf(id)
