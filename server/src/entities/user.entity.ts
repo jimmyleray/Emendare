@@ -14,10 +14,10 @@ export class User extends BaseEntity {
   @Column({ default: process.env.NODE_ENV !== 'production' })
   activated: boolean
 
-  @Column({ default: Date.now })
+  @Column({ default: new Date(Date.now()) })
   created: Date
 
-  @Column({ default: Date.now })
+  @Column({ default: new Date(Date.now()) })
   lastEventDate: Date
 
   @Column({ default: null })

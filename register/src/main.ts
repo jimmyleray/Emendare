@@ -11,8 +11,8 @@ NestFactory.create(AppModule).then(app => {
   app.enableCors()
 
   // Body Parsing
-  // app.use(bodyParser.json()) // for parsing json
-  // app.use(bodyParser.urlencoded({ extended: true })) // for parsing x-www-form-urlencoded
+  app.use(bodyParser.json()) // for parsing json
+  app.use(bodyParser.urlencoded({ extended: true })) // for parsing x-www-form-urlencoded
 
   // Compression
   app.use(compression())

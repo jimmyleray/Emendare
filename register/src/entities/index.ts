@@ -1,1 +1,1 @@
-export * from './register.entity'
+export * from './instance.entity'

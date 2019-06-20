@@ -1,12 +1,12 @@
 import { Entity, Column, ObjectID, ObjectIdColumn, BaseEntity } from 'typeorm'
 
 @Entity()
-export class Register extends BaseEntity {
+export class Instance extends BaseEntity {
   @ObjectIdColumn()
   id: ObjectID
 
   @Column()
-  url: string
+  instanceUrl: string
 
   @Column()
   name: string
@@ -24,5 +24,8 @@ export class Register extends BaseEntity {
   texts: number
 
   @Column()
+  private: boolean
+
+  @Column({ default: new Date(Date.now()) })
   created: Date | string
 }
