@@ -1,79 +1,74 @@
 import { Entity, Column, ObjectID, ObjectIdColumn, BaseEntity } from 'typeorm'
+import { Field, ObjectType, ID } from 'type-graphql'
+import { Results, Argument, Rules } from '../types'
 
 const oneSecond = 1000
 const oneMinute = oneSecond * 60
 const oneHour = oneMinute * 60
 const oneDay = oneHour * 24
 
+@ObjectType()
 @Entity()
 export class Amend extends BaseEntity {
+  @Field(type => ID)
   @ObjectIdColumn()
   id: ObjectID
 
-  @Column({ default: new Date(Date.now()) })
+  @Field()
+  @Column({ default: Date.now })
   created: Date
 
+  @Field()
   @Column()
   finished: Date
 
+  @Field()
   @Column()
   name: string
 
+  @Field()
   @Column({ default: '' })
   description: string
 
+  @Field()
   @Column()
   patch: string
 
+  @Field()
   @Column({ default: 0 })
   version: number
 
+  @Field()
   @Column()
   text: string
 
+  @Field()
   @Column()
   totalPotentialVotesCount: number
 
+  @Field()
   @Column({ default: false })
   closed: boolean
 
+  @Field()
   @Column({ default: false })
   accepted: boolean
 
+  @Field()
   @Column({ default: false })
   conflicted: boolean
 
-  @Column({
-    default: {
-      totalPotentialVotesCount: 0,
-      upVotesCount: 0,
-      downVotesCount: 0,
-      indVotesCount: 0
-    }
-  })
-  results: {
-    totalPotentialVotesCount: number
-    upVotesCount: number
-    downVotesCount: number
-    indVotesCount: number
-  }
-  @Column({ default: [] })
-  arguments: Array<{
-    id: ObjectID
-    created: Date
-    text: string
-    type: string
-    upVotesCount: number
-  }>
+  @Field(type => Results)
+  @Column()
+  results: Results
 
-  @Column({
-    default: {
-      delayMax: process.env.NODE_ENV === 'production' ? oneDay : oneMinute
-    }
-  })
-  rules: {
-    delayMax: number
-  }
+  @Field(type => [Argument])
+  @Column({ default: [] })
+  arguments: Argument[]
+
+  @Field(type => Rules)
+  @Column()
+  rules: Rules
 
   constructor(
     name: string,
@@ -92,15 +87,10 @@ export class Amend extends BaseEntity {
     this.closed = false
     this.accepted = false
     this.conflicted = false
-    this.results = {
-      totalPotentialVotesCount: 0,
-      upVotesCount: 0,
-      downVotesCount: 0,
-      indVotesCount: 0
-    }
+    this.results = new Results()
     this.arguments = []
-    this.rules = {
-      delayMax: process.env.NODE_ENV === 'production' ? oneDay : oneMinute
-    }
+    this.rules = new Rules(
+      process.env.NODE_ENV === 'production' ? oneDay : oneMinute
+    )
   }
 }
