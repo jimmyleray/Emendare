@@ -52,7 +52,7 @@ To install Docker-Compose, please refer to the [Docker Compose official document
 
 The installation of the project requires 2 steps: a configuration of the server and another of the client.
 
-#### Server configuration
+#### Database
 
 The first step will be to create the MongoDB database. To do so, just create a docker container with a Mongo image, following the steps below.
 
@@ -76,7 +76,12 @@ docker-compose up
 
 The database is accessible at the following address: **localhost: 27017 / emendare**.
 
-Once the database is set up, the dependencies can be installed :
+#### Register configuration
+
+This registry behaves like a service registry, where any instance of Emendare can register. It will permit to switch easly between different instances.
+
+
+First install all the dependencies :
 
 ```bash
 npm install
@@ -92,8 +97,25 @@ npm start
 Or for development (run these commands in two separates terminals) :
 
 ```bash
-npm run build:watch
+npm run dev
 ```
+
+#### Server configuration
+
+First install all the dependencies :
+
+```bash
+npm install
+```
+
+Then start the server either for production :
+
+```bash
+npm run build
+npm start
+```
+
+Or for development (run these commands in two separates terminals) :
 
 ```bash
 npm run dev
