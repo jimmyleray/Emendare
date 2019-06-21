@@ -61,9 +61,7 @@ export class AmendService {
     io?: Server
   ): Promise<IResponse<Amend>> {
     const { user, id } = data
-
     const amend: Amend = await Amend.findOne(id)
-    console.log(amend, user)
 
     if (amend && user.followedTexts.indexOf(amend.text.toString()) > -1) {
       if (!amend.closed) {
