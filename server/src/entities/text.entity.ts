@@ -1,28 +1,38 @@
 import { Entity, Column, ObjectID, ObjectIdColumn, BaseEntity } from 'typeorm'
+import { Field, ObjectType, ID } from 'type-graphql'
 
+@ObjectType()
 @Entity()
 export class Text extends BaseEntity {
+  @Field(type => ID)
   @ObjectIdColumn()
   id: ObjectID
 
-  @Column({ default: new Date(Date.now()) })
+  @Field()
+  @Column({ default: Date.now })
   created: Date
 
+  @Field()
   @Column()
   name: string
 
+  @Field()
   @Column()
   description: string
 
+  @Field()
   @Column({ default: 0 })
   followersCount: number
 
+  @Field()
   @Column({ default: '' })
   actual: string
 
+  @Field(type => [String])
   @Column({ default: [] })
   patches: string[]
 
+  @Field(type => [String])
   @Column({ default: [] })
   amends: string[]
 

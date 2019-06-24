@@ -1,4 +1,4 @@
-import { User } from '../entities'
+import { User } from '../../entities'
 
 export function withAuthentication(
   target: object,
@@ -10,7 +10,8 @@ export function withAuthentication(
 
   // NOTE: Do not use arrow syntax here
   descriptor.value = async function(...args: any[]) {
-    const { token } = args[1]
+    const argIndex = args[0] ? 0 : 1
+    const { token } = args[argIndex]
 
     if (!this.authService) {
       console.error('Need to inject AuthService to use this decorator')
@@ -47,8 +48,10 @@ export function withAuthentication(
     }
 
     // add user reference in message data
-    if (args[1] && args[1].data) {
-      args[1].data.user = user
+    if (args[argIndex]) {
+      args[argIndex].data
+        ? (args[argIndex].data.user = user)
+        : (args[argIndex].user = user)
     }
 
     // return the result of the original method

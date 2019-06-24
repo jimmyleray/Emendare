@@ -6,6 +6,7 @@ import { ObjectID } from 'mongodb'
 import { IResponse } from '../../../../interfaces'
 import { AuthService, TextService } from '../../services'
 import { Text, User, Event, Amend } from '../../entities'
+import { Argument } from 'src/common/types'
 
 @Injectable()
 export class AmendService {
@@ -288,13 +289,7 @@ export class AmendService {
 
     if (amend) {
       const argumentDate = new Date(Date.now())
-      const argument = {
-        type,
-        text,
-        created: argumentDate,
-        upVotesCount: 0,
-        id: new ObjectID(argumentDate.getTime())
-      }
+      const argument = new Argument(text, type)
       amend.arguments.push(argument)
       await amend.save()
 

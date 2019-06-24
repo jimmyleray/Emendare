@@ -6,7 +6,7 @@ import {
 import { Socket, Server } from 'socket.io'
 import { EventService } from '../services'
 import { Inject } from '@nestjs/common'
-import { withTryCatch, withResponse } from '../decorators'
+import { withTryCatch, withResponse } from '../common'
 
 @WebSocketGateway()
 export class EventGateway {
