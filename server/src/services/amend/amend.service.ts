@@ -6,7 +6,7 @@ import { ObjectID } from 'mongodb'
 import { IResponse } from '../../../../interfaces'
 import { AuthService, TextService } from '../../services'
 import { Text, User, Event, Amend } from '../../entities'
-import { Argument } from 'src/types'
+import { Argument } from 'src/common/types'
 
 @Injectable()
 export class AmendService {

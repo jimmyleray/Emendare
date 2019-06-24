@@ -1,4 +1,4 @@
-import { User } from '../entities'
+import { User } from '../../entities'
 
 export function withAuthentication(
   target: object,

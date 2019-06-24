@@ -1,6 +1,6 @@
 import { Entity, Column, ObjectID, ObjectIdColumn, BaseEntity } from 'typeorm'
 import { Field, ObjectType, ID } from 'type-graphql'
-import { Results, Argument, Rules } from '../types'
+import { Results, Argument, Rules } from '../common'
 
 const oneSecond = 1000
 const oneMinute = oneSecond * 60

@@ -6,7 +6,7 @@ import {
 import { Socket, Server } from 'socket.io'
 import { AuthService, AmendService } from '../services'
 import { Inject } from '@nestjs/common'
-import { withTryCatch, withAuthentication, withResponse } from '../decorators'
+import { withTryCatch, withAuthentication, withResponse } from '../common'
 import { IMessage } from '../../../interfaces'
 
 @WebSocketGateway()
