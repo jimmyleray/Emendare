@@ -1,3 +1,2 @@
 export * from './token.input'
-export * from './postAmend.input'
-export * from './postText.input'
+export * from './id.input'
