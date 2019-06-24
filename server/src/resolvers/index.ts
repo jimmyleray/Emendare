@@ -1,2 +1,3 @@
-export * from './amend.resolver'
-export * from './text.resolver'
+export * from './amend'
+export * from './text'
+export * from './event'
