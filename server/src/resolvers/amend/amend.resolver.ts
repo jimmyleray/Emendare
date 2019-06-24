@@ -1,7 +1,7 @@
 import { Amend } from '../../entities'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { AmendService } from '../../services'
-import { IdArg, Response, IdInput } from '../../common'
+import { AmendService, AuthService } from '../../services'
+import { IdArg, Response, IdInput, withAuthentication } from '../../common'
 import { IResponse } from '../../../../interfaces'
 import { ObjectType } from 'type-graphql'
 import {
@@ -15,7 +15,10 @@ class AmendResponse extends Response(Amend) {}
 
 @Resolver()
 export class AmendResolver {
-  constructor(private readonly amendService: AmendService) {}
+  constructor(
+    private readonly amendService: AmendService,
+    private readonly authService: AuthService
+  ) {}
 
   @Query(returns => AmendResponse)
   async amend(@Args() { id }: IdArg): Promise<IResponse<Amend>> {
@@ -23,6 +26,7 @@ export class AmendResolver {
   }
 
   @Mutation(returns => AmendResponse)
+  @withAuthentication
   async postAmend(
     @Args('data') data: PostAmendInputs
   ): Promise<IResponse<Amend>> {
@@ -30,21 +34,25 @@ export class AmendResolver {
   }
 
   @Mutation(returns => AmendResponse)
+  @withAuthentication
   async upVoteAmend(@Args('data') data: IdInput): Promise<IResponse<Amend>> {
     return await this.amendService.upVoteAmend(data)
   }
 
   @Mutation(returns => AmendResponse)
+  @withAuthentication
   async upDownAmend(@Args('data') data: IdInput): Promise<IResponse<Amend>> {
     return await this.amendService.downVoteAmend(data)
   }
 
   @Mutation(returns => AmendResponse)
+  @withAuthentication
   async unVoteAmend(@Args('data') data: IdInput): Promise<IResponse<Amend>> {
     return await this.amendService.unVoteAmend(data)
   }
 
   @Mutation(returns => AmendResponse)
+  @withAuthentication
   async postArgument(
     @Args('data') newArgument: PostArgumentInputs
   ): Promise<IResponse<Amend>> {
@@ -52,6 +60,7 @@ export class AmendResolver {
   }
 
   @Mutation(returns => AmendResponse)
+  @withAuthentication
   async upVoteArgument(
     @Args('data') data: VoteArgumentInputs
   ): Promise<IResponse<Amend>> {
@@ -59,6 +68,7 @@ export class AmendResolver {
   }
 
   @Mutation(returns => AmendResponse)
+  @withAuthentication
   async upDownArgument(
     @Args('data') data: VoteArgumentInputs
   ): Promise<IResponse<Amend>> {
@@ -66,6 +76,7 @@ export class AmendResolver {
   }
 
   @Mutation(returns => AmendResponse)
+  @withAuthentication
   async unVoteArgument(
     @Args('data') data: VoteArgumentInputs
   ): Promise<IResponse<Amend>> {
