@@ -45,7 +45,7 @@ const PROVIDERS = [...databaseProvider]
     ScheduleModule.register(),
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
-      formatError: function(error) {
+      formatError(error) {
         return error
       }
     })
