@@ -112,11 +112,11 @@ input PostTextInputs {
 }
 
 type Query {
+  amend(id: String!): AmendResponse!
+  text(id: String!): TextResponse!
+  texts: TextsResponse!
   event(id: String!): EventResponse!
   events(data: EventsInputs!): EventsResponse!
-  amend(token: String!, id: String!): AmendResponse!
-  text(token: String!, id: String!): TextResponse!
-  texts: TextsResponse!
 }
 
 type Results {
