@@ -21,7 +21,7 @@ export class AmendResolver {
   ) {}
 
   @Query(returns => AmendResponse)
-  async amend(@Args() { id }: IdArg): Promise<IResponse<Amend>> {
+  async amend(@Args('id') id: string): Promise<IResponse<Amend>> {
     return await this.amendService.getAmend(id)
   }
 

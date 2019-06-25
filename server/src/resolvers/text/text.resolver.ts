@@ -23,7 +23,7 @@ export class TextResolver {
   ) {}
 
   @Query(returns => TextResponse)
-  async text(@Args() { id }: IdArg): Promise<IResponse<Text>> {
+  async text(@Args('id') id: string): Promise<IResponse<Text>> {
     return await this.textService.getText(id)
   }
 
