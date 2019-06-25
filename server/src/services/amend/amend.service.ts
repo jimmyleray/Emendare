@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { findIndex } from 'lodash'
 import { Server } from 'socket.io'
-import { ObjectID } from 'mongodb'
 
 import { IResponse } from '../../../../interfaces'
 import { AuthService, TextService } from '../../services'
@@ -288,7 +287,6 @@ export class AmendService {
     const amend = await Amend.findOne(amendID)
 
     if (amend) {
-      const argumentDate = new Date(Date.now())
       const argument = new Argument(text, type)
       amend.arguments.push(argument)
       await amend.save()
