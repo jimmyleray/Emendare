@@ -10,7 +10,7 @@ export function withAuthentication(
 
   // NOTE: Do not use arrow syntax here
   descriptor.value = async function(...args: any[]) {
-    const argIndex = args[0] ? 0 : 1
+    const argIndex = args[0].token ? 0 : 1
     const { token } = args[argIndex]
 
     if (!this.authService) {
