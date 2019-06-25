@@ -34,6 +34,11 @@ type Argument {
   upVotesCount: Float!
 }
 
+type ArgumentID {
+  amendID: String!
+  argumentID: String!
+}
+
 type DataFromGetEventsByGroup {
   events: [Event!]
   hasNextPage: Boolean!
@@ -43,6 +48,11 @@ type DataFromGetEventsByGroup {
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
 scalar DateTime
+
+input EmailInput {
+  token: String!
+  email: String!
+}
 
 type Error {
   message: String!
@@ -87,6 +97,32 @@ type Mutation {
   postText(data: PostTextInputs!): TextResponse!
   unFollowText(data: IdInput!): TextResponse!
   followText(data: IdInput!): TextResponse!
+  activateUser(token: String!): UserResponse!
+  subsribeUser(data: UserInputs!): UserResponse!
+  loginUser(token: String!, email: String!, password: String!): UserResponse!
+  resetPassword(token: String!, email: String!): UserResponse!
+  updateEmail(data: EmailInput!): UserResponse!
+  deleteAccount(token: String!): UserResponse!
+  updatePassword(data: PasswordInput!): UserResponse!
+  updateLastEvent(token: String!): UserResponse!
+  toggleNotificationSetting(data: NotificationInput!): UserResponse!
+}
+
+type Notification {
+  newText: Boolean!
+  newAmend: Boolean!
+  amendAccepted: Boolean!
+  amendRefused: Boolean!
+}
+
+input NotificationInput {
+  token: String!
+  key: String!
+}
+
+input PasswordInput {
+  token: String!
+  password: String!
 }
 
 input PostAmendInputs {
@@ -117,6 +153,7 @@ type Query {
   texts: TextsResponse!
   event(id: String!): EventResponse!
   events(data: EventsInputs!): EventsResponse!
+  user(token: String!): UserResponse!
 }
 
 type Results {
@@ -158,6 +195,33 @@ type TextsResponse {
 
 input TokenInput {
   token: String!
+}
+
+type User {
+  id: ID!
+  email: String!
+  password: String!
+  activated: Boolean!
+  created: DateTime!
+  lastEventDate: DateTime!
+  activationToken: String!
+  followedTexts: [String!]!
+  upVotes: [String!]!
+  indVotes: [String!]!
+  downVotes: [String!]!
+  notifications: Notification!
+  argumentUpVotes: [ArgumentID!]!
+  argumentDownVotes: [ArgumentID!]!
+}
+
+input UserInputs {
+  email: String!
+  password: String!
+}
+
+type UserResponse {
+  data: User
+  error: Error
 }
 
 input VoteArgumentInputs {
