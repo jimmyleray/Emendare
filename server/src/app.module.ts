@@ -21,7 +21,12 @@ import {
   CryptoService,
   MailService
 } from './services'
-import { AmendResolver, TextResolver, EventResolver } from './resolvers'
+import {
+  AmendResolver,
+  TextResolver,
+  EventResolver,
+  UserResolver
+} from './resolvers'
 
 const SERVICES = [
   EventService,
@@ -32,7 +37,7 @@ const SERVICES = [
   CryptoService,
   MailService
 ]
-const RESOLVERS = [AmendResolver, TextResolver, EventResolver]
+const RESOLVERS = [AmendResolver, TextResolver, EventResolver, UserResolver]
 const CONTROLLERS = [AppController]
 const TASKS = [CheckAmendVoteTask]
 const GATEWAYS = [EventGateway, AmendGateway, UserGateway, TextGateway]

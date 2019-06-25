@@ -1,7 +1,7 @@
 import { Amend } from '../../entities'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { AmendService, AuthService } from '../../services'
-import { IdArg, Response, IdInput, withAuthentication } from '../../common'
+import { Response, IdInput, withAuthentication } from '../../common'
 import { IResponse } from '../../../../interfaces'
 import { ObjectType } from 'type-graphql'
 import {

@@ -256,7 +256,7 @@ export class UserService {
     return { data: user }
   }
 
-  async delete(data: any, io: Server): Promise<IResponse<any>> {
+  async delete(data: any, io?: Server): Promise<IResponse<any>> {
     const { user } = data
 
     const openAmends = await this.getOpenAmends(user)

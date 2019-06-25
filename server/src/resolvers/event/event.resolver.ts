@@ -1,6 +1,6 @@
 import { Event } from 'src/entities'
 import { ObjectType, Field } from 'type-graphql'
-import { Response, IdArg } from '../../common'
+import { Response } from '../../common'
 import { IResponse } from '../../../../interfaces'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { EventService } from 'src/services'

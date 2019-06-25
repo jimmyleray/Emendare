@@ -1,12 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { findIndex } from 'lodash'
 import { Server } from 'socket.io'
-import { ObjectID } from 'mongodb'
 
 import { IResponse } from '../../../../interfaces'
 import { AuthService, TextService } from '../../services'
 import { Text, User, Event, Amend } from '../../entities'
-import { Argument } from 'src/common/types'
+import { Argument, ArgumentID } from 'src/common/types'
 
 @Injectable()
 export class AmendService {
@@ -288,7 +287,6 @@ export class AmendService {
     const amend = await Amend.findOne(amendID)
 
     if (amend) {
-      const argumentDate = new Date(Date.now())
       const argument = new Argument(text, type)
       amend.arguments.push(argument)
       await amend.save()
@@ -346,7 +344,7 @@ export class AmendService {
           }
 
           amend.arguments[indexArgument].upVotesCount--
-          user.argumentDownVotes.push({ amendID, argumentID })
+          user.argumentDownVotes.push(new ArgumentID(amendID, argumentID))
           await amend.save()
           await user.save()
 
@@ -410,7 +408,7 @@ export class AmendService {
           }
 
           amend.arguments[indexArgument].upVotesCount++
-          user.argumentUpVotes.push({ amendID, argumentID })
+          user.argumentUpVotes.push(new ArgumentID(amendID, argumentID))
           await amend.save()
           await user.save()
 
