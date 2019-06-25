@@ -1,8 +1,8 @@
 import { Event } from 'src/entities'
-import { ObjectType, Query, Field } from 'type-graphql'
-import { Response } from '../../common'
+import { ObjectType, Field } from 'type-graphql'
+import { Response, IdArg } from '../../common'
 import { IResponse } from '../../../../interfaces'
-import { Resolver, Args } from '@nestjs/graphql'
+import { Args, Query, Resolver } from '@nestjs/graphql'
 import { EventService } from 'src/services'
 import { EventsInputs } from './inputs'
 
@@ -28,7 +28,6 @@ export class EventResolver {
 
   @Query(returns => EventResponse)
   async event(@Args('id') id: string): Promise<IResponse<Event>> {
-    console.log(id)
     return await this.eventService.getEvent(id)
   }
 
