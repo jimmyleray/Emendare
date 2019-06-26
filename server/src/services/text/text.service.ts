@@ -4,6 +4,8 @@ import * as JsDiff from 'diff'
 
 import { IResponse, IResponseWithEvent } from '../../../../interfaces'
 import { Text, Event, Amend } from '../../entities'
+import { pubSubEvent } from 'src/common'
+import { Topic } from '../../common/topics'
 
 @Injectable()
 export class TextService {
@@ -80,7 +82,7 @@ export class TextService {
     }
   }
 
-  async postText(data: any, io?: Server): Promise<IResponseWithEvent<Text>> {
+  async postText(data: any, io?: Server): Promise<IResponse<Text>> {
     const { name, description } = data
 
     const text = new Text(name, description)
@@ -95,8 +97,8 @@ export class TextService {
       io.emit('events/new', { data: event })
       io.emit('texts/all', { data: texts.map(texte => texte.id) })
     }
-
-    return { data: text, event }
+    pubSubEvent.publish(Topic.NewEvent, { newEvent: event })
+    return { data: text }
   }
 
   async updateTextWithAmend(text: Text, amend: Amend, io: Server) {

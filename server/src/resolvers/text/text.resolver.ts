@@ -41,11 +41,7 @@ export class TextResolver {
   @Mutation(returns => TextResponse)
   @withAuthentication
   async postText(@Args('data') data: PostTextInputs): Promise<IResponse<Text>> {
-    const { event, ...rest } = await this.textService.postText(data)
-    if (event) {
-      pubSubEvent.publish(Topic.NewEvent, { newEvent: event })
-    }
-    return rest
+    return await this.textService.postText(data)
   }
 
   @Mutation(returns => TextResponse)

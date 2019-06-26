@@ -59,10 +59,6 @@ export class TextGateway {
     client: Socket,
     message: IMessage<{ name: string; description: string }>
   ) {
-    const { event, ...rest } = await this.textService.postText(
-      message.data,
-      this.io
-    )
-    return rest
+    return await this.textService.postText(message.data, this.io)
   }
 }
