@@ -2,8 +2,10 @@ import { Injectable } from '@nestjs/common'
 import { Server } from 'socket.io'
 import * as JsDiff from 'diff'
 
-import { IResponse } from '../../../../interfaces'
+import { IResponse, IResponseWithEvent } from '../../../../interfaces'
 import { Text, Event, Amend } from '../../entities'
+import { pubSubEvent } from 'src/common'
+import { Topic } from '../../common/topics'
 
 @Injectable()
 export class TextService {
@@ -95,7 +97,7 @@ export class TextService {
       io.emit('events/new', { data: event })
       io.emit('texts/all', { data: texts.map(texte => texte.id) })
     }
-
+    pubSubEvent.publish(Topic.NewEvent, { newEvent: event })
     return { data: text }
   }
 

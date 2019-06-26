@@ -167,6 +167,10 @@ type Rules {
   delayMax: Float!
 }
 
+type Subscription {
+  newEvent: EventResponse
+}
+
 type Target {
   type: String!
   id: String!

@@ -2,7 +2,13 @@ import { Text } from '../../entities'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { TextService, AuthService } from '../../services'
 import { PostTextInputs } from './inputs'
-import { Response, IdInput, withAuthentication } from '../../common'
+import {
+  Response,
+  IdInput,
+  withAuthentication,
+  pubSubEvent
+} from '../../common'
+import { Topic } from '../../common/topics'
 import { IResponse } from '../../../../interfaces'
 import { ObjectType, Field } from 'type-graphql'
 
@@ -35,7 +41,7 @@ export class TextResolver {
   @Mutation(returns => TextResponse)
   @withAuthentication
   async postText(@Args('data') data: PostTextInputs): Promise<IResponse<Text>> {
-    return this.textService.postText(data)
+    return await this.textService.postText(data)
   }
 
   @Mutation(returns => TextResponse)
