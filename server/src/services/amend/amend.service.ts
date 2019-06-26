@@ -5,7 +5,8 @@ import { Server } from 'socket.io'
 import { IResponse } from '../../../../interfaces'
 import { AuthService, TextService } from '../../services'
 import { Text, User, Event, Amend } from '../../entities'
-import { Argument, ArgumentID } from 'src/common/types'
+import { Argument, ArgumentID, pubSubEvent } from 'src/common'
+import { Topic } from '../../common/topics'
 
 @Injectable()
 export class AmendService {
@@ -239,7 +240,7 @@ export class AmendService {
       io.emit('events/new', { data: event })
       io.emit('text/' + textID, { data: text })
     }
-
+    pubSubEvent.publish(Topic.NewEvent, { newEvent: event })
     return { data: amend }
   }
 
@@ -277,6 +278,7 @@ export class AmendService {
 
         const newEvent: Event = new Event('result', newAmend.id.toString())
         await newEvent.save()
+        pubSubEvent.publish(Topic.NewEvent, { newEvent })
         io.emit('events/new', { data: newEvent })
       }
     })
