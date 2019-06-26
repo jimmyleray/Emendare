@@ -1,7 +1,8 @@
 import { Amend } from '../../entities'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql'
 import { AmendService, AuthService } from '../../services'
-import { Response, IdInput, withAuthentication } from '../../common'
+import { Response, IdInput, withAuthentication, pubSub } from '../../common'
+import { Topic } from '../../common/topics'
 import { IResponse } from '../../../../interfaces'
 import { ObjectType } from 'type-graphql'
 import {
@@ -81,5 +82,15 @@ export class AmendResolver {
     @Args('data') data: VoteArgumentInputs
   ): Promise<IResponse<Amend>> {
     return await this.amendService.unVoteArgument(data)
+  }
+
+  @Subscription(returns => AmendResponse, { resolve: payload => payload })
+  newAmend() {
+    return pubSub.asyncIterator(Topic.NewAmend)
+  }
+
+  @Subscription(returns => AmendResponse, { resolve: payload => payload })
+  updateAmend() {
+    return pubSub.asyncIterator(Topic.UpdateAmend)
   }
 }

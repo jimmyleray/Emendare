@@ -88,7 +88,7 @@ export class AmendService {
           if (io) {
             io.emit('amend/' + id, { data: amend })
           }
-
+          pubSub.publish(Topic.UpdateAmend, { data: amend })
           return { data: amend }
         } else {
           return {
@@ -141,7 +141,7 @@ export class AmendService {
           if (io) {
             io.emit('amend/' + id, { data: amend })
           }
-
+          pubSub.publish(Topic.UpdateAmend, { data: amend })
           return { data: amend }
         } else {
           return {
@@ -197,7 +197,7 @@ export class AmendService {
         if (io) {
           io.emit('amend/' + id, { data: amend })
         }
-
+        pubSub.publish(Topic.UpdateAmend, { data: amend })
         return { data: amend }
       } else {
         return {
@@ -241,6 +241,7 @@ export class AmendService {
       io.emit('text/' + textID, { data: text })
     }
     pubSub.publish(Topic.NewEvent, { data: event })
+    pubSub.publish(Topic.NewAmend, { data: amend })
     return { data: amend }
   }
 
@@ -293,8 +294,9 @@ export class AmendService {
       amend.arguments.push(argument)
       await amend.save()
 
+      pubSub.publish(Topic.UpdateAmend, { data: amend })
       const response = { data: amend }
-      io.emit('amend/' + amendID, response)
+      if(io) {io.emit('amend/' + amendID, response)}
 
       return response
     } else {
@@ -350,6 +352,7 @@ export class AmendService {
           await amend.save()
           await user.save()
 
+          pubSub.publish(Topic.UpdateAmend, { data: amend })
           const response = { data: amend }
           io.emit('amend/' + amendID, response)
 
@@ -414,6 +417,7 @@ export class AmendService {
           await amend.save()
           await user.save()
 
+          pubSub.publish(Topic.UpdateAmend, { data: amend })
           const response = { data: amend }
           io.emit('amend/' + amendID, response)
 
@@ -485,6 +489,7 @@ export class AmendService {
           await amend.save()
           await user.save()
 
+          pubSub.publish(Topic.UpdateAmend, { data: amend })
           const response = { data: amend }
           io.emit('amend/' + amendID, response)
 
