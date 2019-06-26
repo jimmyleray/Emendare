@@ -41,9 +41,7 @@ export class EventResolver {
 
   @Subscription(returns => EventResponse, {
     nullable: true,
-    resolve: payload => {
-      return { data: payload.newEvent ? payload.newEvent : null }
-    }
+    resolve: payload => payload
   })
   newEvent() {
     return pubSub.asyncIterator(Topic.NewEvent)

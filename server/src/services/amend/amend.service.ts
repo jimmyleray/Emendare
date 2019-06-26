@@ -240,7 +240,7 @@ export class AmendService {
       io.emit('events/new', { data: event })
       io.emit('text/' + textID, { data: text })
     }
-    pubSub.publish(Topic.NewEvent, { newEvent: event })
+    pubSub.publish(Topic.NewEvent, { data: event })
     return { data: amend }
   }
 
@@ -278,7 +278,7 @@ export class AmendService {
 
         const newEvent: Event = new Event('result', newAmend.id.toString())
         await newEvent.save()
-        pubSub.publish(Topic.NewEvent, { newEvent })
+        pubSub.publish(Topic.NewEvent, { data: newEvent })
         io.emit('events/new', { data: newEvent })
       }
     })
