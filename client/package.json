@@ -5,10 +5,12 @@
   "engines": {
     "node": "10.15.3"
   },
+  "main": "main.js",
   "license": "GPL-3.0",
   "scripts": {
     "start": "node app.js",
     "dev": "react-scripts start",
+    "electron": "electron .",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:coverage": "react-scripts test --coverage",
