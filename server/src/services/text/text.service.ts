@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { Server } from 'socket.io'
 import * as JsDiff from 'diff'
 
-import { IResponse } from '../../../../interfaces'
+import { IResponse, IResponseWithEvent } from '../../../../interfaces'
 import { Text, Event, Amend } from '../../entities'
 
 @Injectable()
@@ -80,7 +80,7 @@ export class TextService {
     }
   }
 
-  async postText(data: any, io?: Server): Promise<IResponse<Text>> {
+  async postText(data: any, io?: Server): Promise<IResponseWithEvent<Text>> {
     const { name, description } = data
 
     const text = new Text(name, description)
@@ -96,7 +96,7 @@ export class TextService {
       io.emit('texts/all', { data: texts.map(texte => texte.id) })
     }
 
-    return { data: text }
+    return { data: text, event }
   }
 
   async updateTextWithAmend(text: Text, amend: Amend, io: Server) {
