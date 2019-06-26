@@ -7,7 +7,8 @@ import {
   useUser,
   withEventCard,
   ModalContainer,
-  ArgumentModal
+  ArgumentModal,
+  Card
 } from '../../../components'
 // Interfaces
 import { INews } from '../../../../../interfaces'
@@ -43,10 +44,11 @@ export const EventRow = ({ data, measure, isNew, index }: IEventRowProps) => {
         <ModalContainer.Modal.Trigger
           active={data.event.target.type === 'amend'}
         >
-          <div
+          <Card
             style={{
-              backgroundColor: isNew ? 'rgba(255, 221, 87, 0.1)' : 'initial',
-              padding: '1rem'
+              backgroundColor: isNew ? 'rgba(255, 221, 87, 0.1)' : undefined,
+              padding: '1rem',
+              margin: '1px 1px 1rem 1px'
             }}
           >
             {data.target &&
@@ -54,7 +56,7 @@ export const EventRow = ({ data, measure, isNew, index }: IEventRowProps) => {
               withEventCard(measure, index, data.target.data, user)(
                 displayRightEvent(data.event.target.type)
               )}
-          </div>
+          </Card>
 
           {data.target &&
             data.target.data &&
@@ -63,8 +65,6 @@ export const EventRow = ({ data, measure, isNew, index }: IEventRowProps) => {
                 <ArgumentModal amend={data.target.data} user={user} />
               </ModalContainer.Modal.Content>
             )}
-
-          <hr style={{ margin: 0, backgroundColor: '#e8e8e8' }} />
         </ModalContainer.Modal.Trigger>
       </ModalContainer>
     </React.Fragment>

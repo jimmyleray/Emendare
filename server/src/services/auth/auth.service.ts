@@ -11,7 +11,7 @@ export class AuthService {
   private secret: string
 
   constructor() {
-    const diffieHellman = createDiffieHellman(1024)
+    const diffieHellman = createDiffieHellman(256)
     this.secret = diffieHellman.generateKeys('hex')
 
     fetch(config.registerUrl + 'sharedSecret', {

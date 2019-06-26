@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { findIndex } from 'lodash'
 import { Server } from 'socket.io'
-import { ObjectID } from 'mongodb'
 
 import { IResponse } from '../../../../interfaces'
 import { AuthService, TextService } from '../../services'
 import { Text, User, Event, Amend } from '../../entities'
+import { Argument, ArgumentID, pubSub } from '../../common'
+import { Topic } from '../../common/topics'
 
 @Injectable()
 export class AmendService {
@@ -61,9 +62,7 @@ export class AmendService {
     io?: Server
   ): Promise<IResponse<Amend>> {
     const { user, id } = data
-
     const amend: Amend = await Amend.findOne(id)
-    console.log(amend, user)
 
     if (amend && user.followedTexts.indexOf(amend.text.toString()) > -1) {
       if (!amend.closed) {
@@ -89,7 +88,7 @@ export class AmendService {
           if (io) {
             io.emit('amend/' + id, { data: amend })
           }
-
+          pubSub.publish(Topic.UpdateAmend, { data: amend })
           return { data: amend }
         } else {
           return {
@@ -142,7 +141,7 @@ export class AmendService {
           if (io) {
             io.emit('amend/' + id, { data: amend })
           }
-
+          pubSub.publish(Topic.UpdateAmend, { data: amend })
           return { data: amend }
         } else {
           return {
@@ -198,7 +197,7 @@ export class AmendService {
         if (io) {
           io.emit('amend/' + id, { data: amend })
         }
-
+        pubSub.publish(Topic.UpdateAmend, { data: amend })
         return { data: amend }
       } else {
         return {
@@ -241,7 +240,8 @@ export class AmendService {
       io.emit('events/new', { data: event })
       io.emit('text/' + textID, { data: text })
     }
-
+    pubSub.publish(Topic.NewEvent, { data: event })
+    pubSub.publish(Topic.NewAmend, { data: amend })
     return { data: amend }
   }
 
@@ -275,10 +275,14 @@ export class AmendService {
         })
 
         await Event.delete({ id: oldEvent.id })
+        // publish event: delete an event
+        pubSub.publish(Topic.DeleteEvent, { data: oldEvent })
         io.emit('events/delete', { data: oldEvent })
 
         const newEvent: Event = new Event('result', newAmend.id.toString())
         await newEvent.save()
+        // publish event: new event is created
+        pubSub.publish(Topic.NewEvent, { data: newEvent })
         io.emit('events/new', { data: newEvent })
       }
     })
@@ -289,19 +293,15 @@ export class AmendService {
     const amend = await Amend.findOne(amendID)
 
     if (amend) {
-      const argumentDate = new Date(Date.now())
-      const argument = {
-        type,
-        text,
-        created: argumentDate,
-        upVotesCount: 0,
-        id: new ObjectID(argumentDate.getTime())
-      }
+      const argument = new Argument(text, type)
       amend.arguments.push(argument)
       await amend.save()
 
+      pubSub.publish(Topic.UpdateAmend, { data: amend })
       const response = { data: amend }
-      io.emit('amend/' + amendID, response)
+      if (io) {
+        io.emit('amend/' + amendID, response)
+      }
 
       return response
     } else {
@@ -353,10 +353,11 @@ export class AmendService {
           }
 
           amend.arguments[indexArgument].upVotesCount--
-          user.argumentDownVotes.push({ amendID, argumentID })
+          user.argumentDownVotes.push(new ArgumentID(amendID, argumentID))
           await amend.save()
           await user.save()
 
+          pubSub.publish(Topic.UpdateAmend, { data: amend })
           const response = { data: amend }
           io.emit('amend/' + amendID, response)
 
@@ -417,10 +418,11 @@ export class AmendService {
           }
 
           amend.arguments[indexArgument].upVotesCount++
-          user.argumentUpVotes.push({ amendID, argumentID })
+          user.argumentUpVotes.push(new ArgumentID(amendID, argumentID))
           await amend.save()
           await user.save()
 
+          pubSub.publish(Topic.UpdateAmend, { data: amend })
           const response = { data: amend }
           io.emit('amend/' + amendID, response)
 
@@ -492,6 +494,7 @@ export class AmendService {
           await amend.save()
           await user.save()
 
+          pubSub.publish(Topic.UpdateAmend, { data: amend })
           const response = { data: amend }
           io.emit('amend/' + amendID, response)
 

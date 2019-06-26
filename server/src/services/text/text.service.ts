@@ -4,6 +4,7 @@ import * as JsDiff from 'diff'
 
 import { IResponse } from '../../../../interfaces'
 import { Text, Event, Amend } from '../../entities'
+import { pubSub, Topic } from '../../common'
 
 @Injectable()
 export class TextService {
@@ -47,7 +48,7 @@ export class TextService {
       if (io) {
         io.emit('text/' + text.id, { data: text })
       }
-
+      pubSub.publish(Topic.UpdateText, { data: text })
       return { data: text }
     } else {
       return {
@@ -71,7 +72,7 @@ export class TextService {
       if (io) {
         io.emit('text/' + text.id, { data: text })
       }
-
+      pubSub.publish(Topic.UpdateText, { data: text })
       return { data: text }
     } else {
       return {
@@ -95,7 +96,8 @@ export class TextService {
       io.emit('events/new', { data: event })
       io.emit('texts/all', { data: texts.map(texte => texte.id) })
     }
-
+    pubSub.publish(Topic.NewEvent, { data: event })
+    pubSub.publish(Topic.NewText, { data: text })
     return { data: text }
   }
 

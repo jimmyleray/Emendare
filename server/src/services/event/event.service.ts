@@ -6,6 +6,14 @@ import { Event } from '../../entities'
 export class EventService {
   async getEvent(id: string): Promise<IResponse<Event>> {
     const data = await Event.findOne(id)
+    if (!data) {
+      return {
+        error: {
+          code: 404,
+          message: "Oups, cet événement n'existe pas ou plus"
+        }
+      }
+    }
     return { data }
   }
 
