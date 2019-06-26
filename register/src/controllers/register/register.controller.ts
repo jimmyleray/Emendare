@@ -31,7 +31,7 @@ export class RegisterController {
       const response = await fetch(instanceUrl + 'config')
       const config = await response.json()
 
-      if (config) {
+      if (config && !config.error) {
         let instance = await Instance.findOne({ instanceUrl })
 
         if (!instance) {
