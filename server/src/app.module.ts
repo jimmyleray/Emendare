@@ -50,7 +50,9 @@ const PROVIDERS = [...databaseProvider]
     ScheduleModule.register(),
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
-      autoSchemaFile: 'schema.gql'
+      formatError(error) {
+        return error
+      }
     })
   ]
 })

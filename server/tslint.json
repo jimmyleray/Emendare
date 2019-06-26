@@ -17,7 +17,8 @@
     "arrow-parens": false,
     "max-line-length": false,
     "ordered-imports": false,
-    "variable-name": false
+    "variable-name": false,
+    "max-classes-per-file": false
   },
   "rulesDirectory": []
 }
