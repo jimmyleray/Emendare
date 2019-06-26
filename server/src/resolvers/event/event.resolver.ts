@@ -46,4 +46,12 @@ export class EventResolver {
   newEvent() {
     return pubSub.asyncIterator(Topic.NewEvent)
   }
+
+  @Subscription(returns => EventResponse, {
+    nullable: true,
+    resolve: payload => payload
+  })
+  deleteEvent() {
+    return pubSub.asyncIterator(Topic.DeleteEvent)
+  }
 }

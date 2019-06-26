@@ -275,10 +275,13 @@ export class AmendService {
         })
 
         await Event.delete({ id: oldEvent.id })
+        //publish event deleteEvent
+        pubSub.publish(Topic.DeleteEvent, { data: oldEvent })
         io.emit('events/delete', { data: oldEvent })
 
         const newEvent: Event = new Event('result', newAmend.id.toString())
         await newEvent.save()
+        //publish event newEvent
         pubSub.publish(Topic.NewEvent, { data: newEvent })
         io.emit('events/new', { data: newEvent })
       }
@@ -296,7 +299,9 @@ export class AmendService {
 
       pubSub.publish(Topic.UpdateAmend, { data: amend })
       const response = { data: amend }
-      if(io) {io.emit('amend/' + amendID, response)}
+      if (io) {
+        io.emit('amend/' + amendID, response)
+      }
 
       return response
     } else {
