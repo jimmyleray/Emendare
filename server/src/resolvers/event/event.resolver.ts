@@ -1,8 +1,8 @@
 import { Event } from 'src/entities'
 import { ObjectType, Field } from 'type-graphql'
-import { Response } from '../../common'
+import { Response, pubSubEvent, Topic } from '../../common'
 import { IResponse } from '../../../../interfaces'
-import { Args, Query, Resolver } from '@nestjs/graphql'
+import { Args, Query, Resolver, Subscription } from '@nestjs/graphql'
 import { EventService } from 'src/services'
 import { EventsInputs } from './inputs'
 
@@ -36,5 +36,15 @@ export class EventResolver {
     @Args('data') data: EventsInputs
   ): Promise<IResponse<DataFromGetEventsByGroup>> {
     return this.eventService.getEventsByGroup(data.limit, data.lastEventDate)
+  }
+
+  @Subscription(returns => EventResponse, {
+    nullable: true,
+    resolve: payload => {
+      return { data: payload.newEvent ? payload.newEvent : null }
+    }
+  })
+  newEvent() {
+    return pubSubEvent.asyncIterator('NEW_EVENT')
   }
 }
