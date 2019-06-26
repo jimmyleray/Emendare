@@ -18,7 +18,7 @@ export class Amend extends BaseEntity {
   @Column({ default: Date.now })
   created: Date
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
   finished: Date
 

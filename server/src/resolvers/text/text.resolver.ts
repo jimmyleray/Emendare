@@ -1,13 +1,8 @@
 import { Text } from '../../entities'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql'
 import { TextService, AuthService } from '../../services'
 import { PostTextInputs } from './inputs'
-import {
-  Response,
-  IdInput,
-  withAuthentication,
-  pubSubEvent
-} from '../../common'
+import { Response, IdInput, withAuthentication, pubSub } from '../../common'
 import { Topic } from '../../common/topics'
 import { IResponse } from '../../../../interfaces'
 import { ObjectType, Field } from 'type-graphql'
@@ -54,5 +49,23 @@ export class TextResolver {
   @withAuthentication
   async followText(@Args('data') data: IdInput): Promise<IResponse<Text>> {
     return this.textService.followText(data)
+  }
+
+  @Subscription(returns => TextResponse, {
+    resolve: payload => {
+      return payload
+    }
+  })
+  newText() {
+    return pubSub.asyncIterator(Topic.NewText)
+  }
+
+  @Subscription(returns => TextResponse, {
+    resolve: payload => {
+      return payload
+    }
+  })
+  updateText() {
+    return pubSub.asyncIterator(Topic.UpdateText)
   }
 }
