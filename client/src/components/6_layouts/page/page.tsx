@@ -24,5 +24,5 @@ export const Page = ({
     Title.pageTitle = title
   }, [title])
 
-  return <Card style={style}>{children}</Card>
+  return <div style={style}>{children}</div>
 }
