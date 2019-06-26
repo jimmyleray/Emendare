@@ -8,6 +8,7 @@ import {
   withAuthentication,
   pubSubEvent
 } from '../../common'
+import { Topic } from '../../common/topics'
 import { IResponse } from '../../../../interfaces'
 import { ObjectType, Field } from 'type-graphql'
 
@@ -42,7 +43,7 @@ export class TextResolver {
   async postText(@Args('data') data: PostTextInputs): Promise<IResponse<Text>> {
     const { event, ...rest } = await this.textService.postText(data)
     if (event) {
-      pubSubEvent.publish('NEW_EVENT', { newEvent: event })
+      pubSubEvent.publish(Topic.NewEvent, { newEvent: event })
     }
     return rest
   }
