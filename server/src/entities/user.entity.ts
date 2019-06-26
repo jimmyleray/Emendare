@@ -1,6 +1,6 @@
 import { Entity, Column, ObjectID, ObjectIdColumn, BaseEntity } from 'typeorm'
 import { ObjectType, Field, ID } from 'type-graphql'
-import { Notification, ArgumentID } from 'src/common'
+import { Notification, ArgumentID } from '../common'
 
 @ObjectType()
 @Entity()

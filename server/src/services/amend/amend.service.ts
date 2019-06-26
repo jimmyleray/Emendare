@@ -5,7 +5,7 @@ import { Server } from 'socket.io'
 import { IResponse } from '../../../../interfaces'
 import { AuthService, TextService } from '../../services'
 import { Text, User, Event, Amend } from '../../entities'
-import { Argument, ArgumentID, pubSub } from 'src/common'
+import { Argument, ArgumentID, pubSub } from '../../common'
 import { Topic } from '../../common/topics'
 
 @Injectable()

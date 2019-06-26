@@ -2,10 +2,9 @@ import { Injectable } from '@nestjs/common'
 import { Server } from 'socket.io'
 import * as JsDiff from 'diff'
 
-import { IResponse, IResponseWithEvent } from '../../../../interfaces'
+import { IResponse } from '../../../../interfaces'
 import { Text, Event, Amend } from '../../entities'
-import { pubSub } from 'src/common'
-import { Topic } from '../../common/topics'
+import { pubSub, Topic } from '../../common'
 
 @Injectable()
 export class TextService {

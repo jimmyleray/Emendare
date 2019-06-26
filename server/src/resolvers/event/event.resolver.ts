@@ -1,10 +1,10 @@
-import { Event } from 'src/entities'
+import { Event } from '../../entities'
 import { ObjectType, Field } from 'type-graphql'
 import { Response, pubSub } from '../../common'
 import { Topic } from '../../common/topics'
 import { IResponse } from '../../../../interfaces'
 import { Args, Query, Resolver, Subscription } from '@nestjs/graphql'
-import { EventService } from 'src/services'
+import { EventService } from '../../services'
 import { EventsInputs } from './inputs'
 
 // Responses Type

@@ -1,8 +1,8 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { ObjectType } from 'type-graphql'
-import { User } from 'src/entities'
+import { User } from '../../entities'
 import { Response, withAuthentication, TokenArgs } from '../../common'
-import { UserService, AuthService } from 'src/services'
+import { UserService, AuthService } from '../../services'
 import { IResponse } from '../../../../interfaces'
 import {
   UserInputs,

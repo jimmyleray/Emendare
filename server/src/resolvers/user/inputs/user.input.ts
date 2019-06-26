@@ -1,5 +1,5 @@
 import { InputType, Field, ArgsType } from 'type-graphql'
-import { TokenArgs } from 'src/common'
+import { TokenArgs } from '../../../common'
 
 @InputType()
 export class UserInputs {

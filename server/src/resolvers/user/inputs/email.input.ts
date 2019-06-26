@@ -1,5 +1,5 @@
 import { ArgsType, Field, InputType } from 'type-graphql'
-import { TokenArgs, TokenInput } from 'src/common'
+import { TokenArgs, TokenInput } from '../../../common'
 
 @ArgsType()
 export class EmailArgs extends TokenArgs {
