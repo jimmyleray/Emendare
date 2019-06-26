@@ -1,13 +1,8 @@
 import { Text } from '../../entities'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql'
 import { TextService, AuthService } from '../../services'
 import { PostTextInputs } from './inputs'
-import {
-  Response,
-  IdInput,
-  withAuthentication,
-  pubSubEvent
-} from '../../common'
+import { Response, IdInput, withAuthentication } from '../../common'
 import { Topic } from '../../common/topics'
 import { IResponse } from '../../../../interfaces'
 import { ObjectType, Field } from 'type-graphql'

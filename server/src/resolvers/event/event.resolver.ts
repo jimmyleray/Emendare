@@ -1,6 +1,6 @@
 import { Event } from 'src/entities'
 import { ObjectType, Field } from 'type-graphql'
-import { Response, pubSubEvent } from '../../common'
+import { Response, pubSub } from '../../common'
 import { Topic } from '../../common/topics'
 import { IResponse } from '../../../../interfaces'
 import { Args, Query, Resolver, Subscription } from '@nestjs/graphql'
@@ -46,6 +46,6 @@ export class EventResolver {
     }
   })
   newEvent() {
-    return pubSubEvent.asyncIterator(Topic.NewEvent)
+    return pubSub.asyncIterator(Topic.NewEvent)
   }
 }

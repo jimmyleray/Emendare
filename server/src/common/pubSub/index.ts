@@ -1,1 +1,1 @@
-export * from './event.pubsub'
+export * from './pubsub'
