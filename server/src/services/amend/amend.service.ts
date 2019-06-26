@@ -275,13 +275,13 @@ export class AmendService {
         })
 
         await Event.delete({ id: oldEvent.id })
-        //publish event: delete an event
+        // publish event: delete an event
         pubSub.publish(Topic.DeleteEvent, { data: oldEvent })
         io.emit('events/delete', { data: oldEvent })
 
         const newEvent: Event = new Event('result', newAmend.id.toString())
         await newEvent.save()
-        //publish event: new event is created
+        // publish event: new event is created
         pubSub.publish(Topic.NewEvent, { data: newEvent })
         io.emit('events/new', { data: newEvent })
       }
