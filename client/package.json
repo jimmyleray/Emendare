@@ -47,7 +47,9 @@
   },
   "dependencies": {
     "@types/graphql": "^14.2.2",
+    "@types/ws": "^6.0.1",
     "apollo-boost": "^0.4.3",
+    "apollo-link-ws": "^1.0.18",
     "blueimp-md5": "^2.10.0",
     "bulma": "^0.7.4",
     "compression": "1.7.4",
@@ -65,7 +67,8 @@
     "react-use": "^9.1.0",
     "react-virtualized": "9.21.0",
     "serve-static": "1.14.1",
-    "socket.io-client": "2.2.0"
+    "socket.io-client": "2.2.0",
+    "subscriptions-transport-ws": "^0.9.16"
   },
   "devDependencies": {
     "@types/blueimp-md5": "^2.7.0",
