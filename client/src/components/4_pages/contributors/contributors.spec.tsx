@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { ContributorsPage } from './contributors'
+import ContributorsPage from './contributors'
 
 it('should render a ContributorsPage', () => {
   const component = shallow(<ContributorsPage />)

@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { EditPage } from './edit'
+import EditPage from './edit'
 import { DataContext } from '../../../components'
 
 it('should render an EditPage', () => {

@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { PendingPage } from './pending'
+import PendingPage from './pending'
 
 it('should render a PendingPage', () => {
   const component = shallow(<PendingPage />)

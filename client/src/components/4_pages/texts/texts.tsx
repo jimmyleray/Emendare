@@ -19,7 +19,7 @@ import {
 } from '../../../helpers'
 import { path } from '../../../config'
 
-export const TextsPage = () => {
+const TextsPage = () => {
   const { translate } = React.useContext(I18nContext)
   const { user } = useUser()
   const { get } = React.useContext(DataContext)
@@ -64,3 +64,5 @@ export const TextsPage = () => {
     </React.Fragment>
   )
 }
+
+export default TextsPage

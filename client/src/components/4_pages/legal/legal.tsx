@@ -1,7 +1,7 @@
 import React from 'react'
 import { Hero, Page, I18nContext } from '../../../components'
 
-export const LegalPage = () => {
+const LegalPage = () => {
   const { translate } = React.useContext(I18nContext)
 
   return (
@@ -18,3 +18,5 @@ export const LegalPage = () => {
     </Page>
   )
 }
+
+export default LegalPage

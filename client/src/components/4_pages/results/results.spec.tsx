@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { ResultsPage } from './results'
+import ResultsPage from './results'
 import { Providers } from '../../../components'
 
 it('should render a ResultsPage', () => {

@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { ResetPage } from './reset'
+import ResetPage from './reset'
 
 it('should render a ResetPage', () => {
   const component = shallow(<ResetPage />)

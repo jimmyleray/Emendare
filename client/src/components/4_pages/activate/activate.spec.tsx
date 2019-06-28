@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { ActivatePage } from './activate'
+import ActivatePage from './activate'
 
 it('should render an ActivatePage', () => {
   const component = shallow(<ActivatePage match={{ params: { id: 'test' } }} />)

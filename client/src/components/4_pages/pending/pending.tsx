@@ -7,7 +7,7 @@
 import React from 'react'
 import { Hero, Page } from '../../../components'
 
-export const PendingPage = () => {
+const PendingPage = () => {
   return (
     <Page title="Chargement">
       <Hero
@@ -18,3 +18,5 @@ export const PendingPage = () => {
     </Page>
   )
 }
+
+export default PendingPage

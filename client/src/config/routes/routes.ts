@@ -17,7 +17,6 @@ export const routes: IRoute[] = [
   { name: 'create', path: '/create', private: true },
   { name: 'edit', path: withID('/edit/'), private: true },
   { name: 'activate', path: withID('/activate/') },
-  { name: 'share', path: withID('/share/') },
   { name: 'authentification', path: '/authentification' }
 ]
 

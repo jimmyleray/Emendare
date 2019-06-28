@@ -15,7 +15,7 @@ import {
   filterEventsByUserTextFollowed
 } from '../../../helpers'
 
-export const HomePage = () => {
+const HomePage = () => {
   const { translate } = React.useContext(I18nContext)
   const { user } = useUser()
   const { get } = React.useContext(DataContext)
@@ -43,3 +43,5 @@ export const HomePage = () => {
     </Page>
   )
 }
+
+export default HomePage

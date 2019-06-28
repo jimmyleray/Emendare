@@ -14,7 +14,7 @@ const defaultError = {
   message: "Oups, cette page n'existe pas ou plus"
 }
 
-export const ErrorPage = ({ error = defaultError }) => {
+const ErrorPage = ({ error = defaultError }) => {
   const { translate } = React.useContext(I18nContext)
 
   return (
@@ -32,3 +32,5 @@ export const ErrorPage = ({ error = defaultError }) => {
     </Page>
   )
 }
+
+export default ErrorPage

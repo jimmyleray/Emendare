@@ -6,7 +6,7 @@ interface IActivatePageProps {
   match: any
 }
 
-export const ActivatePage = ({ match }: IActivatePageProps) => {
+const ActivatePage = ({ match }: IActivatePageProps) => {
   const [pending, setPending] = React.useState(true)
   const [activated, setActivated] = React.useState(false)
   const [error, setError] = React.useState<any>(null)
@@ -21,9 +21,9 @@ export const ActivatePage = ({ match }: IActivatePageProps) => {
         setActivated(true)
         setError(null)
       })
-      .catch((error: any) => {
+      .catch((err: any) => {
         setPending(false)
-        setError(error)
+        setError(err)
       })
   }, [])
 
@@ -69,3 +69,5 @@ export const ActivatePage = ({ match }: IActivatePageProps) => {
     </Page>
   )
 }
+
+export default ActivatePage

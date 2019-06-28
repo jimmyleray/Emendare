@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { CreatePage } from './create'
+import CreatePage from './create'
 
 it('should render a CreatePage', () => {
   const component = shallow(<CreatePage />)
