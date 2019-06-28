@@ -2,10 +2,9 @@ import React, { Suspense } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Layout, PrivateRoute, Providers } from '../../../components'
 import PendingPage from '../../4_pages/pending/pending'
+import ErrorPage from '../../4_pages/error/error'
 import { routes } from '../../../config'
 import isString from 'lodash/isString'
-
-const Error = React.lazy(() => import('../../4_pages/error/error'))
 
 const getPage = (name: string) =>
   React.lazy(() => import(`../../4_pages/${name}/${name}`))
@@ -32,7 +31,7 @@ export const Router = () => (
                 />
               )
             })}
-            <Route component={Error} />
+            <Route component={ErrorPage} />
           </Switch>
         </Suspense>
       </Layout>
