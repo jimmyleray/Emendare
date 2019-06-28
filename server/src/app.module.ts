@@ -53,6 +53,9 @@ const PROVIDERS = [...databaseProvider]
       installSubscriptionHandlers: true,
       formatError(error) {
         return error
+      },
+      engine: {
+        apiKey: process.env.ENGINE_API_KEY
       }
     })
   ]
