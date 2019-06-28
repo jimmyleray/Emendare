@@ -13,7 +13,7 @@ import {
 } from '../../../components'
 import { IError } from '../../../../../interfaces'
 
-export const ResetPage = () => {
+const ResetPage = () => {
   const [email, setEmail] = React.useState('')
   const [error, setError] = React.useState<IError | null>(null)
   const [send, setSend] = React.useState(false)
@@ -92,3 +92,5 @@ export const ResetPage = () => {
     </Page>
   )
 }
+
+export default ResetPage

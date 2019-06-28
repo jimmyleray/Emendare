@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 
 enzyme.configure({ adapter: new Adapter() })
 
-import { TextsPage } from './texts'
+import TextsPage from './texts'
 import { Providers } from '../../../components'
 
 it('should render a TextsPage', () => {

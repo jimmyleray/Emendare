@@ -1,36 +1,40 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Layout, PrivateRoute, Providers } from '../../../components'
-import * as Pages from '../../4_pages'
+import PendingPage from '../../4_pages/pending/pending'
 import { routes } from '../../../config'
-import capitalize from 'lodash/capitalize'
 import isString from 'lodash/isString'
+
+const Error = React.lazy(() => import('../../4_pages/error/error'))
+
+const getPage = (name: string) =>
+  React.lazy(() => import(`../../4_pages/${name}/${name}`))
 
 export const Router = () => (
   <BrowserRouter>
     <Providers>
       <Layout>
-        <Switch>
-          {routes.map(route => {
-            // Resolve Default Path
-            route.path = isString(route.path) ? route.path : route.path()
+        <Suspense fallback={<PendingPage />}>
+          <Switch>
+            {routes.map(route => {
+              // Resolve Default Path
+              route.path = isString(route.path) ? route.path : route.path()
 
-            // Resolve Page Component
-            route.component = (Pages as any)[capitalize(route.name) + 'Page']
-            // Then return the Route
-            return route.private ? (
-              <PrivateRoute key={route.path} {...route} />
-            ) : (
-              <Route
-                key={route.path}
-                exact={route.exact}
-                path={route.path}
-                component={route.component}
-              />
-            )
-          })}
-          <Route component={Pages.ErrorPage} />
-        </Switch>
+              // Then return the Route
+              return route.private ? (
+                <PrivateRoute key={route.path} {...route} />
+              ) : (
+                <Route
+                  key={route.path}
+                  exact={route.exact}
+                  path={route.path}
+                  component={getPage(route.name)}
+                />
+              )
+            })}
+            <Route component={Error} />
+          </Switch>
+        </Suspense>
       </Layout>
     </Providers>
   </BrowserRouter>

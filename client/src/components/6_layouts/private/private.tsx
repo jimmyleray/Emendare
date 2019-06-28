@@ -1,6 +1,7 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
-import { PendingPage, useUser } from '../../../components'
+import PendingPage from '../../4_pages/pending/pending'
+import { useUser } from '../../../components'
 import { path } from '../../../config'
 
 // Wait auto-connect to display private page or redirect to Login

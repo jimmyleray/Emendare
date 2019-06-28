@@ -20,7 +20,7 @@ import {
   Tabs
 } from '../../../components'
 
-export const ProfilePage = () => {
+const ProfilePage = () => {
   const userContext = useUser()
   const { translate } = React.useContext(I18nContext)
 
@@ -56,3 +56,5 @@ export const ProfilePage = () => {
     </Page>
   )
 }
+
+export default ProfilePage

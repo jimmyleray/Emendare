@@ -10,9 +10,10 @@
  */
 
 import React from 'react'
-import { DataContext, ErrorPage, Edit, Page } from '../../../components'
+import ErrorPage from '../../4_pages/error/error'
+import { DataContext, Edit, Page } from '../../../components'
 
-export const EditPage = (props: any) => {
+const EditPage = (props: any) => {
   const data = React.useContext(DataContext)
   const text = data.get('text')(props.match.params.id)
 
@@ -24,3 +25,5 @@ export const EditPage = (props: any) => {
     <ErrorPage error={text.error} />
   ) : null
 }
+
+export default EditPage

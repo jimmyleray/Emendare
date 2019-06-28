@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import { ApiContext, Page, Button, Notification } from '../../../components'
 import { path } from '../../../config'
 
-export const CreatePage = () => {
+const CreatePage = () => {
   const [name, setName] = React.useState('')
   const [description, setDescription] = React.useState('')
   const [redirect, setRedirect] = React.useState(false)
@@ -91,3 +91,5 @@ export const CreatePage = () => {
     </Page>
   )
 }
+
+export default CreatePage

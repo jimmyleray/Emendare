@@ -15,7 +15,7 @@ import {
   filterEventsByUserTextFollowed
 } from '../../../helpers'
 
-export const VotesPage = () => {
+const VotesPage = () => {
   const { translate } = React.useContext(I18nContext)
   const { user } = useUser()
   const { get } = React.useContext(DataContext)
@@ -46,3 +46,5 @@ export const VotesPage = () => {
     </Page>
   )
 }
+
+export default VotesPage

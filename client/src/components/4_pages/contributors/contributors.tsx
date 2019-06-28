@@ -33,7 +33,7 @@ const AvatarsRow = (contributors: any[], isType: any) => (
   </React.Fragment>
 )
 
-export const ContributorsPage = () => {
+const ContributorsPage = () => {
   const [contributors, setContributors] = React.useState<any>([])
   const { Socket } = React.useContext(ApiContext)
 
@@ -67,3 +67,5 @@ export const ContributorsPage = () => {
     </I18nContext.Consumer>
   )
 }
+
+export default ContributorsPage
