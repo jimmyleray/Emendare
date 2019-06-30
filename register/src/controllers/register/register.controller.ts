@@ -55,7 +55,7 @@ export class RegisterController {
           instance[key] = value
         })
 
-        return await instance.save()
+        await instance.save()
       }
     }
   }
