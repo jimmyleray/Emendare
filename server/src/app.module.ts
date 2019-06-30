@@ -56,7 +56,10 @@ const PROVIDERS = [...databaseProvider]
       },
       engine: {
         apiKey: process.env.ENGINE_API_KEY
-      }
+      },
+      cors: true,
+      introspection: true,
+      playground: true
     })
   ]
 })
