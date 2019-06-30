@@ -26,6 +26,9 @@ export class Instance extends BaseEntity {
   @Column()
   private: boolean
 
+  @Column()
+  sharedSecret: string
+
   @Column({ default: new Date(Date.now()) })
   created: Date | string
 }

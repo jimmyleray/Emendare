@@ -11,7 +11,7 @@ import config from './config'
 async function bootstrap() {
   try {
     // Initial server log
-    console.log(chalk.green('> Emendare Server launch\n'))
+    console.log(chalk.green('\nEmendare Server launch\n'))
 
     // Create NestJS application
     const app = await NestFactory.create(AppModule)
