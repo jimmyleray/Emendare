@@ -1,4 +1,4 @@
-import * as mjml2html from 'mjml'
+import mjml2html from 'mjml'
 import { header, footer } from '../../components'
 import { IEmail } from '../../../../../interfaces'
 
