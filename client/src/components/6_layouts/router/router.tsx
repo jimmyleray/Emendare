@@ -18,12 +18,10 @@ export const Router = () => (
             {routes.map(route => {
               // Resolve Default Path
               route.path = isString(route.path) ? route.path : route.path()
+              const SecureRoute = route.private ? PrivateRoute : Route
 
-              // Then return the Route
-              return route.private ? (
-                <PrivateRoute key={route.path} {...route} />
-              ) : (
-                <Route
+              return (
+                <SecureRoute
                   key={route.path}
                   exact={route.exact}
                   path={route.path}
