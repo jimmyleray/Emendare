@@ -5,7 +5,7 @@ import { Topic } from '../../common/topics'
 import { IResponse } from '../../../../interfaces'
 import { Args, Query, Resolver, Subscription } from '@nestjs/graphql'
 import { EventService } from '../../services'
-import { EventsInputs } from './inputs'
+import { EventsArgs } from './inputs'
 
 // Responses Type
 @ObjectType()
@@ -33,10 +33,10 @@ export class EventResolver {
   }
 
   @Query(returns => EventsResponse)
-  async events(
-    @Args('data') data: EventsInputs
-  ): Promise<IResponse<DataFromGetEventsByGroup>> {
-    return this.eventService.getEventsByGroup(data.limit, data.lastEventDate)
+  async events(@Args() { limit, lastEventDate }: EventsArgs): Promise<
+    IResponse<DataFromGetEventsByGroup>
+  > {
+    return this.eventService.getEventsByGroup(limit, lastEventDate)
   }
 
   @Subscription(returns => EventResponse, {
