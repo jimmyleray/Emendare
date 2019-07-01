@@ -5,6 +5,8 @@ import PendingPage from '../../4_pages/pending/pending'
 import ErrorPage from '../../4_pages/error/error'
 import { routes } from '../../../config'
 import isString from 'lodash/isString'
+import { ApolloProvider } from 'react-apollo'
+import { client } from '../../../graphql'
 
 const getPage = (name: string) =>
   React.lazy(() => import(`../../4_pages/${name}/${name}`))
