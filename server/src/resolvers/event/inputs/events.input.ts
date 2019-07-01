@@ -1,9 +1,9 @@
-import { InputType, Field, Int } from 'type-graphql'
+import { ArgsType, Field, Int } from 'type-graphql'
 
-@InputType()
-export class EventsInputs {
-  @Field(type => Int)
+@ArgsType()
+export class EventsArgs {
+  @Field(type => Int, { nullable: true })
   limit?: number
-  @Field()
-  lastEventDate: string
+  @Field({ nullable: true })
+  lastEventDate?: string
 }
