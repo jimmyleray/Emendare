@@ -1,5 +1,6 @@
 import React from 'react'
 import io from 'socket.io-client'
+import { AuthService } from '../../../services'
 
 interface IapiProviderProps {
   children: React.ReactNode
@@ -20,7 +21,7 @@ const getSocket = (apiUrl: string) => {
     },
     emit: (name: string, data = {}) => {
       return insecureSocket.emit(name, {
-        token: localStorage.getItem('token'),
+        token: AuthService.getToken(),
         data
       })
     },

@@ -8,6 +8,7 @@ import {
   setUserAction,
   userReducer
 } from './store'
+import { AuthService } from '../../../services'
 
 interface IUserProviderValue {
   user: IUser | null
@@ -27,8 +28,8 @@ export const UserProvider = ({ children }: any) => {
 
   const isConnected = () => state.user !== null
 
-  const logout = () => {
-    localStorage.removeItem('token')
+  const logout = async () => {
+    await AuthService.logout()
     dispatch(setUserAction(null))
   }
 
@@ -48,13 +49,13 @@ export const UserProvider = ({ children }: any) => {
     Socket.fetch('login', { email, password })
       .then(({ user, token }: any) => {
         dispatch(setUserAction(user))
-        localStorage.setItem('token', token)
+        AuthService.setToken(token)
         dispatch(setIsConnectionPendingAction(false))
         dispatch(setErrorAuthAction(null))
         return true
       })
       .catch((err: any) => {
-        localStorage.removeItem('token')
+        AuthService.removeToken()
         dispatch(setIsConnectionPendingAction(false))
         dispatch(setErrorAuthAction(err))
         return false
@@ -68,7 +69,7 @@ export const UserProvider = ({ children }: any) => {
       }
     })
 
-    const token = localStorage.getItem('token')
+    const token = AuthService.getToken()
 
     if (token) {
       login()
