@@ -16,23 +16,25 @@ export const Router = () => (
     <Providers>
       <Layout>
         <Suspense fallback={<PendingPage />}>
-          <Switch>
-            {routes.map(route => {
-              // Resolve Default Path
-              route.path = isString(route.path) ? route.path : route.path()
-              const SecureRoute = route.private ? PrivateRoute : Route
+          <ApolloProvider client={client}>
+            <Switch>
+              {routes.map(route => {
+                // Resolve Default Path
+                route.path = isString(route.path) ? route.path : route.path()
+                const SecureRoute = route.private ? PrivateRoute : Route
 
-              return (
-                <SecureRoute
-                  key={route.path}
-                  exact={route.exact}
-                  path={route.path}
-                  component={getPage(route.name)}
-                />
-              )
-            })}
-            <Route component={ErrorPage} />
-          </Switch>
+                return (
+                  <SecureRoute
+                    key={route.path}
+                    exact={route.exact}
+                    path={route.path}
+                    component={getPage(route.name)}
+                  />
+                )
+              })}
+              <Route component={ErrorPage} />
+            </Switch>
+          </ApolloProvider>
         </Suspense>
       </Layout>
     </Providers>
