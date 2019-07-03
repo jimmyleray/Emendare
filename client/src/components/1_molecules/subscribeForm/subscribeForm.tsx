@@ -1,44 +1,43 @@
 import React, { useState, useCallback } from 'react'
 // Components
 import { Icon, Notification, PwdForm, useUser } from '../../../components'
+import { IError } from '../../../../../interfaces'
 
 interface ISubscribeFormProps {
   /** render props of the submit buttons */
   render: any
+  /** Function to handle inputs change */
+  change: any
+  /** Submit function */
+  submit: any
+  /** Value of the email */
+  email: string
+  /** Value of the password */
+  password: string
+  /** Value of the checking password */
+  checkPassword: string
+  /** True if the password is valid according to the rules */
+  pwdValid: boolean
+  /** True if the password and checkPassword are the same */
+  pwdSame: boolean
+  /** Error */
+  error: IError | null
+  /** True if the user has submited */
+  send: boolean
 }
 
-export const SubscribeForm = ({ render }: ISubscribeFormProps) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [checkPassword, setCheckPassword] = useState('')
-  const [pwdSame, setPwdSame] = useState(false)
-  const [pwdValid, setPwdValid] = useState(false)
-  const [send] = useState(false)
-  const { register, errorAuth } = useUser()
-
-  const submit = (event: any) => {
-    event.preventDefault()
-    register(email, password)
-  }
-
-  const change = useCallback(
-    (name: string, validInput?: boolean) => (event: any) => {
-      switch (name) {
-        case 'password':
-          setPassword(event.target.value)
-          setPwdValid(validInput ? validInput : false)
-          break
-        case 'checkPassword':
-          setCheckPassword(event.target.value)
-          setPwdSame(validInput ? validInput : false)
-          break
-        case 'email':
-          setEmail(event.target.value)
-      }
-    },
-    []
-  )
-
+export const SubscribeForm = ({
+  render,
+  change,
+  submit,
+  email,
+  password,
+  checkPassword,
+  pwdSame,
+  pwdValid,
+  send,
+  error
+}: ISubscribeFormProps) => {
   return (
     <form onSubmit={submit} style={{ width: '100%' }}>
       {!send && (
@@ -68,11 +67,11 @@ export const SubscribeForm = ({ render }: ISubscribeFormProps) => {
             {render(email, password, checkPassword, pwdValid, pwdSame)}
           </div>
 
-          {errorAuth && (
+          {error && (
             <React.Fragment>
               <br />
               <Notification className="is-danger has-text-centered">
-                {errorAuth.message}
+                {error.message}
               </Notification>
             </React.Fragment>
           )}
