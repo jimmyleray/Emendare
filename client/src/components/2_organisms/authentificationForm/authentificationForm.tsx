@@ -3,7 +3,7 @@ import React from 'react'
 import {
   Button,
   LoginFormContainer,
-  SubscribeForm,
+  SubscribeFormContainer,
   Buttons
 } from '../../../components'
 // Hooks
@@ -74,7 +74,7 @@ const displaySubscribe = (
   loginToggler: () => void
 ) => {
   return subscribeToggleState ? (
-    <SubscribeForm
+    <SubscribeFormContainer
       render={(
         email: string,
         password: string,
