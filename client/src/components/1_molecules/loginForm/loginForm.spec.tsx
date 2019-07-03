@@ -7,7 +7,14 @@ import { LoginForm } from './loginForm'
 
 it('should render a loginForm without', () => {
   const { container, getByText } = renderWithRouter(
-    <LoginForm render={() => <Button type="submit">Test</Button>} />
+    <LoginForm
+      email={'test@test.com'}
+      password="test"
+      submit={() => console.log('submit')}
+      change={() => console.log('change')}
+      error={null}
+      render={() => <Button type="submit">Test</Button>}
+    />
   )
   expect(container).toBeTruthy()
   expect(getByText('Test')).toBeTruthy()

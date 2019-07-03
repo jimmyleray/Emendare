@@ -1,6 +1,11 @@
 import React from 'react'
 // Components
-import { Button, LoginForm, SubscribeForm, Buttons } from '../../../components'
+import {
+  Button,
+  LoginFormContainer,
+  SubscribeForm,
+  Buttons
+} from '../../../components'
 // Hooks
 import { useToggle } from '../../../hooks'
 // Helpers
@@ -40,7 +45,7 @@ const displayLogin = (
   location?: any
 ) => {
   return loginToggleState ? (
-    <LoginForm
+    <LoginFormContainer
       location={location}
       render={(email: string, password: string) => (
         <Buttons>

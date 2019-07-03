@@ -1,89 +1,73 @@
-import React, { useState, useCallback } from 'react'
-import { Redirect } from 'react-router-dom'
+import React from 'react'
 // Components
-import { Link, Notification, Input, useUser } from '../../../components'
+import { Link, Notification, Input } from '../../../components'
 // Config
 import { path } from '../../../config'
+import { IError } from '../../../../../interfaces'
 
-interface ILoginPageProps {
-  location?: any
-  /** Render Props to display all the buttons */
+interface ILoginFormProps {
   render: any
+  /** Function to submit the form */
+  submit: any
+  /** Value of the email */
+  email: string
+  /** Function to track change of the inputs values */
+  change: any
+  /** Value of the password */
+  password: string
+  /** Error  */
+  error: IError | null
 }
 
-export const LoginForm = ({ location, render }: ILoginPageProps) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [redirectToRefferer] = useState(false)
-  const { login, errorAuth } = useUser()
-
-  const change = useCallback(
-    (name: string) => (event: any) => {
-      if (name === 'email') {
-        setEmail(event.target.value)
-      } else if (name === 'password') {
-        setPassword(event.target.value)
-      }
-    },
-    []
-  )
-
-  const submit = (event: any) => {
-    event.preventDefault()
-    login(email, password)
-  }
-
-  if (redirectToRefferer) {
-    return (
-      <Redirect
-        to={(location && location.state && location.state.from) || path.home}
-      />
-    )
-  }
-
-  return (
-    <form onSubmit={submit} style={{ width: '100%' }}>
-      <div className="field">
-        <div className="control has-icons-left has-icons-right">
-          <Input
-            autoFocus={true}
-            ariaLabel="email"
-            placeholder="Email"
-            value={email}
-            onChange={change('email')}
-            className="input"
-            type="email"
-            iconLeft="fa-envelope"
-          />
-        </div>
+export const LoginForm = ({
+  render,
+  submit,
+  email,
+  change,
+  password,
+  error
+}: ILoginFormProps) => (
+  <form onSubmit={submit} style={{ width: '100%' }}>
+    <div className="field">
+      <div className="control has-icons-left has-icons-right">
+        <Input
+          autoFocus={true}
+          ariaLabel="email"
+          placeholder="Email"
+          value={email}
+          onChange={change('email')}
+          className="input"
+          type="email"
+          iconLeft="fa-envelope"
+        />
       </div>
-      <div className="field">
-        <div className="control has-icons-left">
-          <Input
-            placeholder="Mot de passe"
-            ariaLabel="Mot de passe"
-            value={password}
-            onChange={change('password')}
-            className="input"
-            type="password"
-            iconLeft="fa-lock"
-          />
-        </div>
-        <div className="has-text-right" style={{ marginTop: 4 }}>
-          <Link to={path.reset} className="is-text">
-            Mot de passe oublié ?
-          </Link>
-        </div>
+    </div>
+    <div className="field">
+      <div className="control has-icons-left">
+        <Input
+          placeholder="Mot de passe"
+          ariaLabel="Mot de passe"
+          value={password}
+          onChange={change('password')}
+          className="input"
+          type="password"
+          iconLeft="fa-lock"
+        />
       </div>
-      <div className="has-text-centered">{render(email, password, submit)}</div>
-      {errorAuth && (
-        <React.Fragment>
-          <br />
-          <Notification className="is-danger has-text-centered">
-            {errorAuth.message}
-          </Notification>
-        </React.Fragment>
-      )}
-    </form>
-  )
-}
+      <div className="has-text-right" style={{ marginTop: 4 }}>
+        <Link to={path.reset} className="is-text">
+          Mot de passe oublié ?
+        </Link>
+      </div>
+    </div>
+    <div className="has-text-centered">{render(email, password, submit)}</div>
+    {error && (
+      <React.Fragment>
+        <br />
+        <Notification className="is-danger has-text-centered">
+          {error.message}
+        </Notification>
+      </React.Fragment>
+    )}
+  </form>
+)
