@@ -86,7 +86,7 @@
     "react-docgen-typescript": "^1.12.3",
     "react-styleguidist": "^9.0.1",
     "react-testing-library": "6.1.2",
-    "source-map-explorer": "^2.0.0",
+    "source-map-explorer": "^2.3.1",
     "tslint": "5.12.1",
     "tslint-react-hooks": "^2.0.0",
     "typescript": "3.3.3"
