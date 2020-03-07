@@ -84,7 +84,7 @@
     "lint-staged": "8.2.1",
     "prettier": "1.18.2",
     "react-docgen-typescript": "^1.12.3",
-    "react-styleguidist": "^9.0.1",
+    "react-styleguidist": "^11.0.0",
     "react-testing-library": "6.1.2",
     "source-map-explorer": "^2.0.0",
     "tslint": "5.12.1",
