@@ -88,7 +88,7 @@
     "react-testing-library": "6.1.2",
     "source-map-explorer": "^2.0.0",
     "tslint": "5.12.1",
-    "tslint-react-hooks": "^2.0.0",
+    "tslint-react-hooks": "^2.2.2",
     "typescript": "3.3.3"
   }
 }
