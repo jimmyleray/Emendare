@@ -30,7 +30,7 @@
     "body-parser": "^1.18.3",
     "cache-manager": "^2.9.0",
     "compression": "^1.7.4",
-    "helmet": "^3.16.0",
+    "helmet": "^3.22.0",
     "mongodb": "^3.1.13",
     "node-fetch": "^2.6.0",
     "reflect-metadata": "^0.1.12",
