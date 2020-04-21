@@ -79,7 +79,7 @@
     "codecov": "3.5.0",
     "cypress": "3.3.2",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.9.1",
+    "enzyme-adapter-react-16": "^1.15.2",
     "husky": "2.7.0",
     "lint-staged": "8.2.1",
     "prettier": "1.18.2",
