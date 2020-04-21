@@ -78,7 +78,7 @@
     "@types/socket.io-client": "1.4.32",
     "codecov": "3.5.0",
     "cypress": "3.3.2",
-    "enzyme": "^3.8.0",
+    "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "husky": "2.7.0",
     "lint-staged": "8.2.1",
